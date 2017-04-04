@@ -83,7 +83,7 @@ set(ProjectVersionMajor 0)
 set(ProjectVersionMinor 3)
 set(ProjectVersionPatch 0)
 set(ProjectVersion "${ProjectVersionMajor}.${ProjectVersionMinor}.${ProjectVersionPatch}")
-set(ProjectReleaseType "alpha") # You can use any string you wish
+set(ProjectReleaseType "beta") # You can use any string you wish
 
 set(ProjectGroupId "steptosky")
 set(ProjectId ${ProjectShortName})

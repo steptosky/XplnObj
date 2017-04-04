@@ -46,7 +46,7 @@ artifact_name = 'XplnObj'
 class XUpdaterLibConan(ConanFile):
     # Usually this variable is used while exporting the package
     # If this behaviour is changed the logic has to be changed too
-    version = "last"
+    version = "0.3.0"
 
     name = artifact_name
     url = 'https://github.com/steptosky/%s' % artifact_name

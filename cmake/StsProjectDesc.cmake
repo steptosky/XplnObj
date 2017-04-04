@@ -62,7 +62,7 @@
 string(TIMESTAMP _curr_y_ "%Y" UTC)
 
 #----------------------------------------------------------------------------------#
-# Organization Info	
+# Organization Info
 
 set(ProjectOrganizationName "StepToSky")
 set(ProjectOrganizationWebLink "www.steptosky.com")
@@ -72,7 +72,7 @@ set(ProjectOrganizationWebLink "www.steptosky.com")
 
 set(ProjectName "X-Plane Obj Library")
 set(ProjectShortName "XplnObj")
-set(ProjectDescription "This library is for import/export to/from x-plane's obj format.")
+set(ProjectDescription "This library is for working with x-plane's obj format.")
 set(ProjectWebLink "www.steptosky.com")
 set(ProjectSourcesWebLink "https://github.com/steptosky/XplnObj")
 
@@ -80,10 +80,10 @@ set(ProjectSourcesWebLink "https://github.com/steptosky/XplnObj")
 # Version / Dependency's system
 
 set(ProjectVersionMajor 0)
-set(ProjectVersionMinor 2)
-set(ProjectVersionPatch 2)
+set(ProjectVersionMinor 3)
+set(ProjectVersionPatch 0)
 set(ProjectVersion "${ProjectVersionMajor}.${ProjectVersionMinor}.${ProjectVersionPatch}")
-set(ProjectReleaseType "alpha") # You can use any string you wish
+set(ProjectReleaseType "beta") # You can use any string you wish
 
 set(ProjectGroupId "steptosky")
 set(ProjectId ${ProjectShortName})

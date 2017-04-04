@@ -72,7 +72,7 @@ set(ProjectOrganizationWebLink "www.steptosky.com")
 
 set(ProjectName "X-Plane Obj Library")
 set(ProjectShortName "XplnObj")
-set(ProjectDescription "This library is for working with x-plane's obj format.")
+set(ProjectDescription "This library is for working with the x-plane's obj format.")
 set(ProjectWebLink "www.steptosky.com")
 set(ProjectSourcesWebLink "https://github.com/steptosky/XplnObj")
 

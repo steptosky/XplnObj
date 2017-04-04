@@ -1,0 +1,124 @@
+/*
+**  Copyright(C) 2017, StepToSky
+**
+**  Redistribution and use in source and binary forms, with or without
+**  modification, are permitted provided that the following conditions are met:
+**
+**  1.Redistributions of source code must retain the above copyright notice, this
+**    list of conditions and the following disclaimer.
+**  2.Redistributions in binary form must reproduce the above copyright notice,
+**    this list of conditions and the following disclaimer in the documentation
+**    and / or other materials provided with the distribution.
+**  3.Neither the name of StepToSky nor the names of its contributors
+**    may be used to endorse or promote products derived from this software
+**    without specific prior written permission.
+**
+**  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+**  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+**  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+**  DISCLAIMED.IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+**  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+**  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+**  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+**  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+**  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+**  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+**
+**  Contacts: www.steptosky.com
+*/
+
+#include "ObjWritePreparer.h"
+#include "xpln/obj/ObjLodGroup.h"
+#include "xpln/obj/ObjMesh.h"
+#include "ObjWriteAnim.h"
+#include "io/ObjValidators.h"
+#include "exceptions/defines.h"
+
+namespace xobj {
+
+	/**************************************************************************************************/
+	///////////////////////////////////////////* Functions *////////////////////////////////////////////
+	/**************************************************************************************************/
+
+	bool ObjWritePreparer::prepare(ObjMain & inObjMain) {
+		size_t lodCount = inObjMain.lodCount();
+		for (size_t i = 0; i < lodCount; ++i) {
+			ObjLodGroup & lod = inObjMain.lod(i);
+			Transform & rootTransform = lod.transform();
+			if (!checkParameters(lod, lod.objectName())) {
+				return false;
+			}
+			if (!proccessTransform(rootTransform)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**************************************************************************************************/
+	///////////////////////////////////////////* Functions *////////////////////////////////////////////
+	/**************************************************************************************************/
+
+	bool ObjWritePreparer::proccessTransform(Transform & transform) {
+		if (!checkParameters(transform, transform.name())) {
+			return false;
+		}
+
+		if (!proccessObjects(transform)) {
+			return false;
+		}
+		//-------------------------------------------------------------------------
+		// children
+
+		Transform::TransformIndex chCount = transform.childrenCount();
+		for (Transform::TransformIndex i = 0; i < chCount; ++i) {
+			if (!proccessTransform(*static_cast<Transform*>(transform.childAt(i)))) {
+				return false;
+			}
+		}
+		//-------------------------------------------------------------------------
+
+		return true;
+	}
+
+	bool ObjWritePreparer::proccessObjects(Transform & transform) {
+		Transform::ObjList objToDelete;
+		for (auto & curr : transform.objList()) {
+			if (!checkParameters(*curr, curr->objectName())) {
+				objToDelete.emplace_back(curr);
+			}
+			else {
+				checkForTwoSided(*curr);
+			}
+		}
+		for (auto & curr : objToDelete) {
+			transform.removeObject(curr);
+		}
+		return true;
+	}
+
+	/**************************************************************************************************/
+	///////////////////////////////////////////* Functions *////////////////////////////////////////////
+	/**************************************************************************************************/
+
+	void ObjWritePreparer::checkForTwoSided(ObjAbstract & inObj) {
+		if (inObj.objType() != OBJ_MESH)
+			return;
+		ObjMesh * meshOriginal = static_cast<ObjMesh*>(&inObj);
+		if (!meshOriginal->pAttr.isTwoSided())
+			return;
+
+		ObjMesh meshDouble;
+		for (auto & vert : meshDouble.pVertices) {
+			vert.pNormal *= -1.0;
+		}
+		for (auto & face : meshDouble.pFaces) {
+			std::swap(face.pV0, face.pV2);
+		}
+		meshOriginal->attach(meshDouble);
+	}
+
+	/**************************************************************************************************/
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**************************************************************************************************/
+}

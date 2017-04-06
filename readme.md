@@ -2,6 +2,8 @@
 - The library is distributed under 
 [BSD (3-Clause)](http://opensource.org/licenses/BSD-3-Clause) 
 license for more information read the [license](license.txt) file.
+- [The X-Plane official website](http://www.x-plane.com/)
+- [The X-Plane obj specification](http://developer.x-plane.com/?article=obj8-file-format-specification)
 - Versioning in accordance with the [semver](http://semver.org/)
 - Minimum C++ standard is 14
 - The versions from the master branch of this library 

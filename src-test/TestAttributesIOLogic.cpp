@@ -47,11 +47,11 @@ using ::testing::InSequence;
 /**************************************************************************************************/
 
 /*
-* This tests are for checking attributes logic of the chain 'mesh objects->file | file->mesh objects'.
-* So they test writter and reader for attribute of mesh objects.
-* The attributes have some logic for writing and reading you can see it in other tests like TestAttributesWrite.
-* Acttualy this tests are like as TestAttributesWrite except they test full chain (not only writing) for one attribute.
-**/
+ * This tests are for checking attributes logic of the chain 'mesh objects->file | file->mesh objects'.
+ * So they test writter and reader for attribute of mesh objects.
+ * The attributes have some logic for writing and reading you can see it in other tests like TestAttributesWrite.
+ * Acttualy this tests are like as TestAttributesWrite except they test full chain (not only writing) for one attribute.
+ */
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -48,7 +48,7 @@ using ::testing::InSequence;
 /* 
  * This tests are for checking attributes of the chain 'mesh object->file | file->mesh object'.
  * So they test writter and reader for attributes of one mesh object.
- **/
+ */
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

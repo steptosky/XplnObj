@@ -46,9 +46,9 @@ using ::testing::InSequence;
 /**************************************************************************************************/
 
 /*
-* This tests are for checking attributes logic for writing only and they are low level.
-* There are also top level tests (TestAttributesIOLogic) like this.
-**/
+ * This tests are for checking attributes logic for writing only and they are low level.
+ * There are also top level tests (TestAttributesIOLogic) like this.
+ */
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

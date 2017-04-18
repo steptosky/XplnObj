@@ -90,7 +90,7 @@ namespace xobj {
 				}
 
 				for (const MeshVertex & v : mobj->pVertices) {
-					writer.printLine(toObjString(v, mobj->pAttr.isSunLight()));
+					writer.printLine(toObjString(v, mobj->pAttr.isTree()));
 				}
 			}
 		}

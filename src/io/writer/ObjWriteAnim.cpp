@@ -230,13 +230,16 @@ namespace xobj {
 	//-------------------------------------------------------------------------
 
 	void ObjWriteAnim::printVisible(const AnimVisibility & inAnim, const Transform & inTransform) const {
-		if (!inAnim.pKeys.size())
+		if (inAnim.pKeys.empty())
 			return;
 
 		for (auto & curr : inAnim.pKeys) {
 			if (checkParameters(curr, std::string("Transform: ").append(inTransform.name()))) {
 				++mStat->pAnimAttrCount;
 				mWriter->printLine(toObjString(curr));
+				if (curr.pHasLoop) {
+					printLoop(curr.pLoopValue);
+				}
 				++mStat->pAnimAttrCount;
 			}
 		}

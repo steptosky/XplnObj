@@ -54,21 +54,26 @@ namespace xobj {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	std::string toObjString(const MeshVertex & inVert, bool inIsSunLight) {
+	std::string toObjString(const MeshVertex & inVert, bool inIsTree) {
 		StringStream out;
 		out << MESH_VT << " " << inVert.pPosition.toString(PRECISION) << "  ";
-		if (inIsSunLight)
-			out << inVert.pNormal.normalized().toString(PRECISION);
-		else
+
+		if (inIsTree)
 			out << 0.0f << " " << 1.0f << " " << 0.0f;
+		else
+			out << inVert.pNormal.normalized().toString(PRECISION);
+
 		out << "  " << inVert.pTexture.toString(PRECISION);
 		return out.str();
 	}
 
 	std::string toObjString(const LineVertex & inVert) {
 		StringStream out;
-		out << VLINE << " " << inVert.pPosition.toString(PRECISION) << " "
-				<< inVert.pColor.red() << " " << inVert.pColor.green() << " " << inVert.pColor.blue();
+		out << VLINE
+				<< " " << inVert.pPosition.toString(PRECISION)
+				<< " " << inVert.pColor.red()
+				<< " " << inVert.pColor.green()
+				<< " " << inVert.pColor.blue();
 		return out.str();
 	}
 

@@ -151,6 +151,10 @@ namespace xobj {
 							<< " " << a.pKeys[1].pDrfValue
 							<< sep << (a.pDrf.empty() ? "none" : a.pDrf.c_str());
 					mWriter->printLine(stream.str());
+					if (a.pHasLoop) {
+						printLoop(a.pLoopValue);
+					}
+
 					++mStat->pAnimAttrCount;
 				}
 				else {
@@ -163,12 +167,13 @@ namespace xobj {
 						mWriter->printLine(toObjString(key));
 					}
 
-					mWriter->spaceLess();
-					mWriter->printLine(ATTR_TRANS_END);
-
 					if (a.pHasLoop) {
 						printLoop(a.pLoopValue);
 					}
+
+					mWriter->spaceLess();
+					mWriter->printLine(ATTR_TRANS_END);
+
 					++mStat->pAnimAttrCount;
 				}
 			}
@@ -191,6 +196,10 @@ namespace xobj {
 							<< " " << a.pKeys[1].pDrfValue
 							<< sep << (a.pDrf.empty() ? "none" : a.pDrf.c_str());
 					mWriter->printLine(stream.str());
+					if (a.pHasLoop) {
+						printLoop(a.pLoopValue);
+					}
+
 					++mStat->pAnimAttrCount;
 				}
 				else {
@@ -204,12 +213,13 @@ namespace xobj {
 						mWriter->printLine(toObjString(key));
 					}
 
-					mWriter->spaceLess();
-					mWriter->printLine(ATTR_ROTATE_END);
-
 					if (a.pHasLoop) {
 						printLoop(a.pLoopValue);
 					}
+
+					mWriter->spaceLess();
+					mWriter->printLine(ATTR_ROTATE_END);
+
 					++mStat->pAnimAttrCount;
 				}
 			}
@@ -220,13 +230,16 @@ namespace xobj {
 	//-------------------------------------------------------------------------
 
 	void ObjWriteAnim::printVisible(const AnimVisibility & inAnim, const Transform & inTransform) const {
-		if (!inAnim.pKeys.size())
+		if (inAnim.pKeys.empty())
 			return;
 
 		for (auto & curr : inAnim.pKeys) {
 			if (checkParameters(curr, std::string("Transform: ").append(inTransform.name()))) {
 				++mStat->pAnimAttrCount;
 				mWriter->printLine(toObjString(curr));
+				if (curr.pHasLoop) {
+					printLoop(curr.pLoopValue);
+				}
 				++mStat->pAnimAttrCount;
 			}
 		}

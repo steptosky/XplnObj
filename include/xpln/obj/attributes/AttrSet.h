@@ -61,7 +61,10 @@ namespace xobj {
 
 		//-------------------------------------------------------------------------
 
-		void setSunLight(bool inEnable);
+		[[deprecated("use setTree instead")]]
+		void setSunLight(bool inEnable) { setTree(!inEnable); }
+
+		void setTree(bool inEnable);
 		void setTwoSided(bool inEnable);
 		void setDraw(bool inState);
 		void setDraped(bool inState);
@@ -78,7 +81,10 @@ namespace xobj {
 
 		//-------------------------------------------------------------------------
 
-		bool isSunLight() const;
+		[[deprecated("use isTree instead")]]
+		bool isSunLight() const { return !isTree(); }
+
+		bool isTree() const;
 		bool isTwoSided() const;
 		bool isDraw() const;
 		bool isDraped() const;
@@ -109,7 +115,7 @@ namespace xobj {
 
 		bool mIsDraw : 1;
 		bool mIsDraped : 1;
-		bool mIsSunLight : 1;
+		bool mIsTree : 1;
 		bool mIsTwoSided : 1;
 		bool mIsCastShadow : 1;
 		bool mIsSolidForCamera : 1;
@@ -123,7 +129,7 @@ namespace xobj {
 	inline AttrSet::AttrSet()
 		: mIsDraw(true),
 		mIsDraped(false),
-		mIsSunLight(true),
+		mIsTree(false),
 		mIsTwoSided(false),
 		mIsCastShadow(true),
 		mIsSolidForCamera(false) {}
@@ -135,7 +141,7 @@ namespace xobj {
 	inline void AttrSet::reset() {
 		mIsDraw = true;
 		mIsDraped = false;
-		mIsSunLight = true;
+		mIsTree = false;
 		mIsTwoSided = false;
 		mIsCastShadow = true;
 		mIsSolidForCamera = false;
@@ -163,7 +169,7 @@ namespace xobj {
 		mIsDraw = inCopy.mIsDraw;
 		mIsTwoSided = inCopy.mIsTwoSided;
 		mIsDraped = inCopy.mIsDraped;
-		mIsSunLight = inCopy.mIsSunLight;
+		mIsTree = inCopy.mIsTree;
 		mIsCastShadow = inCopy.mIsCastShadow;
 		mIsSolidForCamera = inCopy.mIsSolidForCamera;
 		return *this;
@@ -191,7 +197,7 @@ namespace xobj {
 				mIsDraw == inOther.mIsDraw &&
 				mIsTwoSided == inOther.mIsTwoSided &&
 				mIsDraped == inOther.mIsDraped &&
-				mIsSunLight == inOther.mIsSunLight &&
+				mIsTree == inOther.mIsTree &&
 				mIsCastShadow == inOther.mIsCastShadow &&
 				mIsSolidForCamera == inOther.mIsSolidForCamera;
 	}
@@ -202,8 +208,8 @@ namespace xobj {
 
 	//-------------------------------------------------------------------------
 
-	inline void AttrSet::setSunLight(bool inState) {
-		mIsSunLight = inState;
+	inline void AttrSet::setTree(bool inState) {
+		mIsTree = inState;
 	}
 
 	inline void AttrSet::setTwoSided(bool inState) {
@@ -257,8 +263,8 @@ namespace xobj {
 
 	//-------------------------------------------------------------------------
 
-	inline bool AttrSet::isSunLight() const {
-		return mIsSunLight;
+	inline bool AttrSet::isTree() const {
+		return mIsTree;
 	}
 
 	inline bool AttrSet::isTwoSided() const {

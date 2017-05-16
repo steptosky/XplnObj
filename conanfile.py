@@ -34,24 +34,19 @@
 # //////////////////////////////////////////////////////////////////////////////////#
 # ----------------------------------------------------------------------------------#
 
-import os
 from conans import ConanFile, CMake
 from conanfile_vcs import ConanVcs
 
 vcs_data = ConanVcs()
 vcs_data.load_vcs_data()
-artifact_name = 'XplnObj'
 
 
 class XUpdaterLibConan(ConanFile):
-    # Usually this variable is used while exporting the package
-    # If this behaviour is changed the logic has to be changed too
-    version = "0.3.0"
-
-    name = artifact_name
-    url = 'https://github.com/steptosky/%s' % artifact_name
+    version = "0.3.1"
+    name = 'XplnObj'
+    url = 'https://github.com/steptosky/XplnObj'
     license = 'BSD 3-Clause'
-    description = "X-Plane Obj Library"
+    description = "This library is for working with the x-plane's obj format."
     author = 'StepToSky (info@steptosky.com)'
     settings = "os", "compiler", "build_type", "arch"
     options = {'shared': ['True', 'False'], 'include_pdbs': ['True', 'False']}

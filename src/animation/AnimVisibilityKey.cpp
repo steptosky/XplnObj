@@ -27,59 +27,56 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
-#include "xpln/XplnObjExport.h"
-#include <string>
+#include "xpln/obj/animation/AnimVisibilityKey.h"
+#include "sts/utilities/Compare.h"
 
 namespace xobj {
 
 	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the animation hide/show key
-	 * \warning eType::UNDEFINED means key isn't valid
-	 * \ingroup Animation
-	 */
-	class AnimVisibilityKey {
-	public:
+	AnimVisibilityKey::AnimVisibilityKey()
+		: pType(UNDEFINED),
+		pValue1(0.0f),
+		pValue2(1.0f),
+		pDrf("none"),
+		pLoopValue(0.0f),
+		pHasLoop(false) {}
 
-		enum eType : uint8_t {
-			UNDEFINED = 0,
-			SHOW = 'S',
-			HIDE = 'H'
-		};
+	AnimVisibilityKey::AnimVisibilityKey(eType inType, float inValue1, float inValue2, const std::string & inDrf)
+		: pType(inType),
+		pValue1(inValue1),
+		pValue2(inValue2),
+		pDrf(inDrf),
+		pLoopValue(0.0f),
+		pHasLoop(false) {}
 
-		XpObjLib AnimVisibilityKey();
-		XpObjLib AnimVisibilityKey(eType inType, float inValue1, float inValue2, const std::string & inDrf);
+	/**************************************************************************************************/
+	//////////////////////////////////////////* Functions */////////////////////////////////////////////
+	/**************************************************************************************************/
 
-		//-------------------------------------------------------------------------
+	bool AnimVisibilityKey::operator==(const AnimVisibilityKey & other) const {
+		return pType == other.pType &&
+				sts::isEqual(pValue1, other.pValue1) &&
+				sts::isEqual(pValue2, other.pValue2) &&
+				sts::isEqual(pLoopValue, other.pLoopValue) &&
+				pHasLoop == other.pHasLoop &&
+				pDrf == other.pDrf;
+	}
 
-		XpObjLib bool operator==(const AnimVisibilityKey & other) const;
+	/**************************************************************************************************/
+	///////////////////////////////////////////* Functions *////////////////////////////////////////////
+	/**************************************************************************************************/
 
-		bool operator!=(const AnimVisibilityKey & other) const {
-			return !this->operator==(other);
-		}
-
-		//-------------------------------------------------------------------------
-
-		void reset();
-
-		//-------------------------------------------------------------------------
-
-		eType pType;
-		float pValue1;
-		float pValue2;
-		std::string pDrf;
-
-		float pLoopValue;
-		bool pHasLoop;
-
-		//-------------------------------------------------------------------------
-
-	};
+	void AnimVisibilityKey::reset() {
+		pType = UNDEFINED;
+		pValue1 = 0.0f;
+		pValue2 = 1.0f;
+		pDrf = "none";
+		pLoopValue = 0.0f;
+		pHasLoop = false;
+	}
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////

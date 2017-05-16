@@ -34,7 +34,6 @@
 # //////////////////////////////////////////////////////////////////////////////////#
 # ----------------------------------------------------------------------------------#
 
-import os
 from conans import ConanFile, CMake
 from conanfile_vcs import ConanVcs
 
@@ -43,7 +42,7 @@ vcs_data.load_vcs_data()
 
 
 class XUpdaterLibConan(ConanFile):
-    version = "0.3.0"
+    version = "0.3.1"
     name = 'XplnObj'
     url = 'https://github.com/steptosky/XplnObj'
     license = 'BSD 3-Clause'

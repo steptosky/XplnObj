@@ -40,7 +40,7 @@ import os
 # This easily allows to copy the package in other user or channel
 username = os.getenv("CONAN_USERNAME", "steptosky")
 channel = os.getenv("CONAN_CHANNEL", "develop")
-version = os.getenv("CONAN_PACKAGE_VERSION", "0.3.0")
+version = os.getenv("CONAN_PACKAGE_VERSION", "0.3.1")
 artifact_name = 'XplnObj'
 
 

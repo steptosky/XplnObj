@@ -13,3 +13,4 @@ doc/generated/
 test_package/__pycache__/
 __pycache__/
 vcs_data
+test.bat

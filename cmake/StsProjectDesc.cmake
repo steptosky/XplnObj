@@ -34,6 +34,8 @@
 #
 # StepToSky project description.
 #
+# Version 1.2.0 (21.04.2017) 
+#	- List of open source libraries
 # Version 1.1.0 (19.03.2017)
 # Version 1.0.0
 #
@@ -101,6 +103,15 @@ set(ProjectLicenseType "BSD 3-Clause")
 set(ProjectContributors "")
 list(APPEND ProjectContributors "StepToSky <info@steptosky.com>")
 
+#----------------------------------------------------------------------------------#
+# Open source libraries
+# Use the following format. Symbol | is the separator
+# For unspecified fields use nothing but don't forget the separator
+# libname|lib url|copyright|copyrighter url|license|license url
+# example, the urls are empty: "XplnObj||Copyright (c) 2017 StepToSky||BSD|"
+
+set(ProjectLibraries "")
+                                                                                  
 #----------------------------------------------------------------------------------#
 # Other
 

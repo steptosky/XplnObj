@@ -90,11 +90,18 @@ namespace xobj {
 		return out.str();
 	}
 
-	std::string toObjString(const ObjSmoke & inVal) {
+	std::string toObjString(const ObjSmoke & obj, bool printName) {
+		if(obj.smokeType() == ObjSmoke::none) {
+			// todo maybe warning about none?
+			return "";
+		}
 		StringStream out;
-		out << (inVal.smokeType() == ObjSmoke::white ? SMOKE_WHITE : SMOKE_BLACK)
-				<< " " << inVal.position().toString(PRECISION)
-				<< " " << inVal.size();
+		out << (obj.smokeType() == ObjSmoke::white ? SMOKE_WHITE : SMOKE_BLACK)
+				<< " " << obj.position().toString(PRECISION)
+				<< " " << obj.size();
+		if(printName) {
+			out << " ## " << obj.objectName();
+		}
 		return out.str();
 	}
 

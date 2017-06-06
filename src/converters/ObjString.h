@@ -61,7 +61,7 @@ namespace xobj {
 	class ObjSmoke;
 
 	XpObjLib std::string toObjString(const ObjLodGroup & inVal);
-	XpObjLib std::string toObjString(const ObjSmoke & inVal);
+	XpObjLib std::string toObjString(const ObjSmoke & inVal, bool printName);
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////

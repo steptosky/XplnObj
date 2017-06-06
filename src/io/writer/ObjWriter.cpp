@@ -290,6 +290,10 @@ namespace xobj {
 				continue;
 			}
 
+			if (mObjWriteGeometry.printSmokeObject(writer, *objBase)) {
+				continue;
+			}
+
 			if (mObjWriteGeometry.printDummyObject(writer, *objBase)) {
 				continue;
 			}

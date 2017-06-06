@@ -40,6 +40,7 @@
 #include "xpln/obj/ObjLightNamed.h"
 #include "xpln/obj/ObjLightParam.h"
 #include "xpln/obj/ObjLightSpillCust.h"
+#include "xpln/obj/ObjSmoke.h"
 
 #include "xpln/obj/IOStatistic.h"
 #include "xpln/obj/ExportOptions.h"
@@ -323,6 +324,23 @@ namespace xobj {
 			writer.printLine(stream.str());
 			mMeshVertexOffset += numvert;
 			++mStat->pLineObjCount;
+			return true;
+		}
+		return false;
+	}
+
+	//-------------------------------------------------------------------------
+
+	bool ObjWriteGeometry::printSmokeObject(AbstractWriter & writer, const ObjAbstract & objBase) const {
+		if (objBase.objType() == OBJ_SMOKE) {
+			const ObjSmoke & smoke = reinterpret_cast<const ObjSmoke&>(objBase);
+
+			// todo maybe it should have its own :XOBJ_EXP_MARK_ ?
+			std::string params = toObjString(smoke, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_DUMMY));
+			if (!params.empty()) {
+				writer.printLine(params);
+				++mStat->pSmokeObjCount;
+			}
 			return true;
 		}
 		return false;

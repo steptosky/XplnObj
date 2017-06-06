@@ -64,6 +64,7 @@ namespace xobj {
 		size_t pLightObjParamCount; //!< Light param objects count
 		size_t pLightObjSpillCustCount; //!< Light spill custom objects count
 		size_t pDummyObjCount; //!< Dummy objects count
+		size_t pSmokeObjCount; //!< Dummy objects count
 
 		size_t pGlobAttrCount; //!< Global attributes count
 		size_t pTrisManipCount; //!< Object manipulators count

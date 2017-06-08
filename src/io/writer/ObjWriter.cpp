@@ -187,7 +187,7 @@ namespace xobj {
 		if (inCount < 2 && sts::isEqual(inLOD.nearVal(), inLOD.farVal(), 0.1f)) {
 			return;
 		}
-		writer.printLine(toObjString(inLOD));
+		writer.printLine(toObjString(inLOD, true));
 	}
 
 	/********************************************************************************************************/

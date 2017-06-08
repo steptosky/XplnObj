@@ -44,6 +44,7 @@
 
 #include "xpln/obj/ObjLodGroup.h"
 #include "xpln/obj/ObjSmoke.h"
+#include "xpln/obj/ObjDummy.h"
 
 #include "Defines.h"
 #include "StringStream.h"
@@ -81,17 +82,17 @@ namespace xobj {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	std::string toObjString(const ObjLodGroup & inVal) {
+	std::string toObjString(const ObjLodGroup & obj, bool printName) {
 		StringStream out;
-		out << ATTR_LOD << " " << inVal.nearVal() << " " << inVal.farVal();
-		if (!inVal.objectName().empty()) {
-			out << " ## " << inVal.objectName();
+		out << ATTR_LOD << " " << obj.nearVal() << " " << obj.farVal();
+		if (printName) {
+			out << " ## " << obj.objectName();
 		}
 		return out.str();
 	}
 
 	std::string toObjString(const ObjSmoke & obj, bool printName) {
-		if(obj.smokeType() == ObjSmoke::none) {
+		if (obj.smokeType() == ObjSmoke::none) {
 			// todo maybe warning about none?
 			return "";
 		}
@@ -99,8 +100,16 @@ namespace xobj {
 		out << (obj.smokeType() == ObjSmoke::white ? SMOKE_WHITE : SMOKE_BLACK)
 				<< " " << obj.position().toString(PRECISION)
 				<< " " << obj.size();
-		if(printName) {
+		if (printName) {
 			out << " ## " << obj.objectName();
+		}
+		return out.str();
+	}
+
+	std::string toObjString(const ObjDummy & obj, bool printName) {
+		StringStream out;
+		if (printName) {
+			out << "## Dummy: " << obj.objectName();
 		}
 		return out.str();
 	}
@@ -109,59 +118,75 @@ namespace xobj {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	std::string toObjString(const ObjLightCustom & inVal) {
+	std::string toObjString(const ObjLightCustom & obj, bool printName) {
 		StringStream out;
+		if (printName) {
+			out << "## " << obj.objectName() << std::endl;
+		}
 		out << LIGHT_CUSTOM
-				<< " " << inVal.position().toString(PRECISION)
-				<< " " << inVal.color().toString(PRECISION)
-				<< " " << inVal.size()
-				<< " " << inVal.textureRect().point1().toString(PRECISION)
-				<< " " << inVal.textureRect().point2().toString(PRECISION)
-				<< " " << (inVal.dataRef().empty() ? "none" : inVal.dataRef().c_str());
+				<< " " << obj.position().toString(PRECISION)
+				<< " " << obj.color().toString(PRECISION)
+				<< " " << obj.size()
+				<< " " << obj.textureRect().point1().toString(PRECISION)
+				<< " " << obj.textureRect().point2().toString(PRECISION)
+				<< " " << (obj.dataRef().empty() ? "none" : obj.dataRef().c_str());
 		return out.str();
 	}
 
 	//-------------------------------------------------------------------------
 
-	std::string toObjString(const ObjLightNamed & inVal) {
+	std::string toObjString(const ObjLightNamed & obj, bool printName) {
 		StringStream out;
+		if (printName) {
+			out << "## " << obj.objectName() << std::endl;
+		}
 		out << LIGHT_NAMED
-				<< " " << inVal.lightId().toString()
-				<< " " << inVal.position().toString(PRECISION);
+				<< " " << obj.lightId().toString()
+				<< " " << obj.position().toString(PRECISION);
 		return out.str();
 	}
 
 	//-------------------------------------------------------------------------
 
-	std::string toObjString(const ObjLightParam & inVal) {
+	std::string toObjString(const ObjLightParam & obj, bool printName) {
 		StringStream out;
+		if (printName) {
+			out << "## " << obj.objectName() << std::endl;
+		}
 		out << LIGHT_PARAM
-				<< " " << inVal.lightId().toString()
-				<< " " << inVal.position().toString(PRECISION)
-				<< " " << inVal.additionalParams();
+				<< " " << obj.lightId().toString()
+				<< " " << obj.position().toString(PRECISION)
+				<< " " << obj.additionalParams();
 		return out.str();
 	}
 
 	//-------------------------------------------------------------------------
 
-	std::string toObjString(const ObjLightPoint & inVal) {
+	std::string toObjString(const ObjLightPoint & obj, bool printName) {
 		StringStream out;
-		out << VLIGHT << " " << inVal.position().toString(PRECISION) << " "
-				<< inVal.color().red() << " " << inVal.color().green() << " " << inVal.color().blue();
+		if (printName) {
+			out << "## " << obj.objectName() << std::endl;
+		}
+		const Color & c = obj.color();
+		out << VLIGHT << " " << obj.position().toString(PRECISION) << " "
+				<< c.red() << " " << c.green() << " " << c.blue();
 		return out.str();
 	}
 
 	//-------------------------------------------------------------------------
 
-	std::string toObjString(const ObjLightSpillCust & inVal) {
+	std::string toObjString(const ObjLightSpillCust & obj, bool printName) {
 		StringStream out;
+		if (printName) {
+			out << "## " << obj.objectName() << std::endl;
+		}
 		out << LIGHT_SPILL_CUSTOM
-				<< " " << inVal.position().toString(PRECISION)
-				<< " " << inVal.color().toString(PRECISION)
-				<< " " << inVal.size()
-				<< " " << inVal.direction().toString(PRECISION)
-				<< " " << inVal.semiRaw()
-				<< " " << (inVal.dataRef().empty() ? "none" : inVal.dataRef().c_str());
+				<< " " << obj.position().toString(PRECISION)
+				<< " " << obj.color().toString(PRECISION)
+				<< " " << obj.size()
+				<< " " << obj.direction().toString(PRECISION)
+				<< " " << obj.semiRaw()
+				<< " " << (obj.dataRef().empty() ? "none" : obj.dataRef().c_str());
 		return out.str();
 	}
 

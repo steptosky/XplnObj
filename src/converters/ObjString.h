@@ -50,7 +50,7 @@ namespace xobj {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	XpObjLib std::string toObjString(const MeshVertex & inVal, bool inIsSunLight);
+	XpObjLib std::string toObjString(const MeshVertex & inVal, bool inIsTree);
 	XpObjLib std::string toObjString(const LineVertex & inVal);
 
 	/**************************************************************************************************/
@@ -59,9 +59,11 @@ namespace xobj {
 
 	class ObjLodGroup;
 	class ObjSmoke;
+	class ObjDummy;
 
-	XpObjLib std::string toObjString(const ObjLodGroup & inVal);
-	XpObjLib std::string toObjString(const ObjSmoke & inVal, bool printName);
+	XpObjLib std::string toObjString(const ObjLodGroup & obj, bool printName);
+	XpObjLib std::string toObjString(const ObjSmoke & obj, bool printName);
+	XpObjLib std::string toObjString(const ObjDummy & obj, bool printName);
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,11 +75,11 @@ namespace xobj {
 	class ObjLightParam;
 	class ObjLightSpillCust;
 
-	XpObjLib std::string toObjString(const ObjLightCustom & inVal);
-	XpObjLib std::string toObjString(const ObjLightNamed & inVal);
-	XpObjLib std::string toObjString(const ObjLightParam & inVal);
-	XpObjLib std::string toObjString(const ObjLightPoint & inVal);
-	XpObjLib std::string toObjString(const ObjLightSpillCust & inVal);
+	XpObjLib std::string toObjString(const ObjLightCustom & obj, bool printName);
+	XpObjLib std::string toObjString(const ObjLightNamed & obj, bool printName);
+	XpObjLib std::string toObjString(const ObjLightParam & obj, bool printName);
+	XpObjLib std::string toObjString(const ObjLightPoint & obj, bool printName);
+	XpObjLib std::string toObjString(const ObjLightSpillCust & obj, bool printName);
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////

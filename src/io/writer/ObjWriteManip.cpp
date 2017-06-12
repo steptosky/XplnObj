@@ -81,9 +81,7 @@ namespace xobj {
 			if (manip->type() == EManipulator::none) {
 				if (!mIsPanelManip) {
 					ULWarning << "The object <" << mObj->objectName() << "> uses <" << manip->type().toUiString()
-					<< "> manipulator but the object has not the attribute <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
-					<< "> it does not make a sense because this situation is managed automatically.";
-					// disables manip for this object
+					<< "> it does not make a sense because this manipulator is set automatically when it is needed.";
 					return nullptr;
 				}
 			}
@@ -92,7 +90,6 @@ namespace xobj {
 					ULError << "The object <" << mObj->objectName() << "> uses <" << manip->type().toUiString()
 					<< "> manipulator but the object has not the attribute <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
 					<< "> the <" << manip->type().toUiString() << "> can be used only for the geometry with one of those attributes.";
-					// disables manip for this object
 					return nullptr;
 				}
 

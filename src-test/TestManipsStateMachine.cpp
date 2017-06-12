@@ -44,7 +44,7 @@
 #include "xpln/obj/manipulators/AttrManipNoop.h"
 #include "xpln/obj/manipulators/AttrManipPush.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
-#include "manipulators/AttrManipNone.h"
+#include "xpln/obj/manipulators/AttrManipNone.h"
 #include "totext.h"
 
 using namespace xobj;

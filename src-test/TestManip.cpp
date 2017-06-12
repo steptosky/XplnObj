@@ -48,7 +48,7 @@
 #include <xpln/obj/manipulators/AttrManipCmdKnob.h>
 #include <xpln/obj/manipulators/AttrManipCmdSwitchLeftRight.h>
 #include <xpln/obj/manipulators/AttrManipCmdSwitchUpDown.h>
-#include <manipulators/AttrManipNone.h>
+#include <xpln/obj/manipulators/AttrManipNone.h>
 #include <converters/Defines.h>
 #include <sts/string/StringConverters.h>
 

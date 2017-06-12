@@ -27,8 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipNone.h"
-#include "xpln/enums/EManipulator.h"
+#include "xpln/obj/manipulators/AttrManipNone.h"
 
 namespace xobj {
 

@@ -1,6 +1,21 @@
 
 The X-Plane Obj Library
 ---------------------------------------------------------------------------
+#### next
+
+- Added: Smoke object printing. Although there was the smoke object before, 
+         it could not be used. So it can be used now.
+- Added: Export option for the smoke marking XOBJ_EXP_MARK_SMOKE.
+- Added: Panel-Click manipulator. This manipulator should be used for 
+         the cockpit geometry (ATTR_cockpit) when 
+		 you want to enable the panel manipulators.
+- Fixed: Manipulators' state machine. There were some problems in the state machine 
+         one of them could lead to undefined behavior it was fixed now, also 
+		 there was changed the default behaviour. 
+		 By default all the manipulation is disabled now, 
+		 so you must put the manipulator to the objects explicitly.
+
+---------------------------------------------------------------------------
 #### 0.3.1-beta (16.05.2017)
 
 - Added: Loop animation for the visisbility keys.

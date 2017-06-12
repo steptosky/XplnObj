@@ -60,7 +60,7 @@ namespace xobj {
 		typedef std::pair<std::string, EManipulator::eId> Association;
 
 		const Data gList[] = {
-				/* 00 */ Data(ATTR_MANIP_NONE, "none", EManipulator::none),
+				/* 00 */ Data(ATTR_MANIP_NONE, "None", EManipulator::none),
 				/* 01 */ Data(ATTR_MANIP_AXIS_KNOB, "Axis knob", EManipulator::axis_knob),
 				/* 02 */ Data(ATTR_MANIP_AXIS_SWITCH_LEFT_RIGHT, "Axis switch left-right", EManipulator::axis_switch_lr),
 				/* 03 */ Data(ATTR_MANIP_AXIS_SWITCH_UP_DOWN, "Axis switch up-down", EManipulator::axis_switch_ud),
@@ -74,10 +74,11 @@ namespace xobj {
 				/* 11 */ Data(ATTR_MANIP_DRAG_AXIS_PIX, "Drag axis pix", EManipulator::drag_axis_pix),
 				/* 12 */ Data(ATTR_MANIP_DRAG_XY, "Drag xy", EManipulator::drag_xy),
 				/* 13 */ Data(ATTR_MANIP_NOOP, "Noop", EManipulator::noop),
-				/* 14 */ Data(ATTR_MANIP_PUSH, "Push", EManipulator::push),
-				/* 15 */ Data(ATTR_MANIP_RADIO, "Radio", EManipulator::radio),
-				/* 16 */ Data(ATTR_MANIP_TOGGLE, "Toggle", EManipulator::toggle),
-				/* 17 */ Data(ATTR_MANIP_WRAP, "Wrap", EManipulator::wrap),
+				/* 14 */ Data("manip_panel_click", "Panel-Click", EManipulator::panel),
+				/* 15 */ Data(ATTR_MANIP_PUSH, "Push", EManipulator::push),
+				/* 16 */ Data(ATTR_MANIP_RADIO, "Radio", EManipulator::radio),
+				/* 17 */ Data(ATTR_MANIP_TOGGLE, "Toggle", EManipulator::toggle),
+				/* 18 */ Data(ATTR_MANIP_WRAP, "Wrap", EManipulator::wrap),
 			};
 	}
 

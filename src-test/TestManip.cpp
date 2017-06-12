@@ -35,6 +35,7 @@
 #include <xpln/obj/manipulators/AttrManipCmd.h>
 #include <xpln/obj/manipulators/AttrManipCmdAxis.h>
 #include <xpln/obj/manipulators/AttrManipNoop.h>
+#include <xpln/obj/manipulators/AttrManipPanel.h>
 #include <xpln/obj/manipulators/AttrManipPush.h>
 #include <xpln/obj/manipulators/AttrManipRadio.h>
 #include <xpln/obj/manipulators/AttrManipToggle.h>
@@ -47,6 +48,7 @@
 #include <xpln/obj/manipulators/AttrManipCmdKnob.h>
 #include <xpln/obj/manipulators/AttrManipCmdSwitchLeftRight.h>
 #include <xpln/obj/manipulators/AttrManipCmdSwitchUpDown.h>
+#include <manipulators/AttrManipNone.h>
 #include <converters/Defines.h>
 #include <sts/string/StringConverters.h>
 
@@ -502,6 +504,38 @@ TEST(TestManip, AttrManipNoop) {
 	ASSERT_STREQ("ATTR_manip_noop", toObjString(&manip).c_str());
 
 	ASSERT_EQ(EManipulator(EManipulator::noop), manip.type());
+}
+
+//-------------------------------------------------------------------------
+
+TEST(TestManip, AttrManipNone) {
+	AttrManipNone manip;
+	ECursor cursor(ECursor::eId::hand);
+	manip.setCursor(cursor);
+	manip.setToolTip("ToolTip");
+	ASSERT_STREQ("ATTR_manip_none", toObjString(&manip).c_str());
+
+	ASSERT_EQ(EManipulator(EManipulator::none), manip.type());
+}
+
+//-------------------------------------------------------------------------
+
+TEST(TestManip, AttrManipPanel) {
+	AttrManipPanel manip;
+	manip.setCockpit(AttrCockpit(AttrCockpit::cockpit));
+	ECursor cursor(ECursor::eId::hand);
+	manip.setCursor(cursor);
+	manip.setToolTip("ToolTip");
+
+#ifndef NDEBUG
+	const char * res = "ATTR_cockpit ## panel manip";
+#else
+	const char * res = "ATTR_cockpit";
+#endif
+
+	ASSERT_STREQ(res, toObjString(&manip).c_str());
+
+	ASSERT_EQ(EManipulator(EManipulator::panel), manip.type());
 }
 
 //-------------------------------------------------------------------------

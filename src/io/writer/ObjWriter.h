@@ -71,11 +71,11 @@ namespace xobj {
 		ExportOptions mExportOptions;
 		IOStatistic mStatistic;
 
-		ObjWriteGlobAttr mWriteGlobAttr;
-		ObjWriteAttr mWriteAttr;
 		ObjWriteAnim mAnimationWritter;
 		ObjWriteGeometry mObjWriteGeometry;
 		ObjWriteManip mObjWriteManip;
+		ObjWriteGlobAttr mWriteGlobAttr;
+		ObjWriteAttr mWriteAttr;
 
 		ObjMain * mMain;
 

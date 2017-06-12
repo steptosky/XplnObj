@@ -46,7 +46,11 @@
 #include "xpln/obj/manipulators/AttrManipCmdKnob.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchLeftRight.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown.h"
+#include "manipulators/AttrManipNone.h"
 #include "StringStream.h"
+#include "xpln/obj/manipulators/AttrManipPanel.h"
+
+#include "ObjAttrString.h"
 
 namespace xobj {
 
@@ -82,6 +86,8 @@ namespace xobj {
 				return toObjString(*static_cast<const AttrManipDragXy*>(inVal));
 			case EManipulator::eId::noop:
 				return toObjString(*static_cast<const AttrManipNoop*>(inVal));
+			case EManipulator::eId::panel:
+				return toObjString(*static_cast<const AttrManipPanel*>(inVal));
 			case EManipulator::eId::push:
 				return toObjString(*static_cast<const AttrManipPush*>(inVal));
 			case EManipulator::eId::radio:
@@ -91,9 +97,14 @@ namespace xobj {
 			case EManipulator::eId::wrap:
 				return toObjString(*static_cast<const AttrManipWrap*>(inVal));
 			case EManipulator::eId::none:
+				return toObjString(*static_cast<const AttrManipNone*>(inVal));
 			default:
 				return std::string();
 		}
+	}
+
+	std::string toObjString(const AttrManipNone &) {
+		return std::string(ATTR_MANIP_NONE);
 	}
 
 	std::string toObjString(const AttrManipAxisKnob & inVal) {
@@ -106,7 +117,6 @@ namespace xobj {
 		outStr << " " << inVal.holdDelta();
 		outStr << " " << inVal.dataref();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -120,7 +130,6 @@ namespace xobj {
 		outStr << " " << inVal.holdDelta();
 		outStr << " " << inVal.dataref();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -134,7 +143,6 @@ namespace xobj {
 		outStr << " " << inVal.holdDelta();
 		outStr << " " << inVal.dataref();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -144,7 +152,6 @@ namespace xobj {
 		outStr << " " << inVal.cursor().toString();
 		outStr << " " << inVal.command();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -158,7 +165,6 @@ namespace xobj {
 		outStr << " " << inVal.cmdPositive();
 		outStr << " " << inVal.cmdNegative();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -169,7 +175,6 @@ namespace xobj {
 		outStr << " " << inVal.cmdPositive();
 		outStr << " " << inVal.cmdNegative();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -180,7 +185,6 @@ namespace xobj {
 		outStr << " " << inVal.cmdPositive();
 		outStr << " " << inVal.cmdNegative();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -191,7 +195,6 @@ namespace xobj {
 		outStr << " " << inVal.cmdPositive();
 		outStr << " " << inVal.cmdNegative();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -205,7 +208,6 @@ namespace xobj {
 		outStr << " " << inVal.maximum();
 		outStr << " " << inVal.dataref();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -220,7 +222,6 @@ namespace xobj {
 		outStr << " " << inVal.val2();
 		outStr << " " << inVal.dataref();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -235,7 +236,6 @@ namespace xobj {
 		outStr << " " << inVal.val2();
 		outStr << " " << inVal.dataref();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -252,12 +252,20 @@ namespace xobj {
 		outStr << " " << inVal.xDataref();
 		outStr << " " << inVal.yDataref();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipNoop & /* inVal */) {
+	std::string toObjString(const AttrManipNoop &) {
 		return std::string(ATTR_MANIP_NOOP);
+	}
+
+	std::string toObjString(const AttrManipPanel & inVal) {
+		StringStream outStr;
+		outStr << toObjString(inVal.cockpit());
+#ifndef NDEBUG
+		outStr << " ## panel manip";
+#endif
+		return outStr.str();
 	}
 
 	std::string toObjString(const AttrManipPush & inVal) {
@@ -268,7 +276,6 @@ namespace xobj {
 		outStr << " " << inVal.up();
 		outStr << " " << inVal.dataref();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -279,7 +286,6 @@ namespace xobj {
 		outStr << " " << inVal.down();
 		outStr << " " << inVal.dataref();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -291,7 +297,6 @@ namespace xobj {
 		outStr << " " << inVal.off();
 		outStr << " " << inVal.dataref();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -305,7 +310,6 @@ namespace xobj {
 		outStr << " " << inVal.maximum();
 		outStr << " " << inVal.dataref();
 		outStr << " " << inVal.toolTip();
-		outStr.flush();
 		return outStr.str();
 	}
 
@@ -314,7 +318,6 @@ namespace xobj {
 			StringStream outStr;
 			outStr << ATTR_MANIP_WHEEL;
 			outStr << " " << inVal.wheelDelta();
-			outStr.flush();
 			return outStr.str();
 		}
 		return "";

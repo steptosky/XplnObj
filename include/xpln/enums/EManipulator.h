@@ -49,7 +49,8 @@ namespace xobj {
 
 		/*!
 		 * \note It is NOT guaranteed that the existing indexes will be constant when new data is added.
-		 *  So you can consider it when you design your serialization solution. You can use obj string (toString()).
+		 *       So you can consider it when you design your serialization solution. 
+		 *       You can use obj string \link EManipulator::toString \endlink.
 		 */
 		enum eId : int32_t {
 			none = 0,
@@ -66,6 +67,7 @@ namespace xobj {
 			drag_axis_pix,
 			drag_xy,
 			noop,
+			panel,
 			push,
 			radio,
 			toggle,

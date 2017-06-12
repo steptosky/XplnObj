@@ -27,72 +27,49 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
-#include "xpln/XplnObjExport.h"
-#include <cstdlib>
-#include "xpln/obj/attributes/AttrCockpit.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
 
 namespace xobj {
 
-	/**********************************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**********************************************************************************************************************/
+	/**************************************************************************************************/
+	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+	/**************************************************************************************************/
 
-	class AbstractWriter;
-	class AttrManipBase;
-	class ObjAbstract;
-	class ObjMesh;
+	AttrManipPanel::AttrManipPanel()
+		: AttrManipBase(EManipulator(EManipulator::panel)) {}
+
+	/**************************************************************************************************/
+	//////////////////////////////////////////* Functions */////////////////////////////////////////////
+	/**************************************************************************************************/
+
+	void AttrManipPanel::setCockpit(const AttrCockpit & cockpit) {
+		mAttrCockpit = cockpit;
+	}
+
+	const AttrCockpit & AttrManipPanel::cockpit() const {
+		return mAttrCockpit;;
+	}
+
+	/**************************************************************************************************/
+	///////////////////////////////////////////* Functions *////////////////////////////////////////////
+	/**************************************************************************************************/
+
+	bool AttrManipPanel::equals(const AttrManipBase * inMainp) const {
+		if (!inMainp)
+			return false;
+
+		if (!AttrManipBase::equals(inMainp))
+			return false;
+
+		return dynamic_cast<const AttrManipPanel*>(inMainp) != nullptr;
+	}
+
+	AttrManipBase * AttrManipPanel::clone() const {
+		return new AttrManipPanel(*this);
+	}
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	/*!
-	 * \details Manipulators' state machine.
-	 * \remark This algorithm auto-disables the panel manipulator, 
-	 *         so you have to explicitly set the manipulator to each object that needs it.
-	 *         
-	 * \warning Don't delete \link ObjWriteManip::mActiveManip \endlink 
-	 *          because it will be deleted with the object which is owner 
-	 *          of the pointer to the manipulator. 
-	 *          This class just uses the manipulators and does not take ownership.
-	 */
-	class ObjWriteManip {
-
-		ObjWriteManip(const ObjWriteManip &) = delete;
-		ObjWriteManip & operator =(const ObjWriteManip &) = delete;
-
-	public:
-
-		ObjWriteManip() = default;
-		~ObjWriteManip() = default;
-
-		XpObjLib void write(AbstractWriter * writer, const ObjAbstract * obj);
-		XpObjLib void reset();
-		XpObjLib size_t count() const;
-
-		XpObjLib void setPanelEnabled(const AttrCockpit & cockpit);
-		XpObjLib void setPanelDisabled();
-
-	private:
-
-		const AttrManipBase * prepareManip(const AttrManipBase * manip) const;
-
-		void write(AbstractWriter * writer, const AttrManipBase * manip);
-		void print(AbstractWriter * writer, const AttrManipBase * manip);
-
-		const ObjMesh * mObj = nullptr;
-		const AttrManipBase * mActiveManip = nullptr;
-		size_t mManipCounter = 0;
-		bool mIsPanelManip = false;
-
-		AttrManipPanel mAttrManipPanel;
-
-	};
-
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
 }

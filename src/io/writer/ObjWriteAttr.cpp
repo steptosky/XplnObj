@@ -28,13 +28,14 @@
 */
 
 #include "ObjWriteAttr.h"
-#include "../../common/Logger.h"
+#include "ObjWriteManip.h"
 
 #include <cassert>
 #include "AbstractWriter.h"
 #include "common/AttributeNames.h"
 #include "converters/ObjAttrString.h"
 #include "xpln/obj/ObjMesh.h"
+#include <functional>
 
 namespace xobj {
 
@@ -78,13 +79,13 @@ namespace xobj {
 		return mCounter;
 	}
 
-	void ObjWriteAttr::write(AbstractWriter * inWriter, const ObjAbstract * inObj) {
-		assert(inObj);
-		mIWriter = inWriter;
-		if (inObj->objType() != OBJ_MESH) {
+	void ObjWriteAttr::write(AbstractWriter * writer, const ObjAbstract * obj) {
+		assert(obj);
+		mWriter = writer;
+		if (obj->objType() != OBJ_MESH) {
 			return;
 		}
-		writeAttributes(static_cast<const ObjMesh*>(inObj)->pAttr);
+		writeAttributes(static_cast<const ObjMesh*>(obj)->pAttr);
 	}
 
 	/**************************************************************************************************/
@@ -94,63 +95,88 @@ namespace xobj {
 	class AttrWriter {
 	public:
 		template<typename T>
-		static void writeAttr(AbstractWriter * inWriter, const T & inAttr, T & inOutPrevAttr, const char * inOffStr, size_t & outCounter) {
-			if (!inAttr) {
-				if (inOutPrevAttr) {
-					inWriter->printLine(inOffStr);
+		static void writeAttr(AbstractWriter * writer, const T & attr, T & inOutActiveAttr, const char * OffStr, size_t & outCounter,
+							std::function<void(const T &)> attrEnable = nullptr, std::function<void()> attrDisable = nullptr) {
+			if (!attr) {
+				if (inOutActiveAttr) {
+					writer->printLine(OffStr);
+					if (attrDisable) {
+						attrDisable();
+					}
 					++outCounter;
-					inOutPrevAttr = T();
+					inOutActiveAttr = T();
 				}
 			}
 			else {
-				if (!inOutPrevAttr) {
-					inWriter->printLine(toObjString(inAttr));
+				if (!inOutActiveAttr) {
+					writer->printLine(toObjString(attr));
+					if (attrEnable) {
+						attrEnable(attr);
+					}
 					++outCounter;
-					inOutPrevAttr = inAttr;
+					inOutActiveAttr = attr;
 					return;
 				}
 
-				if (inOutPrevAttr != inAttr) {
-					inWriter->printLine(toObjString(inAttr));
+				if (inOutActiveAttr != attr) {
+					writer->printLine(toObjString(attr));
+					if (attrEnable) {
+						attrEnable(attr);
+					}
 					++outCounter;
-					inOutPrevAttr = inAttr;
+					inOutActiveAttr = attr;
 					return;
 				}
 
-				inOutPrevAttr = inAttr;
+				inOutActiveAttr = attr;
 			}
 		}
 	};
 
-	void ObjWriteAttr::writeBool(bool currVal, uint32_t inFlag, const char * inOn, const char * inOff) {
+	void ObjWriteAttr::writeBool(bool currVal, uint32_t flag, const char * attrOn, const char * attrOff) {
 		if (!currVal) {
-			if (Flags::hasFlag(mFlags, inFlag)) {
-				mIWriter->printLine(inOff);
+			if (Flags::hasFlag(mFlags, flag)) {
+				mWriter->printLine(attrOff);
+				Flags::removeFlag(mFlags, flag);
 				++mCounter;
-				Flags::removeFlag(mFlags, inFlag);
 			}
 		}
 		else {
-			if (!Flags::hasFlag(mFlags, inFlag)) {
-				mIWriter->printLine(inOn);
+			if (!Flags::hasFlag(mFlags, flag)) {
+				mWriter->printLine(attrOn);
+				Flags::addFlag(mFlags, flag);
 				++mCounter;
-				Flags::addFlag(mFlags, inFlag);
 			}
 		}
 	}
 
-	void ObjWriteAttr::writeAttributes(const AttrSet & inObj) {
-		writeBool(inObj.isDraped(), Flags::draped, ATTR_DRAPED, ATTR_NO_DRAPED);
-		writeBool(inObj.isSolidForCamera(), Flags::solid_camera, ATTR_SOLID_CAMERA, ATTR_NO_SOLID_CAMERA);
-		writeBool(!inObj.isDraw(), Flags::no_draw, ATTR_DRAW_DISABLE, ATTR_DRAW_ENABLE);
-		writeBool(!inObj.isCastShadow(), Flags::no_shadow, ATTR_NO_SHADOW, ATTR_SHADOW);
+	void ObjWriteAttr::writeAttributes(const AttrSet & obj) {
 
-		AttrWriter::writeAttr<AttrHard>(mIWriter, inObj.hard(), mPrevAttrHard, ATTR_NO_HARD, mCounter);
-		AttrWriter::writeAttr<AttrShiny>(mIWriter, inObj.shiny(), mPrevAttrShiny, toObjString(AttrShiny()).c_str(), mCounter);
-		AttrWriter::writeAttr<AttrBlend>(mIWriter, inObj.blend(), mPrevAttrBlend, toObjString(AttrBlend()).c_str(), mCounter);
-		AttrWriter::writeAttr<AttrPolyOffset>(mIWriter, inObj.polyOffset(), mPrevAttrPolyOffset, toObjString(AttrPolyOffset(0.0f)).c_str(), mCounter);
-		AttrWriter::writeAttr<AttrLightLevel>(mIWriter, inObj.lightLevel(), mPrevAttrLightLevel, ATTR_LIGHT_LEVEL_RESET, mCounter);
-		AttrWriter::writeAttr<AttrCockpit>(mIWriter, inObj.cockpit(), mPrevAttrCockpit, ATTR_NO_COCKPIT, mCounter);
+		std::function<void(const AttrCockpit &)> manipPanelEnabled = [&](const AttrCockpit & cockpit) {
+			if (mManipWriter) {
+				mManipWriter->setPanelEnabled(cockpit);
+			}
+		};
+		std::function<void()> manipPanelDisabled = [&]() {
+			if (mManipWriter) {
+				mManipWriter->setPanelDisabled();
+			}
+		};
+
+		//-------------------------------------------------------------------------
+
+		writeBool(obj.isDraped(), Flags::draped, ATTR_DRAPED, ATTR_NO_DRAPED);
+		writeBool(obj.isSolidForCamera(), Flags::solid_camera, ATTR_SOLID_CAMERA, ATTR_NO_SOLID_CAMERA);
+		writeBool(!obj.isDraw(), Flags::no_draw, ATTR_DRAW_DISABLE, ATTR_DRAW_ENABLE);
+		writeBool(!obj.isCastShadow(), Flags::no_shadow, ATTR_NO_SHADOW, ATTR_SHADOW);
+
+		AttrWriter::writeAttr<AttrHard>(mWriter, obj.hard(), mActiveAttrHard, ATTR_NO_HARD, mCounter);
+		AttrWriter::writeAttr<AttrShiny>(mWriter, obj.shiny(), mActiveAttrShiny, toObjString(AttrShiny()).c_str(), mCounter);
+		AttrWriter::writeAttr<AttrBlend>(mWriter, obj.blend(), mActiveAttrBlend, toObjString(AttrBlend()).c_str(), mCounter);
+		AttrWriter::writeAttr<AttrPolyOffset>(mWriter, obj.polyOffset(), mActiveAttrPolyOffset, toObjString(AttrPolyOffset(0.0f)).c_str(), mCounter);
+		AttrWriter::writeAttr<AttrLightLevel>(mWriter, obj.lightLevel(), mActiveAttrLightLevel, ATTR_LIGHT_LEVEL_RESET, mCounter);
+		AttrWriter::writeAttr<AttrCockpit>(mWriter, obj.cockpit(), mActiveAttrCockpit, ATTR_NO_COCKPIT, mCounter,
+											manipPanelEnabled, manipPanelDisabled);
 	}
 
 	/**************************************************************************************************/

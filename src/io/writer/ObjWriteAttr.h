@@ -44,6 +44,8 @@ namespace xobj {
 	class ObjMesh;
 	class ObjAbstract;
 
+	class ObjWriteManip;
+
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
@@ -55,28 +57,31 @@ namespace xobj {
 
 	public:
 
-		ObjWriteAttr() = default;
+		explicit ObjWriteAttr(ObjWriteManip * manipWriter)
+			: mManipWriter(manipWriter) {}
+
 		~ObjWriteAttr() = default;
 
-		XpObjLib void write(AbstractWriter * inWriter, const ObjAbstract * inObj);
+		XpObjLib void write(AbstractWriter * writer, const ObjAbstract * obj);
 		XpObjLib void reset();
 		XpObjLib size_t count() const;
 
 	private:
 
-		void writeAttributes(const AttrSet & inObj);
-		void writeBool(bool currVal, uint32_t inFlag, const char * inOn, const char * inOff);
+		void writeAttributes(const AttrSet & obj);
+		void writeBool(bool currVal, uint32_t flag, const char * attrOn, const char * attrOff);
 
-		AbstractWriter * mIWriter = nullptr;
+		ObjWriteManip * mManipWriter = nullptr;
+		AbstractWriter * mWriter = nullptr;
 		size_t mCounter = 0;
 		uint32_t mFlags = 0;
 
-		AttrLightLevel mPrevAttrLightLevel;
-		AttrPolyOffset mPrevAttrPolyOffset;
-		AttrBlend mPrevAttrBlend;
-		AttrShiny mPrevAttrShiny;
-		AttrHard mPrevAttrHard;
-		AttrCockpit mPrevAttrCockpit;
+		AttrLightLevel mActiveAttrLightLevel;
+		AttrPolyOffset mActiveAttrPolyOffset;
+		AttrBlend mActiveAttrBlend;
+		AttrShiny mActiveAttrShiny;
+		AttrHard mActiveAttrHard;
+		AttrCockpit mActiveAttrCockpit;
 
 	};
 

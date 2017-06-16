@@ -81,6 +81,11 @@
 // ATTENTION: The users for these remotes must be set before, see CONAN_REMOTES_USERS.
 //     CONAN_UPLOAD_REMOTES=alias, alias
 //
+// Always send mail when successful to specified addresses.
+// Comma separated e-mail addresses.
+// If the variable is not presented no mails will be sent.
+//     SUCCESSFUL_MAIL=mail, mail
+//
 //====================================================================================================//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //====================================================================================================//
@@ -239,7 +244,7 @@ def uploadToConan() {
             }
         }
     } else {
-        echo "Conan upload is disabled"
+        echo "Conan uploading is disabled"
     }
 }
 
@@ -255,6 +260,21 @@ def runCommonPost() {
     }
 }
 
+// Sends information that the build is successfully finished.
+def successfulMail(nodeName) {
+    node(nodeName) {
+        if (env.SUCCESSFUL_MAIL) {
+            mail(
+                    body: "See ${env.BUILD_URL}",
+                    subject: "Successful : ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    to: "${env.SUCCESSFUL_MAIL}"
+            )
+        }
+    }
+}
+
+// Always sends mail if build is failed
+// and mail "build is back to normal"
 def sendMail(nodeName) {
     node(nodeName) {
         // It fixes the bug with the "back to normal" message
@@ -268,13 +288,7 @@ def sendMail(nodeName) {
                                      [$class: 'FirstFailingBuildSuspectsRecipientProvider'],
                                      [$class: 'UpstreamComitterRecipientProvider'],
                                      [$class: 'DevelopersRecipientProvider']])
-        step(
-
-                [$class                  : 'Mailer',
-                 notifyEveryUnstableBuild: true,
-                 recipients              : "${to}",
-                 sendToIndividuals       : true]
-        )
+        step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: "${to}", sendToIndividuals: true])
     }
 }
 
@@ -328,7 +342,10 @@ pipeline {
             runCommonPost()
             sendMail('master')
         }
-        success { echo "Finished ${env.JOB_NAME}:${env.BUILD_ID} on ${env.JENKINS_URL}" }
+        success {
+            successfulMail('master')
+            echo "Finished ${env.JOB_NAME}:${env.BUILD_ID} on ${env.JENKINS_URL}"
+        }
         failure { echo "Finished with failure ${env.JOB_NAME}:${env.BUILD_ID} on ${env.JENKINS_URL}" }
     }
 }

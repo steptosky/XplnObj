@@ -7,16 +7,18 @@ license for more information read the [license](license.txt) file.
 - [SemVer](http://semver.org/) is used for versioning.
 - Minimum C++ standard is 14
 - The versions from the master branch of this library 
-    is available in the conan.io repository without pre-built packages.  
+    is available in the _conan-center https://conan.bintray.com_ repository without pre-built packages.  
     ```XplnObj/X.Y.Z@steptosky/stable```   
-    use ```--build=missing``` or ```--build=XplnObj``` during ```conan install```
+    use ```--build=missing``` or ```--build=XplnObj``` during ```conan install```  
+    Although the _conanfile.py_ has _shared_ option it is not tested yet because 
+    the library is designed to be built staticaly.
 
 # See also
 - [release-checklist](doc/release-checklist.md) If you are making the release.
-- [change log](doc/changelog.md) - this file is filling during the release process.
+- [changelog](doc/changelog.md) - this file is filling during the release process.
 - [how to build](doc/build.md)
 - [how to build with the conan test_package](doc/conan-test-package.md)
-- [dev notes](doc/dev-notes.md)
+- [CI notes](doc/ci-notes.md)
 
 ---
 

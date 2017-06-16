@@ -37,18 +37,17 @@
 from conans import ConanFile, CMake
 import os
 
-# This easily allows to copy the package in other user or channel
-username = os.getenv("CONAN_USERNAME", "steptosky")
-channel = os.getenv("CONAN_CHANNEL", "develop")
+username = os.getenv("CONAN_PACKAGE_USER", "steptosky")
+channel = os.getenv("CONAN_PACKAGE_CHANNEL", "develop")
 version = os.getenv("CONAN_PACKAGE_VERSION", "0.3.1")
-artifact_name = 'XplnObj'
+artifact_name = os.getenv("CONAN_PACKAGE_NAME", "XplnObj")
 
 
-class XUpdaterLibReuseConan(ConanFile):
+class LibReuseConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     requires = "%s/%s@%s/%s" % (artifact_name, version, username, channel)
-    options = {'include_pdbs': ['True', 'False']}
-    default_options = 'include_pdbs=False'
+    options = {'shared': ['True', 'False'], 'include_pdbs': ['True', 'False']}
+    default_options = 'shared=False','include_pdbs=False'
     generators = 'cmake'
 
     def config_options(self):

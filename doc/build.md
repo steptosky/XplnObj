@@ -3,7 +3,7 @@
 ## Dependencies
 ###### Build
 - [Cmake 3.7+](https://cmake.org) - build tool.
-- [Conan 0.22+](https://www.conan.io) - dependency tool.
+- [Conan 0.23+](https://www.conan.io) - dependency tool.
 - [Python 2 or 3](https://www.python.org) - is needed for the Conan.
 - [Doxygen](http://www.stack.nl/~dimitri/doxygen) - if you want to generate the documentation.
 
@@ -36,9 +36,10 @@ Run from root folder ``` doxygen doc/doxygen.cnf ``` the result will be in the _
 -------------------------------------------------------------------------------------
 
 ### Build scripts examples:
-These scripts are just examples!
+These scripts are just examples!  
+Probably you will need to adjust them for your purposes.
 
-#### Windows (.bat)
+#### Windows (.bat) For Visual Studio 2015 (14)
 ```
 ::==========================================================
 @echo off
@@ -72,7 +73,7 @@ rm -r ${dir_name}
 mkdir ${dir_name}
 cd ${dir_name}
 #===========================================================
-#call conan user userName -r remote -p password
+#conan user userName -r remote -p password
 conan install .. -s compiler="gcc" -s compiler.libcxx="libstdc++11" \
                  -s build_type=Release --build=missing
 #===========================================================
@@ -96,7 +97,7 @@ rm -r ${dir_name}
 mkdir ${dir_name}
 cd ${dir_name}
 #===========================================================
-#call conan user userName -r remote -p password
+#conan user userName -r remote -p password
 conan install .. -s compiler="apple-clang" -s compiler.libcxx="libc++" \
                  -s build_type=Release --build=missing
 #===========================================================

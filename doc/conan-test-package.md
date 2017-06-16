@@ -4,8 +4,10 @@ You can build the project with the ```conan test_package```
 It also will put the result into the conan repository.
 
 ### Build scripts examples:
-This is just the example for the windows!
+This is just the example for the windows!  
+Probably you will need to adjust them for your purposes.
 ```
+::call conan user userName -r remote -p password
 conan test_package ^
     --profile ./conan-profiles/vs2015MD-Release ^
     --scope XplnObj:testing=True ^

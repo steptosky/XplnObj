@@ -41,12 +41,12 @@ vcs_data = ConanVcs()
 vcs_data.load_vcs_data()
 
 
-class XUpdaterLibConan(ConanFile):
-    version = "0.3.1"
+class LibConan(ConanFile):
+    version = "0.4.0"
     name = 'XplnObj'
     url = 'https://github.com/steptosky/XplnObj'
     license = 'BSD 3-Clause'
-    description = "This library is for working with the x-plane's obj format."
+    description = "This library is for working with the X-Plane's obj format."
     author = 'StepToSky (info@steptosky.com)'
     settings = "os", "compiler", "build_type", "arch"
     options = {'shared': ['True', 'False'], 'include_pdbs': ['True', 'False']}

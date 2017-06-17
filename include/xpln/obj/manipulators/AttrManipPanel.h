@@ -29,7 +29,9 @@
 
 #pragma once
 
-#include "xpln/obj/manipulators/AttrManipBase.h"
+#include "AttrManipBase.h"
+#include "xpln/enums/EManipulator.h"
+#include "xpln/obj/attributes/AttrCockpit.h"
 
 namespace xobj {
 
@@ -38,14 +40,31 @@ namespace xobj {
 	/********************************************************************************************************/
 
 	/*!
-	 * \details Represents the state - no manip enabled.
+	 * \details Panel-Click manipulator
 	 * \ingroup Manipulators
 	 */
-	class AttrManipNone : public AttrManipBase {
+	class AttrManipPanel : public AttrManipBase {
 	public:
 
-		XpObjLib AttrManipNone();
-		virtual ~AttrManipNone() = default;
+		XpObjLib AttrManipPanel();
+		virtual ~AttrManipPanel() = default;
+
+		//-------------------------------------------------------------------------
+
+		/*!
+		 * \details Panel manipulator can be enabled with the cockpit attribute only.
+		 *          This method sets the cockpit attribute which will be used for enable the manipulator.
+		 * \note This method is for internal using only! The developer must not use it.
+		 * \param cockpit 
+		 */
+		void setCockpit(const AttrCockpit & cockpit);
+
+		/*!
+		 * \see \link AttrManipPanel::setCockpit \endlink
+		 * \note This method is for internal using only! The developer must not use it.
+		 * \return cockpit attribute associated with the manipulator
+		 */
+		const AttrCockpit & cockpit() const;
 
 		//-------------------------------------------------------------------------
 
@@ -57,9 +76,14 @@ namespace xobj {
 
 		//-------------------------------------------------------------------------
 
+	private:
+
+		AttrCockpit mAttrCockpit;
+
 	};
 
 	/********************************************************************************************************/
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/********************************************************************************************************/
+
 }

@@ -27,7 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/manipulators/AttrManipNone.h"
+#include "xpln/obj/manipulators/AttrManipPanel.h"
 
 namespace xobj {
 
@@ -35,25 +35,41 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrManipNone::AttrManipNone()
-		: AttrManipBase(EManipulator(EManipulator::none)) { }
+	AttrManipPanel::AttrManipPanel()
+		: AttrManipBase(EManipulator(EManipulator::panel)) {}
+
+	/**************************************************************************************************/
+	//////////////////////////////////////////* Functions */////////////////////////////////////////////
+	/**************************************************************************************************/
+
+	void AttrManipPanel::setCockpit(const AttrCockpit & cockpit) {
+		mAttrCockpit = cockpit;
+	}
+
+	const AttrCockpit & AttrManipPanel::cockpit() const {
+		return mAttrCockpit;;
+	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool AttrManipNone::equals(const AttrManipBase * inMainp) const {
-		if (!inMainp) {
+	bool AttrManipPanel::equals(const AttrManipBase * inMainp) const {
+		if (!inMainp)
 			return false;
-		}
-		return AttrManipBase::equals(inMainp);
+
+		if (!AttrManipBase::equals(inMainp))
+			return false;
+
+		return dynamic_cast<const AttrManipPanel*>(inMainp) != nullptr;
 	}
 
-	AttrManipBase * AttrManipNone::clone() const {
-		return new AttrManipNone(*this);
+	AttrManipBase * AttrManipPanel::clone() const {
+		return new AttrManipPanel(*this);
 	}
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
+
 }

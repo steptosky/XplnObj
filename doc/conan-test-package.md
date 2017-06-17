@@ -1,16 +1,30 @@
 ## Build with the conan test_package
+
+You can build the project with the ```conan test_package```
+It also will put the result into the conan repository.
+
 ### Build scripts examples:
-This is just the example!
+This is just the example for the windows!  
+Probably you will need to adjust them for your purposes.
 ```
-conan test_package \
-	--profile vs2015-Debug \
-	 -o include_pdbs=True \
-	--scope XplnObj:testing=True \
-	--scope XplnObj:test_report_dir="reports/conan-tests" \
-	--build=outdated
+::call conan user userName -r remote -p password
+conan test_package ^
+    --profile ./conan-profiles/vs2015MD-Release ^
+    --scope XplnObj:testing=True ^
+    --scope XplnObj:test_report_dir="reports/conan-tests" ^
+    --build=outdated
+	
+conan test_package ^
+    --profile ./conan-profiles/vs2015MD-Debug ^
+     -o include_pdbs=True ^
+    --scope XplnObj:testing=True ^
+    --scope XplnObj:test_report_dir="reports/conan-tests" ^
+    --build=outdated
+	
+pause
 ```
 After the building the package is available in the conan local repository,
 so you can use it in other projects.  
-You can change some default parameter by the environment variable,
-see the [conan.py](../conanfile.py) file and the [test_package/conanfile.py](../test_package/conanfile.py) 
+You can change some default parameters by the environment variable,
+see the the [test_package/conanfile.py](../test_package/conanfile.py) 
 file of the _test_package_ for more information.

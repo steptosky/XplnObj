@@ -67,8 +67,11 @@ namespace xobj {
 		/*! \details Mark vertex group by objectName in the 'obj' file */
 		XOBJ_EXP_MARK_VERTEX = 1 << 6,
 
+		/*! \details Mark smokes by objectName in the 'obj' file */
+		XOBJ_EXP_MARK_SMOKE = 1 << 7,
+
 		/*!
-		 * \details Apllying the lod transform matrix to the hierarchy.
+		 * \details Applying the lod transform matrix to the hierarchy.
 		 * \details Use it if you want the lod's transform matrix to affect all its children,
 		 * for example it can be used for align object relative the lods.
 		 */

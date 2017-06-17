@@ -44,6 +44,7 @@ namespace xobj {
 	/**************************************************************************************************/
 
 	class AttrManipBase;
+	class AttrManipNone;
 	class AttrManipCmd;
 	class AttrManipCmdAxis;
 	class AttrManipDelta;
@@ -51,6 +52,7 @@ namespace xobj {
 	class AttrManipDragAxisPix;
 	class AttrManipDragXy;
 	class AttrManipNoop;
+	class AttrManipPanel;
 	class AttrManipPush;
 	class AttrManipRadio;
 	class AttrManipToggle;
@@ -68,6 +70,7 @@ namespace xobj {
 	/**************************************************************************************************/
 
 	XpObjLib std::string toObjString(const AttrManipBase * inVal);
+	XpObjLib std::string toObjString(const AttrManipNone & inVal);
 	XpObjLib std::string toObjString(const AttrManipAxisKnob & inVal);
 	XpObjLib std::string toObjString(const AttrManipAxisSwitchLeftRight & inVal);
 	XpObjLib std::string toObjString(const AttrManipAxisSwitchUpDown & inVal);
@@ -81,6 +84,7 @@ namespace xobj {
 	XpObjLib std::string toObjString(const AttrManipDragAxisPix & inVal);
 	XpObjLib std::string toObjString(const AttrManipDragXy & inVal);
 	XpObjLib std::string toObjString(const AttrManipNoop & inVal);
+	XpObjLib std::string toObjString(const AttrManipPanel & inVal);
 	XpObjLib std::string toObjString(const AttrManipPush & inVal);
 	XpObjLib std::string toObjString(const AttrManipRadio & inVal);
 	XpObjLib std::string toObjString(const AttrManipToggle & inVal);

@@ -38,6 +38,8 @@
 #include "xpln/enums/eObjectType.h"
 #include "xpln/obj/ObjMesh.h"
 #include "xpln/obj/manipulators/AttrManipWheel.h"
+#include "xpln/obj/manipulators/AttrManipPanel.h"
+#include "common/Logger.h"
 
 namespace xobj {
 
@@ -46,60 +48,122 @@ namespace xobj {
 	/********************************************************************************************************/
 
 	void ObjWriteManip::reset() {
-		mPrevManip = nullptr;
+		mActiveManip = nullptr;
 		mManipCounter = 0;
+		mIsPanelManip = false;
+		mObj = nullptr;
 	}
 
 	size_t ObjWriteManip::count() const {
 		return mManipCounter;
 	}
 
-	//-------------------------------------------------------------------------
+	/********************************************************************************************************/
+	//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
+	/********************************************************************************************************/
 
-	void ObjWriteManip::write(AbstractWriter * inWriter, const ObjAbstract * inObj) {
-		if (inObj->objType() == eObjectType::OBJ_MESH) {
-			const ObjMesh * mesh = static_cast<const ObjMesh *>(inObj);
-			write(inWriter, mesh->pAttr.manipulator());
+	void ObjWriteManip::write(AbstractWriter * writer, const ObjAbstract * obj) {
+		if (obj->objType() == eObjectType::OBJ_MESH) {
+			mObj = static_cast<const ObjMesh *>(obj);
+			write(writer, mObj->pAttr.manipulator());
+		}
+		else {
+			mObj = nullptr;
 		}
 	}
 
-	void ObjWriteManip::write(AbstractWriter * inWriter, const AttrManipBase * inManip) {
-		assert(inWriter);
+	/********************************************************************************************************/
+	//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
+	/********************************************************************************************************/
 
-		if (!inManip) {
-			if (mPrevManip) {
-				inWriter->printLine(ATTR_MANIP_NONE);
-				mPrevManip = nullptr;
+	const AttrManipBase * ObjWriteManip::prepareManip(const AttrManipBase * manip) const {
+		if (manip) {
+			if (manip->type() == EManipulator::none) {
+				if (!mIsPanelManip) {
+					ULWarning << "The object <" << mObj->objectName() << "> uses <" << manip->type().toUiString()
+					<< "> it does not make a sense because this manipulator is set automatically when it is needed.";
+					return nullptr;
+				}
+			}
+			else if (manip->type() == EManipulator::panel) {
+				if (!mIsPanelManip) {
+					ULError << "The object <" << mObj->objectName() << "> uses <" << manip->type().toUiString()
+					<< "> manipulator but the object has not the attribute <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
+					<< "> the <" << manip->type().toUiString() << "> can be used only for the geometry with one of those attributes.";
+					return nullptr;
+				}
+
+				// todo const cast is not a good idea
+				AttrManipPanel * panel = const_cast<AttrManipPanel*>(static_cast<const AttrManipPanel*>(manip));
+				panel->setCockpit(mObj->pAttr.cockpit());
+			}
+		}
+		return manip;
+	}
+
+	void ObjWriteManip::write(AbstractWriter * writer, const AttrManipBase * manip) {
+		assert(writer);
+		//------------------------------
+		/*! 
+		 * Checks the order of processing, the attributes must be processed before the manipulators.
+		 * The attributes' state machine calls this methods 
+		 * \link ObjWriteManip::setPanelEnabled \endlink and \link ObjWriteManip::setPanelDisabled \endlink
+		 * which set the \link ObjWriteManip::mIsPanelManip \endlink variable.
+		 */
+		assert(mIsPanelManip == mObj->pAttr.cockpit());
+		//------------------------------
+		manip = prepareManip(manip);
+		//------------------------------
+		if (!manip) {
+			if (mActiveManip) {
+				writer->printLine(ATTR_MANIP_NONE);
+				mActiveManip = nullptr;
 			}
 		}
 		else {
-			if (!mPrevManip) {
-				print(inWriter, inManip);
-				mPrevManip = inManip;
+			if (!mActiveManip) {
+				print(writer, manip);
+				mActiveManip = manip;
 				return;
 			}
 
-			if (!inManip->equals(mPrevManip)) {
-				print(inWriter, inManip);
-				mPrevManip = inManip;
+			if (!manip->equals(mActiveManip)) {
+				print(writer, manip);
+				mActiveManip = manip;
 				return;
 			}
 
-			mPrevManip = inManip;
+			mActiveManip = manip;
 		}
+		//------------------------------
 	}
 
 	//-------------------------------------------------------------------------
 
-	void ObjWriteManip::print(AbstractWriter * inWriter, const AttrManipBase * inCmd) {
-		if (inCmd) {
-			inWriter->printLine(toObjString(inCmd));
-			const AttrManipWheel * wheel = dynamic_cast<const AttrManipWheel*>(inCmd);
+	void ObjWriteManip::print(AbstractWriter * writer, const AttrManipBase * manip) {
+		if (manip) {
+			writer->printLine(toObjString(manip));
+			const AttrManipWheel * wheel = dynamic_cast<const AttrManipWheel*>(manip);
 			if (wheel && wheel->isWheelEnabled()) {
-				inWriter->printLine(toObjString(*wheel));
+				writer->printLine(toObjString(*wheel));
 			}
 			++mManipCounter;
 		}
+	}
+
+	/********************************************************************************************************/
+	//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
+	/********************************************************************************************************/
+
+	void ObjWriteManip::setPanelEnabled(const AttrCockpit & cockpit) {
+		mIsPanelManip = true;
+		mAttrManipPanel.setCockpit(cockpit);
+		mActiveManip = &mAttrManipPanel;
+	}
+
+	void ObjWriteManip::setPanelDisabled() {
+		mActiveManip = nullptr;
+		mIsPanelManip = false;
 	}
 
 	/**************************************************************************************************/

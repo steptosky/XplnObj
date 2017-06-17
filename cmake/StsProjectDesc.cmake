@@ -34,6 +34,8 @@
 #
 # StepToSky project description.
 #
+# Version 1.2.0 (21.04.2017) 
+#	- List of open source libraries
 # Version 1.1.0 (19.03.2017)
 # Version 1.0.0
 #
@@ -46,8 +48,8 @@
 #
 #		# specify the folder where this module is.
 #		list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-#		
-# 		# include the modules
+#
+#		# include the modules
 #		include(StsProjectDesk)
 #		include(StsInfoFilesGenerator)
 #
@@ -72,7 +74,7 @@ set(ProjectOrganizationWebLink "www.steptosky.com")
 
 set(ProjectName "X-Plane Obj Library")
 set(ProjectShortName "XplnObj")
-set(ProjectDescription "This library is for working with the x-plane's obj format.")
+set(ProjectDescription "This library is for working with the X-Plane's obj format.")
 set(ProjectWebLink "www.steptosky.com")
 set(ProjectSourcesWebLink "https://github.com/steptosky/XplnObj")
 
@@ -80,8 +82,8 @@ set(ProjectSourcesWebLink "https://github.com/steptosky/XplnObj")
 # Version / Dependency's system
 
 set(ProjectVersionMajor 0)
-set(ProjectVersionMinor 3)
-set(ProjectVersionPatch 1)
+set(ProjectVersionMinor 4)
+set(ProjectVersionPatch 0)
 set(ProjectVersion "${ProjectVersionMajor}.${ProjectVersionMinor}.${ProjectVersionPatch}")
 set(ProjectReleaseType "beta") # You can use any string you wish
 
@@ -101,6 +103,15 @@ set(ProjectLicenseType "BSD 3-Clause")
 set(ProjectContributors "")
 list(APPEND ProjectContributors "StepToSky <info@steptosky.com>")
 
+#----------------------------------------------------------------------------------#
+# Open source libraries
+# Use the following format. Symbol | is the separator
+# For unspecified fields use nothing but don't forget the separator
+# libname|lib url|copyright|copyrighter url|license|license url
+# example, the urls are empty: "XplnObj||Copyright (c) 2017 StepToSky||BSD|"
+
+set(ProjectLibraries "")
+                                                                                  
 #----------------------------------------------------------------------------------#
 # Other
 

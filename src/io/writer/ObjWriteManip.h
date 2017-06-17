@@ -31,6 +31,8 @@
 
 #include "xpln/XplnObjExport.h"
 #include <cstdlib>
+#include "xpln/obj/attributes/AttrCockpit.h"
+#include "xpln/obj/manipulators/AttrManipPanel.h"
 
 namespace xobj {
 
@@ -41,14 +43,21 @@ namespace xobj {
 	class AbstractWriter;
 	class AttrManipBase;
 	class ObjAbstract;
+	class ObjMesh;
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
 
 	/*!
-	 * \details State oriented implementation.
-	 * \warning Previous manip must stay alive.
+	 * \details Manipulators' state machine.
+	 * \remark This algorithm auto-disables the panel manipulator, 
+	 *         so you have to explicitly set the manipulator to each object that needs it.
+	 *         
+	 * \warning Don't delete \link ObjWriteManip::mActiveManip \endlink 
+	 *          because it will be deleted with the object which is owner 
+	 *          of the pointer to the manipulator. 
+	 *          This class just uses the manipulators and does not take ownership.
 	 */
 	class ObjWriteManip {
 
@@ -60,17 +69,26 @@ namespace xobj {
 		ObjWriteManip() = default;
 		~ObjWriteManip() = default;
 
-		XpObjLib void write(AbstractWriter * inWriter, const ObjAbstract * inObj);
+		XpObjLib void write(AbstractWriter * writer, const ObjAbstract * obj);
 		XpObjLib void reset();
 		XpObjLib size_t count() const;
 
+		XpObjLib void setPanelEnabled(const AttrCockpit & cockpit);
+		XpObjLib void setPanelDisabled();
+
 	private:
 
-		void write(AbstractWriter * inWriter, const AttrManipBase * inObj);
-		void print(AbstractWriter * inWriter, const AttrManipBase * inCmd);
+		const AttrManipBase * prepareManip(const AttrManipBase * manip) const;
 
-		const AttrManipBase * mPrevManip = nullptr;
+		void write(AbstractWriter * writer, const AttrManipBase * manip);
+		void print(AbstractWriter * writer, const AttrManipBase * manip);
+
+		const ObjMesh * mObj = nullptr;
+		const AttrManipBase * mActiveManip = nullptr;
 		size_t mManipCounter = 0;
+		bool mIsPanelManip = false;
+
+		AttrManipPanel mAttrManipPanel;
 
 	};
 

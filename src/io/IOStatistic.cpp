@@ -48,6 +48,7 @@ namespace xobj {
 		pLightObjParamCount(0),
 		pLightObjSpillCustCount(0),
 		pDummyObjCount(0),
+		pSmokeObjCount(0),
 
 		pGlobAttrCount(0),
 		pTrisManipCount(0),

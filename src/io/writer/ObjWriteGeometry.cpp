@@ -40,13 +40,13 @@
 #include "xpln/obj/ObjLightNamed.h"
 #include "xpln/obj/ObjLightParam.h"
 #include "xpln/obj/ObjLightSpillCust.h"
+#include "xpln/obj/ObjSmoke.h"
 
 #include "xpln/obj/IOStatistic.h"
 #include "xpln/obj/ExportOptions.h"
 #include "xpln/enums/eExportOptions.h"
 #include "converters/Defines.h"
 #include "common/AttributeNames.h"
-#include "converters/ObjString.h"
 
 namespace xobj {
 
@@ -203,12 +203,7 @@ namespace xobj {
 		for (auto objBase : inNode.objList()) {
 			if (objBase->objType() == OBJ_LIGHT_POINT) {
 				const ObjLightPoint * lobj = static_cast<const ObjLightPoint*>(objBase);
-
-				if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_DEBUG)) {
-					writer.printLine(std::string("# ").append(lobj->objectName()));
-				}
-
-				writer.printLine(toObjString(*lobj));
+				writer.printLine(toObjString(*lobj, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LIGHT)));
 			}
 		}
 
@@ -274,16 +269,11 @@ namespace xobj {
 
 	template<typename T>
 	bool printLight(AbstractWriter & writer, const T & lobj, const ExportOptions & options, size_t & counter) {
-		std::string params = toObjString(lobj);
-		if (params.empty())
-			return false;
-
-		if (options.isEnabled(XOBJ_EXP_MARK_LIGHT)) {
-			writer.printLine(std::string("## ").append(lobj.objectName()));
+		std::string params = toObjString(lobj, options.isEnabled(XOBJ_EXP_MARK_LIGHT));
+		if (!params.empty()) {
+			writer.printLine(params.c_str());
+			++counter;
 		}
-
-		writer.printLine(params.c_str());
-		++counter;
 		return true;
 	}
 
@@ -307,6 +297,7 @@ namespace xobj {
 
 	bool ObjWriteGeometry::printLineObject(AbstractWriter & writer, const ObjAbstract & objBase) {
 		if (objBase.objType() == OBJ_LINE) {
+			// todo something wrong with this code wasn't it written? Seems like copy/paste from mesh.
 			const ObjLine * lobj = static_cast<const ObjLine*>(&objBase);
 			size_t numvert = lobj->verticesList().size();
 			std::stringstream stream;
@@ -330,12 +321,29 @@ namespace xobj {
 
 	//-------------------------------------------------------------------------
 
+	bool ObjWriteGeometry::printSmokeObject(AbstractWriter & writer, const ObjAbstract & objBase) const {
+		if (objBase.objType() == OBJ_SMOKE) {
+			const ObjSmoke & smoke = reinterpret_cast<const ObjSmoke&>(objBase);
+			std::string params = toObjString(smoke, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_SMOKE));
+			if (!params.empty()) {
+				writer.printLine(params);
+				++mStat->pSmokeObjCount;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	//-------------------------------------------------------------------------
+
 	bool ObjWriteGeometry::printDummyObject(AbstractWriter & writer, const ObjAbstract & objBase) const {
 		if (objBase.objType() == OBJ_DUMMY) {
-			if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_DUMMY)) {
-				writer.printLine(std::string("## Dummy: ").append(objBase.objectName()));
+			const ObjDummy & dummy = reinterpret_cast<const ObjDummy&>(objBase);
+			std::string params = toObjString(dummy, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_DUMMY));
+			if (!params.empty()) {
+				writer.printLine(params);
+				++mStat->pDummyObjCount;
 			}
-			++mStat->pDummyObjCount;
 			return true;
 		}
 		return false;

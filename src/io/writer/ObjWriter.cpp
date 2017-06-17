@@ -51,7 +51,8 @@ namespace xobj {
 
 	ObjWriter::ObjWriter()
 		: mAnimationWritter(&mExportOptions, &mStatistic),
-		mObjWriteGeometry(&mExportOptions, &mStatistic) {
+		mObjWriteGeometry(&mExportOptions, &mStatistic),
+		mWriteAttr(&mObjWriteManip) {
 
 		reset();
 	}
@@ -187,7 +188,7 @@ namespace xobj {
 		if (inCount < 2 && sts::isEqual(inLOD.nearVal(), inLOD.farVal(), 0.1f)) {
 			return;
 		}
-		writer.printLine(toObjString(inLOD));
+		writer.printLine(toObjString(inLOD, true));
 	}
 
 	/********************************************************************************************************/
@@ -196,10 +197,8 @@ namespace xobj {
 
 	inline std::string currentDateTime() {
 		time_t now = time(0);
-		struct tm tstruct;
 		char buf[80];
-		tstruct = *localtime(&now);
-		//strftime(buf, sizeof(buf), "%Y-%m-%d %X", &tstruct);
+		struct tm tstruct = *localtime(&now);
 		strftime(buf, sizeof(buf), "%Y-%m-%d", &tstruct);
 		return buf;
 	}
@@ -277,6 +276,7 @@ namespace xobj {
 		//-------------------------------------------------------------------------
 
 		for (auto objBase : inParent.objList()) {
+			// order attr and manip is important.
 			mWriteAttr.write(&writer, objBase);
 			mObjWriteManip.write(&writer, objBase);
 
@@ -287,6 +287,10 @@ namespace xobj {
 			}
 
 			if (mObjWriteGeometry.printLightObject(writer, *objBase, inParent)) {
+				continue;
+			}
+
+			if (mObjWriteGeometry.printSmokeObject(writer, *objBase)) {
 				continue;
 			}
 

@@ -39,7 +39,7 @@ import os
 
 username = os.getenv("CONAN_PACKAGE_USER", "steptosky")
 channel = os.getenv("CONAN_PACKAGE_CHANNEL", "develop")
-version = os.getenv("CONAN_PACKAGE_VERSION", "0.3.1")
+version = os.getenv("CONAN_PACKAGE_VERSION", "0.4.0")
 artifact_name = os.getenv("CONAN_PACKAGE_NAME", "XplnObj")
 
 

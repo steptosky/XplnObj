@@ -1,7 +1,7 @@
 
 The X-Plane Obj Library
 ---------------------------------------------------------------------------
-#### next
+#### 0.4.0-beta (17.06.2017)
 
 - Added: Smoke object printing. Although there was the smoke object before, 
          it could not be used. So it can be used now.
@@ -9,10 +9,11 @@ The X-Plane Obj Library
 - Added: Panel-Click manipulator. This manipulator should be used for 
          the cockpit geometry (ATTR_cockpit) when 
 		 you want to enable the panel manipulators.
+- Added: Jenkins pipeline script.
 - Fixed: Manipulators' state machine. There were some problems in the state machine 
          one of them could lead to undefined behavior it was fixed now, also 
 		 there was changed the default behaviour. 
-		 By default all the manipulation is disabled now, 
+		 By default all the manipulators sre **disabled now**, 
 		 so you must put the manipulator to the objects explicitly.
 
 ---------------------------------------------------------------------------

@@ -62,7 +62,20 @@ namespace xobj {
 		if (inVal.texture() == "none" || inVal.texture().empty()) {
 			ULWarning << inPrefix << " - Texture is not specified";
 		}
-		return true;
+		bool result = true;
+		if (StringValidator::hasIllegalSymbols(inVal.texture())) {
+			result = false;
+			ULError << inPrefix << " contains illegal symbols in the texture name <" << inVal.texture() << ">";
+		}
+		if (StringValidator::hasIllegalSymbols(inVal.textureLit())) {
+			result = false;
+			ULError << inPrefix << " contains illegal symbols in the lit texture name <" << inVal.textureLit() << ">";
+		}
+		if (StringValidator::hasIllegalSymbols(inVal.textureNormal())) {
+			result = false;
+			ULError << inPrefix << " contains illegal symbols in the normal texture name <" << inVal.textureNormal() << ">";
+		}
+		return result;
 	}
 
 	/**************************************************************************************************/

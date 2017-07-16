@@ -1,6 +1,11 @@
 
 The X-Plane Obj Library
 ---------------------------------------------------------------------------
+#### Next
+
+- Added: Printing error if texture name contains illegal symbols.
+
+---------------------------------------------------------------------------
 #### 0.4.0-beta (17.06.2017)
 
 - Added: Smoke object printing. Although there was the smoke object before, 

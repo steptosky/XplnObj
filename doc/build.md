@@ -3,7 +3,7 @@
 ## Dependencies
 ###### Build
 - [Cmake 3.7+](https://cmake.org) - build tool.
-- [Conan 0.23+](https://www.conan.io) - dependency tool.
+- [Conan 0.25+](https://www.conan.io) - dependency tool.
 - [Python 2 or 3](https://www.python.org) - is needed for the Conan.
 - [Doxygen](http://www.stack.nl/~dimitri/doxygen) - if you want to generate the documentation.
 
@@ -12,30 +12,26 @@
 
 -------------------------------------------------------------------------------------
 
-#### See also [Build with the conan test_package](conan-test-package.md)
+#### See also [Build with the conan 'create'](conan-create.md)
 
 -------------------------------------------------------------------------------------
 
 ## cmake variables
-- USE_CONAN_CMAKE_MULTI=ON/OFF - Supporting the conan cmake_multi.  
-You can enable it for suporting multi configuration for Visual Studio, Xcode.  
-It can be needed while developing.
-- BUILD_TESTS=ON/OFF - Enable or disable building the test projects.
-- TEST_REPORT_DIR - You can specify the directory for the tests reports it is useful for CI.
+- **BUILD_TESTS=ON/OFF** - Enable or disable building the test projects.
+- **TEST_REPORT_DIR** - You can specify the directory for the tests reports it is useful for CI.
 ##### Memo
-- CMAKE_BUILD_TYPE - It will be set to _Release_ if it is not specified.
-- CMAKE_INSTALL_PREFIX - Installation directory.
-- BUILD_SHARED_LIBS - Enable or Disable shared linbrary building.
+- **CMAKE_BUILD_TYPE** - It will be set to _Release_ if it is not specified.
+- **CMAKE_INSTALL_PREFIX** - Installation directory.
 
 -------------------------------------------------------------------------------------
 
-### Build the documentation
-You must have the [doxygen](http://www.stack.nl/~dimitri/doxygen/) installed and added to your _PATH_ environment variable.  
+### Build documentation
+You have to have [doxygen](http://www.stack.nl/~dimitri/doxygen/) installed and added to your _PATH_ environment variable.  
 Run from root folder ``` doxygen doc/doxygen.cnf ``` the result will be in the _doc/generated_ folder.
 
 -------------------------------------------------------------------------------------
 
-### Build scripts examples:
+### Build project scripts examples:
 These scripts are just examples!  
 Probably you will need to adjust them for your purposes.
 
@@ -53,9 +49,7 @@ call conan install .. --profile ../conan-profiles/vs2015MD-Debug -g cmake_multi 
 ::==========================================================
 call cmake -G "Visual Studio 14 Win64" ../ ^
 	-DCMAKE_INSTALL_PREFIX=../output ^
-	-DUSE_CONAN_CMAKE_MULTI=ON ^
-	-DBUILD_TESTS=ON ^
-	-DBUILD_SHARED_LIBS=OFF
+	-DBUILD_TESTS=ON
 :: Keep it commented if you want to generate VS project only
 :: (without building), otherwise uncomment it.
 ::call cmake --build . --target install --config Release
@@ -79,10 +73,8 @@ conan install .. -s compiler="gcc" -s compiler.libcxx="libstdc++11" \
 #===========================================================
 cmake -G"Unix Makefiles" ../ \
     -DCMAKE_BUILD_TYPE="Release" \
-    -DUSE_CONAN_CMAKE_MULTI=OFF \
     -DCMAKE_INSTALL_PREFIX=../output \
-    -DBUILD_TESTS=ON \
-    -DBUILD_SHARED_LIBS=OFF
+    -DBUILD_TESTS=ON
 cmake --build . --target install
 cd ../
 #===========================================================
@@ -103,10 +95,8 @@ conan install .. -s compiler="apple-clang" -s compiler.libcxx="libc++" \
 #===========================================================
 cmake -G"Unix Makefiles" ../ \
     -DCMAKE_BUILD_TYPE="Release" \
-    -DUSE_CONAN_CMAKE_MULTI=OFF \
     -DCMAKE_INSTALL_PREFIX=../output \
-    -DBUILD_TESTS=ON \
-    -DBUILD_SHARED_LIBS=OFF
+    -DBUILD_TESTS=ON
 cmake --build . --target install
 cd ../
 #===========================================================

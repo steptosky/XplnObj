@@ -46,20 +46,27 @@ class LibConan(ConanFile):
     name = 'XplnObj'
     url = 'https://github.com/steptosky/XplnObj'
     license = 'BSD 3-Clause'
-    description = "This library is for working with the X-Plane's obj format."
-    author = 'StepToSky (info@steptosky.com)'
+    description = "This library is for working with the X-Plane's obj format. It uses C++ 14."
+    author = 'StepToSky <info@steptosky.com>'
     settings = "os", "compiler", "build_type", "arch"
-    options = {'shared': ['True', 'False'], 'include_pdbs': ['True', 'False']}
-    default_options = 'shared=False', 'include_pdbs=False', 'gtest:shared=False'
+    options = {'shared': [True, False],
+               'include_pdbs': [True, False],
+               "fpic": [True, False]}
+    default_options = 'shared=False', 'include_pdbs=False', 'gtest:shared=False', 'fpic=False'
     exports = 'vcs_data', 'conanfile_vcs.py'
-    exports_sources = 'CMakeLists.txt', 'src/*', 'src-test/*', 'include/*', 'cmake/*'
+    exports_sources = 'CMakeLists.txt', 'src/*', 'src-test/*', 'include/*', 'cmake/*', 'license*'
     generators = 'cmake'
+    build_policy = 'missing'
+
+    def configure(self):
+        if self.settings.compiler == "Visual Studio" and float(str(self.settings.compiler.version)) < 14:
+            raise Exception("Visual Studio >= 14 is required")
 
     def config_options(self):
         if self.settings.compiler != "Visual Studio":
             try:  # It might have already been removed if required by more than 1 package
                 del self.options.include_pdbs
-            except:
+            except Exception:
                 pass
 
     def requirements(self):
@@ -67,21 +74,21 @@ class LibConan(ConanFile):
             self.requires('gtest/1.8.0@lasote/stable', private=True)
 
     def build(self):
-        target_test = 'run_tests' if self.settings.compiler == 'Visual Studio' else 'test'
-        cmake = CMake(self.settings)
-        args = ['-DBUILD_SHARED_LIBS="%s"' % ('ON' if self.options.shared else 'OFF')]
-        args += ['-DBUILD_TESTS="%s"' % ('ON' if self.scope.testing else 'OFF')]
-        args += ['-DCMAKE_INSTALL_PREFIX="%s"' % self.package_folder]
+        cmake = CMake(self)
+        vcs_data.setup_cmake(cmake)
+        cmake.definitions["BUILD_TESTS"] = 'ON' if self.scope.testing else 'OFF'
         if self.scope.test_report_dir:
-            args += ['-DTEST_REPORT_DIR="%s"' % self.scope.test_report_dir]
-        if vcs_data.has_valid_data():
-            args += [vcs_data.cmake_args()]
-        self.run('cmake %s %s %s' % (self.conanfile_directory, cmake.command_line, ' '.join(args)))
-        self.run('cmake --build . --target install %s' % cmake.build_config)
+            cmake.definitions["TEST_REPORT_DIR"] = self.scope.test_report_dir
+        if self.options.fpic:
+            cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = "ON"
+        cmake.configure()
+        cmake.build()
+        cmake.install()
         if self.scope.testing:
-            self.run('cmake --build . --target %s %s' % (target_test, cmake.build_config))
+            cmake.test()
 
     def package(self):
+        self.copy("license*", src=".", dst="licenses", ignore_case=True, keep_path=False)
         if self.settings.compiler == "Visual Studio" and self.options.include_pdbs:
             self.copy(pattern="*/%s.pdb" % self.name, dst='%s' % self.settings.build_type, src=".", keep_path=False)
 

@@ -35,7 +35,21 @@
 //====================================================================================================//
 //
 // It is early version of pipeline script
+//
+//
+// Version: 0.3.0 (24.07.2017)
+//     - Changed: usage 'conan create' instead of 'conan test_package' for building.
+//     - Added: printing more information.
+//
+// Version: 0.2.1 (07.07.2017)
+//     - Fixed: error mail sending if post build is failed.
+//
+// Version: 0.2.0 (27.06.2017)
+//     - Added: Credentials Id for the repository url. It allows you to use private repositories.
+//
 // Version: 0.1.0 (16.06.2017)
+//
+//
 //
 // Notes:
 //    * Agent with the name 'master' is used for sending e-mails,
@@ -49,7 +63,9 @@
 //
 //
 // You have to specify url to the GIT repository.
+// You also can specify a credential id with semicolon separator
 //     GIT_REPO_URL=https://github.com/steptosky/XplnObj
+//     GIT_REPO_URL=credentialId;https://github.com/steptosky/XplnObj
 //
 // You have to specify regex for branches.
 // Example: :^(?!.*master).*$  - all except master
@@ -93,6 +109,7 @@
 
 // Sets the user for specified conan's remote using Jenkins credential id.
 def setConanUserWithCredentialId(remote, credential_id) {
+    echo "[INFO] Start adding conan's remotes users"
     withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: credential_id,
                       usernameVariable: 'CONAN_USERNAME', passwordVariable: 'CONAN_PASSWORD']]) {
         def str = "conan user ${env.CONAN_USERNAME} -r ${remote} -p ${env.CONAN_PASSWORD}"
@@ -102,11 +119,13 @@ def setConanUserWithCredentialId(remote, credential_id) {
             bat str
         }
     }
+    echo "[INFO] Finish adding conan's remotes users"
 }
 
 // Uploads the conan recipe to specified conan remote.
 // It uploads only the recipe without pre-build packages.
 def conanUpload(product_id, package_version, conan_user, conan_channel, conan_remote) {
+    echo "[INFO] Start uploading to conan's remotes"
     def remStr = "conan remove ${product_id}/${package_version}@${conan_user}/${conan_channel} " +
             "-s -b -f"
     def uploadStr = "conan upload ${product_id}/${package_version}@${conan_user}/${conan_channel} " +
@@ -118,6 +137,7 @@ def conanUpload(product_id, package_version, conan_user, conan_channel, conan_re
         bat remStr
         bat uploadStr
     }
+    echo "[INFO] Finish uploading to conan's remotes"
 }
 
 class Remote implements Serializable {
@@ -131,10 +151,11 @@ class Remote implements Serializable {
 // remote data is separated with the colon.
 // returns array.
 Remote[] parseRemoteUsers(remote_var) {
+    echo "[INFO] Start parsing to conan's remotes users"
     def remoteOutList = []
     if (remote_var) {
         def remotes = remote_var.split(',')
-        echo "Found ${remotes.size()} users for the conan remotes"
+        echo "[INFO] Found ${remotes.size()} users for the conan remotes"
         for (int i = 0; i < remotes.size(); ++i) {
             def data = remotes[i].split(":")
             if (data.size() == 2) {
@@ -143,19 +164,21 @@ Remote[] parseRemoteUsers(remote_var) {
                 r.credentialsId = data[1].trim()
                 remoteOutList.add(r)
             } else {
-                echo "Incorrect conan remote data <${remotes[i]}> at <${i}> position"
+                echo "[INFO] Incorrect conan remote data <${remotes[i]}> at <${i}> position"
             }
         }
     } else {
-        echo "Conan remotes are not specified"
+        echo "[INFO] Conan remotes are not specified"
     }
-    echo "Parsed ${remoteOutList.size()} conan remotes"
+    echo "[INFO] Parsed ${remoteOutList.size()} conan remotes"
+    echo "[INFO] Finish parsing to conan's remotes users"
     return remoteOutList
 }
 
 // Generates variables from the project description cmake script
 // then load it into the Map and return it
 Map loadProjectVariables() {
+    echo "[INFO] Start loading the project variables"
     def str = 'cmake -DCONTENT_PREFIX=Sts -P StsProjectDescCiEnvGenerator.cmake'
     Map result = [:]
     dir('cmake') {
@@ -172,21 +195,52 @@ Map loadProjectVariables() {
             }
         }
     }
+    echo "[INFO] Finish loading the project variables"
     return result
 }
 
-// Builds the project and its tests with the conan's test_package
+// Builds the project and its tests with the conan's 'create' (test_package)
 def buildWithConanTestPackage(build_type, product_id, test_report_dir) {
-    def str = 'conan test_package -s build_type=' +
-            build_type + ' --scope ' +
-            product_id + ':testing=True --scope ' +
-            product_id + ':test_report_dir=\"' +
-            test_report_dir + '\" --build=' + product_id
+    echo "[INFO] Start building with the conan 'create' (test_package)"
+    def str = 'conan create ' + env.CONAN_PACKAGE_USER + '/' + env.CONAN_PACKAGE_CHANNEL +
+            ' -s build_type=' + build_type +
+            ' --scope ' + product_id + ':testing=True' +
+            ' --scope ' + product_id + ':test_report_dir=\"' + test_report_dir + '\"' +
+            ' --build=' + product_id + ' --build=outdated'
     if (isUnix()) {
         sh str
     } else {
         bat str
     }
+    echo "[INFO] Finish building with the conan 'create' (test_package)"
+}
+
+def printConanRemotes() {
+    echo "[INFO] Start printing conan's remote list"
+    def cmdRemote = 'conan remote list'
+    if (isUnix()) {
+        sh cmdRemote
+    } else {
+        bat cmdRemote
+    }
+    echo "[INFO] Finish printing conan's remote list"
+}
+
+def gitCheckout() {
+    echo "[INFO] Start git checkout"
+    def repoData = env.GIT_REPO_URL.split(";")
+    if (repoData.size() == 2) {
+        echo "[INFO] Git checkout with credentials"
+        checkout([$class           : 'GitSCM', branches: [[name: env.GIT_BRANCH]], doGenerateSubmoduleConfigurations: false,
+                  extensions       : [], submoduleCfg: [],
+                  userRemoteConfigs: [[credentialsId: repoData[0].trim(), url: repoData[1].trim()]]])
+    } else {
+        echo "[INFO] Git checkout"
+        checkout([$class           : 'GitSCM', branches: [[name: env.GIT_BRANCH]], doGenerateSubmoduleConfigurations: false,
+                  extensions       : [], submoduleCfg: [],
+                  userRemoteConfigs: [[url: env.GIT_REPO_URL]]])
+    }
+    echo "[INFO] Finish git checkout"
 }
 
 //====================================================================================================//
@@ -197,12 +251,12 @@ def buildWithConanTestPackage(build_type, product_id, test_report_dir) {
 def runCommonPre(nodeName) {
     stage('"' + nodeName + '" Prepare') {
         //---------------------
-        echo "Git checkout"
-        checkout([$class    : 'GitSCM', branches: [[name: env.GIT_BRANCH]], doGenerateSubmoduleConfigurations: false,
-                  extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: env.GIT_REPO_URL]]])
+        gitCheckout()
+        //---------------------
+        printConanRemotes()
         //---------------------
         if (env.CONAN_REMOTES_USERS) {
-            echo "Set conan users"
+            echo "[INFO] Start processing conan users variable"
             Remote[] remoteReadList = parseRemoteUsers(env.CONAN_REMOTES_USERS)
             // foreach does not work in this place, bug or don't I know something?
             // Caused: java.io.NotSerializableException: java.util.AbstractList$Itr
@@ -210,6 +264,7 @@ def runCommonPre(nodeName) {
                 Remote r = remoteReadList[i]
                 setConanUserWithCredentialId(r.remoteName, r.credentialsId)
             }
+            echo "[INFO] Finish processing conan users variable"
         }
         //---------------------
     }
@@ -219,10 +274,12 @@ def runCommonBuild(nodeName) {
     def test_report_dir = env.WORKSPACE + '/reports/conan-tests'
     stage('"' + nodeName + '" Build') {
         Map kv = loadProjectVariables()
-        echo "Build Debug"
+        echo "[INFO] Start building Debug"
         buildWithConanTestPackage('Debug', kv['StsProjectId'], test_report_dir)
-        echo "Build Release"
+        echo "[INFO] Finish building Debug"
+        echo "[INFO] Start building Release"
         buildWithConanTestPackage('Release', kv['StsProjectId'], test_report_dir)
+        echo "[INFO] Finish building Release"
     }
 }
 
@@ -244,19 +301,7 @@ def uploadToConan() {
             }
         }
     } else {
-        echo "Conan uploading is disabled"
-    }
-}
-
-def runCommonPost() {
-    def instancesList = env.BUILD_AGENTS.split(",")
-    for (int i = 0; i < instancesList.size(); i++) {
-        def instanceName = instancesList[i].trim()
-        node(instanceName) {
-            stage('"' + instanceName + '" Publish tests') {
-                junit healthScaleFactor: 100.0, testResults: 'reports/*/*.xml'
-            }
-        }
+        echo "[INFO] Conan uploading is disabled"
     }
 }
 
@@ -292,6 +337,22 @@ def sendMail(nodeName) {
     }
 }
 
+def runCommonPost() {
+    try {
+        def instancesList = env.BUILD_AGENTS.split(",")
+        for (int i = 0; i < instancesList.size(); i++) {
+            def instanceName = instancesList[i].trim()
+            node(instanceName) {
+                stage('"' + instanceName + '" Publish tests') {
+                    junit healthScaleFactor: 100.0, testResults: 'reports/*/*.xml'
+                }
+            }
+        }
+    } finally {
+        sendMail('master')
+    }
+}
+
 //=====================================================================================================//
 // Skeleton for dynamic nodes
 
@@ -316,7 +377,7 @@ def parallelConverge(String instances) {
 
         parallel parallelNodes
     } else {
-        echo "There is no any build agent specified"
+        echo "[INFO] There are no build agents specified"
     }
 }
 
@@ -340,13 +401,12 @@ pipeline {
     post {
         always {
             runCommonPost()
-            sendMail('master')
         }
         success {
             successfulMail('master')
-            echo "Finished ${env.JOB_NAME}:${env.BUILD_ID} on ${env.JENKINS_URL}"
+            echo "[INFO] Finished ${env.JOB_NAME}:${env.BUILD_ID} on ${env.JENKINS_URL}"
         }
-        failure { echo "Finished with failure ${env.JOB_NAME}:${env.BUILD_ID} on ${env.JENKINS_URL}" }
+        failure { echo "[INFO] Finished with failure ${env.JOB_NAME}:${env.BUILD_ID} on ${env.JENKINS_URL}" }
     }
 }
 

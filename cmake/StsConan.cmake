@@ -31,70 +31,31 @@
 #  Contacts: www.steptosky.com
 #
 #----------------------------------------------------------------------------------#
-#//////////////////////////////////////////////////////////////////////////////////#
-#----------------------------------------------------------------------------------#
-# project
-
-set(PROJECT Test${ProjectId})
-project(${PROJECT} VERSION ${ProjectVersion} LANGUAGES "CXX")
-
+#
+# Conan basic setup. 
+#
+# Version 1.0.0
+#
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
-# project files
+# conan.io
 
-file(GLOB_RECURSE CM_FILES 
-	"*.h" "*.inl" "*.cpp"
-)
-include(StsGroupFiles)
-groupFiles("${CM_FILES}")
- 
-#----------------------------------------------------------------------------------#
-#//////////////////////////////////////////////////////////////////////////////////#
-#----------------------------------------------------------------------------------#
-# targets 
+cmake_minimum_required (VERSION 3.7.0)
 
-add_executable(${PROJECT} ${CM_FILES})
-add_dependencies(${PROJECT} ${ProjectId})
-
-#----------------------------------------------------------------------------------#
-# linkage 
-
-target_include_directories(${PROJECT} PRIVATE ${CMAKE_SOURCE_DIR}/include)
-target_include_directories(${PROJECT} PRIVATE ${CMAKE_SOURCE_DIR}/src)
-
-target_link_libraries(${PROJECT} CONAN_PKG::gtest)
-target_link_libraries(${PROJECT} ${ProjectId})
-target_link_libraries(${PROJECT} "$<$<CXX_COMPILER_ID:GNU>:pthread>")
-target_link_libraries(${PROJECT} "$<$<CXX_COMPILER_ID:Clang>:pthread>")
-
-#----------------------------------------------------------------------------------#
-# compile options
-
-target_compile_options(${PROJECT} 
-	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/W4>"
-	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:-D_CRT_SECURE_NO_WARNINGS>"
-	
-	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-Wno-unknown-pragmas>"
-	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-pedantic>"
-	
-	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-Wno-unknown-pragmas>"
-	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-pedantic>"
-
-	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-Wno-unknown-pragmas>"
-	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pedantic>"
-)
-
-#----------------------------------------------------------------------------------#
-#//////////////////////////////////////////////////////////////////////////////////#
-#----------------------------------------------------------------------------------#
-# testing
-
-add_test(
-	NAME ${PROJECT}
-	COMMAND $<TARGET_FILE:${PROJECT}>  
-	"--gtest_output=xml:${TEST_REPORT_DIR}/${PROJECT}-$<CONFIG>.xml"
-)
+message(STATUS "==============================================")
+message(STATUS "Process conan data")
+if(EXISTS "${CMAKE_BINARY_DIR}/conanbuildinfo_multi.cmake")
+	include(${CMAKE_BINARY_DIR}/conanbuildinfo_multi.cmake)
+	message(STATUS "Found and included 'conanbuildinfo_multi.cmake'")
+elseif(EXISTS "${CMAKE_BINARY_DIR}/conanbuildinfo.cmake")
+	include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+	message(STATUS "Found and included 'conanbuildinfo.cmake'")
+else()
+	message(FATAL_ERROR "'conanbuildinfo_multi.cmake' or 'conanbuildinfo.cmake' are not found."
+	" Probably you have forgotten to run 'conan install'")
+endif()
+conan_basic_setup(TARGETS)
 
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#

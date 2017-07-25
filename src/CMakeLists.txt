@@ -76,20 +76,18 @@ target_compile_options(${PROJECT}
 	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/W4>"
 	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:-D_CRT_SECURE_NO_WARNINGS>"
 	
-	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-std=c++1y>"
+	PUBLIC "$<$<CXX_COMPILER_ID:AppleClang>:-std=c++1y>"
 	PUBLIC  "$<$<CXX_COMPILER_ID:AppleClang>:-stdlib=libc++>"
 	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-pedantic>"
 	
-	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-std=c++1y>"
+	PUBLIC "$<$<CXX_COMPILER_ID:Clang>:-std=c++1y>"
 	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-pedantic>"
-	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-fPIC>"
 	
-	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-std=c++1y>"
+	PUBLIC "$<$<CXX_COMPILER_ID:GNU>:-std=c++1y>"
 	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pedantic>"
-	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-fPIC>"
 )
 
 #----------------------------------------------------------------------------------#

@@ -17,4 +17,4 @@
 - Check whether the [conanfile.py](../conanfile.py) is corresponding to cmake settings and options, 
   if they were changed in the cmake scripts.
 - Check whether the [conanfile.py](../conanfile.py) uses the correct dependencies and their version.
-- Check the _test_package_ works correctly, run ``` conan test_package ``` or see [how to build with the conan test_package](conan-test-package.md).
+- Check whether the _test_package_ works correctly, see [how to build with the conan 'create'](conan-create.md).

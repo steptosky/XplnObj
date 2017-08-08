@@ -115,7 +115,7 @@ namespace xobj {
 			ULError << inPrefix << " - The \"far value\" value can't be less \"near value\" value.";
 			return false;
 		}
-		if (inVal.transform().objList().empty() && inVal.transform().childrenCount() == 0) {
+		if (!inVal.transform().hasObjects() && inVal.transform().childrenCount() == 0) {
 			ULError << inPrefix << " - The lod does not contain any objects.";
 			return false;
 		}

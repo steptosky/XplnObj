@@ -30,6 +30,7 @@
 #pragma once
 
 #include <list>
+#include <functional>
 #include "xpln/XplnObjExport.h"
 #include "xpln/common/TMatrix.h"
 #include "xpln/obj/animation/AnimTrans.h"
@@ -147,6 +148,7 @@ namespace xobj {
 		 */
 		XpObjLib void addObject(ObjAbstract * inObj);
 		XpObjLib bool removeObject(ObjAbstract * inObj);
+		bool hasObjects() const { return !mObjList.empty(); }
 		XpObjLib const ObjList & objList() const;
 
 		//-------------------------------------------------------------------------
@@ -167,19 +169,19 @@ namespace xobj {
 
 		//-------------------------------------------------------------------------
 
-		TMatrix parentMatrix() const {
-			const Transform * p = parent();
-			return p ? p->pMatrix : TMatrix();
-		}
+		TMatrix parentMatrix() const;
+		Transform & createChild(const char * inName = nullptr);
 
-		Transform & createChild(const char * inName = nullptr) {
-			Transform * tr = new Transform;
-			tr->setParent(this);
-			if (inName) {
-				tr->setName(inName);
-			}
-			return *tr;
-		}
+		//-------------------------------------------------------------------------
+
+		XpObjLib bool visitObjects(const std::function<bool(ObjAbstract &)> & function);
+		XpObjLib bool visitObjects(const std::function<bool(const ObjAbstract &)> & function) const;
+
+		bool visitChildren(const std::function<bool(Transform &)> & function) { return visitChildren(this, function); }
+		bool visitChildren(const std::function<bool(const Transform &)> & function) const { return visitChildren(this, function); }
+
+		bool visitAllChildren(const std::function<bool(Transform &)> & function) { return visitAllOf(this, function); }
+		bool visitAllChildren(const std::function<bool(const Transform &)> & function) const { return visitAllOf(this, function); }
 
 		//-------------------------------------------------------------------------
 
@@ -187,12 +189,35 @@ namespace xobj {
 
 		TreeItem * mTreePtr;
 
-		static bool _checkForParity(const Transform & inTr, bool state = false);
+		static bool visitAllOf(Transform * parent, const std::function<bool(Transform &)> & function);
+		static bool visitAllOf(const Transform * parent, const std::function<bool(const Transform &)> & function);
+		static bool visitChildren(Transform * parent, const std::function<bool(Transform &)> & function);
+		static bool visitChildren(const Transform * parent, const std::function<bool(const Transform &)> & function);
+
+		static bool checkForParity(const Transform & inTr, bool state = false);
 
 		ObjList mObjList;
 		std::string mName = "undefined";
 
 	};
+
+	/**************************************************************************************************/
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**************************************************************************************************/
+
+	inline TMatrix Transform::parentMatrix() const {
+		const Transform * p = parent();
+		return p ? p->pMatrix : TMatrix();
+	}
+
+	inline Transform & Transform::createChild(const char * inName) {
+		Transform * tr = new Transform;
+		tr->setParent(this);
+		if (inName) {
+			tr->setName(inName);
+		}
+		return *tr;
+	}
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -174,13 +174,48 @@ namespace xobj {
 
 		//-------------------------------------------------------------------------
 
+		/*!
+		 * \details Calls specified function for each object.
+		 * \param function Return false if you want to stop iterating.
+		 * \return False if iterating was stopped by function.
+		 */
 		XpObjLib bool visitObjects(const std::function<bool(ObjAbstract &)> & function);
+
+		/*!
+		 * \details Calls specified function for each object.
+		 * \param function Return false if you want to stop iterating.
+		 * \return False if iterating was stopped by function.
+		 */
 		XpObjLib bool visitObjects(const std::function<bool(const ObjAbstract &)> & function) const;
 
+		/*!
+		 * \details Calls specified function only for children of this transform.
+		 * \param function Return false if you want to stop iterating.
+		 * \return False if iterating was stopped by function.
+		 */
 		bool visitChildren(const std::function<bool(Transform &)> & function) { return visitChildren(this, function); }
+
+		/*!
+		 * \details Calls specified function only for children of this transform.
+		 * \param function Return false if you want to stop iterating.
+		 * \return False if iterating was stopped by function.
+		 */
 		bool visitChildren(const std::function<bool(const Transform &)> & function) const { return visitChildren(this, function); }
 
+		/*!
+		 * \details Calls specified function for all children in hierarchy 
+		 *          i.e. iterating full tree where this transform is root.
+		 * \param function Return false if you want to stop iterating.
+		 * \return False if iterating was stopped by function.
+		 */
 		bool visitAllChildren(const std::function<bool(Transform &)> & function) { return visitAllOf(this, function); }
+
+		/*!
+		 * \details Calls specified function for all children in hierarchy
+		 *          i.e. iterating full tree where this transform is root.
+		 * \param function Return false if you want to stop iterating.
+		 * \return False if iterating was stopped by function.
+		 */
 		bool visitAllChildren(const std::function<bool(const Transform &)> & function) const { return visitAllOf(this, function); }
 
 		//-------------------------------------------------------------------------

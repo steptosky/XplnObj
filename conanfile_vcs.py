@@ -52,21 +52,23 @@ class ConanVcs:
     vcs_branch = ''
     vcs_revision = ''
 
-    def cmake_args(self):
-        return '-Dvcs_branch=%s -Dvcs_revision=%s ' % (self.vcs_branch, self.vcs_revision)
+    def setup_cmake(self, cmake):
+        if self.has_valid_data():
+            cmake.definitions["vcs_branch"] = self.vcs_branch
+            cmake.definitions["vcs_revision"] = self.vcs_revision
 
     def has_valid_data(self):
         if len(self.vcs_branch) == 0 or len(self.vcs_revision) == 0:
             return False
         return True
 
-    def write_to_file(self, filepath):
-        file = open(filepath, "w")
+    def write_to_file(self, file_path):
+        file = open(file_path, "w")
         file.write('%s\n%s' % (self.vcs_branch, self.vcs_revision))
         file.close()
 
-    def read_from_file(self, filepath):
-        text_file = open(filepath, "r")
+    def read_from_file(self, file_path):
+        text_file = open(file_path, "r")
         out = text_file.read().split('\n')
         if len(out) < 2:
             self.clear_data()
@@ -81,8 +83,13 @@ class ConanVcs:
 
     def read_vcs_data(self):
         self.clear_data()
-        self.vcs_branch = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']).decode("utf-8").strip()
-        self.vcs_revision = subprocess.check_output(['git', 'log', '-1', '--pretty=format:%h']).decode("utf-8").strip()
+        try:
+            self.vcs_branch = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']) \
+                .decode("utf-8").strip()
+            self.vcs_revision = subprocess.check_output(['git', 'log', '-1', '--pretty=format:%h']) \
+                .decode("utf-8").strip()
+        except Exception:
+            pass
         return self.has_valid_data()
 
     def load_vcs_data(self):

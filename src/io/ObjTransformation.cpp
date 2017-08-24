@@ -73,7 +73,7 @@ namespace xobj {
 		// objects
 
 		if (exp) {
-			if (transform.objList().empty()) {
+			if (!transform.hasObjects()) {
 				mapsExpCoordinates(nullptr, transform, rootMatrix);
 			}
 			else {
@@ -83,7 +83,7 @@ namespace xobj {
 			}
 		}
 		else {
-			if (transform.objList().empty()) {
+			if (!transform.hasObjects()) {
 				mapsImpCoordinates(nullptr, transform, rootMatrix);
 			}
 			else {
@@ -131,7 +131,7 @@ namespace xobj {
 		//------------------------------------------------------------------------------------------
 		// Actually the following code can be optimized but I prefer keep it such a way,
 		// it is easier to understanding for me. 
-		// But pay attenation there are identical parts in this code (i.e. copy/paste).
+		// But pay attention there are identical parts in this code (i.e. copy/paste).
 		//------------------------------------------------------------------------------------------
 		// TestTransformationAlgorithm_case0
 		if (!objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && !transParent && !rotateParent) {

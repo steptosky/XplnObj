@@ -31,7 +31,6 @@
 #include "sts/utilities/templates/TreeItem.h"
 #include "xpln/obj/ObjAbstract.h"
 #include "../common/Logger.h"
-#include "sts/geometry/TMatrix3.h"
 
 namespace xobj {
 
@@ -191,18 +190,18 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool Transform::_checkForParity(const Transform & inParent, bool state /*= false*/) {
+	bool Transform::checkForParity(const Transform & inParent, bool state /*= false*/) {
 		static bool res = false;
 		res = state;
 		if (inParent.pMatrix.isParity())
 			res = !res;
 		if (inParent.isRoot())
 			return res;
-		return _checkForParity(*inParent.parent(), res);
+		return checkForParity(*inParent.parent(), res);
 	}
 
 	bool Transform::checkHierarchyForParity() const {
-		return _checkForParity(*this, false);
+		return checkForParity(*this, false);
 	}
 
 	//-------------------------------------------------------------------------
@@ -243,6 +242,84 @@ namespace xobj {
 
 	bool Transform::hasAnimVis() const {
 		return pAnimVis.isAnimated();
+	}
+
+	/**************************************************************************************************/
+	//////////////////////////////////////////* Functions */////////////////////////////////////////////
+	/**************************************************************************************************/
+
+	bool Transform::visitObjects(const std::function<bool(ObjAbstract &)> & function) {
+		for (auto o: mObjList) {
+			assert(o);
+			if (!function(*o)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	bool Transform::visitObjects(const std::function<bool(const ObjAbstract &)> & function) const {
+		for (const auto o : mObjList) {
+			assert(o);
+			if (!function(*o)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**************************************************************************************************/
+	//////////////////////////////////////////* Functions */////////////////////////////////////////////
+	/**************************************************************************************************/
+
+	bool Transform::visitAllOf(Transform * parent, const std::function<bool(Transform &)> & function) {
+		TransformIndex numChildren = parent->childrenCount();
+		for (TransformIndex idx = 0; idx < numChildren; ++idx) {
+			Transform * currNode = parent->childAt(idx);
+			if (!function(*currNode)) {
+				return false;
+			}
+			if (!visitAllOf(currNode, function)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	bool Transform::visitAllOf(const Transform * parent, const std::function<bool(const Transform &)> & function) {
+		TransformIndex numChildren = parent->childrenCount();
+		for (TransformIndex idx = 0; idx < numChildren; ++idx) {
+			const Transform * currNode = parent->childAt(idx);
+			if (!function(*currNode)) {
+				return false;
+			}
+			if (!visitAllOf(currNode, function)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	//-------------------------------------------------------------------------
+
+	bool Transform::visitChildren(Transform * parent, const std::function<bool(Transform &)> & function) {
+		TransformIndex count = parent->childrenCount();
+		for (TransformIndex i = 0; i < count; ++i) {
+			if (!function(*parent->childAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	bool Transform::visitChildren(const Transform * parent, const std::function<bool(const Transform &)> & function) {
+		TransformIndex count = parent->childrenCount();
+		for (TransformIndex i = 0; i < count; ++i) {
+			if (!function(*parent->childAt(i))) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**************************************************************************************************/

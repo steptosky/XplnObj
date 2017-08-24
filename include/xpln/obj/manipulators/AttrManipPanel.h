@@ -57,14 +57,14 @@ namespace xobj {
 		 * \note This method is for internal using only! The developer must not use it.
 		 * \param cockpit 
 		 */
-		void setCockpit(const AttrCockpit & cockpit);
+		XpObjLib void setCockpit(const AttrCockpit & cockpit);
 
 		/*!
 		 * \see \link AttrManipPanel::setCockpit \endlink
 		 * \note This method is for internal using only! The developer must not use it.
 		 * \return cockpit attribute associated with the manipulator
 		 */
-		const AttrCockpit & cockpit() const;
+		XpObjLib const AttrCockpit & cockpit() const;
 
 		//-------------------------------------------------------------------------
 

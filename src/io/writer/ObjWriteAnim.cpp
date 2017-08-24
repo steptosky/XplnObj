@@ -95,7 +95,7 @@ namespace xobj {
 		if (!inTransform.hasAnim())
 			return false;
 
-		if (inTransform.objList().empty() && inTransform.childrenCount() == 0)
+		if (!inTransform.hasObjects() && inTransform.childrenCount() == 0)
 			return false;
 
 		mWriter = &writer;

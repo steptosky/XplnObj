@@ -39,29 +39,31 @@ import os
 
 username = os.getenv("CONAN_PACKAGE_USER", "steptosky")
 channel = os.getenv("CONAN_PACKAGE_CHANNEL", "develop")
-version = os.getenv("CONAN_PACKAGE_VERSION", "0.4.0")
+version = os.getenv("CONAN_PACKAGE_VERSION", "0.4.1")
 artifact_name = os.getenv("CONAN_PACKAGE_NAME", "XplnObj")
 
 
 class LibReuseConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     requires = "%s/%s@%s/%s" % (artifact_name, version, username, channel)
-    options = {'shared': ['True', 'False'], 'include_pdbs': ['True', 'False']}
-    default_options = 'shared=False','include_pdbs=False'
     generators = 'cmake'
 
-    def config_options(self):
-        if self.options.include_pdbs:
-            self.options[artifact_name].include_pdbs = True
-            self.options['gtest'].include_pdbs = True
-
     def build(self):
-        cmake = CMake(self.settings)
-        self.run('cmake %s %s' % (self.conanfile_directory, cmake.command_line))
-        self.run('cmake --build . %s' % cmake.build_config)
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
+
+    def imports(self):
+        self.copy(pattern="*.dll", dst="bin", src="Release")
+        self.copy(pattern="*.dll", dst="bin", src="Debug")
+        self.copy(pattern="*.pdb", dst="bin", src="Release")
+        self.copy(pattern="*.pdb", dst="bin", src="Debug")
+        self.copy(pattern="*.dylib", dst="bin", src="Release")
+        self.copy(pattern="*.dylib", dst="bin", src="Debug")
 
     def test(self):
-        self.run(os.sep.join([".", ("%s" % self.settings.build_type), "mytest"]))
+        self.run("cd bin && .%smytest" % os.sep)
+        assert os.path.exists(os.path.join(self.deps_cpp_info[artifact_name].rootpath, "licenses", "license.txt"))
 
 # ----------------------------------------------------------------------------------#
 # //////////////////////////////////////////////////////////////////////////////////#

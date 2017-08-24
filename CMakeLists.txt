@@ -52,25 +52,14 @@ project("XplnObj" LANGUAGES "CXX")
 include(StsProjectDesc)
 include(StsInfoFilesGenerator)
 genInfoFile(StsProjectDesc "${CMAKE_SOURCE_DIR}/include/xpln/Info.h")
-  
+
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
 # conan.io
 
-option(USE_CONAN_CMAKE_MULTI "using conan cmake_multi" OFF)
+include(StsConan)
 
-if(BUILD_TESTS)
-	message(STATUS "==============================================")
-	# the problem is the conan test_package can not use cmake_multi
-	if(USE_CONAN_CMAKE_MULTI)
-		include(${CMAKE_BINARY_DIR}/conanbuildinfo_multi.cmake)
-	else()
-		include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-	endif()
-	conan_define_targets()
-endif()
- 
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
@@ -84,13 +73,16 @@ if (NOT TEST_REPORT_DIR)
 	set(TEST_REPORT_DIR ${CMAKE_SOURCE_DIR}/reports/tests)
 endif()
 
+if (NOT BUILD_SHARED_LIBS)
+	set (BUILD_SHARED_LIBS OFF)
+endif()
+
 option(BUILD_TESTS "Build all of it's own tests." OFF) 
 
 message(STATUS "==============================================")
 message(STATUS "Build type = ${CMAKE_BUILD_TYPE}")
 message(STATUS "Build tests = ${BUILD_TESTS}")
 message(STATUS "Shared lib = ${BUILD_SHARED_LIBS}")
-message(STATUS "Using conan cmake multi = ${USE_CONAN_CMAKE_MULTI}")
 message(STATUS "Test report dir = ${TEST_REPORT_DIR}")
 message(STATUS "Installation prefix = ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "==============================================")

@@ -41,15 +41,10 @@ cmake_minimum_required (VERSION 3.7.0)
 
 message(STATUS "== CONAN TEST PACKAGE ==========================================")
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_define_targets()
+conan_basic_setup(TARGETS)
 
 ADD_EXECUTABLE(mytest test_package.cpp)
 TARGET_LINK_LIBRARIES(mytest CONAN_PKG::XplnObj)
-
-# On different OS the path is different, so we make path the same.
-set_target_properties(mytest PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/$<CONFIG>
-)
 
 target_compile_options(mytest 
 	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/W4>"
@@ -62,12 +57,10 @@ target_compile_options(mytest
 	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-std=c++1y>"
 	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-pedantic>"
-	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-fPIC>"
 	
 	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-std=c++1y>"
 	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pedantic>"
-	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-fPIC>"
 )
 
 #----------------------------------------------------------------------------------#

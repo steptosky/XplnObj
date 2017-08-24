@@ -42,7 +42,7 @@ vcs_data.load_vcs_data()
 
 
 class LibConan(ConanFile):
-    version = "0.4.0"
+    version = "0.4.1"
     name = 'XplnObj'
     url = 'https://github.com/steptosky/XplnObj'
     license = 'BSD 3-Clause'

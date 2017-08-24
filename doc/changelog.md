@@ -1,7 +1,7 @@
 
 X-Plane Obj Library
 ---------------------------------------------------------------------------
-#### Next
+#### 0.4.1-beta (24.08.2017)
 
 - **Added:** Printing error if texture name contains illegal symbols.
 - **Improved:** Build scripts.

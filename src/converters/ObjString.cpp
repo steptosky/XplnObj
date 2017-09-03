@@ -153,10 +153,13 @@ namespace xobj {
 		if (printName) {
 			out << "## " << obj.objectName() << std::endl;
 		}
-		out << LIGHT_PARAM
-				<< " " << obj.lightId().toString()
-				<< " " << obj.position().toString(PRECISION)
-				<< " " << obj.additionalParams();
+		if (obj.lightId() == ELightParams(ELightParams::light_params_custom)) {
+			out << LIGHT_PARAM << " " << obj.lightName();
+		}
+		else {
+			out << LIGHT_PARAM << " " << obj.lightId().toString();
+		}
+		out << " " << obj.position().toString(PRECISION) << " " << obj.additionalParams();
 		return out.str();
 	}
 

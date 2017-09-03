@@ -340,6 +340,12 @@ namespace xobj {
 			result = false;
 			ULError << inPrefix << " - Light objectName isn't specified.";
 		}
+		if (inVal.lightId() == ELightParams(ELightParams::light_params_custom)) {
+			if (inVal.lightName().empty()) {
+				result = false;
+				ULError << inPrefix << " - Custom light name isn't specified.";
+			}
+		}
 		if (inVal.additionalParams().empty()) {
 			result = false;
 			ULError << inPrefix << " - Parameters isn't specified.";

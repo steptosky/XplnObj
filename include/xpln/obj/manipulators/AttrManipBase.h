@@ -29,6 +29,7 @@
 
 #pragma once
 
+#include <string>
 #include "xpln/enums/ECursor.h"
 #include "xpln/enums/EManipulator.h"
 

@@ -37,11 +37,11 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjWriteOptimize::optimize(ObjMain & inObjMain) {
-		if (inObjMain.pExportOptions.isEnabled(XOBJ_EXP_OPTIMIZATION)) {
-			size_t lodCount = inObjMain.lodCount();
+	void ObjWriteOptimize::optimize(ObjMain & mainObj) {
+		if (mainObj.pExportOptions.isEnabled(XOBJ_EXP_OPTIMIZATION)) {
+			const size_t lodCount = mainObj.lodCount();
 			for (size_t i = 0; i < lodCount; ++i) {
-				ObjLodGroup & lod = inObjMain.lod(i);
+				ObjLodGroup & lod = mainObj.lod(i);
 				Transform & rootTransform = lod.transform();
 				proccess(rootTransform);
 			}

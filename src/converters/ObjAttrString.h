@@ -63,23 +63,23 @@ namespace xobj {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	XpObjLib std::string toObjGlobString(const AttrBlend & inVal);
-	XpObjLib std::string toObjGlobString(const AttrLayerGroup & inVal);
-	XpObjLib std::string toObjGlobString(const AttrDrapedLayerGroup & inVal);
-	XpObjLib std::string toObjGlobString(const AttrLodDrap & inVal);
-	XpObjLib std::string toObjGlobString(const AttrSlungLoadWeight & inVal);
-	XpObjLib std::string toObjGlobString(const AttrSpecular & inVal);
-	XpObjLib std::string toObjGlobString(const AttrTint & inVal);
-	XpObjLib std::string toObjGlobString(const AttrWetDry & inVal);
-	XpObjLib std::string toObjGlobString(const AttrSlopeLimit & inVal);
-	XpObjLib std::string toObjGlobString(const AttrCockpitRegion & inVal);
+	XpObjLib std::string toObjGlobString(const AttrBlend & globAttr);
+	XpObjLib std::string toObjGlobString(const AttrLayerGroup & globAttr);
+	XpObjLib std::string toObjGlobString(const AttrDrapedLayerGroup & globAttr);
+	XpObjLib std::string toObjGlobString(const AttrLodDrap & globAttr);
+	XpObjLib std::string toObjGlobString(const AttrSlungLoadWeight & globAttr);
+	XpObjLib std::string toObjGlobString(const AttrSpecular & globAttr);
+	XpObjLib std::string toObjGlobString(const AttrTint & globAttr);
+	XpObjLib std::string toObjGlobString(const AttrWetDry & globAttr);
+	XpObjLib std::string toObjGlobString(const AttrSlopeLimit & globAttr);
+	XpObjLib std::string toObjGlobString(const AttrCockpitRegion & globAttr);
 
-	XpObjLib std::string toObjString(const AttrBlend & inVal);
-	XpObjLib std::string toObjString(const AttrHard & inVal);
-	XpObjLib std::string toObjString(const AttrLightLevel & inVal);
-	XpObjLib std::string toObjString(const AttrPolyOffset & inVal);
-	XpObjLib std::string toObjString(const AttrShiny & inVal);
-	XpObjLib std::string toObjString(const AttrCockpit & inVal);
+	XpObjLib std::string toObjString(const AttrBlend & attr);
+	XpObjLib std::string toObjString(const AttrHard & attr);
+	XpObjLib std::string toObjString(const AttrLightLevel & attr);
+	XpObjLib std::string toObjString(const AttrPolyOffset & attr);
+	XpObjLib std::string toObjString(const AttrShiny & attr);
+	XpObjLib std::string toObjString(const AttrCockpit & attr);
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////

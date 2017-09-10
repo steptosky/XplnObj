@@ -54,27 +54,27 @@ namespace xobj {
 		};
 
 		const Data gList[] = {
-				/* 00 */ Data(TOTEXT(none), "none", ECursor::none),
-				/* 01 */ Data(TOTEXT(four_arrows), "Four arrows", ECursor::four_arrows),
-				/* 02 */ Data(TOTEXT(hand), "Hand", ECursor::hand),
-				/* 03 */ Data(TOTEXT(button), "Button", ECursor::button),
-				/* 04 */ Data(TOTEXT(rotate_small), "Rotate small", ECursor::rotate_small),
-				/* 05 */ Data(TOTEXT(rotate_small_left), "Rotate small left", ECursor::rotate_small_left),
-				/* 06 */ Data(TOTEXT(rotate_small_right), "Rotate small right", ECursor::rotate_small_right),
-				/* 07 */ Data(TOTEXT(rotate_medium), "Rotate medium", ECursor::rotate_medium),
-				/* 08 */ Data(TOTEXT(rotate_medium_left), "Rotate medium left", ECursor::rotate_medium_left),
-				/* 09 */ Data(TOTEXT(rotate_medium_right), "Rotate medium right", ECursor::rotate_medium_right),
-				/* 10 */ Data(TOTEXT(rotate_large), "Rotate large", ECursor::rotate_large),
-				/* 11 */ Data(TOTEXT(rotate_large_left), "Rotate large left", ECursor::rotate_large_left),
-				/* 12 */ Data(TOTEXT(rotate_large_right), "Rotate large right", ECursor::rotate_large_right),
-				/* 13 */ Data(TOTEXT(up_down), "Up-Down", ECursor::up_down),
-				/* 14 */ Data(TOTEXT(down), "Down", ECursor::down),
-				/* 15 */ Data(TOTEXT(up), "Up", ECursor::up),
-				/* 16 */ Data(TOTEXT(left_right), "Left-Right", ECursor::left_right),
-				/* 17 */ Data(TOTEXT(right), "Right", ECursor::right),
-				/* 18 */ Data(TOTEXT(left), "Left", ECursor::left),
-				/* 19 */ Data(TOTEXT(arrow), "Arrow", ECursor::arrow),
-			};
+			/* 00 */ Data(TOTEXT(none), "none", ECursor::none),
+			/* 01 */ Data(TOTEXT(four_arrows), "Four arrows", ECursor::four_arrows),
+			/* 02 */ Data(TOTEXT(hand), "Hand", ECursor::hand),
+			/* 03 */ Data(TOTEXT(button), "Button", ECursor::button),
+			/* 04 */ Data(TOTEXT(rotate_small), "Rotate small", ECursor::rotate_small),
+			/* 05 */ Data(TOTEXT(rotate_small_left), "Rotate small left", ECursor::rotate_small_left),
+			/* 06 */ Data(TOTEXT(rotate_small_right), "Rotate small right", ECursor::rotate_small_right),
+			/* 07 */ Data(TOTEXT(rotate_medium), "Rotate medium", ECursor::rotate_medium),
+			/* 08 */ Data(TOTEXT(rotate_medium_left), "Rotate medium left", ECursor::rotate_medium_left),
+			/* 09 */ Data(TOTEXT(rotate_medium_right), "Rotate medium right", ECursor::rotate_medium_right),
+			/* 10 */ Data(TOTEXT(rotate_large), "Rotate large", ECursor::rotate_large),
+			/* 11 */ Data(TOTEXT(rotate_large_left), "Rotate large left", ECursor::rotate_large_left),
+			/* 12 */ Data(TOTEXT(rotate_large_right), "Rotate large right", ECursor::rotate_large_right),
+			/* 13 */ Data(TOTEXT(up_down), "Up-Down", ECursor::up_down),
+			/* 14 */ Data(TOTEXT(down), "Down", ECursor::down),
+			/* 15 */ Data(TOTEXT(up), "Up", ECursor::up),
+			/* 16 */ Data(TOTEXT(left_right), "Left-Right", ECursor::left_right),
+			/* 17 */ Data(TOTEXT(right), "Right", ECursor::right),
+			/* 18 */ Data(TOTEXT(left), "Left", ECursor::left),
+			/* 19 */ Data(TOTEXT(arrow), "Arrow", ECursor::arrow),
+		};
 	}
 
 	/**************************************************************************************************/
@@ -84,53 +84,53 @@ namespace xobj {
 	ECursor::ECursor()
 		: mId(none) { }
 
-	ECursor::ECursor(eId inId)
-		: mId(inId) { }
+	ECursor::ECursor(eId id)
+		: mId(id) { }
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Operators *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool ECursor::operator==(const ECursor & inRight) const {
-		return mId == inRight.mId;
+	bool ECursor::operator==(const ECursor & other) const {
+		return mId == other.mId;
 	}
 
-	bool ECursor::operator==(eId inId) const {
-		return mId == inId;
+	bool ECursor::operator==(eId id) const {
+		return mId == id;
 	}
 
-	bool ECursor::operator!=(const ECursor & inRight) const {
-		return mId != inRight.mId;
+	bool ECursor::operator!=(const ECursor & other) const {
+		return mId != other.mId;
 	}
 
-	bool ECursor::operator!=(eId inId) const {
-		return mId != inId;
+	bool ECursor::operator!=(eId id) const {
+		return mId != id;
 	}
 
 	/**************************************************************************************************/
 	//////////////////////////////////////////* Functions */////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	ECursor ECursor::fromUiString(const char * inName) {
-		if (inName) {
+	ECursor ECursor::fromUiString(const char * name) {
+		if (name) {
 			for (size_t i = 0; i < ARRAY_LENGTH(EObjCursorsData::gList); ++i) {
-				if (strcmp(inName, EObjCursorsData::gList[i].mUi) == 0) {
+				if (strcmp(name, EObjCursorsData::gList[i].mUi) == 0) {
 					return ECursor(EObjCursorsData::gList[i].mId);
 				}
 			}
-			LError << TOTEXT(ECursor) << " Does not contain ui name: \"" << inName << "\"";
+			LError << TOTEXT(ECursor) << " Does not contain ui name: \"" << name << "\"";
 		}
 		return ECursor();
 	}
 
-	ECursor ECursor::fromString(const char * inAttrName) {
-		if (inAttrName) {
+	ECursor ECursor::fromString(const char * attrName) {
+		if (attrName) {
 			for (size_t i = 0; i < ARRAY_LENGTH(EObjCursorsData::gList); ++i) {
-				if (strcmp(inAttrName, EObjCursorsData::gList[i].mAttr) == 0) {
+				if (strcmp(attrName, EObjCursorsData::gList[i].mAttr) == 0) {
 					return ECursor(EObjCursorsData::gList[i].mId);
 				}
 			}
-			LError << TOTEXT(ECursor) << " Does not contain attribute name: \"" << inAttrName << "\"";
+			LError << TOTEXT(ECursor) << " Does not contain attribute name: \"" << attrName << "\"";
 		}
 		return ECursor();
 	}

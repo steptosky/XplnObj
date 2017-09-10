@@ -39,13 +39,13 @@ namespace xobj {
 
 	/*!
 	 * \details Representation of the LOD object
-	 * \note This class should not be created outside the library.
+	 * \note This class should not be created outside the library, use \link ObjMain::addLod \endlink.
 	 * \ingroup Objects
 	 */
 	class ObjLodGroup {
 
-		ObjLodGroup(const ObjLodGroup &/*inCopy*/) = delete;
-		ObjLodGroup & operator =(const ObjLodGroup &/*inCopy*/) = delete;
+		ObjLodGroup(const ObjLodGroup &) = delete;
+		ObjLodGroup & operator =(const ObjLodGroup &) = delete;
 
 	protected:
 
@@ -65,7 +65,7 @@ namespace xobj {
 
 		//--------------------------------------------------------
 
-		XpObjLib void setObjectName(const std::string & inName);
+		XpObjLib void setObjectName(const std::string & mame);
 		XpObjLib const std::string & objectName() const;
 
 		//--------------------------------------------------------

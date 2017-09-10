@@ -62,9 +62,9 @@ namespace xobj {
 		/*!
 		 * \details Constructor init.
 		 * \note Makes the enabled attribute.
-		 * \param inState 
+		 * \param [in] state 
 		 */
-		XpObjLib AttrWetDry(eState inState);
+		XpObjLib AttrWetDry(eState state);
 
 		~AttrWetDry() = default;
 
@@ -72,25 +72,25 @@ namespace xobj {
 
 		/*!
 		 * \details Check whether the attribute is enabled. 
-		 * \note All class's seters will enable this attribute.
+		 * \note All class's setters will enable this attribute.
 		 */
 		XpObjLib operator bool() const;
 
 		/*!
-		 * \details Sets the attribute enabled/desabled.
-		 * \note All class's seters will enable this attribute.
-		 * \param inState 
+		 * \details Sets the attribute enabled/disabled.
+		 * \note All class's setters will enable this attribute.
+		 * \param [in] state 
 		 */
-		XpObjLib void setEnabled(bool inState);
+		XpObjLib void setEnabled(bool state);
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrWetDry & inRight) const;
-		XpObjLib bool operator!=(const AttrWetDry & inRight) const;
+		XpObjLib bool operator==(const AttrWetDry & other) const;
+		XpObjLib bool operator!=(const AttrWetDry & other) const;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib void setState(eState inState);
+		XpObjLib void setState(eState state);
 		XpObjLib eState state() const;
 
 		//-------------------------------------------------------------------------

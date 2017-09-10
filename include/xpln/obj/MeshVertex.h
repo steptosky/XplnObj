@@ -47,17 +47,17 @@ namespace xobj {
 
 		MeshVertex() = default;
 
-		MeshVertex(const Point3 & inPosition, const Point3 & inNormal, const Point2 & inTexCoord)
-			: pPosition(inPosition),
-			pNormal(inNormal),
-			pTexture(inTexCoord) {}
+		MeshVertex(const Point3 & pos, const Point3 & normal, const Point2 & texCoord)
+			: pPosition(pos),
+			pNormal(normal),
+			pTexture(texCoord) {}
 
 		//------------------------------------------------------------------
 
-		bool operator==(const MeshVertex & inOther) const {
-			return pPosition == inOther.pPosition &&
-					pNormal == inOther.pNormal &&
-					pTexture == inOther.pTexture;
+		bool operator==(const MeshVertex & other) const {
+			return pPosition == other.pPosition &&
+					pNormal == other.pNormal &&
+					pTexture == other.pTexture;
 		}
 
 		bool operator!=(const MeshVertex & inOther) const {

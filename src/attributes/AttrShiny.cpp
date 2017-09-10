@@ -37,8 +37,8 @@ namespace xobj {
 	//////////////////////////////////////////* Static area *///////////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrShiny::AttrShiny(float inRatio)
-		: mRatio(inRatio),
+	AttrShiny::AttrShiny(float ratio)
+		: mRatio(ratio),
 		mIsEnabled(true) { }
 
 	AttrShiny::AttrShiny()
@@ -53,27 +53,27 @@ namespace xobj {
 		return mIsEnabled;
 	}
 
-	void AttrShiny::setEnabled(bool inState) {
-		mIsEnabled = inState;
+	void AttrShiny::setEnabled(bool state) {
+		mIsEnabled = state;
 	}
 
-	bool AttrShiny::operator==(const AttrShiny & inRight) const {
-		return (mIsEnabled == inRight.mIsEnabled && sts::isEqual(mRatio, inRight.mRatio, 0.01f));
+	bool AttrShiny::operator==(const AttrShiny & other) const {
+		return (mIsEnabled == other.mIsEnabled && sts::isEqual(mRatio, other.mRatio, 0.01f));
 	}
 
-	bool AttrShiny::operator!=(const AttrShiny & inRight) const {
-		return !operator==(inRight);
+	bool AttrShiny::operator!=(const AttrShiny & other) const {
+		return !operator==(other);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrShiny::setRatio(float inRatio) {
-		inRatio = std::min(inRatio, 1.0f);
-		inRatio = std::max(inRatio, 0.0f);
+	void AttrShiny::setRatio(float ratio) {
+		ratio = std::min(ratio, 1.0f);
+		ratio = std::max(ratio, 0.0f);
 		mIsEnabled = true;
-		mRatio = inRatio;
+		mRatio = ratio;
 	}
 
 	float AttrShiny::ratio() const {

@@ -53,9 +53,9 @@ namespace xobj {
 		/*!
 		 * \details Constructor init.
 		 * \note Makes the enabled attribute.
-		 * \param inDistance 
+		 * \param [in] distance 
 		 */
-		XpObjLib AttrLodDrap(float inDistance);
+		XpObjLib AttrLodDrap(float distance);
 
 		~AttrLodDrap() = default;
 
@@ -63,25 +63,25 @@ namespace xobj {
 
 		/*!
 		 * \details Check whether the attribute is enabled. 
-		 * \note All class's seters will enable this attribute.
+		 * \note All class's setters will enable this attribute.
 		 */
 		XpObjLib operator bool() const;
 
 		/*!
-		 * \details Sets the attribute enabled/desabled.
-		 * \note All class's seters will enable this attribute.
-		 * \param inState 
+		 * \details Sets the attribute enabled/disabled.
+		 * \note All class's setters will enable this attribute.
+		 * \param [in] state 
 		 */
-		XpObjLib void setEnabled(bool inState);
+		XpObjLib void setEnabled(bool state);
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrLodDrap & inRight) const;
-		XpObjLib bool operator!=(const AttrLodDrap & inRight) const;
+		XpObjLib bool operator==(const AttrLodDrap & other) const;
+		XpObjLib bool operator!=(const AttrLodDrap & other) const;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib void setDistance(float inDistance);
+		XpObjLib void setDistance(float distance);
 		XpObjLib float distance() const;
 
 		//-------------------------------------------------------------------------

@@ -42,14 +42,14 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool AttrManipNoop::equals(const AttrManipBase * inMainp) const {
-		if (!inMainp)
+	bool AttrManipNoop::equals(const AttrManipBase * manip) const {
+		if (!manip)
 			return false;
 
-		if (!AttrManipBase::equals(inMainp))
+		if (!AttrManipBase::equals(manip))
 			return false;
 
-		return dynamic_cast<const AttrManipNoop*>(inMainp) != nullptr;
+		return dynamic_cast<const AttrManipNoop*>(manip) != nullptr;
 	}
 
 	AttrManipBase * AttrManipNoop::clone() const {

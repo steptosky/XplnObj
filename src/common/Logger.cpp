@@ -53,8 +53,8 @@ namespace xobj {
 	//////////////////////////////////////////* Static area *///////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ExternalLog::registerCallBack(CallBack inCb) {
-		sts::BaseLogger::instance().setCallBack(reinterpret_cast<sts::BaseLogger::CallBack>(inCb));
+	void ExternalLog::registerCallBack(CallBack callback) {
+		sts::BaseLogger::instance().setCallBack(reinterpret_cast<sts::BaseLogger::CallBack>(callback));
 		sts::BaseLogger::instance().setLevel(LOGLEVEL);
 	}
 
@@ -66,9 +66,9 @@ namespace xobj {
 	//////////////////////////////////////////* Functions */////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	std::string ExternalLog::about(bool inUseWinEol) {
+	std::string ExternalLog::about(bool useWinEol) {
 		std::stringstream stream;
-		const char * eol = inUseWinEol ? "\r\n" : "\n";
+		const char * eol = useWinEol ? "\r\n" : "\n";
 		//-------------------------------------------------------------------------
 
 		stream << "Project: " << XOBJ_PROJECT_NAME << eol;
@@ -94,9 +94,9 @@ namespace xobj {
 		return stream.str();
 	}
 
-	std::string ExternalLog::shortAbout(bool inUseWinEol) {
+	std::string ExternalLog::shortAbout(bool useWinEol) {
 		std::stringstream stream;
-		const char * eol = inUseWinEol ? "\r\n" : "\n";
+		const char * eol = useWinEol ? "\r\n" : "\n";
 		//-------------------------------------------------------------------------
 
 		stream << "Project: " << XOBJ_PROJECT_NAME << eol;

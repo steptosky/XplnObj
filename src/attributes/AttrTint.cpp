@@ -36,9 +36,9 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrTint::AttrTint(float inAlbedoRatio, float inEmissiveRatio)
-		: mAlbedo(inAlbedoRatio),
-		mEmissive(inEmissiveRatio),
+	AttrTint::AttrTint(float albedoRatio, float emissiveRatio)
+		: mAlbedo(albedoRatio),
+		mEmissive(emissiveRatio),
 		mIsEnabled(true) { }
 
 	AttrTint::AttrTint()
@@ -54,31 +54,31 @@ namespace xobj {
 		return mIsEnabled;
 	}
 
-	void AttrTint::setEnabled(bool inState) {
-		mIsEnabled = inState;
+	void AttrTint::setEnabled(bool state) {
+		mIsEnabled = state;
 	}
 
-	bool AttrTint::operator==(const AttrTint & inRight) const {
-		return (mIsEnabled == inRight.mIsEnabled &&
-				sts::isEqual(mAlbedo, inRight.mAlbedo, 0.01f) &&
-				sts::isEqual(mEmissive, inRight.mEmissive, 0.01f));
+	bool AttrTint::operator==(const AttrTint & other) const {
+		return (mIsEnabled == other.mIsEnabled &&
+				sts::isEqual(mAlbedo, other.mAlbedo, 0.01f) &&
+				sts::isEqual(mEmissive, other.mEmissive, 0.01f));
 	}
 
-	bool AttrTint::operator!=(const AttrTint & inRight) const {
-		return !operator==(inRight);
+	bool AttrTint::operator!=(const AttrTint & other) const {
+		return !operator==(other);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrTint::setAlbedo(float inRatio) {
-		mAlbedo = inRatio;
+	void AttrTint::setAlbedo(float albedoRatio) {
+		mAlbedo = albedoRatio;
 		mIsEnabled = true;
 	}
 
-	void AttrTint::setEmissive(float inRatio) {
-		mEmissive = inRatio;
+	void AttrTint::setEmissive(float emissiveRatio) {
+		mEmissive = emissiveRatio;
 		mIsEnabled = true;
 	}
 
@@ -90,9 +90,9 @@ namespace xobj {
 		return mEmissive;
 	}
 
-	void AttrTint::set(float inAlbedoRatio, float inEmissiveRatio) {
-		mAlbedo = inAlbedoRatio;
-		mEmissive = inEmissiveRatio;
+	void AttrTint::set(float albedoRatio, float emissiveRatio) {
+		mAlbedo = albedoRatio;
+		mEmissive = emissiveRatio;
 	}
 
 	/**************************************************************************************************/

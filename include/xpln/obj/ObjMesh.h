@@ -47,11 +47,11 @@ namespace xobj {
 	 */
 	class ObjMesh : public ObjAbstract {
 
-		ObjMesh & operator =(const ObjMesh & inCopy) = delete;
+		ObjMesh & operator =(const ObjMesh &) = delete;
 
 	protected:
 
-		XpObjLib ObjMesh(const ObjMesh & inCopy);
+		XpObjLib ObjMesh(const ObjMesh & copy);
 
 	public:
 
@@ -68,7 +68,7 @@ namespace xobj {
 		//-------------------------------------------------------------------------
 
 		/*!
-		 * \details Attribute set.
+		 * \details Attributes set.
 		 */
 		AttrSet pAttr;
 
@@ -85,10 +85,10 @@ namespace xobj {
 		//-------------------------------------------------------------------------
 
 		/*!
-		 * \details Attaches vertices and faces from another mesh to this one.
-		 * \param [in] inOtherMesh
+		 * \details Attaches vertices and faces from another mesh.
+		 * \param [in] otherMesh
 		 */
-		XpObjLib void attach(const ObjMesh & inOtherMesh);
+		XpObjLib void attach(const ObjMesh & otherMesh);
 
 		//-------------------------------------------------------------------------
 
@@ -96,7 +96,7 @@ namespace xobj {
 		XpObjLib eObjectType objType() const final;
 
 		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & inTm) final;
+		XpObjLib void applyTransform(const TMatrix & tm) final;
 
 		/* \copydoc ObjAbstract::clone */
 		XpObjLib ObjAbstract * clone() const override;

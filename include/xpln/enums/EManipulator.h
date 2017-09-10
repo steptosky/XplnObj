@@ -29,7 +29,6 @@
 
 #pragma once
 
-#include <string>
 #include <vector>
 #include <cstdint>
 #include "xpln/XplnObjExport.h"
@@ -87,33 +86,33 @@ namespace xobj {
 
 		/*!
 		 * \details Constructor init from manipulator's Id.
-		 * \param [in] inId
+		 * \param [in] id
 		 */
-		XpObjLib explicit EManipulator(eId inId);
+		XpObjLib explicit EManipulator(eId id);
 
 		XpObjLib ~EManipulator() = default;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool operator ==(const EManipulator & inRight) const;
-		XpObjLib bool operator ==(eId inId) const;
+		XpObjLib bool operator ==(const EManipulator & other) const;
+		XpObjLib bool operator ==(eId id) const;
 
-		XpObjLib bool operator !=(const EManipulator & inRight) const;
-		XpObjLib bool operator !=(eId inId) const;
+		XpObjLib bool operator !=(const EManipulator & other) const;
+		XpObjLib bool operator !=(eId id) const;
 
 		//-------------------------------------------------------------------------
 
 		/*!
 		 * \details Makes from string which is used in the ui.
-		 * \param [in] inName
+		 * \param [in] name
 		 */
-		XpObjLib static EManipulator fromUiString(const char * inName);
+		XpObjLib static EManipulator fromUiString(const char * name);
 
 		/*!
 		 * \details Makes from string which is used in the obj files.
-		 * \param [in] inAttrName
+		 * \param [in] attrName
 		 */
-		XpObjLib static EManipulator fromString(const char * inAttrName);
+		XpObjLib static EManipulator fromString(const char * attrName);
 
 		//-------------------------------------------------------------------------
 

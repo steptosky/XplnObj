@@ -46,7 +46,7 @@ namespace xobj {
 	public:
 
 		Color();
-		Color(float inRed, float inGreen, float inBlue, float inAlpha = 1.0f);
+		Color(float red, float green, float blue, float alpha = 1.0f);
 		Color(const Color & p);
 		~Color() = default;
 
@@ -65,16 +65,16 @@ namespace xobj {
 		float blue() const;
 		float alpha() const;
 
-		void setRed(float inValue);
-		void setGreen(float inValue);
-		void setBlue(float inValue);
-		void setAlpha(float inValue);
+		void setRed(float val);
+		void setGreen(float val);
+		void setBlue(float val);
+		void setAlpha(float val);
 
-		void setValues(float inRed, float inGreen, float inBlue, float inAlpha) {
-			setRed(inRed);
-			setGreen(inGreen);
-			setBlue(inBlue);
-			setAlpha(inAlpha);
+		void setValues(float red, float green, float blue, float alpha) {
+			setRed(red);
+			setGreen(green);
+			setBlue(blue);
+			setAlpha(alpha);
 		}
 
 		//-------------------------------------------------------------------------

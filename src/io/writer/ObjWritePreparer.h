@@ -44,14 +44,14 @@ namespace xobj {
 
 	public:
 
-		static bool prepare(ObjMain & inObjMain);
+		static bool prepare(ObjMain & mainObj);
 
 	private:
 
 		static bool proccessTransform(Transform & transform);
 		static bool proccessObjects(Transform & transform);
 
-		static void checkForTwoSided(ObjAbstract & inObj);
+		static void checkForTwoSided(ObjAbstract & obj);
 
 	};
 

@@ -43,11 +43,11 @@ namespace xobj {
 	 */
 	class ObjDummy : public ObjAbstract {
 
-		ObjDummy & operator =(const ObjDummy & inCopy) = delete;
+		ObjDummy & operator =(const ObjDummy &) = delete;
 
 	protected:
 
-		XpObjLib ObjDummy(const ObjDummy & inCopy);
+		XpObjLib ObjDummy(const ObjDummy & copy);
 
 	public:
 
@@ -60,7 +60,7 @@ namespace xobj {
 		XpObjLib eObjectType objType() const final;
 
 		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & inTm) final;
+		XpObjLib void applyTransform(const TMatrix & tm) final;
 
 		/* \copydoc ObjAbstract::clone */
 		XpObjLib ObjAbstract * clone() const override;

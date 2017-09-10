@@ -432,7 +432,7 @@ void TMatrix3<value_type>::setTranslateIdentity() {
 /*!
  * \details This method makes rotation portion to identity
  * \warning If the matrix was sheared (skewed) then this method is not able to leave correct scale component.
- * \param[in] leaveScale if true then method will try to leave scale and clear any rotation data.
+ * \param [in] leaveScale if true then method will try to leave scale and clear any rotation data.
  */
 template<class value_type>
 void TMatrix3<value_type>::setRotateIdentity(bool leaveScale) {
@@ -523,7 +523,7 @@ void TMatrix3<value_type>::setScaleIdentity() {
 
 /*!
  * \details Applies an incremental translation transformation to this matrix.
- * \param[in] inVec vector 3
+ * \param [in] inVec vector 3
  */
 template<class value_type>
 void TMatrix3<value_type>::translate(const Vector3<value_type> & inVec) {
@@ -532,9 +532,9 @@ void TMatrix3<value_type>::translate(const Vector3<value_type> & inVec) {
 
 /*!
  * \details Applies an incremental translation transformation to this matrix.
- * \param[in] inX
- * \param[in] inY
- * \param[in] inZ
+ * \param [in] inX
+ * \param [in] inY
+ * \param [in] inZ
  */
 template<class value_type>
 void TMatrix3<value_type>::translate(value_type inX, value_type inY, value_type inZ) {
@@ -548,7 +548,7 @@ void TMatrix3<value_type>::translate(value_type inX, value_type inY, value_type 
 
 /*!
  * \details Sets actual translation transformation of this matrix.
- * \param[in] inVec vector 3
+ * \param [in] inVec vector 3
  */
 template<class value_type>
 void TMatrix3<value_type>::setTranslate(const sts_t::Vector3<value_type> & inVec) {
@@ -557,9 +557,9 @@ void TMatrix3<value_type>::setTranslate(const sts_t::Vector3<value_type> & inVec
 
 /*!
  * \details Sets actual translation transformation of this matrix.
- * \param[in] inX
- * \param[in] inY
- * \param[in] inZ
+ * \param [in] inX
+ * \param [in] inY
+ * \param [in] inZ
  */
 template<class value_type>
 void TMatrix3<value_type>::setTranslate(value_type inX, value_type inY, value_type inZ) {
@@ -612,7 +612,7 @@ value_type TMatrix3<value_type>::translationZ() const {
 /*!
  * \details Apply an incremental X rotation transformation to this matrix.
  * This is equivalent to multiplying on the RIGHT by the transform.
- * \param[in] inAngleRadians angle in radians
+ * \param [in] inAngleRadians angle in radians
  */
 template<class value_type>
 void TMatrix3<value_type>::rotateX(value_type inAngleRadians) {
@@ -646,7 +646,7 @@ void TMatrix3<value_type>::rotateX(value_type inAngleRadians) {
 /*!
  * \details Apply an incremental Y rotation transformation to this matrix.
  * This is equivalent to multiplying on the RIGHT by the transform.
- * \param[in] inAngleRadians angle in radians
+ * \param [in] inAngleRadians angle in radians
  */
 template<class value_type>
 void TMatrix3<value_type>::rotateY(value_type inAngleRadians) {
@@ -680,7 +680,7 @@ void TMatrix3<value_type>::rotateY(value_type inAngleRadians) {
 /*!
  * \details Apply an incremental Z rotation transformation to this matrix.
  * This is equivalent to multiplying on the RIGHT by the transform.
- * \param[in] inAngleRadians angle in radians
+ * \param [in] inAngleRadians angle in radians
  */
 template<class value_type>
 void TMatrix3<value_type>::rotateZ(value_type inAngleRadians) {
@@ -727,7 +727,7 @@ void TMatrix3<value_type>::setRotate(const Vector3<value_type> & inAxis, value_t
 /*!
  * \details Applies an incremental scaling transformation to this matrix.
  * This is equivalent to multiplying on the RIGHT by the transform.
- * \param[in] s scale
+ * \param [in] s scale
  */
 template<class value_type>
 void TMatrix3<value_type>::scale(const Vector3<value_type> & inVec) {
@@ -737,9 +737,9 @@ void TMatrix3<value_type>::scale(const Vector3<value_type> & inVec) {
 /*!
  * \details Applies an incremental scaling transformation to this matrix.
  * This is equivalent to multiplying on the RIGHT by the transform.
- * \param[in] inX
- * \param[in] inY
- * \param[in] inZ
+ * \param [in] inX
+ * \param [in] inY
+ * \param [in] inZ
  */
 template<class value_type>
 void TMatrix3<value_type>::scale(value_type inX, value_type inY, value_type inZ) {
@@ -768,9 +768,9 @@ void TMatrix3<value_type>::preTranslate(const Vector3<value_type> & p) {
 /*!
  * \details Applies an incremental translation transformation to this matrix.
  * This is equivalent to multiplying on the LEFT by the transform.
- * \param[in] inX Specifies the translation distance.
- * \param[in] inY Specifies the translation distance.
- * \param[in] inZ Specifies the translation distance.
+ * \param [in] inX Specifies the translation distance.
+ * \param [in] inY Specifies the translation distance.
+ * \param [in] inZ Specifies the translation distance.
  */
 template<class value_type>
 void TMatrix3<value_type>::preTranslate(value_type inX, value_type inY, value_type inZ) {
@@ -993,7 +993,7 @@ void TMatrix3<value_type>::mapVectors(sts_t::Vector3<value_type> * inOutVec, siz
  * \warning Scale will be identity
  * The algorithm seems to take a maximum of 11 iterations to converge.
  * An orthogonal matrix has an axis system where each axis is 90 degrees from the others (it's not skewed).
- * \param[in] maxIteration iteration count
+ * \param [in] maxIteration iteration count
  */
 template<class value_type>
 void TMatrix3<value_type>::orthogonalize(int maxIteration) {

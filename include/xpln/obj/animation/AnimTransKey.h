@@ -47,12 +47,12 @@ namespace xobj {
 		AnimTransKey()
 			: pDrfValue(0.0f) {}
 
-		AnimTransKey(float inX, float inY, float inZ, float inDataRefValue)
-			: AnimTransKey(Point3(inX, inY, inZ), inDataRefValue) {}
+		AnimTransKey(float x, float y, float z, float dataRefValue)
+			: AnimTransKey(Point3(x, y, z), dataRefValue) {}
 
-		AnimTransKey(const Point3 & inPosition, float inDataRefValue)
-			: pPosition(inPosition),
-			pDrfValue(inDataRefValue) {}
+		AnimTransKey(const Point3 & pos, float dataRefValue)
+			: pPosition(pos),
+			pDrfValue(dataRefValue) {}
 
 		//-----------------------------------------
 

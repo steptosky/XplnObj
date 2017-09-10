@@ -50,13 +50,13 @@ namespace xobj {
 
 		//-------------------------------------------------------------------------
 
-		bool operator==(const AttrManipWheel & inRight) const;
-		bool operator!=(const AttrManipWheel & inRight) const;
+		bool operator==(const AttrManipWheel & other) const;
+		bool operator!=(const AttrManipWheel & other) const;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib void setWheelEnabled(bool inState);
-		XpObjLib void setWheelDelta(float inVal);
+		XpObjLib void setWheelEnabled(bool state);
+		XpObjLib void setWheelDelta(float delta);
 		XpObjLib bool isWheelEnabled() const;
 		XpObjLib float wheelDelta() const;
 

@@ -40,36 +40,36 @@ namespace xobj {
 	/*!
 	 * \details Rectangle for texture coordinates, dimension by 2 points.
 	 * \remark s1,t1,s2,t2 - the texture coordinates (fractions from 0 to 1).
-	 * S refers to horizontal coordinates, and T for vertical coordinates.
+	 *         S refers to horizontal coordinates, and T for vertical coordinates.
 	 */
 	class RectangleI {
 	public:
 
 		/*! 
 		 * \details Sets rectangle
-		 * \param[in] inPoint1 x = s1, y = t1
-		 * \param[in] inPoint2 x = s2, y = t2
+		 * \param [in] p1 x = s1, y = t1
+		 * \param [in] p2 x = s2, y = t2
 		 */
-		void setRect(const Point2 & inPoint1, const Point2 & inPoint2);
+		void setRect(const Point2 & p1, const Point2 & p2);
 
 		/*!
 		 * \details Sets point 1
-		 * param[in] inPoint1 x = s1, y = t1
+		 * \param [in] p1 x = s1, y = t1
 		 */
-		void setPoint1(const Point2 & inPoint1);
+		void setPoint1(const Point2 & p1);
 
 		/*! 
 		 * \details Sets point 2
-		 * \param[in] inPoint2 x = s2, y = t2
+		 * \param [in] p2 x = s2, y = t2
 		 */
-		void setPoint2(const Point2 & inPoint2);
+		void setPoint2(const Point2 & p2);
 
 		/*! 
 		 * \details Gets rectangle
-		 * \param[out] outPoint1 x = s1, y = t1
-		 * \param[out] outPoint2 x = s2, y = t2
+		 * \param [out] p1 x = s1, y = t1
+		 * \param [out] p2 x = s2, y = t2
 		 */
-		void rect(Point2 & outPoint1, Point2 & outPoint2) const;
+		void rect(Point2 & p1, Point2 & p2) const;
 
 		/*! 
 		 * \details Sets point 1
@@ -84,20 +84,20 @@ namespace xobj {
 		const Point2 & point2() const;
 
 		/*! Operator = */
-		RectangleI & operator=(const RectangleI & inOther);
+		RectangleI & operator=(const RectangleI & other);
 
 		/*! Constructor default */
 		RectangleI();
 
 		/*! 
 		 * \details Constructor init
-		 * \param[in] inPoint1 x = s1, y = t1
-		 * \param[in] inPoint2 x = s2, y = t2
+		 * \param [in] p1 x = s1, y = t1
+		 * \param [in] p2 x = s2, y = t2
 		 */
-		RectangleI(const Point2 & inPoint1, const Point2 & inPoint2);
+		RectangleI(const Point2 & p1, const Point2 & p2);
 
 		/*! Constructor copy  */
-		RectangleI(const RectangleI & inOther);
+		RectangleI(const RectangleI & other);
 
 		virtual ~RectangleI() { }
 
@@ -112,22 +112,22 @@ namespace xobj {
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	/***********************************************************************************************/
 
-	inline void RectangleI::setRect(const Point2 & inPoint1, const Point2 & inPoint2) {
-		mPoint1 = inPoint1;
-		mPoint2 = inPoint2;
+	inline void RectangleI::setRect(const Point2 & p1, const Point2 & p2) {
+		mPoint1 = p1;
+		mPoint2 = p2;
 	}
 
-	inline void RectangleI::setPoint1(const Point2 & inPoint1) {
-		mPoint1 = inPoint1;
+	inline void RectangleI::setPoint1(const Point2 & p1) {
+		mPoint1 = p1;
 	}
 
-	inline void RectangleI::setPoint2(const Point2 & inPoint2) {
-		mPoint2 = inPoint2;
+	inline void RectangleI::setPoint2(const Point2 & p2) {
+		mPoint2 = p2;
 	}
 
-	inline void RectangleI::rect(Point2 & outPoint1, Point2 & outPoint2) const {
-		outPoint1 = mPoint1;
-		outPoint2 = mPoint2;
+	inline void RectangleI::rect(Point2 & p1, Point2 & p2) const {
+		p1 = mPoint1;
+		p2 = mPoint2;
 	}
 
 	inline const Point2 & RectangleI::point1() const {
@@ -138,9 +138,9 @@ namespace xobj {
 		return mPoint2;
 	}
 
-	inline RectangleI & RectangleI::operator=(const RectangleI & inOther) {
-		mPoint1 = inOther.mPoint1;
-		mPoint2 = inOther.mPoint2;
+	inline RectangleI & RectangleI::operator=(const RectangleI & other) {
+		mPoint1 = other.mPoint1;
+		mPoint2 = other.mPoint2;
 		return *this;
 	}
 

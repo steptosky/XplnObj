@@ -65,14 +65,14 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool AttrManipRadio::equals(const AttrManipBase * inMainp) const {
-		if (!inMainp)
+	bool AttrManipRadio::equals(const AttrManipBase * manip) const {
+		if (!manip)
 			return false;
 
-		if (!AttrManipBase::equals(inMainp))
+		if (!AttrManipBase::equals(manip))
 			return false;
 
-		const AttrManipRadio * right = dynamic_cast<const AttrManipRadio*>(inMainp);
+		const AttrManipRadio * right = dynamic_cast<const AttrManipRadio*>(manip);
 		if (!right)
 			return false;
 

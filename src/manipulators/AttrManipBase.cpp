@@ -35,32 +35,32 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrManipBase::AttrManipBase(EManipulator inType)
-		: mEManipulator(inType),
+	AttrManipBase::AttrManipBase(EManipulator type)
+		: mEManipulator(type),
 		mToolType("none") { }
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrManipBase::setToolTip(const std::string & inToolTip) {
-		mToolType = inToolTip;
+	void AttrManipBase::setToolTip(const std::string & toolTip) {
+		mToolType = toolTip;
 	}
 
 	const std::string & AttrManipBase::toolTip() const {
 		return mToolType;
 	}
 
-	void AttrManipBase::setCursor(ECursor inCursor) {
-		mCursor = inCursor;
+	void AttrManipBase::setCursor(ECursor cursor) {
+		mCursor = cursor;
 	}
 
-	bool AttrManipBase::equals(const AttrManipBase * inMainp) const {
-		if (!inMainp)
+	bool AttrManipBase::equals(const AttrManipBase * manip) const {
+		if (!manip)
 			return false;
-		if (mCursor != inMainp->mCursor)
+		if (mCursor != manip->mCursor)
 			return false;
-		if (mToolType != inMainp->mToolType)
+		if (mToolType != manip->mToolType)
 			return false;
 		return true;
 	}

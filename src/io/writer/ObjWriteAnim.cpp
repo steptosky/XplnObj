@@ -40,45 +40,45 @@ namespace xobj {
 	/////////////////////////////////////////////* Static area *//////////////////////////////////////////////
 	/********************************************************************************************************/
 
-	const Transform * ObjWriteAnim::animRotateParent(const Transform * inTransform) {
-		if (inTransform == nullptr) {
+	const Transform * ObjWriteAnim::animRotateParent(const Transform * transform) {
+		if (transform == nullptr) {
 			return nullptr;
 		}
-		if (inTransform->isRoot())
+		if (transform->isRoot())
 			return nullptr;
 
-		if (inTransform->hasAnimRotate()) {
-			return inTransform;
+		if (transform->hasAnimRotate()) {
+			return transform;
 		}
 
-		return animRotateParent(dynamic_cast<const Transform*>(inTransform->parent()));
+		return animRotateParent(dynamic_cast<const Transform*>(transform->parent()));
 	}
 
-	const Transform * ObjWriteAnim::animTransParent(const Transform * inTransform) {
-		if (inTransform == nullptr) {
+	const Transform * ObjWriteAnim::animTransParent(const Transform * transform) {
+		if (transform == nullptr) {
 			return nullptr;
 		}
-		if (inTransform->isRoot())
+		if (transform->isRoot())
 			return nullptr;
 
-		if (inTransform->hasAnimTrans()) {
-			return inTransform;
+		if (transform->hasAnimTrans()) {
+			return transform;
 		}
 
-		return animTransParent(dynamic_cast<const Transform*>(inTransform->parent()));
+		return animTransParent(dynamic_cast<const Transform*>(transform->parent()));
 	}
 
 	/********************************************************************************************************/
 	///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
 	/********************************************************************************************************/
 
-	ObjWriteAnim::ObjWriteAnim(const ExportOptions * inOption, IOStatistic * outStat) {
-		assert(inOption);
+	ObjWriteAnim::ObjWriteAnim(const ExportOptions * option, IOStatistic * outStat) {
+		assert(option);
 		assert(outStat);
 
 		mWriter = nullptr;
 		mStat = outStat;
-		mOptions = inOption;
+		mOptions = option;
 	}
 
 	ObjWriteAnim::~ObjWriteAnim() {
@@ -91,11 +91,11 @@ namespace xobj {
 	//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
 	/********************************************************************************************************/
 
-	bool ObjWriteAnim::printAnimationStart(AbstractWriter & writer, const Transform & inTransform) {
-		if (!inTransform.hasAnim())
+	bool ObjWriteAnim::printAnimationStart(AbstractWriter & writer, const Transform & transform) {
+		if (!transform.hasAnim())
 			return false;
 
-		if (!inTransform.hasObjects() && inTransform.childrenCount() == 0)
+		if (!transform.hasObjects() && transform.childrenCount() == 0)
 			return false;
 
 		mWriter = &writer;
@@ -103,7 +103,7 @@ namespace xobj {
 		//-------------------------------------------------------------------------
 
 		if (mOptions->isEnabled(XOBJ_EXP_MARK_TRANSFORM)) {
-			mWriter->printLine(std::string(ATTR_ANIM_BEGIN).append(" ## ").append(inTransform.name()));
+			mWriter->printLine(std::string(ATTR_ANIM_BEGIN).append(" ## ").append(transform.name()));
 		}
 		else {
 			mWriter->printLine(ATTR_ANIM_BEGIN);
@@ -111,22 +111,22 @@ namespace xobj {
 
 		mWriter->spaceMore();
 		//-------------------------------------------------------------------------
-		printVisible(inTransform.pAnimVis, inTransform);
-		printTrans(inTransform.pAnimTrans, inTransform);
-		printRotate(inTransform.pAnimRotate, inTransform);
+		printVisible(transform.pAnimVis, transform);
+		printTrans(transform.pAnimTrans, transform);
+		printRotate(transform.pAnimRotate, transform);
 		//-------------------------------------------------------------------------
 		return true;
 	}
 
-	bool ObjWriteAnim::printAnimationEnd(AbstractWriter & writer, const Transform & inTransform) {
-		if (!inTransform.hasAnim())
+	bool ObjWriteAnim::printAnimationEnd(AbstractWriter & writer, const Transform & transform) {
+		if (!transform.hasAnim())
 			return false;
 
 		mWriter = &writer;
 		mWriter->spaceLess();
 
 		if (mOptions->isEnabled(XOBJ_EXP_MARK_TRANSFORM)) {
-			mWriter->printLine(std::string(ATTR_ANIM_END).append(" ## ").append(inTransform.name()));
+			mWriter->printLine(std::string(ATTR_ANIM_END).append(" ## ").append(transform.name()));
 		}
 		else {
 			mWriter->printLine(ATTR_ANIM_END);
@@ -138,10 +138,10 @@ namespace xobj {
 	//////////////////////////////////////////* Functions */////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const Transform & inTransform) const {
+	void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const Transform & transform) const {
 		std::string sep = mOptions->isEnabled(XOBJ_EXP_DEBUG) ? "   " : " ";
-		for (auto & a: animTrans) {
-			if (a.isAnimated() && checkParameters(a, std::string("Transform: ").append(inTransform.name()))) {
+		for (auto & a : animTrans) {
+			if (a.isAnimated() && checkParameters(a, std::string("Transform: ").append(transform.name()))) {
 				if (a.pKeys.size() == 2) {
 					StringStream stream;
 					stream << ATTR_TRANS
@@ -182,10 +182,10 @@ namespace xobj {
 
 	//-------------------------------------------------------------------------
 
-	void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const Transform & inTransform) const {
+	void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const Transform & transform) const {
 		std::string sep = mOptions->isEnabled(XOBJ_EXP_DEBUG) ? "   " : " ";
 		for (auto & a : animRot) {
-			if (a.isAnimated() && checkParameters(a, std::string("Transform: ").append(inTransform.name()))) {
+			if (a.isAnimated() && checkParameters(a, std::string("Transform: ").append(transform.name()))) {
 				if (a.pKeys.size() == 2) {
 					StringStream stream;
 					stream << ATTR_ROTATE
@@ -229,12 +229,12 @@ namespace xobj {
 
 	//-------------------------------------------------------------------------
 
-	void ObjWriteAnim::printVisible(const AnimVisibility & inAnim, const Transform & inTransform) const {
+	void ObjWriteAnim::printVisible(const AnimVisibility & inAnim, const Transform & transform) const {
 		if (inAnim.pKeys.empty())
 			return;
 
 		for (auto & curr : inAnim.pKeys) {
-			if (checkParameters(curr, std::string("Transform: ").append(inTransform.name()))) {
+			if (checkParameters(curr, std::string("Transform: ").append(transform.name()))) {
 				++mStat->pAnimAttrCount;
 				mWriter->printLine(toObjString(curr));
 				if (curr.pHasLoop) {
@@ -249,9 +249,9 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjWriteAnim::printLoop(float inVal) const {
+	void ObjWriteAnim::printLoop(float val) const {
 		StringStream stream;
-		stream << ANIM_KEYFRAME_LOOP << " " << inVal;
+		stream << ANIM_KEYFRAME_LOOP << " " << val;
 		mWriter->printLine(stream.str());
 		++mStat->pAnimAttrCount;
 	}

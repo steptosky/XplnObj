@@ -45,11 +45,11 @@ namespace xobj {
 	 */
 	class ObjLightPoint : public ObjAbstract {
 
-		ObjLightPoint & operator =(const ObjLightPoint & inCopy) = delete;
+		ObjLightPoint & operator =(const ObjLightPoint &) = delete;
 
 	protected:
 
-		XpObjLib ObjLightPoint(const ObjLightPoint & inCopy);
+		XpObjLib ObjLightPoint(const ObjLightPoint & copy);
 
 	public:
 
@@ -58,8 +58,8 @@ namespace xobj {
 
 		//--------------------------------------------------------
 
-		XpObjLib void setColor(const Color & inColor);
-		XpObjLib void setPosition(const Point3 & inVal);
+		XpObjLib void setColor(const Color & color);
+		XpObjLib void setPosition(const Point3 & pos);
 
 		XpObjLib const Color & color() const;
 		XpObjLib const Point3 & position() const;
@@ -70,7 +70,7 @@ namespace xobj {
 		XpObjLib eObjectType objType() const final;
 
 		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & inTm) final;
+		XpObjLib void applyTransform(const TMatrix & tm) final;
 
 		/* \copydoc ObjAbstract::clone */
 		XpObjLib ObjAbstract * clone() const override;

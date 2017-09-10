@@ -43,11 +43,11 @@ namespace xobj {
 	 */
 	class ObjSmoke : public ObjAbstract {
 
-		ObjSmoke & operator =(const ObjSmoke & inCopy) = delete;
+		ObjSmoke & operator =(const ObjSmoke &) = delete;
 
 	protected:
 
-		XpObjLib ObjSmoke(const ObjSmoke & inCopy);
+		XpObjLib ObjSmoke(const ObjSmoke & copy);
 
 	public:
 
@@ -66,8 +66,8 @@ namespace xobj {
 
 		//-----------------------------------------------------
 
-		XpObjLib void setSmokeType(eSmokeType inType);
-		XpObjLib void setPosition(const Point3 & val);
+		XpObjLib void setSmokeType(eSmokeType type);
+		XpObjLib void setPosition(const Point3 & pos);
 		XpObjLib void setSize(float inSize);
 
 		XpObjLib eSmokeType smokeType() const;
@@ -80,7 +80,7 @@ namespace xobj {
 		XpObjLib eObjectType objType() const final;
 
 		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & inTm) final;
+		XpObjLib void applyTransform(const TMatrix & tm) final;
 
 		//-----------------------------------------------------
 

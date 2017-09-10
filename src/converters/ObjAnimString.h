@@ -47,9 +47,9 @@ namespace xobj {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	XpObjLib std::string toObjString(const AnimVisibilityKey & inVal);
-	XpObjLib std::string toObjString(const AnimTransKey & inVal);
-	XpObjLib std::string toObjString(const AnimRotateKey & inVal);
+	XpObjLib std::string toObjString(const AnimVisibilityKey & key);
+	XpObjLib std::string toObjString(const AnimTransKey & key);
+	XpObjLib std::string toObjString(const AnimRotateKey & key);
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -55,10 +55,10 @@ namespace xobj {
 		/*!
 		 * \details Constructor init.
 		 * \note Makes the enabled attribute.
-		 * \param [in] inSurface
-		 * \param [in] inDeck true allows the user to fly under the surface.
+		 * \param [in] surface
+		 * \param [in] deck true allows the user to fly under the surface.
 		 */
-		XpObjLib AttrHard(ESurface inSurface, bool inDeck = false);
+		XpObjLib AttrHard(ESurface surface, bool deck = false);
 
 		~AttrHard() = default;
 
@@ -66,25 +66,25 @@ namespace xobj {
 
 		/*!
 		 * \details Check whether the attribute is enabled. 
-		 * \note All class's seters will enable this attribute.
+		 * \note All class's setters will enable this attribute.
 		 */
 		XpObjLib operator bool() const;
 
 		/*!
-		 * \details Sets the attribute enabled/desabled.
-		 * \note All class's seters will enable this attribute.
-		 * \param inState 
+		 * \details Sets the attribute enabled/disabled.
+		 * \note All class's setters will enable this attribute.
+		 * \param [in] state 
 		 */
-		XpObjLib void setEnabled(bool inState);
+		XpObjLib void setEnabled(bool state);
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrHard & inRight) const;
-		XpObjLib bool operator!=(const AttrHard & inRight) const;
+		XpObjLib bool operator==(const AttrHard & other) const;
+		XpObjLib bool operator!=(const AttrHard & other) const;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib void setESurface(const ESurface & inVal, bool inDeck = false);
+		XpObjLib void setESurface(const ESurface & surface, bool deck = false);
 		XpObjLib const ESurface & surface() const;
 		XpObjLib bool isDeck() const;
 

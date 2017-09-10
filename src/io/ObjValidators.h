@@ -48,14 +48,14 @@ namespace xobj {
 
 	class AttrGlobSet;
 
-	XpObjLib bool checkParameters(const AttrGlobSet & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const ObjAbstract & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const ObjDummy & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const ObjLine & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const ObjLodGroup & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const ObjMain & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const ObjMesh & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const ObjSmoke & inVal, const std::string & inPrefix);
+	XpObjLib bool checkParameters(const AttrGlobSet & attrSet, const std::string & prefix);
+	XpObjLib bool checkParameters(const ObjAbstract & baseObj, const std::string & prefix);
+	XpObjLib bool checkParameters(const ObjDummy & obj, const std::string & prefix);
+	XpObjLib bool checkParameters(const ObjLine & obj, const std::string & prefix);
+	XpObjLib bool checkParameters(const ObjLodGroup & lodObj, const std::string & prefix);
+	XpObjLib bool checkParameters(const ObjMain & mainObj, const std::string & prefix);
+	XpObjLib bool checkParameters(const ObjMesh & obj, const std::string & prefix);
+	XpObjLib bool checkParameters(const ObjSmoke & obj, const std::string & prefix);
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,7 @@ namespace xobj {
 
 	class Transform;
 
-	XpObjLib bool checkParameters(const Transform & inVal, const std::string & inPrefix);
+	XpObjLib bool checkParameters(const Transform & transform, const std::string & prefix);
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,10 +74,10 @@ namespace xobj {
 	class AnimTransKey;
 	class AnimRotate;
 
-	XpObjLib bool checkParameters(const AnimVisibilityKey & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const AnimTrans & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const AnimTransKey & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const AnimRotate & inVal, const std::string & inPrefix);
+	XpObjLib bool checkParameters(const AnimVisibilityKey & key, const std::string & prefix);
+	XpObjLib bool checkParameters(const AnimTrans & anim, const std::string & prefix);
+	XpObjLib bool checkParameters(const AnimTransKey & key, const std::string & prefix);
+	XpObjLib bool checkParameters(const AnimRotate & anim, const std::string & prefix);
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////

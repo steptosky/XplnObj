@@ -28,7 +28,6 @@
 */
 
 #include "ObjWriteGlobAttr.h"
-#include "../../common/Logger.h"
 
 #include <cassert>
 #include "AbstractWriter.h"
@@ -43,34 +42,34 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjWriteGlobAttr::write(AbstractWriter * inWriter, const ObjMain * inObj) {
-		assert(inObj);
+	void ObjWriteGlobAttr::write(AbstractWriter * writer, const ObjMain * obj) {
+		assert(obj);
 
-		writeTexture(inWriter, ATTR_GLOBAL_TEXTURE, inObj->pAttr.texture());
-		writeTexture(inWriter, ATTR_GLOBAL_TEXTURE_LIT, inObj->pAttr.textureLit());
-		writeTexture(inWriter, ATTR_GLOBAL_TEXTURE_NORMAL, inObj->pAttr.textureNormal());
+		writeTexture(writer, ATTR_GLOBAL_TEXTURE, obj->pAttr.texture());
+		writeTexture(writer, ATTR_GLOBAL_TEXTURE_LIT, obj->pAttr.textureLit());
+		writeTexture(writer, ATTR_GLOBAL_TEXTURE_NORMAL, obj->pAttr.textureNormal());
 
-		writeBool(inWriter, ATTR_GLOBAL_BLEND_GLASS, inObj->pAttr.isBlendGlass());
-		writeBool(inWriter, ATTR_GLOBAL_NORMAL_METALNESS, inObj->pAttr.isNormalMetalness());
-		writeBool(inWriter, ATTR_GLOBAL_TILTED, inObj->pAttr.isTilted());
-		writeBool(inWriter, ATTR_GLOBAL_NO_SHADOW, inObj->pAttr.isNoShadow());
-		writeBool(inWriter, ATTR_GLOBAL_COCKPIT_LIT, inObj->pAttr.isCockpitLit());
+		writeBool(writer, ATTR_GLOBAL_BLEND_GLASS, obj->pAttr.isBlendGlass());
+		writeBool(writer, ATTR_GLOBAL_NORMAL_METALNESS, obj->pAttr.isNormalMetalness());
+		writeBool(writer, ATTR_GLOBAL_TILTED, obj->pAttr.isTilted());
+		writeBool(writer, ATTR_GLOBAL_NO_SHADOW, obj->pAttr.isNoShadow());
+		writeBool(writer, ATTR_GLOBAL_COCKPIT_LIT, obj->pAttr.isCockpitLit());
 		// Is printed in another place.
 		//writeBool(inWriter, ATTR_GLOBAL_DEBUG, inObj->pAttr.isDebug());
 
-		writeString(inWriter, toObjGlobString(inObj->pAttr.wetDry()));
-		writeString(inWriter, toObjGlobString(inObj->pAttr.blend()));
-		writeString(inWriter, toObjGlobString(inObj->pAttr.layerGroup()));
-		writeString(inWriter, toObjGlobString(inObj->pAttr.layerGroupDraped()));
-		writeString(inWriter, toObjGlobString(inObj->pAttr.lodDrap()));
-		writeString(inWriter, toObjGlobString(inObj->pAttr.slungLoadWeight()));
-		writeString(inWriter, toObjGlobString(inObj->pAttr.specular()));
-		writeString(inWriter, toObjGlobString(inObj->pAttr.tint()));
-		writeString(inWriter, toObjGlobString(inObj->pAttr.slopeLimit()));
-		writeString(inWriter, toObjGlobString(inObj->pAttr.cockpitRegion(AttrCockpitRegion::r1)));
-		writeString(inWriter, toObjGlobString(inObj->pAttr.cockpitRegion(AttrCockpitRegion::r2)));
-		writeString(inWriter, toObjGlobString(inObj->pAttr.cockpitRegion(AttrCockpitRegion::r3)));
-		writeString(inWriter, toObjGlobString(inObj->pAttr.cockpitRegion(AttrCockpitRegion::r4)));
+		writeString(writer, toObjGlobString(obj->pAttr.wetDry()));
+		writeString(writer, toObjGlobString(obj->pAttr.blend()));
+		writeString(writer, toObjGlobString(obj->pAttr.layerGroup()));
+		writeString(writer, toObjGlobString(obj->pAttr.layerGroupDraped()));
+		writeString(writer, toObjGlobString(obj->pAttr.lodDrap()));
+		writeString(writer, toObjGlobString(obj->pAttr.slungLoadWeight()));
+		writeString(writer, toObjGlobString(obj->pAttr.specular()));
+		writeString(writer, toObjGlobString(obj->pAttr.tint()));
+		writeString(writer, toObjGlobString(obj->pAttr.slopeLimit()));
+		writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r1)));
+		writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r2)));
+		writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r3)));
+		writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r4)));
 	}
 
 	void ObjWriteGlobAttr::reset() {

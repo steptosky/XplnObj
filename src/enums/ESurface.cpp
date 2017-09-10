@@ -54,18 +54,18 @@ namespace xobj {
 		};
 
 		const Data gList[] = {
-				/* 00 */ Data(TOTEXT(none), "none", ESurface::none),
-				/* 01 */ Data(TOTEXT(water), "Water", ESurface::water),
-				/* 02 */ Data(TOTEXT(concrete), "Concrete", ESurface::concrete),
-				/* 03 */ Data(TOTEXT(asphalt), "Asphalt", ESurface::asphalt),
-				/* 04 */ Data(TOTEXT(grass), "Grass", ESurface::grass),
-				/* 05 */ Data(TOTEXT(dirt), "Dirt", ESurface::dirt),
-				/* 06 */ Data(TOTEXT(gravel), "Gravel", ESurface::gravel),
-				/* 07 */ Data(TOTEXT(lakebad), "Lakebad", ESurface::lakebad),
-				/* 08 */ Data(TOTEXT(snow), "Snow", ESurface::snow),
-				/* 09 */ Data(TOTEXT(shoulder), "Shoulder", ESurface::shoulder),
-				/* 10 */ Data(TOTEXT(blastpad), "Blastpad", ESurface::blastpad)
-			};
+			/* 00 */ Data(TOTEXT(none), "none", ESurface::none),
+			/* 01 */ Data(TOTEXT(water), "Water", ESurface::water),
+			/* 02 */ Data(TOTEXT(concrete), "Concrete", ESurface::concrete),
+			/* 03 */ Data(TOTEXT(asphalt), "Asphalt", ESurface::asphalt),
+			/* 04 */ Data(TOTEXT(grass), "Grass", ESurface::grass),
+			/* 05 */ Data(TOTEXT(dirt), "Dirt", ESurface::dirt),
+			/* 06 */ Data(TOTEXT(gravel), "Gravel", ESurface::gravel),
+			/* 07 */ Data(TOTEXT(lakebad), "Lakebad", ESurface::lakebad),
+			/* 08 */ Data(TOTEXT(snow), "Snow", ESurface::snow),
+			/* 09 */ Data(TOTEXT(shoulder), "Shoulder", ESurface::shoulder),
+			/* 10 */ Data(TOTEXT(blastpad), "Blastpad", ESurface::blastpad)
+		};
 	}
 
 	/**************************************************************************************************/
@@ -75,53 +75,53 @@ namespace xobj {
 	ESurface::ESurface()
 		: mId(none) { }
 
-	ESurface::ESurface(eId inId)
-		: mId(inId) { }
+	ESurface::ESurface(eId id)
+		: mId(id) { }
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Operators *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool ESurface::operator==(const ESurface & inRight) const {
-		return mId == inRight.mId;
+	bool ESurface::operator==(const ESurface & other) const {
+		return mId == other.mId;
 	}
 
-	bool ESurface::operator==(eId inId) const {
-		return mId == inId;
+	bool ESurface::operator==(eId id) const {
+		return mId == id;
 	}
 
-	bool ESurface::operator!=(const ESurface & inRight) const {
-		return mId != inRight.mId;
+	bool ESurface::operator!=(const ESurface & other) const {
+		return mId != other.mId;
 	}
 
-	bool ESurface::operator!=(eId inId) const {
-		return mId != inId;
+	bool ESurface::operator!=(eId id) const {
+		return mId != id;
 	}
 
 	/**************************************************************************************************/
 	//////////////////////////////////////////* Functions */////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	ESurface ESurface::fromUiString(const char * inName) {
-		if (inName) {
+	ESurface ESurface::fromUiString(const char * name) {
+		if (name) {
 			for (size_t i = 0; i < ARRAY_LENGTH(ESurfacesData::gList); ++i) {
-				if (strcmp(inName, ESurfacesData::gList[i].mUi) == 0) {
+				if (strcmp(name, ESurfacesData::gList[i].mUi) == 0) {
 					return ESurface(ESurfacesData::gList[i].mId);
 				}
 			}
-			LError << TOTEXT(ESurface) << " Does not contain ui name: \"" << inName << "\"";
+			LError << TOTEXT(ESurface) << " Does not contain ui name: \"" << name << "\"";
 		}
 		return ESurface();
 	}
 
-	ESurface ESurface::fromString(const char * inAttrName) {
-		if (inAttrName) {
+	ESurface ESurface::fromString(const char * attrName) {
+		if (attrName) {
 			for (size_t i = 0; i < ARRAY_LENGTH(ESurfacesData::gList); ++i) {
-				if (strcmp(inAttrName, ESurfacesData::gList[i].mAttr) == 0) {
+				if (strcmp(attrName, ESurfacesData::gList[i].mAttr) == 0) {
 					return ESurface(ESurfacesData::gList[i].mId);
 				}
 			}
-			LError << TOTEXT(ESurface) << " Does not contain attribute name: \"" << inAttrName << "\"";
+			LError << TOTEXT(ESurface) << " Does not contain attribute name: \"" << attrName << "\"";
 		}
 		return ESurface();
 	}

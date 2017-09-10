@@ -44,11 +44,11 @@ namespace xobj {
 	 */
 	class ObjLightSpillCust : public ObjAbstractLight {
 
-		ObjLightSpillCust & operator =(const ObjLightSpillCust & inCopy) = delete;
+		ObjLightSpillCust & operator =(const ObjLightSpillCust &) = delete;
 
 	protected:
 
-		XpObjLib ObjLightSpillCust(const ObjLightSpillCust & inCopy);
+		XpObjLib ObjLightSpillCust(const ObjLightSpillCust & copy);
 
 	public:
 
@@ -57,12 +57,12 @@ namespace xobj {
 
 		//--------------------------------------------------------
 
-		XpObjLib void setColor(const Color & inColor);
-		XpObjLib void setSize(float inSize);
-		XpObjLib void setSemiRaw(float inSemi);
-		XpObjLib void setSemiAngle(float inRadians);
-		XpObjLib void setDirection(Point3 inDirection);
-		XpObjLib void setDataRef(const std::string & inDataRef);
+		XpObjLib void setColor(const Color & color);
+		XpObjLib void setSize(float size);
+		XpObjLib void setSemiRaw(float semi);
+		XpObjLib void setSemiAngle(float radians);
+		XpObjLib void setDirection(Point3 direction);
+		XpObjLib void setDataRef(const std::string & dataRef);
 
 		XpObjLib Color color() const;
 		XpObjLib float size() const;
@@ -77,7 +77,7 @@ namespace xobj {
 		XpObjLib eObjectType objType() const final;
 
 		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & inTm) final;
+		XpObjLib void applyTransform(const TMatrix & tm) final;
 
 		/* \copydoc ObjAbstract::clone */
 		XpObjLib ObjAbstract * clone() const override;

@@ -29,7 +29,6 @@
 
 #pragma once
 
-#include "common/Logger.h"
 #include "AbstractWriter.h"
 
 #include "xpln/obj/ExportOptions.h"
@@ -54,14 +53,14 @@ namespace xobj {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**********************************************************************************************************************/
 	/*!
-	*	\brief X-Plane obj writer
-	*	\details X-Plane obj writer
-	*/
+	 *	\brief X-Plane obj writer
+	 *	\details X-Plane obj writer
+	 */
 	class ObjWriter {
 	public:
 
-		bool writeFile(ObjMain * inRoot, const std::string & inPath, const std::string & inSignature,
-						IOStatistic & outStat, const TMatrix & inTm);
+		bool writeFile(ObjMain * root, const std::string & path, const std::string & signature,
+						IOStatistic & outStat, const TMatrix & tm);
 		void reset();
 		ObjWriter();
 		~ObjWriter();
@@ -79,12 +78,12 @@ namespace xobj {
 
 		ObjMain * mMain;
 
-		void calculateVerticiesAndFaces(const Transform & inParent);
+		void calculateVerticiesAndFaces(const Transform & parent);
 		void printGlobalInformation(AbstractWriter & writer, const ObjMain & objRoot);
-		void printObjects(AbstractWriter & writer, const Transform & inParent);
+		void printObjects(AbstractWriter & writer, const Transform & parent);
 
 		static void printSignature(AbstractWriter & writer, const std::string & signature);
-		void printLOD(AbstractWriter & writer, const ObjLodGroup & inLOD, size_t inCount) const;
+		void printLOD(AbstractWriter & writer, const ObjLodGroup & lod, size_t count) const;
 
 	};
 

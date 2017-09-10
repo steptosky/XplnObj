@@ -54,16 +54,16 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	ObjWriteGeometry::ObjWriteGeometry(const ExportOptions * inOption, IOStatistic * outStat)
+	ObjWriteGeometry::ObjWriteGeometry(const ExportOptions * option, IOStatistic * outStat)
 		: mMeshFaceOffset(0),
 		mMeshVertexOffset(0),
 		mPointLightOffsetByObject(0) {
 
-		assert(inOption);
+		assert(option);
 		assert(outStat);
 
 		mStat = outStat;
-		mOptions = inOption;
+		mOptions = option;
 	}
 
 	/**************************************************************************************************/
@@ -80,8 +80,8 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjWriteGeometry::printMeshVerticiesRecursive(AbstractWriter & writer, const Transform & inNode) const {
-		for (auto objBase : inNode.objList()) {
+	void ObjWriteGeometry::printMeshVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
+		for (auto objBase : transform.objList()) {
 			if (objBase->objType() == OBJ_MESH) {
 				const ObjMesh * mobj = static_cast<const ObjMesh*>(objBase);
 
@@ -95,8 +95,8 @@ namespace xobj {
 			}
 		}
 
-		for (Transform::TransformIndex i = 0; i < inNode.childrenCount(); ++i) {
-			const Transform * ch = dynamic_cast<const Transform*>(inNode.childAt(i));
+		for (Transform::TransformIndex i = 0; i < transform.childrenCount(); ++i) {
+			const Transform * ch = dynamic_cast<const Transform*>(transform.childAt(i));
 			assert(ch);
 			if (ch) {
 				printMeshVerticiesRecursive(writer, *ch);
@@ -108,21 +108,22 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjWriteGeometry::printMeshFaceRecursive(AbstractWriter & writer, const ObjMain & inMain) const {
+	void ObjWriteGeometry::printMeshFaceRecursive(AbstractWriter & writer, const ObjMain & main) const {
 		std::stringstream stream;
 		stream.precision(PRECISION);
 		stream << std::fixed;
 
 		size_t idx = 0;
 		size_t offset = 0;
-		size_t lodCount = inMain.lodCount();
+		const size_t lodCount = main.lodCount();
 		for (size_t i = 0; i < lodCount; ++i) {
-			writeMeshFaceRecursive(stream, inMain.lod(i).transform(), idx, offset);
+			writeMeshFaceRecursive(stream, main.lod(i).transform(), idx, offset);
 		}
 		writer.printLine(stream.str());
 	}
 
-	void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Transform & inNode, size_t & idx, size_t & offset) const {
+	void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Transform & inNode, size_t & idx,
+												size_t & offset) const {
 		for (const ObjAbstract * objBase : inNode.objList()) {
 			if (objBase->objType() != OBJ_MESH) {
 				continue;
@@ -173,8 +174,8 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjWriteGeometry::printLineVerticiesRecursive(AbstractWriter & writer, const Transform & inNode) const {
-		for (auto objBase : inNode.objList()) {
+	void ObjWriteGeometry::printLineVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
+		for (auto objBase : transform.objList()) {
 			if (objBase->objType() == OBJ_LINE) {
 				const ObjLine * lobj = static_cast<const ObjLine*>(objBase);
 
@@ -188,30 +189,30 @@ namespace xobj {
 			}
 		}
 
-		for (Transform::TransformIndex i = 0; i < inNode.childrenCount(); ++i) {
-			const Transform * ch = dynamic_cast<const Transform*>(inNode.childAt(i));
+		for (Transform::TransformIndex i = 0; i < transform.childrenCount(); ++i) {
+			const Transform * ch = dynamic_cast<const Transform*>(transform.childAt(i));
 			assert(ch);
 			if (ch) {
-				printLineVerticiesRecursive(writer, *dynamic_cast<const Transform*>(inNode.childAt(i)));
+				printLineVerticiesRecursive(writer, *dynamic_cast<const Transform*>(transform.childAt(i)));
 			}
 		}
 	}
 
 	//-------------------------------------------------------------------------
 
-	void ObjWriteGeometry::printLightPointVerticiesRecursive(AbstractWriter & writer, const Transform & inNode) const {
-		for (auto objBase : inNode.objList()) {
+	void ObjWriteGeometry::printLightPointVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
+		for (auto objBase : transform.objList()) {
 			if (objBase->objType() == OBJ_LIGHT_POINT) {
 				const ObjLightPoint * lobj = static_cast<const ObjLightPoint*>(objBase);
 				writer.printLine(toObjString(*lobj, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LIGHT)));
 			}
 		}
 
-		for (Transform::TransformIndex i = 0; i < inNode.childrenCount(); ++i) {
-			const Transform * ch = dynamic_cast<const Transform*>(inNode.childAt(i));
+		for (Transform::TransformIndex i = 0; i < transform.childrenCount(); ++i) {
+			const Transform * ch = dynamic_cast<const Transform*>(transform.childAt(i));
 			assert(ch);
 			if (ch) {
-				printLightPointVerticiesRecursive(writer, *dynamic_cast<const Transform*>(inNode.childAt(i)));
+				printLightPointVerticiesRecursive(writer, *dynamic_cast<const Transform*>(transform.childAt(i)));
 			}
 		}
 	}
@@ -277,17 +278,22 @@ namespace xobj {
 		return true;
 	}
 
-	bool ObjWriteGeometry::printLightObject(AbstractWriter & writer, const ObjAbstract & objBase, const Transform & /*inParent*/) const {
-		eObjectType type = objBase.objType();
+	bool ObjWriteGeometry::
+	printLightObject(AbstractWriter & writer, const ObjAbstract & objBase, const Transform &) const {
+		const eObjectType type = objBase.objType();
 		switch (type) {
 			case OBJ_LIGHT_NAMED:
-				return printLight<ObjLightNamed>(writer, static_cast<const ObjLightNamed&>(objBase), *mOptions, mStat->pLightObjNamedCount);
+				return printLight<ObjLightNamed>(writer, static_cast<const ObjLightNamed&>(objBase), *mOptions,
+												mStat->pLightObjNamedCount);
 			case OBJ_LIGHT_CUSTOM:
-				return printLight<ObjLightCustom>(writer, static_cast<const ObjLightCustom&>(objBase), *mOptions, mStat->pLightObjCustomCount);
+				return printLight<ObjLightCustom>(writer, static_cast<const ObjLightCustom&>(objBase), *mOptions,
+												mStat->pLightObjCustomCount);
 			case OBJ_LIGHT_PARAM:
-				return printLight<ObjLightParam>(writer, static_cast<const ObjLightParam&>(objBase), *mOptions, mStat->pLightObjParamCount);
+				return printLight<ObjLightParam>(writer, static_cast<const ObjLightParam&>(objBase), *mOptions,
+												mStat->pLightObjParamCount);
 			case OBJ_LIGHT_SPILL_CUSTOM:
-				return printLight<ObjLightSpillCust>(writer, static_cast<const ObjLightSpillCust&>(objBase), *mOptions, mStat->pLightObjSpillCustCount);
+				return printLight<ObjLightSpillCust>(writer, static_cast<const ObjLightSpillCust&>(objBase), *mOptions,
+													mStat->pLightObjSpillCustCount);
 			default:
 				return false;
 		}

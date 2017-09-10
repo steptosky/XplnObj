@@ -47,21 +47,21 @@ namespace xobj {
 
 		LineVertex() = default;
 
-		LineVertex(const Point3 & inPosition, const Color & inColor)
-			: pPosition(inPosition),
-			pColor(inColor) { }
+		LineVertex(const Point3 & pos, const Color & color)
+			: pPosition(pos),
+			pColor(color) { }
 
 		~LineVertex() = default;
 
 		//--------------------------------------------------
 
-		bool operator==(const LineVertex & inOther) const {
-			return pPosition == inOther.pPosition &&
-					pColor == inOther.pColor;
+		bool operator==(const LineVertex & other) const {
+			return pPosition == other.pPosition &&
+					pColor == other.pColor;
 		}
 
-		bool operator!=(const LineVertex & inOther) const {
-			return !this->operator==(inOther);
+		bool operator!=(const LineVertex & other) const {
+			return !this->operator==(other);
 		}
 
 		//--------------------------------------------------

@@ -58,46 +58,46 @@ namespace xobj {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	std::string toObjString(const AttrManipBase * inVal) {
-		switch (inVal->type().id()) {
+	std::string toObjString(const AttrManipBase * manip) {
+		switch (manip->type().id()) {
 			case EManipulator::axis_knob:
-				return toObjString(*static_cast<const AttrManipAxisKnob*>(inVal));
+				return toObjString(*static_cast<const AttrManipAxisKnob*>(manip));
 			case EManipulator::axis_switch_lr:
-				return toObjString(*static_cast<const AttrManipAxisSwitchLeftRight*>(inVal));
+				return toObjString(*static_cast<const AttrManipAxisSwitchLeftRight*>(manip));
 			case EManipulator::axis_switch_ud:
-				return toObjString(*static_cast<const AttrManipAxisSwitchUpDown*>(inVal));
+				return toObjString(*static_cast<const AttrManipAxisSwitchUpDown*>(manip));
 			case EManipulator::eId::command:
-				return toObjString(*static_cast<const AttrManipCmd*>(inVal));
+				return toObjString(*static_cast<const AttrManipCmd*>(manip));
 			case EManipulator::eId::command_axis:
-				return toObjString(*static_cast<const AttrManipCmdAxis*>(inVal));
+				return toObjString(*static_cast<const AttrManipCmdAxis*>(manip));
 			case EManipulator::command_knob:
-				return toObjString(*static_cast<const AttrManipCmdKnob*>(inVal));
+				return toObjString(*static_cast<const AttrManipCmdKnob*>(manip));
 			case EManipulator::command_switch_lr:
-				return toObjString(*static_cast<const AttrManipCmdSwitchLeftRight*>(inVal));
+				return toObjString(*static_cast<const AttrManipCmdSwitchLeftRight*>(manip));
 			case EManipulator::command_switch_ud:
-				return toObjString(*static_cast<const AttrManipCmdSwitchUpDown*>(inVal));
+				return toObjString(*static_cast<const AttrManipCmdSwitchUpDown*>(manip));
 			case EManipulator::eId::delta:
-				return toObjString(*static_cast<const AttrManipDelta*>(inVal));
+				return toObjString(*static_cast<const AttrManipDelta*>(manip));
 			case EManipulator::eId::drag_axis:
-				return toObjString(*static_cast<const AttrManipDragAxis*>(inVal));
+				return toObjString(*static_cast<const AttrManipDragAxis*>(manip));
 			case EManipulator::eId::drag_axis_pix:
-				return toObjString(*static_cast<const AttrManipDragAxisPix*>(inVal));
+				return toObjString(*static_cast<const AttrManipDragAxisPix*>(manip));
 			case EManipulator::eId::drag_xy:
-				return toObjString(*static_cast<const AttrManipDragXy*>(inVal));
+				return toObjString(*static_cast<const AttrManipDragXy*>(manip));
 			case EManipulator::eId::noop:
-				return toObjString(*static_cast<const AttrManipNoop*>(inVal));
+				return toObjString(*static_cast<const AttrManipNoop*>(manip));
 			case EManipulator::eId::panel:
-				return toObjString(*static_cast<const AttrManipPanel*>(inVal));
+				return toObjString(*static_cast<const AttrManipPanel*>(manip));
 			case EManipulator::eId::push:
-				return toObjString(*static_cast<const AttrManipPush*>(inVal));
+				return toObjString(*static_cast<const AttrManipPush*>(manip));
 			case EManipulator::eId::radio:
-				return toObjString(*static_cast<const AttrManipRadio*>(inVal));
+				return toObjString(*static_cast<const AttrManipRadio*>(manip));
 			case EManipulator::eId::toggle:
-				return toObjString(*static_cast<const AttrManipToggle*>(inVal));
+				return toObjString(*static_cast<const AttrManipToggle*>(manip));
 			case EManipulator::eId::wrap:
-				return toObjString(*static_cast<const AttrManipWrap*>(inVal));
+				return toObjString(*static_cast<const AttrManipWrap*>(manip));
 			case EManipulator::eId::none:
-				return toObjString(*static_cast<const AttrManipNone*>(inVal));
+				return toObjString(*static_cast<const AttrManipNone*>(manip));
 			default:
 				return std::string();
 		}
@@ -107,151 +107,151 @@ namespace xobj {
 		return std::string(ATTR_MANIP_NONE);
 	}
 
-	std::string toObjString(const AttrManipAxisKnob & inVal) {
+	std::string toObjString(const AttrManipAxisKnob & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_AXIS_KNOB;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.minimum();
-		outStr << " " << inVal.maximum();
-		outStr << " " << inVal.clickDelta();
-		outStr << " " << inVal.holdDelta();
-		outStr << " " << inVal.dataref();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.minimum();
+		outStr << " " << manip.maximum();
+		outStr << " " << manip.clickDelta();
+		outStr << " " << manip.holdDelta();
+		outStr << " " << manip.dataref();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipAxisSwitchLeftRight & inVal) {
+	std::string toObjString(const AttrManipAxisSwitchLeftRight & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_AXIS_SWITCH_LEFT_RIGHT;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.minimum();
-		outStr << " " << inVal.maximum();
-		outStr << " " << inVal.clickDelta();
-		outStr << " " << inVal.holdDelta();
-		outStr << " " << inVal.dataref();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.minimum();
+		outStr << " " << manip.maximum();
+		outStr << " " << manip.clickDelta();
+		outStr << " " << manip.holdDelta();
+		outStr << " " << manip.dataref();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipAxisSwitchUpDown & inVal) {
+	std::string toObjString(const AttrManipAxisSwitchUpDown & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_AXIS_SWITCH_UP_DOWN;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.minimum();
-		outStr << " " << inVal.maximum();
-		outStr << " " << inVal.clickDelta();
-		outStr << " " << inVal.holdDelta();
-		outStr << " " << inVal.dataref();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.minimum();
+		outStr << " " << manip.maximum();
+		outStr << " " << manip.clickDelta();
+		outStr << " " << manip.holdDelta();
+		outStr << " " << manip.dataref();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipCmd & inVal) {
+	std::string toObjString(const AttrManipCmd & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_COMMAND;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.command();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.command();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipCmdAxis & inVal) {
+	std::string toObjString(const AttrManipCmdAxis & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_COMMAND_AXIS;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.x();
-		outStr << " " << inVal.y();
-		outStr << " " << inVal.z();
-		outStr << " " << inVal.cmdPositive();
-		outStr << " " << inVal.cmdNegative();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.x();
+		outStr << " " << manip.y();
+		outStr << " " << manip.z();
+		outStr << " " << manip.cmdPositive();
+		outStr << " " << manip.cmdNegative();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipCmdKnob & inVal) {
+	std::string toObjString(const AttrManipCmdKnob & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_COMMAND_KNOB;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.cmdPositive();
-		outStr << " " << inVal.cmdNegative();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.cmdPositive();
+		outStr << " " << manip.cmdNegative();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipCmdSwitchLeftRight & inVal) {
+	std::string toObjString(const AttrManipCmdSwitchLeftRight & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_SWITCH_LEFT_RIGHT;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.cmdPositive();
-		outStr << " " << inVal.cmdNegative();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.cmdPositive();
+		outStr << " " << manip.cmdNegative();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipCmdSwitchUpDown & inVal) {
+	std::string toObjString(const AttrManipCmdSwitchUpDown & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_SWITCH_UP_DOWN;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.cmdPositive();
-		outStr << " " << inVal.cmdNegative();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.cmdPositive();
+		outStr << " " << manip.cmdNegative();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipDelta & inVal) {
+	std::string toObjString(const AttrManipDelta & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_DELTA;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.down();
-		outStr << " " << inVal.hold();
-		outStr << " " << inVal.minimum();
-		outStr << " " << inVal.maximum();
-		outStr << " " << inVal.dataref();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.down();
+		outStr << " " << manip.hold();
+		outStr << " " << manip.minimum();
+		outStr << " " << manip.maximum();
+		outStr << " " << manip.dataref();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipDragAxis & inVal) {
+	std::string toObjString(const AttrManipDragAxis & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_DRAG_AXIS;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.x();
-		outStr << " " << inVal.y();
-		outStr << " " << inVal.z();
-		outStr << " " << inVal.val1();
-		outStr << " " << inVal.val2();
-		outStr << " " << inVal.dataref();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.x();
+		outStr << " " << manip.y();
+		outStr << " " << manip.z();
+		outStr << " " << manip.val1();
+		outStr << " " << manip.val2();
+		outStr << " " << manip.dataref();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipDragAxisPix & inVal) {
+	std::string toObjString(const AttrManipDragAxisPix & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_DRAG_AXIS_PIX;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.dxPix();
-		outStr << " " << inVal.step();
-		outStr << " " << inVal.exp();
-		outStr << " " << inVal.val1();
-		outStr << " " << inVal.val2();
-		outStr << " " << inVal.dataref();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.dxPix();
+		outStr << " " << manip.step();
+		outStr << " " << manip.exp();
+		outStr << " " << manip.val1();
+		outStr << " " << manip.val2();
+		outStr << " " << manip.dataref();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipDragXy & inVal) {
+	std::string toObjString(const AttrManipDragXy & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_DRAG_XY;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.x();
-		outStr << " " << inVal.y();
-		outStr << " " << inVal.xMin();
-		outStr << " " << inVal.xMax();
-		outStr << " " << inVal.yMin();
-		outStr << " " << inVal.yMax();
-		outStr << " " << inVal.xDataref();
-		outStr << " " << inVal.yDataref();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.x();
+		outStr << " " << manip.y();
+		outStr << " " << manip.xMin();
+		outStr << " " << manip.xMax();
+		outStr << " " << manip.yMin();
+		outStr << " " << manip.yMax();
+		outStr << " " << manip.xDataref();
+		outStr << " " << manip.yDataref();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
@@ -259,65 +259,65 @@ namespace xobj {
 		return std::string(ATTR_MANIP_NOOP);
 	}
 
-	std::string toObjString(const AttrManipPanel & inVal) {
+	std::string toObjString(const AttrManipPanel & manip) {
 		StringStream outStr;
-		outStr << toObjString(inVal.cockpit());
+		outStr << toObjString(manip.cockpit());
 #ifndef NDEBUG
 		outStr << " ## panel manip";
 #endif
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipPush & inVal) {
+	std::string toObjString(const AttrManipPush & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_PUSH;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.down();
-		outStr << " " << inVal.up();
-		outStr << " " << inVal.dataref();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.down();
+		outStr << " " << manip.up();
+		outStr << " " << manip.dataref();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipRadio & inVal) {
+	std::string toObjString(const AttrManipRadio & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_RADIO;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.down();
-		outStr << " " << inVal.dataref();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.down();
+		outStr << " " << manip.dataref();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipToggle & inVal) {
+	std::string toObjString(const AttrManipToggle & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_TOGGLE;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.on();
-		outStr << " " << inVal.off();
-		outStr << " " << inVal.dataref();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.on();
+		outStr << " " << manip.off();
+		outStr << " " << manip.dataref();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipWrap & inVal) {
+	std::string toObjString(const AttrManipWrap & manip) {
 		StringStream outStr;
 		outStr << ATTR_MANIP_WRAP;
-		outStr << " " << inVal.cursor().toString();
-		outStr << " " << inVal.down();
-		outStr << " " << inVal.hold();
-		outStr << " " << inVal.minimum();
-		outStr << " " << inVal.maximum();
-		outStr << " " << inVal.dataref();
-		outStr << " " << inVal.toolTip();
+		outStr << " " << manip.cursor().toString();
+		outStr << " " << manip.down();
+		outStr << " " << manip.hold();
+		outStr << " " << manip.minimum();
+		outStr << " " << manip.maximum();
+		outStr << " " << manip.dataref();
+		outStr << " " << manip.toolTip();
 		return outStr.str();
 	}
 
-	std::string toObjString(const AttrManipWheel & inVal) {
-		if (inVal.isWheelEnabled()) {
+	std::string toObjString(const AttrManipWheel & manip) {
+		if (manip.isWheelEnabled()) {
 			StringStream outStr;
 			outStr << ATTR_MANIP_WHEEL;
-			outStr << " " << inVal.wheelDelta();
+			outStr << " " << manip.wheelDelta();
 			return outStr.str();
 		}
 		return "";

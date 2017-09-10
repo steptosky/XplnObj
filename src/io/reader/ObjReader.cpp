@@ -72,12 +72,12 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool ObjReader::readFile(const std::string & inFilePath, ObjReaderListener & inListener) {
+	bool ObjReader::readFile(const std::string & filePath, ObjReaderListener & listener) {
 		ObjReader reader;
-		inListener.reset();
-		reader.mObjParserListener = &inListener;
+		listener.reset();
+		reader.mObjParserListener = &listener;
 		try {
-			return reader.readFile(inFilePath);
+			return reader.readFile(filePath);
 		}
 		catch (std::exception & e) {
 			ULFatal << e.what();
@@ -85,8 +85,8 @@ namespace xobj {
 		}
 	}
 
-	bool ObjReader::readFile(const std::string & inFilePath) const {
-		ObjReadParser * parser = new ObjReadParser(inFilePath);
+	bool ObjReader::readFile(const std::string & filePath) const {
+		ObjReadParser * parser = new ObjReadParser(filePath);
 		if (!parser->isValid()) {
 			delete parser;
 			return false;

@@ -58,12 +58,12 @@ namespace xobj {
 
 		/*!
 		 * \details Log callback.
-		 * \param type function message type
-		 * \param msg function message
-		 * \param file function source file
-		 * \param line function line of the source file
-		 * \param function function function objectName
-		 * \param function category category of the message
+		 * \param [in] type function message type
+		 * \param [in] msg function message
+		 * \param [in] file function source file
+		 * \param [in] line function line of the source file
+		 * \param [in] function function function objectName
+		 * \param [in] function category category of the message
 		 */
 		typedef void (*CallBack)(eType type, const char * msg,
 								const char * file, int line, const char * function,
@@ -71,9 +71,9 @@ namespace xobj {
 
 		/*!
 		 * \details If a callback is registered then all logs from this library will be sent to the callback.
-		 * \param inCallBack function
+		 * \param [in] callBack function
 		 */
-		XpObjLib static void registerCallBack(CallBack inCallBack);
+		XpObjLib static void registerCallBack(CallBack callBack);
 
 		/*!
 		 * \details Unregisters current callback.
@@ -82,17 +82,17 @@ namespace xobj {
 
 		/*!
 		 * \details Generates the string that can be used in about window.
-		 * \param inUseWinEol true = "\r\n", false = "\n"
+		 * \param [in] useWinEol true = "\r\n", false = "\n"
 		 * \return ascii string for about window.
 		 */
-		XpObjLib static std::string about(bool inUseWinEol = false);
+		XpObjLib static std::string about(bool useWinEol = false);
 
 		/*!
 		* \details Generates the short string that can be used in about window.
-		* \param inUseWinEol true = "\r\n", false = "\n"
+		* \param [in] useWinEol true = "\r\n", false = "\n"
 		* \return ascii string for about window.
 		*/
-		XpObjLib static std::string shortAbout(bool inUseWinEol = false);
+		XpObjLib static std::string shortAbout(bool useWinEol = false);
 
 	};
 

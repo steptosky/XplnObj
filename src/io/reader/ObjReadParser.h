@@ -44,13 +44,13 @@ namespace xobj {
 	/*!
 	 * \details Class text parser.
 	 * \details Use constructor with file path or readFile() first, this methods reads specified file to the memory
-	 * then you can use the methods for parsing. When you complete parsing use close() method,
-	 * it frees memory and after this method you can not use parsing methods.
-	 * The method close() is calling by the destructor too.
-	 * Use isEnd() for check you have read all data.
+	 *          then you can use the methods for parsing. When you complete parsing use close() method,
+	 *          it frees memory and after this method you can not use parsing methods.
+	 *          The method close() is calling by the destructor too.
+	 *          Use isEnd() for check you have read all data.
 	 * \warning The parsing methods does not have a check for the class validation.
-	 * It means if a file was not read or the memory was free by the close() method
-	 * then you can not use parsing methods!
+	 *          It means if a file was not read or the memory was free by the close() method
+	 *          then you can not use parsing methods!
 	 */
 	class ObjReadParser {
 
@@ -61,13 +61,13 @@ namespace xobj {
 
 		//-------------------------------------------------------------------------
 
-		explicit ObjReadParser(const std::string & inFilePath = "");
+		explicit ObjReadParser(const std::string & filePath = "");
 		virtual ~ObjReadParser();
 
 		//-------------------------------------------------------------------------
 		// Class initialization
 
-		bool readFile(const std::string & inFilePath);
+		bool readFile(const std::string & filePath);
 		bool isValid() const;
 		void close();
 
@@ -96,11 +96,11 @@ namespace xobj {
 	private:
 
 		void skipEol();
-		bool static isEol(const uint8_t * inByte);
-		bool static isSpace(const uint8_t * inByte);
+		bool static isEol(const uint8_t * byte);
+		bool static isSpace(const uint8_t * byte);
 		bool isComment() const;
 
-		static unsigned fileSize(FILE * inFile);
+		static unsigned fileSize(FILE * file);
 
 		mutable std::stack<uint8_t*> mStack;
 
@@ -125,13 +125,13 @@ namespace xobj {
 	}
 
 	/*! \details Identify chars that indicate a new line */
-	inline bool ObjReadParser::isEol(const uint8_t * inByte) {
-		return (*inByte == 0 || *inByte == 13 || *inByte == '\n');
+	inline bool ObjReadParser::isEol(const uint8_t * byte) {
+		return (*byte == 0 || *byte == 13 || *byte == '\n');
 	}
 
 	/*! \details Identify chars that separate with whitespace */
-	inline bool ObjReadParser::isSpace(const uint8_t * inByte) {
-		return (*inByte == '\t' || *inByte == ' ');
+	inline bool ObjReadParser::isSpace(const uint8_t * byte) {
+		return (*byte == '\t' || *byte == ' ');
 	}
 
 	/*! \details Consume all newlines. */

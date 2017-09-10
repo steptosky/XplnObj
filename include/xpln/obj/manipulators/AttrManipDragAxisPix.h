@@ -68,7 +68,7 @@ namespace xobj {
 		//-------------------------------------------------------------------------
 
 		/*! \copydoc AttrManipBase::equals */
-		XpObjLib bool equals(const AttrManipBase * inMainp) const override;
+		XpObjLib bool equals(const AttrManipBase * manip) const override;
 
 		/*! \copydoc AttrManipBase::clone */
 		XpObjLib AttrManipBase * clone() const override;

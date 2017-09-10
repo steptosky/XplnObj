@@ -30,7 +30,6 @@
 #pragma once
 
 #include <cstdint>
-#include <string>
 #include "xpln/obj/ObjMesh.h"
 #include "xpln/obj/attributes/AttrSet.h"
 

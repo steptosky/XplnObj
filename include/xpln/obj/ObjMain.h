@@ -28,6 +28,7 @@
 */
 
 #pragma once
+
 #include <vector>
 #include "ObjLodGroup.h"
 #include "ExportOptions.h"
@@ -70,7 +71,7 @@ namespace xobj {
 
 		/*!
 		 * \details Transform matrix for applying while exporting/importing.
-		 * \details With this matrix you can move, rotate, convert to another system coordinates the objects.
+		 * \details With this matrix you can move, rotate, convert to another system coordinates all the objects.
 		 */
 		TMatrix pMatrix;
 
@@ -78,15 +79,15 @@ namespace xobj {
 
 		/*!
 		 * \details Gets lod by index.
-		 * \param [in] inIndex
+		 * \param [in] index
 		 */
-		XpObjLib ObjLodGroup & lod(size_t inIndex);
+		XpObjLib ObjLodGroup & lod(size_t index);
 
 		/*!
 		 * \details Gets lod by index.
-		 * \param [in] inIndex
+		 * \param [in] index
 		 */
-		XpObjLib const ObjLodGroup & lod(size_t inIndex) const;
+		XpObjLib const ObjLodGroup & lod(size_t index) const;
 
 		/*!
 		 * \details Adds lods.
@@ -96,9 +97,9 @@ namespace xobj {
 
 		/*!
 		 * \details Removes lod by index.
-		 * \param [in] inIndex
+		 * \param [in] index
 		 */
-		XpObjLib void removeLod(size_t inIndex);
+		XpObjLib void removeLod(size_t index);
 
 		/*!
 		 * \details Gets count of the lods.
@@ -109,37 +110,37 @@ namespace xobj {
 
 		/*!
 		 * \details Starts export to 'obj' file.
-		 * \param [in] inPath full path with filename and extension.
+		 * \param [in] path full path with filename and extension.
 		 * \return True if successful otherwise false.
 		 */
-		XpObjLib bool exportToFile(const std::string & inPath);
+		XpObjLib bool exportToFile(const std::string & path);
 
 		/*!
 		 * \details Starts export to 'obj' file.
-		 * \param [in] inPath full path with filename and extension
+		 * \param [in] path full path with filename and extension
 		 * \param [out] outStat export statistic.
 		 * \return True if successful otherwise false.
 		 */
-		XpObjLib bool exportToFile(const std::string & inPath, IOStatistic & outStat);
+		XpObjLib bool exportToFile(const std::string & path, IOStatistic & outStat);
 
 		/*!
 		 * \details Starts import from 'obj' file.
-		 * \param [in] inPath full path with filename and extension.
+		 * \param [in] path full path with filename and extension.
 		 * \return True if successful otherwise false.
 		 */
-		XpObjLib bool importFromFile(const std::string & inPath);
+		XpObjLib bool importFromFile(const std::string & path);
 
 		/*!
 		 * \details Start import from 'obj' file
-		 * \param [in] inPath full path with filename and extension
+		 * \param [in] path full path with filename and extension
 		 * \param [out] outStat import statistic.
 		 * \return True if successful otherwise false.
 		 */
-		XpObjLib bool importFromFile(const std::string & inPath, IOStatistic & outStat);
+		XpObjLib bool importFromFile(const std::string & path, IOStatistic & outStat);
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib void setObjectName(const std::string & inName);
+		XpObjLib void setObjectName(const std::string & name);
 		XpObjLib const std::string & objectName() const;
 
 		//-------------------------------------------------------------------------

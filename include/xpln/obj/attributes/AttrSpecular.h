@@ -53,9 +53,9 @@ namespace xobj {
 		/*!
 		 * \details Constructor init.
 		 * \note Makes the enabled attribute.
-		 * \param inRatio 
+		 * \param [in] ratio 
 		 */
-		XpObjLib AttrSpecular(float inRatio);
+		XpObjLib AttrSpecular(float ratio);
 
 		~AttrSpecular() = default;
 
@@ -63,25 +63,25 @@ namespace xobj {
 
 		/*!
 		 * \details Check whether the attribute is enabled. 
-		 * \note All class's seters will enable this attribute.
+		 * \note All class's setters will enable this attribute.
 		 */
 		XpObjLib operator bool() const;
 
 		/*!
-		 * \details Sets the attribute enabled/desabled.
-		 * \note All class's seters will enable this attribute.
-		 * \param inState 
+		 * \details Sets the attribute enabled/disabled.
+		 * \note All class's setters will enable this attribute.
+		 * \param [in] state 
 		 */
-		XpObjLib void setEnabled(bool inState);
+		XpObjLib void setEnabled(bool state);
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrSpecular & inRight) const;
-		XpObjLib bool operator!=(const AttrSpecular & inRight) const;
+		XpObjLib bool operator==(const AttrSpecular & other) const;
+		XpObjLib bool operator!=(const AttrSpecular & other) const;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib void setRatio(float inRatio);
+		XpObjLib void setRatio(float ratio);
 		XpObjLib float ratio() const;
 
 		//-------------------------------------------------------------------------

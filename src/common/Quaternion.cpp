@@ -52,14 +52,14 @@ namespace xobj {
 
 	//-------------------------------------------------------------------------
 
-	Quaternion::Quaternion(const Quaternion & inCopy) {
-		*this = inCopy;
+	Quaternion::Quaternion(const Quaternion & copy) {
+		*this = copy;
 	}
 
 	//-------------------------------------------------------------------------
 
-	Quaternion::Quaternion(float inX, float inY, float inZ, float inW) {
-		mData = new sts::QuaternionF(inX, inY, inZ, inW);
+	Quaternion::Quaternion(float x, float y, float z, float w) {
+		mData = new sts::QuaternionF(x, y, z, w);
 	}
 
 	//-------------------------------------------------------------------------
@@ -73,8 +73,8 @@ namespace xobj {
 	///////////////////////////////////////////* Operators *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	Quaternion & Quaternion::operator =(const Quaternion & inCopy) {
-		*reinterpret_cast<sts::QuaternionF*>(mData) = *reinterpret_cast<sts::QuaternionF*>(inCopy.mData);
+	Quaternion & Quaternion::operator =(const Quaternion & copy) {
+		*reinterpret_cast<sts::QuaternionF*>(mData) = *reinterpret_cast<sts::QuaternionF*>(copy.mData);
 		return *this;
 	}
 
@@ -82,32 +82,32 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void Quaternion::setX(float inX) {
-		QUAT_PTR->setX(inX);
+	void Quaternion::setX(float x) {
+		QUAT_PTR->setX(x);
 	}
 
 	//-------------------------------------------------------------------------
 
-	void Quaternion::setY(float inY) {
-		QUAT_PTR->setY(inY);
+	void Quaternion::setY(float y) {
+		QUAT_PTR->setY(y);
 	}
 
 	//-------------------------------------------------------------------------
 
-	void Quaternion::setZ(float inZ) {
-		QUAT_PTR->setZ(inZ);
+	void Quaternion::setZ(float z) {
+		QUAT_PTR->setZ(z);
 	}
 
 	//-------------------------------------------------------------------------
 
-	void Quaternion::setW(float inW) {
-		QUAT_PTR->setW(inW);
+	void Quaternion::setW(float w) {
+		QUAT_PTR->setW(w);
 	}
 
 	//-------------------------------------------------------------------------
 
-	void Quaternion::setValues(float inX, float inY, float inZ, float inW) {
-		QUAT_PTR->set(inX, inY, inZ, inW);
+	void Quaternion::setValues(float x, float y, float z, float w) {
+		QUAT_PTR->set(x, y, z, w);
 	}
 
 	//-------------------------------------------------------------------------

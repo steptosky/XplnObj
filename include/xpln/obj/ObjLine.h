@@ -28,6 +28,7 @@
 */
 
 #pragma once
+
 #include <vector>
 #include "ObjAbstract.h"
 #include "LineVertex.h"
@@ -44,11 +45,11 @@ namespace xobj {
 	 */
 	class ObjLine : public ObjAbstract {
 
-		ObjLine & operator =(const ObjLine & inCopy) = delete;
+		ObjLine & operator =(const ObjLine &) = delete;
 
 	protected:
 
-		XpObjLib ObjLine(const ObjLine & inCopy);
+		XpObjLib ObjLine(const ObjLine & copy);
 
 	public:
 
@@ -68,10 +69,10 @@ namespace xobj {
 		//--------------------------------------------------------
 
 		/*!
-		 * \details Attaches vertices from another line to this one.
-		 * \param [in] inOtherLine
+		 * \details Attaches vertices from another line.
+		 * \param [in] otherLine
 		 */
-		XpObjLib void attach(const ObjLine & inOtherLine);
+		XpObjLib void attach(const ObjLine & otherLine);
 
 		//--------------------------------------------------------
 
@@ -79,7 +80,7 @@ namespace xobj {
 		XpObjLib eObjectType objType() const final;
 
 		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & inTm) final;
+		XpObjLib void applyTransform(const TMatrix & tm) final;
 
 		/* \copydoc ObjAbstract::clone */
 		XpObjLib ObjAbstract * clone() const override;

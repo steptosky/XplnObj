@@ -58,27 +58,27 @@ namespace xobj {
 
 		//-------------------------------------------------------------------------
 
-		void setTexture(const std::string & inVal);
-		void setTextureLit(const std::string & inVal);
-		void setTextureNormal(const std::string & inVal);
+		void setTexture(const std::string & val);
+		void setTextureLit(const std::string & val);
+		void setTextureNormal(const std::string & val);
 
-		void setNormalMetalness(bool inVal);
-		void setBlendGlass(bool inVal);
-		void setTilted(bool inVal);
-		void setNoShadow(bool inVal);
-		void setCockpitLit(bool inVal);
-		void setDebug(bool inVal);
+		void setNormalMetalness(bool val);
+		void setBlendGlass(bool val);
+		void setTilted(bool val);
+		void setNoShadow(bool val);
+		void setCockpitLit(bool val);
+		void setDebug(bool val);
 
-		void setWetDry(const AttrWetDry & inVal);
-		void setBlend(const AttrBlend & inVal);
-		void setLayerGroup(const AttrLayerGroup & inVal);
-		void setLayerGroupDraped(const AttrDrapedLayerGroup & inVal);
-		void setLodDrap(const AttrLodDrap & inVal);
-		void setSlungLoadWeight(const AttrSlungLoadWeight & inVal);
-		void setSpecular(const AttrSpecular & inVal);
-		void setTint(const AttrTint & inVal);
-		void setSlopeLimit(const AttrSlopeLimit & inVal);
-		void setCockpitRegion(const AttrCockpitRegion & inVal, AttrCockpitRegion::eNum inNum);
+		void setWetDry(const AttrWetDry & attr);
+		void setBlend(const AttrBlend & attr);
+		void setLayerGroup(const AttrLayerGroup & attr);
+		void setLayerGroupDraped(const AttrDrapedLayerGroup & attr);
+		void setLodDrap(const AttrLodDrap & val);
+		void setSlungLoadWeight(const AttrSlungLoadWeight & attr);
+		void setSpecular(const AttrSpecular & attr);
+		void setTint(const AttrTint & attr);
+		void setSlopeLimit(const AttrSlopeLimit & attr);
+		void setCockpitRegion(const AttrCockpitRegion & attr, AttrCockpitRegion::eNum num);
 
 		const std::string & texture() const;
 		const std::string & textureLit() const;
@@ -100,7 +100,7 @@ namespace xobj {
 		const AttrSpecular & specular() const;
 		const AttrTint & tint() const;
 		const AttrSlopeLimit & slopeLimit() const;
-		const AttrCockpitRegion & cockpitRegion(AttrCockpitRegion::eNum inNum) const;
+		const AttrCockpitRegion & cockpitRegion(AttrCockpitRegion::eNum num) const;
 
 		//-------------------------------------------------------------------------
 
@@ -181,24 +181,24 @@ namespace xobj {
 	//////////////////////////////////////////* Functions */////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	inline void AttrGlobSet::setTexture(const std::string & inVal) {
-		mTexture = inVal;
+	inline void AttrGlobSet::setTexture(const std::string & val) {
+		mTexture = val;
 	}
 
 	inline const std::string & AttrGlobSet::texture() const {
 		return mTexture;
 	}
 
-	inline void AttrGlobSet::setTextureLit(const std::string & inVal) {
-		mTextureLit = inVal;
+	inline void AttrGlobSet::setTextureLit(const std::string & val) {
+		mTextureLit = val;
 	}
 
 	inline const std::string & AttrGlobSet::textureLit() const {
 		return mTextureLit;
 	}
 
-	inline void AttrGlobSet::setTextureNormal(const std::string & inVal) {
-		mTextureNormal = inVal;
+	inline void AttrGlobSet::setTextureNormal(const std::string & val) {
+		mTextureNormal = val;
 	}
 
 	inline const std::string & AttrGlobSet::textureNormal() const {
@@ -209,44 +209,44 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	inline void AttrGlobSet::setNormalMetalness(bool inVal) {
-		mNormalMetalness = inVal;
+	inline void AttrGlobSet::setNormalMetalness(bool val) {
+		mNormalMetalness = val;
 	}
 
 	inline bool AttrGlobSet::isNormalMetalness() const {
 		return mNormalMetalness;
 	}
 
-	inline void AttrGlobSet::setBlendGlass(bool inVal) {
-		mBlendClass = inVal;
+	inline void AttrGlobSet::setBlendGlass(bool val) {
+		mBlendClass = val;
 	}
 
 	inline bool AttrGlobSet::isBlendGlass() const {
 		return mBlendClass;
 	}
 
-	inline void AttrGlobSet::setTilted(bool inVal) {
-		mTilted = inVal;
+	inline void AttrGlobSet::setTilted(bool val) {
+		mTilted = val;
 	}
 
 	inline bool AttrGlobSet::isTilted() const {
 		return mTilted;
 	}
 
-	inline void AttrGlobSet::setNoShadow(bool inVal) {
-		mDropShadow = inVal;
+	inline void AttrGlobSet::setNoShadow(bool val) {
+		mDropShadow = val;
 	}
 
 	inline bool AttrGlobSet::isNoShadow() const {
 		return mDropShadow;
 	}
 
-	inline void AttrGlobSet::setCockpitLit(bool inVal) {
-		mIsCockpitLit = inVal;
+	inline void AttrGlobSet::setCockpitLit(bool val) {
+		mIsCockpitLit = val;
 	}
 
-	inline void AttrGlobSet::setDebug(bool inVal) {
-		mIsDebug = inVal;
+	inline void AttrGlobSet::setDebug(bool val) {
+		mIsDebug = val;
 	}
 
 	inline bool AttrGlobSet::isCockpitLit() const {
@@ -261,84 +261,84 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	inline void AttrGlobSet::setBlend(const AttrBlend & inVal) {
-		mBlend = inVal;
+	inline void AttrGlobSet::setBlend(const AttrBlend & attr) {
+		mBlend = attr;
 	}
 
 	inline const AttrBlend & AttrGlobSet::blend() const {
 		return mBlend;
 	}
 
-	inline void AttrGlobSet::setLayerGroup(const AttrLayerGroup & inVal) {
-		mLayerGroup = inVal;
+	inline void AttrGlobSet::setLayerGroup(const AttrLayerGroup & attr) {
+		mLayerGroup = attr;
 	}
 
 	inline const AttrLayerGroup & AttrGlobSet::layerGroup() const {
 		return mLayerGroup;
 	}
 
-	inline void AttrGlobSet::setLayerGroupDraped(const AttrDrapedLayerGroup & inVal) {
-		mLayerGroupDraped = inVal;
+	inline void AttrGlobSet::setLayerGroupDraped(const AttrDrapedLayerGroup & attr) {
+		mLayerGroupDraped = attr;
 	}
 
 	inline const AttrDrapedLayerGroup & AttrGlobSet::layerGroupDraped() const {
 		return mLayerGroupDraped;
 	}
 
-	inline void AttrGlobSet::setLodDrap(const AttrLodDrap & inVal) {
-		mLodDrap = inVal;
+	inline void AttrGlobSet::setLodDrap(const AttrLodDrap & attr) {
+		mLodDrap = attr;
 	}
 
 	inline const AttrLodDrap & AttrGlobSet::lodDrap() const {
 		return mLodDrap;
 	}
 
-	inline void AttrGlobSet::setSlungLoadWeight(const AttrSlungLoadWeight & inVal) {
-		mSlungLoadWeight = inVal;
+	inline void AttrGlobSet::setSlungLoadWeight(const AttrSlungLoadWeight & attr) {
+		mSlungLoadWeight = attr;
 	}
 
 	inline const AttrSlungLoadWeight & AttrGlobSet::slungLoadWeight() const {
 		return mSlungLoadWeight;
 	}
 
-	inline void AttrGlobSet::setSpecular(const AttrSpecular & inVal) {
-		mSpecular = inVal;
+	inline void AttrGlobSet::setSpecular(const AttrSpecular & attr) {
+		mSpecular = attr;
 	}
 
 	inline const AttrSpecular & AttrGlobSet::specular() const {
 		return mSpecular;
 	}
 
-	inline void AttrGlobSet::setTint(const AttrTint & inVal) {
-		mTint = inVal;
+	inline void AttrGlobSet::setTint(const AttrTint & attr) {
+		mTint = attr;
 	}
 
 	inline const AttrTint & AttrGlobSet::tint() const {
 		return mTint;
 	}
 
-	inline void AttrGlobSet::setWetDry(const AttrWetDry & inVal) {
-		mAttrWetDry = inVal;
+	inline void AttrGlobSet::setWetDry(const AttrWetDry & attr) {
+		mAttrWetDry = attr;
 	}
 
 	inline const AttrWetDry & AttrGlobSet::wetDry() const {
 		return mAttrWetDry;
 	}
 
-	inline void AttrGlobSet::setSlopeLimit(const AttrSlopeLimit & inVal) {
-		mAttrSlopeLimit = inVal;
+	inline void AttrGlobSet::setSlopeLimit(const AttrSlopeLimit & attr) {
+		mAttrSlopeLimit = attr;
 	}
 
 	inline const AttrSlopeLimit & AttrGlobSet::slopeLimit() const {
 		return mAttrSlopeLimit;
 	}
 
-	inline void AttrGlobSet::setCockpitRegion(const AttrCockpitRegion & inVal, AttrCockpitRegion::eNum inNum) {
-		mAttrCockpitRegion[static_cast<size_t>(inNum)] = inVal;
+	inline void AttrGlobSet::setCockpitRegion(const AttrCockpitRegion & attr, AttrCockpitRegion::eNum num) {
+		mAttrCockpitRegion[static_cast<size_t>(num)] = attr;
 	}
 
-	inline const AttrCockpitRegion & AttrGlobSet::cockpitRegion(AttrCockpitRegion::eNum inNum) const {
-		return mAttrCockpitRegion[static_cast<size_t>(inNum)];
+	inline const AttrCockpitRegion & AttrGlobSet::cockpitRegion(AttrCockpitRegion::eNum num) const {
+		return mAttrCockpitRegion[static_cast<size_t>(num)];
 	}
 
 	/**************************************************************************************************/

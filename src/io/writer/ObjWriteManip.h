@@ -30,7 +30,6 @@
 #pragma once
 
 #include "xpln/XplnObjExport.h"
-#include <cstdlib>
 #include "xpln/obj/attributes/AttrCockpit.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
 

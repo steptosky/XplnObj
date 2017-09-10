@@ -42,6 +42,7 @@
 #include "ObjWriteOptimize.h"
 #include "io/ObjTransformation.h"
 #include "ObjWriteInstancing.h"
+#include "common/Logger.h"
 
 namespace xobj {
 
@@ -79,23 +80,23 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool ObjWriter::writeFile(ObjMain * inRoot, const std::string & inPath, const std::string & inSignature,
-							IOStatistic & outStat, const TMatrix & inTm) {
+	bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::string & signature,
+							IOStatistic & outStat, const TMatrix & tm) {
 		try {
 			reset(); // reset all data that needs to be recalculated
 
-			if (inRoot == nullptr || !checkParameters(*inRoot, inRoot->objectName()))
+			if (root == nullptr || !checkParameters(*root, root->objectName()))
 				return false;
 
-			if (inRoot->pExportOptions.isEnabled(XOBJ_EXP_DEBUG)) {
-				ULMessage << "File: " << inPath;
+			if (root->pExportOptions.isEnabled(XOBJ_EXP_DEBUG)) {
+				ULMessage << "File: " << path;
 			}
 
-			mMain = inRoot;
-			mExportOptions = inRoot->pExportOptions;
+			mMain = root;
+			mExportOptions = root->pExportOptions;
 
 			Writer writer;
-			if (!writer.openFile(inPath))
+			if (!writer.openFile(path))
 				return false;
 
 			writer.spaceEnable(mExportOptions.isEnabled(XOBJ_EXP_MARK_TREE_HIERARCHY));
@@ -109,7 +110,7 @@ namespace xobj {
 				return false;
 			}
 			ObjWriteOptimize::optimize(*mMain);
-			ObjTransformation::correctExportTransform(*mMain, inTm, mExportOptions.isEnabled(XOBJ_EXP_APPLY_LOD_TM));
+			ObjTransformation::correctExportTransform(*mMain, tm, mExportOptions.isEnabled(XOBJ_EXP_APPLY_LOD_TM));
 
 			//-------------------------------------------------------------------------
 			// calculate count
@@ -173,7 +174,7 @@ namespace xobj {
 				writer.printEol();
 			}
 
-			printSignature(writer, inSignature);
+			printSignature(writer, signature);
 			writer.closeFile();
 			outStat = mStatistic;
 			return true;
@@ -184,11 +185,11 @@ namespace xobj {
 		}
 	}
 
-	void ObjWriter::printLOD(AbstractWriter & writer, const ObjLodGroup & inLOD, size_t inCount) const {
-		if (inCount < 2 && sts::isEqual(inLOD.nearVal(), inLOD.farVal(), 0.1f)) {
+	void ObjWriter::printLOD(AbstractWriter & writer, const ObjLodGroup & lod, size_t count) const {
+		if (count < 2 && sts::isEqual(lod.nearVal(), lod.farVal(), 0.1f)) {
 			return;
 		}
-		writer.printLine(toObjString(inLOD, true));
+		writer.printLine(toObjString(lod, true));
 	}
 
 	/********************************************************************************************************/
@@ -223,10 +224,10 @@ namespace xobj {
 	//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
 	/********************************************************************************************************/
 
-	void ObjWriter::calculateVerticiesAndFaces(const Transform & inParent) {
+	void ObjWriter::calculateVerticiesAndFaces(const Transform & parent) {
 		static const ObjMesh * mobj = nullptr;
 		static const ObjLine * lobj = nullptr;
-		for (auto obj : inParent.objList()) {
+		for (auto obj : parent.objList()) {
 			if (obj->objType() == OBJ_MESH) {
 				mobj = static_cast<const ObjMesh*>(obj);
 				mStatistic.pMeshVerticesCount += mobj->pVertices.size();
@@ -241,8 +242,8 @@ namespace xobj {
 			}
 		}
 
-		for (Transform::TransformIndex i = 0; i < inParent.childrenCount(); ++i) {
-			calculateVerticiesAndFaces(*dynamic_cast<const Transform*>(inParent.childAt(i)));
+		for (Transform::TransformIndex i = 0; i < parent.childrenCount(); ++i) {
+			calculateVerticiesAndFaces(*dynamic_cast<const Transform*>(parent.childAt(i)));
 		}
 	}
 
@@ -267,15 +268,15 @@ namespace xobj {
 	//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
 	/********************************************************************************************************/
 
-	void ObjWriter::printObjects(AbstractWriter & writer, const Transform & inParent) {
+	void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) {
 
 		//-------------------------------------------------------------------------
 
-		mAnimationWritter.printAnimationStart(writer, inParent);
+		mAnimationWritter.printAnimationStart(writer, parent);
 
 		//-------------------------------------------------------------------------
 
-		for (auto objBase : inParent.objList()) {
+		for (auto objBase : parent.objList()) {
 			// order attr and manip is important.
 			mWriteAttr.write(&writer, objBase);
 			mObjWriteManip.write(&writer, objBase);
@@ -286,7 +287,7 @@ namespace xobj {
 				continue;
 			}
 
-			if (mObjWriteGeometry.printLightObject(writer, *objBase, inParent)) {
+			if (mObjWriteGeometry.printLightObject(writer, *objBase, parent)) {
 				continue;
 			}
 
@@ -310,12 +311,12 @@ namespace xobj {
 		//-------------------------------------------------------------------------
 
 		// print child
-		for (Transform::TransformIndex i = 0; i < inParent.childrenCount(); ++i)
-			printObjects(writer, *dynamic_cast<const Transform*>(inParent.childAt(i)));
+		for (Transform::TransformIndex i = 0; i < parent.childrenCount(); ++i)
+			printObjects(writer, *dynamic_cast<const Transform*>(parent.childAt(i)));
 
 		//-------------------------------------------------------------------------
 
-		mAnimationWritter.printAnimationEnd(writer, inParent);
+		mAnimationWritter.printAnimationEnd(writer, parent);
 
 		//-------------------------------------------------------------------------
 	}

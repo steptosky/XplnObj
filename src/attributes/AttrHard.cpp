@@ -28,7 +28,6 @@
 */
 
 #include "xpln/obj/attributes/AttrHard.h"
-#include <algorithm>
 
 namespace xobj {
 
@@ -36,9 +35,9 @@ namespace xobj {
 	//////////////////////////////////////////* Static area *///////////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrHard::AttrHard(ESurface inSurface, bool inDeck)
-		: mESurface(inSurface),
-		mIsDeck(inDeck),
+	AttrHard::AttrHard(ESurface surface, bool deck)
+		: mESurface(surface),
+		mIsDeck(deck),
 		mIsEnabled(true) { }
 
 	AttrHard::AttrHard()
@@ -54,31 +53,31 @@ namespace xobj {
 		return mIsEnabled;
 	}
 
-	void AttrHard::setEnabled(bool inState) {
-		mIsEnabled = inState;
+	void AttrHard::setEnabled(bool state) {
+		mIsEnabled = state;
 	}
 
-	bool AttrHard::operator==(const AttrHard & inRight) const {
-		return (mIsEnabled == inRight.mIsEnabled &&
-				mIsDeck == inRight.mIsDeck &&
-				mESurface == inRight.mESurface);
+	bool AttrHard::operator==(const AttrHard & other) const {
+		return (mIsEnabled == other.mIsEnabled &&
+				mIsDeck == other.mIsDeck &&
+				mESurface == other.mESurface);
 	}
 
-	bool AttrHard::operator!=(const AttrHard & inRight) const {
-		return !operator==(inRight);
+	bool AttrHard::operator!=(const AttrHard & other) const {
+		return !operator==(other);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrHard::setESurface(const ESurface & inVal, bool inDeck /*= false*/) {
+	void AttrHard::setESurface(const ESurface & surface, bool deck) {
 		mIsEnabled = true;
-		mESurface = inVal;
-		mIsDeck = inDeck;
+		mESurface = surface;
+		mIsDeck = deck;
 	}
 
-	const xobj::ESurface & AttrHard::surface() const {
+	const ESurface & AttrHard::surface() const {
 		return mESurface;
 	}
 

@@ -54,7 +54,7 @@ namespace xobj {
 	class ObjAbstract {
 
 		friend Transform;
-		ObjAbstract & operator =(const ObjAbstract & inCopy) = delete;
+		ObjAbstract & operator =(const ObjAbstract &) = delete;
 
 	protected:
 
@@ -66,7 +66,7 @@ namespace xobj {
 		 * \details Constructor copy.
 		 * \note It does not copy the transform linkage.
 		 */
-		XpObjLib ObjAbstract(const ObjAbstract & inCopy);
+		XpObjLib ObjAbstract(const ObjAbstract & copy);
 
 		//-----------------------------------------------------
 
@@ -84,28 +84,28 @@ namespace xobj {
 
 		/*
 		 * \details Access to the object transformation node.
-		 * \return Nullptr if the object doesn't have the transformation node, otherwise pointer to the linked transformation node.
+		 * \return Nullptr if the object doesn't have a transformation node, otherwise pointer to the linked transformation node.
 		 */
 		XpObjLib Transform * transform();
 
 		/*
 		 * \details Access to the object transformation node.
-		 * \return Nullptr if the object doesn't have the transformation node, otherwise pointer to the linked transformation node.
+		 * \return Nullptr if the object doesn't have a transformation node, otherwise pointer to the linked transformation node.
 		 */
 		XpObjLib const Transform * transform() const;
 
 		//--------------------------------------------------------
 
-		XpObjLib void setObjectName(const std::string & inName);
+		XpObjLib void setObjectName(const std::string & name);
 		XpObjLib const std::string & objectName() const;
 
 		//--------------------------------------------------------
 
 		/*!
 		 * \details Applies specified transformation matrix to the object.
-		 * \param [in] inTm transform matrix.
+		 * \param [in] tm transform matrix.
 		 */
-		virtual void applyTransform(const TMatrix & inTm) = 0;
+		virtual void applyTransform(const TMatrix & tm) = 0;
 
 		/*!
 		 * \return Cloned object.

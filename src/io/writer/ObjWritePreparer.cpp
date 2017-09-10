@@ -32,7 +32,6 @@
 #include "xpln/obj/ObjMesh.h"
 #include "ObjWriteAnim.h"
 #include "io/ObjValidators.h"
-#include "exceptions/defines.h"
 
 namespace xobj {
 
@@ -40,10 +39,10 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool ObjWritePreparer::prepare(ObjMain & inObjMain) {
-		size_t lodCount = inObjMain.lodCount();
+	bool ObjWritePreparer::prepare(ObjMain & mainObj) {
+		const size_t lodCount = mainObj.lodCount();
 		for (size_t i = 0; i < lodCount; ++i) {
-			ObjLodGroup & lod = inObjMain.lod(i);
+			ObjLodGroup & lod = mainObj.lod(i);
 			Transform & rootTransform = lod.transform();
 			if (!checkParameters(lod, lod.objectName())) {
 				return false;
@@ -101,10 +100,10 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjWritePreparer::checkForTwoSided(ObjAbstract & inObj) {
-		if (inObj.objType() != OBJ_MESH)
+	void ObjWritePreparer::checkForTwoSided(ObjAbstract & obj) {
+		if (obj.objType() != OBJ_MESH)
 			return;
-		ObjMesh * meshOriginal = static_cast<ObjMesh*>(&inObj);
+		ObjMesh * meshOriginal = static_cast<ObjMesh*>(&obj);
 		if (!meshOriginal->pAttr.isTwoSided())
 			return;
 

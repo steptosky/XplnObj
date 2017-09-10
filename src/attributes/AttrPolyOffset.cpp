@@ -36,8 +36,8 @@ namespace xobj {
 	//////////////////////////////////////////* Static area *///////////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrPolyOffset::AttrPolyOffset(float inOffset)
-		: mOffset(inOffset),
+	AttrPolyOffset::AttrPolyOffset(float offset)
+		: mOffset(offset),
 		mIsEnabled(true) { }
 
 	AttrPolyOffset::AttrPolyOffset()
@@ -52,25 +52,25 @@ namespace xobj {
 		return mIsEnabled;
 	}
 
-	void AttrPolyOffset::setEnabled(bool inState) {
-		mIsEnabled = inState;
+	void AttrPolyOffset::setEnabled(bool state) {
+		mIsEnabled = state;
 	}
 
-	bool AttrPolyOffset::operator==(const AttrPolyOffset & inRight) const {
-		return (mIsEnabled == inRight.mIsEnabled && sts::isEqual(mOffset, inRight.mOffset, 0.01f));
+	bool AttrPolyOffset::operator==(const AttrPolyOffset & other) const {
+		return (mIsEnabled == other.mIsEnabled && sts::isEqual(mOffset, other.mOffset, 0.01f));
 	}
 
-	bool AttrPolyOffset::operator!=(const AttrPolyOffset & inRight) const {
-		return !operator==(inRight);
+	bool AttrPolyOffset::operator!=(const AttrPolyOffset & other) const {
+		return !operator==(other);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrPolyOffset::setOffset(float inOffset) {
+	void AttrPolyOffset::setOffset(float offset) {
 		mIsEnabled = true;
-		mOffset = inOffset;
+		mOffset = offset;
 	}
 
 	float AttrPolyOffset::offset() const {

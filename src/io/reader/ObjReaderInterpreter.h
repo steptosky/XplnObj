@@ -46,29 +46,29 @@ namespace xobj {
 	class ObjReaderInterpreter : public ObjReaderListener {
 	public:
 
-		ObjReaderInterpreter(ObjMain * inObjMain, const TMatrix & rootMatrix, IOStatistic * inIOStatistic);
+		ObjReaderInterpreter(ObjMain * objMain, const TMatrix & rootMatrix, IOStatistic * ioStatistic);
 		~ObjReaderInterpreter();
 
 	protected:
 
 		//-----------------------------------------------------
 
-		void gotGlobAttrTexture(const std::string & inVal) override;
-		void gotGlobAttrTextureLit(const std::string & inVal) override;
-		void gotGlobAttrTextureNormal(const std::string & inVal) override;
+		void gotGlobAttrTexture(const std::string & val) override;
+		void gotGlobAttrTextureLit(const std::string & val) override;
+		void gotGlobAttrTextureNormal(const std::string & val) override;
 
 		//-----------------------------------------------------
 
-		void gotGlobAttrTint(const AttrTint & inAttr) override;
-		void gotGlobAttrWetDry(const AttrWetDry & inAttr) override;
-		void gotGlobAttrBlend(const AttrBlend & inAttr) override;
-		void gotGlobAttrSpecular(const AttrSpecular & inAttr) override;
-		void gotGlobAttrLodDraped(const AttrLodDrap & inAttr) override;
-		void gotGlobAttrLayerGroup(const AttrLayerGroup & inAttr) override;
-		void gotGlobAttrSlopeLimit(const AttrSlopeLimit & inAttr) override;
-		void gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & inAttr) override;
-		void gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGroup & inAttr) override;
-		void gotGlobAttrCockpitRegion(const AttrCockpitRegion & inAttr) override;
+		void gotGlobAttrTint(const AttrTint & globAttr) override;
+		void gotGlobAttrWetDry(const AttrWetDry & globAttr) override;
+		void gotGlobAttrBlend(const AttrBlend & globAttr) override;
+		void gotGlobAttrSpecular(const AttrSpecular & globAttr) override;
+		void gotGlobAttrLodDraped(const AttrLodDrap & globAttr) override;
+		void gotGlobAttrLayerGroup(const AttrLayerGroup & globAttr) override;
+		void gotGlobAttrSlopeLimit(const AttrSlopeLimit & globAttr) override;
+		void gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & globAttr) override;
+		void gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGroup & globAttr) override;
+		void gotGlobAttrCockpitRegion(const AttrCockpitRegion & globAttr) override;
 		void gotGlobAttrDebug() override;
 		void gotGlobAttrTilted() override;
 		void gotGlobAttrNoShadow() override;
@@ -78,46 +78,46 @@ namespace xobj {
 
 		//-----------------------------------------------------
 
-		void gotLod(float inNear, float inFar, const std::string & inEndLineComment) override;
+		void gotLod(float near, float far, const std::string & endLineComment) override;
 
 		//-----------------------------------------------------
 
-		void gotMeshVertices(const ObjMesh::VertexList & inVertices) override;
-		void gotMeshFaces(const FaceIndexArray & inIndices) override;
+		void gotMeshVertices(const ObjMesh::VertexList & vertices) override;
+		void gotMeshFaces(const FaceIndexArray & indices) override;
 
 		//-----------------------------------------------------
 
-		void gotTrisAttrHard(const AttrHard & inAttr) override;
-		void gotTrisAttrShiny(const AttrShiny & inAttr) override;
-		void gotTrisAttrBlend(const AttrBlend & inAttr) override;
-		void gotTrisAttrPolyOffset(const AttrPolyOffset & inAttr) override;
-		void gotTrisAttrLightLevel(const AttrLightLevel & inAttr) override;
-		void gotTrisAttrCockpit(const AttrCockpit & inAttr) override;
-		void gotTrisAttrShadow(bool inState) override;
-		void gotTrisAttrDraped(bool inState) override;
-		void gotTrisAttrDrawEnable(bool inState) override;
-		void gotTrisAttrSolidCamera(bool inState) override;
+		void gotTrisAttrHard(const AttrHard & attr) override;
+		void gotTrisAttrShiny(const AttrShiny & attr) override;
+		void gotTrisAttrBlend(const AttrBlend & attr) override;
+		void gotTrisAttrPolyOffset(const AttrPolyOffset & attr) override;
+		void gotTrisAttrLightLevel(const AttrLightLevel & attr) override;
+		void gotTrisAttrCockpit(const AttrCockpit & attr) override;
+		void gotTrisAttrShadow(bool state) override;
+		void gotTrisAttrDraped(bool state) override;
+		void gotTrisAttrDrawEnable(bool state) override;
+		void gotTrisAttrSolidCamera(bool state) override;
 		void gotTrisAttrReset() override;
 
 		//-----------------------------------------------------
 
 		void gotTrisAttrManipNo() override;
-		void gotTrisAttrManipWheel(const AttrManipWheel & inManip) override;
-		void gotTrisAttrManip(const AttrManipBase & inManip) override;
+		void gotTrisAttrManipWheel(const AttrManipWheel & manip) override;
+		void gotTrisAttrManip(const AttrManipBase & manip) override;
 
 		//-----------------------------------------------------
 
-		void gotTris(Index inOffset, Index inCount, const std::string & inEndLineComment) override /* exception */;
+		void gotTris(Index offset, Index count, const std::string & endLineComment) override /* exception */;
 
 		//-----------------------------------------------------
 
 		void gotAnimBegin() override;
 		void gotAnimEnd() override;
-		void gotAnimHide(const AnimVisibility::Key & InKey) override;
-		void gotAnimShow(const AnimVisibility::Key & InKey) override;
-		void gotTranslateAnim(AnimTrans::KeyList & inKeys, std::string & inDataref,
+		void gotAnimHide(const AnimVisibility::Key & key) override;
+		void gotAnimShow(const AnimVisibility::Key & key) override;
+		void gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
 							bool hasLoop, float loopVal) override;
-		void gotRotateAnim(AnimRotate::KeyList & inKeys, float ( & inVector)[3], std::string & inDataref,
+		void gotRotateAnim(AnimRotate::KeyList & key, float ( & inVector)[3], std::string & dataref,
 							bool hasLoop, float loopVal) override;
 
 		//-----------------------------------------------------
@@ -131,7 +131,7 @@ namespace xobj {
 	private:
 
 		void checkForCreateLod();
-		static std::string extractComment(const std::string & inStr, const char * inDefaultVal);
+		static std::string extractComment(const std::string & str, const char * dataref);
 
 		ObjMain * mObjMain;
 		IOStatistic * mIOStatistic;

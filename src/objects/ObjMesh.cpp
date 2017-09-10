@@ -36,10 +36,10 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	ObjMesh::ObjMesh(const ObjMesh & inCopy)
-		: ObjAbstract(inCopy),
-		pVertices(inCopy.pVertices),
-		pFaces(inCopy.pFaces) {}
+	ObjMesh::ObjMesh(const ObjMesh & copy)
+		: ObjAbstract(copy),
+		pVertices(copy.pVertices),
+		pFaces(copy.pFaces) {}
 
 	ObjMesh::ObjMesh() {
 		setObjectName("Obj Mesh");
@@ -51,25 +51,24 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjMesh::attach(const ObjMesh & inOtherMesh) {
-		size_t currThisVertCount = pVertices.size();
-		for (auto & currVert : inOtherMesh.pVertices)
+	void ObjMesh::attach(const ObjMesh & otherMesh) {
+		const size_t vCount = pVertices.size();
+		for (auto & currVert : otherMesh.pVertices) {
 			pVertices.emplace_back(currVert);
-
-		for (auto & currFace : inOtherMesh.pFaces)
-			pFaces.emplace_back(MeshFace(currFace.pV0 + currThisVertCount,
-										currFace.pV1 + currThisVertCount,
-										currFace.pV2 + currThisVertCount));
+		}
+		for (auto & f : otherMesh.pFaces) {
+			pFaces.emplace_back(f.pV0 + vCount, f.pV1 + vCount, f.pV2 + vCount);
+		}
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjMesh::applyTransform(const TMatrix & inTm) {
+	void ObjMesh::applyTransform(const TMatrix & tm) {
 		for (auto & curr : pVertices) {
-			inTm.transformPoint(curr.pPosition);
-			inTm.transformVector(curr.pNormal);
+			tm.transformPoint(curr.pPosition);
+			tm.transformVector(curr.pNormal);
 		}
 
 		//		if (reinterpret_cast<const sts::TMatrixD3 *>(inTm.internalPointer())->isParity()) {

@@ -45,11 +45,11 @@ namespace xobj {
 	 */
 	class ObjLightCustom : public ObjAbstractLight {
 
-		ObjLightCustom & operator =(const ObjLightCustom & inCopy) = delete;
+		ObjLightCustom & operator =(const ObjLightCustom &) = delete;
 
 	protected:
 
-		XpObjLib ObjLightCustom(const ObjLightCustom & inCopy);
+		XpObjLib ObjLightCustom(const ObjLightCustom & copy);
 
 	public:
 
@@ -58,10 +58,10 @@ namespace xobj {
 
 		//--------------------------------------------------------
 
-		XpObjLib void setSize(float inSize);
-		XpObjLib void setColor(const Color & inColor);
-		XpObjLib void setTextureRect(const RectangleI & inTextureRect);
-		XpObjLib void setDataRef(const std::string & inDataRef);
+		XpObjLib void setSize(float size);
+		XpObjLib void setColor(const Color & color);
+		XpObjLib void setTextureRect(const RectangleI & textureRect);
+		XpObjLib void setDataRef(const std::string & dataRef);
 
 		XpObjLib float size() const;
 		XpObjLib Color color() const;
@@ -74,7 +74,7 @@ namespace xobj {
 		XpObjLib eObjectType objType() const final;
 
 		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & inTm) final;
+		XpObjLib void applyTransform(const TMatrix & tm) final;
 
 		/* \copydoc ObjAbstract::clone */
 		XpObjLib ObjAbstract * clone() const override;

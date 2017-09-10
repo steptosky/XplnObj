@@ -89,14 +89,14 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool AttrManipDelta::equals(const AttrManipBase * inMainp) const {
-		if (!inMainp)
+	bool AttrManipDelta::equals(const AttrManipBase * manip) const {
+		if (!manip)
 			return false;
 
-		if (!AttrManipBase::equals(inMainp))
+		if (!AttrManipBase::equals(manip))
 			return false;
 
-		const AttrManipDelta * right = dynamic_cast<const AttrManipDelta*>(inMainp);
+		const AttrManipDelta * right = dynamic_cast<const AttrManipDelta*>(manip);
 		if (!right)
 			return false;
 

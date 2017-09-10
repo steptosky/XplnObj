@@ -51,7 +51,7 @@ TreeItem<TYPE, CONTAINER>::TreeItem()
 
 /*!
  * \details Constructor init parent
- * \param[in] inParent
+ * \param [in] inParent
  */
 template<typename TYPE, typename CONTAINER>
 TreeItem<TYPE, CONTAINER>::TreeItem(TreeItem<TYPE, CONTAINER> * inParent)

@@ -50,25 +50,25 @@ namespace xobj {
 		//-------------------------------------------------------------------------
 
 		/*!
-		\details Print line with LEOL.
-		\param [in] inMsg nullptr means only LEOL will be printed
-		*/
-		virtual void printLine(const char * inMsg) = 0;
+		 * \details Print line with LEOL.
+		 * \param [in] msg nullptr means only LEOL will be printed
+		 */
+		virtual void printLine(const char * msg) = 0;
 
 		/*!
-		\details Print line with LEOL.
-		\param [in] inMsg if it is empty then only LEOL will be printed
-		*/
-		void printLine(const std::string & inMsg);
+		 * \details Print line with LEOL.
+		 * \param [in] msg if it is empty then only LEOL will be printed
+		 */
+		void printLine(const std::string & msg);
 
 		/*!
-		\details Print only LEOL.
-		*/
+		 * \details Print only LEOL.
+		 */
 		void printEol();
 
 		//-------------------------------------------------------------------------
 
-		void spaceEnable(bool inState);
+		void spaceEnable(bool state);
 		void spaceMore();
 		void spaceLess();
 
@@ -77,9 +77,9 @@ namespace xobj {
 	protected:
 
 		/*!
-		\details Gets actiall space for the line.
-		\return Space symbols if it is enabled otherwise empty string.
-		*/
+		 * \details Gets actual space for the line.
+		 * \return Space symbols if it is enabled otherwise empty string.
+		 */
 		const std::string & space() const;
 
 	private:
@@ -95,8 +95,8 @@ namespace xobj {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	inline void AbstractWriter::spaceEnable(bool inState) {
-		mIsSpaseEnabled = inState;
+	inline void AbstractWriter::spaceEnable(bool state) {
+		mIsSpaseEnabled = state;
 	}
 
 	inline bool AbstractWriter::isSpaceEnabled() const {
@@ -122,8 +122,8 @@ namespace xobj {
 
 	//-------------------------------------------------------------------------
 
-	inline void AbstractWriter::printLine(const std::string & inMsg) {
-		inMsg.empty() ? printEol() : printLine(inMsg.c_str());
+	inline void AbstractWriter::printLine(const std::string & msg) {
+		msg.empty() ? printEol() : printLine(msg.c_str());
 	}
 
 	inline void AbstractWriter::printEol() {

@@ -36,10 +36,10 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrLightLevel::AttrLightLevel(float inVal1, float inVal2, const std::string & inDataRef)
-		: mVal1(inVal1),
-		mVal2(inVal2),
-		mDataref(inDataRef),
+	AttrLightLevel::AttrLightLevel(float val1, float val2, const std::string & dataRef)
+		: mVal1(val1),
+		mVal2(val2),
+		mDataref(dataRef),
 		mIsEnabled(true) { }
 
 	AttrLightLevel::AttrLightLevel()
@@ -56,38 +56,38 @@ namespace xobj {
 		return mIsEnabled;
 	}
 
-	void AttrLightLevel::setEnabled(bool inState) {
-		mIsEnabled = inState;
+	void AttrLightLevel::setEnabled(bool state) {
+		mIsEnabled = state;
 	}
 
-	bool AttrLightLevel::operator==(const AttrLightLevel & inRight) const {
-		return (mIsEnabled == inRight.mIsEnabled &&
-				mDataref == inRight.mDataref &&
-				sts::isEqual(mVal1, inRight.mVal1, 0.01f) &&
-				sts::isEqual(mVal2, inRight.mVal2, 0.01f));
+	bool AttrLightLevel::operator==(const AttrLightLevel & other) const {
+		return (mIsEnabled == other.mIsEnabled &&
+				mDataref == other.mDataref &&
+				sts::isEqual(mVal1, other.mVal1, 0.01f) &&
+				sts::isEqual(mVal2, other.mVal2, 0.01f));
 	}
 
-	bool AttrLightLevel::operator!=(const AttrLightLevel & inRight) const {
-		return !operator==(inRight);
+	bool AttrLightLevel::operator!=(const AttrLightLevel & other) const {
+		return !operator==(other);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrLightLevel::setVal1(float inVal) {
+	void AttrLightLevel::setVal1(float val1) {
 		mIsEnabled = true;
-		mVal1 = inVal;
+		mVal1 = val1;
 	}
 
-	void AttrLightLevel::setVal2(float inVal) {
+	void AttrLightLevel::setVal2(float val2) {
 		mIsEnabled = true;
-		mVal2 = inVal;
+		mVal2 = val2;
 	}
 
-	void AttrLightLevel::setDataref(const std::string & inDataRef) {
+	void AttrLightLevel::setDataref(const std::string & dataRef) {
 		mIsEnabled = true;
-		mDataref = inDataRef;
+		mDataref = dataRef;
 	}
 
 	float AttrLightLevel::val1() const {

@@ -101,20 +101,13 @@ namespace xobj {
 	/**************************************************************************************************/
 
 	void ObjWritePreparer::checkForTwoSided(ObjAbstract & obj) {
-		if (obj.objType() != OBJ_MESH)
+		if (obj.objType() != OBJ_MESH) {
 			return;
-		ObjMesh * meshOriginal = static_cast<ObjMesh*>(&obj);
-		if (!meshOriginal->pAttr.isTwoSided())
-			return;
-
-		ObjMesh meshDouble;
-		for (auto & vert : meshDouble.pVertices) {
-			vert.pNormal *= -1.0;
 		}
-		for (auto & face : meshDouble.pFaces) {
-			std::swap(face.pV0, face.pV2);
+		ObjMesh * mesh = static_cast<ObjMesh*>(&obj);
+		if (mesh->pAttr.isTwoSided()) {
+			mesh->makeTwoSided();
 		}
-		meshOriginal->attach(meshDouble);
 	}
 
 	/**************************************************************************************************/

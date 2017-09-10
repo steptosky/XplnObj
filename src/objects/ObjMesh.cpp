@@ -61,6 +61,24 @@ namespace xobj {
 		}
 	}
 
+	void ObjMesh::flipNormals() {
+		for (auto & vert : pVertices) {
+			vert.pNormal *= -1.0;
+		}
+		for (auto & face : pFaces) {
+			std::swap(face.pV0, face.pV2);
+		}
+	}
+
+	void ObjMesh::makeTwoSided() {
+		if (!mTwoSided) {
+			ObjMesh copy(*this);
+			copy.flipNormals();
+			attach(copy);
+			mTwoSided = true;
+		}
+	}
+
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/

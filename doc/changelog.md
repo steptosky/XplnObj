@@ -3,6 +3,7 @@ X-Plane Obj Library
 ---------------------------------------------------------------------------
 #### Next
 
+- **Fixed:** Creating two sided mesh.
 - **Fixed:** Printing custom name of the LIGHT_PARAM.
 
 ---------------------------------------------------------------------------

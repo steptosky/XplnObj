@@ -90,6 +90,16 @@ namespace xobj {
 		 */
 		XpObjLib void attach(const ObjMesh & otherMesh);
 
+		/*!
+		 * \details Flips mesh normals.
+		 */
+		XpObjLib void flipNormals();
+
+		/*!
+		 * \details It makes mesh copy at the same location and flips its normals.
+		 */
+		XpObjLib void makeTwoSided();
+
 		//-------------------------------------------------------------------------
 
 		/*! \copydoc ObjAbstract::objType */
@@ -102,6 +112,10 @@ namespace xobj {
 		XpObjLib ObjAbstract * clone() const override;
 
 		//-------------------------------------------------------------------------
+
+	private:
+
+		bool mTwoSided = false;
 
 	};
 

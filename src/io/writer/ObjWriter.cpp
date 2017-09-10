@@ -197,7 +197,7 @@ namespace xobj {
 	/********************************************************************************************************/
 
 	inline std::string currentDateTime() {
-		time_t now = time(0);
+		time_t now = time(nullptr);
 		char buf[80];
 		struct tm tstruct = *localtime(&now);
 		strftime(buf, sizeof(buf), "%Y-%m-%d", &tstruct);

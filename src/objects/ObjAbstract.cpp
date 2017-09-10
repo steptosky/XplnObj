@@ -47,8 +47,8 @@ namespace xobj {
 		if (mObjTransform) {
 			if (!mObjTransform->removeObject(this)) {
 				LError << " Internal logic error."
-					<< " type: " << ObjAbstract::objType()
-					<< " objectName: " << objectName();
+						<< " type: " << ObjAbstract::objType()
+						<< " objectName: " << objectName();
 			}
 		}
 	}

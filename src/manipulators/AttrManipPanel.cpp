@@ -47,7 +47,7 @@ namespace xobj {
 	}
 
 	const AttrCockpit & AttrManipPanel::cockpit() const {
-		return mAttrCockpit;;
+		return mAttrCockpit;
 	}
 
 	/**************************************************************************************************/

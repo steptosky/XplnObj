@@ -1,4 +1,4 @@
- /*
+/*
 **  Copyright(C) 2017, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without

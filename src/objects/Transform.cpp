@@ -42,8 +42,8 @@ namespace xobj {
 	public:
 
 		TreeItem(Transform * inTransformTree)
-			: mTransformTree(inTransformTree),
-			mIsCallDestructor(true) { }
+			: mIsCallDestructor(true),
+			mTransformTree(inTransformTree) { }
 
 		void setData(Transform * val) {
 			mTransformTree = val;
@@ -53,7 +53,7 @@ namespace xobj {
 			return mTransformTree;
 		}
 
-		TreeItem * clone() const {
+		TreeItem * clone() const override {
 			return nullptr;
 		}
 

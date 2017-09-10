@@ -81,15 +81,15 @@ namespace xobj {
 			if (manip->type() == EManipulator::none) {
 				if (!mIsPanelManip) {
 					ULWarning << "The object <" << mObj->objectName() << "> uses <" << manip->type().toUiString()
-					<< "> it does not make a sense because this manipulator is set automatically when it is needed.";
+							<< "> it does not make a sense because this manipulator is set automatically when it is needed.";
 					return nullptr;
 				}
 			}
 			else if (manip->type() == EManipulator::panel) {
 				if (!mIsPanelManip) {
 					ULError << "The object <" << mObj->objectName() << "> uses <" << manip->type().toUiString()
-					<< "> manipulator but the object has not the attribute <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
-					<< "> the <" << manip->type().toUiString() << "> can be used only for the geometry with one of those attributes.";
+							<< "> manipulator but the object has not the attribute <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
+							<< "> the <" << manip->type().toUiString() << "> can be used only for the geometry with one of those attributes.";
 					return nullptr;
 				}
 

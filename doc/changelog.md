@@ -1,7 +1,7 @@
 
 X-Plane Obj Library
 ---------------------------------------------------------------------------
-#### Next
+#### 0.5.0-beta (05.10.2017)
 
 - **Added:** Error if any LOD except the first one contains hard polygons.
 - **Added:** Auto-flip normals for objects with mirrored transformation.

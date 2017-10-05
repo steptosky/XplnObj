@@ -82,8 +82,8 @@ set(ProjectSourcesWebLink "https://github.com/steptosky/XplnObj")
 # Version / Dependency's system
 
 set(ProjectVersionMajor 0)
-set(ProjectVersionMinor 4)
-set(ProjectVersionPatch 1)
+set(ProjectVersionMinor 5)
+set(ProjectVersionPatch 0)
 set(ProjectVersion "${ProjectVersionMajor}.${ProjectVersionMinor}.${ProjectVersionPatch}")
 set(ProjectReleaseType "beta") # You can use any string you wish
 

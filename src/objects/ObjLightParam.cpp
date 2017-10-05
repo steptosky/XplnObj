@@ -50,7 +50,7 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjLightParam::applyTransform(const TMatrix & tm) {
+	void ObjLightParam::applyTransform(const TMatrix & tm, const bool) {
 		Point3 pos = mPosition;
 		tm.transformPoint(pos);
 		mPosition = pos;

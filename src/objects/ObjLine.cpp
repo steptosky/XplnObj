@@ -49,7 +49,7 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjLine::applyTransform(const TMatrix & tm) {
+	void ObjLine::applyTransform(const TMatrix & tm, const bool) {
 		for (auto & vertex : mVertices) {
 			tm.transformPoint(vertex.pPosition);
 		}

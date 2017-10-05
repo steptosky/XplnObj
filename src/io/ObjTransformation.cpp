@@ -136,23 +136,21 @@ namespace xobj {
 		// TestTransformationAlgorithm_case0
 		if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && !transParent && !rotateParent) {
 			if (obj) {
-				obj->applyTransform(transform.pMatrix * rootTm);
+				obj->applyTransform(transform.pMatrix * rootTm, true);
 			}
 		}
 			//----------
 			// TestTransformationAlgorithm_case1
 		else if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && transParent && !rotateParent) {
 			if (obj) {
-				obj->applyTransform((transform.pMatrix * rootTm) *
-									(transParent->pMatrix * rootTm).toTranslation().inversed());
+				obj->applyTransform((transform.pMatrix * rootTm) * (transParent->pMatrix * rootTm).toTranslation().inversed(), true);
 			}
 		}
 			//----------
 			// TestTransformationAlgorithm_case2
 		else if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && transParent && rotateParent) {
 			if (obj) {
-				obj->applyTransform((transform.pMatrix * rootTm) *
-									(transParent->pMatrix * rootTm).toTranslation().inversed());
+				obj->applyTransform((transform.pMatrix * rootTm) * (transParent->pMatrix * rootTm).toTranslation().inversed(), true);
 			}
 		}
 			//------------------------------------------------------------------------------------------
@@ -166,7 +164,7 @@ namespace xobj {
 			mapAnimTransKeys(transform.pAnimTrans, tmTrans);
 
 			if (obj) {
-				obj->applyTransform((transform.pMatrix * rootTm).toRotation());
+				obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
 			}
 		}
 			//----------
@@ -181,7 +179,7 @@ namespace xobj {
 			mapAnimTransKeys(transform.pAnimTrans, tmTrans);
 
 			if (obj) {
-				obj->applyTransform((transform.pMatrix * rootTm).toRotation());
+				obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
 			}
 		}
 			//----------
@@ -196,7 +194,7 @@ namespace xobj {
 			mapAnimTransKeys(transform.pAnimTrans, tmTrans);
 
 			if (obj) {
-				obj->applyTransform((transform.pMatrix * rootTm).toRotation());
+				obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
 			}
 		}
 			//------------------------------------------------------------------------------------------
@@ -209,11 +207,11 @@ namespace xobj {
 			tmTrans *= rootTm;
 			mapAnimTransKeys(transform.pAnimTrans, tmTrans);
 			// making rotate vector relative parent system coordinates. 
-			TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
+			const TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
 			mapAnimRotateKeys(transform.pAnimRotate, tmRot);
 
 			if (obj) {
-				obj->applyTransform((transform.pMatrix * rootTm).toRotation());
+				obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
 			}
 		}
 			//----------
@@ -228,11 +226,11 @@ namespace xobj {
 			mapAnimTransKeys(transform.pAnimTrans, tmTrans);
 			// making rotate vector relative parent system coordinates. 
 			// TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case6
-			TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
+			const TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
 			mapAnimRotateKeys(transform.pAnimRotate, tmRot);
 
 			if (obj) {
-				obj->applyTransform((transform.pMatrix * rootTm).toRotation());
+				obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
 			}
 		}
 			//----------
@@ -247,11 +245,11 @@ namespace xobj {
 			mapAnimTransKeys(transform.pAnimTrans, tmTrans);
 			// making rotate vector relative parent system coordinates. 
 			// TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case6
-			TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
+			const TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
 			mapAnimRotateKeys(transform.pAnimRotate, tmRot);
 
 			if (obj) {
-				obj->applyTransform((transform.pMatrix * rootTm).toRotation());
+				obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
 			}
 		}
 			//------------------------------------------------------------------------------------------

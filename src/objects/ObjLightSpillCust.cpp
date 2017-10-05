@@ -69,7 +69,7 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjLightSpillCust::applyTransform(const TMatrix & tm) {
+	void ObjLightSpillCust::applyTransform(const TMatrix & tm, const bool) {
 		Point3 pos = mPosition;
 		tm.transformPoint(pos);
 		mPosition = pos;

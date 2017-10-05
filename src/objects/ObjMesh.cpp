@@ -83,21 +83,15 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjMesh::applyTransform(const TMatrix & tm) {
+	void ObjMesh::applyTransform(const TMatrix & tm, const bool useParity) {
 		for (auto & curr : pVertices) {
 			tm.transformPoint(curr.pPosition);
 			tm.transformVector(curr.pNormal);
 		}
 
-		//		if (reinterpret_cast<const sts::TMatrixD3 *>(inTm.internalPointer())->isParity()) {
-		//			for (auto & vert : pVertices) {
-		//				inTm.transformVector(vert.pNormal);
-		//				vert.pNormal *= -1.0;
-		//			}
-		//			for (auto & face : pFaces) {
-		//				std::swap(face.pV0, face.pV2);
-		//			}
-		//		}
+		if (useParity && tm.parity()) {
+			flipNormals();
+		}
 	}
 
 	/**************************************************************************************************/

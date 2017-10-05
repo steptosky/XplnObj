@@ -104,8 +104,9 @@ namespace xobj {
 		/*!
 		 * \details Applies specified transformation matrix to the object.
 		 * \param [in] tm transform matrix.
+		 * \param [in] useParity \see \link TMatrix::parity \endlink
 		 */
-		virtual void applyTransform(const TMatrix & tm) = 0;
+		virtual void applyTransform(const TMatrix & tm, const bool useParity = false) = 0;
 
 		/*!
 		 * \return Cloned object.

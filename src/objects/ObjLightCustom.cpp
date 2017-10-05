@@ -52,7 +52,7 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjLightCustom::applyTransform(const TMatrix & tm) {
+	void ObjLightCustom::applyTransform(const TMatrix & tm, const bool) {
 		Point3 pos = mPosition;
 		tm.transformPoint(pos);
 		mPosition = pos;

@@ -52,7 +52,7 @@ namespace xobj {
 		return OBJ_DUMMY;
 	}
 
-	void ObjDummy::applyTransform(const TMatrix &) { }
+	void ObjDummy::applyTransform(const TMatrix &, const bool) { }
 
 	/**************************************************************************************************/
 	//////////////////////////////////////////* Functions */////////////////////////////////////////////

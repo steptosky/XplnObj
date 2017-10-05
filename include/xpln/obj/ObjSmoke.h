@@ -80,7 +80,7 @@ namespace xobj {
 		XpObjLib eObjectType objType() const final;
 
 		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & tm) final;
+		XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
 
 		//-----------------------------------------------------
 

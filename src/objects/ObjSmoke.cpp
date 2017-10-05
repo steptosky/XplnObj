@@ -83,7 +83,7 @@ namespace xobj {
 		return OBJ_SMOKE;
 	}
 
-	void ObjSmoke::applyTransform(const TMatrix & tm) {
+	void ObjSmoke::applyTransform(const TMatrix & tm, const bool) {
 		Point3 pos = mPosition;
 		tm.transformPoint(pos);
 		mPosition = pos;

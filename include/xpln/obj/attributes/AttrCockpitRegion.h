@@ -61,12 +61,12 @@ namespace xobj {
 		/*!
 		 * \details Constructor init.
 		 * \note Makes the enabled attribute.
-		 * \param inLeft 
-		 * \param inBottom 
-		 * \param inRight 
-		 * \param inTop 
+		 * \param [in] left 
+		 * \param [in] bottom 
+		 * \param [in] right 
+		 * \param [in] top 
 		 */
-		XpObjLib AttrCockpitRegion(int32_t inLeft, int32_t inBottom, int32_t inRight, int32_t inTop);
+		XpObjLib AttrCockpitRegion(int32_t left, int32_t bottom, int32_t right, int32_t top);
 
 		~AttrCockpitRegion() = default;
 
@@ -74,28 +74,28 @@ namespace xobj {
 
 		/*!
 		 * \details Check whether the attribute is enabled. 
-		 * \note All class's seters will enable this attribute.
+		 * \note All class's setters will enable this attribute.
 		 */
 		XpObjLib operator bool() const;
 
 		/*!
-		 * \details Sets the attribute enabled/desabled.
-		 * \note All class's seters will enable this attribute.
-		 * \param inState 
+		 * \details Sets the attribute enabled/disabled.
+		 * \note All class's setters will enable this attribute.
+		 * \param [in] state 
 		 */
-		XpObjLib void setEnabled(bool inState);
+		XpObjLib void setEnabled(bool state);
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrCockpitRegion & inRight) const;
-		XpObjLib bool operator!=(const AttrCockpitRegion & inRight) const;
+		XpObjLib bool operator==(const AttrCockpitRegion & other) const;
+		XpObjLib bool operator!=(const AttrCockpitRegion & other) const;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib void setLeft(int32_t inLeft);
-		XpObjLib void setBottom(int32_t inBottom);
-		XpObjLib void setRight(int32_t inRight);
-		XpObjLib void setTop(int32_t inTop);
+		XpObjLib void setLeft(int32_t left);
+		XpObjLib void setBottom(int32_t bottom);
+		XpObjLib void setRight(int32_t right);
+		XpObjLib void setTop(int32_t top);
 
 		XpObjLib int32_t left() const;
 		XpObjLib int32_t bottom() const;

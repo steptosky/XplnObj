@@ -35,8 +35,8 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	ObjDummy::ObjDummy(const ObjDummy & inCopy)
-		: ObjAbstract(inCopy) {}
+	ObjDummy::ObjDummy(const ObjDummy & copy)
+		: ObjAbstract(copy) {}
 
 	ObjDummy::ObjDummy() {
 		setObjectName("Dummy");
@@ -52,7 +52,7 @@ namespace xobj {
 		return OBJ_DUMMY;
 	}
 
-	void ObjDummy::applyTransform(const TMatrix &/*inTm*/) { }
+	void ObjDummy::applyTransform(const TMatrix &, const bool) { }
 
 	/**************************************************************************************************/
 	//////////////////////////////////////////* Functions */////////////////////////////////////////////

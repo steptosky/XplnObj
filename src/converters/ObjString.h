@@ -50,8 +50,8 @@ namespace xobj {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	XpObjLib std::string toObjString(const MeshVertex & inVal, bool inIsTree);
-	XpObjLib std::string toObjString(const LineVertex & inVal);
+	XpObjLib std::string toObjString(const MeshVertex & vertex, bool isTree);
+	XpObjLib std::string toObjString(const LineVertex & vertex);
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////

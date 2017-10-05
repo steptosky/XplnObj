@@ -95,11 +95,11 @@ namespace xobj {
 	class AttrWriter {
 	public:
 		template<typename T>
-		static void writeAttr(AbstractWriter * writer, const T & attr, T & inOutActiveAttr, const char * OffStr, size_t & outCounter,
+		static void writeAttr(AbstractWriter * writer, const T & attr, T & inOutActiveAttr, const char * offStr, size_t & outCounter,
 							std::function<void(const T &)> attrEnable = nullptr, std::function<void()> attrDisable = nullptr) {
 			if (!attr) {
 				if (inOutActiveAttr) {
-					writer->printLine(OffStr);
+					writer->printLine(offStr);
 					if (attrDisable) {
 						attrDisable();
 					}

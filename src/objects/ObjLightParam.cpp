@@ -35,11 +35,11 @@ namespace xobj {
 	///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
 	/********************************************************************************************************/
 
-	ObjLightParam::ObjLightParam(const ObjLightParam & inCopy)
-		: ObjAbstractLight(inCopy),
-		mId(inCopy.mId),
-		mLightName(inCopy.mLightName),
-		mAdditional(inCopy.mAdditional) {}
+	ObjLightParam::ObjLightParam(const ObjLightParam & copy)
+		: ObjAbstractLight(copy),
+		mId(copy.mId),
+		mLightName(copy.mLightName),
+		mAdditional(copy.mAdditional) {}
 
 	ObjLightParam::ObjLightParam()
 		: mId(ELightParams::none) {
@@ -50,9 +50,9 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjLightParam::applyTransform(const TMatrix & inTm) {
+	void ObjLightParam::applyTransform(const TMatrix & tm, const bool) {
 		Point3 pos = mPosition;
-		inTm.transformPoint(pos);
+		tm.transformPoint(pos);
 		mPosition = pos;
 	}
 
@@ -64,8 +64,8 @@ namespace xobj {
 		return OBJ_LIGHT_PARAM;
 	}
 
-	void ObjLightParam::setAdditionalParams(const std::string & inParams) {
-		mAdditional = inParams;
+	void ObjLightParam::setAdditionalParams(const std::string & params) {
+		mAdditional = params;
 	}
 
 	const std::string & ObjLightParam::additionalParams() const {
@@ -76,12 +76,12 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjLightParam::setLightId(ELightParams inId) {
-		mId = inId;
+	void ObjLightParam::setLightId(ELightParams id) {
+		mId = id;
 	}
 
-	void ObjLightParam::setLightName(const std::string & inName) {
-		mLightName = inName;
+	void ObjLightParam::setLightName(const std::string & name) {
+		mLightName = name;
 	}
 
 	const std::string & ObjLightParam::lightName() const {

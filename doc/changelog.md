@@ -1,6 +1,14 @@
 
 X-Plane Obj Library
 ---------------------------------------------------------------------------
+#### 0.5.0-beta (05.10.2017)
+
+- **Added:** Error if any LOD except the first one contains hard polygons.
+- **Added:** Auto-flip normals for objects with mirrored transformation.
+- **Fixed:** Creating two sided mesh.
+- **Fixed:** Printing custom name of the LIGHT_PARAM.
+
+---------------------------------------------------------------------------
 #### 0.4.1-beta (24.08.2017)
 
 - **Added:** Printing error if texture name contains illegal symbols.

@@ -42,29 +42,29 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjTransformation::correctExportTransform(ObjMain & inObjMain, const TMatrix & inTm, bool useLodTm) {
-		correctTransform(inObjMain, inTm, true, useLodTm);
+	void ObjTransformation::correctExportTransform(ObjMain & mainObj, const TMatrix & tm, bool useLodTm) {
+		correctTransform(mainObj, tm, true, useLodTm);
 	}
 
-	void ObjTransformation::correctImportTransform(ObjMain & inObjMain, const TMatrix & inTm) {
-		correctTransform(inObjMain, inTm, false, false);
+	void ObjTransformation::correctImportTransform(ObjMain & mainObj, const TMatrix & tm) {
+		correctTransform(mainObj, tm, false, false);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjTransformation::correctTransform(ObjMain & inObjMain, const TMatrix & inTm, bool exp, bool useLodTm) {
-		size_t lodCount = inObjMain.lodCount();
+	void ObjTransformation::correctTransform(ObjMain & mainObj, const TMatrix & tm, bool exp, bool useLodTm) {
+		const size_t lodCount = mainObj.lodCount();
 		for (size_t i = 0; i < lodCount; ++i) {
-			ObjLodGroup & lod = inObjMain.lod(i);
+			ObjLodGroup & lod = mainObj.lod(i);
 			Transform & transform = lod.transform();
-			TMatrix tm = inTm;
+			TMatrix tmCopy = tm;
 			if (useLodTm) {
-				tm = transform.pMatrix * tm;
+				tmCopy = transform.pMatrix * tmCopy;
 				transform.pMatrix.setIdentity();
 			}
-			proccess(transform, tm, exp);
+			proccess(transform, tmCopy, exp);
 		}
 	}
 
@@ -96,7 +96,7 @@ namespace xobj {
 		//-------------------------------------------------------------------------
 		// children
 
-		Transform::TransformIndex chCount = transform.childrenCount();
+		const Transform::TransformIndex chCount = transform.childrenCount();
 		for (Transform::TransformIndex i = 0; i < chCount; ++i) {
 			proccess(*static_cast<Transform*>(transform.childAt(i)), rootMatrix, exp);
 		}
@@ -108,9 +108,9 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjTransformation::mapsExpCoordinates(ObjAbstract * inObj, Transform & objTransform, const TMatrix & rootMtx) {
-		const Transform * transParent = ObjWriteAnim::animTransParent(static_cast<Transform*>(objTransform.parent()));
-		const Transform * rotateParent = ObjWriteAnim::animRotateParent(static_cast<Transform*>(objTransform.parent()));
+	void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transform, const TMatrix & rootTm) {
+		const Transform * transParent = ObjWriteAnim::animTransParent(static_cast<Transform*>(transform.parent()));
+		const Transform * rotateParent = ObjWriteAnim::animRotateParent(static_cast<Transform*>(transform.parent()));
 		//------------------------------------------------------------------------------------------
 		// All animation is relative parent's axis, but transformation matrix of each Transform is in the world space.
 		// For example: 
@@ -127,139 +127,137 @@ namespace xobj {
 		// They are needed for the algorithm which prints animation.
 		// The algorithm will prints those keys only as the static position before rotation (i.e. center of rotation).
 		// We must not add those keys if the transform contains animation translation!
-		translationOfTransformToAnimTransKeys(objTransform);
+		translationOfTransformToAnimTransKeys(transform);
 		//------------------------------------------------------------------------------------------
 		// Actually the following code can be optimized but I prefer keep it such a way,
 		// it is easier to understanding for me. 
 		// But pay attention there are identical parts in this code (i.e. copy/paste).
 		//------------------------------------------------------------------------------------------
 		// TestTransformationAlgorithm_case0
-		if (!objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && !transParent && !rotateParent) {
-			if (inObj) {
-				inObj->applyTransform(objTransform.pMatrix * rootMtx);
+		if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && !transParent && !rotateParent) {
+			if (obj) {
+				obj->applyTransform(transform.pMatrix * rootTm, true);
 			}
 		}
-		//----------
-		// TestTransformationAlgorithm_case1
-		else if (!objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && transParent && !rotateParent) {
-			if (inObj) {
-				inObj->applyTransform((objTransform.pMatrix * rootMtx) *
-									(transParent->pMatrix * rootMtx).toTranslation().inversed());
+			//----------
+			// TestTransformationAlgorithm_case1
+		else if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && transParent && !rotateParent) {
+			if (obj) {
+				obj->applyTransform((transform.pMatrix * rootTm) * (transParent->pMatrix * rootTm).toTranslation().inversed(), true);
 			}
 		}
-		//----------
-		// TestTransformationAlgorithm_case2
-		else if (!objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && transParent && rotateParent) {
-			if (inObj) {
-				inObj->applyTransform((objTransform.pMatrix * rootMtx) *
-									(transParent->pMatrix * rootMtx).toTranslation().inversed());
+			//----------
+			// TestTransformationAlgorithm_case2
+		else if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && transParent && rotateParent) {
+			if (obj) {
+				obj->applyTransform((transform.pMatrix * rootTm) * (transParent->pMatrix * rootTm).toTranslation().inversed(), true);
 			}
 		}
-		//------------------------------------------------------------------------------------------
-		// TestTransformationAlgorithm_case3
-		else if (!objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && !transParent && !rotateParent) {
+			//------------------------------------------------------------------------------------------
+			// TestTransformationAlgorithm_case3
+		else if (!transform.hasAnimRotate() && transform.hasAnimTrans() && !transParent && !rotateParent) {
 			// making translate vectors relative parent system coordinates and offset keys value. 
 			// TODO (needs decompose to method) because has copy
-			TMatrix tmTrans = objTransform.parentMatrix().toRotation();
-			tmTrans *= objTransform.pMatrix.toTranslation();
-			tmTrans *= rootMtx;
-			mapAnimTransKeys(objTransform.pAnimTrans, tmTrans);
+			TMatrix tmTrans = transform.parentMatrix().toRotation();
+			tmTrans *= transform.pMatrix.toTranslation();
+			tmTrans *= rootTm;
+			mapAnimTransKeys(transform.pAnimTrans, tmTrans);
 
-			if (inObj) {
-				inObj->applyTransform((objTransform.pMatrix * rootMtx).toRotation());
+			if (obj) {
+				obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
 			}
 		}
-		//----------
-		// TestTransformationAlgorithm_case4
-		else if (!objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && transParent && !rotateParent) {
+			//----------
+			// TestTransformationAlgorithm_case4
+		else if (!transform.hasAnimRotate() && transform.hasAnimTrans() && transParent && !rotateParent) {
 			// making translate vectors relative parent system coordinates and offset keys value.
 			// TODO (needs decompose to method) because has copy
-			TMatrix tmTrans = objTransform.parentMatrix().toRotation();
-			tmTrans *= objTransform.pMatrix.toTranslation();
+			TMatrix tmTrans = transform.parentMatrix().toRotation();
+			tmTrans *= transform.pMatrix.toTranslation();
 			tmTrans *= transParent->pMatrix.toTranslation().inversed();
-			tmTrans *= rootMtx.toRotation();
-			mapAnimTransKeys(objTransform.pAnimTrans, tmTrans);
+			tmTrans *= rootTm.toRotation();
+			mapAnimTransKeys(transform.pAnimTrans, tmTrans);
 
-			if (inObj) {
-				inObj->applyTransform((objTransform.pMatrix * rootMtx).toRotation());
+			if (obj) {
+				obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
 			}
 		}
-		//----------
-		// TestTransformationAlgorithm_case5
-		else if (!objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && transParent && rotateParent) {
+			//----------
+			// TestTransformationAlgorithm_case5
+		else if (!transform.hasAnimRotate() && transform.hasAnimTrans() && transParent && rotateParent) {
 			// making translate vectors relative parent system coordinates and offset keys value. 
 			// TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case4
-			TMatrix tmTrans = objTransform.parentMatrix().toRotation();
-			tmTrans *= objTransform.pMatrix.toTranslation();
+			TMatrix tmTrans = transform.parentMatrix().toRotation();
+			tmTrans *= transform.pMatrix.toTranslation();
 			tmTrans *= transParent->pMatrix.toTranslation().inversed();
-			tmTrans *= rootMtx.toRotation();
-			mapAnimTransKeys(objTransform.pAnimTrans, tmTrans);
+			tmTrans *= rootTm.toRotation();
+			mapAnimTransKeys(transform.pAnimTrans, tmTrans);
 
-			if (inObj) {
-				inObj->applyTransform((objTransform.pMatrix * rootMtx).toRotation());
+			if (obj) {
+				obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
 			}
 		}
-		//------------------------------------------------------------------------------------------
-		// TestTransformationAlgorithm_case6
-		else if (objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && !transParent && !rotateParent) {
+			//------------------------------------------------------------------------------------------
+			// TestTransformationAlgorithm_case6
+		else if (transform.hasAnimRotate() && transform.hasAnimTrans() && !transParent && !rotateParent) {
 			// making translate vectors relative parent system coordinates and offset keys value. 
 			// TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case3
-			TMatrix tmTrans = objTransform.parentMatrix().toRotation();
-			tmTrans *= objTransform.pMatrix.toTranslation();
-			tmTrans *= rootMtx;
-			mapAnimTransKeys(objTransform.pAnimTrans, tmTrans);
+			TMatrix tmTrans = transform.parentMatrix().toRotation();
+			tmTrans *= transform.pMatrix.toTranslation();
+			tmTrans *= rootTm;
+			mapAnimTransKeys(transform.pAnimTrans, tmTrans);
 			// making rotate vector relative parent system coordinates. 
-			TMatrix tmRot = objTransform.parentMatrix().toRotation() * rootMtx.toRotation();
-			mapAnimRotateKeys(objTransform.pAnimRotate, tmRot);
+			const TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
+			mapAnimRotateKeys(transform.pAnimRotate, tmRot);
 
-			if (inObj) {
-				inObj->applyTransform((objTransform.pMatrix * rootMtx).toRotation());
+			if (obj) {
+				obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
 			}
 		}
-		//----------
-		// TestTransformationAlgorithm_case7
-		else if (objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && transParent && !rotateParent) {
+			//----------
+			// TestTransformationAlgorithm_case7
+		else if (transform.hasAnimRotate() && transform.hasAnimTrans() && transParent && !rotateParent) {
 			// making translate vectors relative parent system coordinates and offset keys value. 
 			// TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case4
-			TMatrix tmTrans = objTransform.parentMatrix().toRotation();
-			tmTrans *= objTransform.pMatrix.toTranslation();
+			TMatrix tmTrans = transform.parentMatrix().toRotation();
+			tmTrans *= transform.pMatrix.toTranslation();
 			tmTrans *= transParent->pMatrix.toTranslation().inversed();
-			tmTrans *= rootMtx.toRotation();
-			mapAnimTransKeys(objTransform.pAnimTrans, tmTrans);
+			tmTrans *= rootTm.toRotation();
+			mapAnimTransKeys(transform.pAnimTrans, tmTrans);
 			// making rotate vector relative parent system coordinates. 
 			// TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case6
-			TMatrix tmRot = objTransform.parentMatrix().toRotation() * rootMtx.toRotation();
-			mapAnimRotateKeys(objTransform.pAnimRotate, tmRot);
+			const TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
+			mapAnimRotateKeys(transform.pAnimRotate, tmRot);
 
-			if (inObj) {
-				inObj->applyTransform((objTransform.pMatrix * rootMtx).toRotation());
+			if (obj) {
+				obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
 			}
 		}
-		//----------
-		// TestTransformationAlgorithm_case8
-		else if (objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && transParent && rotateParent) {
+			//----------
+			// TestTransformationAlgorithm_case8
+		else if (transform.hasAnimRotate() && transform.hasAnimTrans() && transParent && rotateParent) {
 			// making translate vectors relative parent system coordinates and offset keys value. 
 			// TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case4
-			TMatrix tmTrans = objTransform.parentMatrix().toRotation();
-			tmTrans *= objTransform.pMatrix.toTranslation();
+			TMatrix tmTrans = transform.parentMatrix().toRotation();
+			tmTrans *= transform.pMatrix.toTranslation();
 			tmTrans *= transParent->pMatrix.toTranslation().inversed();
-			tmTrans *= rootMtx.toRotation();
-			mapAnimTransKeys(objTransform.pAnimTrans, tmTrans);
+			tmTrans *= rootTm.toRotation();
+			mapAnimTransKeys(transform.pAnimTrans, tmTrans);
 			// making rotate vector relative parent system coordinates. 
 			// TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case6
-			TMatrix tmRot = objTransform.parentMatrix().toRotation() * rootMtx.toRotation();
-			mapAnimRotateKeys(objTransform.pAnimRotate, tmRot);
+			const TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
+			mapAnimRotateKeys(transform.pAnimRotate, tmRot);
 
-			if (inObj) {
-				inObj->applyTransform((objTransform.pMatrix * rootMtx).toRotation());
+			if (obj) {
+				obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
 			}
 		}
-		//------------------------------------------------------------------------------------------
+			//------------------------------------------------------------------------------------------
 		else {
 			StringStream str;
 			str << "Unexpected transformation state, probably your hierarchy is incorrect: "
-					<< objTransform.hasAnimRotate() << ":"
-					<< objTransform.hasAnimTrans() << ":"
+					<< transform.hasAnimRotate() << ":"
+					<< transform.hasAnimTrans() << ":"
 					<< (transParent != nullptr) << ":"
 					<< (rotateParent != nullptr);
 			throw std::logic_error(ExcTxt(str.str()));
@@ -283,7 +281,8 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjTransformation::mapsImpCoordinates(ObjAbstract * /*inObj*/, Transform & objTransform, const TMatrix & /*rootMtx*/) {
+	void ObjTransformation::
+	mapsImpCoordinates(ObjAbstract * /*obj*/, Transform & objTransform, const TMatrix & /*rootTm*/) {
 		const Transform * transParent = ObjWriteAnim::animTransParent(static_cast<Transform*>(objTransform.parent()));
 		const Transform * rotateParent = ObjWriteAnim::animRotateParent(static_cast<Transform*>(objTransform.parent()));
 
@@ -311,7 +310,7 @@ namespace xobj {
 			// TODO implementation
 			LInfo << " !!! 4";
 		}
-		//------------------------------------------------------------------------------------------
+			//------------------------------------------------------------------------------------------
 
 		else if (!objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && !transParent && !rotateParent) {
 			// TODO implementation
@@ -329,7 +328,7 @@ namespace xobj {
 			// TODO implementation
 			LInfo << " !!! 8";
 		}
-		//------------------------------------------------------------------------------------------
+			//------------------------------------------------------------------------------------------
 
 		else if (!objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && !transParent && !rotateParent) {
 			// TODO implementation
@@ -347,7 +346,7 @@ namespace xobj {
 			// TODO implementation
 			LInfo << " !!! 12";
 		}
-		//------------------------------------------------------------------------------------------
+			//------------------------------------------------------------------------------------------
 
 		else if (objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && !transParent && !rotateParent) {
 			// TODO implementation
@@ -365,7 +364,7 @@ namespace xobj {
 			// TODO implementation
 			LInfo << " !!! 16";
 		}
-		//------------------------------------------------------------------------------------------
+			//------------------------------------------------------------------------------------------
 
 		else {
 			throw std::logic_error(ExcTxt("Unknown transformation state"));
@@ -377,7 +376,8 @@ namespace xobj {
 	/**************************************************************************************************/
 
 	void ObjTransformation::AnimKeysToTransform(Transform & inOutTrans) {
-		for (AnimTransList::iterator animTr = inOutTrans.pAnimTrans.begin(); animTr != inOutTrans.pAnimTrans.end(); ++animTr) {
+		for (AnimTransList::iterator animTr = inOutTrans.pAnimTrans.begin(); animTr != inOutTrans.pAnimTrans.end(); ++animTr
+		) {
 			if (animTr->pKeys.size() == 1) {
 				Point3 currPos = inOutTrans.pMatrix.position();
 				inOutTrans.pMatrix.setPosition(currPos + animTr->pKeys[0].pPosition);
@@ -388,7 +388,8 @@ namespace xobj {
 			}
 		}
 
-		for (AnimRotateList::iterator animRot = inOutTrans.pAnimRotate.begin(); animRot != inOutTrans.pAnimRotate.end(); ++animRot) {
+		for (AnimRotateList::iterator animRot = inOutTrans.pAnimRotate.begin(); animRot != inOutTrans.pAnimRotate.end(); ++
+			animRot) {
 			if (animRot->pKeys.size() == 1) {
 				TMatrix mtx;
 				mtx.setRotate(animRot->pVector, animRot->pKeys[0].pAngleDegrees);

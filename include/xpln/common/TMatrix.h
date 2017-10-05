@@ -94,7 +94,21 @@ namespace xobj {
 		Point3 position() const;
 		Quaternion rotation() const;
 
-		bool isParity() const;
+		/*!
+		 * \details Get the 'parity' of the matrix.
+		 *          Scaling one axis of the matrix negatively switches the 'parity'.
+		 *          However if you scale two axis the parity will flip back.
+		 *          Scaling three axis switches the parity again.
+		 * \remarks It can be used for check to flip normals
+		 * \return The 'parity' of the matrix
+		 */
+		bool parity() const;
+
+		/*!
+		 * \deprecated use \link TMatrix::parity \endlink
+		 */
+		[[deprecated("use parity()")]]
+		bool isParity() const { return parity(); }
 
 		//-------------------------------------------------------------------------
 

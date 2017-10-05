@@ -89,14 +89,14 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool AttrManipAxisKnob::equals(const AttrManipBase * inMainp) const {
-		if (!inMainp)
+	bool AttrManipAxisKnob::equals(const AttrManipBase * manip) const {
+		if (!manip)
 			return false;
 
-		if (!AttrManipBase::equals(inMainp))
+		if (!AttrManipBase::equals(manip))
 			return false;
 
-		const AttrManipAxisKnob * right = dynamic_cast<const AttrManipAxisKnob*>(inMainp);
+		const AttrManipAxisKnob * right = dynamic_cast<const AttrManipAxisKnob*>(manip);
 		if (!right)
 			return false;
 

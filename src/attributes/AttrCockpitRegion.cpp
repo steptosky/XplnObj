@@ -36,11 +36,11 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrCockpitRegion::AttrCockpitRegion(int32_t inLeft, int32_t inBottom, int32_t inRight, int32_t inTop)
-		: mLeft(inLeft),
-		mBottom(inBottom),
-		mRight(inRight),
-		mTop(inTop),
+	AttrCockpitRegion::AttrCockpitRegion(int32_t left, int32_t bottom, int32_t right, int32_t top)
+		: mLeft(left),
+		mBottom(bottom),
+		mRight(right),
+		mTop(top),
 		mIsEnabled(true) { }
 
 	AttrCockpitRegion::AttrCockpitRegion()
@@ -58,43 +58,43 @@ namespace xobj {
 		return mIsEnabled;
 	}
 
-	void AttrCockpitRegion::setEnabled(bool inState) {
-		mIsEnabled = inState;
+	void AttrCockpitRegion::setEnabled(bool state) {
+		mIsEnabled = state;
 	}
 
-	bool AttrCockpitRegion::operator==(const AttrCockpitRegion & inRight) const {
-		return mIsEnabled == inRight.mIsEnabled &&
-				mLeft == inRight.mLeft &&
-				mBottom == inRight.mBottom &&
-				mRight == inRight.mRight &&
-				mTop == inRight.mTop;
+	bool AttrCockpitRegion::operator==(const AttrCockpitRegion & other) const {
+		return mIsEnabled == other.mIsEnabled &&
+				mLeft == other.mLeft &&
+				mBottom == other.mBottom &&
+				mRight == other.mRight &&
+				mTop == other.mTop;
 	}
 
-	bool AttrCockpitRegion::operator!=(const AttrCockpitRegion & inRight) const {
-		return !operator==(inRight);
+	bool AttrCockpitRegion::operator!=(const AttrCockpitRegion & other) const {
+		return !operator==(other);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrCockpitRegion::setLeft(int32_t inLeft) {
-		mLeft = inLeft;
+	void AttrCockpitRegion::setLeft(int32_t left) {
+		mLeft = left;
 		mIsEnabled = true;
 	}
 
-	void AttrCockpitRegion::setBottom(int32_t inBottom) {
-		mBottom = inBottom;
+	void AttrCockpitRegion::setBottom(int32_t bottom) {
+		mBottom = bottom;
 		mIsEnabled = true;
 	}
 
-	void AttrCockpitRegion::setRight(int32_t inRight) {
-		mRight = inRight;
+	void AttrCockpitRegion::setRight(int32_t right) {
+		mRight = right;
 		mIsEnabled = true;
 	}
 
-	void AttrCockpitRegion::setTop(int32_t inTop) {
-		mTop = inTop;
+	void AttrCockpitRegion::setTop(int32_t top) {
+		mTop = top;
 		mIsEnabled = true;
 	}
 

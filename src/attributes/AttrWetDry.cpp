@@ -35,8 +35,8 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrWetDry::AttrWetDry(eState inState)
-		: mState(inState),
+	AttrWetDry::AttrWetDry(eState state)
+		: mState(state),
 		mIsEnabled(true) { }
 
 	AttrWetDry::AttrWetDry()
@@ -51,25 +51,25 @@ namespace xobj {
 		return mIsEnabled;
 	}
 
-	void AttrWetDry::setEnabled(bool inState) {
-		mIsEnabled = inState;
+	void AttrWetDry::setEnabled(bool state) {
+		mIsEnabled = state;
 	}
 
-	bool AttrWetDry::operator==(const AttrWetDry & inRight) const {
-		return (mIsEnabled == inRight.mIsEnabled && mState == inRight.mState);
+	bool AttrWetDry::operator==(const AttrWetDry & other) const {
+		return (mIsEnabled == other.mIsEnabled && mState == other.mState);
 	}
 
-	bool AttrWetDry::operator!=(const AttrWetDry & inRight) const {
-		return !operator==(inRight);
+	bool AttrWetDry::operator!=(const AttrWetDry & other) const {
+		return !operator==(other);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrWetDry::setState(eState inState) {
+	void AttrWetDry::setState(eState state) {
 		mIsEnabled = true;
-		mState = inState;
+		mState = state;
 	}
 
 	AttrWetDry::eState AttrWetDry::state() const {

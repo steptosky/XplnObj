@@ -45,11 +45,11 @@ namespace xobj {
 	bool ObjWriteInstancing::check(ObjMain & inObjMain) {
 		ULWarning << "The instance checking is in the test mode, so it may works incorrectly.";
 		ULInfo << " To check whether your object is instanced, put the word DEBUG in the end of the OBJ file and run X-Plane."
-			<< " The log file will contain a printout about your object."
-			<< " If the word \"complex\" is not present and the word \"additive\" is (or your object does not contain multiple LODs) then your object can be instanced.";
+				<< " The log file will contain a printout about your object."
+				<< " If the word \"complex\" is not present and the word \"additive\" is (or your object does not contain multiple LODs) then your object can be instanced.";
 		// TODO checking: LOD must be additive, not selective, or only one LOD 
 		bool outResult = true;
-		size_t lodCount = inObjMain.lodCount();
+		const size_t lodCount = inObjMain.lodCount();
 		for (size_t i = 0; i < lodCount; ++i) {
 			ObjLodGroup & lod = inObjMain.lod(i);
 			Transform & rootTransform = lod.transform();
@@ -110,52 +110,52 @@ namespace xobj {
 	void ObjWriteInstancing::proccessAttributes(ObjMesh & mesh, bool & outResult) {
 		if (mesh.pAttr.manipulator()) {
 			printBreakInstancing(mesh.objectName().c_str(),
-								std::string("the object has the manipulator attribute which is not allowed for instansing").c_str());
+								std::string("the object has the manipulator attribute which is not allowed for instancing").c_str());
 			outResult = false;
 		}
 		if (mesh.pAttr.polyOffset()) {
 			printBreakInstancing(mesh.objectName().c_str(),
 								std::string("the object has the \"").append(ATTR_POLY_OS)
-																	.append("\" attribute which is not allowed for instansing").c_str());
+																	.append("\" attribute which is not allowed for instancing").c_str());
 			outResult = false;
 		}
 		if (mesh.pAttr.blend()) {
 			printBreakInstancing(mesh.objectName().c_str(),
 								std::string("the object has on of the \"").append(ATTR_BLEND).append("/")
 																		.append(ATTR_NO_BLEND).append("/").append(ATTR_SHADOW_BLEND)
-																		.append("\" attribute which is not allowed for instansing").c_str());
+																		.append("\" attribute which is not allowed for instancing").c_str());
 			outResult = false;
 		}
 		if (mesh.pAttr.shiny()) {
 			printBreakInstancing(mesh.objectName().c_str(),
 								std::string("the object has the \"").append(ATTR_SHINY_RAT)
-																	.append("\" attribute which is not allowed for instansing").c_str());
+																	.append("\" attribute which is not allowed for instancing").c_str());
 			outResult = false;
 		}
 		if (mesh.pAttr.cockpit()) {
 			printBreakInstancing(mesh.objectName().c_str(),
 								std::string("the object has on of the \"").append(ATTR_COCKPIT).append("/")
 																		.append(ATTR_COCKPIT_REGION)
-																		.append("\" attribute which is not allowed for instansing").c_str());
+																		.append("\" attribute which is not allowed for instancing").c_str());
 			outResult = false;
 		}
 		//-------------------------------------------------------------------------
 		if (!mesh.pAttr.isDraw()) {
 			printBreakInstancing(mesh.objectName().c_str(),
 								std::string("the object has the \"").append(ATTR_DRAW_DISABLE)
-																	.append("\" attribute which is not allowed for instansing").c_str());
+																	.append("\" attribute which is not allowed for instancing").c_str());
 			outResult = false;
 		}
 		if (!mesh.pAttr.isCastShadow()) {
 			printBreakInstancing(mesh.objectName().c_str(),
 								std::string("the object has the \"").append(ATTR_NO_SHADOW)
-																	.append("\" attribute which is not allowed for instansing").c_str());
+																	.append("\" attribute which is not allowed for instancing").c_str());
 			outResult = false;
 		}
 		if (mesh.pAttr.isSolidForCamera()) {
 			printBreakInstancing(mesh.objectName().c_str(),
 								std::string("the object has the \"").append(ATTR_SOLID_CAMERA)
-																	.append("\" attribute which is not allowed for instansing").c_str());
+																	.append("\" attribute which is not allowed for instancing").c_str());
 			outResult = false;
 		}
 	}

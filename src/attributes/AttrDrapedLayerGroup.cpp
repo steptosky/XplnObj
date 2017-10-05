@@ -36,9 +36,9 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrDrapedLayerGroup::AttrDrapedLayerGroup(ELayer inLayer, int32_t inOffset)
-		: mOffset(static_cast<uint8_t>(inOffset)),
-		mLayer(inLayer),
+	AttrDrapedLayerGroup::AttrDrapedLayerGroup(ELayer layer, int32_t offset)
+		: mOffset(static_cast<uint8_t>(offset)),
+		mLayer(layer),
 		mIsEnabled(true) { }
 
 	AttrDrapedLayerGroup::AttrDrapedLayerGroup()
@@ -54,26 +54,26 @@ namespace xobj {
 		return mIsEnabled;
 	}
 
-	void AttrDrapedLayerGroup::setEnabled(bool inState) {
-		mIsEnabled = inState;
+	void AttrDrapedLayerGroup::setEnabled(bool state) {
+		mIsEnabled = state;
 	}
 
-	bool AttrDrapedLayerGroup::operator==(const AttrDrapedLayerGroup & inRight) const {
-		return (mIsEnabled == inRight.mIsEnabled && mOffset == inRight.mOffset && mLayer == inRight.mLayer);
+	bool AttrDrapedLayerGroup::operator==(const AttrDrapedLayerGroup & other) const {
+		return (mIsEnabled == other.mIsEnabled && mOffset == other.mOffset && mLayer == other.mLayer);
 	}
 
-	bool AttrDrapedLayerGroup::operator!=(const AttrDrapedLayerGroup & inRight) const {
-		return !operator==(inRight);
+	bool AttrDrapedLayerGroup::operator!=(const AttrDrapedLayerGroup & other) const {
+		return !operator==(other);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrDrapedLayerGroup::setOffset(int32_t inOffset) {
-		inOffset = std::min(inOffset, 5);
-		inOffset = std::max(inOffset, -5);
-		mOffset = static_cast<int8_t>(inOffset);
+	void AttrDrapedLayerGroup::setOffset(int32_t offset) {
+		offset = std::min(offset, 5);
+		offset = std::max(offset, -5);
+		mOffset = static_cast<int8_t>(offset);
 		mIsEnabled = true;
 	}
 
@@ -81,8 +81,8 @@ namespace xobj {
 		return static_cast<int32_t>(mOffset);
 	}
 
-	void AttrDrapedLayerGroup::setLayer(ELayer inLayer) {
-		mLayer = inLayer;
+	void AttrDrapedLayerGroup::setLayer(ELayer layer) {
+		mLayer = layer;
 		mIsEnabled = true;
 	}
 

@@ -69,27 +69,27 @@ namespace xobj {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	XpObjLib std::string toObjString(const AttrManipBase * inVal);
-	XpObjLib std::string toObjString(const AttrManipNone & inVal);
-	XpObjLib std::string toObjString(const AttrManipAxisKnob & inVal);
-	XpObjLib std::string toObjString(const AttrManipAxisSwitchLeftRight & inVal);
-	XpObjLib std::string toObjString(const AttrManipAxisSwitchUpDown & inVal);
-	XpObjLib std::string toObjString(const AttrManipCmd & inVal);
-	XpObjLib std::string toObjString(const AttrManipCmdAxis & inVal);
-	XpObjLib std::string toObjString(const AttrManipCmdKnob & inVal);
-	XpObjLib std::string toObjString(const AttrManipCmdSwitchLeftRight & inVal);
-	XpObjLib std::string toObjString(const AttrManipCmdSwitchUpDown & inVal);
-	XpObjLib std::string toObjString(const AttrManipDelta & inVal);
-	XpObjLib std::string toObjString(const AttrManipDragAxis & inVal);
-	XpObjLib std::string toObjString(const AttrManipDragAxisPix & inVal);
-	XpObjLib std::string toObjString(const AttrManipDragXy & inVal);
-	XpObjLib std::string toObjString(const AttrManipNoop & inVal);
-	XpObjLib std::string toObjString(const AttrManipPanel & inVal);
-	XpObjLib std::string toObjString(const AttrManipPush & inVal);
-	XpObjLib std::string toObjString(const AttrManipRadio & inVal);
-	XpObjLib std::string toObjString(const AttrManipToggle & inVal);
-	XpObjLib std::string toObjString(const AttrManipWrap & inVal);
-	XpObjLib std::string toObjString(const AttrManipWheel & inVal);
+	XpObjLib std::string toObjString(const AttrManipBase * manip);
+	XpObjLib std::string toObjString(const AttrManipNone & manip);
+	XpObjLib std::string toObjString(const AttrManipAxisKnob & manip);
+	XpObjLib std::string toObjString(const AttrManipAxisSwitchLeftRight & manip);
+	XpObjLib std::string toObjString(const AttrManipAxisSwitchUpDown & manip);
+	XpObjLib std::string toObjString(const AttrManipCmd & manip);
+	XpObjLib std::string toObjString(const AttrManipCmdAxis & manip);
+	XpObjLib std::string toObjString(const AttrManipCmdKnob & manip);
+	XpObjLib std::string toObjString(const AttrManipCmdSwitchLeftRight & manip);
+	XpObjLib std::string toObjString(const AttrManipCmdSwitchUpDown & manip);
+	XpObjLib std::string toObjString(const AttrManipDelta & manip);
+	XpObjLib std::string toObjString(const AttrManipDragAxis & manip);
+	XpObjLib std::string toObjString(const AttrManipDragAxisPix & manip);
+	XpObjLib std::string toObjString(const AttrManipDragXy & manip);
+	XpObjLib std::string toObjString(const AttrManipNoop & manip);
+	XpObjLib std::string toObjString(const AttrManipPanel & manip);
+	XpObjLib std::string toObjString(const AttrManipPush & manip);
+	XpObjLib std::string toObjString(const AttrManipRadio & manip);
+	XpObjLib std::string toObjString(const AttrManipToggle & manip);
+	XpObjLib std::string toObjString(const AttrManipWrap & manip);
+	XpObjLib std::string toObjString(const AttrManipWheel & manip);
 
 	/**************************************************************************************************/
 	////////////////////////////////////////////////////////////////////////////////////////////////////

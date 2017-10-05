@@ -29,7 +29,6 @@
 
 #pragma once
 
-#include <cstdint>
 #include "ObjAbstract.h"
 
 namespace xobj {
@@ -44,14 +43,14 @@ namespace xobj {
 	 */
 	class ObjAbstractLight : public ObjAbstract {
 
-		ObjAbstractLight & operator =(const ObjAbstractLight & inCopy) = delete;
+		ObjAbstractLight & operator =(const ObjAbstractLight &) = delete;
 
 	protected:
 
 		//-----------------------------------------------------
 
 		ObjAbstractLight() = default;
-		XpObjLib ObjAbstractLight(const ObjAbstractLight & inCopy);
+		XpObjLib ObjAbstractLight(const ObjAbstractLight & copy);
 
 		//-----------------------------------------------------
 
@@ -61,7 +60,7 @@ namespace xobj {
 
 		//-----------------------------------------------------
 
-		XpObjLib void setPosition(const Point3 & val);
+		XpObjLib void setPosition(const Point3 & pos);
 		XpObjLib const Point3 & position() const;
 
 		//-----------------------------------------------------

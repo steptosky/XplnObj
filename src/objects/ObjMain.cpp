@@ -66,48 +66,48 @@ namespace xobj {
 	//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
 	/********************************************************************************************************/
 
-	bool ObjMain::exportToFile(const std::string & inPath) {
+	bool ObjMain::exportToFile(const std::string & path) {
 		IOStatistic outStat;
-		return exportToFile(inPath, outStat);
+		return exportToFile(path, outStat);
 	}
 
 	//-------------------------------------------------------------------------
 
-	bool ObjMain::importFromFile(const std::string & inPath) {
+	bool ObjMain::importFromFile(const std::string & path) {
 		IOStatistic outStat;
-		return importFromFile(inPath, outStat);
+		return importFromFile(path, outStat);
 	}
 
 	//-------------------------------------------------------------------------
 
-	bool ObjMain::exportToFile(const std::string & inPath, IOStatistic & outStat) {
+	bool ObjMain::exportToFile(const std::string & path, IOStatistic & outStat) {
 		sortLod();
 		outStat.reset();
-		return ObjWriter().writeFile(this, inPath, pExportOptions.signature(), outStat, pMatrix);
+		return ObjWriter().writeFile(this, path, pExportOptions.signature(), outStat, pMatrix);
 	}
 
 	//-------------------------------------------------------------------------
 
-	bool ObjMain::importFromFile(const std::string & inPath, IOStatistic & outStat) {
+	bool ObjMain::importFromFile(const std::string & path, IOStatistic & outStat) {
 		outStat.reset();
 		ObjReaderInterpreter interpreter(this, pMatrix, &outStat);
-		return ObjReader::readFile(inPath, interpreter);
+		return ObjReader::readFile(path, interpreter);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	ObjLodGroup & ObjMain::lod(size_t inIndex) {
-		assert(inIndex < mLods.size());
-		return *mLods[inIndex];
+	ObjLodGroup & ObjMain::lod(size_t index) {
+		assert(index < mLods.size());
+		return *(mLods.at(index));
 	}
 
 	//-------------------------------------------------------------------------
 
-	const ObjLodGroup & ObjMain::lod(size_t inIndex) const {
-		assert(inIndex < mLods.size());
-		return *mLods[inIndex];
+	const ObjLodGroup & ObjMain::lod(size_t index) const {
+		assert(index < mLods.size());
+		return *(mLods.at(index));
 	}
 
 	//-------------------------------------------------------------------------
@@ -120,9 +120,9 @@ namespace xobj {
 
 	//-------------------------------------------------------------------------
 
-	void ObjMain::removeLod(size_t inIndex) {
-		assert(inIndex < mLods.size());
-		mLods.erase(mLods.begin() + inIndex);
+	void ObjMain::removeLod(size_t index) {
+		assert(index < mLods.size());
+		mLods.erase(mLods.begin() + index);
 	}
 
 	//-------------------------------------------------------------------------
@@ -139,8 +139,8 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjMain::setObjectName(const std::string & inName) {
-		mName = inName;
+	void ObjMain::setObjectName(const std::string & name) {
+		mName = name;
 	}
 
 	const std::string & ObjMain::objectName() const {

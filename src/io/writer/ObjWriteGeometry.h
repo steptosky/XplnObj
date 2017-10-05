@@ -60,17 +60,17 @@ namespace xobj {
 	class ObjWriteGeometry {
 	public:
 
-		ObjWriteGeometry(const ExportOptions * inOption, IOStatistic * outStat);
+		ObjWriteGeometry(const ExportOptions * option, IOStatistic * outStat);
 		~ObjWriteGeometry() = default;
 
-		void printMeshVerticiesRecursive(AbstractWriter & writer, const Transform & inNode) const;
-		void printLineVerticiesRecursive(AbstractWriter & writer, const Transform & inNode) const;
-		void printLightPointVerticiesRecursive(AbstractWriter & writer, const Transform & inNode) const;
-		void printMeshFaceRecursive(AbstractWriter & writer, const ObjMain & inMain) const;
+		void printMeshVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const;
+		void printLineVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const;
+		void printLightPointVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const;
+		void printMeshFaceRecursive(AbstractWriter & writer, const ObjMain & main) const;
 
 		bool printMeshObject(AbstractWriter & writer, const ObjAbstract & objBase);
 		bool printLightPointObject(AbstractWriter & writer, const ObjAbstract & objBase);
-		bool printLightObject(AbstractWriter & writer, const ObjAbstract & objBase, const Transform & inParent) const;
+		bool printLightObject(AbstractWriter & writer, const ObjAbstract & objBase, const Transform & transform) const;
 		bool printLineObject(AbstractWriter & writer, const ObjAbstract & objBase);
 		bool printSmokeObject(AbstractWriter & writer, const ObjAbstract & objBase) const;
 		bool printDummyObject(AbstractWriter & writer, const ObjAbstract & objBase) const;
@@ -82,7 +82,7 @@ namespace xobj {
 		ObjWriteGeometry(const ObjWriteGeometry &) = delete;
 		ObjWriteGeometry & operator =(const ObjWriteGeometry &) = delete;
 
-		void writeMeshFaceRecursive(std::ostream & writer, const Transform & inParent, size_t & idx, size_t & offset) const;
+		void writeMeshFaceRecursive(std::ostream & writer, const Transform & parent, size_t & idx, size_t & offset) const;
 
 		IOStatistic * mStat;
 		const ExportOptions * mOptions;

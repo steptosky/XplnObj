@@ -41,11 +41,11 @@ namespace xobj {
 	Color::Color()
 		: Color(0.0, 0.0, 0.0, 1.0) { }
 
-	Color::Color(float inRed, float inGreen, float inBlue, float inAlpha) {
-		mColor[0] = inRed;
-		mColor[1] = inGreen;
-		mColor[2] = inBlue;
-		mColor[3] = inAlpha;
+	Color::Color(float red, float green, float blue, float alpha) {
+		mColor[0] = red;
+		mColor[1] = green;
+		mColor[2] = blue;
+		mColor[3] = alpha;
 	}
 
 	Color::Color(const Color & p) {
@@ -98,20 +98,20 @@ namespace xobj {
 		return mColor[3];
 	}
 
-	void Color::setRed(float inValue) {
-		mColor[0] = inValue;
+	void Color::setRed(float val) {
+		mColor[0] = val;
 	}
 
-	void Color::setGreen(float inValue) {
-		mColor[1] = inValue;
+	void Color::setGreen(float val) {
+		mColor[1] = val;
 	}
 
-	void Color::setBlue(float inValue) {
-		mColor[2] = inValue;
+	void Color::setBlue(float val) {
+		mColor[2] = val;
 	}
 
-	void Color::setAlpha(float inValue) {
-		mColor[3] = inValue;
+	void Color::setAlpha(float val) {
+		mColor[3] = val;
 	}
 
 	/**************************************************************************************************/

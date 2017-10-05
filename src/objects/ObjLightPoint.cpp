@@ -35,10 +35,10 @@ namespace xobj {
 	///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
 	/********************************************************************************************************/
 
-	ObjLightPoint::ObjLightPoint(const ObjLightPoint & inCopy)
-		: ObjAbstract(inCopy),
-		mColor(inCopy.mColor),
-		mPosition(inCopy.mPosition) {}
+	ObjLightPoint::ObjLightPoint(const ObjLightPoint & copy)
+		: ObjAbstract(copy),
+		mColor(copy.mColor),
+		mPosition(copy.mPosition) {}
 
 	ObjLightPoint::ObjLightPoint()
 		: mColor(0.7f, 0.7f, 0.7f, 1.0f) {
@@ -50,9 +50,9 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjLightPoint::applyTransform(const TMatrix & inTm) {
+	void ObjLightPoint::applyTransform(const TMatrix & tm, const bool) {
 		Point3 pos = mPosition;
-		inTm.transformPoint(pos);
+		tm.transformPoint(pos);
 		mPosition = pos;
 	}
 
@@ -68,16 +68,16 @@ namespace xobj {
 		return mPosition;
 	}
 
-	void ObjLightPoint::setPosition(const Point3 & val) {
-		mPosition = val;
+	void ObjLightPoint::setPosition(const Point3 & pos) {
+		mPosition = pos;
 	}
 
 	const Color & ObjLightPoint::color() const {
 		return mColor;
 	}
 
-	void ObjLightPoint::setColor(const Color & inColor) {
-		mColor = inColor;
+	void ObjLightPoint::setColor(const Color & color) {
+		mColor = color;
 	}
 
 	/**************************************************************************************************/

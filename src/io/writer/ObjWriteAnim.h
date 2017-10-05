@@ -47,28 +47,28 @@ namespace xobj {
 		ObjWriteAnim & operator =(const ObjWriteAnim &) = delete;
 	public:
 
-		ObjWriteAnim(const ExportOptions * inOption, IOStatistic * outStat);
+		ObjWriteAnim(const ExportOptions * option, IOStatistic * outStat);
 		~ObjWriteAnim();
 
 		//-------------------------------------------------------------------------
 
-		static const Transform * animTransParent(const Transform * inTransform);
-		static const Transform * animRotateParent(const Transform * inTransform);
+		static const Transform * animTransParent(const Transform * transform);
+		static const Transform * animRotateParent(const Transform * transform);
 
 		//-------------------------------------------------------------------------
 
-		bool printAnimationStart(AbstractWriter & writer, const Transform & inTransform);
-		bool printAnimationEnd(AbstractWriter & writer, const Transform & inTransform);
+		bool printAnimationStart(AbstractWriter & writer, const Transform & transform);
+		bool printAnimationEnd(AbstractWriter & writer, const Transform & transform);
 
 		//-------------------------------------------------------------------------
 
 	private:
 
-		void printTrans(const AnimTransList & animTrans, const Transform & inTransform) const;
-		void printRotate(const AnimRotateList & animRot, const Transform & inTransform) const;
-		void printVisible(const AnimVisibility & inAnim, const Transform & inTransform) const;
+		void printTrans(const AnimTransList & animTrans, const Transform & transform) const;
+		void printRotate(const AnimRotateList & animRot, const Transform & transform) const;
+		void printVisible(const AnimVisibility & inAnim, const Transform & transform) const;
 
-		void printLoop(float inVal) const;
+		void printLoop(float val) const;
 
 		//-------------------------------------------------------------------------
 

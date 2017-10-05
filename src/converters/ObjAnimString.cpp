@@ -41,9 +41,9 @@ namespace xobj {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	std::string toObjString(const AnimVisibilityKey & inVal) {
+	std::string toObjString(const AnimVisibilityKey & key) {
 		StringStream outStr;
-		switch (inVal.pType) {
+		switch (key.pType) {
 			case AnimVisibilityKey::SHOW:
 				outStr << ATTR_ANIM_SHOW;
 				break;
@@ -55,7 +55,7 @@ namespace xobj {
 				LError << TOTEXT(AnimVisibilityKey) << " has undefined type";
 				return "";
 		}
-		outStr << " " << inVal.pValue1 << " " << inVal.pValue2 << "   " << inVal.pDrf << std::flush;
+		outStr << " " << key.pValue1 << " " << key.pValue2 << "   " << key.pDrf << std::flush;
 		return outStr.str();
 	}
 
@@ -81,9 +81,9 @@ namespace xobj {
 
 	//-------------------------------------------------------------------------
 
-	std::string toObjString(const AnimTransKey & inVal) {
+	std::string toObjString(const AnimTransKey & key) {
 		StringStream outStr;
-		outStr << ATTR_TRANS_KEY << " " << inVal.pDrfValue << " " << inVal.pPosition.toString(PRECISION) << std::flush;
+		outStr << ATTR_TRANS_KEY << " " << key.pDrfValue << " " << key.pPosition.toString(PRECISION) << std::flush;
 		return outStr.str();
 	}
 
@@ -104,9 +104,9 @@ namespace xobj {
 
 	//-------------------------------------------------------------------------
 
-	std::string toObjString(const AnimRotateKey & inVal) {
+	std::string toObjString(const AnimRotateKey & key) {
 		StringStream outStr;
-		outStr << ATTR_ROTATE_KEY << " " << inVal.pDrfValue << " " << inVal.pAngleDegrees << std::flush;
+		outStr << ATTR_ROTATE_KEY << " " << key.pDrfValue << " " << key.pAngleDegrees << std::flush;
 		return outStr.str();
 	}
 

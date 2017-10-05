@@ -42,8 +42,8 @@ namespace xobj {
 	public:
 
 		TreeItem(Transform * inTransformTree)
-			: mTransformTree(inTransformTree),
-			mIsCallDestructor(true) { }
+			: mIsCallDestructor(true),
+			mTransformTree(inTransformTree) { }
 
 		void setData(Transform * val) {
 			mTransformTree = val;
@@ -53,7 +53,7 @@ namespace xobj {
 			return mTransformTree;
 		}
 
-		TreeItem * clone() const {
+		TreeItem * clone() const override {
 			return nullptr;
 		}
 
@@ -103,8 +103,8 @@ namespace xobj {
 		return mTreePtr->isRoot();
 	}
 
-	void Transform::setParent(Transform * inParent) {
-		mTreePtr->setParent(static_cast<TreeItem*>(inParent->mTreePtr));
+	void Transform::setParent(Transform * parent) {
+		mTreePtr->setParent(static_cast<TreeItem*>(parent->mTreePtr));
 	}
 
 	Transform * Transform::parent() {
@@ -123,20 +123,20 @@ namespace xobj {
 		return static_cast<TransformIndex>(mTreePtr->childrenCount());
 	}
 
-	Transform * Transform::childAt(TransformIndex inIndex) {
-		return mTreePtr->childAt(inIndex)->data();
+	Transform * Transform::childAt(TransformIndex index) {
+		return mTreePtr->childAt(index)->data();
 	}
 
-	const Transform * Transform::childAt(TransformIndex inIndex) const {
-		return mTreePtr->childAt(inIndex)->data();
+	const Transform * Transform::childAt(TransformIndex index) const {
+		return mTreePtr->childAt(index)->data();
 	}
 
 	bool Transform::isChildOf(const Transform * parent) const {
 		return mTreePtr->isChildOf(parent->mTreePtr);
 	}
 
-	Transform * Transform::takeChildAt(TransformIndex inIndex) {
-		return mTreePtr->takeChildAt(inIndex)->data();
+	Transform * Transform::takeChildAt(TransformIndex index) {
+		return mTreePtr->takeChildAt(index)->data();
 	}
 
 	/**************************************************************************************************/
@@ -155,24 +155,24 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void Transform::addObject(ObjAbstract * inObj) {
-		if (inObj) {
+	void Transform::addObject(ObjAbstract * baseObj) {
+		if (baseObj) {
 			for (auto curr : mObjList) {
-				if (curr == inObj) {
+				if (curr == baseObj) {
 					LWarning << " You try to add an object which is already exist.";
 					return;
 				}
 			}
 
-			inObj->mObjTransform = this;
-			mObjList.push_back(inObj);
+			baseObj->mObjTransform = this;
+			mObjList.push_back(baseObj);
 		}
 	}
 
-	bool Transform::removeObject(ObjAbstract * inObj) {
-		if (inObj) {
+	bool Transform::removeObject(ObjAbstract * baseObj) {
+		if (baseObj) {
 			for (auto it = mObjList.begin(); it != mObjList.end(); ++it) {
-				if (*it == inObj) {
+				if (*it == baseObj) {
 					(*it)->mObjTransform = nullptr;
 					mObjList.erase(it);
 					return true;
@@ -190,18 +190,18 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool Transform::checkForParity(const Transform & inParent, bool state /*= false*/) {
-		static bool res = false;
-		res = state;
-		if (inParent.pMatrix.isParity())
-			res = !res;
-		if (inParent.isRoot())
-			return res;
-		return checkForParity(*inParent.parent(), res);
+	bool Transform::hierarchicalParity(const Transform & parent, bool state) {
+		if (parent.pMatrix.parity()) {
+			state = !state;
+		}
+		if (parent.isRoot()) {
+			return state;
+		}
+		return hierarchicalParity(*parent.parent(), state);
 	}
 
-	bool Transform::checkHierarchyForParity() const {
-		return checkForParity(*this, false);
+	bool Transform::hierarchicalParity() const {
+		return hierarchicalParity(*this, false);
 	}
 
 	//-------------------------------------------------------------------------
@@ -249,7 +249,7 @@ namespace xobj {
 	/**************************************************************************************************/
 
 	bool Transform::visitObjects(const std::function<bool(ObjAbstract &)> & function) {
-		for (auto o: mObjList) {
+		for (auto o : mObjList) {
 			assert(o);
 			if (!function(*o)) {
 				return false;

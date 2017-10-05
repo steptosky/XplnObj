@@ -35,8 +35,8 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrCockpit::AttrCockpit(eType inType)
-		: mType(inType),
+	AttrCockpit::AttrCockpit(eType type)
+		: mType(type),
 		mIsEnabled(true) { }
 
 	AttrCockpit::AttrCockpit()
@@ -51,25 +51,25 @@ namespace xobj {
 		return mIsEnabled;
 	}
 
-	void AttrCockpit::setEnabled(bool inState) {
-		mIsEnabled = inState;
+	void AttrCockpit::setEnabled(bool state) {
+		mIsEnabled = state;
 	}
 
-	bool AttrCockpit::operator==(const AttrCockpit & inRight) const {
-		return mIsEnabled == inRight.mIsEnabled &&
-				mType == inRight.mType;
+	bool AttrCockpit::operator==(const AttrCockpit & other) const {
+		return mIsEnabled == other.mIsEnabled &&
+				mType == other.mType;
 	}
 
-	bool AttrCockpit::operator!=(const AttrCockpit & inRight) const {
-		return !operator==(inRight);
+	bool AttrCockpit::operator!=(const AttrCockpit & other) const {
+		return !operator==(other);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrCockpit::setType(eType inType) {
-		mType = inType;
+	void AttrCockpit::setType(eType type) {
+		mType = type;
 		mIsEnabled = true;
 	}
 

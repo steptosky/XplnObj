@@ -53,9 +53,9 @@ namespace xobj {
 
 		//------------------------------------------------------------
 
-		XpObjLib bool isEnabled(eExportOptions inOption) const;
-		XpObjLib void enable(eExportOptions inOption);
-		XpObjLib void disable(eExportOptions inOption);
+		XpObjLib bool isEnabled(eExportOptions option) const;
+		XpObjLib void enable(eExportOptions option);
+		XpObjLib void disable(eExportOptions option);
 		XpObjLib virtual void reset();
 
 		//------------------------------------------------------------
@@ -70,18 +70,18 @@ namespace xobj {
 		/*!
 		 * \details Sets option flags.
 		 * \remark It can be useful for serialization/deserialization.
-		 * \param [in] inFlags
+		 * \param [in] flags
 		 */
-		XpObjLib void setOptionFlags(uint64_t inFlags);
+		XpObjLib void setOptionFlags(uint64_t flags);
 
 		//------------------------------------------------------------
 
 		/*!
 		 * \details Sets 'obj' file signature.
 		 * The signature will be written at the end of obj file.
-		 * \param [in] inSignature text.
+		 * \param [in] signature text.
 		 */
-		XpObjLib void setSignature(const std::string & inSignature);
+		XpObjLib void setSignature(const std::string & signature);
 
 		/*!
 		 * \details Gets obj file signature.

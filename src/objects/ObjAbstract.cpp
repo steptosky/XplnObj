@@ -40,15 +40,15 @@ namespace xobj {
 	ObjAbstract::ObjAbstract()
 		: mName("undefined") { }
 
-	ObjAbstract::ObjAbstract(const ObjAbstract & inCopy)
-		: mName(inCopy.mName) { }
+	ObjAbstract::ObjAbstract(const ObjAbstract & copy)
+		: mName(copy.mName) { }
 
 	ObjAbstract::~ObjAbstract() {
 		if (mObjTransform) {
 			if (!mObjTransform->removeObject(this)) {
 				LError << " Internal logic error."
-					<< " type: " << ObjAbstract::objType()
-					<< " objectName: " << objectName();
+						<< " type: " << ObjAbstract::objType()
+						<< " objectName: " << objectName();
 			}
 		}
 	}
@@ -73,8 +73,8 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjAbstract::setObjectName(const std::string & inName) {
-		mName = inName;
+	void ObjAbstract::setObjectName(const std::string & name) {
+		mName = name;
 	}
 
 	const std::string & ObjAbstract::objectName() const {

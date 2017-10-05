@@ -44,10 +44,10 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool Writer::openFile(const std::string & inFilePath) {
-		mStream.open(inFilePath.c_str());
+	bool Writer::openFile(const std::string & filePath) {
+		mStream.open(filePath.c_str());
 		if (!mStream) {
-			ULError << " - File <" << inFilePath << "> couldn't be created or written!";
+			ULError << " - File <" << filePath << "> couldn't be created or written!";
 			return false;
 		}
 		mStream.precision(6);
@@ -61,9 +61,9 @@ namespace xobj {
 		}
 	}
 
-	void Writer::printLine(const char * inMsg) {
-		if (inMsg) {
-			mStream << space().c_str() << inMsg << std::endl;
+	void Writer::printLine(const char * msg) {
+		if (msg) {
+			mStream << space().c_str() << msg << std::endl;
 		}
 		else {
 			mStream << std::endl;

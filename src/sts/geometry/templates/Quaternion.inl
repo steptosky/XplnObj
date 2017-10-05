@@ -225,7 +225,7 @@ inline double Quaternion<Type>::length() const {
 
 /*!
 \details Dot product
-\param[in] q other quaternion
+\param [in] q other quaternion
 */
 template<class Type>
 inline double Quaternion<Type>::dot(const Quaternion<Type> & q) const {

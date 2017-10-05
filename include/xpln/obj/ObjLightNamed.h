@@ -44,11 +44,11 @@ namespace xobj {
 	 */
 	class ObjLightNamed : public ObjAbstractLight {
 
-		ObjLightNamed & operator =(const ObjLightNamed & inCopy) = delete;
+		ObjLightNamed & operator =(const ObjLightNamed &) = delete;
 
 	protected:
 
-		XpObjLib ObjLightNamed(const ObjLightNamed & inCopy);
+		XpObjLib ObjLightNamed(const ObjLightNamed & copy);
 
 	public:
 
@@ -57,7 +57,7 @@ namespace xobj {
 
 		//-----------------------------------------------------
 
-		XpObjLib void setLightId(ELightNamed inId);
+		XpObjLib void setLightId(ELightNamed id);
 		XpObjLib ELightNamed lightId() const;
 
 		//-----------------------------------------------------
@@ -66,7 +66,7 @@ namespace xobj {
 		XpObjLib eObjectType objType() const final;
 
 		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & inTm) final;
+		XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
 
 		/* \copydoc ObjAbstract::clone */
 		XpObjLib ObjAbstract * clone() const override;

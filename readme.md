@@ -5,9 +5,8 @@ license for more information read the [license](license.txt) file.
 - [The X-Plane official website](http://www.x-plane.com/).
 - [The X-Plane obj specification](http://developer.x-plane.com/?article=obj8-file-format-specification).
 - [SemVer](http://semver.org/) is used for versioning.
-- It requires C++ 14
-- The versions from the master branch of this library 
-    is available in the _conan-center https://conan.bintray.com_ remote  
+- The library requires C++ 14
+- The versions from the master branch of this library is available in the _conan-center https://conan.bintray.com_  remote  
     without pre-built packages. ```XplnObj/X.Y.Z@steptosky/stable```   
 
 ## Conan additional arguments

@@ -44,7 +44,7 @@ namespace xobj {
 
 	public:
 
-		static void optimize(ObjMain & inObjMain);
+		static void optimize(ObjMain & mainObj);
 
 	private:
 

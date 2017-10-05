@@ -51,33 +51,33 @@ namespace xobj {
 	public:
 
 		AttrSet();
-		AttrSet(const AttrSet & inCopy);
-		AttrSet & operator=(const AttrSet & inCopy);
+		AttrSet(const AttrSet & copy);
+		AttrSet & operator=(const AttrSet & copy);
 
-		bool operator==(const AttrSet & inOther) const;
-		bool operator!=(const AttrSet & inOther) const;
+		bool operator==(const AttrSet & other) const;
+		bool operator!=(const AttrSet & other) const;
 
 		virtual ~AttrSet();
 
 		//-------------------------------------------------------------------------
 
 		[[deprecated("use setTree instead")]]
-		void setSunLight(bool inEnable) { setTree(!inEnable); }
+		void setSunLight(bool state) { setTree(!state); }
 
-		void setTree(bool inEnable);
-		void setTwoSided(bool inEnable);
-		void setDraw(bool inState);
-		void setDraped(bool inState);
-		void setCastShadow(bool inState);
-		void setSolidForCamera(bool inState);
+		void setTree(bool state);
+		void setTwoSided(bool state);
+		void setDraw(bool state);
+		void setDraped(bool state);
+		void setCastShadow(bool state);
+		void setSolidForCamera(bool state);
 
-		void setPolyOffset(const AttrPolyOffset & inValue);
-		void setShiny(const AttrShiny & inShiny);
-		void setBlend(const AttrBlend & inBlend);
-		void setHard(const AttrHard & inSurface);
-		void setLightLevel(const AttrLightLevel & inLightLevel);
-		void setManipulator(AttrManipBase * inManip); //!< takes ownership
-		void setCockpit(const AttrCockpit & inAttr);
+		void setPolyOffset(const AttrPolyOffset & attr);
+		void setShiny(const AttrShiny & attr);
+		void setBlend(const AttrBlend & attr);
+		void setHard(const AttrHard & attr);
+		void setLightLevel(const AttrLightLevel & attr);
+		void setManipulator(AttrManipBase * manip); //!< takes ownership
+		void setCockpit(const AttrCockpit & attr);
 
 		//-------------------------------------------------------------------------
 
@@ -134,8 +134,8 @@ namespace xobj {
 		mIsCastShadow(true),
 		mIsSolidForCamera(false) {}
 
-	inline AttrSet::AttrSet(const AttrSet & inCopy) {
-		this->operator=(inCopy);
+	inline AttrSet::AttrSet(const AttrSet & copy) {
+		this->operator=(copy);
 	}
 
 	inline void AttrSet::reset() {
@@ -155,23 +155,22 @@ namespace xobj {
 		mAttrHard = AttrHard();
 	}
 
-	inline AttrSet & AttrSet::operator=(const AttrSet & inCopy) {
-		inCopy.mAttrManipBase ?
-			setManipulator(inCopy.mAttrManipBase->clone()) : setManipulator(nullptr);
+	inline AttrSet & AttrSet::operator=(const AttrSet & copy) {
+		copy.mAttrManipBase ? setManipulator(copy.mAttrManipBase->clone()) : setManipulator(nullptr);
 
-		mAttrLightLevel = inCopy.mAttrLightLevel;
-		mAttrPolyOffset = inCopy.mAttrPolyOffset;
-		mAttrBlend = inCopy.mAttrBlend;
-		mAttrShiny = inCopy.mAttrShiny;
-		mAttrHard = inCopy.mAttrHard;
-		mAttrCockpit = inCopy.mAttrCockpit;
+		mAttrLightLevel = copy.mAttrLightLevel;
+		mAttrPolyOffset = copy.mAttrPolyOffset;
+		mAttrBlend = copy.mAttrBlend;
+		mAttrShiny = copy.mAttrShiny;
+		mAttrHard = copy.mAttrHard;
+		mAttrCockpit = copy.mAttrCockpit;
 
-		mIsDraw = inCopy.mIsDraw;
-		mIsTwoSided = inCopy.mIsTwoSided;
-		mIsDraped = inCopy.mIsDraped;
-		mIsTree = inCopy.mIsTree;
-		mIsCastShadow = inCopy.mIsCastShadow;
-		mIsSolidForCamera = inCopy.mIsSolidForCamera;
+		mIsDraw = copy.mIsDraw;
+		mIsTwoSided = copy.mIsTwoSided;
+		mIsDraped = copy.mIsDraped;
+		mIsTree = copy.mIsTree;
+		mIsCastShadow = copy.mIsCastShadow;
+		mIsSolidForCamera = copy.mIsSolidForCamera;
 		return *this;
 	}
 
@@ -181,84 +180,84 @@ namespace xobj {
 
 	//-------------------------------------------------------------------------
 
-	inline bool AttrSet::operator==(const AttrSet & inOther) const {
+	inline bool AttrSet::operator==(const AttrSet & other) const {
 		if (mAttrManipBase != nullptr) {
-			if (!mAttrManipBase->equals(inOther.mAttrManipBase)) {
+			if (!mAttrManipBase->equals(other.mAttrManipBase)) {
 				return false;
 			}
 		}
-		return mAttrLightLevel == inOther.mAttrLightLevel &&
-				mAttrPolyOffset == inOther.mAttrPolyOffset &&
-				mAttrBlend == inOther.mAttrBlend &&
-				mAttrShiny == inOther.mAttrShiny &&
-				mAttrHard == inOther.mAttrHard &&
-				mAttrCockpit == inOther.mAttrCockpit &&
+		return mAttrLightLevel == other.mAttrLightLevel &&
+				mAttrPolyOffset == other.mAttrPolyOffset &&
+				mAttrBlend == other.mAttrBlend &&
+				mAttrShiny == other.mAttrShiny &&
+				mAttrHard == other.mAttrHard &&
+				mAttrCockpit == other.mAttrCockpit &&
 
-				mIsDraw == inOther.mIsDraw &&
-				mIsTwoSided == inOther.mIsTwoSided &&
-				mIsDraped == inOther.mIsDraped &&
-				mIsTree == inOther.mIsTree &&
-				mIsCastShadow == inOther.mIsCastShadow &&
-				mIsSolidForCamera == inOther.mIsSolidForCamera;
+				mIsDraw == other.mIsDraw &&
+				mIsTwoSided == other.mIsTwoSided &&
+				mIsDraped == other.mIsDraped &&
+				mIsTree == other.mIsTree &&
+				mIsCastShadow == other.mIsCastShadow &&
+				mIsSolidForCamera == other.mIsSolidForCamera;
 	}
 
-	inline bool AttrSet::operator!=(const AttrSet & inOther) const {
-		return !this->operator==(inOther);
+	inline bool AttrSet::operator!=(const AttrSet & other) const {
+		return !this->operator==(other);
 	}
 
 	//-------------------------------------------------------------------------
 
-	inline void AttrSet::setTree(bool inState) {
-		mIsTree = inState;
+	inline void AttrSet::setTree(bool state) {
+		mIsTree = state;
 	}
 
-	inline void AttrSet::setTwoSided(bool inState) {
-		mIsTwoSided = inState;
+	inline void AttrSet::setTwoSided(bool state) {
+		mIsTwoSided = state;
 	}
 
-	inline void AttrSet::setDraw(bool inState) {
-		mIsDraw = inState;
+	inline void AttrSet::setDraw(bool state) {
+		mIsDraw = state;
 	}
 
-	inline void AttrSet::setDraped(bool inState) {
-		mIsDraped = inState;
+	inline void AttrSet::setDraped(bool state) {
+		mIsDraped = state;
 	}
 
-	inline void AttrSet::setCastShadow(bool inState) {
-		mIsCastShadow = inState;
+	inline void AttrSet::setCastShadow(bool state) {
+		mIsCastShadow = state;
 	}
 
-	inline void AttrSet::setSolidForCamera(bool inState) {
-		mIsSolidForCamera = inState;
+	inline void AttrSet::setSolidForCamera(bool state) {
+		mIsSolidForCamera = state;
 	}
 
-	inline void AttrSet::setPolyOffset(const AttrPolyOffset & inValue) {
-		mAttrPolyOffset = inValue;
+	inline void AttrSet::setPolyOffset(const AttrPolyOffset & attr) {
+		mAttrPolyOffset = attr;
 	}
 
-	inline void AttrSet::setShiny(const AttrShiny & inShiny) {
-		mAttrShiny = inShiny;
+	inline void AttrSet::setShiny(const AttrShiny & attr) {
+		mAttrShiny = attr;
 	}
 
-	inline void AttrSet::setBlend(const AttrBlend & inBlend) {
-		mAttrBlend = inBlend;
+	inline void AttrSet::setBlend(const AttrBlend & attr) {
+		mAttrBlend = attr;
 	}
 
-	inline void AttrSet::setHard(const AttrHard & inSurface) {
-		mAttrHard = inSurface;
+	inline void AttrSet::setHard(const AttrHard & attr) {
+		mAttrHard = attr;
 	}
 
-	inline void AttrSet::setLightLevel(const AttrLightLevel & inLightLevel) {
-		mAttrLightLevel = inLightLevel;
+	inline void AttrSet::setLightLevel(const AttrLightLevel & attr) {
+		mAttrLightLevel = attr;
 	}
 
-	inline void AttrSet::setManipulator(AttrManipBase * inManip) {
+	inline void AttrSet::setManipulator(AttrManipBase * manip) {
 		delete mAttrManipBase;
-		mAttrManipBase = inManip;
+		mAttrManipBase = manip;
 	}
 
-	inline void AttrSet::setCockpit(const AttrCockpit & inAttr) {
-		mAttrCockpit = inAttr;
+	inline void AttrSet::setCockpit(const AttrCockpit & attr) {
+		mAttrCockpit = attr;
 	}
 
 	//-------------------------------------------------------------------------

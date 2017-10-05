@@ -53,7 +53,7 @@ namespace xobj {
 		};
 
 		XpObjLib AnimVisibilityKey();
-		XpObjLib AnimVisibilityKey(eType inType, float inValue1, float inValue2, const std::string & inDrf);
+		XpObjLib AnimVisibilityKey(eType type, float val1, float val2, const std::string & dataRef);
 
 		//-------------------------------------------------------------------------
 

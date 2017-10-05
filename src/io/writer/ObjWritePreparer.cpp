@@ -32,7 +32,6 @@
 #include "xpln/obj/ObjMesh.h"
 #include "ObjWriteAnim.h"
 #include "io/ObjValidators.h"
-#include "exceptions/defines.h"
 
 namespace xobj {
 
@@ -40,15 +39,15 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool ObjWritePreparer::prepare(ObjMain & inObjMain) {
-		size_t lodCount = inObjMain.lodCount();
+	bool ObjWritePreparer::prepare(ObjMain & mainObj) {
+		const size_t lodCount = mainObj.lodCount();
 		for (size_t i = 0; i < lodCount; ++i) {
-			ObjLodGroup & lod = inObjMain.lod(i);
+			ObjLodGroup & lod = mainObj.lod(i);
 			Transform & rootTransform = lod.transform();
 			if (!checkParameters(lod, lod.objectName())) {
 				return false;
 			}
-			if (!proccessTransform(rootTransform)) {
+			if (!proccessTransform(rootTransform, i, lod)) {
 				return false;
 			}
 		}
@@ -59,20 +58,20 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool ObjWritePreparer::proccessTransform(Transform & transform) {
+	bool ObjWritePreparer::proccessTransform(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod) {
 		if (!checkParameters(transform, transform.name())) {
 			return false;
 		}
 
-		if (!proccessObjects(transform)) {
+		if (!proccessObjects(transform, lodNumber, lod)) {
 			return false;
 		}
 		//-------------------------------------------------------------------------
 		// children
 
-		Transform::TransformIndex chCount = transform.childrenCount();
+		const Transform::TransformIndex chCount = transform.childrenCount();
 		for (Transform::TransformIndex i = 0; i < chCount; ++i) {
-			if (!proccessTransform(*static_cast<Transform*>(transform.childAt(i)))) {
+			if (!proccessTransform(*static_cast<Transform*>(transform.childAt(i)), lodNumber, lod)) {
 				return false;
 			}
 		}
@@ -81,10 +80,13 @@ namespace xobj {
 		return true;
 	}
 
-	bool ObjWritePreparer::proccessObjects(Transform & transform) {
+	bool ObjWritePreparer::proccessObjects(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod) {
 		Transform::ObjList objToDelete;
 		for (auto & curr : transform.objList()) {
 			if (!checkParameters(*curr, curr->objectName())) {
+				objToDelete.emplace_back(curr);
+			}
+			else if (lodNumber > 0 && findHardPolygons(*curr, lod.objectName())) {
 				objToDelete.emplace_back(curr);
 			}
 			else {
@@ -101,21 +103,14 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjWritePreparer::checkForTwoSided(ObjAbstract & inObj) {
-		if (inObj.objType() != OBJ_MESH)
+	void ObjWritePreparer::checkForTwoSided(ObjAbstract & obj) {
+		if (obj.objType() != OBJ_MESH) {
 			return;
-		ObjMesh * meshOriginal = static_cast<ObjMesh*>(&inObj);
-		if (!meshOriginal->pAttr.isTwoSided())
-			return;
-
-		ObjMesh meshDouble;
-		for (auto & vert : meshDouble.pVertices) {
-			vert.pNormal *= -1.0;
 		}
-		for (auto & face : meshDouble.pFaces) {
-			std::swap(face.pV0, face.pV2);
+		ObjMesh * mesh = static_cast<ObjMesh*>(&obj);
+		if (mesh->pAttr.isTwoSided()) {
+			mesh->makeTwoSided();
 		}
-		meshOriginal->attach(meshDouble);
 	}
 
 	/**************************************************************************************************/

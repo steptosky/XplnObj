@@ -53,8 +53,8 @@ namespace xobj {
 	class Transform {
 
 		friend TreeItem;
-		Transform(const Transform & inCopy) = delete;
-		Transform & operator=(const Transform & inCopy) = delete;
+		Transform(const Transform &) = delete;
+		Transform & operator=(const Transform &) = delete;
 
 	public:
 
@@ -84,9 +84,9 @@ namespace xobj {
 		/*!
 		 * \details Sets the transform parent
 		 * \remark You can set parent as nullptr then the object will be as a root.
-		 * \param [in] inParent pointer to one new parent
+		 * \param [in] parent pointer to one new parent
 		 */
-		XpObjLib void setParent(Transform * inParent);
+		XpObjLib void setParent(Transform * parent);
 
 		/*!
 		 * \return root of the transform
@@ -118,21 +118,21 @@ namespace xobj {
 		 * \details Remove specified child pointer from the children container and return its pointer.
 		 * \return Pointer to child
 		 */
-		XpObjLib Transform * takeChildAt(TransformIndex inIndex);
+		XpObjLib Transform * takeChildAt(TransformIndex index);
 
 		/*!
 		 * \details Gets the child by specified index
-		 * \param [in] inIndex
+		 * \param [in] index
 		 * \return Pointer to a child
 		 */
-		XpObjLib Transform * childAt(TransformIndex inIndex);
+		XpObjLib Transform * childAt(TransformIndex index);
 
 		/*!
 		 * \details Gets child at specified index
-		 * \param inIndex 
+		 * \param [in] index 
 		 * \return child at specified index
 		 */
-		XpObjLib const Transform * childAt(TransformIndex inIndex) const;
+		XpObjLib const Transform * childAt(TransformIndex index) const;
 
 		/*!
 		 * \details Checks whether the transform is a child of specified parent transform.
@@ -146,8 +146,8 @@ namespace xobj {
 		/*!
 		 * \warning Also takes ownership of the pointer
 		 */
-		XpObjLib void addObject(ObjAbstract * inObj);
-		XpObjLib bool removeObject(ObjAbstract * inObj);
+		XpObjLib void addObject(ObjAbstract * baseObj);
+		XpObjLib bool removeObject(ObjAbstract * baseObj);
 		bool hasObjects() const { return !mObjList.empty(); }
 		XpObjLib const ObjList & objList() const;
 
@@ -165,7 +165,17 @@ namespace xobj {
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool checkHierarchyForParity() const;
+		/*!
+		 * \details It comes up to the root and calculates parity value.
+		 * \see \link TMatrix::parity \endlink
+		 */
+		XpObjLib bool hierarchicalParity() const;
+
+		/*!
+		 * \deprecated use \link Transform::hierarchicalParity \endlink
+		 */
+		[[deprecated("use hierarchicalParity()")]]
+		XpObjLib bool checkHierarchyForParity() const { return hierarchicalParity(); }
 
 		//-------------------------------------------------------------------------
 
@@ -200,7 +210,9 @@ namespace xobj {
 		 * \param function Return false if you want to stop iterating.
 		 * \return False if iterating was stopped by function.
 		 */
-		bool visitChildren(const std::function<bool(const Transform &)> & function) const { return visitChildren(this, function); }
+		bool visitChildren(const std::function<bool(const Transform &)> & function) const {
+			return visitChildren(this, function);
+		}
 
 		/*!
 		 * \details Calls specified function for all children in hierarchy 
@@ -216,7 +228,9 @@ namespace xobj {
 		 * \param function Return false if you want to stop iterating.
 		 * \return False if iterating was stopped by function.
 		 */
-		bool visitAllChildren(const std::function<bool(const Transform &)> & function) const { return visitAllOf(this, function); }
+		bool visitAllChildren(const std::function<bool(const Transform &)> & function) const {
+			return visitAllOf(this, function);
+		}
 
 		//-------------------------------------------------------------------------
 
@@ -229,7 +243,7 @@ namespace xobj {
 		static bool visitChildren(Transform * parent, const std::function<bool(Transform &)> & function);
 		static bool visitChildren(const Transform * parent, const std::function<bool(const Transform &)> & function);
 
-		static bool checkForParity(const Transform & inTr, bool state = false);
+		static bool hierarchicalParity(const Transform & parent, bool state = false);
 
 		ObjList mObjList;
 		std::string mName = "undefined";

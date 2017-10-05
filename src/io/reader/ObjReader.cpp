@@ -72,12 +72,12 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool ObjReader::readFile(const std::string & inFilePath, ObjReaderListener & inListener) {
+	bool ObjReader::readFile(const std::string & filePath, ObjReaderListener & listener) {
 		ObjReader reader;
-		inListener.reset();
-		reader.mObjParserListener = &inListener;
+		listener.reset();
+		reader.mObjParserListener = &listener;
 		try {
-			return reader.readFile(inFilePath);
+			return reader.readFile(filePath);
 		}
 		catch (std::exception & e) {
 			ULFatal << e.what();
@@ -85,8 +85,8 @@ namespace xobj {
 		}
 	}
 
-	bool ObjReader::readFile(const std::string & inFilePath) const {
-		ObjReadParser * parser = new ObjReadParser(inFilePath);
+	bool ObjReader::readFile(const std::string & filePath) const {
+		ObjReadParser * parser = new ObjReadParser(filePath);
 		if (!parser->isValid()) {
 			delete parser;
 			return false;
@@ -342,7 +342,7 @@ namespace xobj {
 			parser.skipSpace();
 			float albedo = parser.extractFloat();
 			parser.skipSpace();
-			float emissive = parser.extractFloat();;
+			float emissive = parser.extractFloat();
 			mObjParserListener->gotGlobAttrTint(AttrTint(albedo, emissive));
 			return true;
 		}
@@ -377,7 +377,7 @@ namespace xobj {
 			parser.skipSpace();
 			std::string group = parser.extractWord();
 			parser.skipSpace();
-			int offset = parser.extractInt();;
+			int offset = parser.extractInt();
 			mObjParserListener->gotGlobAttrLayerGroup(AttrLayerGroup(ELayer::fromString(group.c_str()), offset));
 			return true;
 		}
@@ -419,7 +419,7 @@ namespace xobj {
 			parser.skipSpace();
 			std::string group = parser.extractWord();
 			parser.skipSpace();
-			int offset = parser.extractInt();;
+			int offset = parser.extractInt();
 			mObjParserListener->gotGlobAttrLayerGroupDraped(AttrDrapedLayerGroup(ELayer::fromString(group.c_str()), offset));
 			return true;
 		}
@@ -816,7 +816,7 @@ namespace xobj {
 			parser.skipSpace();
 			m.setDown(parser.extractFloat());
 			parser.skipSpace();
-			m.setUp(parser.extractFloat());;
+			m.setUp(parser.extractFloat());
 			parser.skipSpace();
 			m.setDataref(parser.extractWord());
 			parser.skipSpace();

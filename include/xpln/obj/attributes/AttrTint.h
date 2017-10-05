@@ -53,10 +53,10 @@ namespace xobj {
 		/*!
 		 * \details Constructor init.
 		 * \note Makes the enabled attribute.
-		 * \param inAlbedoRatio 
-		 * \param inEmissiveRatio 
+		 * \param [in] albedoRatio 
+		 * \param [in] emissiveRatio 
 		 */
-		XpObjLib AttrTint(float inAlbedoRatio, float inEmissiveRatio);
+		XpObjLib AttrTint(float albedoRatio, float emissiveRatio);
 
 		~AttrTint() = default;
 
@@ -64,27 +64,27 @@ namespace xobj {
 
 		/*!
 		 * \details Check whether the attribute is enabled. 
-		 * \note All class's seters will enable this attribute.
+		 * \note All class's setters will enable this attribute.
 		 */
 		XpObjLib operator bool() const;
 
 		/*!
-		 * \details Sets the attribute enabled/desabled.
-		 * \note All class's seters will enable this attribute.
-		 * \param inState 
+		 * \details Sets the attribute enabled/disabled.
+		 * \note All class's setters will enable this attribute.
+		 * \param [in] state 
 		 */
-		XpObjLib void setEnabled(bool inState);
+		XpObjLib void setEnabled(bool state);
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrTint & inRight) const;
-		XpObjLib bool operator!=(const AttrTint & inRight) const;
+		XpObjLib bool operator==(const AttrTint & other) const;
+		XpObjLib bool operator!=(const AttrTint & other) const;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib void set(float inAlbedoRatio, float inEmissiveRatio);
-		XpObjLib void setAlbedo(float inRatio);
-		XpObjLib void setEmissive(float inRatio);
+		XpObjLib void set(float albedoRatio, float emissiveRatio);
+		XpObjLib void setAlbedo(float albedoRatio);
+		XpObjLib void setEmissive(float emissiveRatio);
 
 		XpObjLib float albedo() const;
 		XpObjLib float emissive() const;

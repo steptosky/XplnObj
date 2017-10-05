@@ -44,22 +44,22 @@ namespace xobj {
 
 	public:
 
-		static void correctExportTransform(ObjMain & inObjMain, const TMatrix & inTm, bool useLodTm);
-		static void correctImportTransform(ObjMain & inObjMain, const TMatrix & inTm);
+		static void correctExportTransform(ObjMain & mainObj, const TMatrix & tm, bool useLodTm);
+		static void correctImportTransform(ObjMain & mainObj, const TMatrix & tm);
 
 	private:
 
-		static void correctTransform(ObjMain & inObjMain, const TMatrix & inTm, bool exp, bool useLodTm);
+		static void correctTransform(ObjMain & mainObj, const TMatrix & tm, bool exp, bool useLodTm);
 		static void proccess(Transform & transform, const TMatrix & rootTransform, bool exp);
 
 		//-------------------------------------------------------------------------
 
-		static void mapsExpCoordinates(ObjAbstract * inObj, Transform & inOutTrans, const TMatrix & inRootTmx);
+		static void mapsExpCoordinates(ObjAbstract * obj, Transform & inOutTrans, const TMatrix & rootTm);
 		static void translationOfTransformToAnimTransKeys(Transform & inOutTrans);
 
 		//-------------------------------------------------------------------------
 
-		static void mapsImpCoordinates(ObjAbstract * inObj, Transform & inOutTrans, const TMatrix & inRootTmx);
+		static void mapsImpCoordinates(ObjAbstract * obj, Transform & inOutTrans, const TMatrix & rootTm);
 		static void AnimKeysToTransform(Transform & inOutTrans);
 
 		//-------------------------------------------------------------------------

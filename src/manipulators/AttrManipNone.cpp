@@ -42,11 +42,11 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool AttrManipNone::equals(const AttrManipBase * inMainp) const {
-		if (!inMainp) {
+	bool AttrManipNone::equals(const AttrManipBase * manip) const {
+		if (!manip) {
 			return false;
 		}
-		return AttrManipBase::equals(inMainp);
+		return AttrManipBase::equals(manip);
 	}
 
 	AttrManipBase * AttrManipNone::clone() const {

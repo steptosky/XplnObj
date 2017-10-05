@@ -41,17 +41,17 @@ namespace xobj {
 	public:
 
 		Quaternion();
-		Quaternion(const Quaternion & inCopy);
-		Quaternion(float inX, float inY, float inZ, float inW);
+		Quaternion(const Quaternion & copy);
+		Quaternion(float x, float y, float z, float w);
 		virtual ~Quaternion();
 
-		Quaternion & operator =(const Quaternion & inCopy);
+		Quaternion & operator =(const Quaternion & copy);
 
-		void setX(float inX);
-		void setY(float inY);
-		void setZ(float inZ);
-		void setW(float inW);
-		void setValues(float inX, float inY, float inZ, float inW);
+		void setX(float x);
+		void setY(float y);
+		void setZ(float z);
+		void setW(float w);
+		void setValues(float x, float y, float z, float w);
 
 		float x() const;
 		float y() const;

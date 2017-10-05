@@ -42,18 +42,28 @@ namespace xobj {
 	 * \ingroup Enumerations
 	 */
 	enum eObjectType : uint32_t {
-		OBJ_NO = 0, //!< Is not correct object
+		//!< Is not correct object
+		OBJ_NO = 0,
 
-		OBJ_LINE = 100, //!< Geometric line object
-		OBJ_DUMMY, //!< Dummy object
-		OBJ_SMOKE, //!< Smoke object
-		OBJ_MESH, //!< Geometric mesh object
+		//!< Geometric line object
+		OBJ_LINE = 100,
+		//!< Dummy object
+		OBJ_DUMMY,
+		//!< Smoke object
+		OBJ_SMOKE,
+		//!< Geometric mesh object
+		OBJ_MESH,
 
-		OBJ_LIGHT_NAMED = 200, //!< Light named
-		OBJ_LIGHT_CUSTOM, //!< Light custom
-		OBJ_LIGHT_PARAM, //!< Light param
-		OBJ_LIGHT_SPILL_CUSTOM,//!< Light spill custom
-		OBJ_LIGHT_POINT, //!< Light point custom
+		//!< Light named
+		OBJ_LIGHT_NAMED = 200,
+		//!< Light custom
+		OBJ_LIGHT_CUSTOM,
+		//!< Light param
+		OBJ_LIGHT_PARAM,
+		//!< Light spill custom
+		OBJ_LIGHT_SPILL_CUSTOM,
+		//!< Light point custom
+		OBJ_LIGHT_POINT,
 
 	};
 

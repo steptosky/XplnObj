@@ -85,23 +85,23 @@ namespace xobj {
 		//-----------------------------------------------------
 		// Global attributes
 
-		virtual void gotGlobAttrTexture(const std::string & inVal) = 0;
-		virtual void gotGlobAttrTextureLit(const std::string & inVal) = 0;
-		virtual void gotGlobAttrTextureNormal(const std::string & inVal) = 0;
+		virtual void gotGlobAttrTexture(const std::string & val) = 0;
+		virtual void gotGlobAttrTextureLit(const std::string & val) = 0;
+		virtual void gotGlobAttrTextureNormal(const std::string & val) = 0;
 
 		//-----------------------------------------------------
 		// Global attributes
 
-		virtual void gotGlobAttrTint(const AttrTint & inAttr) = 0;
-		virtual void gotGlobAttrWetDry(const AttrWetDry & inAttr) = 0;
-		virtual void gotGlobAttrBlend(const AttrBlend & inAttr) = 0;
-		virtual void gotGlobAttrSpecular(const AttrSpecular & inAttr) = 0;
-		virtual void gotGlobAttrLodDraped(const AttrLodDrap & inAttr) = 0;
-		virtual void gotGlobAttrLayerGroup(const AttrLayerGroup & inAttr) = 0;
-		virtual void gotGlobAttrSlopeLimit(const AttrSlopeLimit & inAttr) = 0;
-		virtual void gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & inAttr) = 0;
-		virtual void gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGroup & inAttr) = 0;
-		virtual void gotGlobAttrCockpitRegion(const AttrCockpitRegion & inAttr) = 0;
+		virtual void gotGlobAttrTint(const AttrTint & globAttr) = 0;
+		virtual void gotGlobAttrWetDry(const AttrWetDry & globAttr) = 0;
+		virtual void gotGlobAttrBlend(const AttrBlend & globAttr) = 0;
+		virtual void gotGlobAttrSpecular(const AttrSpecular & globAttr) = 0;
+		virtual void gotGlobAttrLodDraped(const AttrLodDrap & globAttr) = 0;
+		virtual void gotGlobAttrLayerGroup(const AttrLayerGroup & globAttr) = 0;
+		virtual void gotGlobAttrSlopeLimit(const AttrSlopeLimit & globAttr) = 0;
+		virtual void gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & globAttr) = 0;
+		virtual void gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGroup & globAttr) = 0;
+		virtual void gotGlobAttrCockpitRegion(const AttrCockpitRegion & globAttr) = 0;
 		virtual void gotGlobAttrDebug() = 0;
 		virtual void gotGlobAttrTilted() = 0;
 		virtual void gotGlobAttrNoShadow() = 0;
@@ -112,40 +112,40 @@ namespace xobj {
 		//-----------------------------------------------------
 		// Lods
 
-		virtual void gotLod(float inNear, float inFar, const std::string & inEndLineComment) = 0;
+		virtual void gotLod(float near, float far, const std::string & endLineComment) = 0;
 
 		//-----------------------------------------------------
 		// Global Objects' data
 
-		virtual void gotMeshVertices(const ObjMesh::VertexList & inVertices) = 0;
-		virtual void gotMeshFaces(const FaceIndexArray & inIndices) = 0;
+		virtual void gotMeshVertices(const ObjMesh::VertexList & vertices) = 0;
+		virtual void gotMeshFaces(const FaceIndexArray & indices) = 0;
 
 		//-----------------------------------------------------
 		// Objects' data
 
-		virtual void gotTrisAttrHard(const AttrHard & inAttr) = 0;
-		virtual void gotTrisAttrShiny(const AttrShiny & inAttr) = 0;
-		virtual void gotTrisAttrBlend(const AttrBlend & inAttr) = 0;
-		virtual void gotTrisAttrPolyOffset(const AttrPolyOffset & inAttr) = 0;
-		virtual void gotTrisAttrLightLevel(const AttrLightLevel & inAttr) = 0;
-		virtual void gotTrisAttrCockpit(const AttrCockpit & inAttr) = 0;
-		virtual void gotTrisAttrShadow(bool inState) = 0;
-		virtual void gotTrisAttrDraped(bool inState) = 0;
-		virtual void gotTrisAttrDrawEnable(bool inState) = 0;
-		virtual void gotTrisAttrSolidCamera(bool inState) = 0;
+		virtual void gotTrisAttrHard(const AttrHard & attr) = 0;
+		virtual void gotTrisAttrShiny(const AttrShiny & attr) = 0;
+		virtual void gotTrisAttrBlend(const AttrBlend & attr) = 0;
+		virtual void gotTrisAttrPolyOffset(const AttrPolyOffset & attr) = 0;
+		virtual void gotTrisAttrLightLevel(const AttrLightLevel & attr) = 0;
+		virtual void gotTrisAttrCockpit(const AttrCockpit & attr) = 0;
+		virtual void gotTrisAttrShadow(bool state) = 0;
+		virtual void gotTrisAttrDraped(bool state) = 0;
+		virtual void gotTrisAttrDrawEnable(bool state) = 0;
+		virtual void gotTrisAttrSolidCamera(bool state) = 0;
 		virtual void gotTrisAttrReset() = 0;
 
 		//-----------------------------------------------------
 		// Objects' manipulators
 
 		virtual void gotTrisAttrManipNo() = 0;
-		virtual void gotTrisAttrManipWheel(const AttrManipWheel & inManip) = 0;
-		virtual void gotTrisAttrManip(const AttrManipBase & inManip) = 0;
+		virtual void gotTrisAttrManipWheel(const AttrManipWheel & manip) = 0;
+		virtual void gotTrisAttrManip(const AttrManipBase & manip) = 0;
 
 		//-----------------------------------------------------
 		// Objects
 
-		virtual void gotTris(Index inOffset, Index inCount, const std::string & inEndLineComment) = 0;
+		virtual void gotTris(Index offset, Index count, const std::string & endLineComment) = 0;
 
 		//-----------------------------------------------------
 		// Animation data
@@ -153,11 +153,11 @@ namespace xobj {
 		virtual void gotAnimBegin() = 0;
 		virtual void gotAnimEnd() = 0;
 
-		virtual void gotAnimHide(const AnimVisibility::Key & InKey) = 0;
-		virtual void gotAnimShow(const AnimVisibility::Key & InKey) = 0;
-		virtual void gotTranslateAnim(AnimTrans::KeyList & inKeys, std::string & inDataref,
+		virtual void gotAnimHide(const AnimVisibility::Key & key) = 0;
+		virtual void gotAnimShow(const AnimVisibility::Key & key) = 0;
+		virtual void gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
 									bool hasLoop, float loopVal) = 0;
-		virtual void gotRotateAnim(AnimRotate::KeyList & inKeys, float (&inVector)[3], std::string & inDataref,
+		virtual void gotRotateAnim(AnimRotate::KeyList & keys, float (&inVector)[3], std::string & dataref,
 									bool hasLoop, float loopVal) = 0;
 
 		//-----------------------------------------------------

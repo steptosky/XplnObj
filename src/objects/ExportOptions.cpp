@@ -43,8 +43,8 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ExportOptions::setSignature(const std::string & inSignature) {
-		mSignature = inSignature;
+	void ExportOptions::setSignature(const std::string & signature) {
+		mSignature = signature;
 	}
 
 	//-------------------------------------------------------------------------
@@ -63,24 +63,24 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ExportOptions::setOptionFlags(uint64_t inFlags) {
-		mOptionFlags = inFlags;
+	void ExportOptions::setOptionFlags(uint64_t flags) {
+		mOptionFlags = flags;
 	}
 
 	uint64_t ExportOptions::optionFlags() const {
 		return mOptionFlags;
 	}
 
-	void ExportOptions::disable(eExportOptions inOption) {
-		mOptionFlags &= ~inOption;
+	void ExportOptions::disable(eExportOptions option) {
+		mOptionFlags &= ~option;
 	}
 
-	bool ExportOptions::isEnabled(eExportOptions inOption) const {
-		return ((mOptionFlags & inOption) == inOption);
+	bool ExportOptions::isEnabled(eExportOptions option) const {
+		return ((mOptionFlags & option) == option);
 	}
 
-	void ExportOptions::enable(eExportOptions inOption) {
-		mOptionFlags |= inOption;
+	void ExportOptions::enable(eExportOptions option) {
+		mOptionFlags |= option;
 	}
 
 	/**************************************************************************************************/

@@ -53,12 +53,12 @@ namespace xobj {
 		/*!
 		 * \details Constructor init.
 		 * \note Makes the enabled attribute.
-		 * \param inMinPitch 
-		 * \param inMaxPitch 
-		 * \param inMinRoll 
-		 * \param inMaxRoll 
+		 * \param [in] minPitch 
+		 * \param [in] maxPitch 
+		 * \param [in] minRoll 
+		 * \param [in] maxRoll 
 		 */
-		XpObjLib AttrSlopeLimit(float inMinPitch, float inMaxPitch, float inMinRoll, float inMaxRoll);
+		XpObjLib AttrSlopeLimit(float minPitch, float maxPitch, float minRoll, float maxRoll);
 
 		~AttrSlopeLimit() = default;
 
@@ -66,28 +66,28 @@ namespace xobj {
 
 		/*!
 		 * \details Check whether the attribute is enabled. 
-		 * \note All class's seters will enable this attribute.
+		 * \note All class's setters will enable this attribute.
 		 */
 		XpObjLib operator bool() const;
 
 		/*!
-		 * \details Sets the attribute enabled/desabled.
-		 * \note All class's seters will enable this attribute.
-		 * \param inState 
+		 * \details Sets the attribute enabled/disabled.
+		 * \note All class's setters will enable this attribute.
+		 * \param [in] state 
 		 */
-		XpObjLib void setEnabled(bool inState);
+		XpObjLib void setEnabled(bool state);
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrSlopeLimit & inRight) const;
-		XpObjLib bool operator!=(const AttrSlopeLimit & inRight) const;
+		XpObjLib bool operator==(const AttrSlopeLimit & other) const;
+		XpObjLib bool operator!=(const AttrSlopeLimit & other) const;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib void setMinPitch(float inMinPitch);
-		XpObjLib void setMaxPitch(float inMaxPitch);
-		XpObjLib void setMinRoll(float inMinRoll);
-		XpObjLib void setMaxRoll(float inMaxRoll);
+		XpObjLib void setMinPitch(float minPitch);
+		XpObjLib void setMaxPitch(float maxPitch);
+		XpObjLib void setMinRoll(float minRoll);
+		XpObjLib void setMaxRoll(float maxRoll);
 
 		XpObjLib float minPitch() const;
 		XpObjLib float maxPitch() const;

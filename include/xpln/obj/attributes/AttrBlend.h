@@ -46,7 +46,8 @@ namespace xobj {
 	public:
 
 		enum eType : uint8_t {
-			blend, // default
+			// default
+			blend,
 			no_blend,
 			shadow_blend,
 		};
@@ -62,10 +63,10 @@ namespace xobj {
 		/*!
 		 * \details Constructor init.
 		 * \note Makes the enabled attribute.
-		 * \param inType 
-		 * \param inRatio 
+		 * \param [in] type 
+		 * \param [in] ratio 
 		 */
-		XpObjLib AttrBlend(eType inType, float inRatio);
+		XpObjLib AttrBlend(eType type, float ratio);
 
 		~AttrBlend() = default;
 
@@ -73,25 +74,25 @@ namespace xobj {
 
 		/*!
 		 * \details Check whether the attribute is enabled. 
-		 * \note All class's seters will enable this attribute.
+		 * \note All class's setters will enable this attribute.
 		 */
 		XpObjLib operator bool() const;
 
 		/*!
-		 * \details Sets the attribute enabled/desabled.
-		 * \note All class's seters will enable this attribute.
-		 * \param inState 
+		 * \details Sets the attribute enabled/disabled.
+		 * \note All class's setters will enable this attribute.
+		 * \param [in] state 
 		 */
-		XpObjLib void setEnabled(bool inState);
+		XpObjLib void setEnabled(bool state);
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrBlend & inRight) const;
-		XpObjLib bool operator!=(const AttrBlend & inRight) const;
+		XpObjLib bool operator==(const AttrBlend & other) const;
+		XpObjLib bool operator!=(const AttrBlend & other) const;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib void setRatio(float inRatio);
+		XpObjLib void setRatio(float ratio);
 		XpObjLib float ratio() const;
 		XpObjLib eType type() const;
 

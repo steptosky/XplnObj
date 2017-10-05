@@ -48,9 +48,9 @@ namespace xobj {
 			: pAngleDegrees(0.0f),
 			pDrfValue(0.0f) {}
 
-		AnimRotateKey(float inAngleDegrees, float inDataRefValue)
-			: pAngleDegrees(inAngleDegrees),
-			pDrfValue(inDataRefValue) {}
+		AnimRotateKey(float angleDegrees, float dataRefValue)
+			: pAngleDegrees(angleDegrees),
+			pDrfValue(dataRefValue) {}
 
 		//-----------------------------------------
 

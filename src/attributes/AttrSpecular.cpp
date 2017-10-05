@@ -37,8 +37,8 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrSpecular::AttrSpecular(float inRatio)
-		: mRatio(inRatio),
+	AttrSpecular::AttrSpecular(float ratio)
+		: mRatio(ratio),
 		mIsEnabled(true) { }
 
 	AttrSpecular::AttrSpecular()
@@ -53,27 +53,27 @@ namespace xobj {
 		return mIsEnabled;
 	}
 
-	void AttrSpecular::setEnabled(bool inState) {
-		mIsEnabled = inState;
+	void AttrSpecular::setEnabled(bool state) {
+		mIsEnabled = state;
 	}
 
-	bool AttrSpecular::operator==(const AttrSpecular & inRight) const {
-		return (mIsEnabled == inRight.mIsEnabled && sts::isEqual(mRatio, inRight.mRatio, 0.01f));
+	bool AttrSpecular::operator==(const AttrSpecular & other) const {
+		return (mIsEnabled == other.mIsEnabled && sts::isEqual(mRatio, other.mRatio, 0.01f));
 	}
 
-	bool AttrSpecular::operator!=(const AttrSpecular & inRight) const {
-		return !operator==(inRight);
+	bool AttrSpecular::operator!=(const AttrSpecular & other) const {
+		return !operator==(other);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrSpecular::setRatio(float inRatio) {
-		inRatio = std::min(inRatio, 1.0f);
-		inRatio = std::max(inRatio, 0.0f);
+	void AttrSpecular::setRatio(float ratio) {
+		ratio = std::min(ratio, 1.0f);
+		ratio = std::max(ratio, 0.0f);
 		mIsEnabled = true;
-		mRatio = inRatio;
+		mRatio = ratio;
 	}
 
 	float AttrSpecular::ratio() const {

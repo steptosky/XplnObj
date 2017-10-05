@@ -49,9 +49,9 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjLodGroup::setObjectName(const std::string & inName) {
-		mName = inName;
-		mObjTransform.setName(inName);
+	void ObjLodGroup::setObjectName(const std::string & mame) {
+		mName = mame;
+		mObjTransform.setName(mame);
 	}
 
 	const std::string & ObjLodGroup::objectName() const {

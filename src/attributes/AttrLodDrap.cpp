@@ -36,8 +36,8 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrLodDrap::AttrLodDrap(float inDistance)
-		: mDistance(inDistance),
+	AttrLodDrap::AttrLodDrap(float distance)
+		: mDistance(distance),
 		mIsEnabled(true) { }
 
 	AttrLodDrap::AttrLodDrap()
@@ -52,24 +52,24 @@ namespace xobj {
 		return mIsEnabled;
 	}
 
-	void AttrLodDrap::setEnabled(bool inState) {
-		mIsEnabled = inState;
+	void AttrLodDrap::setEnabled(bool state) {
+		mIsEnabled = state;
 	}
 
-	bool AttrLodDrap::operator==(const AttrLodDrap & inRight) const {
-		return (mIsEnabled == inRight.mIsEnabled && sts::isEqual(mDistance, inRight.mDistance, 0.01f));
+	bool AttrLodDrap::operator==(const AttrLodDrap & other) const {
+		return (mIsEnabled == other.mIsEnabled && sts::isEqual(mDistance, other.mDistance, 0.01f));
 	}
 
-	bool AttrLodDrap::operator!=(const AttrLodDrap & inRight) const {
-		return !operator==(inRight);
+	bool AttrLodDrap::operator!=(const AttrLodDrap & other) const {
+		return !operator==(other);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrLodDrap::setDistance(float inDistance) {
-		mDistance = inDistance;
+	void AttrLodDrap::setDistance(float distance) {
+		mDistance = distance;
 		mIsEnabled = true;
 	}
 

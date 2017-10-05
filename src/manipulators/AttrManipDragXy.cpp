@@ -113,14 +113,14 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool AttrManipDragXy::equals(const AttrManipBase * inMainp) const {
-		if (!inMainp)
+	bool AttrManipDragXy::equals(const AttrManipBase * manip) const {
+		if (!manip)
 			return false;
 
-		if (!AttrManipBase::equals(inMainp))
+		if (!AttrManipBase::equals(manip))
 			return false;
 
-		const AttrManipDragXy * right = dynamic_cast<const AttrManipDragXy*>(inMainp);
+		const AttrManipDragXy * right = dynamic_cast<const AttrManipDragXy*>(manip);
 		if (!right)
 			return false;
 

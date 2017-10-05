@@ -29,7 +29,6 @@
 
 #pragma once
 
-#include <string>
 #include <vector>
 #include <cstdint>
 #include "xpln/XplnObjExport.h"
@@ -49,7 +48,7 @@ namespace xobj {
 
 		/*!
 		 * \note It is NOT guaranteed that the existing indexes will be constant when new data is added.
-		 *  So you can consider it when you design your serialization solution. You can use obj string (toString()).
+		 *       So you can consider it when you design your serialization solution. You can use obj string (toString()).
 		 */
 		enum eId : int32_t {
 			none = 0,
@@ -79,33 +78,33 @@ namespace xobj {
 
 		/*!
 		 * \details Constructor init from Id.
-		 * \param [in] inId
+		 * \param [in] id
 		 */
-		XpObjLib explicit ELayer(eId inId);
+		XpObjLib explicit ELayer(eId id);
 
 		XpObjLib ~ELayer() = default;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool operator ==(const ELayer & inRight) const;
-		XpObjLib bool operator ==(eId inId) const;
+		XpObjLib bool operator ==(const ELayer & other) const;
+		XpObjLib bool operator ==(eId id) const;
 
-		XpObjLib bool operator !=(const ELayer & inRight) const;
-		XpObjLib bool operator !=(eId inId) const;
+		XpObjLib bool operator !=(const ELayer & other) const;
+		XpObjLib bool operator !=(eId id) const;
 
 		//-------------------------------------------------------------------------
 
 		/*!
 		 * \details Makes from string which is used in the ui.
-		 * \param [in] inName
+		 * \param [in] name
 		 */
-		XpObjLib static ELayer fromUiString(const char * inName);
+		XpObjLib static ELayer fromUiString(const char * name);
 
 		/*!
 		 * \details Makes from string which is used in the obj files.
-		 * \param [in] inAttrName
+		 * \param [in] attrName
 		 */
-		XpObjLib static ELayer fromString(const char * inAttrName);
+		XpObjLib static ELayer fromString(const char * attrName);
 
 		//-------------------------------------------------------------------------
 

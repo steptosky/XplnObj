@@ -48,21 +48,21 @@ namespace xobj {
 
 		MeshFace() = default;
 
-		MeshFace(value_type inV0, value_type inV1, value_type inV2)
-			: pV0(inV0),
-			pV1(inV1),
-			pV2(inV2) {}
+		MeshFace(value_type v0, value_type v1, value_type v2)
+			: pV0(v0),
+			pV1(v1),
+			pV2(v2) {}
 
 		//--------------------------------------------------
 
-		bool operator==(const MeshFace & inOther) const {
-			return pV0 == inOther.pV0 &&
-					pV1 == inOther.pV1 &&
-					pV2 == inOther.pV2;
+		bool operator==(const MeshFace & other) const {
+			return pV0 == other.pV0 &&
+					pV1 == other.pV1 &&
+					pV2 == other.pV2;
 		}
 
-		bool operator!=(const MeshFace & inOther) const {
-			return !this->operator==(inOther);
+		bool operator!=(const MeshFace & other) const {
+			return !this->operator==(other);
 		}
 
 		//--------------------------------------------------

@@ -29,7 +29,6 @@
 
 #include "xpln/common/TMatrix.h"
 #include "sts/geometry/Quaternion.h"
-#include "sts/geometry/TMatrix3.h"
 #include "sts/geometry/Converters.h"
 #include "sts/string/StringConverters.h"
 
@@ -118,7 +117,7 @@ namespace xobj {
 
 	//-------------------------------------------------------------------------
 
-	bool TMatrix::isParity() const {
+	bool TMatrix::parity() const {
 		return reinterpret_cast<const Mtx3*>(this)->isParity();
 	}
 

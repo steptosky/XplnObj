@@ -60,26 +60,26 @@ namespace xobj {
 		typedef std::pair<std::string, EManipulator::eId> Association;
 
 		const Data gList[] = {
-				/* 00 */ Data(ATTR_MANIP_NONE, "None", EManipulator::none),
-				/* 01 */ Data(ATTR_MANIP_AXIS_KNOB, "Axis knob", EManipulator::axis_knob),
-				/* 02 */ Data(ATTR_MANIP_AXIS_SWITCH_LEFT_RIGHT, "Axis switch left-right", EManipulator::axis_switch_lr),
-				/* 03 */ Data(ATTR_MANIP_AXIS_SWITCH_UP_DOWN, "Axis switch up-down", EManipulator::axis_switch_ud),
-				/* 04 */ Data(ATTR_MANIP_COMMAND, "Command", EManipulator::command),
-				/* 02 */ Data(ATTR_MANIP_COMMAND_AXIS, "Command axis", EManipulator::command_axis),
-				/* 06 */ Data(ATTR_MANIP_COMMAND_KNOB, "Command knob", EManipulator::command_knob),
-				/* 07 */ Data(ATTR_MANIP_SWITCH_LEFT_RIGHT, "Command switch left-right", EManipulator::command_switch_lr),
-				/* 08 */ Data(ATTR_MANIP_SWITCH_UP_DOWN, "Command switch up-down", EManipulator::command_switch_ud),
-				/* 09 */ Data(ATTR_MANIP_DELTA, "Delta", EManipulator::delta),
-				/* 10 */ Data(ATTR_MANIP_DRAG_AXIS, "Drag axis", EManipulator::drag_axis),
-				/* 11 */ Data(ATTR_MANIP_DRAG_AXIS_PIX, "Drag axis pix", EManipulator::drag_axis_pix),
-				/* 12 */ Data(ATTR_MANIP_DRAG_XY, "Drag xy", EManipulator::drag_xy),
-				/* 13 */ Data(ATTR_MANIP_NOOP, "Noop", EManipulator::noop),
-				/* 14 */ Data("manip_panel_click", "Panel-Click", EManipulator::panel),
-				/* 15 */ Data(ATTR_MANIP_PUSH, "Push", EManipulator::push),
-				/* 16 */ Data(ATTR_MANIP_RADIO, "Radio", EManipulator::radio),
-				/* 17 */ Data(ATTR_MANIP_TOGGLE, "Toggle", EManipulator::toggle),
-				/* 18 */ Data(ATTR_MANIP_WRAP, "Wrap", EManipulator::wrap),
-			};
+			/* 00 */ Data(ATTR_MANIP_NONE, "None", EManipulator::none),
+			/* 01 */ Data(ATTR_MANIP_AXIS_KNOB, "Axis knob", EManipulator::axis_knob),
+			/* 02 */ Data(ATTR_MANIP_AXIS_SWITCH_LEFT_RIGHT, "Axis switch left-right", EManipulator::axis_switch_lr),
+			/* 03 */ Data(ATTR_MANIP_AXIS_SWITCH_UP_DOWN, "Axis switch up-down", EManipulator::axis_switch_ud),
+			/* 04 */ Data(ATTR_MANIP_COMMAND, "Command", EManipulator::command),
+			/* 02 */ Data(ATTR_MANIP_COMMAND_AXIS, "Command axis", EManipulator::command_axis),
+			/* 06 */ Data(ATTR_MANIP_COMMAND_KNOB, "Command knob", EManipulator::command_knob),
+			/* 07 */ Data(ATTR_MANIP_SWITCH_LEFT_RIGHT, "Command switch left-right", EManipulator::command_switch_lr),
+			/* 08 */ Data(ATTR_MANIP_SWITCH_UP_DOWN, "Command switch up-down", EManipulator::command_switch_ud),
+			/* 09 */ Data(ATTR_MANIP_DELTA, "Delta", EManipulator::delta),
+			/* 10 */ Data(ATTR_MANIP_DRAG_AXIS, "Drag axis", EManipulator::drag_axis),
+			/* 11 */ Data(ATTR_MANIP_DRAG_AXIS_PIX, "Drag axis pix", EManipulator::drag_axis_pix),
+			/* 12 */ Data(ATTR_MANIP_DRAG_XY, "Drag xy", EManipulator::drag_xy),
+			/* 13 */ Data(ATTR_MANIP_NOOP, "Noop", EManipulator::noop),
+			/* 14 */ Data("manip_panel_click", "Panel-Click", EManipulator::panel),
+			/* 15 */ Data(ATTR_MANIP_PUSH, "Push", EManipulator::push),
+			/* 16 */ Data(ATTR_MANIP_RADIO, "Radio", EManipulator::radio),
+			/* 17 */ Data(ATTR_MANIP_TOGGLE, "Toggle", EManipulator::toggle),
+			/* 18 */ Data(ATTR_MANIP_WRAP, "Wrap", EManipulator::wrap),
+		};
 	}
 
 	/**************************************************************************************************/
@@ -89,53 +89,53 @@ namespace xobj {
 	EManipulator::EManipulator()
 		: EManipulator(none) { }
 
-	EManipulator::EManipulator(eId inId)
-		: mId(inId) { }
+	EManipulator::EManipulator(eId id)
+		: mId(id) { }
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Operators *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool EManipulator::operator==(const EManipulator & inRight) const {
-		return mId == inRight.mId;
+	bool EManipulator::operator==(const EManipulator & other) const {
+		return mId == other.mId;
 	}
 
-	bool EManipulator::operator==(eId inId) const {
-		return mId == inId;
+	bool EManipulator::operator==(eId id) const {
+		return mId == id;
 	}
 
-	bool EManipulator::operator!=(const EManipulator & inRight) const {
-		return mId != inRight.mId;
+	bool EManipulator::operator!=(const EManipulator & other) const {
+		return mId != other.mId;
 	}
 
-	bool EManipulator::operator!=(eId inId) const {
-		return mId != inId;
+	bool EManipulator::operator!=(eId id) const {
+		return mId != id;
 	}
 
 	/**************************************************************************************************/
 	//////////////////////////////////////////* Functions */////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	EManipulator EManipulator::fromUiString(const char * inName) {
-		if (inName) {
+	EManipulator EManipulator::fromUiString(const char * name) {
+		if (name) {
 			for (size_t i = 0; i < ARRAY_LENGTH(EManipulatorData::gList); ++i) {
-				if (strcmp(inName, EManipulatorData::gList[i].mUi) == 0) {
+				if (strcmp(name, EManipulatorData::gList[i].mUi) == 0) {
 					return EManipulator(EManipulatorData::gList[i].mId);
 				}
 			}
-			LError << TOTEXT(EManipulator) << " Does not contain ui name: \"" << inName << "\"";
+			LError << TOTEXT(EManipulator) << " Does not contain ui name: \"" << name << "\"";
 		}
 		return EManipulator();
 	}
 
-	EManipulator EManipulator::fromString(const char * inAttrName) {
-		if (inAttrName) {
+	EManipulator EManipulator::fromString(const char * attrName) {
+		if (attrName) {
 			for (size_t i = 0; i < ARRAY_LENGTH(EManipulatorData::gList); ++i) {
-				if (strcmp(inAttrName, EManipulatorData::gList[i].mAttr) == 0) {
+				if (strcmp(attrName, EManipulatorData::gList[i].mAttr) == 0) {
 					return EManipulator(EManipulatorData::gList[i].mId);
 				}
 			}
-			LError << TOTEXT(EManipulator) << " Does not contain attribute name: \"" << inAttrName << "\"";
+			LError << TOTEXT(EManipulator) << " Does not contain attribute name: \"" << attrName << "\"";
 		}
 		return EManipulator();
 	}

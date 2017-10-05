@@ -56,7 +56,7 @@ namespace xobj {
 		/*!
 		 * \note Makes the enabled attribute.
 		 */
-		XpObjLib AttrLightLevel(float inVal1, float inVal2, const std::string & inDataRef);
+		XpObjLib AttrLightLevel(float val1, float val2, const std::string & dataRef);
 
 		~AttrLightLevel() = default;
 
@@ -64,27 +64,27 @@ namespace xobj {
 
 		/*!
 		 * \details Check whether the attribute is enabled.
-		 * \note Any class's seter will enable this attribute.
+		 * \note Any class's setter will enable this attribute.
 		 */
 		XpObjLib operator bool() const;
 
 		/*!
-		 * \details Sets the attribute enabled/desabled.
-		 * \note Any class's seter will enable this attribute.
-		 * \param inState
+		 * \details Sets the attribute enabled/disabled.
+		 * \note Any class's setter will enable this attribute.
+		 * \param [in] state
 		 */
-		XpObjLib void setEnabled(bool inState);
+		XpObjLib void setEnabled(bool state);
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrLightLevel & inRight) const;
-		XpObjLib bool operator!=(const AttrLightLevel & inRight) const;
+		XpObjLib bool operator==(const AttrLightLevel & other) const;
+		XpObjLib bool operator!=(const AttrLightLevel & other) const;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib void setVal1(float inVal);
-		XpObjLib void setVal2(float inVal);
-		XpObjLib void setDataref(const std::string & inDataRef);
+		XpObjLib void setVal1(float val1);
+		XpObjLib void setVal2(float val2);
+		XpObjLib void setDataref(const std::string & dataRef);
 
 		XpObjLib float val1() const;
 		XpObjLib float val2() const;

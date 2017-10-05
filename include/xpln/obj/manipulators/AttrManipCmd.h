@@ -49,13 +49,13 @@ namespace xobj {
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib void setCommand(const std::string & inCmd);
+		XpObjLib void setCommand(const std::string & cmd);
 		XpObjLib const std::string & command() const;
 
 		//-------------------------------------------------------------------------
 
 		/*! \copydoc AttrManipBase::equals */
-		XpObjLib bool equals(const AttrManipBase * inMainp) const override;
+		XpObjLib bool equals(const AttrManipBase * manip) const override;
 
 		/*! \copydoc AttrManipBase::clone */
 		XpObjLib AttrManipBase * clone() const override;

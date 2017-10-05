@@ -44,11 +44,11 @@ namespace xobj {
 		pLoopValue(0.0f),
 		pHasLoop(false) {}
 
-	AnimVisibilityKey::AnimVisibilityKey(eType inType, float inValue1, float inValue2, const std::string & inDrf)
-		: pType(inType),
-		pValue1(inValue1),
-		pValue2(inValue2),
-		pDrf(inDrf),
+	AnimVisibilityKey::AnimVisibilityKey(eType type, float val1, float val2, const std::string & dataRef)
+		: pType(type),
+		pValue1(val1),
+		pValue2(val2),
+		pDrf(dataRef),
 		pLoopValue(0.0f),
 		pHasLoop(false) {}
 

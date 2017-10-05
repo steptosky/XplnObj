@@ -36,8 +36,8 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrSlungLoadWeight::AttrSlungLoadWeight(float inWeight)
-		: mWeight(inWeight),
+	AttrSlungLoadWeight::AttrSlungLoadWeight(float weight)
+		: mWeight(weight),
 		mIsEnabled(true) { }
 
 	AttrSlungLoadWeight::AttrSlungLoadWeight()
@@ -52,25 +52,25 @@ namespace xobj {
 		return mIsEnabled;
 	}
 
-	void AttrSlungLoadWeight::setEnabled(bool inState) {
-		mIsEnabled = inState;
+	void AttrSlungLoadWeight::setEnabled(bool state) {
+		mIsEnabled = state;
 	}
 
-	bool AttrSlungLoadWeight::operator==(const AttrSlungLoadWeight & inRight) const {
-		return (mIsEnabled == inRight.mIsEnabled && sts::isEqual(mWeight, inRight.mWeight, 0.01f));
+	bool AttrSlungLoadWeight::operator==(const AttrSlungLoadWeight & other) const {
+		return (mIsEnabled == other.mIsEnabled && sts::isEqual(mWeight, other.mWeight, 0.01f));
 	}
 
-	bool AttrSlungLoadWeight::operator!=(const AttrSlungLoadWeight & inRight) const {
-		return !operator==(inRight);
+	bool AttrSlungLoadWeight::operator!=(const AttrSlungLoadWeight & other) const {
+		return !operator==(other);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrSlungLoadWeight::setWeight(float inWeight) {
+	void AttrSlungLoadWeight::setWeight(float weight) {
 		mIsEnabled = true;
-		mWeight = inWeight;
+		mWeight = weight;
 	}
 
 	float AttrSlungLoadWeight::weight() const {

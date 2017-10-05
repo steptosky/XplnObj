@@ -47,7 +47,7 @@ namespace xobj {
 
 	public:
 
-		static bool readFile(const std::string & inFilePath, ObjReaderListener & inListener);
+		static bool readFile(const std::string & filePath, ObjReaderListener & listener);
 
 	private:
 

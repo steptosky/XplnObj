@@ -35,9 +35,9 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	ObjLine::ObjLine(const ObjLine & inCopy)
-		: ObjAbstract(inCopy),
-		mVertices(inCopy.mVertices) {}
+	ObjLine::ObjLine(const ObjLine & copy)
+		: ObjAbstract(copy),
+		mVertices(copy.mVertices) {}
 
 	ObjLine::ObjLine() {
 		setObjectName("Obj Line");
@@ -49,9 +49,9 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjLine::applyTransform(const TMatrix & inTm) {
+	void ObjLine::applyTransform(const TMatrix & tm, const bool) {
 		for (auto & vertex : mVertices) {
-			inTm.transformPoint(vertex.pPosition);
+			tm.transformPoint(vertex.pPosition);
 		}
 	}
 
@@ -59,10 +59,10 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjLine::attach(const ObjLine & inOtherLine) {
+	void ObjLine::attach(const ObjLine & otherLine) {
 		auto & thisVertexList = verticesList();
-		for (auto & vertex : inOtherLine.verticesList()) {
-			thisVertexList.push_back(vertex);
+		for (auto & vertex : otherLine.verticesList()) {
+			thisVertexList.emplace_back(vertex);
 		}
 	}
 

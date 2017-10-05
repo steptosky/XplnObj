@@ -29,9 +29,8 @@
 
 #pragma once
 
-#include "xpln/obj/ObjMain.h"
-#include "xpln/obj/attributes/AttrSet.h"
 #include "xpln/obj/ObjMesh.h"
+#include "xpln/obj/ObjMain.h"
 
 namespace xobj {
 

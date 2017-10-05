@@ -38,13 +38,13 @@ namespace xobj {
 	///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
 	/********************************************************************************************************/
 
-	ObjLightSpillCust::ObjLightSpillCust(const ObjLightSpillCust & inCopy)
-		: ObjAbstractLight(inCopy),
-		mSize(inCopy.mSize),
-		mSemi(inCopy.mSemi),
-		mColor(inCopy.mColor),
-		mDirection(inCopy.mDirection),
-		mDataRef(inCopy.mDataRef) {}
+	ObjLightSpillCust::ObjLightSpillCust(const ObjLightSpillCust & copy)
+		: ObjAbstractLight(copy),
+		mSize(copy.mSize),
+		mSemi(copy.mSemi),
+		mColor(copy.mColor),
+		mDirection(copy.mDirection),
+		mDataRef(copy.mDataRef) {}
 
 	ObjLightSpillCust::ObjLightSpillCust()
 		: mSize(10.0f),
@@ -69,13 +69,13 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjLightSpillCust::applyTransform(const TMatrix & inTm) {
+	void ObjLightSpillCust::applyTransform(const TMatrix & tm, const bool) {
 		Point3 pos = mPosition;
-		inTm.transformPoint(pos);
+		tm.transformPoint(pos);
 		mPosition = pos;
 
 		Point3 dir = direction();
-		inTm.transformVector(dir);
+		tm.transformVector(dir);
 		setDirection(dir);
 	}
 
@@ -91,13 +91,13 @@ namespace xobj {
 		return mDirection;
 	}
 
-	void ObjLightSpillCust::setDirection(Point3 inDirection) {
-		mDirection = inDirection;
+	void ObjLightSpillCust::setDirection(Point3 direction) {
+		mDirection = direction;
 		mDirection.normalize();
 	}
 
-	void ObjLightSpillCust::setColor(const Color & inColor) {
-		mColor = inColor;
+	void ObjLightSpillCust::setColor(const Color & color) {
+		mColor = color;
 	}
 
 	Color ObjLightSpillCust::color() const {
@@ -108,24 +108,24 @@ namespace xobj {
 		return mSemi;
 	}
 
-	void ObjLightSpillCust::setSemiRaw(float inSemi) {
-		mSemi = inSemi;
+	void ObjLightSpillCust::setSemiRaw(float semi) {
+		mSemi = semi;
 	}
 
 	float ObjLightSpillCust::size() const {
 		return mSize;
 	}
 
-	void ObjLightSpillCust::setSize(float inSize) {
-		mSize = inSize;
+	void ObjLightSpillCust::setSize(float size) {
+		mSize = size;
 	}
 
 	const std::string & ObjLightSpillCust::dataRef() const {
 		return mDataRef;
 	}
 
-	void ObjLightSpillCust::setDataRef(const std::string & inDataRef) {
-		mDataRef = inDataRef;
+	void ObjLightSpillCust::setDataRef(const std::string & dataRef) {
+		mDataRef = dataRef;
 	}
 
 	/**************************************************************************************************/

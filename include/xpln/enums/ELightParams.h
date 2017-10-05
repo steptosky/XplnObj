@@ -31,7 +31,6 @@
 
 #include <vector>
 #include <cstdint>
-#include <string>
 #include "xpln/XplnObjExport.h"
 
 namespace xobj {
@@ -49,7 +48,7 @@ namespace xobj {
 
 		/*!
 		 * \note It is NOT guaranteed that the existing indexes will be constant when new data is added.
-		 *  So you can consider it when you design your serialization solution. You can use obj string (toString()).
+		 *       So you can consider it when you design your serialization solution. You can use obj string (toString()).
 		 */
 		enum eId : int32_t {
 			none = 0,
@@ -109,33 +108,33 @@ namespace xobj {
 
 		/*!
 		 * \details Constructor init from Id.
-		 * \param [in] inId
+		 * \param [in] id
 		 */
-		XpObjLib explicit ELightParams(eId inId);
+		XpObjLib explicit ELightParams(eId id);
 
 		XpObjLib ~ELightParams() = default;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool operator ==(const ELightParams & inRight) const;
-		XpObjLib bool operator ==(eId inId) const;
+		XpObjLib bool operator ==(const ELightParams & other) const;
+		XpObjLib bool operator ==(eId id) const;
 
-		XpObjLib bool operator !=(const ELightParams & inRight) const;
-		XpObjLib bool operator !=(eId inId) const;
+		XpObjLib bool operator !=(const ELightParams & other) const;
+		XpObjLib bool operator !=(eId id) const;
 
 		//-------------------------------------------------------------------------
 
 		/*!
 		 * \details Makes from string which is used in the ui.
-		 * \param [in] inName
+		 * \param [in] name
 		 */
-		XpObjLib static ELightParams fromUiString(const char * inName);
+		XpObjLib static ELightParams fromUiString(const char * name);
 
 		/*!
 		 * \details Makes from string which is used in the obj files.
-		 * \param [in] inAttrName
+		 * \param [in] attrName
 		 */
-		XpObjLib static ELightParams fromString(const char * inAttrName);
+		XpObjLib static ELightParams fromString(const char * attrName);
 
 		//-------------------------------------------------------------------------
 

@@ -54,10 +54,10 @@ namespace xobj {
 		/*!
 		 * \details Constructor init.
 		 * \note Makes the enabled attribute.
-		 * \param inLayer 
-		 * \param inOffset 
+		 * \param [in] layer 
+		 * \param [in] offset 
 		 */
-		XpObjLib AttrLayerGroup(ELayer inLayer, int32_t inOffset = 0);
+		XpObjLib AttrLayerGroup(ELayer layer, int32_t offset = 0);
 
 		~AttrLayerGroup() = default;
 
@@ -65,26 +65,26 @@ namespace xobj {
 
 		/*!
 		 * \details Check whether the attribute is enabled.
-		 * \note All class's seters will enable this attribute.
+		 * \note All class's setters will enable this attribute.
 		 */
 		XpObjLib operator bool() const;
 
 		/*!
-		 * \details Sets the attribute enabled/desabled.
-		 * \note All class's seters will enable this attribute.
-		 * \param inState
+		 * \details Sets the attribute enabled/disabled.
+		 * \note All class's setters will enable this attribute.
+		 * \param [in] state
 		 */
-		XpObjLib void setEnabled(bool inState);
+		XpObjLib void setEnabled(bool state);
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrLayerGroup & inRight) const;
-		XpObjLib bool operator!=(const AttrLayerGroup & inRight) const;
+		XpObjLib bool operator==(const AttrLayerGroup & other) const;
+		XpObjLib bool operator!=(const AttrLayerGroup & other) const;
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib void setOffset(int32_t inOffset);
-		XpObjLib void setLayer(ELayer inLayer);
+		XpObjLib void setOffset(int32_t offset);
+		XpObjLib void setLayer(ELayer layer);
 
 		XpObjLib int32_t offset() const;
 		XpObjLib ELayer layer() const;

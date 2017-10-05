@@ -35,11 +35,11 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	ObjSmoke::ObjSmoke(const ObjSmoke & inCopy)
-		: ObjAbstract(inCopy),
-		mSize(inCopy.mSize),
-		mPosition(inCopy.mPosition),
-		mSmokeType(inCopy.mSmokeType) { }
+	ObjSmoke::ObjSmoke(const ObjSmoke & copy)
+		: ObjAbstract(copy),
+		mSize(copy.mSize),
+		mPosition(copy.mPosition),
+		mSmokeType(copy.mSmokeType) { }
 
 	ObjSmoke::ObjSmoke() {
 		setObjectName("Smoke");
@@ -51,24 +51,24 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjSmoke::setPosition(const Point3 & inVal) {
-		mPosition = inVal;
+	void ObjSmoke::setPosition(const Point3 & pos) {
+		mPosition = pos;
 	}
 
 	const Point3 & ObjSmoke::position() const {
 		return mPosition;
 	}
 
-	void ObjSmoke::setSize(float inSize) {
-		mSize = inSize;
+	void ObjSmoke::setSize(float size) {
+		mSize = size;
 	}
 
 	float ObjSmoke::size() const {
 		return mSize;
 	}
 
-	void ObjSmoke::setSmokeType(eSmokeType inType) {
-		mSmokeType = inType;
+	void ObjSmoke::setSmokeType(eSmokeType type) {
+		mSmokeType = type;
 	}
 
 	ObjSmoke::eSmokeType ObjSmoke::smokeType() const {
@@ -83,9 +83,9 @@ namespace xobj {
 		return OBJ_SMOKE;
 	}
 
-	void ObjSmoke::applyTransform(const TMatrix & inTm) {
+	void ObjSmoke::applyTransform(const TMatrix & tm, const bool) {
 		Point3 pos = mPosition;
-		inTm.transformPoint(pos);
+		tm.transformPoint(pos);
 		mPosition = pos;
 	}
 

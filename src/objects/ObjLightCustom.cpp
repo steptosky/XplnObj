@@ -35,12 +35,12 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	ObjLightCustom::ObjLightCustom(const ObjLightCustom & inCopy)
-		: ObjAbstractLight(inCopy),
-		mColor(inCopy.mColor),
-		mSize(inCopy.mSize),
-		mTexture(inCopy.mTexture),
-		mDataRef(inCopy.mDataRef) {}
+	ObjLightCustom::ObjLightCustom(const ObjLightCustom & copy)
+		: ObjAbstractLight(copy),
+		mColor(copy.mColor),
+		mSize(copy.mSize),
+		mTexture(copy.mTexture),
+		mDataRef(copy.mDataRef) {}
 
 	ObjLightCustom::ObjLightCustom()
 		: mSize(10.0f),
@@ -52,9 +52,9 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjLightCustom::applyTransform(const TMatrix & inTm) {
+	void ObjLightCustom::applyTransform(const TMatrix & tm, const bool) {
 		Point3 pos = mPosition;
-		inTm.transformPoint(pos);
+		tm.transformPoint(pos);
 		mPosition = pos;
 	}
 
@@ -74,28 +74,28 @@ namespace xobj {
 		return mSize;
 	}
 
-	void ObjLightCustom::setSize(float inSize) {
-		mSize = inSize;
+	void ObjLightCustom::setSize(float size) {
+		mSize = size;
 	}
 
 	Color ObjLightCustom::color() const {
 		return mColor;
 	}
 
-	void ObjLightCustom::setColor(const Color & inColor) {
-		mColor = inColor;
+	void ObjLightCustom::setColor(const Color & color) {
+		mColor = color;
 	}
 
 	const std::string & ObjLightCustom::dataRef() const {
 		return mDataRef;
 	}
 
-	void ObjLightCustom::setDataRef(const std::string & inDataRef) {
-		mDataRef = inDataRef;
+	void ObjLightCustom::setDataRef(const std::string & dataRef) {
+		mDataRef = dataRef;
 	}
 
-	void ObjLightCustom::setTextureRect(const RectangleI & inTextureRect) {
-		mTexture = inTextureRect;
+	void ObjLightCustom::setTextureRect(const RectangleI & textureRect) {
+		mTexture = textureRect;
 	}
 
 	/**************************************************************************************************/

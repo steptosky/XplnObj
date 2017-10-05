@@ -3,7 +3,7 @@
 ## Dependencies
 ###### Build
 - [Cmake 3.7+](https://cmake.org) - build tool.
-- [Conan 0.25+](https://www.conan.io) - dependency tool.
+- [Conan 0.27+](https://www.conan.io) - dependency tool.
 - [Python 2 or 3](https://www.python.org) - is needed for the Conan.
 - [Doxygen](http://www.stack.nl/~dimitri/doxygen) - if you want to generate the documentation.
 

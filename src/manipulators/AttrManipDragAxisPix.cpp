@@ -97,14 +97,14 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool AttrManipDragAxisPix::equals(const AttrManipBase * inMainp) const {
-		if (!inMainp)
+	bool AttrManipDragAxisPix::equals(const AttrManipBase * manip) const {
+		if (!manip)
 			return false;
 
-		if (!AttrManipBase::equals(inMainp))
+		if (!AttrManipBase::equals(manip))
 			return false;
 
-		const AttrManipDragAxisPix * right = dynamic_cast<const AttrManipDragAxisPix*>(inMainp);
+		const AttrManipDragAxisPix * right = dynamic_cast<const AttrManipDragAxisPix*>(manip);
 		if (!right)
 			return false;
 

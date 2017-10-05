@@ -55,7 +55,7 @@ namespace xobj {
 		ObjWriteGlobAttr() = default;
 		~ObjWriteGlobAttr() = default;
 
-		XpObjLib void write(AbstractWriter * inWriter, const ObjMain * inObj);
+		XpObjLib void write(AbstractWriter * writer, const ObjMain * obj);
 		XpObjLib void reset();
 		XpObjLib size_t count() const;
 

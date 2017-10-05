@@ -52,13 +52,13 @@ namespace xobj {
 
 		//-------------------------------------------------------------------------
 
-		bool openFile(const std::string & inFilePath);
+		bool openFile(const std::string & filePath);
 		void closeFile();
 
 		//-------------------------------------------------------------------------
 
 		/*! \copydoc AbstractWriter::printEol */
-		void printLine(const char * inMsg) override;
+		void printLine(const char * msg) override;
 
 		//-------------------------------------------------------------------------
 

@@ -43,8 +43,8 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrManipCmd::setCommand(const std::string & inCmd) {
-		mCommand = inCmd.empty() ? "none" : inCmd;
+	void AttrManipCmd::setCommand(const std::string & cmd) {
+		mCommand = cmd.empty() ? "none" : cmd;
 	}
 
 	const std::string & AttrManipCmd::command() const {
@@ -55,14 +55,14 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool AttrManipCmd::equals(const AttrManipBase * inMainp) const {
-		if (!inMainp)
+	bool AttrManipCmd::equals(const AttrManipBase * manip) const {
+		if (!manip)
 			return false;
 
-		if (!AttrManipBase::equals(inMainp))
+		if (!AttrManipBase::equals(manip))
 			return false;
 
-		const AttrManipCmd * right = dynamic_cast<const AttrManipCmd*>(inMainp);
+		const AttrManipCmd * right = dynamic_cast<const AttrManipCmd*>(manip);
 		if (!right)
 			return false;
 

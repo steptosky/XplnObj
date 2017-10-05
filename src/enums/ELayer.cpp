@@ -54,19 +54,19 @@ namespace xobj {
 		};
 
 		const Data gList[] = {
-				/*  0 */ Data(TOTEXT(none), "none", ELayer::none),
-				/*  1 */ Data(TOTEXT(terrain), "Terrain", ELayer::terrain),
-				/*  2 */ Data(TOTEXT(beaches), "Beaches", ELayer::beaches),
-				/*  3 */ Data(TOTEXT(shoulders), "Shoulders", ELayer::shoulders),
-				/*  4 */ Data(TOTEXT(taxiways), "Taxiways", ELayer::taxiways),
-				/*  5 */ Data(TOTEXT(runways), "Runways", ELayer::ranways),
-				/*  6 */ Data(TOTEXT(markings), "Markings", ELayer::markings),
-				/*  7 */ Data(TOTEXT(airports), "Airports", ELayer::airports),
-				/*  8 */ Data(TOTEXT(roads), "Roads", ELayer::roads),
-				/*  9 */ Data(TOTEXT(objects), "Objects", ELayer::objects),
-				/* 10 */ Data(TOTEXT(light_objects), "Light objects", ELayer::light_objects),
-				/* 11 */ Data(TOTEXT(cars), "Cars", ELayer::cars)
-			};
+			/*  0 */ Data(TOTEXT(none), "none", ELayer::none),
+			/*  1 */ Data(TOTEXT(terrain), "Terrain", ELayer::terrain),
+			/*  2 */ Data(TOTEXT(beaches), "Beaches", ELayer::beaches),
+			/*  3 */ Data(TOTEXT(shoulders), "Shoulders", ELayer::shoulders),
+			/*  4 */ Data(TOTEXT(taxiways), "Taxiways", ELayer::taxiways),
+			/*  5 */ Data(TOTEXT(runways), "Runways", ELayer::ranways),
+			/*  6 */ Data(TOTEXT(markings), "Markings", ELayer::markings),
+			/*  7 */ Data(TOTEXT(airports), "Airports", ELayer::airports),
+			/*  8 */ Data(TOTEXT(roads), "Roads", ELayer::roads),
+			/*  9 */ Data(TOTEXT(objects), "Objects", ELayer::objects),
+			/* 10 */ Data(TOTEXT(light_objects), "Light objects", ELayer::light_objects),
+			/* 11 */ Data(TOTEXT(cars), "Cars", ELayer::cars)
+		};
 	}
 
 	/**************************************************************************************************/
@@ -76,53 +76,53 @@ namespace xobj {
 	ELayer::ELayer()
 		: mId(none) {}
 
-	ELayer::ELayer(eId inId)
-		: mId(inId) { }
+	ELayer::ELayer(eId id)
+		: mId(id) { }
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Operators *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool ELayer::operator==(const ELayer & inRight) const {
-		return mId == inRight.mId;
+	bool ELayer::operator==(const ELayer & other) const {
+		return mId == other.mId;
 	}
 
-	bool ELayer::operator==(eId inId) const {
-		return mId == inId;
+	bool ELayer::operator==(eId id) const {
+		return mId == id;
 	}
 
-	bool ELayer::operator!=(const ELayer & inRight) const {
-		return mId != inRight.mId;
+	bool ELayer::operator!=(const ELayer & other) const {
+		return mId != other.mId;
 	}
 
-	bool ELayer::operator!=(eId inId) const {
-		return mId != inId;
+	bool ELayer::operator!=(eId id) const {
+		return mId != id;
 	}
 
 	/**************************************************************************************************/
 	//////////////////////////////////////////* Functions */////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	ELayer ELayer::fromUiString(const char * inName) {
-		if (inName) {
+	ELayer ELayer::fromUiString(const char * name) {
+		if (name) {
 			for (size_t i = 0; i < ARRAY_LENGTH(ELayersData::gList); ++i) {
-				if (strcmp(inName, ELayersData::gList[i].mUi) == 0) {
+				if (strcmp(name, ELayersData::gList[i].mUi) == 0) {
 					return ELayer(ELayersData::gList[i].mId);
 				}
 			}
-			LError << TOTEXT(ELayer) << " Does not contain ui name: \"" << inName << "\"";
+			LError << TOTEXT(ELayer) << " Does not contain ui name: \"" << name << "\"";
 		}
 		return ELayer();
 	}
 
-	ELayer ELayer::fromString(const char * inAttrName) {
-		if (inAttrName) {
+	ELayer ELayer::fromString(const char * attrName) {
+		if (attrName) {
 			for (size_t i = 0; i < ARRAY_LENGTH(ELayersData::gList); ++i) {
-				if (strcmp(inAttrName, ELayersData::gList[i].mAttr) == 0) {
+				if (strcmp(attrName, ELayersData::gList[i].mAttr) == 0) {
 					return ELayer(ELayersData::gList[i].mId);
 				}
 			}
-			LError << TOTEXT(ELayer) << " Does not contain attribute name: \"" << inAttrName << "\"";
+			LError << TOTEXT(ELayer) << " Does not contain attribute name: \"" << attrName << "\"";
 		}
 		return ELayer();
 	}

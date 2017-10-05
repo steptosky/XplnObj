@@ -43,24 +43,24 @@ namespace xobj {
 	//////////////////////////////////////////* Functions */////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool AttrManipWheel::operator==(const AttrManipWheel & inRight) const {
-		return mWheel == inRight.mWheel && sts::isEqual(mWheelDelta, inRight.mWheelDelta);
+	bool AttrManipWheel::operator==(const AttrManipWheel & other) const {
+		return mWheel == other.mWheel && sts::isEqual(mWheelDelta, other.mWheelDelta);
 	}
 
-	bool AttrManipWheel::operator!=(const AttrManipWheel & inRight) const {
-		return !this->operator==(inRight);
+	bool AttrManipWheel::operator!=(const AttrManipWheel & other) const {
+		return !this->operator==(other);
 	}
 
 	/**************************************************************************************************/
 	//////////////////////////////////////////* Functions */////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrManipWheel::setWheelEnabled(bool inState) {
-		mWheel = inState;
+	void AttrManipWheel::setWheelEnabled(bool state) {
+		mWheel = state;
 	}
 
-	void AttrManipWheel::setWheelDelta(float inVal) {
-		mWheelDelta = inVal;
+	void AttrManipWheel::setWheelDelta(float delta) {
+		mWheelDelta = delta;
 	}
 
 	bool AttrManipWheel::isWheelEnabled() const {

@@ -35,9 +35,9 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	ObjAbstractLight::ObjAbstractLight(const ObjAbstractLight & inCopy)
-		: ObjAbstract(inCopy),
-		mPosition(inCopy.mPosition) {}
+	ObjAbstractLight::ObjAbstractLight(const ObjAbstractLight & copy)
+		: ObjAbstract(copy),
+		mPosition(copy.mPosition) {}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
@@ -47,8 +47,8 @@ namespace xobj {
 		return mPosition;
 	}
 
-	void ObjAbstractLight::setPosition(const Point3 & val) {
-		mPosition = val;
+	void ObjAbstractLight::setPosition(const Point3 & pos) {
+		mPosition = pos;
 	}
 
 	/**************************************************************************************************/

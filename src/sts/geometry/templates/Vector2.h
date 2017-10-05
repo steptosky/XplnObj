@@ -131,7 +131,7 @@ namespace sts_t {
 
 		/*!
 		 * \details Sets the vector length.
-		 * \param[in] len new length.
+		 * \param [in] len new length.
 		 */
 		void setLength(value_type len) {
 			static_assert(std::numeric_limits<value_type>::is_iec559,
@@ -188,7 +188,7 @@ namespace sts_t {
 
 		/*!
 		 * \details Dot product.
-		 * \param[in] inVec other vector.
+		 * \param [in] inVec other vector.
 		 */
 		value_type dot(const Vector2 & inVec) const {
 			return (x * inVec.x + y * inVec.y);

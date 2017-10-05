@@ -44,29 +44,29 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	std::string ObjReaderInterpreter::extractComment(const std::string & inStr, const char * inDefaultVal) {
-		if (!inStr.empty()) {
-			std::string name = inStr;
+	std::string ObjReaderInterpreter::extractComment(const std::string & str, const char * dataref) {
+		if (!str.empty()) {
+			std::string name = str;
 			sts::MbStrUtils::trimLeft(name, "#");
 			sts::MbStrUtils::trim(name, " ");
 			return name;
 		}
-		return inDefaultVal ? inDefaultVal : "";
+		return dataref ? dataref : "";
 	}
 
 	/*************************************************************************************************/
 	///////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/*************************************************************************************************/
 
-	ObjReaderInterpreter::ObjReaderInterpreter(ObjMain * inObjMain, const TMatrix & rootMatrix, IOStatistic * inIOStatistic)
-		: mObjMain(inObjMain),
-		mIOStatistic(inIOStatistic),
+	ObjReaderInterpreter::ObjReaderInterpreter(ObjMain * objMain, const TMatrix & rootMatrix, IOStatistic * ioStatistic)
+		: mObjMain(objMain),
+		mIOStatistic(ioStatistic),
 		mCurrentLod(nullptr),
 		mCurrentTransform(nullptr),
 		mRootMtx(rootMatrix) {
 
-		assert(inObjMain);
-		assert(inIOStatistic);
+		assert(objMain);
+		assert(ioStatistic);
 	}
 
 	ObjReaderInterpreter::~ObjReaderInterpreter() {
@@ -77,9 +77,9 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjReaderInterpreter::gotGlobAttrTexture(const std::string & inVal) {
-		if (!inVal.empty()) {
-			mObjMain->pAttr.setTexture(inVal);
+	void ObjReaderInterpreter::gotGlobAttrTexture(const std::string & val) {
+		if (!val.empty()) {
+			mObjMain->pAttr.setTexture(val);
 			++mIOStatistic->pGlobAttrCount;
 		}
 		else {
@@ -87,13 +87,13 @@ namespace xobj {
 		}
 	}
 
-	void ObjReaderInterpreter::gotGlobAttrTextureLit(const std::string & inVal) {
-		mObjMain->pAttr.setTextureLit(inVal);
+	void ObjReaderInterpreter::gotGlobAttrTextureLit(const std::string & val) {
+		mObjMain->pAttr.setTextureLit(val);
 		++mIOStatistic->pGlobAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotGlobAttrTextureNormal(const std::string & inVal) {
-		mObjMain->pAttr.setTextureNormal(inVal);
+	void ObjReaderInterpreter::gotGlobAttrTextureNormal(const std::string & val) {
+		mObjMain->pAttr.setTextureNormal(val);
 		++mIOStatistic->pGlobAttrCount;
 	}
 
@@ -101,13 +101,13 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjReaderInterpreter::gotGlobAttrWetDry(const AttrWetDry & inAttr) {
-		mObjMain->pAttr.setWetDry(inAttr);
+	void ObjReaderInterpreter::gotGlobAttrWetDry(const AttrWetDry & globAttr) {
+		mObjMain->pAttr.setWetDry(globAttr);
 		++mIOStatistic->pGlobAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotGlobAttrTint(const AttrTint & inAttr) {
-		mObjMain->pAttr.setTint(inAttr);
+	void ObjReaderInterpreter::gotGlobAttrTint(const AttrTint & globAttr) {
+		mObjMain->pAttr.setTint(globAttr);
 		++mIOStatistic->pGlobAttrCount;
 	}
 
@@ -116,13 +116,13 @@ namespace xobj {
 		++mIOStatistic->pGlobAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotGlobAttrBlend(const AttrBlend & inAttr) {
-		mObjMain->pAttr.setBlend(inAttr);
+	void ObjReaderInterpreter::gotGlobAttrBlend(const AttrBlend & globAttr) {
+		mObjMain->pAttr.setBlend(globAttr);
 		++mIOStatistic->pGlobAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotGlobAttrSpecular(const AttrSpecular & inAttr) {
-		mObjMain->pAttr.setSpecular(inAttr);
+	void ObjReaderInterpreter::gotGlobAttrSpecular(const AttrSpecular & globAttr) {
+		mObjMain->pAttr.setSpecular(globAttr);
 		++mIOStatistic->pGlobAttrCount;
 	}
 
@@ -131,8 +131,8 @@ namespace xobj {
 		++mIOStatistic->pGlobAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotGlobAttrLodDraped(const AttrLodDrap & inAttr) {
-		mObjMain->pAttr.setLodDrap(inAttr);
+	void ObjReaderInterpreter::gotGlobAttrLodDraped(const AttrLodDrap & globAttr) {
+		mObjMain->pAttr.setLodDrap(globAttr);
 		++mIOStatistic->pGlobAttrCount;
 	}
 
@@ -151,45 +151,45 @@ namespace xobj {
 		++mIOStatistic->pGlobAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotGlobAttrLayerGroup(const AttrLayerGroup & inAttr) {
-		mObjMain->pAttr.setLayerGroup(inAttr);
+	void ObjReaderInterpreter::gotGlobAttrLayerGroup(const AttrLayerGroup & globAttr) {
+		mObjMain->pAttr.setLayerGroup(globAttr);
 		++mIOStatistic->pGlobAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotGlobAttrSlopeLimit(const AttrSlopeLimit & inAttr) {
-		mObjMain->pAttr.setSlopeLimit(inAttr);
+	void ObjReaderInterpreter::gotGlobAttrSlopeLimit(const AttrSlopeLimit & globAttr) {
+		mObjMain->pAttr.setSlopeLimit(globAttr);
 		++mIOStatistic->pGlobAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotGlobAttrCockpitRegion(const AttrCockpitRegion & inAttr) {
+	void ObjReaderInterpreter::gotGlobAttrCockpitRegion(const AttrCockpitRegion & globAttr) {
 		if (!mObjMain->pAttr.cockpitRegion(AttrCockpitRegion::r1)) {
-			mObjMain->pAttr.setCockpitRegion(inAttr, AttrCockpitRegion::r1);
+			mObjMain->pAttr.setCockpitRegion(globAttr, AttrCockpitRegion::r1);
 			++mIOStatistic->pGlobAttrCount;
 		}
 		else if (!mObjMain->pAttr.cockpitRegion(AttrCockpitRegion::r2)) {
-			mObjMain->pAttr.setCockpitRegion(inAttr, AttrCockpitRegion::r2);
+			mObjMain->pAttr.setCockpitRegion(globAttr, AttrCockpitRegion::r2);
 			++mIOStatistic->pGlobAttrCount;
 		}
 		else if (!mObjMain->pAttr.cockpitRegion(AttrCockpitRegion::r3)) {
-			mObjMain->pAttr.setCockpitRegion(inAttr, AttrCockpitRegion::r3);
+			mObjMain->pAttr.setCockpitRegion(globAttr, AttrCockpitRegion::r3);
 			++mIOStatistic->pGlobAttrCount;
 		}
 		else if (!mObjMain->pAttr.cockpitRegion(AttrCockpitRegion::r4)) {
-			mObjMain->pAttr.setCockpitRegion(inAttr, AttrCockpitRegion::r4);
+			mObjMain->pAttr.setCockpitRegion(globAttr, AttrCockpitRegion::r4);
 			++mIOStatistic->pGlobAttrCount;
 		}
 		else {
-			ULError << "Too many cocpit regions, must be 4 per file.";
+			ULError << "Too many cockpit regions, must be 4 per file.";
 		}
 	}
 
-	void ObjReaderInterpreter::gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & inAttr) {
-		mObjMain->pAttr.setSlungLoadWeight(inAttr);
+	void ObjReaderInterpreter::gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & globAttr) {
+		mObjMain->pAttr.setSlungLoadWeight(globAttr);
 		++mIOStatistic->pGlobAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGroup & inAttr) {
-		mObjMain->pAttr.setLayerGroupDraped(inAttr);
+	void ObjReaderInterpreter::gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGroup & globAttr) {
+		mObjMain->pAttr.setLayerGroupDraped(globAttr);
 		++mIOStatistic->pGlobAttrCount;
 	}
 
@@ -203,11 +203,11 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjReaderInterpreter::gotLod(float inNear, float inFar, const std::string & inEndLineComment) {
+	void ObjReaderInterpreter::gotLod(float near, float far, const std::string & endLineComment) {
 		ObjLodGroup & l = mObjMain->addLod();
-		l.setNearVal(inNear);
-		l.setFarVal(inFar);
-		l.setObjectName(extractComment(inEndLineComment, l.objectName().c_str()));
+		l.setNearVal(near);
+		l.setFarVal(far);
+		l.setObjectName(extractComment(endLineComment, l.objectName().c_str()));
 		mCurrentLod = &l;
 		mCurrentTransform = &l.transform();
 		//mCurrentTransform->pMatrix *= mRootMtx;
@@ -217,71 +217,71 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjReaderInterpreter::gotMeshVertices(const ObjMesh::VertexList & inVertices) {
-		mVertices = inVertices;
+	void ObjReaderInterpreter::gotMeshVertices(const ObjMesh::VertexList & vertices) {
+		mVertices = vertices;
 	}
 
-	void ObjReaderInterpreter::gotMeshFaces(const FaceIndexArray & inIndices) {
-		mIndices = inIndices;
+	void ObjReaderInterpreter::gotMeshFaces(const FaceIndexArray & indices) {
+		mIndices = indices;
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjReaderInterpreter::gotTrisAttrHard(const AttrHard & inAttr) {
-		mCurrentAttrSet.setHard(inAttr);
+	void ObjReaderInterpreter::gotTrisAttrHard(const AttrHard & attr) {
+		mCurrentAttrSet.setHard(attr);
 		++mIOStatistic->pTrisAttrCount;
 	}
 
 	void ObjReaderInterpreter::gotTrisAttrReset() {
 		mCurrentAttrSet.setShiny(AttrShiny());
-		// TODO Reset other light attributes like emission specular etc
+		// TODO Reset other light attributes like emission specular etc...
 		++mIOStatistic->pTrisAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotTrisAttrBlend(const AttrBlend & inAttr) {
-		mCurrentAttrSet.setBlend(inAttr);
+	void ObjReaderInterpreter::gotTrisAttrBlend(const AttrBlend & attr) {
+		mCurrentAttrSet.setBlend(attr);
 		++mIOStatistic->pTrisAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotTrisAttrShadow(bool inState) {
-		mCurrentAttrSet.setCastShadow(inState);
+	void ObjReaderInterpreter::gotTrisAttrShadow(bool state) {
+		mCurrentAttrSet.setCastShadow(state);
 		++mIOStatistic->pTrisAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotTrisAttrDraped(bool inState) {
-		mCurrentAttrSet.setDraped(inState);
+	void ObjReaderInterpreter::gotTrisAttrDraped(bool state) {
+		mCurrentAttrSet.setDraped(state);
 		++mIOStatistic->pTrisAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotTrisAttrCockpit(const AttrCockpit & inAttr) {
-		mCurrentAttrSet.setCockpit(inAttr);
+	void ObjReaderInterpreter::gotTrisAttrCockpit(const AttrCockpit & attr) {
+		mCurrentAttrSet.setCockpit(attr);
 		++mIOStatistic->pTrisAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotTrisAttrPolyOffset(const AttrPolyOffset & inAttr) {
-		mCurrentAttrSet.setPolyOffset(inAttr);
+	void ObjReaderInterpreter::gotTrisAttrPolyOffset(const AttrPolyOffset & attr) {
+		mCurrentAttrSet.setPolyOffset(attr);
 		++mIOStatistic->pTrisAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotTrisAttrShiny(const AttrShiny & inAttr) {
-		mCurrentAttrSet.setShiny(inAttr);
+	void ObjReaderInterpreter::gotTrisAttrShiny(const AttrShiny & attr) {
+		mCurrentAttrSet.setShiny(attr);
 		++mIOStatistic->pTrisAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotTrisAttrLightLevel(const AttrLightLevel & inAttr) {
-		mCurrentAttrSet.setLightLevel(inAttr);
+	void ObjReaderInterpreter::gotTrisAttrLightLevel(const AttrLightLevel & attr) {
+		mCurrentAttrSet.setLightLevel(attr);
 		++mIOStatistic->pTrisAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotTrisAttrDrawEnable(bool inState) {
-		mCurrentAttrSet.setDraw(inState);
+	void ObjReaderInterpreter::gotTrisAttrDrawEnable(bool state) {
+		mCurrentAttrSet.setDraw(state);
 		++mIOStatistic->pTrisAttrCount;
 	}
 
-	void ObjReaderInterpreter::gotTrisAttrSolidCamera(bool inState) {
-		mCurrentAttrSet.setSolidForCamera(inState);
+	void ObjReaderInterpreter::gotTrisAttrSolidCamera(bool state) {
+		mCurrentAttrSet.setSolidForCamera(state);
 		++mIOStatistic->pTrisAttrCount;
 	}
 
@@ -293,7 +293,7 @@ namespace xobj {
 		mCurrentAttrSet.setManipulator(nullptr);
 	}
 
-	void ObjReaderInterpreter::gotTrisAttrManipWheel(const AttrManipWheel & inManip) {
+	void ObjReaderInterpreter::gotTrisAttrManipWheel(const AttrManipWheel & manip) {
 		if (mCurrentAttrSet.manipulator() != nullptr) {
 			const AttrManipWheel * cm = dynamic_cast<const AttrManipWheel *>(mCurrentAttrSet.manipulator());
 			if (!cm) {
@@ -303,7 +303,7 @@ namespace xobj {
 			AttrManipBase * mb = mCurrentAttrSet.manipulator()->clone();
 			AttrManipWheel * mbcm = dynamic_cast<AttrManipWheel *>(mb);
 			assert(mbcm);
-			*mbcm = inManip;
+			*mbcm = manip;
 			mCurrentAttrSet.setManipulator(mb);
 		}
 		else {
@@ -311,9 +311,9 @@ namespace xobj {
 		}
 	}
 
-	void ObjReaderInterpreter::gotTrisAttrManip(const AttrManipBase & inManip) {
+	void ObjReaderInterpreter::gotTrisAttrManip(const AttrManipBase & manip) {
 		if (mCurrentAttrSet.manipulator() != nullptr) {
-			if (inManip.equals(mCurrentAttrSet.manipulator())) {
+			if (manip.equals(mCurrentAttrSet.manipulator())) {
 				return;
 			}
 		}
@@ -321,46 +321,46 @@ namespace xobj {
 		// So equals does not work as expected for this logic.
 		// I don't have a good solution yet.
 		++mIOStatistic->pTrisManipCount;
-		mCurrentAttrSet.setManipulator(inManip.clone());
+		mCurrentAttrSet.setManipulator(manip.clone());
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void ObjReaderInterpreter::gotTris(Index inOffset, Index inCount, const std::string & inEndLineComment) {
+	void ObjReaderInterpreter::gotTris(Index offset, Index count, const std::string & endLineComment) {
 		checkForCreateLod();
 		assert(mCurrentTransform);
 
-		if (inOffset + inCount > mIndices.size()) {
-			throw std::runtime_error(ExcTxt("Incorrect Tris's paramenetrs."));
+		if (offset + count > mIndices.size()) {
+			throw std::runtime_error(ExcTxt("Incorrect Tris's parameters."));
 		}
 
-		if (inCount == 0) {
-			throw std::runtime_error(ExcTxt("The Tris's <count> paramenter is 0."));
+		if (count == 0) {
+			throw std::runtime_error(ExcTxt("The Tris's <count> parameter is 0."));
 		}
 
-		if (inCount % 3) {
-			throw std::runtime_error(ExcTxt("The Tris's <count> paramenter is not a multiple of 3."));
+		if (count % 3) {
+			throw std::runtime_error(ExcTxt("The Tris's <count> parameter is not a multiple of 3."));
 		}
 
-		if (inOffset % 3) {
-			throw std::runtime_error(ExcTxt("The Tris's <offset> paramenter is not a multiple of 3."));
+		if (offset % 3) {
+			throw std::runtime_error(ExcTxt("The Tris's <offset> parameter is not a multiple of 3."));
 		}
 
 		//--------------------------
 
-		ObjMesh::FaceList flist(inCount / 3);
+		ObjMesh::FaceList flist(count / 3);
 		size_t min = std::numeric_limits<size_t>::max();
 		size_t max = std::numeric_limits<size_t>::min();
 
 		// indices to faces and min/max vertex id
-		for (FaceIndex i = 0, idx = 0; i < inCount; i += 3) {
+		for (FaceIndex i = 0, idx = 0; i < count; i += 3) {
 			ObjMesh::Face & face = flist.at(idx++);
 
-			face.pV0 = mIndices.at(inOffset + i);
-			face.pV1 = mIndices.at(inOffset + i + 1);
-			face.pV2 = mIndices.at(inOffset + i + 2);
+			face.pV0 = mIndices.at(offset + i);
+			face.pV1 = mIndices.at(offset + i + 1);
+			face.pV2 = mIndices.at(offset + i + 2);
 
 			min = std::min(min, face.pV0);
 			min = std::min(min, face.pV1);
@@ -380,7 +380,7 @@ namespace xobj {
 
 		ObjMesh::VertexList vlist((max - min) + 1);
 
-		// make vertex arrray and fix vertex id of the faces
+		// make vertex array and fix vertex id of the faces
 		for (auto & face : flist) {
 			face.pV0 -= min;
 			face.pV1 -= min;
@@ -400,7 +400,7 @@ namespace xobj {
 		ObjMesh * mesh = new ObjMesh;
 		mesh->pFaces.swap(flist);
 		mesh->pVertices.swap(vlist);
-		mesh->setObjectName(extractComment(inEndLineComment, mesh->objectName().c_str()));
+		mesh->setObjectName(extractComment(endLineComment, mesh->objectName().c_str()));
 		mesh->pAttr = mCurrentAttrSet;
 
 		//--------------------------
@@ -434,43 +434,43 @@ namespace xobj {
 		mCurrentTransform = static_cast<Transform *>(mCurrentTransform->parent());
 	}
 
-	void ObjReaderInterpreter::gotAnimHide(const AnimVisibility::Key & InKey) {
+	void ObjReaderInterpreter::gotAnimHide(const AnimVisibility::Key & key) {
 		checkForCreateLod();
-		assert(InKey.pType == AnimVisibility::Key::HIDE);
+		assert(key.pType == AnimVisibility::Key::HIDE);
 		if (mCurrentTransform) {
-			mCurrentTransform->pAnimVis.pKeys.emplace_back(InKey);
+			mCurrentTransform->pAnimVis.pKeys.emplace_back(key);
 		}
 	}
 
-	void ObjReaderInterpreter::gotAnimShow(const AnimVisibility::Key & InKey) {
+	void ObjReaderInterpreter::gotAnimShow(const AnimVisibility::Key & key) {
 		checkForCreateLod();
-		assert(InKey.pType == AnimVisibility::Key::SHOW);
+		assert(key.pType == AnimVisibility::Key::SHOW);
 		if (mCurrentTransform) {
-			mCurrentTransform->pAnimVis.pKeys.emplace_back(InKey);
+			mCurrentTransform->pAnimVis.pKeys.emplace_back(key);
 		}
 	}
 
-	void ObjReaderInterpreter::gotTranslateAnim(AnimTrans::KeyList & inKeys, std::string & inDataref,
+	void ObjReaderInterpreter::gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
 												bool hasLoop, float loopVal) {
 		checkForCreateLod();
 		if (mCurrentTransform) {
 			mCurrentTransform->pAnimTrans.emplace_back();
 			AnimTrans & anim = mCurrentTransform->pAnimTrans.back();
-			anim.pKeys.swap(inKeys);
-			anim.pDrf = inDataref;
+			anim.pKeys.swap(key);
+			anim.pDrf = dataref;
 			anim.pHasLoop = hasLoop;
 			anim.pLoopValue = loopVal;
 		}
 	}
 
-	void ObjReaderInterpreter::gotRotateAnim(AnimRotate::KeyList & inKeys, float ( & inVector)[3], std::string & inDataref,
+	void ObjReaderInterpreter::gotRotateAnim(AnimRotate::KeyList & key, float ( & inVector)[3], std::string & dataref,
 											bool hasLoop, float loopVal) {
 		checkForCreateLod();
 		if (mCurrentTransform) {
 			mCurrentTransform->pAnimRotate.emplace_back();
 			AnimRotate & anim = mCurrentTransform->pAnimRotate.back();
-			anim.pKeys.swap(inKeys);
-			anim.pDrf = inDataref;
+			anim.pKeys.swap(key);
+			anim.pDrf = dataref;
 			anim.pVector.set(inVector[0], inVector[1], inVector[2]);
 			anim.pHasLoop = hasLoop;
 			anim.pLoopValue = loopVal;

@@ -37,13 +37,14 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	ObjReadParser::ObjReadParser(const std::string & inFilePath)
+	ObjReadParser::ObjReadParser(const std::string & filePath)
 		: mMemCurr(nullptr),
 		mMemStart(nullptr),
 		mMemEnd(nullptr) {
 
-		if (!inFilePath.empty())
-			readFile(inFilePath);
+		if (!filePath.empty()) {
+			readFile(filePath);
+		}
 	}
 
 	ObjReadParser::~ObjReadParser() {
@@ -54,15 +55,15 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool ObjReadParser::readFile(const std::string & inFilePath) {
+	bool ObjReadParser::readFile(const std::string & filePath) {
 		close();
-		FILE * file = fopen(inFilePath.data(), "rb");
+		FILE * file = fopen(filePath.data(), "rb");
 		if (!file) {
-			ULError << "File <" << inFilePath.data() << "> could not be read!";
+			ULError << "File <" << filePath.data() << "> could not be read!";
 			return false;
 		}
 
-		unsigned filesize = fileSize(file);
+		const unsigned filesize = fileSize(file);
 
 		mMemStart = static_cast<uint8_t *>(malloc(filesize));
 		if (mMemStart == nullptr) {
@@ -91,10 +92,10 @@ namespace xobj {
 		}
 	}
 
-	unsigned ObjReadParser::fileSize(FILE * inFile) {
-		fseek(inFile, 0L, SEEK_END);
-		unsigned filesize = static_cast<unsigned>(ftell(inFile));
-		fseek(inFile, 0L, SEEK_SET);
+	unsigned ObjReadParser::fileSize(FILE * file) {
+		fseek(file, 0L, SEEK_END);
+		unsigned filesize = static_cast<unsigned>(ftell(file));
+		fseek(file, 0L, SEEK_SET);
 		return unsigned(filesize);
 	}
 

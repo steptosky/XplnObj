@@ -54,7 +54,7 @@ TEST(TestTransformCommon, anim_enabled) {
 	ASSERT_FALSE(lod.transform().hasAnimVis());
 
 	//--------------------
-	// transalte
+	// translate
 
 	lod.transform().pAnimTrans.emplace_back();
 	AnimTrans & animTrans = lod.transform().pAnimTrans.back();
@@ -131,7 +131,7 @@ TEST(TestTransformCommon, apliing_root_transformation) {
 	// check results
 
 	std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh"));
-	meshTarget1->applyTransform(transformOut1.pMatrix);
+	meshTarget1->applyTransform(transformOut1.pMatrix, false);
 	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
 }
 

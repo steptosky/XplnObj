@@ -29,6 +29,7 @@
 
 #pragma once
 
+#include <string>
 #include "xpln/enums/ECursor.h"
 #include "xpln/enums/EManipulator.h"
 
@@ -45,7 +46,7 @@ namespace xobj {
 	class AttrManipBase {
 	protected:
 
-		XpObjLib explicit AttrManipBase(EManipulator inType);
+		XpObjLib explicit AttrManipBase(EManipulator type);
 
 	public:
 
@@ -59,8 +60,8 @@ namespace xobj {
 
 		//-------------------------------------------------------------------------
 
-		XpObjLib virtual void setToolTip(const std::string & inToolTip);
-		XpObjLib virtual void setCursor(ECursor inCursor);
+		XpObjLib virtual void setToolTip(const std::string & toolTip);
+		XpObjLib virtual void setCursor(ECursor cursor);
 
 		XpObjLib virtual const std::string & toolTip() const;
 		XpObjLib virtual ECursor cursor() const;
@@ -68,10 +69,10 @@ namespace xobj {
 		//-------------------------------------------------------------------------
 
 		/*!
-		 * \param [in] inMainp
+		 * \param [in] manip
 		 * \return true if two manipulators are equaled otherwise false.
 		 */
-		XpObjLib virtual bool equals(const AttrManipBase * inMainp) const;
+		XpObjLib virtual bool equals(const AttrManipBase * manip) const;
 
 		XpObjLib virtual AttrManipBase * clone() const = 0;
 

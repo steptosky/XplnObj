@@ -47,21 +47,21 @@ namespace xobj {
 	}
 
 	const AttrCockpit & AttrManipPanel::cockpit() const {
-		return mAttrCockpit;;
+		return mAttrCockpit;
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool AttrManipPanel::equals(const AttrManipBase * inMainp) const {
-		if (!inMainp)
+	bool AttrManipPanel::equals(const AttrManipBase * manip) const {
+		if (!manip)
 			return false;
 
-		if (!AttrManipBase::equals(inMainp))
+		if (!AttrManipBase::equals(manip))
 			return false;
 
-		return dynamic_cast<const AttrManipPanel*>(inMainp) != nullptr;
+		return dynamic_cast<const AttrManipPanel*>(manip) != nullptr;
 	}
 
 	AttrManipBase * AttrManipPanel::clone() const {

@@ -36,9 +36,9 @@ namespace xobj {
 	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 	/**************************************************************************************************/
 
-	AttrLayerGroup::AttrLayerGroup(ELayer inLayer, int32_t inOffset)
-		: mOffset(static_cast<uint8_t>(inOffset)),
-		mLayer(inLayer),
+	AttrLayerGroup::AttrLayerGroup(ELayer layer, int32_t offset)
+		: mOffset(static_cast<uint8_t>(offset)),
+		mLayer(layer),
 		mIsEnabled(true) { }
 
 	AttrLayerGroup::AttrLayerGroup()
@@ -54,28 +54,28 @@ namespace xobj {
 		return mIsEnabled;
 	}
 
-	void AttrLayerGroup::setEnabled(bool inState) {
-		mIsEnabled = inState;
+	void AttrLayerGroup::setEnabled(bool state) {
+		mIsEnabled = state;
 	}
 
-	bool AttrLayerGroup::operator==(const AttrLayerGroup & inRight) const {
-		return (mIsEnabled == inRight.mIsEnabled &&
-				mOffset == inRight.mOffset &&
-				mLayer == inRight.mLayer);
+	bool AttrLayerGroup::operator==(const AttrLayerGroup & other) const {
+		return (mIsEnabled == other.mIsEnabled &&
+				mOffset == other.mOffset &&
+				mLayer == other.mLayer);
 	}
 
-	bool AttrLayerGroup::operator!=(const AttrLayerGroup & inRight) const {
-		return !operator==(inRight);
+	bool AttrLayerGroup::operator!=(const AttrLayerGroup & other) const {
+		return !operator==(other);
 	}
 
 	/**************************************************************************************************/
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	void AttrLayerGroup::setOffset(int32_t inOffset) {
-		inOffset = std::min(inOffset, 5);
-		inOffset = std::max(inOffset, -5);
-		mOffset = static_cast<int8_t>(inOffset);
+	void AttrLayerGroup::setOffset(int32_t offset) {
+		offset = std::min(offset, 5);
+		offset = std::max(offset, -5);
+		mOffset = static_cast<int8_t>(offset);
 		mIsEnabled = true;
 	}
 
@@ -83,8 +83,8 @@ namespace xobj {
 		return static_cast<int32_t>(mOffset);
 	}
 
-	void AttrLayerGroup::setLayer(ELayer inLayer) {
-		mLayer = inLayer;
+	void AttrLayerGroup::setLayer(ELayer layer) {
+		mLayer = layer;
 		mIsEnabled = true;
 	}
 

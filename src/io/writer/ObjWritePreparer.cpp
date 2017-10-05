@@ -47,7 +47,7 @@ namespace xobj {
 			if (!checkParameters(lod, lod.objectName())) {
 				return false;
 			}
-			if (!proccessTransform(rootTransform)) {
+			if (!proccessTransform(rootTransform, i, lod)) {
 				return false;
 			}
 		}
@@ -58,20 +58,20 @@ namespace xobj {
 	///////////////////////////////////////////* Functions *////////////////////////////////////////////
 	/**************************************************************************************************/
 
-	bool ObjWritePreparer::proccessTransform(Transform & transform) {
+	bool ObjWritePreparer::proccessTransform(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod) {
 		if (!checkParameters(transform, transform.name())) {
 			return false;
 		}
 
-		if (!proccessObjects(transform)) {
+		if (!proccessObjects(transform, lodNumber, lod)) {
 			return false;
 		}
 		//-------------------------------------------------------------------------
 		// children
 
-		Transform::TransformIndex chCount = transform.childrenCount();
+		const Transform::TransformIndex chCount = transform.childrenCount();
 		for (Transform::TransformIndex i = 0; i < chCount; ++i) {
-			if (!proccessTransform(*static_cast<Transform*>(transform.childAt(i)))) {
+			if (!proccessTransform(*static_cast<Transform*>(transform.childAt(i)), lodNumber, lod)) {
 				return false;
 			}
 		}
@@ -80,10 +80,13 @@ namespace xobj {
 		return true;
 	}
 
-	bool ObjWritePreparer::proccessObjects(Transform & transform) {
+	bool ObjWritePreparer::proccessObjects(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod) {
 		Transform::ObjList objToDelete;
 		for (auto & curr : transform.objList()) {
 			if (!checkParameters(*curr, curr->objectName())) {
+				objToDelete.emplace_back(curr);
+			}
+			else if (lodNumber > 0 && findHardPolygons(*curr, lod.objectName())) {
 				objToDelete.emplace_back(curr);
 			}
 			else {

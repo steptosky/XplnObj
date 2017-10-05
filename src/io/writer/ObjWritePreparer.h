@@ -48,8 +48,8 @@ namespace xobj {
 
 	private:
 
-		static bool proccessTransform(Transform & transform);
-		static bool proccessObjects(Transform & transform);
+		static bool proccessTransform(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod);
+		static bool proccessObjects(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod);
 
 		static void checkForTwoSided(ObjAbstract & obj);
 

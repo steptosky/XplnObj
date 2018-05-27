@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -61,8 +61,11 @@ class AttrManipAxisKnob;
 class AttrManipAxisSwitchLeftRight;
 class AttrManipAxisSwitchUpDown;
 class AttrManipCmdKnob;
+class AttrManipCmdKnob2;
 class AttrManipCmdSwitchLeftRight;
+class AttrManipCmdSwitchLeftRight2;
 class AttrManipCmdSwitchUpDown;
+class AttrManipCmdSwitchUpDown2;
 class AttrManipWheel;
 
 /**************************************************************************************************/
@@ -77,8 +80,11 @@ XpObjLib std::string toObjString(const AttrManipAxisSwitchUpDown & manip);
 XpObjLib std::string toObjString(const AttrManipCmd & manip);
 XpObjLib std::string toObjString(const AttrManipCmdAxis & manip);
 XpObjLib std::string toObjString(const AttrManipCmdKnob & manip);
+XpObjLib std::string toObjString(const AttrManipCmdKnob2 & manip);
 XpObjLib std::string toObjString(const AttrManipCmdSwitchLeftRight & manip);
+XpObjLib std::string toObjString(const AttrManipCmdSwitchLeftRight2 & manip);
 XpObjLib std::string toObjString(const AttrManipCmdSwitchUpDown & manip);
+XpObjLib std::string toObjString(const AttrManipCmdSwitchUpDown2 & manip);
 XpObjLib std::string toObjString(const AttrManipDelta & manip);
 XpObjLib std::string toObjString(const AttrManipDragAxis & manip);
 XpObjLib std::string toObjString(const AttrManipDragAxisPix & manip);

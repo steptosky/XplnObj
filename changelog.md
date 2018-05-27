@@ -1,6 +1,16 @@
 
 X-Plane Obj Library
 ---------------------------------------------------------------------------
+#### next
+
+- **Added:** New manipulators:
+             ATTR_manip_command_switch_left_right2
+             ATTR_manip_command_switch_up_down2 
+             ATTR_manip_command_knob2
+- **Fixed:** Incorrect attribute name inside .obj for the
+             ATTR_manip_command_switch_up_down and ATTR_manip_command_switch_left_right.
+
+---------------------------------------------------------------------------
 #### 0.5.0-beta (05.10.2017)
 
 - **Added:** Error if any LOD except the first one contains hard polygons.

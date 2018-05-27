@@ -1,5 +1,5 @@
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -39,6 +39,15 @@
 #include "xpln/obj/attributes/AttrLayerGroup.h"
 #include "xpln/obj/attributes/AttrLightLevel.h"
 #include "xpln/obj/attributes/AttrLodDrap.h"
+#include "xpln/obj/attributes/AttrPolyOffset.h"
+#include "xpln/obj/attributes/AttrShiny.h"
+#include "xpln/obj/attributes/AttrSlopeLimit.h"
+#include "xpln/obj/attributes/AttrSlungLoadWeight.h"
+#include "xpln/obj/attributes/AttrSpecular.h"
+#include "xpln/obj/attributes/AttrTint.h"
+#include "xpln/obj/attributes/AttrWetDry.h"
+#include "xpln/obj/attributes/AttrCockpitRegion.h"
+#include "xpln/obj/attributes/AttrCockpit.h"
 #include "xpln/obj/manipulators/AttrManipCmd.h"
 #include "xpln/obj/manipulators/AttrManipCmdAxis.h"
 #include "xpln/obj/manipulators/AttrManipDelta.h"
@@ -50,20 +59,14 @@
 #include "xpln/obj/manipulators/AttrManipRadio.h"
 #include "xpln/obj/manipulators/AttrManipToggle.h"
 #include "xpln/obj/manipulators/AttrManipWrap.h"
-#include "xpln/obj/attributes/AttrPolyOffset.h"
-#include "xpln/obj/attributes/AttrShiny.h"
-#include "xpln/obj/attributes/AttrSlopeLimit.h"
-#include "xpln/obj/attributes/AttrSlungLoadWeight.h"
-#include "xpln/obj/attributes/AttrSpecular.h"
-#include "xpln/obj/attributes/AttrTint.h"
-#include "xpln/obj/attributes/AttrWetDry.h"
-#include "xpln/obj/attributes/AttrCockpitRegion.h"
-#include "xpln/obj/attributes/AttrCockpit.h"
 #include "xpln/obj/manipulators/AttrManipCmdKnob.h"
+#include "xpln/obj/manipulators/AttrManipCmdKnob2.h"
 #include "xpln/obj/manipulators/AttrManipAxisSwitchLeftRight.h"
 #include "xpln/obj/manipulators/AttrManipAxisSwitchUpDown.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchLeftRight.h"
+#include "xpln/obj/manipulators/AttrManipCmdSwitchLeftRight2.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown.h"
+#include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown2.h"
 #include "xpln/obj/manipulators/AttrManipAxisKnob.h"
 
 namespace xobj {
@@ -693,7 +696,18 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         mObjParserListener->gotTrisAttrManip(m);
         return true;
     }
-    if (parser.isMatch(ATTR_MANIP_SWITCH_LEFT_RIGHT)) {
+	if (parser.isMatch(ATTR_MANIP_COMMAND_KNOB2)) {
+		AttrManipCmdKnob2 m;
+		parser.skipSpace();
+		m.setCursor(ECursor::fromString(parser.extractWord().c_str()));
+		parser.skipSpace();
+		m.setCmd(parser.extractWord());
+		parser.skipSpace();
+		m.setToolTip(parser.extractWord());
+		mObjParserListener->gotTrisAttrManip(m);
+		return true;
+	}
+    if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT)) {
         AttrManipCmdSwitchLeftRight m;
         parser.skipSpace();
         m.setCursor(ECursor::fromString(parser.extractWord().c_str()));
@@ -706,7 +720,18 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         mObjParserListener->gotTrisAttrManip(m);
         return true;
     }
-    if (parser.isMatch(ATTR_MANIP_SWITCH_UP_DOWN)) {
+	if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2)) {
+		AttrManipCmdSwitchLeftRight2 m;
+		parser.skipSpace();
+		m.setCursor(ECursor::fromString(parser.extractWord().c_str()));
+		parser.skipSpace();
+		m.setCmd(parser.extractWord());
+		parser.skipSpace();
+		m.setToolTip(parser.extractWord());
+		mObjParserListener->gotTrisAttrManip(m);
+		return true;
+	}
+    if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN)) {
         AttrManipCmdSwitchUpDown m;
         parser.skipSpace();
         m.setCursor(ECursor::fromString(parser.extractWord().c_str()));
@@ -719,6 +744,17 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         mObjParserListener->gotTrisAttrManip(m);
         return true;
     }
+	if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2)) {
+		AttrManipCmdSwitchUpDown2 m;
+		parser.skipSpace();
+		m.setCursor(ECursor::fromString(parser.extractWord().c_str()));
+		parser.skipSpace();
+		m.setCmd(parser.extractWord());
+		parser.skipSpace();
+		m.setToolTip(parser.extractWord());
+		mObjParserListener->gotTrisAttrManip(m);
+		return true;
+	}
     if (parser.isMatch(ATTR_MANIP_DELTA)) {
         AttrManipDelta m;
         parser.skipSpace();

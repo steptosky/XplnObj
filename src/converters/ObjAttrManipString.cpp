@@ -1,5 +1,5 @@
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -44,8 +44,11 @@
 #include "xpln/obj/manipulators/AttrManipAxisSwitchLeftRight.h"
 #include "xpln/obj/manipulators/AttrManipAxisSwitchUpDown.h"
 #include "xpln/obj/manipulators/AttrManipCmdKnob.h"
+#include "xpln/obj/manipulators/AttrManipCmdKnob2.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchLeftRight.h"
+#include "xpln/obj/manipulators/AttrManipCmdSwitchLeftRight2.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown.h"
+#include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown2.h"
 #include "xpln/obj/manipulators/AttrManipNone.h"
 #include "StringStream.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
@@ -72,10 +75,16 @@ std::string toObjString(const AttrManipBase * manip) {
             return toObjString(*static_cast<const AttrManipCmdAxis*>(manip));
         case EManipulator::command_knob:
             return toObjString(*static_cast<const AttrManipCmdKnob*>(manip));
+        case EManipulator::command_knob2:
+            return toObjString(*static_cast<const AttrManipCmdKnob2*>(manip));
         case EManipulator::command_switch_lr:
             return toObjString(*static_cast<const AttrManipCmdSwitchLeftRight*>(manip));
+        case EManipulator::command_switch_lr2:
+            return toObjString(*static_cast<const AttrManipCmdSwitchLeftRight2*>(manip));
         case EManipulator::command_switch_ud:
             return toObjString(*static_cast<const AttrManipCmdSwitchUpDown*>(manip));
+        case EManipulator::command_switch_ud2:
+            return toObjString(*static_cast<const AttrManipCmdSwitchUpDown2*>(manip));
         case EManipulator::eId::delta:
             return toObjString(*static_cast<const AttrManipDelta*>(manip));
         case EManipulator::eId::drag_axis:
@@ -178,9 +187,18 @@ std::string toObjString(const AttrManipCmdKnob & manip) {
     return outStr.str();
 }
 
+std::string toObjString(const AttrManipCmdKnob2 & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_KNOB2;
+    outStr << " " << manip.cursor().toString();
+    outStr << " " << manip.cmd();
+    outStr << " " << manip.toolTip();
+    return outStr.str();
+}
+
 std::string toObjString(const AttrManipCmdSwitchLeftRight & manip) {
     StringStream outStr;
-    outStr << ATTR_MANIP_SWITCH_LEFT_RIGHT;
+    outStr << ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT;
     outStr << " " << manip.cursor().toString();
     outStr << " " << manip.cmdPositive();
     outStr << " " << manip.cmdNegative();
@@ -188,12 +206,30 @@ std::string toObjString(const AttrManipCmdSwitchLeftRight & manip) {
     return outStr.str();
 }
 
+std::string toObjString(const AttrManipCmdSwitchLeftRight2 & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2;
+    outStr << " " << manip.cursor().toString();
+    outStr << " " << manip.cmd();
+    outStr << " " << manip.toolTip();
+    return outStr.str();
+}
+
 std::string toObjString(const AttrManipCmdSwitchUpDown & manip) {
     StringStream outStr;
-    outStr << ATTR_MANIP_SWITCH_UP_DOWN;
+    outStr << ATTR_MANIP_COMMAND_SWITCH_UP_DOWN;
     outStr << " " << manip.cursor().toString();
     outStr << " " << manip.cmdPositive();
     outStr << " " << manip.cmdNegative();
+    outStr << " " << manip.toolTip();
+    return outStr.str();
+}
+
+std::string toObjString(const AttrManipCmdSwitchUpDown2 & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2;
+    outStr << " " << manip.cursor().toString();
+    outStr << " " << manip.cmd();
     outStr << " " << manip.toolTip();
     return outStr.str();
 }

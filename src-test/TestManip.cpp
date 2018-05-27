@@ -1,5 +1,5 @@
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -46,8 +46,11 @@
 #include <xpln/obj/manipulators/AttrManipAxisSwitchUpDown.h>
 #include <xpln/obj/manipulators/AttrManipAxisSwitchLeftRight.h>
 #include <xpln/obj/manipulators/AttrManipCmdKnob.h>
+#include <xpln/obj/manipulators/AttrManipCmdKnob2.h>
 #include <xpln/obj/manipulators/AttrManipCmdSwitchLeftRight.h>
+#include <xpln/obj/manipulators/AttrManipCmdSwitchLeftRight2.h>
 #include <xpln/obj/manipulators/AttrManipCmdSwitchUpDown.h>
+#include <xpln/obj/manipulators/AttrManipCmdSwitchUpDown2.h>
 #include <xpln/obj/manipulators/AttrManipNone.h>
 #include <converters/Defines.h>
 #include <sts/string/StringUtils.h>
@@ -278,6 +281,25 @@ TEST(TestManip, AttrManipCmdKnob) {
 
 //-------------------------------------------------------------------------
 
+TEST(TestManip, AttrManipCmdKnob2) {
+	AttrManipCmdKnob2 manip;
+	ECursor cursor(ECursor::eId::hand);
+	manip.setCursor(cursor);
+	manip.setToolTip("ToolTip");
+
+	manip.setCmd("command");
+
+	ASSERT_STREQ(std::string("ATTR_manip_command_knob2 ").append(cursor.toString())
+				 .append(" command ToolTip").c_str(),
+				 toObjString(&manip).c_str());
+
+	// getters
+	ASSERT_STREQ("command", manip.cmd().c_str());
+	ASSERT_EQ(EManipulator(EManipulator::command_knob2), manip.type());
+}
+
+//-------------------------------------------------------------------------
+
 TEST(TestManip, AttrManipCmdSwitchLeftRight) {
     AttrManipCmdSwitchLeftRight manip;
     ECursor cursor(ECursor::eId::hand);
@@ -287,7 +309,7 @@ TEST(TestManip, AttrManipCmdSwitchLeftRight) {
     manip.setCmdPositive("pcommand");
     manip.setCmdNegative("ncommand");
 
-    ASSERT_STREQ(std::string("ATTR_manip_switch_left_right ").append(cursor.toString())
+    ASSERT_STREQ(std::string("ATTR_manip_command_switch_left_right ").append(cursor.toString())
         .append(" pcommand ncommand ToolTip").c_str(),
         toObjString(&manip).c_str());
 
@@ -296,6 +318,25 @@ TEST(TestManip, AttrManipCmdSwitchLeftRight) {
     ASSERT_STREQ("ncommand", manip.cmdNegative().c_str());
 
     ASSERT_EQ(EManipulator(EManipulator::command_switch_lr), manip.type());
+}
+
+//-------------------------------------------------------------------------
+
+TEST(TestManip, AttrManipCmdSwitchLeftRight2) {
+	AttrManipCmdSwitchLeftRight2 manip;
+	ECursor cursor(ECursor::eId::hand);
+	manip.setCursor(cursor);
+	manip.setToolTip("ToolTip");
+
+	manip.setCmd("command");
+
+	ASSERT_STREQ(std::string("ATTR_manip_command_switch_left_right2 ").append(cursor.toString())
+				 .append(" command ToolTip").c_str(),
+				 toObjString(&manip).c_str());
+
+	// getters
+	ASSERT_STREQ("command", manip.cmd().c_str());
+	ASSERT_EQ(EManipulator(EManipulator::command_switch_lr2), manip.type());
 }
 
 //-------------------------------------------------------------------------
@@ -309,7 +350,7 @@ TEST(TestManip, AttrManipCmdSwitchUpDown) {
     manip.setCmdPositive("pcommand");
     manip.setCmdNegative("ncommand");
 
-    ASSERT_STREQ(std::string("ATTR_manip_switch_up_down ").append(cursor.toString())
+    ASSERT_STREQ(std::string("ATTR_manip_command_switch_up_down ").append(cursor.toString())
         .append(" pcommand ncommand ToolTip").c_str(),
         toObjString(&manip).c_str());
 
@@ -318,6 +359,25 @@ TEST(TestManip, AttrManipCmdSwitchUpDown) {
     ASSERT_STREQ("ncommand", manip.cmdNegative().c_str());
 
     ASSERT_EQ(EManipulator(EManipulator::command_switch_ud), manip.type());
+}
+
+//-------------------------------------------------------------------------
+
+TEST(TestManip, AttrManipCmdSwitchUpDown2) {
+	AttrManipCmdSwitchUpDown2 manip;
+	ECursor cursor(ECursor::eId::hand);
+	manip.setCursor(cursor);
+	manip.setToolTip("ToolTip");
+
+	manip.setCmd("command");
+
+	ASSERT_STREQ(std::string("ATTR_manip_command_switch_up_down2 ").append(cursor.toString())
+				 .append(" command ToolTip").c_str(),
+				 toObjString(&manip).c_str());
+
+	// getters
+	ASSERT_STREQ("command", manip.cmd().c_str());
+	ASSERT_EQ(EManipulator(EManipulator::command_switch_ud2), manip.type());
 }
 
 //-------------------------------------------------------------------------

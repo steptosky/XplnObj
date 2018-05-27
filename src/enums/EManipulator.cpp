@@ -1,5 +1,5 @@
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -67,19 +67,22 @@ namespace EManipulatorData {
         /* 03 */ Data(ATTR_MANIP_AXIS_SWITCH_UP_DOWN, "Axis switch up-down", EManipulator::axis_switch_ud),
         /* 04 */ Data(ATTR_MANIP_COMMAND, "Command", EManipulator::command),
         /* 02 */ Data(ATTR_MANIP_COMMAND_AXIS, "Command axis", EManipulator::command_axis),
-        /* 06 */ Data(ATTR_MANIP_COMMAND_KNOB, "Command knob", EManipulator::command_knob),
-        /* 07 */ Data(ATTR_MANIP_SWITCH_LEFT_RIGHT, "Command switch left-right", EManipulator::command_switch_lr),
-        /* 08 */ Data(ATTR_MANIP_SWITCH_UP_DOWN, "Command switch up-down", EManipulator::command_switch_ud),
-        /* 09 */ Data(ATTR_MANIP_DELTA, "Delta", EManipulator::delta),
-        /* 10 */ Data(ATTR_MANIP_DRAG_AXIS, "Drag axis", EManipulator::drag_axis),
-        /* 11 */ Data(ATTR_MANIP_DRAG_AXIS_PIX, "Drag axis pix", EManipulator::drag_axis_pix),
-        /* 12 */ Data(ATTR_MANIP_DRAG_XY, "Drag xy", EManipulator::drag_xy),
-        /* 13 */ Data(ATTR_MANIP_NOOP, "Noop", EManipulator::noop),
-        /* 14 */ Data("manip_panel_click", "Panel-Click", EManipulator::panel),
-        /* 15 */ Data(ATTR_MANIP_PUSH, "Push", EManipulator::push),
-        /* 16 */ Data(ATTR_MANIP_RADIO, "Radio", EManipulator::radio),
-        /* 17 */ Data(ATTR_MANIP_TOGGLE, "Toggle", EManipulator::toggle),
-        /* 18 */ Data(ATTR_MANIP_WRAP, "Wrap", EManipulator::wrap),
+        /* 06 */ Data(ATTR_MANIP_COMMAND_KNOB, "Command knob", EManipulator::command_knob2),
+        /* 07 */ Data(ATTR_MANIP_COMMAND_KNOB2, "Command knob VR compatible", EManipulator::command_knob),
+        /* 08 */ Data(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT, "Command switch left-right", EManipulator::command_switch_lr),
+        /* 09 */ Data(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN, "Command switch up-down", EManipulator::command_switch_ud),
+        /* 10 */ Data(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2, "Command switch left-right VR compatible", EManipulator::command_switch_lr2),
+        /* 11 */ Data(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2, "Command switch up-down VR compatible", EManipulator::command_switch_ud2),
+        /* 12 */ Data(ATTR_MANIP_DELTA, "Delta", EManipulator::delta),
+        /* 13 */ Data(ATTR_MANIP_DRAG_AXIS, "Drag axis", EManipulator::drag_axis),
+        /* 14 */ Data(ATTR_MANIP_DRAG_AXIS_PIX, "Drag axis pix", EManipulator::drag_axis_pix),
+        /* 15 */ Data(ATTR_MANIP_DRAG_XY, "Drag xy", EManipulator::drag_xy),
+        /* 16 */ Data(ATTR_MANIP_NOOP, "Noop", EManipulator::noop),
+        /* 17 */ Data("manip_panel_click", "Panel-Click", EManipulator::panel),
+        /* 18 */ Data(ATTR_MANIP_PUSH, "Push", EManipulator::push),
+        /* 19 */ Data(ATTR_MANIP_RADIO, "Radio", EManipulator::radio),
+        /* 20 */ Data(ATTR_MANIP_TOGGLE, "Toggle", EManipulator::toggle),
+        /* 21 */ Data(ATTR_MANIP_WRAP, "Wrap", EManipulator::wrap),
     };
 }
 

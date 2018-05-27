@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -103,7 +103,7 @@
 #define ATTR_LIGHT_LEVEL_RESET "ATTR_light_level_reset"
 #define ATTR_RESET "ATTR_reset"
 
-// use these only for reading because these are depricated and should not be used for export
+// use these only for reading because these are deprecated and should not be used for export
 #define ATTR_AMBIENT_RGB "ATTR_ambient_rgb" // deprecated and ignored
 #define ATTR_SPECULAR_RGB "ATTR_specular_rgb" // deprecated and ignored
 #define ATTR_EMISSION_RGB "ATTR_emission_rgb"
@@ -129,11 +129,14 @@
 #define ATTR_MANIP_DRAG_AXIS "ATTR_manip_drag_axis"
 #define ATTR_MANIP_COMMAND_AXIS "ATTR_manip_command_axis"
 #define ATTR_MANIP_COMMAND_KNOB "ATTR_manip_command_knob"
+#define ATTR_MANIP_COMMAND_KNOB2 "ATTR_manip_command_knob2"
 #define ATTR_MANIP_DRAG_AXIS_PIX "ATTR_manip_drag_axis_pix"
-#define ATTR_MANIP_SWITCH_UP_DOWN "ATTR_manip_switch_up_down"
-#define ATTR_MANIP_SWITCH_LEFT_RIGHT "ATTR_manip_switch_left_right"
 #define ATTR_MANIP_AXIS_SWITCH_UP_DOWN "ATTR_manip_axis_switch_up_down"
 #define ATTR_MANIP_AXIS_SWITCH_LEFT_RIGHT "ATTR_manip_axis_switch_left_right"
+#define ATTR_MANIP_COMMAND_SWITCH_UP_DOWN "ATTR_manip_command_switch_up_down"
+#define ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2 "ATTR_manip_command_switch_up_down2"
+#define ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT "ATTR_manip_command_switch_left_right"
+#define ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2 "ATTR_manip_command_switch_left_right2"
 
 // animation
 #define ATTR_TRANS "ANIM_trans"

@@ -66,11 +66,12 @@ public:
     size_t pDummyObjCount;          //!< Dummy objects count
     size_t pSmokeObjCount;          //!< Dummy objects count
 
-    size_t pGlobAttrCount;  //!< Global attributes count
-    size_t pTrisManipCount; //!< Object manipulators count
-    size_t pTrisAttrCount;  //!< Object attributes count
+    size_t pCustomLinesCount; //!< Count of lines that are printed before and after objects.
+    size_t pGlobAttrCount;    //!< Global attributes count
+    size_t pTrisManipCount;   //!< Object manipulators count
+    size_t pTrisAttrCount;    //!< Object attributes count
 
-    size_t pAnimAttrCount; //!< Animations rotation count
+    size_t pAnimAttrCount;
 
     //------------------------------------------------------------
 

@@ -1,6 +1,14 @@
 
 X-Plane Obj Library
 ---------------------------------------------------------------------------
+#### next
+
+- **Added:** Ability to specifying strings that are printed before and after object.
+             This allows you to use new attributes manually until
+             it is supported by the library or writing notes.
+             This can be applied to any object types.             
+
+---------------------------------------------------------------------------
 #### 0.5.0-beta (05.10.2017)
 
 - **Added:** Error if any LOD except the first one contains hard polygons.

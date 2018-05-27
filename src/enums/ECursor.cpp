@@ -27,6 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include  <cstring>
 #include "xpln/enums/ECursor.h"
 #include <utility>
 #include "common/Logger.h"

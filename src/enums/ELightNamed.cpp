@@ -27,6 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include  <cstring>
 #include "xpln/enums/ELightNamed.h"
 #include <utility>
 #include "common/Logger.h"

@@ -74,7 +74,8 @@ target_link_libraries(${PROJECT} "$<$<CXX_COMPILER_ID:Clang>:pthread>")
 
 target_compile_options(${PROJECT} 
 	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/W4>"
-    #PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/WX>"
+    PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/WX>"
+    PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:-D_CRT_SECURE_NO_WARNINGS>"
 	
 	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-pedantic>"

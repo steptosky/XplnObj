@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,70 +29,68 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "AttrManipBase.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
-	/*!
-	 * \details ATTR_manip_drag_xy
-	 * \ingroup Manipulators
-	 */
-	class AttrManipDragXy : public AttrManipBase {
-	public:
+/*!
+ * \details ATTR_manip_drag_xy
+ * \ingroup Manipulators
+ */
+class AttrManipDragXy : public AttrManipBase {
+public:
 
-		XpObjLib AttrManipDragXy();
-		virtual ~AttrManipDragXy() = default;
+    XpObjLib AttrManipDragXy();
+    virtual ~AttrManipDragXy() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setX(float val);
-		XpObjLib void setXMin(float val);
-		XpObjLib void setXMax(float val);
-		XpObjLib float x() const;
-		XpObjLib float xMin() const;
-		XpObjLib float xMax() const;
-		XpObjLib void setXDataref(const std::string & val);
-		XpObjLib const std::string & xDataref() const;
+    XpObjLib void setX(float val);
+    XpObjLib void setXMin(float val);
+    XpObjLib void setXMax(float val);
+    XpObjLib float x() const;
+    XpObjLib float xMin() const;
+    XpObjLib float xMax() const;
+    XpObjLib void setXDataref(const std::string & val);
+    XpObjLib const std::string & xDataref() const;
 
-		XpObjLib void setY(float val);
-		XpObjLib void setYMin(float val);
-		XpObjLib void setYMax(float val);
-		XpObjLib float y() const;
-		XpObjLib float yMin() const;
-		XpObjLib float yMax() const;
-		XpObjLib void setYDataref(const std::string & val);
-		XpObjLib const std::string & yDataref() const;
+    XpObjLib void setY(float val);
+    XpObjLib void setYMin(float val);
+    XpObjLib void setYMax(float val);
+    XpObjLib float y() const;
+    XpObjLib float yMin() const;
+    XpObjLib float yMax() const;
+    XpObjLib void setYDataref(const std::string & val);
+    XpObjLib const std::string & yDataref() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*! \copydoc AttrManipBase::equals */
-		XpObjLib bool equals(const AttrManipBase * manip) const override;
+    /*! \copydoc AttrManipBase::equals */
+    XpObjLib bool equals(const AttrManipBase * manip) const override;
 
-		/*! \copydoc AttrManipBase::clone */
-		XpObjLib AttrManipBase * clone() const override;
+    /*! \copydoc AttrManipBase::clone */
+    XpObjLib AttrManipBase * clone() const override;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		float mX = 0.0f;
-		float mY = 0.0f;
-		float mXMin = 0.0f;
-		float mXMax = 0.0f;
-		float mYMin = 0.0f;
-		float mYMax = 0.0f;
-		std::string mXDataref = "none";
-		std::string mYDataref = "none";
+    float mX = 0.0f;
+    float mY = 0.0f;
+    float mXMin = 0.0f;
+    float mXMax = 0.0f;
+    float mYMin = 0.0f;
+    float mYMax = 0.0f;
+    std::string mXDataref = "none";
+    std::string mYDataref = "none";
 
-	};
+};
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 }

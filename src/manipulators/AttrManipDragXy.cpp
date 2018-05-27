@@ -34,112 +34,112 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipDragXy::AttrManipDragXy()
-		: AttrManipBase(EManipulator(EManipulator::drag_xy)) { }
+AttrManipDragXy::AttrManipDragXy()
+    : AttrManipBase(EManipulator(EManipulator::drag_xy)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipDragXy::setX(float val) {
-		mX = val;
-	}
+void AttrManipDragXy::setX(float val) {
+    mX = val;
+}
 
-	void AttrManipDragXy::setXMin(float val) {
-		mXMin = val;
-	}
+void AttrManipDragXy::setXMin(float val) {
+    mXMin = val;
+}
 
-	void AttrManipDragXy::setXMax(float val) {
-		mXMax = val;
-	}
+void AttrManipDragXy::setXMax(float val) {
+    mXMax = val;
+}
 
-	float AttrManipDragXy::x() const {
-		return mX;
-	}
+float AttrManipDragXy::x() const {
+    return mX;
+}
 
-	float AttrManipDragXy::xMin() const {
-		return mXMin;
-	}
+float AttrManipDragXy::xMin() const {
+    return mXMin;
+}
 
-	float AttrManipDragXy::xMax() const {
-		return mXMax;
-	}
+float AttrManipDragXy::xMax() const {
+    return mXMax;
+}
 
-	void AttrManipDragXy::setY(float val) {
-		mY = val;
-	}
+void AttrManipDragXy::setY(float val) {
+    mY = val;
+}
 
-	void AttrManipDragXy::setYMin(float val) {
-		mYMin = val;
-	}
+void AttrManipDragXy::setYMin(float val) {
+    mYMin = val;
+}
 
-	void AttrManipDragXy::setYMax(float val) {
-		mYMax = val;
-	}
+void AttrManipDragXy::setYMax(float val) {
+    mYMax = val;
+}
 
-	float AttrManipDragXy::y() const {
-		return mY;
-	}
+float AttrManipDragXy::y() const {
+    return mY;
+}
 
-	float AttrManipDragXy::yMin() const {
-		return mYMin;
-	}
+float AttrManipDragXy::yMin() const {
+    return mYMin;
+}
 
-	float AttrManipDragXy::yMax() const {
-		return mYMax;
-	}
+float AttrManipDragXy::yMax() const {
+    return mYMax;
+}
 
-	const std::string & AttrManipDragXy::yDataref() const {
-		return mYDataref;
-	}
+const std::string & AttrManipDragXy::yDataref() const {
+    return mYDataref;
+}
 
-	void AttrManipDragXy::setYDataref(const std::string & val) {
-		mYDataref = val;
-	}
+void AttrManipDragXy::setYDataref(const std::string & val) {
+    mYDataref = val;
+}
 
-	const std::string & AttrManipDragXy::xDataref() const {
-		return mXDataref;
-	}
+const std::string & AttrManipDragXy::xDataref() const {
+    return mXDataref;
+}
 
-	void AttrManipDragXy::setXDataref(const std::string & val) {
-		mXDataref = val;
-	}
+void AttrManipDragXy::setXDataref(const std::string & val) {
+    mXDataref = val;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipDragXy::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipDragXy::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipDragXy * right = dynamic_cast<const AttrManipDragXy*>(manip);
-		if (!right)
-			return false;
+    const AttrManipDragXy * right = dynamic_cast<const AttrManipDragXy*>(manip);
+    if (!right)
+        return false;
 
-		return (sts::isEqual(mX, right->mX) &&
-				sts::isEqual(mY, right->mY) &&
-				sts::isEqual(mXMin, right->mXMin) &&
-				sts::isEqual(mXMax, right->mXMax) &&
-				sts::isEqual(mYMin, right->mYMin) &&
-				sts::isEqual(mYMax, right->mYMax) &&
-				sts::isEqual(mXDataref, right->mXDataref) &&
-				sts::isEqual(mYDataref, right->mYDataref));
-	}
+    return (sts::isEqual(mX, right->mX) &&
+            sts::isEqual(mY, right->mY) &&
+            sts::isEqual(mXMin, right->mXMin) &&
+            sts::isEqual(mXMax, right->mXMax) &&
+            sts::isEqual(mYMin, right->mYMin) &&
+            sts::isEqual(mYMax, right->mYMax) &&
+            sts::isEqual(mXDataref, right->mXDataref) &&
+            sts::isEqual(mYDataref, right->mYDataref));
+}
 
-	AttrManipBase * AttrManipDragXy::clone() const {
-		return new AttrManipDragXy(*this);
-	}
+AttrManipBase * AttrManipDragXy::clone() const {
+    return new AttrManipDragXy(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,59 +29,57 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/enums/ELightNamed.h"
 #include "ObjAbstractLight.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the named light
-	 * \ingroup Objects
-	 */
-	class ObjLightNamed : public ObjAbstractLight {
+/*!
+ * \details Representation of the named light
+ * \ingroup Objects
+ */
+class ObjLightNamed : public ObjAbstractLight {
 
-		ObjLightNamed & operator =(const ObjLightNamed &) = delete;
+    ObjLightNamed & operator =(const ObjLightNamed &) = delete;
 
-	protected:
+protected:
 
-		XpObjLib ObjLightNamed(const ObjLightNamed & copy);
+    XpObjLib ObjLightNamed(const ObjLightNamed & copy);
 
-	public:
+public:
 
-		XpObjLib ObjLightNamed();
-		virtual ~ObjLightNamed() = default;
+    XpObjLib ObjLightNamed();
+    virtual ~ObjLightNamed() = default;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		XpObjLib void setLightId(ELightNamed id);
-		XpObjLib ELightNamed lightId() const;
+    XpObjLib void setLightId(ELightNamed id);
+    XpObjLib ELightNamed lightId() const;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		/*! \copydoc ObjAbstract::objType */
-		XpObjLib eObjectType objType() const final;
+    /*! \copydoc ObjAbstract::objType */
+    XpObjLib eObjectType objType() const final;
 
-		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
+    /*! \copydoc ObjAbstract::applyTransform */
+    XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
 
-		/* \copydoc ObjAbstract::clone */
-		XpObjLib ObjAbstract * clone() const override;
+    /* \copydoc ObjAbstract::clone */
+    XpObjLib ObjAbstract * clone() const override;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-	private:
+private:
 
-		ELightNamed mId;
+    ELightNamed mId;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

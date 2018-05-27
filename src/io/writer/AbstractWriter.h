@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,111 +29,109 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <string>
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class AbstractWriter {
+class AbstractWriter {
 
-		AbstractWriter(const AbstractWriter &) = delete;
-		AbstractWriter & operator =(const AbstractWriter &) = delete;
+    AbstractWriter(const AbstractWriter &) = delete;
+    AbstractWriter & operator =(const AbstractWriter &) = delete;
 
-	public:
+public:
 
-		AbstractWriter() = default;
-		virtual ~AbstractWriter() = default;
+    AbstractWriter() = default;
+    virtual ~AbstractWriter() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Print line with LEOL.
-		 * \param [in] msg nullptr means only LEOL will be printed
-		 */
-		virtual void printLine(const char * msg) = 0;
+    /*!
+     * \details Print line with LEOL.
+     * \param [in] msg nullptr means only LEOL will be printed
+     */
+    virtual void printLine(const char * msg) = 0;
 
-		/*!
-		 * \details Print line with LEOL.
-		 * \param [in] msg if it is empty then only LEOL will be printed
-		 */
-		void printLine(const std::string & msg);
+    /*!
+     * \details Print line with LEOL.
+     * \param [in] msg if it is empty then only LEOL will be printed
+     */
+    void printLine(const std::string & msg);
 
-		/*!
-		 * \details Print only LEOL.
-		 */
-		void printEol();
+    /*!
+     * \details Print only LEOL.
+     */
+    void printEol();
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		void spaceEnable(bool state);
-		void spaceMore();
-		void spaceLess();
+    void spaceEnable(bool state);
+    void spaceMore();
+    void spaceLess();
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	protected:
+protected:
 
-		/*!
-		 * \details Gets actual space for the line.
-		 * \return Space symbols if it is enabled otherwise empty string.
-		 */
-		const std::string & space() const;
+    /*!
+     * \details Gets actual space for the line.
+     * \return Space symbols if it is enabled otherwise empty string.
+     */
+    const std::string & space() const;
 
-	private:
+private:
 
-		bool isSpaceEnabled() const;
+    bool isSpaceEnabled() const;
 
-		bool mIsSpaseEnabled = true;
-		std::string mResult;
+    bool mIsSpaseEnabled = true;
+    std::string mResult;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	inline void AbstractWriter::spaceEnable(bool state) {
-		mIsSpaseEnabled = state;
-	}
+inline void AbstractWriter::spaceEnable(bool state) {
+    mIsSpaseEnabled = state;
+}
 
-	inline bool AbstractWriter::isSpaceEnabled() const {
-		return mIsSpaseEnabled;
-	}
+inline bool AbstractWriter::isSpaceEnabled() const {
+    return mIsSpaseEnabled;
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	inline void AbstractWriter::spaceMore() {
-		mResult.append("\t");
-	}
+inline void AbstractWriter::spaceMore() {
+    mResult.append("\t");
+}
 
-	inline void AbstractWriter::spaceLess() {
-		if (!mResult.empty()) {
-			mResult.pop_back();
-		}
-	}
+inline void AbstractWriter::spaceLess() {
+    if (!mResult.empty()) {
+        mResult.pop_back();
+    }
+}
 
-	inline const std::string & AbstractWriter::space() const {
-		static std::string emptyResult;
-		return isSpaceEnabled() ? mResult : emptyResult;
-	}
+inline const std::string & AbstractWriter::space() const {
+    static std::string emptyResult;
+    return isSpaceEnabled() ? mResult : emptyResult;
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	inline void AbstractWriter::printLine(const std::string & msg) {
-		msg.empty() ? printEol() : printLine(msg.c_str());
-	}
+inline void AbstractWriter::printLine(const std::string & msg) {
+    msg.empty() ? printEol() : printLine(msg.c_str());
+}
 
-	inline void AbstractWriter::printEol() {
-		printLine("");
-	}
+inline void AbstractWriter::printEol() {
+    printLine("");
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

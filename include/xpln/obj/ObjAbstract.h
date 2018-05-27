@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,8 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <string>
 #include "xpln/XplnObjExport.h"
 #include "xpln/enums/eObjectType.h"
@@ -36,94 +36,94 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class Transform;
-	class AttrSet;
+class Transform;
+class AttrSet;
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Base class for all 'obj' objects
-	 * \ingroup Objects
-	 */
-	class ObjAbstract {
+/*!
+ * \details Base class for all 'obj' objects
+ * \ingroup Objects
+ */
+class ObjAbstract {
 
-		friend Transform;
-		ObjAbstract & operator =(const ObjAbstract &) = delete;
+    friend Transform;
+    ObjAbstract & operator =(const ObjAbstract &) = delete;
 
-	protected:
+protected:
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		XpObjLib ObjAbstract();
+    XpObjLib ObjAbstract();
 
-		/*!
-		 * \details Constructor copy.
-		 * \note It does not copy the transform linkage.
-		 */
-		XpObjLib ObjAbstract(const ObjAbstract & copy);
+    /*!
+     * \details Constructor copy.
+     * \note It does not copy the transform linkage.
+     */
+    XpObjLib ObjAbstract(const ObjAbstract & copy);
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-	public:
+public:
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		XpObjLib virtual ~ObjAbstract();
+    XpObjLib virtual ~ObjAbstract();
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		XpObjLib virtual eObjectType objType() const;
+    XpObjLib virtual eObjectType objType() const;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		/*
-		 * \details Access to the object transformation node.
-		 * \return Nullptr if the object doesn't have a transformation node, otherwise pointer to the linked transformation node.
-		 */
-		XpObjLib Transform * transform();
+    /*
+     * \details Access to the object transformation node.
+     * \return Nullptr if the object doesn't have a transformation node, otherwise pointer to the linked transformation node.
+     */
+    XpObjLib Transform * transform();
 
-		/*
-		 * \details Access to the object transformation node.
-		 * \return Nullptr if the object doesn't have a transformation node, otherwise pointer to the linked transformation node.
-		 */
-		XpObjLib const Transform * transform() const;
+    /*
+     * \details Access to the object transformation node.
+     * \return Nullptr if the object doesn't have a transformation node, otherwise pointer to the linked transformation node.
+     */
+    XpObjLib const Transform * transform() const;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		XpObjLib void setObjectName(const std::string & name);
-		XpObjLib const std::string & objectName() const;
+    XpObjLib void setObjectName(const std::string & name);
+    XpObjLib const std::string & objectName() const;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		/*!
-		 * \details Applies specified transformation matrix to the object.
-		 * \param [in] tm transform matrix.
-		 * \param [in] useParity \see \link TMatrix::parity \endlink
-		 */
-		virtual void applyTransform(const TMatrix & tm, const bool useParity = false) = 0;
+    /*!
+     * \details Applies specified transformation matrix to the object.
+     * \param [in] tm transform matrix.
+     * \param [in] useParity \see \link TMatrix::parity \endlink
+     */
+    virtual void applyTransform(const TMatrix & tm, const bool useParity = false) = 0;
 
-		/*!
-		 * \return Cloned object.
-		 */
-		virtual ObjAbstract * clone() const = 0;
+    /*!
+     * \return Cloned object.
+     */
+    virtual ObjAbstract * clone() const = 0;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-	private:
+private:
 
-		Transform * mObjTransform = nullptr;
-		std::string mName;
+    Transform * mObjTransform = nullptr;
+    std::string mName;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,49 +29,47 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/XplnObjExport.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Base class for all manipulators that support mouse wheel.
-	 * \note You should not directly use this class.
-	 * \ingroup Manipulators
-	 */
-	class AttrManipWheel {
-	public:
+/*!
+ * \details Base class for all manipulators that support mouse wheel.
+ * \note You should not directly use this class.
+ * \ingroup Manipulators
+ */
+class AttrManipWheel {
+public:
 
-		XpObjLib AttrManipWheel();
-		virtual ~AttrManipWheel() = default;
+    XpObjLib AttrManipWheel();
+    virtual ~AttrManipWheel() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		bool operator==(const AttrManipWheel & other) const;
-		bool operator!=(const AttrManipWheel & other) const;
+    bool operator==(const AttrManipWheel & other) const;
+    bool operator!=(const AttrManipWheel & other) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setWheelEnabled(bool state);
-		XpObjLib void setWheelDelta(float delta);
-		XpObjLib bool isWheelEnabled() const;
-		XpObjLib float wheelDelta() const;
+    XpObjLib void setWheelEnabled(bool state);
+    XpObjLib void setWheelDelta(float delta);
+    XpObjLib bool isWheelEnabled() const;
+    XpObjLib float wheelDelta() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		bool mWheel : 1;
-		float mWheelDelta = 0.0f;
+    bool mWheel : 1;
+    float mWheelDelta = 0.0f;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

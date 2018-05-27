@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,63 +29,61 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "AttrManipBase.h"
 #include "xpln/enums/EManipulator.h"
 #include "xpln/obj/attributes/AttrCockpit.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
-	/*!
-	 * \details Panel-Click manipulator
-	 * \ingroup Manipulators
-	 */
-	class AttrManipPanel : public AttrManipBase {
-	public:
+/*!
+ * \details Panel-Click manipulator
+ * \ingroup Manipulators
+ */
+class AttrManipPanel : public AttrManipBase {
+public:
 
-		XpObjLib AttrManipPanel();
-		virtual ~AttrManipPanel() = default;
+    XpObjLib AttrManipPanel();
+    virtual ~AttrManipPanel() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Panel manipulator can be enabled with the cockpit attribute only.
-		 *          This method sets the cockpit attribute which will be used for enable the manipulator.
-		 * \note This method is for internal using only! The developer must not use it.
-		 * \param cockpit 
-		 */
-		XpObjLib void setCockpit(const AttrCockpit & cockpit);
+    /*!
+     * \details Panel manipulator can be enabled with the cockpit attribute only.
+     *          This method sets the cockpit attribute which will be used for enable the manipulator.
+     * \note This method is for internal using only! The developer must not use it.
+     * \param cockpit 
+     */
+    XpObjLib void setCockpit(const AttrCockpit & cockpit);
 
-		/*!
-		 * \see \link AttrManipPanel::setCockpit \endlink
-		 * \note This method is for internal using only! The developer must not use it.
-		 * \return cockpit attribute associated with the manipulator
-		 */
-		XpObjLib const AttrCockpit & cockpit() const;
+    /*!
+     * \see \link AttrManipPanel::setCockpit \endlink
+     * \note This method is for internal using only! The developer must not use it.
+     * \return cockpit attribute associated with the manipulator
+     */
+    XpObjLib const AttrCockpit & cockpit() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*! \copydoc AttrManipBase::equals */
-		XpObjLib bool equals(const AttrManipBase * manip) const override;
+    /*! \copydoc AttrManipBase::equals */
+    XpObjLib bool equals(const AttrManipBase * manip) const override;
 
-		/*! \copydoc AttrManipBase::clone */
-		XpObjLib AttrManipBase * clone() const override;
+    /*! \copydoc AttrManipBase::clone */
+    XpObjLib AttrManipBase * clone() const override;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		AttrCockpit mAttrCockpit;
+    AttrCockpit mAttrCockpit;
 
-	};
+};
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
 }

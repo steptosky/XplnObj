@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,76 +29,74 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <cstddef>
 #include "AbstractWriter.h"
 
 namespace xobj {
 
-	class Logger;
-	class ExportOptions;
+class Logger;
+class ExportOptions;
 
-	class ObjIOStream;
-	class IOStatistic;
-	class ObjAbstract;
+class ObjIOStream;
+class IOStatistic;
+class ObjAbstract;
 
-	class ObjAbstractLight;
-	class String;
-	class Counter;
+class ObjAbstractLight;
+class String;
+class Counter;
 
-	class Point3;
-	class Transform;
+class Point3;
+class Transform;
 
-	class ObjMain;
+class ObjMain;
 
-	/**********************************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
 
-	/*!
-	 *	\details Class helper that write geometry for ObjWritter
-	 */
-	class ObjWriteGeometry {
-	public:
+/*!
+ *	\details Class helper that write geometry for ObjWritter
+ */
+class ObjWriteGeometry {
+public:
 
-		ObjWriteGeometry(const ExportOptions * option, IOStatistic * outStat);
-		~ObjWriteGeometry() = default;
+    ObjWriteGeometry(const ExportOptions * option, IOStatistic * outStat);
+    ~ObjWriteGeometry() = default;
 
-		void printMeshVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const;
-		void printLineVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const;
-		void printLightPointVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const;
-		void printMeshFaceRecursive(AbstractWriter & writer, const ObjMain & main) const;
+    void printMeshVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const;
+    void printLineVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const;
+    void printLightPointVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const;
+    void printMeshFaceRecursive(AbstractWriter & writer, const ObjMain & main) const;
 
-		bool printMeshObject(AbstractWriter & writer, const ObjAbstract & objBase);
-		bool printLightPointObject(AbstractWriter & writer, const ObjAbstract & objBase);
-		bool printLightObject(AbstractWriter & writer, const ObjAbstract & objBase, const Transform & transform) const;
-		bool printLineObject(AbstractWriter & writer, const ObjAbstract & objBase);
-		bool printSmokeObject(AbstractWriter & writer, const ObjAbstract & objBase) const;
-		bool printDummyObject(AbstractWriter & writer, const ObjAbstract & objBase) const;
+    bool printMeshObject(AbstractWriter & writer, const ObjAbstract & objBase);
+    bool printLightPointObject(AbstractWriter & writer, const ObjAbstract & objBase);
+    bool printLightObject(AbstractWriter & writer, const ObjAbstract & objBase, const Transform & transform) const;
+    bool printLineObject(AbstractWriter & writer, const ObjAbstract & objBase);
+    bool printSmokeObject(AbstractWriter & writer, const ObjAbstract & objBase) const;
+    bool printDummyObject(AbstractWriter & writer, const ObjAbstract & objBase) const;
 
-		void reset();
+    void reset();
 
-	private:
+private:
 
-		ObjWriteGeometry(const ObjWriteGeometry &) = delete;
-		ObjWriteGeometry & operator =(const ObjWriteGeometry &) = delete;
+    ObjWriteGeometry(const ObjWriteGeometry &) = delete;
+    ObjWriteGeometry & operator =(const ObjWriteGeometry &) = delete;
 
-		void writeMeshFaceRecursive(std::ostream & writer, const Transform & parent, size_t & idx, size_t & offset) const;
+    void writeMeshFaceRecursive(std::ostream & writer, const Transform & parent, size_t & idx, size_t & offset) const;
 
-		IOStatistic * mStat;
-		const ExportOptions * mOptions;
+    IOStatistic * mStat;
+    const ExportOptions * mOptions;
 
-		// Mesh
-		size_t mMeshFaceOffset;
-		size_t mMeshVertexOffset;
+    // Mesh
+    size_t mMeshFaceOffset;
+    size_t mMeshVertexOffset;
 
-		// Light
-		size_t mPointLightOffsetByObject;
+    // Light
+    size_t mPointLightOffsetByObject;
 
-	};
+};
 
-	/**********************************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
 }

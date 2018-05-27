@@ -31,46 +31,46 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipBase::AttrManipBase(EManipulator type)
-		: mEManipulator(type),
-		mToolType("none") { }
+AttrManipBase::AttrManipBase(EManipulator type)
+    : mEManipulator(type),
+      mToolType("none") { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipBase::setToolTip(const std::string & toolTip) {
-		mToolType = toolTip;
-	}
+void AttrManipBase::setToolTip(const std::string & toolTip) {
+    mToolType = toolTip;
+}
 
-	const std::string & AttrManipBase::toolTip() const {
-		return mToolType;
-	}
+const std::string & AttrManipBase::toolTip() const {
+    return mToolType;
+}
 
-	void AttrManipBase::setCursor(ECursor cursor) {
-		mCursor = cursor;
-	}
+void AttrManipBase::setCursor(ECursor cursor) {
+    mCursor = cursor;
+}
 
-	bool AttrManipBase::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
-		if (mCursor != manip->mCursor)
-			return false;
-		if (mToolType != manip->mToolType)
-			return false;
-		return true;
-	}
+bool AttrManipBase::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
+    if (mCursor != manip->mCursor)
+        return false;
+    if (mToolType != manip->mToolType)
+        return false;
+    return true;
+}
 
-	ECursor AttrManipBase::cursor() const {
-		return mCursor;
-	}
+ECursor AttrManipBase::cursor() const {
+    return mCursor;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

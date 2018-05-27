@@ -32,90 +32,90 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrSlopeLimit::AttrSlopeLimit(float minPitch, float maxPitch, float minRoll, float maxRoll)
-		: mMinPitch(minPitch),
-		mMaxPitch(maxPitch),
-		mMinRoll(minRoll),
-		mMaxRoll(maxRoll),
-		mIsEnabled(true) { }
+AttrSlopeLimit::AttrSlopeLimit(float minPitch, float maxPitch, float minRoll, float maxRoll)
+    : mMinPitch(minPitch),
+      mMaxPitch(maxPitch),
+      mMinRoll(minRoll),
+      mMaxRoll(maxRoll),
+      mIsEnabled(true) { }
 
-	AttrSlopeLimit::AttrSlopeLimit()
-		: mMinPitch(0.0f),
-		mMaxPitch(0.0f),
-		mMinRoll(0.0f),
-		mMaxRoll(0.0f),
-		mIsEnabled(false) { }
+AttrSlopeLimit::AttrSlopeLimit()
+    : mMinPitch(0.0f),
+      mMaxPitch(0.0f),
+      mMinRoll(0.0f),
+      mMaxRoll(0.0f),
+      mIsEnabled(false) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrSlopeLimit::operator bool() const {
-		return mIsEnabled;
-	}
+AttrSlopeLimit::operator bool() const {
+    return mIsEnabled;
+}
 
-	void AttrSlopeLimit::setEnabled(bool state) {
-		mIsEnabled = state;
-	}
+void AttrSlopeLimit::setEnabled(bool state) {
+    mIsEnabled = state;
+}
 
-	bool AttrSlopeLimit::operator==(const AttrSlopeLimit & other) const {
-		return (mIsEnabled == other.mIsEnabled &&
-				sts::isEqual(mMinPitch, other.mMinPitch, 0.01f) &&
-				sts::isEqual(mMaxPitch, other.mMaxPitch, 0.01f) &&
-				sts::isEqual(mMinRoll, other.mMinRoll, 0.01f) &&
-				sts::isEqual(mMaxRoll, other.mMaxRoll, 0.01f));
-	}
+bool AttrSlopeLimit::operator==(const AttrSlopeLimit & other) const {
+    return (mIsEnabled == other.mIsEnabled &&
+            sts::isEqual(mMinPitch, other.mMinPitch, 0.01f) &&
+            sts::isEqual(mMaxPitch, other.mMaxPitch, 0.01f) &&
+            sts::isEqual(mMinRoll, other.mMinRoll, 0.01f) &&
+            sts::isEqual(mMaxRoll, other.mMaxRoll, 0.01f));
+}
 
-	bool AttrSlopeLimit::operator!=(const AttrSlopeLimit & other) const {
-		return !operator==(other);
-	}
+bool AttrSlopeLimit::operator!=(const AttrSlopeLimit & other) const {
+    return !operator==(other);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrSlopeLimit::setMinPitch(float minPitch) {
-		mMinPitch = minPitch;
-		mIsEnabled = true;
-	}
+void AttrSlopeLimit::setMinPitch(float minPitch) {
+    mMinPitch = minPitch;
+    mIsEnabled = true;
+}
 
-	void AttrSlopeLimit::setMaxPitch(float maxPitch) {
-		mMaxPitch = maxPitch;
-		mIsEnabled = true;
-	}
+void AttrSlopeLimit::setMaxPitch(float maxPitch) {
+    mMaxPitch = maxPitch;
+    mIsEnabled = true;
+}
 
-	void AttrSlopeLimit::setMinRoll(float minRoll) {
-		mMinRoll = minRoll;
-		mIsEnabled = true;
-	}
+void AttrSlopeLimit::setMinRoll(float minRoll) {
+    mMinRoll = minRoll;
+    mIsEnabled = true;
+}
 
-	void AttrSlopeLimit::setMaxRoll(float maxRoll) {
-		mMaxRoll = maxRoll;
-		mIsEnabled = true;
-	}
+void AttrSlopeLimit::setMaxRoll(float maxRoll) {
+    mMaxRoll = maxRoll;
+    mIsEnabled = true;
+}
 
-	float AttrSlopeLimit::minPitch() const {
-		return mMinPitch;
-	}
+float AttrSlopeLimit::minPitch() const {
+    return mMinPitch;
+}
 
-	float AttrSlopeLimit::maxPitch() const {
-		return mMaxPitch;
-	}
+float AttrSlopeLimit::maxPitch() const {
+    return mMaxPitch;
+}
 
-	float AttrSlopeLimit::minRoll() const {
-		return mMinRoll;
-	}
+float AttrSlopeLimit::minRoll() const {
+    return mMinRoll;
+}
 
-	float AttrSlopeLimit::maxRoll() const {
-		return mMaxRoll;
-	}
+float AttrSlopeLimit::maxRoll() const {
+    return mMaxRoll;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

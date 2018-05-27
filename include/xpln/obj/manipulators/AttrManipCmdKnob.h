@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,53 +29,51 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "AttrManipBase.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
-	/*!
-	 * \details ATTR_manip_command_knob
-	 * \note Mouse wheel support for this manipulators is automatic – each single click of the mouse wheel runs the increase or decrease command once.
-	 * \ingroup Manipulators
-	 */
-	class AttrManipCmdKnob : public AttrManipBase {
-	public:
+/*!
+ * \details ATTR_manip_command_knob
+ * \note Mouse wheel support for this manipulators is automatic – each single click of the mouse wheel runs the increase or decrease command once.
+ * \ingroup Manipulators
+ */
+class AttrManipCmdKnob : public AttrManipBase {
+public:
 
-		XpObjLib AttrManipCmdKnob();
-		virtual ~AttrManipCmdKnob() = default;
+    XpObjLib AttrManipCmdKnob();
+    virtual ~AttrManipCmdKnob() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setCmdNegative(const std::string & val);
-		XpObjLib void setCmdPositive(const std::string & val);
-		XpObjLib const std::string & cmdNegative() const;
-		XpObjLib const std::string & cmdPositive() const;
+    XpObjLib void setCmdNegative(const std::string & val);
+    XpObjLib void setCmdPositive(const std::string & val);
+    XpObjLib const std::string & cmdNegative() const;
+    XpObjLib const std::string & cmdPositive() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*! \copydoc AttrManipBase::equals */
-		XpObjLib bool equals(const AttrManipBase * manip) const override;
+    /*! \copydoc AttrManipBase::equals */
+    XpObjLib bool equals(const AttrManipBase * manip) const override;
 
-		/*! \copydoc AttrManipBase::clone */
-		XpObjLib AttrManipBase * clone() const override;
+    /*! \copydoc AttrManipBase::clone */
+    XpObjLib AttrManipBase * clone() const override;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		std::string mPosCommand = "none";
-		std::string mNegCommand = "none";
+    std::string mPosCommand = "none";
+    std::string mNegCommand = "none";
 
-	};
+};
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
 }

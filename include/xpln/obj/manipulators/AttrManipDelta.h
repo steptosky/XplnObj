@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,62 +29,60 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "AttrManipBase.h"
 #include "AttrManipWheel.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
-	/*!
-	 * \details ATTR_manip_delta
-	 * \ingroup Manipulators
-	 */
-	class AttrManipDelta : public AttrManipBase, public AttrManipWheel {
-	public:
+/*!
+ * \details ATTR_manip_delta
+ * \ingroup Manipulators
+ */
+class AttrManipDelta : public AttrManipBase, public AttrManipWheel {
+public:
 
-		XpObjLib AttrManipDelta();
-		virtual ~AttrManipDelta() = default;
+    XpObjLib AttrManipDelta();
+    virtual ~AttrManipDelta() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setDown(float val);
-		XpObjLib void setHold(float val);
-		XpObjLib void setMinimum(float val);
-		XpObjLib void setMaximum(float val);
-		XpObjLib float down() const;
-		XpObjLib float hold() const;
-		XpObjLib float minimum() const;
-		XpObjLib float maximum() const;
+    XpObjLib void setDown(float val);
+    XpObjLib void setHold(float val);
+    XpObjLib void setMinimum(float val);
+    XpObjLib void setMaximum(float val);
+    XpObjLib float down() const;
+    XpObjLib float hold() const;
+    XpObjLib float minimum() const;
+    XpObjLib float maximum() const;
 
-		XpObjLib const std::string & dataref() const;
-		XpObjLib void setDataref(const std::string & val);
+    XpObjLib const std::string & dataref() const;
+    XpObjLib void setDataref(const std::string & val);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*! \copydoc AttrManipBase::equals */
-		XpObjLib bool equals(const AttrManipBase * manip) const override;
+    /*! \copydoc AttrManipBase::equals */
+    XpObjLib bool equals(const AttrManipBase * manip) const override;
 
-		/*! \copydoc AttrManipBase::clone */
-		XpObjLib AttrManipBase * clone() const override;
+    /*! \copydoc AttrManipBase::clone */
+    XpObjLib AttrManipBase * clone() const override;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		float mDown = 0.0f;
-		float mHold = 0.0f;
-		float mMin = 0.0f;
-		float mMax = 0.0f;
-		std::string mDataref = "none";
+    float mDown = 0.0f;
+    float mHold = 0.0f;
+    float mMin = 0.0f;
+    float mMax = 0.0f;
+    std::string mDataref = "none";
 
-	};
+};
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 }

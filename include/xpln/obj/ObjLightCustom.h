@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,71 +29,69 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "ObjAbstractLight.h"
 #include "xpln/common/RectangleI.h"
 #include "xpln/common/Color.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the custom light
-	 * \ingroup Objects
-	 */
-	class ObjLightCustom : public ObjAbstractLight {
+/*!
+ * \details Representation of the custom light
+ * \ingroup Objects
+ */
+class ObjLightCustom : public ObjAbstractLight {
 
-		ObjLightCustom & operator =(const ObjLightCustom &) = delete;
+    ObjLightCustom & operator =(const ObjLightCustom &) = delete;
 
-	protected:
+protected:
 
-		XpObjLib ObjLightCustom(const ObjLightCustom & copy);
+    XpObjLib ObjLightCustom(const ObjLightCustom & copy);
 
-	public:
+public:
 
-		XpObjLib ObjLightCustom();
-		virtual ~ObjLightCustom() = default;
+    XpObjLib ObjLightCustom();
+    virtual ~ObjLightCustom() = default;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		XpObjLib void setSize(float size);
-		XpObjLib void setColor(const Color & color);
-		XpObjLib void setTextureRect(const RectangleI & textureRect);
-		XpObjLib void setDataRef(const std::string & dataRef);
+    XpObjLib void setSize(float size);
+    XpObjLib void setColor(const Color & color);
+    XpObjLib void setTextureRect(const RectangleI & textureRect);
+    XpObjLib void setDataRef(const std::string & dataRef);
 
-		XpObjLib float size() const;
-		XpObjLib Color color() const;
-		XpObjLib RectangleI textureRect() const;
-		XpObjLib const std::string & dataRef() const;
+    XpObjLib float size() const;
+    XpObjLib Color color() const;
+    XpObjLib RectangleI textureRect() const;
+    XpObjLib const std::string & dataRef() const;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		/*! \copydoc ObjAbstract::objType */
-		XpObjLib eObjectType objType() const final;
+    /*! \copydoc ObjAbstract::objType */
+    XpObjLib eObjectType objType() const final;
 
-		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
+    /*! \copydoc ObjAbstract::applyTransform */
+    XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
 
-		/* \copydoc ObjAbstract::clone */
-		XpObjLib ObjAbstract * clone() const override;
+    /* \copydoc ObjAbstract::clone */
+    XpObjLib ObjAbstract * clone() const override;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-	private:
+private:
 
-		Color mColor;
-		float mSize;
-		RectangleI mTexture;
-		std::string mDataRef;
+    Color mColor;
+    float mSize;
+    RectangleI mTexture;
+    std::string mDataRef;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

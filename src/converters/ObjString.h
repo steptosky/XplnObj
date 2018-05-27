@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,8 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <string>
 #include "xpln/XplnObjExport.h"
 
@@ -39,50 +39,50 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class MeshVertex;
-	class LineVertex;
+class MeshVertex;
+class LineVertex;
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	XpObjLib std::string toObjString(const MeshVertex & vertex, bool isTree);
-	XpObjLib std::string toObjString(const LineVertex & vertex);
+XpObjLib std::string toObjString(const MeshVertex & vertex, bool isTree);
+XpObjLib std::string toObjString(const LineVertex & vertex);
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class ObjLodGroup;
-	class ObjSmoke;
-	class ObjDummy;
+class ObjLodGroup;
+class ObjSmoke;
+class ObjDummy;
 
-	XpObjLib std::string toObjString(const ObjLodGroup & obj, bool printName);
-	XpObjLib std::string toObjString(const ObjSmoke & obj, bool printName);
-	XpObjLib std::string toObjString(const ObjDummy & obj, bool printName);
+XpObjLib std::string toObjString(const ObjLodGroup & obj, bool printName);
+XpObjLib std::string toObjString(const ObjSmoke & obj, bool printName);
+XpObjLib std::string toObjString(const ObjDummy & obj, bool printName);
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class ObjLightCustom;
-	class ObjLightNamed;
-	class ObjLightPoint;
-	class ObjLightParam;
-	class ObjLightSpillCust;
+class ObjLightCustom;
+class ObjLightNamed;
+class ObjLightPoint;
+class ObjLightParam;
+class ObjLightSpillCust;
 
-	XpObjLib std::string toObjString(const ObjLightCustom & obj, bool printName);
-	XpObjLib std::string toObjString(const ObjLightNamed & obj, bool printName);
-	XpObjLib std::string toObjString(const ObjLightParam & obj, bool printName);
-	XpObjLib std::string toObjString(const ObjLightPoint & obj, bool printName);
-	XpObjLib std::string toObjString(const ObjLightSpillCust & obj, bool printName);
+XpObjLib std::string toObjString(const ObjLightCustom & obj, bool printName);
+XpObjLib std::string toObjString(const ObjLightNamed & obj, bool printName);
+XpObjLib std::string toObjString(const ObjLightParam & obj, bool printName);
+XpObjLib std::string toObjString(const ObjLightPoint & obj, bool printName);
+XpObjLib std::string toObjString(const ObjLightSpillCust & obj, bool printName);
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

@@ -59,28 +59,28 @@ using ::testing::InSequence;
 
 class TestAttributesIOLogic : public ::testing::Test {
 
-	TestAttributesIOLogic(const TestAttributesIOLogic &) = delete;
-	TestAttributesIOLogic & operator =(const TestAttributesIOLogic &) = delete;
+    TestAttributesIOLogic(const TestAttributesIOLogic &) = delete;
+    TestAttributesIOLogic & operator =(const TestAttributesIOLogic &) = delete;
 
 public:
 
-	TestAttributesIOLogic() = default;
-	virtual ~TestAttributesIOLogic() = default;
+    TestAttributesIOLogic() = default;
+    virtual ~TestAttributesIOLogic() = default;
 
-	static void extractMesh(const ObjMain & inMain, size_t inLodNumber, size_t inMeshNumber, ObjMesh *& outMesh) {
-		ASSERT_TRUE(inLodNumber < inMain.lodCount());
-		const ObjLodGroup & inLGroup = inMain.lod(inLodNumber);
-		ASSERT_TRUE(inMeshNumber < inLGroup.transform().objList().size());
-		auto iterator = inLGroup.transform().objList().begin();
-		for (size_t i = 0; i < inMeshNumber; ++i) {
-			++iterator;
-		}
-		ObjAbstract * obj = *(iterator);
-		ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
-		outMesh = static_cast<ObjMesh *>(obj);
-	}
+    static void extractMesh(const ObjMain & inMain, size_t inLodNumber, size_t inMeshNumber, ObjMesh *& outMesh) {
+        ASSERT_TRUE(inLodNumber < inMain.lodCount());
+        const ObjLodGroup & inLGroup = inMain.lod(inLodNumber);
+        ASSERT_TRUE(inMeshNumber < inLGroup.transform().objList().size());
+        auto iterator = inLGroup.transform().objList().begin();
+        for (size_t i = 0; i < inMeshNumber; ++i) {
+            ++iterator;
+        }
+        ObjAbstract * obj = *(iterator);
+        ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
+        outMesh = static_cast<ObjMesh *>(obj);
+    }
 
-	AttrPolyOffset mAttrPolyOffset;
+    AttrPolyOffset mAttrPolyOffset;
 
 };
 
@@ -89,393 +89,393 @@ public:
 /**************************************************************************************************/
 
 TEST_F(TestAttributesIOLogic, case_1) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	mAttrPolyOffset.setOffset(1.0f);
-	// Attr
-	outM1->pAttr.setPolyOffset(mAttrPolyOffset);
-	// No Attr
-	// mObjMesh2
-	// mObjMesh3
-	// mObjMesh4
+    mAttrPolyOffset.setOffset(1.0f);
+    // Attr
+    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
+    // No Attr
+    // mObjMesh2
+    // mObjMesh3
+    // mObjMesh4
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(2, stat.pTrisAttrCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(2, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(2, stat.pTrisAttrCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(2, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMesh * inM = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-	ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ObjMesh * inM = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-	ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-	ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-	ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
 }
 
 TEST_F(TestAttributesIOLogic, case_2) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	mAttrPolyOffset.setOffset(1.0f);
-	// Attr
-	outM1->pAttr.setPolyOffset(mAttrPolyOffset);
-	outM2->pAttr.setPolyOffset(mAttrPolyOffset);
-	// No Attr
-	// mObjMesh3
-	// mObjMesh4
+    mAttrPolyOffset.setOffset(1.0f);
+    // Attr
+    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM2->pAttr.setPolyOffset(mAttrPolyOffset);
+    // No Attr
+    // mObjMesh3
+    // mObjMesh4
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(2, stat.pTrisAttrCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(2, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(2, stat.pTrisAttrCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(2, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMesh * inM = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-	ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ObjMesh * inM = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-	ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-	ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-	ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
 }
 
 TEST_F(TestAttributesIOLogic, case_3) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	mAttrPolyOffset.setOffset(1.0f);
-	// Attr
-	outM1->pAttr.setPolyOffset(mAttrPolyOffset);
-	outM2->pAttr.setPolyOffset(mAttrPolyOffset);
-	outM3->pAttr.setPolyOffset(mAttrPolyOffset);
-	// No Attr
-	// mObjMesh4
+    mAttrPolyOffset.setOffset(1.0f);
+    // Attr
+    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM2->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM3->pAttr.setPolyOffset(mAttrPolyOffset);
+    // No Attr
+    // mObjMesh4
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(2, stat.pTrisAttrCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(2, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(2, stat.pTrisAttrCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(2, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMesh * inM = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-	ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ObjMesh * inM = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-	ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-	ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-	ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
 }
 
 TEST_F(TestAttributesIOLogic, case_4) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	mAttrPolyOffset.setOffset(1.0f);
-	// Attr
-	outM1->pAttr.setPolyOffset(mAttrPolyOffset);
-	outM2->pAttr.setPolyOffset(mAttrPolyOffset);
-	outM3->pAttr.setPolyOffset(mAttrPolyOffset);
-	outM4->pAttr.setPolyOffset(mAttrPolyOffset);
+    mAttrPolyOffset.setOffset(1.0f);
+    // Attr
+    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM2->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM3->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM4->pAttr.setPolyOffset(mAttrPolyOffset);
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(1, stat.pTrisAttrCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(1, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(1, stat.pTrisAttrCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(1, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMesh * inM = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-	ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ObjMesh * inM = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-	ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-	ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-	ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
 }
 
 TEST_F(TestAttributesIOLogic, case_5) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	// Attr
-	mAttrPolyOffset.setOffset(1.0f);
-	outM1->pAttr.setPolyOffset(mAttrPolyOffset);
-	// Attr
-	mAttrPolyOffset.setOffset(2.0f);
-	outM2->pAttr.setPolyOffset(mAttrPolyOffset);
-	// Attr
-	mAttrPolyOffset.setOffset(3.0f);
-	outM3->pAttr.setPolyOffset(mAttrPolyOffset);
-	// Attr
-	mAttrPolyOffset.setOffset(4.0f);
-	outM4->pAttr.setPolyOffset(mAttrPolyOffset);
+    // Attr
+    mAttrPolyOffset.setOffset(1.0f);
+    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
+    // Attr
+    mAttrPolyOffset.setOffset(2.0f);
+    outM2->pAttr.setPolyOffset(mAttrPolyOffset);
+    // Attr
+    mAttrPolyOffset.setOffset(3.0f);
+    outM3->pAttr.setPolyOffset(mAttrPolyOffset);
+    // Attr
+    mAttrPolyOffset.setOffset(4.0f);
+    outM4->pAttr.setPolyOffset(mAttrPolyOffset);
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(4, stat.pTrisAttrCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(4, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(4, stat.pTrisAttrCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(4, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMesh * inM = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-	ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
+    ObjMesh * inM = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-	ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
+    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-	ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
+    ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-	ASSERT_EQ(AttrPolyOffset(4.0f), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
+    ASSERT_EQ(AttrPolyOffset(4.0f), inM->pAttr.polyOffset());
 }
 
 TEST_F(TestAttributesIOLogic, case_6) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	mAttrPolyOffset.setOffset(1.0f);
-	// Attr
-	outM1->pAttr.setPolyOffset(mAttrPolyOffset);
-	outM2->pAttr.setPolyOffset(mAttrPolyOffset);
-	// Attr
-	mAttrPolyOffset.setOffset(2.0f);
-	outM3->pAttr.setPolyOffset(mAttrPolyOffset);
-	// Attr
-	mAttrPolyOffset.setOffset(3.0f);
-	outM4->pAttr.setPolyOffset(mAttrPolyOffset);
+    mAttrPolyOffset.setOffset(1.0f);
+    // Attr
+    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM2->pAttr.setPolyOffset(mAttrPolyOffset);
+    // Attr
+    mAttrPolyOffset.setOffset(2.0f);
+    outM3->pAttr.setPolyOffset(mAttrPolyOffset);
+    // Attr
+    mAttrPolyOffset.setOffset(3.0f);
+    outM4->pAttr.setPolyOffset(mAttrPolyOffset);
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(3, stat.pTrisAttrCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(3, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(3, stat.pTrisAttrCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(3, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMesh * inM = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-	ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
+    ObjMesh * inM = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-	ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-	ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
+    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-	ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
+    ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.polyOffset());
 }
 
 TEST_F(TestAttributesIOLogic, case_7) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	mAttrPolyOffset.setOffset(1.0f);
-	// Attr
-	outM1->pAttr.setPolyOffset(mAttrPolyOffset);
-	// No Attr
-	// mObjMesh2
-	// Attr
-	mAttrPolyOffset.setOffset(2.0f);
-	outM3->pAttr.setPolyOffset(mAttrPolyOffset);
-	// Attr
-	mAttrPolyOffset.setOffset(3.0f);
-	outM4->pAttr.setPolyOffset(mAttrPolyOffset);
+    mAttrPolyOffset.setOffset(1.0f);
+    // Attr
+    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
+    // No Attr
+    // mObjMesh2
+    // Attr
+    mAttrPolyOffset.setOffset(2.0f);
+    outM3->pAttr.setPolyOffset(mAttrPolyOffset);
+    // Attr
+    mAttrPolyOffset.setOffset(3.0f);
+    outM4->pAttr.setPolyOffset(mAttrPolyOffset);
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(4, stat.pTrisAttrCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(4, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(4, stat.pTrisAttrCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(4, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMesh * inM = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-	ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
+    ObjMesh * inM = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-	ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-	ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
+    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-	ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
+    ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.polyOffset());
 }
 
 TEST_F(TestAttributesIOLogic, case_8) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	mAttrPolyOffset.setOffset(1.0f);
-	// Attr
-	outM1->pAttr.setPolyOffset(mAttrPolyOffset);
-	// No Attr
-	// mObjMesh2
-	// Attr
-	mAttrPolyOffset.setOffset(2.0f);
-	outM3->pAttr.setPolyOffset(mAttrPolyOffset);
-	// No Attr
-	// mObjMesh4
+    mAttrPolyOffset.setOffset(1.0f);
+    // Attr
+    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
+    // No Attr
+    // mObjMesh2
+    // Attr
+    mAttrPolyOffset.setOffset(2.0f);
+    outM3->pAttr.setPolyOffset(mAttrPolyOffset);
+    // No Attr
+    // mObjMesh4
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(4, stat.pTrisAttrCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(4, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-	ASSERT_EQ(4, stat.pTrisAttrCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
+    ASSERT_EQ(4, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMesh * inM = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-	ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
+    ObjMesh * inM = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-	ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-	ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
+    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.polyOffset());
 
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-	ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
 }
 
 /**************************************************************************************************/

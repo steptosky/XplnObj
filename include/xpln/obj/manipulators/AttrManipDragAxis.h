@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,66 +29,64 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "AttrManipBase.h"
 #include "AttrManipWheel.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
-	/*!
-	 * \details ATTR_manip_drag_axis
-	 * \ingroup Manipulators
-	 */
-	class AttrManipDragAxis : public AttrManipBase, public AttrManipWheel {
-	public:
+/*!
+ * \details ATTR_manip_drag_axis
+ * \ingroup Manipulators
+ */
+class AttrManipDragAxis : public AttrManipBase, public AttrManipWheel {
+public:
 
-		XpObjLib AttrManipDragAxis();
-		virtual ~AttrManipDragAxis() = default;
+    XpObjLib AttrManipDragAxis();
+    virtual ~AttrManipDragAxis() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setX(float val);
-		XpObjLib void setY(float val);
-		XpObjLib void setZ(float val);
-		XpObjLib float x() const;
-		XpObjLib float y() const;
-		XpObjLib float z() const;
+    XpObjLib void setX(float val);
+    XpObjLib void setY(float val);
+    XpObjLib void setZ(float val);
+    XpObjLib float x() const;
+    XpObjLib float y() const;
+    XpObjLib float z() const;
 
-		XpObjLib void setVal1(float val);
-		XpObjLib void setVal2(float val);
-		XpObjLib float val1() const;
-		XpObjLib float val2() const;
+    XpObjLib void setVal1(float val);
+    XpObjLib void setVal2(float val);
+    XpObjLib float val1() const;
+    XpObjLib float val2() const;
 
-		XpObjLib void setDataref(const std::string & val);
-		XpObjLib const std::string & dataref() const;
+    XpObjLib void setDataref(const std::string & val);
+    XpObjLib const std::string & dataref() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*! \copydoc AttrManipBase::equals */
-		XpObjLib bool equals(const AttrManipBase * manip) const override;
+    /*! \copydoc AttrManipBase::equals */
+    XpObjLib bool equals(const AttrManipBase * manip) const override;
 
-		/*! \copydoc AttrManipBase::clone */
-		XpObjLib AttrManipBase * clone() const override;
+    /*! \copydoc AttrManipBase::clone */
+    XpObjLib AttrManipBase * clone() const override;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		float mX = 0.0f;
-		float mY = 0.0f;
-		float mZ = 0.0f;
-		float mVal1 = 0.0f;
-		float mVal2 = 1.0f;
-		std::string mDataref = "none";
+    float mX = 0.0f;
+    float mY = 0.0f;
+    float mZ = 0.0f;
+    float mVal1 = 0.0f;
+    float mVal2 = 1.0f;
+    std::string mDataref = "none";
 
-	};
+};
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 }

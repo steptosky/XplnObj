@@ -36,7 +36,7 @@
  */
 template<class value_type>
 TMatrix3<value_type>::TMatrix3()
-	: TMatrix3(true) {}
+    : TMatrix3(true) {}
 
 /*!
  * \details Constructor init
@@ -44,7 +44,7 @@ TMatrix3<value_type>::TMatrix3()
  */
 template<class value_type>
 TMatrix3<value_type>::TMatrix3(bool inIdentity) {
-	inIdentity ? setIdentity() : setZero();
+    inIdentity ? setIdentity() : setZero();
 }
 
 /*!
@@ -56,11 +56,11 @@ TMatrix3<value_type>::TMatrix3(bool inIdentity) {
  */
 template<class value_type>
 TMatrix3<value_type>::TMatrix3(value_type * inArray, size_t inCount) {
-	assert(inArray);
-	assert(inCount != 0);
-	assert(inCount <= 12);
-	memcpy(mData, inArray, sizeof(value_type) * inCount);
-	validateFlags();
+    assert(inArray);
+    assert(inCount != 0);
+    assert(inCount <= 12);
+    memcpy(mData, inArray, sizeof(value_type) * inCount);
+    validateFlags();
 }
 
 /*!
@@ -69,16 +69,16 @@ TMatrix3<value_type>::TMatrix3(value_type * inArray, size_t inCount) {
  */
 template<class value_type>
 TMatrix3<value_type>::TMatrix3(
-	value_type m00, value_type m01, value_type m02,
-	value_type m10, value_type m11, value_type m12,
-	value_type m20, value_type m21, value_type m22,
-	value_type m30, value_type m31, value_type m32)
-	: mFlags(0) {
-	mData[0][0] = m00 , mData[0][1] = m01 , mData[0][2] = m02;
-	mData[1][0] = m10 , mData[1][1] = m11 , mData[1][2] = m12;
-	mData[2][0] = m20 , mData[2][1] = m21 , mData[2][2] = m22;
-	mData[3][0] = m30 , mData[3][1] = m31 , mData[3][2] = m32;
-	validateFlags();
+    value_type m00, value_type m01, value_type m02,
+    value_type m10, value_type m11, value_type m12,
+    value_type m20, value_type m21, value_type m22,
+    value_type m30, value_type m31, value_type m32)
+    : mFlags(0) {
+    mData[0][0] = m00, mData[0][1] = m01, mData[0][2] = m02;
+    mData[1][0] = m10, mData[1][1] = m11, mData[1][2] = m12;
+    mData[2][0] = m20, mData[2][1] = m21, mData[2][2] = m22;
+    mData[3][0] = m30, mData[3][1] = m31, mData[3][2] = m32;
+    validateFlags();
 }
 
 /*!
@@ -98,8 +98,8 @@ TMatrix3<value_type>::~TMatrix3() {}
  */
 template<class value_type>
 const value_type & TMatrix3<value_type>::operator[](size_t i) const {
-	assert(i < 12);
-	return reinterpret_cast<const value_type*>(mData)[i];
+    assert(i < 12);
+    return reinterpret_cast<const value_type*>(mData)[i];
 }
 
 /*!
@@ -109,8 +109,8 @@ const value_type & TMatrix3<value_type>::operator[](size_t i) const {
  */
 template<class value_type>
 value_type & TMatrix3<value_type>::operator[](size_t i) {
-	assert(i < 12);
-	return reinterpret_cast<value_type*>(mData)[i];
+    assert(i < 12);
+    return reinterpret_cast<value_type*>(mData)[i];
 }
 
 /*!
@@ -124,8 +124,8 @@ value_type & TMatrix3<value_type>::operator[](size_t i) {
  */
 template<class value_type>
 const value_type & TMatrix3<value_type>::operator()(size_t row, size_t column) const {
-	assert(row < 4 && column < 3);
-	return mData[row][column];
+    assert(row < 4 && column < 3);
+    return mData[row][column];
 }
 
 /*!
@@ -139,8 +139,8 @@ const value_type & TMatrix3<value_type>::operator()(size_t row, size_t column) c
  */
 template<class value_type>
 value_type & TMatrix3<value_type>::operator()(size_t row, size_t column) {
-	assert(row < 4 && column < 3);
-	return mData[row][column];
+    assert(row < 4 && column < 3);
+    return mData[row][column];
 }
 
 /*!
@@ -149,22 +149,22 @@ value_type & TMatrix3<value_type>::operator()(size_t row, size_t column) {
  */
 template<class value_type>
 bool TMatrix3<value_type>::operator==(const TMatrix3<value_type> & inMtx) const {
-	return (
-		sts::isEqual(mData[0][0], inMtx.mData[0][0]) &&
-		sts::isEqual(mData[0][1], inMtx.mData[0][1]) &&
-		sts::isEqual(mData[0][2], inMtx.mData[0][2]) &&
+    return (
+        sts::isEqual(mData[0][0], inMtx.mData[0][0]) &&
+        sts::isEqual(mData[0][1], inMtx.mData[0][1]) &&
+        sts::isEqual(mData[0][2], inMtx.mData[0][2]) &&
 
-		sts::isEqual(mData[1][0], inMtx.mData[1][0]) &&
-		sts::isEqual(mData[1][1], inMtx.mData[1][1]) &&
-		sts::isEqual(mData[1][2], inMtx.mData[1][2]) &&
+        sts::isEqual(mData[1][0], inMtx.mData[1][0]) &&
+        sts::isEqual(mData[1][1], inMtx.mData[1][1]) &&
+        sts::isEqual(mData[1][2], inMtx.mData[1][2]) &&
 
-		sts::isEqual(mData[2][0], inMtx.mData[2][0]) &&
-		sts::isEqual(mData[2][1], inMtx.mData[2][1]) &&
-		sts::isEqual(mData[2][2], inMtx.mData[2][2]) &&
+        sts::isEqual(mData[2][0], inMtx.mData[2][0]) &&
+        sts::isEqual(mData[2][1], inMtx.mData[2][1]) &&
+        sts::isEqual(mData[2][2], inMtx.mData[2][2]) &&
 
-		sts::isEqual(mData[3][0], inMtx.mData[3][0]) &&
-		sts::isEqual(mData[3][1], inMtx.mData[3][1]) &&
-		sts::isEqual(mData[3][2], inMtx.mData[3][2]));
+        sts::isEqual(mData[3][0], inMtx.mData[3][0]) &&
+        sts::isEqual(mData[3][1], inMtx.mData[3][1]) &&
+        sts::isEqual(mData[3][2], inMtx.mData[3][2]));
 }
 
 /*!
@@ -173,7 +173,7 @@ bool TMatrix3<value_type>::operator==(const TMatrix3<value_type> & inMtx) const 
  */
 template<class value_type>
 bool TMatrix3<value_type>::operator!=(const TMatrix3<value_type> & inMtx) const {
-	return !this->operator==(inMtx);
+    return !this->operator==(inMtx);
 }
 
 /*!
@@ -182,12 +182,12 @@ bool TMatrix3<value_type>::operator!=(const TMatrix3<value_type> & inMtx) const 
  */
 template<class value_type>
 TMatrix3<value_type> & TMatrix3<value_type>::operator-=(const TMatrix3<value_type> & inMtx) {
-	mData[0][0] -= inMtx.mData[0][0] , mData[0][1] -= inMtx.mData[0][1] , mData[0][2] -= inMtx.mData[0][2];
-	mData[1][0] -= inMtx.mData[1][0] , mData[1][1] -= inMtx.mData[1][1] , mData[1][2] -= inMtx.mData[1][2];
-	mData[2][0] -= inMtx.mData[2][0] , mData[2][1] -= inMtx.mData[2][1] , mData[2][2] -= inMtx.mData[2][2];
-	mData[3][0] -= inMtx.mData[3][0] , mData[3][1] -= inMtx.mData[3][1] , mData[3][2] -= inMtx.mData[3][2];
-	__clearIdentFlag(MAT_IDENT);
-	return *this;
+    mData[0][0] -= inMtx.mData[0][0], mData[0][1] -= inMtx.mData[0][1], mData[0][2] -= inMtx.mData[0][2];
+    mData[1][0] -= inMtx.mData[1][0], mData[1][1] -= inMtx.mData[1][1], mData[1][2] -= inMtx.mData[1][2];
+    mData[2][0] -= inMtx.mData[2][0], mData[2][1] -= inMtx.mData[2][1], mData[2][2] -= inMtx.mData[2][2];
+    mData[3][0] -= inMtx.mData[3][0], mData[3][1] -= inMtx.mData[3][1], mData[3][2] -= inMtx.mData[3][2];
+    __clearIdentFlag(MAT_IDENT);
+    return *this;
 }
 
 /*!
@@ -196,12 +196,12 @@ TMatrix3<value_type> & TMatrix3<value_type>::operator-=(const TMatrix3<value_typ
  */
 template<class value_type>
 TMatrix3<value_type> & TMatrix3<value_type>::operator+=(const TMatrix3<value_type> & inMtx) {
-	mData[0][0] += inMtx.mData[0][0] , mData[0][1] += inMtx.mData[0][1] , mData[0][2] += inMtx.mData[0][2];
-	mData[1][0] += inMtx.mData[1][0] , mData[1][1] += inMtx.mData[1][1] , mData[1][2] += inMtx.mData[1][2];
-	mData[2][0] += inMtx.mData[2][0] , mData[2][1] += inMtx.mData[2][1] , mData[2][2] += inMtx.mData[2][2];
-	mData[3][0] += inMtx.mData[3][0] , mData[3][1] += inMtx.mData[3][1] , mData[3][2] += inMtx.mData[3][2];
-	__clearIdentFlag(MAT_IDENT);
-	return *this;
+    mData[0][0] += inMtx.mData[0][0], mData[0][1] += inMtx.mData[0][1], mData[0][2] += inMtx.mData[0][2];
+    mData[1][0] += inMtx.mData[1][0], mData[1][1] += inMtx.mData[1][1], mData[1][2] += inMtx.mData[1][2];
+    mData[2][0] += inMtx.mData[2][0], mData[2][1] += inMtx.mData[2][1], mData[2][2] += inMtx.mData[2][2];
+    mData[3][0] += inMtx.mData[3][0], mData[3][1] += inMtx.mData[3][1], mData[3][2] += inMtx.mData[3][2];
+    __clearIdentFlag(MAT_IDENT);
+    return *this;
 }
 
 /*!
@@ -211,10 +211,10 @@ TMatrix3<value_type> & TMatrix3<value_type>::operator+=(const TMatrix3<value_typ
  */
 template<class value_type>
 TMatrix3<value_type> & TMatrix3<value_type>::operator*=(const TMatrix3<value_type> & inMtx) {
-	if (!inMtx.isIdentity()) {
-		(isIdentity() == false) ? *this = this->operator*(inMtx) : *this = inMtx;
-	}
-	return *this;
+    if (!inMtx.isIdentity()) {
+        (isIdentity() == false) ? *this = this->operator*(inMtx) : *this = inMtx;
+    }
+    return *this;
 }
 
 /*!
@@ -224,12 +224,12 @@ TMatrix3<value_type> & TMatrix3<value_type>::operator*=(const TMatrix3<value_typ
  */
 template<class value_type>
 TMatrix3<value_type> & TMatrix3<value_type>::operator*=(value_type scalar) {
-	mData[0][0] *= scalar , mData[0][1] *= scalar , mData[0][2] *= scalar;
-	mData[1][0] *= scalar , mData[1][1] *= scalar , mData[1][2] *= scalar;
-	mData[2][0] *= scalar , mData[2][1] *= scalar , mData[2][2] *= scalar;
-	mData[3][0] *= scalar , mData[3][1] *= scalar , mData[3][2] *= scalar;
-	__clearIdentFlag(MAT_IDENT);
-	return *this;
+    mData[0][0] *= scalar, mData[0][1] *= scalar, mData[0][2] *= scalar;
+    mData[1][0] *= scalar, mData[1][1] *= scalar, mData[1][2] *= scalar;
+    mData[2][0] *= scalar, mData[2][1] *= scalar, mData[2][2] *= scalar;
+    mData[3][0] *= scalar, mData[3][1] *= scalar, mData[3][2] *= scalar;
+    __clearIdentFlag(MAT_IDENT);
+    return *this;
 }
 
 /*!
@@ -238,30 +238,30 @@ TMatrix3<value_type> & TMatrix3<value_type>::operator*=(value_type scalar) {
  */
 template<class value_type>
 TMatrix3<value_type> TMatrix3<value_type>::operator*(const TMatrix3<value_type> & inTm) const {
-	if (inTm.isIdentity()) {
-		return *this;
-	}
-	if (isIdentity()) {
-		return inTm;
-	}
-	TMatrix3 outTm(
-				 inTm.mData[0][0] * mData[0][0] + inTm.mData[1][0] * mData[0][1] + inTm.mData[2][0] * mData[0][2], // 00
-				 inTm.mData[0][1] * mData[0][0] + inTm.mData[1][1] * mData[0][1] + inTm.mData[2][1] * mData[0][2], // 01
-				 inTm.mData[0][2] * mData[0][0] + inTm.mData[1][2] * mData[0][1] + inTm.mData[2][2] * mData[0][2], // 02
-				 inTm.mData[0][0] * mData[1][0] + inTm.mData[1][0] * mData[1][1] + inTm.mData[2][0] * mData[1][2], // 10
-				 inTm.mData[0][1] * mData[1][0] + inTm.mData[1][1] * mData[1][1] + inTm.mData[2][1] * mData[1][2], // 11
-				 inTm.mData[0][2] * mData[1][0] + inTm.mData[1][2] * mData[1][1] + inTm.mData[2][2] * mData[1][2], // 12
-				 inTm.mData[0][0] * mData[2][0] + inTm.mData[1][0] * mData[2][1] + inTm.mData[2][0] * mData[2][2], // 20
-				 inTm.mData[0][1] * mData[2][0] + inTm.mData[1][1] * mData[2][1] + inTm.mData[2][1] * mData[2][2], // 21
-				 inTm.mData[0][2] * mData[2][0] + inTm.mData[1][2] * mData[2][1] + inTm.mData[2][2] * mData[2][2], // 22
-				 inTm.mData[0][0] * mData[3][0] + inTm.mData[1][0] * mData[3][1] + inTm.mData[2][0] * mData[3][2] + inTm.mData[3][0],
-				 inTm.mData[0][1] * mData[3][0] + inTm.mData[1][1] * mData[3][1] + inTm.mData[2][1] * mData[3][2] + inTm.mData[3][1],
-				 inTm.mData[0][2] * mData[3][0] + inTm.mData[1][2] * mData[3][1] + inTm.mData[2][2] * mData[3][2] + inTm.mData[3][2]);
+    if (inTm.isIdentity()) {
+        return *this;
+    }
+    if (isIdentity()) {
+        return inTm;
+    }
+    TMatrix3 outTm(
+                   inTm.mData[0][0] * mData[0][0] + inTm.mData[1][0] * mData[0][1] + inTm.mData[2][0] * mData[0][2], // 00
+                   inTm.mData[0][1] * mData[0][0] + inTm.mData[1][1] * mData[0][1] + inTm.mData[2][1] * mData[0][2], // 01
+                   inTm.mData[0][2] * mData[0][0] + inTm.mData[1][2] * mData[0][1] + inTm.mData[2][2] * mData[0][2], // 02
+                   inTm.mData[0][0] * mData[1][0] + inTm.mData[1][0] * mData[1][1] + inTm.mData[2][0] * mData[1][2], // 10
+                   inTm.mData[0][1] * mData[1][0] + inTm.mData[1][1] * mData[1][1] + inTm.mData[2][1] * mData[1][2], // 11
+                   inTm.mData[0][2] * mData[1][0] + inTm.mData[1][2] * mData[1][1] + inTm.mData[2][2] * mData[1][2], // 12
+                   inTm.mData[0][0] * mData[2][0] + inTm.mData[1][0] * mData[2][1] + inTm.mData[2][0] * mData[2][2], // 20
+                   inTm.mData[0][1] * mData[2][0] + inTm.mData[1][1] * mData[2][1] + inTm.mData[2][1] * mData[2][2], // 21
+                   inTm.mData[0][2] * mData[2][0] + inTm.mData[1][2] * mData[2][1] + inTm.mData[2][2] * mData[2][2], // 22
+                   inTm.mData[0][0] * mData[3][0] + inTm.mData[1][0] * mData[3][1] + inTm.mData[2][0] * mData[3][2] + inTm.mData[3][0],
+                   inTm.mData[0][1] * mData[3][0] + inTm.mData[1][1] * mData[3][1] + inTm.mData[2][1] * mData[3][2] + inTm.mData[3][1],
+                   inTm.mData[0][2] * mData[3][0] + inTm.mData[1][2] * mData[3][1] + inTm.mData[2][2] * mData[3][2] + inTm.mData[3][2]);
 
-	if (isIdentity(SCL_IDENT) && inTm.isIdentity(SCL_IDENT)) {
-		outTm.__addIdentFlags(SCL_IDENT);
-	}
-	return outTm;
+    if (isIdentity(SCL_IDENT) && inTm.isIdentity(SCL_IDENT)) {
+        outTm.__addIdentFlags(SCL_IDENT);
+    }
+    return outTm;
 }
 
 /*!
@@ -270,7 +270,7 @@ TMatrix3<value_type> TMatrix3<value_type>::operator*(const TMatrix3<value_type> 
  */
 template<class value_type>
 TMatrix3<value_type> TMatrix3<value_type>::operator+(const TMatrix3<value_type> & inMtx) const {
-	return TMatrix3(*this) += inMtx;
+    return TMatrix3(*this) += inMtx;
 }
 
 /*!
@@ -279,7 +279,7 @@ TMatrix3<value_type> TMatrix3<value_type>::operator+(const TMatrix3<value_type> 
  */
 template<class value_type>
 TMatrix3<value_type> TMatrix3<value_type>::operator-(const TMatrix3<value_type> & inMtx) const {
-	return TMatrix3<value_type>(*this) -= inMtx;
+    return TMatrix3<value_type>(*this) -= inMtx;
 }
 
 /*!
@@ -288,7 +288,7 @@ TMatrix3<value_type> TMatrix3<value_type>::operator-(const TMatrix3<value_type> 
  */
 template<class value_type>
 TMatrix3<value_type> TMatrix3<value_type>::operator*(value_type scalar) const {
-	return TMatrix3<value_type>(*this) *= scalar;
+    return TMatrix3<value_type>(*this) *= scalar;
 }
 
 /**************************************************************************************************/
@@ -301,23 +301,23 @@ TMatrix3<value_type> TMatrix3<value_type>::operator*(value_type scalar) const {
  */
 template<class value_type>
 bool TMatrix3<value_type>::isEqual(const TMatrix3<value_type> & inMtx, value_type epsilon) const {
-	return (
-		sts::isEqual(mData[0][0], inMtx.mData[0][0], epsilon) &&
-		sts::isEqual(mData[0][1], inMtx.mData[0][1], epsilon) &&
-		sts::isEqual(mData[0][2], inMtx.mData[0][2], epsilon) &&
+    return (
+        sts::isEqual(mData[0][0], inMtx.mData[0][0], epsilon) &&
+        sts::isEqual(mData[0][1], inMtx.mData[0][1], epsilon) &&
+        sts::isEqual(mData[0][2], inMtx.mData[0][2], epsilon) &&
 
-		sts::isEqual(mData[1][0], inMtx.mData[1][0], epsilon) &&
-		sts::isEqual(mData[1][1], inMtx.mData[1][1], epsilon) &&
-		sts::isEqual(mData[1][2], inMtx.mData[1][2], epsilon) &&
+        sts::isEqual(mData[1][0], inMtx.mData[1][0], epsilon) &&
+        sts::isEqual(mData[1][1], inMtx.mData[1][1], epsilon) &&
+        sts::isEqual(mData[1][2], inMtx.mData[1][2], epsilon) &&
 
-		sts::isEqual(mData[2][0], inMtx.mData[2][0], epsilon) &&
-		sts::isEqual(mData[2][1], inMtx.mData[2][1], epsilon) &&
-		sts::isEqual(mData[2][2], inMtx.mData[2][2], epsilon) &&
+        sts::isEqual(mData[2][0], inMtx.mData[2][0], epsilon) &&
+        sts::isEqual(mData[2][1], inMtx.mData[2][1], epsilon) &&
+        sts::isEqual(mData[2][2], inMtx.mData[2][2], epsilon) &&
 
-		sts::isEqual(mData[3][0], inMtx.mData[3][0], epsilon) &&
-		sts::isEqual(mData[3][1], inMtx.mData[3][1], epsilon) &&
-		sts::isEqual(mData[3][2], inMtx.mData[3][2], epsilon)
-	);
+        sts::isEqual(mData[3][0], inMtx.mData[3][0], epsilon) &&
+        sts::isEqual(mData[3][1], inMtx.mData[3][1], epsilon) &&
+        sts::isEqual(mData[3][2], inMtx.mData[3][2], epsilon)
+    );
 }
 
 /*!
@@ -325,20 +325,20 @@ bool TMatrix3<value_type>::isEqual(const TMatrix3<value_type> & inMtx, value_typ
  */
 template<class value_type>
 void TMatrix3<value_type>::setIdentity() {
-	mData[0][0] = value_type(1);
-	mData[0][1] = value_type(0);
-	mData[0][2] = value_type(0);
-	mData[1][0] = value_type(0);
-	mData[1][1] = value_type(1);
-	mData[1][2] = value_type(0);
-	mData[2][0] = value_type(0);
-	mData[2][1] = value_type(0);
-	mData[2][2] = value_type(1);
-	mData[3][0] = value_type(0);
-	mData[3][1] = value_type(0);
-	mData[3][2] = value_type(0);
-	mFlags = 0;
-	__addIdentFlags(MAT_IDENT);
+    mData[0][0] = value_type(1);
+    mData[0][1] = value_type(0);
+    mData[0][2] = value_type(0);
+    mData[1][0] = value_type(0);
+    mData[1][1] = value_type(1);
+    mData[1][2] = value_type(0);
+    mData[2][0] = value_type(0);
+    mData[2][1] = value_type(0);
+    mData[2][2] = value_type(1);
+    mData[3][0] = value_type(0);
+    mData[3][1] = value_type(0);
+    mData[3][2] = value_type(0);
+    mFlags = 0;
+    __addIdentFlags(MAT_IDENT);
 }
 
 /*!
@@ -346,20 +346,20 @@ void TMatrix3<value_type>::setIdentity() {
  */
 template<class value_type>
 void TMatrix3<value_type>::setZero() {
-	mData[0][0] = value_type(0);
-	mData[0][1] = value_type(0);
-	mData[0][2] = value_type(0);
-	mData[1][0] = value_type(0);
-	mData[1][1] = value_type(0);
-	mData[1][2] = value_type(0);
-	mData[2][0] = value_type(0);
-	mData[2][1] = value_type(0);
-	mData[2][2] = value_type(0);
-	mData[3][0] = value_type(0);
-	mData[3][1] = value_type(0);
-	mData[3][2] = value_type(0);
-	mFlags = 0;
-	__addIdentFlags(POS_IDENT);
+    mData[0][0] = value_type(0);
+    mData[0][1] = value_type(0);
+    mData[0][2] = value_type(0);
+    mData[1][0] = value_type(0);
+    mData[1][1] = value_type(0);
+    mData[1][2] = value_type(0);
+    mData[2][0] = value_type(0);
+    mData[2][1] = value_type(0);
+    mData[2][2] = value_type(0);
+    mData[3][0] = value_type(0);
+    mData[3][1] = value_type(0);
+    mData[3][2] = value_type(0);
+    mFlags = 0;
+    __addIdentFlags(POS_IDENT);
 }
 
 /*!
@@ -368,50 +368,50 @@ void TMatrix3<value_type>::setZero() {
  */
 template<class value_type>
 TMatrix3<value_type> TMatrix3<value_type>::inversed() const {
-	TMatrix3<value_type> outMtx(true);
-	if (!isIdentity(MAT_IDENT)) {
-		if (isIdentity(SCL_IDENT)) {
-			outMtx.mData[0][0] = mData[0][0];
-			outMtx.mData[0][1] = mData[1][0];
-			outMtx.mData[0][2] = mData[2][0];
-			outMtx.mData[1][0] = mData[0][1];
-			outMtx.mData[1][1] = mData[1][1];
-			outMtx.mData[1][2] = mData[2][1];
-			outMtx.mData[2][0] = mData[0][2];
-			outMtx.mData[2][1] = mData[1][2];
-			outMtx.mData[2][2] = mData[2][2];
-		}
-		else {
-			outMtx.mData[0][0] = mData[1][1] * mData[2][2] - mData[1][2] * mData[2][1];
-			outMtx.mData[0][1] = mData[0][2] * mData[2][1] - mData[0][1] * mData[2][2];
-			outMtx.mData[0][2] = mData[0][1] * mData[1][2] - mData[0][2] * mData[1][1];
-			outMtx.mData[1][0] = mData[2][0] * mData[1][2] - mData[1][0] * mData[2][2];
-			outMtx.mData[1][1] = mData[2][2] * mData[0][0] - mData[0][2] * mData[2][0];
-			outMtx.mData[1][2] = mData[0][2] * mData[1][0] - mData[1][2] * mData[0][0];
-			outMtx.mData[2][0] = mData[1][0] * mData[2][1] - mData[2][0] * mData[1][1];
-			outMtx.mData[2][1] = mData[0][1] * mData[2][0] - mData[2][1] * mData[0][0];
-			outMtx.mData[2][2] = mData[1][1] * mData[0][0] - mData[0][1] * mData[1][0];
+    TMatrix3<value_type> outMtx(true);
+    if (!isIdentity(MAT_IDENT)) {
+        if (isIdentity(SCL_IDENT)) {
+            outMtx.mData[0][0] = mData[0][0];
+            outMtx.mData[0][1] = mData[1][0];
+            outMtx.mData[0][2] = mData[2][0];
+            outMtx.mData[1][0] = mData[0][1];
+            outMtx.mData[1][1] = mData[1][1];
+            outMtx.mData[1][2] = mData[2][1];
+            outMtx.mData[2][0] = mData[0][2];
+            outMtx.mData[2][1] = mData[1][2];
+            outMtx.mData[2][2] = mData[2][2];
+        }
+        else {
+            outMtx.mData[0][0] = mData[1][1] * mData[2][2] - mData[1][2] * mData[2][1];
+            outMtx.mData[0][1] = mData[0][2] * mData[2][1] - mData[0][1] * mData[2][2];
+            outMtx.mData[0][2] = mData[0][1] * mData[1][2] - mData[0][2] * mData[1][1];
+            outMtx.mData[1][0] = mData[2][0] * mData[1][2] - mData[1][0] * mData[2][2];
+            outMtx.mData[1][1] = mData[2][2] * mData[0][0] - mData[0][2] * mData[2][0];
+            outMtx.mData[1][2] = mData[0][2] * mData[1][0] - mData[1][2] * mData[0][0];
+            outMtx.mData[2][0] = mData[1][0] * mData[2][1] - mData[2][0] * mData[1][1];
+            outMtx.mData[2][1] = mData[0][1] * mData[2][0] - mData[2][1] * mData[0][0];
+            outMtx.mData[2][2] = mData[1][1] * mData[0][0] - mData[0][1] * mData[1][0];
 
-			value_type factor = mData[1][0] * outMtx.mData[0][1] + mData[2][0] * outMtx.mData[0][2] + mData[0][0] * outMtx.mData[0][0];
-			factor = sts::isEqual(factor, value_type(0)) ? value_type(1.0e7) : value_type(1) / factor;
+            value_type factor = mData[1][0] * outMtx.mData[0][1] + mData[2][0] * outMtx.mData[0][2] + mData[0][0] * outMtx.mData[0][0];
+            factor = sts::isEqual(factor, value_type(0)) ? value_type(1.0e7) : value_type(1) / factor;
 
-			outMtx.mData[0][0] *= factor;
-			outMtx.mData[0][1] *= factor;
-			outMtx.mData[0][2] *= factor;
-			outMtx.mData[1][0] *= factor;
-			outMtx.mData[1][1] *= factor;
-			outMtx.mData[1][2] *= factor;
-			outMtx.mData[2][0] *= factor;
-			outMtx.mData[2][2] *= factor;
-			outMtx.mData[2][1] *= factor;
-		}
+            outMtx.mData[0][0] *= factor;
+            outMtx.mData[0][1] *= factor;
+            outMtx.mData[0][2] *= factor;
+            outMtx.mData[1][0] *= factor;
+            outMtx.mData[1][1] *= factor;
+            outMtx.mData[1][2] *= factor;
+            outMtx.mData[2][0] *= factor;
+            outMtx.mData[2][2] *= factor;
+            outMtx.mData[2][1] *= factor;
+        }
 
-		outMtx.mData[3][0] = -(mData[3][0] * outMtx.mData[0][0] + mData[3][1] * outMtx.mData[1][0] + mData[3][2] * outMtx.mData[2][0]);
-		outMtx.mData[3][1] = -(mData[3][0] * outMtx.mData[0][1] + mData[3][1] * outMtx.mData[1][1] + mData[3][2] * outMtx.mData[2][1]);
-		outMtx.mData[3][2] = -(mData[3][0] * outMtx.mData[0][2] + mData[3][1] * outMtx.mData[1][2] + mData[3][2] * outMtx.mData[2][2]);
-		outMtx.mFlags = mFlags;
-	}
-	return outMtx;
+        outMtx.mData[3][0] = -(mData[3][0] * outMtx.mData[0][0] + mData[3][1] * outMtx.mData[1][0] + mData[3][2] * outMtx.mData[2][0]);
+        outMtx.mData[3][1] = -(mData[3][0] * outMtx.mData[0][1] + mData[3][1] * outMtx.mData[1][1] + mData[3][2] * outMtx.mData[2][1]);
+        outMtx.mData[3][2] = -(mData[3][0] * outMtx.mData[0][2] + mData[3][1] * outMtx.mData[1][2] + mData[3][2] * outMtx.mData[2][2]);
+        outMtx.mFlags = mFlags;
+    }
+    return outMtx;
 }
 
 /**************************************************************************************************/
@@ -423,10 +423,10 @@ TMatrix3<value_type> TMatrix3<value_type>::inversed() const {
  */
 template<class value_type>
 void TMatrix3<value_type>::setTranslateIdentity() {
-	mData[3][0] = 0.0;
-	mData[3][1] = 0.0;
-	mData[3][2] = 0.0;
-	__addIdentFlags(POS_IDENT);
+    mData[3][0] = 0.0;
+    mData[3][1] = 0.0;
+    mData[3][2] = 0.0;
+    __addIdentFlags(POS_IDENT);
 }
 
 /*!
@@ -436,37 +436,37 @@ void TMatrix3<value_type>::setTranslateIdentity() {
  */
 template<class value_type>
 void TMatrix3<value_type>::setRotateIdentity(bool leaveScale) {
-	if (isIdentity(ROT_IDENT)) {
-		return;
-	}
-	if (leaveScale) {
-		if (!isIdentity(SCL_IDENT)) {
-			mData[0][0] = sqrt(mData[0][0] * mData[0][0] + mData[0][1] * mData[0][1] + mData[0][2] * mData[0][2]);
-			mData[1][1] = sqrt(mData[1][0] * mData[1][0] + mData[1][1] * mData[1][1] + mData[1][2] * mData[1][2]);
-			mData[2][2] = sqrt(mData[2][0] * mData[2][0] + mData[2][1] * mData[2][1] + mData[2][2] * mData[2][2]);
-			mData[0][1] = mData[0][2] = 0.0;
-			mData[1][0] = mData[1][2] = 0.0;
-			mData[2][0] = mData[2][1] = 0.0;
-			if (sts::isEqual(mData[0][0], value_type(1)) && sts::isEqual(mData[1][1], value_type(1)) && sts::isEqual(mData[2][2], value_type(1))) {
-				__addIdentFlags(ROT_IDENT | SCL_IDENT);
-			}
-			else {
-				__addIdentFlags(ROT_IDENT);
-			}
-		}
-	}
-	else {
-		mData[0][0] = 1.0;
-		mData[0][1] = 0.0;
-		mData[0][2] = value_type(0);
-		mData[1][0] = 0.0;
-		mData[1][1] = 1.0;
-		mData[1][2] = value_type(0);
-		mData[2][0] = 0.0;
-		mData[2][1] = 0.0;
-		mData[2][2] = value_type(1);
-		__addIdentFlags(ROT_IDENT | SCL_IDENT);
-	}
+    if (isIdentity(ROT_IDENT)) {
+        return;
+    }
+    if (leaveScale) {
+        if (!isIdentity(SCL_IDENT)) {
+            mData[0][0] = sqrt(mData[0][0] * mData[0][0] + mData[0][1] * mData[0][1] + mData[0][2] * mData[0][2]);
+            mData[1][1] = sqrt(mData[1][0] * mData[1][0] + mData[1][1] * mData[1][1] + mData[1][2] * mData[1][2]);
+            mData[2][2] = sqrt(mData[2][0] * mData[2][0] + mData[2][1] * mData[2][1] + mData[2][2] * mData[2][2]);
+            mData[0][1] = mData[0][2] = 0.0;
+            mData[1][0] = mData[1][2] = 0.0;
+            mData[2][0] = mData[2][1] = 0.0;
+            if (sts::isEqual(mData[0][0], value_type(1)) && sts::isEqual(mData[1][1], value_type(1)) && sts::isEqual(mData[2][2], value_type(1))) {
+                __addIdentFlags(ROT_IDENT | SCL_IDENT);
+            }
+            else {
+                __addIdentFlags(ROT_IDENT);
+            }
+        }
+    }
+    else {
+        mData[0][0] = 1.0;
+        mData[0][1] = 0.0;
+        mData[0][2] = value_type(0);
+        mData[1][0] = 0.0;
+        mData[1][1] = 1.0;
+        mData[1][2] = value_type(0);
+        mData[2][0] = 0.0;
+        mData[2][1] = 0.0;
+        mData[2][2] = value_type(1);
+        __addIdentFlags(ROT_IDENT | SCL_IDENT);
+    }
 }
 
 /*!
@@ -478,45 +478,45 @@ void TMatrix3<value_type>::setRotateIdentity(bool leaveScale) {
  */
 template<class value_type>
 void TMatrix3<value_type>::setScaleIdentity() {
-	if (isIdentity(SCL_IDENT)) {
-		return;
-	}
-	value_type factor = value_type(1);
-	value_type len = sqrt(mData[0][0] * mData[0][0] + mData[0][1] * mData[0][1] + mData[0][2] * mData[0][2]);
-	if (!sts::isEqual(len, value_type(0))) {
-		factor = value_type(1) / len;
-		mData[0][0] *= factor;
-		mData[0][1] *= factor;
-		mData[0][2] *= factor;
-	}
+    if (isIdentity(SCL_IDENT)) {
+        return;
+    }
+    value_type factor = value_type(1);
+    value_type len = sqrt(mData[0][0] * mData[0][0] + mData[0][1] * mData[0][1] + mData[0][2] * mData[0][2]);
+    if (!sts::isEqual(len, value_type(0))) {
+        factor = value_type(1) / len;
+        mData[0][0] *= factor;
+        mData[0][1] *= factor;
+        mData[0][2] *= factor;
+    }
 
-	len = sqrt(mData[1][0] * mData[1][0] + mData[1][1] * mData[1][1] + mData[1][2] * mData[1][2]);
-	if (!sts::isEqual(len, value_type(0))) {
-		factor = value_type(1) / len;
-		mData[1][0] *= factor;
-		mData[1][1] *= factor;
-		mData[1][2] *= factor;
-	}
+    len = sqrt(mData[1][0] * mData[1][0] + mData[1][1] * mData[1][1] + mData[1][2] * mData[1][2]);
+    if (!sts::isEqual(len, value_type(0))) {
+        factor = value_type(1) / len;
+        mData[1][0] *= factor;
+        mData[1][1] *= factor;
+        mData[1][2] *= factor;
+    }
 
-	len = sqrt(mData[2][0] * mData[2][0] + mData[2][1] * mData[2][1] + mData[2][2] * mData[2][2]);
-	if (!sts::isEqual(len, value_type(0))) {
-		factor = value_type(1) / len;
-		mData[2][0] *= factor;
-		mData[2][1] *= factor;
-		mData[2][2] *= factor;
-	}
+    len = sqrt(mData[2][0] * mData[2][0] + mData[2][1] * mData[2][1] + mData[2][2] * mData[2][2]);
+    if (!sts::isEqual(len, value_type(0))) {
+        factor = value_type(1) / len;
+        mData[2][0] *= factor;
+        mData[2][1] *= factor;
+        mData[2][2] *= factor;
+    }
 
-	if (!sts::isEqual((mData[1][1] * mData[0][1]) + (mData[1][2] * mData[0][2]) + (mData[1][0] * mData[0][0]), value_type(0)))
-		return;
-	if (!sts::isEqual((mData[0][2] * mData[2][2]) + (mData[0][1] * mData[2][1]) + (mData[0][0] * mData[2][0]), value_type(0)))
-		return;
-	if (!sts::isEqual((mData[1][2] * mData[2][2]) + (mData[1][1] * mData[2][1]) + (mData[1][0] * mData[2][0]), value_type(0)))
-		return;
+    if (!sts::isEqual((mData[1][1] * mData[0][1]) + (mData[1][2] * mData[0][2]) + (mData[1][0] * mData[0][0]), value_type(0)))
+        return;
+    if (!sts::isEqual((mData[0][2] * mData[2][2]) + (mData[0][1] * mData[2][1]) + (mData[0][0] * mData[2][0]), value_type(0)))
+        return;
+    if (!sts::isEqual((mData[1][2] * mData[2][2]) + (mData[1][1] * mData[2][1]) + (mData[1][0] * mData[2][0]), value_type(0)))
+        return;
 
-	Vec3 res = Vec3(mData[0][0], mData[0][1], mData[0][2]).crossProduct(Vec3(mData[1][0], mData[1][1], mData[1][2]));
-	if (((mData[2][0] * res.x) + (mData[2][1] * res.y) + (mData[2][2] * res.z)) > value_type(0.5)) {
-		__addIdentFlags(SCL_IDENT);
-	}
+    Vec3 res = Vec3(mData[0][0], mData[0][1], mData[0][2]).crossProduct(Vec3(mData[1][0], mData[1][1], mData[1][2]));
+    if (((mData[2][0] * res.x) + (mData[2][1] * res.y) + (mData[2][2] * res.z)) > value_type(0.5)) {
+        __addIdentFlags(SCL_IDENT);
+    }
 }
 
 //------------------------------------------------------------------------
@@ -527,7 +527,7 @@ void TMatrix3<value_type>::setScaleIdentity() {
  */
 template<class value_type>
 void TMatrix3<value_type>::translate(const Vector3<value_type> & inVec) {
-	translate(inVec.x, inVec.y, inVec.z);
+    translate(inVec.x, inVec.y, inVec.z);
 }
 
 /*!
@@ -538,10 +538,10 @@ void TMatrix3<value_type>::translate(const Vector3<value_type> & inVec) {
  */
 template<class value_type>
 void TMatrix3<value_type>::translate(value_type inX, value_type inY, value_type inZ) {
-	mData[3][0] += inX;
-	mData[3][1] += inY;
-	mData[3][2] += inZ;
-	__clearIdentFlag(POS_IDENT);
+    mData[3][0] += inX;
+    mData[3][1] += inY;
+    mData[3][2] += inZ;
+    __clearIdentFlag(POS_IDENT);
 }
 
 //-------------------------------------------------------------------------
@@ -552,7 +552,7 @@ void TMatrix3<value_type>::translate(value_type inX, value_type inY, value_type 
  */
 template<class value_type>
 void TMatrix3<value_type>::setTranslate(const sts_t::Vector3<value_type> & inVec) {
-	translation(inVec.x, inVec.y, inVec.z);
+    translation(inVec.x, inVec.y, inVec.z);
 }
 
 /*!
@@ -563,10 +563,10 @@ void TMatrix3<value_type>::setTranslate(const sts_t::Vector3<value_type> & inVec
  */
 template<class value_type>
 void TMatrix3<value_type>::setTranslate(value_type inX, value_type inY, value_type inZ) {
-	mData[3][0] = inX;
-	mData[3][1] = inY;
-	mData[3][2] = inZ;
-	__clearIdentFlag(POS_IDENT);
+    mData[3][0] = inX;
+    mData[3][1] = inY;
+    mData[3][2] = inZ;
+    __clearIdentFlag(POS_IDENT);
 }
 
 /*!
@@ -575,9 +575,9 @@ void TMatrix3<value_type>::setTranslate(value_type inX, value_type inY, value_ty
  */
 template<class value_type>
 sts_t::Vector3<value_type> TMatrix3<value_type>::translation() const {
-	return sts_t::Vector3<value_type>(translationX(),
-									translationY(),
-									translationZ());
+    return sts_t::Vector3<value_type>(translationX(),
+                                      translationY(),
+                                      translationZ());
 }
 
 /*!
@@ -586,7 +586,7 @@ sts_t::Vector3<value_type> TMatrix3<value_type>::translation() const {
  */
 template<class value_type>
 value_type TMatrix3<value_type>::translationX() const {
-	return mData[3][0];
+    return mData[3][0];
 }
 
 /*!
@@ -595,7 +595,7 @@ value_type TMatrix3<value_type>::translationX() const {
  */
 template<class value_type>
 value_type TMatrix3<value_type>::translationY() const {
-	return mData[3][1];
+    return mData[3][1];
 }
 
 /*!
@@ -604,7 +604,7 @@ value_type TMatrix3<value_type>::translationY() const {
  */
 template<class value_type>
 value_type TMatrix3<value_type>::translationZ() const {
-	return mData[3][2];
+    return mData[3][2];
 }
 
 //-------------------------------------------------------------------------
@@ -616,31 +616,31 @@ value_type TMatrix3<value_type>::translationZ() const {
  */
 template<class value_type>
 void TMatrix3<value_type>::rotateX(value_type inAngleRadians) {
-	if (sts::isEqual(inAngleRadians, value_type(0))) {
-		return;
-	}
-	value_type sinA = sin(inAngleRadians);
-	value_type cosA = cos(inAngleRadians);
+    if (sts::isEqual(inAngleRadians, value_type(0))) {
+        return;
+    }
+    value_type sinA = sin(inAngleRadians);
+    value_type cosA = cos(inAngleRadians);
 
-	value_type tmpCell1 = mData[0][1];
-	value_type tmpCell2 = mData[0][2];
-	mData[0][1] = tmpCell1 * cosA - tmpCell2 * sinA;
-	mData[0][2] = tmpCell2 * cosA + tmpCell1 * sinA;
-	tmpCell1 = mData[1][1];
-	tmpCell2 = mData[1][2];
-	mData[1][1] = tmpCell1 * cosA - tmpCell2 * sinA;
-	mData[1][2] = tmpCell2 * cosA + tmpCell1 * sinA;
-	tmpCell1 = mData[2][1];
-	tmpCell2 = mData[2][2];
-	mData[2][1] = tmpCell1 * cosA - tmpCell2 * sinA;
-	mData[2][2] = tmpCell2 * cosA + tmpCell1 * sinA;
+    value_type tmpCell1 = mData[0][1];
+    value_type tmpCell2 = mData[0][2];
+    mData[0][1] = tmpCell1 * cosA - tmpCell2 * sinA;
+    mData[0][2] = tmpCell2 * cosA + tmpCell1 * sinA;
+    tmpCell1 = mData[1][1];
+    tmpCell2 = mData[1][2];
+    mData[1][1] = tmpCell1 * cosA - tmpCell2 * sinA;
+    mData[1][2] = tmpCell2 * cosA + tmpCell1 * sinA;
+    tmpCell1 = mData[2][1];
+    tmpCell2 = mData[2][2];
+    mData[2][1] = tmpCell1 * cosA - tmpCell2 * sinA;
+    mData[2][2] = tmpCell2 * cosA + tmpCell1 * sinA;
 
-	tmpCell1 = mData[3][1];
-	tmpCell2 = mData[3][2];
-	mData[3][1] = tmpCell1 * cosA - tmpCell2 * sinA;
-	mData[3][2] = tmpCell2 * cosA + tmpCell1 * sinA;
+    tmpCell1 = mData[3][1];
+    tmpCell2 = mData[3][2];
+    mData[3][1] = tmpCell1 * cosA - tmpCell2 * sinA;
+    mData[3][2] = tmpCell2 * cosA + tmpCell1 * sinA;
 
-	__clearIdentFlag(ROT_IDENT);
+    __clearIdentFlag(ROT_IDENT);
 }
 
 /*!
@@ -650,31 +650,31 @@ void TMatrix3<value_type>::rotateX(value_type inAngleRadians) {
  */
 template<class value_type>
 void TMatrix3<value_type>::rotateY(value_type inAngleRadians) {
-	if (sts::isEqual(inAngleRadians, value_type(0))) {
-		return;
-	}
-	value_type sinA = sin(inAngleRadians);
-	value_type cosA = cos(inAngleRadians);
+    if (sts::isEqual(inAngleRadians, value_type(0))) {
+        return;
+    }
+    value_type sinA = sin(inAngleRadians);
+    value_type cosA = cos(inAngleRadians);
 
-	value_type tmpCell1 = mData[0][0];
-	value_type tmpCell2 = mData[0][2];
-	mData[0][0] = tmpCell1 * cosA + tmpCell2 * sinA;
-	mData[0][2] = tmpCell2 * cosA - tmpCell1 * sinA;
-	tmpCell1 = mData[1][0];
-	tmpCell2 = mData[1][2];
-	mData[1][0] = tmpCell1 * cosA + tmpCell2 * sinA;
-	mData[1][2] = tmpCell2 * cosA - tmpCell1 * sinA;
-	tmpCell1 = mData[2][0];
-	tmpCell2 = mData[2][2];
-	mData[2][0] = tmpCell1 * cosA + tmpCell2 * sinA;
-	mData[2][2] = tmpCell2 * cosA - tmpCell1 * sinA;
+    value_type tmpCell1 = mData[0][0];
+    value_type tmpCell2 = mData[0][2];
+    mData[0][0] = tmpCell1 * cosA + tmpCell2 * sinA;
+    mData[0][2] = tmpCell2 * cosA - tmpCell1 * sinA;
+    tmpCell1 = mData[1][0];
+    tmpCell2 = mData[1][2];
+    mData[1][0] = tmpCell1 * cosA + tmpCell2 * sinA;
+    mData[1][2] = tmpCell2 * cosA - tmpCell1 * sinA;
+    tmpCell1 = mData[2][0];
+    tmpCell2 = mData[2][2];
+    mData[2][0] = tmpCell1 * cosA + tmpCell2 * sinA;
+    mData[2][2] = tmpCell2 * cosA - tmpCell1 * sinA;
 
-	tmpCell1 = mData[3][0];
-	tmpCell2 = mData[3][2];
-	mData[3][0] = tmpCell1 * cosA + tmpCell2 * sinA;
-	mData[3][2] = tmpCell2 * cosA - tmpCell1 * sinA;
+    tmpCell1 = mData[3][0];
+    tmpCell2 = mData[3][2];
+    mData[3][0] = tmpCell1 * cosA + tmpCell2 * sinA;
+    mData[3][2] = tmpCell2 * cosA - tmpCell1 * sinA;
 
-	__clearIdentFlag(ROT_IDENT);
+    __clearIdentFlag(ROT_IDENT);
 }
 
 /*!
@@ -684,31 +684,31 @@ void TMatrix3<value_type>::rotateY(value_type inAngleRadians) {
  */
 template<class value_type>
 void TMatrix3<value_type>::rotateZ(value_type inAngleRadians) {
-	if (sts::isEqual(inAngleRadians, value_type(0))) {
-		return;
-	}
-	value_type sinA = sin(inAngleRadians);
-	value_type cosA = cos(inAngleRadians);
+    if (sts::isEqual(inAngleRadians, value_type(0))) {
+        return;
+    }
+    value_type sinA = sin(inAngleRadians);
+    value_type cosA = cos(inAngleRadians);
 
-	value_type tmpCell1 = mData[0][0];
-	value_type tmpCell2 = mData[0][1];
-	mData[0][0] = tmpCell1 * cosA - tmpCell2 * sinA;
-	mData[0][1] = tmpCell2 * cosA + tmpCell1 * sinA;
-	tmpCell1 = mData[1][0];
-	tmpCell2 = mData[1][1];
-	mData[1][0] = tmpCell1 * cosA - tmpCell2 * sinA;
-	mData[1][1] = tmpCell2 * cosA + tmpCell1 * sinA;
-	tmpCell1 = mData[2][0];
-	tmpCell2 = mData[2][1];
-	mData[2][0] = tmpCell1 * cosA - tmpCell2 * sinA;
-	mData[2][1] = tmpCell2 * cosA + tmpCell1 * sinA;
+    value_type tmpCell1 = mData[0][0];
+    value_type tmpCell2 = mData[0][1];
+    mData[0][0] = tmpCell1 * cosA - tmpCell2 * sinA;
+    mData[0][1] = tmpCell2 * cosA + tmpCell1 * sinA;
+    tmpCell1 = mData[1][0];
+    tmpCell2 = mData[1][1];
+    mData[1][0] = tmpCell1 * cosA - tmpCell2 * sinA;
+    mData[1][1] = tmpCell2 * cosA + tmpCell1 * sinA;
+    tmpCell1 = mData[2][0];
+    tmpCell2 = mData[2][1];
+    mData[2][0] = tmpCell1 * cosA - tmpCell2 * sinA;
+    mData[2][1] = tmpCell2 * cosA + tmpCell1 * sinA;
 
-	tmpCell1 = mData[3][0];
-	tmpCell2 = mData[3][1];
-	mData[3][0] = tmpCell1 * cosA - tmpCell2 * sinA;
-	mData[3][1] = tmpCell2 * cosA + tmpCell1 * sinA;
+    tmpCell1 = mData[3][0];
+    tmpCell2 = mData[3][1];
+    mData[3][0] = tmpCell1 * cosA - tmpCell2 * sinA;
+    mData[3][1] = tmpCell2 * cosA + tmpCell1 * sinA;
 
-	__clearIdentFlag(ROT_IDENT);
+    __clearIdentFlag(ROT_IDENT);
 }
 
 /*!
@@ -719,7 +719,7 @@ void TMatrix3<value_type>::rotateZ(value_type inAngleRadians) {
  */
 template<class value_type>
 void TMatrix3<value_type>::setRotate(const Vector3<value_type> & inAxis, value_type inAngleRadians) {
-	fromAxisAngle(inAxis, inAngleRadians);
+    fromAxisAngle(inAxis, inAngleRadians);
 }
 
 //-------------------------------------------------------------------------
@@ -731,7 +731,7 @@ void TMatrix3<value_type>::setRotate(const Vector3<value_type> & inAxis, value_t
  */
 template<class value_type>
 void TMatrix3<value_type>::scale(const Vector3<value_type> & inVec) {
-	scale(inVec.x, inVec.y, inVec.z);
+    scale(inVec.x, inVec.y, inVec.z);
 }
 
 /*!
@@ -743,14 +743,14 @@ void TMatrix3<value_type>::scale(const Vector3<value_type> & inVec) {
  */
 template<class value_type>
 void TMatrix3<value_type>::scale(value_type inX, value_type inY, value_type inZ) {
-	if (sts::isEqual(inX, value_type(1)) && sts::isEqual(inY, value_type(1)) && sts::isEqual(inZ, value_type(1))) {
-		return;
-	}
-	mData[0][0] *= inX , mData[0][1] *= inY , mData[0][2] *= inZ;
-	mData[1][0] *= inX , mData[1][1] *= inY , mData[1][2] *= inZ;
-	mData[2][0] *= inX , mData[2][1] *= inY , mData[2][2] *= inZ;
-	mData[3][0] *= inX , mData[3][1] *= inY , mData[3][2] *= inZ;
-	__clearIdentFlag(SCL_IDENT);
+    if (sts::isEqual(inX, value_type(1)) && sts::isEqual(inY, value_type(1)) && sts::isEqual(inZ, value_type(1))) {
+        return;
+    }
+    mData[0][0] *= inX, mData[0][1] *= inY, mData[0][2] *= inZ;
+    mData[1][0] *= inX, mData[1][1] *= inY, mData[1][2] *= inZ;
+    mData[2][0] *= inX, mData[2][1] *= inY, mData[2][2] *= inZ;
+    mData[3][0] *= inX, mData[3][1] *= inY, mData[3][2] *= inZ;
+    __clearIdentFlag(SCL_IDENT);
 }
 
 //-------------------------------------------------------------------------
@@ -762,7 +762,7 @@ void TMatrix3<value_type>::scale(value_type inX, value_type inY, value_type inZ)
  */
 template<class value_type>
 void TMatrix3<value_type>::preTranslate(const Vector3<value_type> & p) {
-	preTranslate(p.setX(), p.setY(), p.setZ());
+    preTranslate(p.setX(), p.setY(), p.setZ());
 }
 
 /*!
@@ -774,14 +774,14 @@ void TMatrix3<value_type>::preTranslate(const Vector3<value_type> & p) {
  */
 template<class value_type>
 void TMatrix3<value_type>::preTranslate(value_type inX, value_type inY, value_type inZ) {
-	// Temp variables are very important, don't optimize it!
-	value_type tmpX = ((mData[0][0] * inX) + (mData[1][0] * inY) + (mData[2][0] * inZ)) + mData[3][0];
-	value_type tmpY = ((mData[0][1] * inX) + (mData[1][1] * inY) + (mData[2][1] * inZ)) + mData[3][1];
-	value_type tmpZ = ((mData[0][2] * inX) + (mData[1][2] * inY) + (mData[2][2] * inZ)) + mData[3][2];
-	mData[3][0] = tmpX;
-	mData[3][1] = tmpY;
-	mData[3][2] = tmpZ;
-	__clearIdentFlag(POS_IDENT);
+    // Temp variables are very important, don't optimize it!
+    value_type tmpX = ((mData[0][0] * inX) + (mData[1][0] * inY) + (mData[2][0] * inZ)) + mData[3][0];
+    value_type tmpY = ((mData[0][1] * inX) + (mData[1][1] * inY) + (mData[2][1] * inZ)) + mData[3][1];
+    value_type tmpZ = ((mData[0][2] * inX) + (mData[1][2] * inY) + (mData[2][2] * inZ)) + mData[3][2];
+    mData[3][0] = tmpX;
+    mData[3][1] = tmpY;
+    mData[3][2] = tmpZ;
+    __clearIdentFlag(POS_IDENT);
 }
 
 //-------------------------------------------------------------------------
@@ -793,26 +793,26 @@ void TMatrix3<value_type>::preTranslate(value_type inX, value_type inY, value_ty
  */
 template<class value_type>
 void TMatrix3<value_type>::preRotateX(value_type inAngleRadians) {
-	if (sts::isEqual(inAngleRadians, value_type(0))) {
-		return;
-	}
-	value_type sinA = sin(inAngleRadians);
-	value_type cosA = cos(inAngleRadians);
+    if (sts::isEqual(inAngleRadians, value_type(0))) {
+        return;
+    }
+    value_type sinA = sin(inAngleRadians);
+    value_type cosA = cos(inAngleRadians);
 
-	value_type tmpCell1 = mData[1][0];
-	value_type tmpCell2 = mData[2][0];
-	mData[1][0] = tmpCell2 * sinA + tmpCell1 * cosA;
-	mData[2][0] = tmpCell2 * cosA - tmpCell1 * sinA;
-	tmpCell1 = mData[1][1];
-	tmpCell2 = mData[2][1];
-	mData[1][1] = tmpCell2 * sinA + tmpCell1 * cosA;
-	mData[2][1] = tmpCell2 * cosA - tmpCell1 * sinA;
-	tmpCell1 = mData[1][2];
-	tmpCell2 = mData[2][2];
-	mData[1][2] = tmpCell2 * sinA + tmpCell1 * cosA;
-	mData[2][2] = tmpCell2 * cosA - tmpCell1 * sinA;
+    value_type tmpCell1 = mData[1][0];
+    value_type tmpCell2 = mData[2][0];
+    mData[1][0] = tmpCell2 * sinA + tmpCell1 * cosA;
+    mData[2][0] = tmpCell2 * cosA - tmpCell1 * sinA;
+    tmpCell1 = mData[1][1];
+    tmpCell2 = mData[2][1];
+    mData[1][1] = tmpCell2 * sinA + tmpCell1 * cosA;
+    mData[2][1] = tmpCell2 * cosA - tmpCell1 * sinA;
+    tmpCell1 = mData[1][2];
+    tmpCell2 = mData[2][2];
+    mData[1][2] = tmpCell2 * sinA + tmpCell1 * cosA;
+    mData[2][2] = tmpCell2 * cosA - tmpCell1 * sinA;
 
-	__clearIdentFlag(ROT_IDENT);
+    __clearIdentFlag(ROT_IDENT);
 }
 
 /*!
@@ -822,26 +822,26 @@ void TMatrix3<value_type>::preRotateX(value_type inAngleRadians) {
  */
 template<class value_type>
 void TMatrix3<value_type>::preRotateY(value_type inAngleRadians) {
-	if (sts::isEqual(inAngleRadians, value_type(0))) {
-		return;
-	}
-	value_type sinA = sin(inAngleRadians);
-	value_type cosA = cos(inAngleRadians);
+    if (sts::isEqual(inAngleRadians, value_type(0))) {
+        return;
+    }
+    value_type sinA = sin(inAngleRadians);
+    value_type cosA = cos(inAngleRadians);
 
-	value_type tmpCell1 = mData[0][0];
-	value_type tmpCell2 = mData[2][0];
-	mData[0][0] = tmpCell1 * cosA - tmpCell2 * sinA;
-	mData[2][0] = tmpCell1 * sinA + tmpCell2 * cosA;
-	tmpCell1 = mData[0][1];
-	tmpCell2 = mData[2][1];
-	mData[0][1] = tmpCell1 * cosA - tmpCell2 * sinA;
-	mData[2][1] = tmpCell1 * sinA + tmpCell2 * cosA;
-	tmpCell1 = mData[0][2];
-	tmpCell2 = mData[2][2];
-	mData[0][2] = tmpCell1 * cosA - tmpCell2 * sinA;
-	mData[2][2] = tmpCell1 * sinA + tmpCell2 * cosA;
+    value_type tmpCell1 = mData[0][0];
+    value_type tmpCell2 = mData[2][0];
+    mData[0][0] = tmpCell1 * cosA - tmpCell2 * sinA;
+    mData[2][0] = tmpCell1 * sinA + tmpCell2 * cosA;
+    tmpCell1 = mData[0][1];
+    tmpCell2 = mData[2][1];
+    mData[0][1] = tmpCell1 * cosA - tmpCell2 * sinA;
+    mData[2][1] = tmpCell1 * sinA + tmpCell2 * cosA;
+    tmpCell1 = mData[0][2];
+    tmpCell2 = mData[2][2];
+    mData[0][2] = tmpCell1 * cosA - tmpCell2 * sinA;
+    mData[2][2] = tmpCell1 * sinA + tmpCell2 * cosA;
 
-	__clearIdentFlag(ROT_IDENT);
+    __clearIdentFlag(ROT_IDENT);
 }
 
 /*!
@@ -851,26 +851,26 @@ void TMatrix3<value_type>::preRotateY(value_type inAngleRadians) {
  */
 template<class value_type>
 void TMatrix3<value_type>::preRotateZ(value_type inAngleRadians) {
-	if (sts::isEqual(inAngleRadians, value_type(0))) {
-		return;
-	}
-	value_type sinA = sin(inAngleRadians);
-	value_type cosA = cos(inAngleRadians);
+    if (sts::isEqual(inAngleRadians, value_type(0))) {
+        return;
+    }
+    value_type sinA = sin(inAngleRadians);
+    value_type cosA = cos(inAngleRadians);
 
-	value_type tmpCell1 = mData[0][0];
-	value_type tmpCell2 = mData[1][0];
-	mData[0][0] = tmpCell2 * sinA + tmpCell1 * cosA;
-	mData[1][0] = tmpCell2 * cosA - tmpCell1 * sinA;
-	tmpCell1 = mData[0][1];
-	tmpCell2 = mData[1][1];
-	mData[0][1] = tmpCell2 * sinA + tmpCell1 * cosA;
-	mData[1][1] = tmpCell2 * cosA - tmpCell1 * sinA;
-	tmpCell1 = mData[0][2];
-	tmpCell2 = mData[1][2];
-	mData[0][2] = tmpCell2 * sinA + tmpCell1 * cosA;
-	mData[1][2] = tmpCell2 * cosA - tmpCell1 * sinA;
+    value_type tmpCell1 = mData[0][0];
+    value_type tmpCell2 = mData[1][0];
+    mData[0][0] = tmpCell2 * sinA + tmpCell1 * cosA;
+    mData[1][0] = tmpCell2 * cosA - tmpCell1 * sinA;
+    tmpCell1 = mData[0][1];
+    tmpCell2 = mData[1][1];
+    mData[0][1] = tmpCell2 * sinA + tmpCell1 * cosA;
+    mData[1][1] = tmpCell2 * cosA - tmpCell1 * sinA;
+    tmpCell1 = mData[0][2];
+    tmpCell2 = mData[1][2];
+    mData[0][2] = tmpCell2 * sinA + tmpCell1 * cosA;
+    mData[1][2] = tmpCell2 * cosA - tmpCell1 * sinA;
 
-	__clearIdentFlag(ROT_IDENT);
+    __clearIdentFlag(ROT_IDENT);
 }
 
 //-------------------------------------------------------------------------
@@ -882,7 +882,7 @@ void TMatrix3<value_type>::preRotateZ(value_type inAngleRadians) {
  */
 template<class value_type>
 void TMatrix3<value_type>::preScale(const Vector3<value_type> & p) {
-	preScale(p.setX(), p.setY(), p.setZ());
+    preScale(p.setX(), p.setY(), p.setZ());
 }
 
 /*!
@@ -894,13 +894,13 @@ void TMatrix3<value_type>::preScale(const Vector3<value_type> & p) {
  */
 template<class value_type>
 void TMatrix3<value_type>::preScale(value_type inX, value_type inY, value_type inZ) {
-	if (sts::isEqual(inX, value_type(1)) && sts::isEqual(inY, value_type(1)) && sts::isEqual(inZ, value_type(1)))
-		return;
-	// Note: we must not effect for translate!
-	mData[0][0] *= inX , mData[0][1] *= inX , mData[0][2] *= inX;
-	mData[1][0] *= inY , mData[1][1] *= inY , mData[1][2] *= inY;
-	mData[2][0] *= inZ , mData[2][1] *= inZ , mData[2][2] *= inZ;
-	__clearIdentFlag(SCL_IDENT);
+    if (sts::isEqual(inX, value_type(1)) && sts::isEqual(inY, value_type(1)) && sts::isEqual(inZ, value_type(1)))
+        return;
+    // Note: we must not effect for translate!
+    mData[0][0] *= inX, mData[0][1] *= inX, mData[0][2] *= inX;
+    mData[1][0] *= inY, mData[1][1] *= inY, mData[1][2] *= inY;
+    mData[2][0] *= inZ, mData[2][1] *= inZ, mData[2][2] *= inZ;
+    __clearIdentFlag(SCL_IDENT);
 }
 
 /**************************************************************************************************/
@@ -916,13 +916,13 @@ void TMatrix3<value_type>::preScale(value_type inX, value_type inY, value_type i
  */
 template<class value_type>
 sts_t::Vector3<value_type> TMatrix3<value_type>::mapPoint(const sts_t::Vector3<value_type> & inPoint) const {
-	if (isIdentity()) {
-		return inPoint;
-	}
-	return sts_t::Vector3<value_type>(
-									 mData[0][0] * inPoint.x + mData[1][0] * inPoint.y + mData[2][0] * inPoint.z + mData[3][0],
-									 mData[0][1] * inPoint.x + mData[1][1] * inPoint.y + mData[2][1] * inPoint.z + mData[3][1],
-									 mData[0][2] * inPoint.x + mData[1][2] * inPoint.y + mData[2][2] * inPoint.z + mData[3][2]);
+    if (isIdentity()) {
+        return inPoint;
+    }
+    return sts_t::Vector3<value_type>(
+                                      mData[0][0] * inPoint.x + mData[1][0] * inPoint.y + mData[2][0] * inPoint.z + mData[3][0],
+                                      mData[0][1] * inPoint.x + mData[1][1] * inPoint.y + mData[2][1] * inPoint.z + mData[3][1],
+                                      mData[0][2] * inPoint.x + mData[1][2] * inPoint.y + mData[2][2] * inPoint.z + mData[3][2]);
 }
 
 /*!
@@ -933,13 +933,13 @@ sts_t::Vector3<value_type> TMatrix3<value_type>::mapPoint(const sts_t::Vector3<v
  */
 template<class value_type>
 sts_t::Vector3<value_type> TMatrix3<value_type>::mapVector(const sts_t::Vector3<value_type> & inVec) const {
-	if (isIdentity()) {
-		return inVec;
-	}
-	return sts_t::Vector3<value_type>(
-									 mData[0][0] * inVec.x + mData[1][0] * inVec.y + mData[2][0] * inVec.z,
-									 mData[0][1] * inVec.x + mData[1][1] * inVec.y + mData[2][1] * inVec.z,
-									 mData[0][2] * inVec.x + mData[1][2] * inVec.y + mData[2][2] * inVec.z);
+    if (isIdentity()) {
+        return inVec;
+    }
+    return sts_t::Vector3<value_type>(
+                                      mData[0][0] * inVec.x + mData[1][0] * inVec.y + mData[2][0] * inVec.z,
+                                      mData[0][1] * inVec.x + mData[1][1] * inVec.y + mData[2][1] * inVec.z,
+                                      mData[0][2] * inVec.x + mData[1][2] * inVec.y + mData[2][2] * inVec.z);
 }
 
 /*!
@@ -950,17 +950,17 @@ sts_t::Vector3<value_type> TMatrix3<value_type>::mapVector(const sts_t::Vector3<
  */
 template<class value_type>
 void TMatrix3<value_type>::mapPoints(sts_t::Vector3<value_type> * inOutPoints, size_t inCount) const {
-	if (inOutPoints == nullptr || inCount == 0 || isIdentity()) {
-		return;
-	}
-	sts_t::Vector3<value_type> tmp;
-	for (size_t i = 0; i < inCount; ++i) {
-		tmp = *inOutPoints;
-		inOutPoints->x = mData[0][0] * tmp.x + mData[1][0] * tmp.y + mData[2][0] * tmp.z + mData[3][0];
-		inOutPoints->y = mData[0][1] * tmp.x + mData[1][1] * tmp.y + mData[2][1] * tmp.z + mData[3][1];
-		inOutPoints->z = mData[0][2] * tmp.x + mData[1][2] * tmp.y + mData[2][2] * tmp.z + mData[3][2];
-		++inOutPoints;
-	}
+    if (inOutPoints == nullptr || inCount == 0 || isIdentity()) {
+        return;
+    }
+    sts_t::Vector3<value_type> tmp;
+    for (size_t i = 0; i < inCount; ++i) {
+        tmp = *inOutPoints;
+        inOutPoints->x = mData[0][0] * tmp.x + mData[1][0] * tmp.y + mData[2][0] * tmp.z + mData[3][0];
+        inOutPoints->y = mData[0][1] * tmp.x + mData[1][1] * tmp.y + mData[2][1] * tmp.z + mData[3][1];
+        inOutPoints->z = mData[0][2] * tmp.x + mData[1][2] * tmp.y + mData[2][2] * tmp.z + mData[3][2];
+        ++inOutPoints;
+    }
 }
 
 /*!
@@ -971,17 +971,17 @@ void TMatrix3<value_type>::mapPoints(sts_t::Vector3<value_type> * inOutPoints, s
  */
 template<class value_type>
 void TMatrix3<value_type>::mapVectors(sts_t::Vector3<value_type> * inOutVec, size_t inCount) const {
-	if (inOutVec == nullptr || inCount == 0 || isIdentity()) {
-		return;
-	}
-	sts_t::Vector3<value_type> tmp;
-	for (size_t i = 0; i < inCount; ++i) {
-		tmp = *inOutVec;
-		inOutVec->x = mData[0][0] * tmp.x + mData[1][0] * tmp.y + mData[2][0] * tmp.z;
-		inOutVec->y = mData[0][1] * tmp.x + mData[1][1] * tmp.y + mData[2][1] * tmp.z;
-		inOutVec->z = mData[0][2] * tmp.x + mData[1][2] * tmp.y + mData[2][2] * tmp.z;
-		++inOutVec;
-	}
+    if (inOutVec == nullptr || inCount == 0 || isIdentity()) {
+        return;
+    }
+    sts_t::Vector3<value_type> tmp;
+    for (size_t i = 0; i < inCount; ++i) {
+        tmp = *inOutVec;
+        inOutVec->x = mData[0][0] * tmp.x + mData[1][0] * tmp.y + mData[2][0] * tmp.z;
+        inOutVec->y = mData[0][1] * tmp.x + mData[1][1] * tmp.y + mData[2][1] * tmp.z;
+        inOutVec->z = mData[0][2] * tmp.x + mData[1][2] * tmp.y + mData[2][2] * tmp.z;
+        ++inOutVec;
+    }
 }
 
 /**************************************************************************************************/
@@ -997,53 +997,53 @@ void TMatrix3<value_type>::mapVectors(sts_t::Vector3<value_type> * inOutVec, siz
  */
 template<class value_type>
 void TMatrix3<value_type>::orthogonalize(int maxIteration) {
-	Vector3<value_type> row0(mData[0][0], mData[0][1], mData[0][2]);
-	Vector3<value_type> row1(mData[1][0], mData[1][1], mData[1][2]);
-	Vector3<value_type> row2(mData[2][0], mData[2][1], mData[2][2]);
-	Vector3<value_type> res;
-	int counter = 0;
-	do {
-		res = row1.crossProduct(row2);
-		res.normalize();
-		mData[0][0] = res.x;
-		mData[0][1] = res.y;
-		mData[0][2] = res.z;
+    Vector3<value_type> row0(mData[0][0], mData[0][1], mData[0][2]);
+    Vector3<value_type> row1(mData[1][0], mData[1][1], mData[1][2]);
+    Vector3<value_type> row2(mData[2][0], mData[2][1], mData[2][2]);
+    Vector3<value_type> res;
+    int counter = 0;
+    do {
+        res = row1.crossProduct(row2);
+        res.normalize();
+        mData[0][0] = res.x;
+        mData[0][1] = res.y;
+        mData[0][2] = res.z;
 
-		res = row2.crossProduct(row0);
-		res.normalize();
-		mData[1][0] = res.x;
-		mData[1][1] = res.y;
-		mData[1][2] = res.z;
+        res = row2.crossProduct(row0);
+        res.normalize();
+        mData[1][0] = res.x;
+        mData[1][1] = res.y;
+        mData[1][2] = res.z;
 
-		res = row0.crossProduct(row1);
-		res.normalize();
-		mData[2][0] = res.x;
-		mData[2][1] = res.y;
-		mData[2][2] = res.z;
+        res = row0.crossProduct(row1);
+        res.normalize();
+        mData[2][0] = res.x;
+        mData[2][1] = res.y;
+        mData[2][2] = res.z;
 
-		if (sts::isEqual(value_type(
-									 fabs(mData[1][0] * mData[2][0] + mData[1][1] * mData[2][1] + mData[1][2] * mData[2][2]) +
-									 fabs(mData[1][0] * mData[0][0] + mData[1][1] * mData[0][1] + mData[1][2] * mData[0][2]) +
-									 fabs(mData[2][0] * mData[0][0] + mData[2][1] * mData[0][1] + mData[2][2] * mData[0][2])), value_type(0))) {
-			break;
-		}
+        if (sts::isEqual(value_type(
+                                    fabs(mData[1][0] * mData[2][0] + mData[1][1] * mData[2][1] + mData[1][2] * mData[2][2]) +
+                                    fabs(mData[1][0] * mData[0][0] + mData[1][1] * mData[0][1] + mData[1][2] * mData[0][2]) +
+                                    fabs(mData[2][0] * mData[0][0] + mData[2][1] * mData[0][1] + mData[2][2] * mData[0][2])), value_type(0))) {
+            break;
+        }
 
-		row1.x = (row1.x + mData[1][0]) * value_type(0.5);
-		row1.y = (row1.y + mData[1][1]) * value_type(0.5);
-		row1.z = (row1.z + mData[1][2]) * value_type(0.5);
+        row1.x = (row1.x + mData[1][0]) * value_type(0.5);
+        row1.y = (row1.y + mData[1][1]) * value_type(0.5);
+        row1.z = (row1.z + mData[1][2]) * value_type(0.5);
 
-		row2.x = (row2.x + mData[2][0]) * value_type(0.5);
-		row2.y = (row2.y + mData[2][1]) * value_type(0.5);
-		row2.z = (row2.z + mData[2][2]) * value_type(0.5);
+        row2.x = (row2.x + mData[2][0]) * value_type(0.5);
+        row2.y = (row2.y + mData[2][1]) * value_type(0.5);
+        row2.z = (row2.z + mData[2][2]) * value_type(0.5);
 
-		row0.x = (row0.x + mData[0][0]) * value_type(0.5);
-		row0.y = (row0.y + mData[0][1]) * value_type(0.5);
-		row0.z = (row0.z + mData[0][2]) * value_type(0.5);
+        row0.x = (row0.x + mData[0][0]) * value_type(0.5);
+        row0.y = (row0.y + mData[0][1]) * value_type(0.5);
+        row0.z = (row0.z + mData[0][2]) * value_type(0.5);
 
-		++counter;
-	} while (counter < maxIteration);
+        ++counter;
+    } while (counter < maxIteration);
 
-	__addIdentFlags(SCL_IDENT);
+    __addIdentFlags(SCL_IDENT);
 }
 
 /*!
@@ -1056,8 +1056,8 @@ void TMatrix3<value_type>::orthogonalize(int maxIteration) {
  */
 template<class value_type>
 bool TMatrix3<value_type>::isParity() const {
-	Vec3 res = Vec3(mData[0][0], mData[0][1], mData[0][2]).crossProduct(Vec3(mData[1][0], mData[1][1], mData[1][2]));
-	return ((res.x * mData[2][0]) + (res.y * mData[2][1]) + (res.z * mData[2][2]) < value_type(0));
+    Vec3 res = Vec3(mData[0][0], mData[0][1], mData[0][2]).crossProduct(Vec3(mData[1][0], mData[1][1], mData[1][2]));
+    return ((res.x * mData[2][0]) + (res.y * mData[2][1]) + (res.z * mData[2][2]) < value_type(0));
 }
 
 /**************************************************************************************************/
@@ -1082,15 +1082,15 @@ bool TMatrix3<value_type>::isParity() const {
  */
 template<class value_type>
 void TMatrix3<value_type>::set(
-	value_type m00, value_type m01, value_type m02,
-	value_type m10, value_type m11, value_type m12,
-	value_type m20, value_type m21, value_type m22,
-	value_type m30, value_type m31, value_type m32) {
-	mData[0][0] = m00 , mData[0][1] = m01 , mData[0][2] = m02;
-	mData[1][0] = m10 , mData[1][1] = m11 , mData[1][2] = m12;
-	mData[2][0] = m20 , mData[2][1] = m21 , mData[2][2] = m22;
-	mData[3][0] = m30 , mData[3][1] = m31 , mData[3][2] = m32;
-	validateFlags();
+    value_type m00, value_type m01, value_type m02,
+    value_type m10, value_type m11, value_type m12,
+    value_type m20, value_type m21, value_type m22,
+    value_type m30, value_type m31, value_type m32) {
+    mData[0][0] = m00, mData[0][1] = m01, mData[0][2] = m02;
+    mData[1][0] = m10, mData[1][1] = m11, mData[1][2] = m12;
+    mData[2][0] = m20, mData[2][1] = m21, mData[2][2] = m22;
+    mData[3][0] = m30, mData[3][1] = m31, mData[3][2] = m32;
+    validateFlags();
 }
 
 /**************************************************************************************************/
@@ -1099,17 +1099,17 @@ void TMatrix3<value_type>::set(
 
 template<class value_type>
 bool TMatrix3<value_type>::isRotating() const {
-	return !isIdentity(static_cast<uint32_t>(TMatrix3<value_type>::ROT_IDENT));
+    return !isIdentity(static_cast<uint32_t>(TMatrix3<value_type>::ROT_IDENT));
 }
 
 template<class value_type>
 bool TMatrix3<value_type>::isScaling() const {
-	return !isIdentity(static_cast<uint32_t>(TMatrix3<value_type>::SCL_IDENT));
+    return !isIdentity(static_cast<uint32_t>(TMatrix3<value_type>::SCL_IDENT));
 }
 
 template<class value_type>
 bool TMatrix3<value_type>::isTranslating() const {
-	return !isIdentity(static_cast<uint32_t>(TMatrix3<value_type>::POS_IDENT));
+    return !isIdentity(static_cast<uint32_t>(TMatrix3<value_type>::POS_IDENT));
 }
 
 /*!
@@ -1117,17 +1117,17 @@ bool TMatrix3<value_type>::isTranslating() const {
  */
 template<class value_type>
 void TMatrix3<value_type>::__addIdentFlags(uint32_t f) {
-	mFlags |= f;
+    mFlags |= f;
 }
 
 template<class value_type>
 bool TMatrix3<value_type>::isIdentity(uint32_t f) const {
-	return ((mFlags & f) == f);
+    return ((mFlags & f) == f);
 }
 
 template<class value_type>
 int TMatrix3<value_type>::identFlags() const {
-	return mFlags;
+    return mFlags;
 }
 
 /*!
@@ -1135,51 +1135,51 @@ int TMatrix3<value_type>::identFlags() const {
  */
 template<class value_type>
 void TMatrix3<value_type>::__clearIdentFlag(uint32_t f) {
-	mFlags &= ~f;
+    mFlags &= ~f;
 }
 
 template<class value_type>
 bool TMatrix3<value_type>::isIdentity() const {
-	return ((mFlags & MAT_IDENT) == MAT_IDENT);
+    return ((mFlags & MAT_IDENT) == MAT_IDENT);
 }
 
 template<class value_type>
 void TMatrix3<value_type>::validateFlags() {
-	int flags = MAT_IDENT;
-	int i = 0;
-	do {
-		if (!sts::isEqual(value_type(sqrt(mData[i][0] * mData[i][0] + mData[i][1] * mData[i][1] + mData[i][2] * mData[i][2])), value_type(1))) /// check it in the max
-			flags &= ~SCL_IDENT;
+    int flags = MAT_IDENT;
+    int i = 0;
+    do {
+        if (!sts::isEqual(value_type(sqrt(mData[i][0] * mData[i][0] + mData[i][1] * mData[i][1] + mData[i][2] * mData[i][2])), value_type(1))) /// check it in the max
+            flags &= ~SCL_IDENT;
 
-		if (!sts::isEqual(mData[3][i], value_type(0)))
-			flags &= ~POS_IDENT;
+        if (!sts::isEqual(mData[3][i], value_type(0)))
+            flags &= ~POS_IDENT;
 
-		if (i) {
-			if (!sts::isEqual(mData[i][0], value_type(0)))
-				flags &= ~ROT_IDENT;
-		}
+        if (i) {
+            if (!sts::isEqual(mData[i][0], value_type(0)))
+                flags &= ~ROT_IDENT;
+        }
 
-		if (i != 1) {
-			if (!sts::isEqual(mData[i][1], value_type(0)))
-				flags &= ~ROT_IDENT;
-		}
+        if (i != 1) {
+            if (!sts::isEqual(mData[i][1], value_type(0)))
+                flags &= ~ROT_IDENT;
+        }
 
-		if (i != 2) {
-			if (!sts::isEqual(mData[i][2], value_type(0)))
-				flags &= ~ROT_IDENT;
-		}
-		++i;
-	} while (i < 3);
+        if (i != 2) {
+            if (!sts::isEqual(mData[i][2], value_type(0)))
+                flags &= ~ROT_IDENT;
+        }
+        ++i;
+    } while (i < 3);
 
-	if ((flags & ROT_IDENT) == ROT_IDENT) {
-		if (!sts::isEqual(mData[0][0], value_type(1)))
-			flags &= ~ROT_IDENT;
-		else if (!sts::isEqual(mData[1][1], value_type(1)))
-			flags &= ~ROT_IDENT;
-		else if (!sts::isEqual(mData[2][2], value_type(1)))
-			flags &= ~ROT_IDENT;
-	}
-	mFlags = (mFlags & ~MAT_IDENT) | flags;
+    if ((flags & ROT_IDENT) == ROT_IDENT) {
+        if (!sts::isEqual(mData[0][0], value_type(1)))
+            flags &= ~ROT_IDENT;
+        else if (!sts::isEqual(mData[1][1], value_type(1)))
+            flags &= ~ROT_IDENT;
+        else if (!sts::isEqual(mData[2][2], value_type(1)))
+            flags &= ~ROT_IDENT;
+    }
+    mFlags = (mFlags & ~MAT_IDENT) | flags;
 }
 
 /**************************************************************************************************/
@@ -1189,13 +1189,13 @@ void TMatrix3<value_type>::validateFlags() {
 /*! \details for internal use only \code return reinterpret_cast<value_type*>(mData); \endcode */
 template<class value_type>
 value_type * TMatrix3<value_type>::rawData() {
-	return reinterpret_cast<value_type*>(mData);
+    return reinterpret_cast<value_type*>(mData);
 }
 
 /*! \details for internal use only \code return reinterpret_cast<const value_type*>(mData); \endcode */
 template<class value_type>
 const value_type * TMatrix3<value_type>::rawData() const {
-	return reinterpret_cast<const value_type*>(mData);
+    return reinterpret_cast<const value_type*>(mData);
 }
 
 /**************************************************************************************************/

@@ -33,214 +33,214 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	typedef sts_t::Vector2<float> Point;
+typedef sts_t::Vector2<float> Point;
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	Point2::Point2()
-		: Point2(0.0f, 0.0f) { }
+Point2::Point2()
+    : Point2(0.0f, 0.0f) { }
 
-	Point2::Point2(const Point2 & c)
-		: Point2(c.x, c.y) {}
+Point2::Point2(const Point2 & c)
+    : Point2(c.x, c.y) {}
 
-	Point2::Point2(const float & v)
-		: Point2(v, v) { }
+Point2::Point2(const float & v)
+    : Point2(v, v) { }
 
-	Point2::Point2(float inX, float inY)
-		: x(inX),
-		y(inY) { }
+Point2::Point2(float inX, float inY)
+    : x(inX),
+      y(inY) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	Point2 & Point2::operator=(const Point2 & c) {
-		x = c.x;
-		y = c.y;
-		return *this;
-	}
+Point2 & Point2::operator=(const Point2 & c) {
+    x = c.x;
+    y = c.y;
+    return *this;
+}
 
-	Point2 & Point2::operator=(const float v) {
-		*reinterpret_cast<Point*>(this) = v;
-		return *this;
-	}
+Point2 & Point2::operator=(const float v) {
+    *reinterpret_cast<Point*>(this) = v;
+    return *this;
+}
 
-	Point2 & Point2::operator+=(const Point2 & p) {
-		*reinterpret_cast<Point*>(this) += *reinterpret_cast<const Point*>(&p);
-		return *this;
-	}
+Point2 & Point2::operator+=(const Point2 & p) {
+    *reinterpret_cast<Point*>(this) += *reinterpret_cast<const Point*>(&p);
+    return *this;
+}
 
-	Point2 & Point2::operator+=(const float v) {
-		*reinterpret_cast<Point*>(this) += v;
-		return *this;
-	}
+Point2 & Point2::operator+=(const float v) {
+    *reinterpret_cast<Point*>(this) += v;
+    return *this;
+}
 
-	Point2 & Point2::operator-=(const Point2 & p) {
-		*reinterpret_cast<Point*>(this) -= *reinterpret_cast<const Point*>(&p);
-		return *this;
-	}
+Point2 & Point2::operator-=(const Point2 & p) {
+    *reinterpret_cast<Point*>(this) -= *reinterpret_cast<const Point*>(&p);
+    return *this;
+}
 
-	Point2 & Point2::operator-=(const float v) {
-		*reinterpret_cast<Point*>(this) -= v;
-		return *this;
-	}
+Point2 & Point2::operator-=(const float v) {
+    *reinterpret_cast<Point*>(this) -= v;
+    return *this;
+}
 
-	Point2 & Point2::operator*=(const Point2 & p) {
-		*reinterpret_cast<Point*>(this) *= *reinterpret_cast<const Point*>(&p);
-		return *this;
-	}
+Point2 & Point2::operator*=(const Point2 & p) {
+    *reinterpret_cast<Point*>(this) *= *reinterpret_cast<const Point*>(&p);
+    return *this;
+}
 
-	Point2 & Point2::operator*=(const float v) {
-		*reinterpret_cast<Point*>(this) *= v;
-		return *this;
-	}
+Point2 & Point2::operator*=(const float v) {
+    *reinterpret_cast<Point*>(this) *= v;
+    return *this;
+}
 
-	Point2 & Point2::operator/=(const Point2 & p) {
-		*reinterpret_cast<Point*>(this) /= *reinterpret_cast<const Point*>(&p);
-		return *this;
-	}
+Point2 & Point2::operator/=(const Point2 & p) {
+    *reinterpret_cast<Point*>(this) /= *reinterpret_cast<const Point*>(&p);
+    return *this;
+}
 
-	Point2 & Point2::operator/=(const float v) {
-		*reinterpret_cast<Point*>(this) /= v;
-		return *this;
-	}
+Point2 & Point2::operator/=(const float v) {
+    *reinterpret_cast<Point*>(this) /= v;
+    return *this;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool Point2::operator==(const Point2 & p) const {
-		return reinterpret_cast<const Point*>(this)->compare(*reinterpret_cast<const Point*>(&p), FEPSILON);
-	}
+bool Point2::operator==(const Point2 & p) const {
+    return reinterpret_cast<const Point*>(this)->compare(*reinterpret_cast<const Point*>(&p), FEPSILON);
+}
 
-	bool Point2::operator==(const float v) const {
-		return reinterpret_cast<const Point*>(this)->compare(*reinterpret_cast<const Point*>(&v), FEPSILON);
-	}
+bool Point2::operator==(const float v) const {
+    return reinterpret_cast<const Point*>(this)->compare(*reinterpret_cast<const Point*>(&v), FEPSILON);
+}
 
-	bool Point2::operator!=(const Point2 & p) const {
-		return !reinterpret_cast<const Point*>(this)->compare(*reinterpret_cast<const Point*>(&p), FEPSILON);
-	}
+bool Point2::operator!=(const Point2 & p) const {
+    return !reinterpret_cast<const Point*>(this)->compare(*reinterpret_cast<const Point*>(&p), FEPSILON);
+}
 
-	bool Point2::operator!=(const float v) const {
-		return !reinterpret_cast<const Point*>(this)->compare(*reinterpret_cast<const Point*>(&v), FEPSILON);
-	}
+bool Point2::operator!=(const float v) const {
+    return !reinterpret_cast<const Point*>(this)->compare(*reinterpret_cast<const Point*>(&v), FEPSILON);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	Point2 operator +(const Point2 & p1, const Point2 & p2) {
-		const Point * pp1 = reinterpret_cast<const Point*>(&p1);
-		const Point * pp2 = reinterpret_cast<const Point*>(&p2);
-		Point res = *pp1 + *pp2;
-		return *reinterpret_cast<const Point2*>(&res);
-	}
+Point2 operator +(const Point2 & p1, const Point2 & p2) {
+    const Point * pp1 = reinterpret_cast<const Point*>(&p1);
+    const Point * pp2 = reinterpret_cast<const Point*>(&p2);
+    Point res = *pp1 + *pp2;
+    return *reinterpret_cast<const Point2*>(&res);
+}
 
-	Point2 operator +(const Point2 & p, float v) {
-		const Point * pp1 = reinterpret_cast<const Point*>(&p);
-		Point res = *pp1 + v;
-		return *reinterpret_cast<const Point2*>(&res);
-	}
+Point2 operator +(const Point2 & p, float v) {
+    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+    Point res = *pp1 + v;
+    return *reinterpret_cast<const Point2*>(&res);
+}
 
-	Point2 operator +(float v, const Point2 & p) {
-		const Point * pp1 = reinterpret_cast<const Point*>(&p);
-		Point res = v + *pp1;
-		return *reinterpret_cast<const Point2*>(&res);
-	}
+Point2 operator +(float v, const Point2 & p) {
+    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+    Point res = v + *pp1;
+    return *reinterpret_cast<const Point2*>(&res);
+}
 
-	Point2 operator -(const Point2 & p1, const Point2 & p2) {
-		const Point * pp1 = reinterpret_cast<const Point*>(&p1);
-		const Point * pp2 = reinterpret_cast<const Point*>(&p2);
-		Point res = *pp1 - *pp2;
-		return *reinterpret_cast<const Point2*>(&res);
-	}
+Point2 operator -(const Point2 & p1, const Point2 & p2) {
+    const Point * pp1 = reinterpret_cast<const Point*>(&p1);
+    const Point * pp2 = reinterpret_cast<const Point*>(&p2);
+    Point res = *pp1 - *pp2;
+    return *reinterpret_cast<const Point2*>(&res);
+}
 
-	Point2 operator -(const Point2 & p, float v) {
-		const Point * pp1 = reinterpret_cast<const Point*>(&p);
-		Point res = *pp1 - v;
-		return *reinterpret_cast<const Point2*>(&res);
-	}
+Point2 operator -(const Point2 & p, float v) {
+    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+    Point res = *pp1 - v;
+    return *reinterpret_cast<const Point2*>(&res);
+}
 
-	Point2 operator -(float v, const Point2 & p) {
-		const Point * pp1 = reinterpret_cast<const Point*>(&p);
-		Point res = v - *pp1;
-		return *reinterpret_cast<const Point2*>(&res);
-	}
+Point2 operator -(float v, const Point2 & p) {
+    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+    Point res = v - *pp1;
+    return *reinterpret_cast<const Point2*>(&res);
+}
 
-	Point2 operator *(const Point2 & p1, const Point2 & p2) {
-		const Point * pp1 = reinterpret_cast<const Point*>(&p1);
-		const Point * pp2 = reinterpret_cast<const Point*>(&p2);
-		Point res = *pp1 * *pp2;
-		return *reinterpret_cast<const Point2*>(&res);
-	}
+Point2 operator *(const Point2 & p1, const Point2 & p2) {
+    const Point * pp1 = reinterpret_cast<const Point*>(&p1);
+    const Point * pp2 = reinterpret_cast<const Point*>(&p2);
+    Point res = *pp1 * *pp2;
+    return *reinterpret_cast<const Point2*>(&res);
+}
 
-	Point2 operator *(const Point2 & p, float v) {
-		const Point * pp1 = reinterpret_cast<const Point*>(&p);
-		Point res = *pp1 * v;
-		return *reinterpret_cast<const Point2*>(&res);
-	}
+Point2 operator *(const Point2 & p, float v) {
+    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+    Point res = *pp1 * v;
+    return *reinterpret_cast<const Point2*>(&res);
+}
 
-	Point2 operator *(float v, const Point2 & p) {
-		const Point * pp1 = reinterpret_cast<const Point*>(&p);
-		Point res = v * *pp1;
-		return *reinterpret_cast<const Point2*>(&res);
-	}
+Point2 operator *(float v, const Point2 & p) {
+    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+    Point res = v * *pp1;
+    return *reinterpret_cast<const Point2*>(&res);
+}
 
-	Point2 operator /(const Point2 & p1, const Point2 & p2) {
-		const Point * pp1 = reinterpret_cast<const Point*>(&p1);
-		const Point * pp2 = reinterpret_cast<const Point*>(&p2);
-		Point res = *pp1 / *pp2;
-		return *reinterpret_cast<const Point2*>(&res);
-	}
+Point2 operator /(const Point2 & p1, const Point2 & p2) {
+    const Point * pp1 = reinterpret_cast<const Point*>(&p1);
+    const Point * pp2 = reinterpret_cast<const Point*>(&p2);
+    Point res = *pp1 / *pp2;
+    return *reinterpret_cast<const Point2*>(&res);
+}
 
-	Point2 operator /(const Point2 & p, float v) {
-		const Point * pp1 = reinterpret_cast<const Point*>(&p);
-		Point res = *pp1 / v;
-		return *reinterpret_cast<const Point2*>(&res);
-	}
+Point2 operator /(const Point2 & p, float v) {
+    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+    Point res = *pp1 / v;
+    return *reinterpret_cast<const Point2*>(&res);
+}
 
-	Point2 operator /(float v, const Point2 & p) {
-		const Point * pp1 = reinterpret_cast<const Point*>(&p);
-		Point res = v / *pp1;
-		return *reinterpret_cast<const Point2*>(&res);
-	}
+Point2 operator /(float v, const Point2 & p) {
+    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+    Point res = v / *pp1;
+    return *reinterpret_cast<const Point2*>(&res);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	std::string Point2::toString(uint8_t precision /*= 4*/) const {
-		return reinterpret_cast<const Point*>(this)->toString("%x %y", precision);
-	}
+std::string Point2::toString(uint8_t precision /*= 4*/) const {
+    return reinterpret_cast<const Point*>(this)->toString("%x %y", precision);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	float Point2::length() const {
-		return reinterpret_cast<const Point*>(this)->length();
-	}
+float Point2::length() const {
+    return reinterpret_cast<const Point*>(this)->length();
+}
 
-	void Point2::normalize() {
-		reinterpret_cast<Point*>(this)->normalize();
-	}
+void Point2::normalize() {
+    reinterpret_cast<Point*>(this)->normalize();
+}
 
-	bool Point2::isEmpty() const {
-		return reinterpret_cast<const Point*>(this)->isEmpty();
-	}
+bool Point2::isEmpty() const {
+    return reinterpret_cast<const Point*>(this)->isEmpty();
+}
 
-	void Point2::clear() {
-		reinterpret_cast<Point*>(this)->clear();
-	}
+void Point2::clear() {
+    reinterpret_cast<Point*>(this)->clear();
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

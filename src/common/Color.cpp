@@ -34,98 +34,98 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	Color::Color()
-		: Color(0.0, 0.0, 0.0, 1.0) { }
+Color::Color()
+    : Color(0.0, 0.0, 0.0, 1.0) { }
 
-	Color::Color(float red, float green, float blue, float alpha) {
-		mColor[0] = red;
-		mColor[1] = green;
-		mColor[2] = blue;
-		mColor[3] = alpha;
-	}
+Color::Color(float red, float green, float blue, float alpha) {
+    mColor[0] = red;
+    mColor[1] = green;
+    mColor[2] = blue;
+    mColor[3] = alpha;
+}
 
-	Color::Color(const Color & p) {
-		*this = p;
-	}
+Color::Color(const Color & p) {
+    *this = p;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	Color & Color::operator=(const Color & p) {
-		setRed(p.red());
-		setGreen(p.green());
-		setBlue(p.blue());
-		setAlpha(p.alpha());
-		return *this;
-	}
+Color & Color::operator=(const Color & p) {
+    setRed(p.red());
+    setGreen(p.green());
+    setBlue(p.blue());
+    setAlpha(p.alpha());
+    return *this;
+}
 
-	bool Color::operator==(const Color & c) const {
-		return (sts::isEqual(mColor[0], c.mColor[0]) &&
-				sts::isEqual(mColor[1], c.mColor[1]) &&
-				sts::isEqual(mColor[2], c.mColor[2]) &&
-				sts::isEqual(mColor[3], c.mColor[3]));
-	}
+bool Color::operator==(const Color & c) const {
+    return (sts::isEqual(mColor[0], c.mColor[0]) &&
+            sts::isEqual(mColor[1], c.mColor[1]) &&
+            sts::isEqual(mColor[2], c.mColor[2]) &&
+            sts::isEqual(mColor[3], c.mColor[3]));
+}
 
-	bool Color::operator!=(const Color & c) const {
-		return (sts::isNotEqual(mColor[0], c.mColor[0]) ||
-				sts::isNotEqual(mColor[1], c.mColor[1]) ||
-				sts::isNotEqual(mColor[2], c.mColor[2]) ||
-				sts::isNotEqual(mColor[3], c.mColor[3]));
-	}
+bool Color::operator!=(const Color & c) const {
+    return (sts::isNotEqual(mColor[0], c.mColor[0]) ||
+            sts::isNotEqual(mColor[1], c.mColor[1]) ||
+            sts::isNotEqual(mColor[2], c.mColor[2]) ||
+            sts::isNotEqual(mColor[3], c.mColor[3]));
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	float Color::red() const {
-		return mColor[0];
-	}
+float Color::red() const {
+    return mColor[0];
+}
 
-	float Color::green() const {
-		return mColor[1];
-	}
+float Color::green() const {
+    return mColor[1];
+}
 
-	float Color::blue() const {
-		return mColor[2];
-	}
+float Color::blue() const {
+    return mColor[2];
+}
 
-	float Color::alpha() const {
-		return mColor[3];
-	}
+float Color::alpha() const {
+    return mColor[3];
+}
 
-	void Color::setRed(float val) {
-		mColor[0] = val;
-	}
+void Color::setRed(float val) {
+    mColor[0] = val;
+}
 
-	void Color::setGreen(float val) {
-		mColor[1] = val;
-	}
+void Color::setGreen(float val) {
+    mColor[1] = val;
+}
 
-	void Color::setBlue(float val) {
-		mColor[2] = val;
-	}
+void Color::setBlue(float val) {
+    mColor[2] = val;
+}
 
-	void Color::setAlpha(float val) {
-		mColor[3] = val;
-	}
+void Color::setAlpha(float val) {
+    mColor[3] = val;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	std::string Color::toString(uint8_t precision /*= 4*/) const {
-		StringStream outStr(precision);
-		outStr << red() << " " << green() << " " << blue() << " " << alpha();
-		return outStr.str();
-	}
+std::string Color::toString(uint8_t precision /*= 4*/) const {
+    StringStream outStr(precision);
+    outStr << red() << " " << green() << " " << blue() << " " << alpha();
+    return outStr.str();
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

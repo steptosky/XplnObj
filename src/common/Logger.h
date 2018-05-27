@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -26,8 +28,6 @@
 **
 **  Contacts: www.steptosky.com
 */
-
-#pragma once
 
 #include <fstream>
 #include "sts/utilities/Logger.h"

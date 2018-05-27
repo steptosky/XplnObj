@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,83 +29,81 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/XplnObjExport.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details REQUIRE_WET/REQUIRE_DRY
-	 * \ingroup Attributes
-	 */
-	class AttrWetDry {
-	public:
+/*!
+ * \details REQUIRE_WET/REQUIRE_DRY
+ * \ingroup Attributes
+ */
+class AttrWetDry {
+public:
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		enum eState {
-			wet = 1,
-			dry
-		};
+    enum eState {
+        wet = 1,
+        dry
+    };
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Constructor default.
-		 * \note Makes the disabled attribute.
-		 */
-		XpObjLib AttrWetDry();
+    /*!
+     * \details Constructor default.
+     * \note Makes the disabled attribute.
+     */
+    XpObjLib AttrWetDry();
 
-		/*!
-		 * \details Constructor init.
-		 * \note Makes the enabled attribute.
-		 * \param [in] state 
-		 */
-		XpObjLib AttrWetDry(eState state);
+    /*!
+     * \details Constructor init.
+     * \note Makes the enabled attribute.
+     * \param [in] state 
+     */
+    XpObjLib AttrWetDry(eState state);
 
-		~AttrWetDry() = default;
+    ~AttrWetDry() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Check whether the attribute is enabled. 
-		 * \note All class's setters will enable this attribute.
-		 */
-		XpObjLib operator bool() const;
+    /*!
+     * \details Check whether the attribute is enabled. 
+     * \note All class's setters will enable this attribute.
+     */
+    XpObjLib operator bool() const;
 
-		/*!
-		 * \details Sets the attribute enabled/disabled.
-		 * \note All class's setters will enable this attribute.
-		 * \param [in] state 
-		 */
-		XpObjLib void setEnabled(bool state);
+    /*!
+     * \details Sets the attribute enabled/disabled.
+     * \note All class's setters will enable this attribute.
+     * \param [in] state 
+     */
+    XpObjLib void setEnabled(bool state);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrWetDry & other) const;
-		XpObjLib bool operator!=(const AttrWetDry & other) const;
+    XpObjLib bool operator==(const AttrWetDry & other) const;
+    XpObjLib bool operator!=(const AttrWetDry & other) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setState(eState state);
-		XpObjLib eState state() const;
+    XpObjLib void setState(eState state);
+    XpObjLib eState state() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		eState mState;
-		bool mIsEnabled : 1;
+    eState mState;
+    bool mIsEnabled : 1;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

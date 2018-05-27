@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,35 +29,33 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/obj/ObjMain.h"
 
 namespace xobj {
 
-	/**********************************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
 
-	class ObjWritePreparer {
+class ObjWritePreparer {
 
-		ObjWritePreparer() = default;
-		~ObjWritePreparer() = default;
+    ObjWritePreparer() = default;
+    ~ObjWritePreparer() = default;
 
-	public:
+public:
 
-		static bool prepare(ObjMain & mainObj);
+    static bool prepare(ObjMain & mainObj);
 
-	private:
+private:
 
-		static bool proccessTransform(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod);
-		static bool proccessObjects(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod);
+    static bool proccessTransform(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod);
+    static bool proccessObjects(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod);
 
-		static void checkForTwoSided(ObjAbstract & obj);
+    static void checkForTwoSided(ObjAbstract & obj);
 
-	};
+};
 
-	/**********************************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
 }

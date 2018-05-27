@@ -38,73 +38,73 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjWriteGlobAttr::write(AbstractWriter * writer, const ObjMain * obj) {
-		assert(obj);
+void ObjWriteGlobAttr::write(AbstractWriter * writer, const ObjMain * obj) {
+    assert(obj);
 
-		writeTexture(writer, ATTR_GLOBAL_TEXTURE, obj->pAttr.texture());
-		writeTexture(writer, ATTR_GLOBAL_TEXTURE_LIT, obj->pAttr.textureLit());
-		writeTexture(writer, ATTR_GLOBAL_TEXTURE_NORMAL, obj->pAttr.textureNormal());
+    writeTexture(writer, ATTR_GLOBAL_TEXTURE, obj->pAttr.texture());
+    writeTexture(writer, ATTR_GLOBAL_TEXTURE_LIT, obj->pAttr.textureLit());
+    writeTexture(writer, ATTR_GLOBAL_TEXTURE_NORMAL, obj->pAttr.textureNormal());
 
-		writeBool(writer, ATTR_GLOBAL_BLEND_GLASS, obj->pAttr.isBlendGlass());
-		writeBool(writer, ATTR_GLOBAL_NORMAL_METALNESS, obj->pAttr.isNormalMetalness());
-		writeBool(writer, ATTR_GLOBAL_TILTED, obj->pAttr.isTilted());
-		writeBool(writer, ATTR_GLOBAL_NO_SHADOW, obj->pAttr.isNoShadow());
-		writeBool(writer, ATTR_GLOBAL_COCKPIT_LIT, obj->pAttr.isCockpitLit());
-		// Is printed in another place.
-		//writeBool(inWriter, ATTR_GLOBAL_DEBUG, inObj->pAttr.isDebug());
+    writeBool(writer, ATTR_GLOBAL_BLEND_GLASS, obj->pAttr.isBlendGlass());
+    writeBool(writer, ATTR_GLOBAL_NORMAL_METALNESS, obj->pAttr.isNormalMetalness());
+    writeBool(writer, ATTR_GLOBAL_TILTED, obj->pAttr.isTilted());
+    writeBool(writer, ATTR_GLOBAL_NO_SHADOW, obj->pAttr.isNoShadow());
+    writeBool(writer, ATTR_GLOBAL_COCKPIT_LIT, obj->pAttr.isCockpitLit());
+    // Is printed in another place.
+    //writeBool(inWriter, ATTR_GLOBAL_DEBUG, inObj->pAttr.isDebug());
 
-		writeString(writer, toObjGlobString(obj->pAttr.wetDry()));
-		writeString(writer, toObjGlobString(obj->pAttr.blend()));
-		writeString(writer, toObjGlobString(obj->pAttr.layerGroup()));
-		writeString(writer, toObjGlobString(obj->pAttr.layerGroupDraped()));
-		writeString(writer, toObjGlobString(obj->pAttr.lodDrap()));
-		writeString(writer, toObjGlobString(obj->pAttr.slungLoadWeight()));
-		writeString(writer, toObjGlobString(obj->pAttr.specular()));
-		writeString(writer, toObjGlobString(obj->pAttr.tint()));
-		writeString(writer, toObjGlobString(obj->pAttr.slopeLimit()));
-		writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r1)));
-		writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r2)));
-		writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r3)));
-		writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r4)));
-	}
+    writeString(writer, toObjGlobString(obj->pAttr.wetDry()));
+    writeString(writer, toObjGlobString(obj->pAttr.blend()));
+    writeString(writer, toObjGlobString(obj->pAttr.layerGroup()));
+    writeString(writer, toObjGlobString(obj->pAttr.layerGroupDraped()));
+    writeString(writer, toObjGlobString(obj->pAttr.lodDrap()));
+    writeString(writer, toObjGlobString(obj->pAttr.slungLoadWeight()));
+    writeString(writer, toObjGlobString(obj->pAttr.specular()));
+    writeString(writer, toObjGlobString(obj->pAttr.tint()));
+    writeString(writer, toObjGlobString(obj->pAttr.slopeLimit()));
+    writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r1)));
+    writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r2)));
+    writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r3)));
+    writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r4)));
+}
 
-	void ObjWriteGlobAttr::reset() {
-		mCounter = 0;
-	}
+void ObjWriteGlobAttr::reset() {
+    mCounter = 0;
+}
 
-	size_t ObjWriteGlobAttr::count() const {
-		return mCounter;
-	}
+size_t ObjWriteGlobAttr::count() const {
+    return mCounter;
+}
 
-	void ObjWriteGlobAttr::writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString) {
-		if (!inString.empty()) {
-			if (!StringValidator::hasIllegalSymbols(inString, "\t\n\r")) {
-				inWriter->printLine(std::string(inAttr).append(" ").append(inString));
-				++mCounter;
-			}
-		}
-	}
+void ObjWriteGlobAttr::writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString) {
+    if (!inString.empty()) {
+        if (!StringValidator::hasIllegalSymbols(inString, "\t\n\r")) {
+            inWriter->printLine(std::string(inAttr).append(" ").append(inString));
+            ++mCounter;
+        }
+    }
+}
 
-	void ObjWriteGlobAttr::writeBool(AbstractWriter * inWriter, const char * inAttr, bool inState) {
-		if (inState) {
-			inWriter->printLine(inAttr);
-			++mCounter;
-		}
-	}
+void ObjWriteGlobAttr::writeBool(AbstractWriter * inWriter, const char * inAttr, bool inState) {
+    if (inState) {
+        inWriter->printLine(inAttr);
+        ++mCounter;
+    }
+}
 
-	void ObjWriteGlobAttr::writeString(AbstractWriter * inWriter, const std::string inStr) {
-		if (!inStr.empty()) {
-			inWriter->printLine(inStr);
-			++mCounter;
-		}
-	}
+void ObjWriteGlobAttr::writeString(AbstractWriter * inWriter, const std::string inStr) {
+    if (!inStr.empty()) {
+        inWriter->printLine(inStr);
+        ++mCounter;
+    }
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

@@ -34,62 +34,62 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipRadio::AttrManipRadio()
-		: AttrManipBase(EManipulator(EManipulator::radio)) { }
+AttrManipRadio::AttrManipRadio()
+    : AttrManipBase(EManipulator(EManipulator::radio)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipRadio::setDown(float val) {
-		mDown = val;
-	}
+void AttrManipRadio::setDown(float val) {
+    mDown = val;
+}
 
-	float AttrManipRadio::down() const {
-		return mDown;
-	}
+float AttrManipRadio::down() const {
+    return mDown;
+}
 
-	const std::string & AttrManipRadio::dataref() const {
-		return mDataref;
-	}
+const std::string & AttrManipRadio::dataref() const {
+    return mDataref;
+}
 
-	void AttrManipRadio::setDataref(const std::string & val) {
-		mDataref = val;
-	}
+void AttrManipRadio::setDataref(const std::string & val) {
+    mDataref = val;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipRadio::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipRadio::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipRadio * right = dynamic_cast<const AttrManipRadio*>(manip);
-		if (!right)
-			return false;
+    const AttrManipRadio * right = dynamic_cast<const AttrManipRadio*>(manip);
+    if (!right)
+        return false;
 
-		const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-		if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
-			return false;
+    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
+    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
+        return false;
 
-		return (sts::isEqual(mDown, right->mDown) &&
-				sts::isEqual(mDataref, right->mDataref));
-	}
+    return (sts::isEqual(mDown, right->mDown) &&
+            sts::isEqual(mDataref, right->mDataref));
+}
 
-	AttrManipBase * AttrManipRadio::clone() const {
-		return new AttrManipRadio(*this);
-	}
+AttrManipBase * AttrManipRadio::clone() const {
+    return new AttrManipRadio(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

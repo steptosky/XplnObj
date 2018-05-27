@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,55 +29,53 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/XplnObjExport.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the animation rotation key
-	 * \ingroup Animation
-	 */
-	class AnimRotateKey {
-	public:
+/*!
+ * \details Representation of the animation rotation key
+ * \ingroup Animation
+ */
+class AnimRotateKey {
+public:
 
-		AnimRotateKey()
-			: pAngleDegrees(0.0f),
-			pDrfValue(0.0f) {}
+    AnimRotateKey()
+        : pAngleDegrees(0.0f),
+          pDrfValue(0.0f) {}
 
-		AnimRotateKey(float angleDegrees, float dataRefValue)
-			: pAngleDegrees(angleDegrees),
-			pDrfValue(dataRefValue) {}
+    AnimRotateKey(float angleDegrees, float dataRefValue)
+        : pAngleDegrees(angleDegrees),
+          pDrfValue(dataRefValue) {}
 
-		//-----------------------------------------
+    //-----------------------------------------
 
-		XpObjLib bool operator==(const AnimRotateKey & other) const;
+    XpObjLib bool operator==(const AnimRotateKey & other) const;
 
-		bool operator!=(const AnimRotateKey & other) const {
-			return !this->operator==(other);
-		}
+    bool operator!=(const AnimRotateKey & other) const {
+        return !this->operator==(other);
+    }
 
-		//-----------------------------------------
+    //-----------------------------------------
 
-		void reset() {
-			pAngleDegrees = 0.0f;
-			pDrfValue = 0.0f;
-		}
+    void reset() {
+        pAngleDegrees = 0.0f;
+        pDrfValue = 0.0f;
+    }
 
-		//-----------------------------------------------
+    //-----------------------------------------------
 
-		float pAngleDegrees;
-		float pDrfValue;
-		//-------------------------------------------------------------------------
+    float pAngleDegrees;
+    float pDrfValue;
+    //-------------------------------------------------------------------------
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

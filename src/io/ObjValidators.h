@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,88 +29,86 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/XplnObjExport.h"
 #include <string>
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class ObjAbstract;
-	class ObjDummy;
-	class ObjLine;
-	class ObjLodGroup;
-	class ObjMain;
-	class ObjMesh;
-	class ObjSmoke;
+class ObjAbstract;
+class ObjDummy;
+class ObjLine;
+class ObjLodGroup;
+class ObjMain;
+class ObjMesh;
+class ObjSmoke;
 
-	class AttrGlobSet;
+class AttrGlobSet;
 
-	/*!
-	 * \details Hard polygons can only be used in the first LOD.
-	 *          So algorithms have to use this function to 
-	 *          check whether the object contains a hard polygons attribute.
-	 *          This function also prints information to the log
-	 *          if specified object contains a hard polygons attribute.
-	 * \param baseObj 
-	 * \param lodName 
-	 * \return True if specified object contains a hard polygons attribute, otherwise false.
-	 */
-	XpObjLib bool findHardPolygons(const ObjAbstract & baseObj, const std::string & lodName);
+/*!
+ * \details Hard polygons can only be used in the first LOD.
+ *          So algorithms have to use this function to 
+ *          check whether the object contains a hard polygons attribute.
+ *          This function also prints information to the log
+ *          if specified object contains a hard polygons attribute.
+ * \param baseObj 
+ * \param lodName 
+ * \return True if specified object contains a hard polygons attribute, otherwise false.
+ */
+XpObjLib bool findHardPolygons(const ObjAbstract & baseObj, const std::string & lodName);
 
-	XpObjLib bool checkParameters(const AttrGlobSet & attrSet, const std::string & prefix);
-	XpObjLib bool checkParameters(const ObjAbstract & baseObj, const std::string & prefix);
-	XpObjLib bool checkParameters(const ObjDummy & obj, const std::string & prefix);
-	XpObjLib bool checkParameters(const ObjLine & obj, const std::string & prefix);
-	XpObjLib bool checkParameters(const ObjLodGroup & lodObj, const std::string & prefix);
-	XpObjLib bool checkParameters(const ObjMain & mainObj, const std::string & prefix);
-	XpObjLib bool checkParameters(const ObjMesh & obj, const std::string & prefix);
-	XpObjLib bool checkParameters(const ObjSmoke & obj, const std::string & prefix);
+XpObjLib bool checkParameters(const AttrGlobSet & attrSet, const std::string & prefix);
+XpObjLib bool checkParameters(const ObjAbstract & baseObj, const std::string & prefix);
+XpObjLib bool checkParameters(const ObjDummy & obj, const std::string & prefix);
+XpObjLib bool checkParameters(const ObjLine & obj, const std::string & prefix);
+XpObjLib bool checkParameters(const ObjLodGroup & lodObj, const std::string & prefix);
+XpObjLib bool checkParameters(const ObjMain & mainObj, const std::string & prefix);
+XpObjLib bool checkParameters(const ObjMesh & obj, const std::string & prefix);
+XpObjLib bool checkParameters(const ObjSmoke & obj, const std::string & prefix);
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class Transform;
+class Transform;
 
-	XpObjLib bool checkParameters(const Transform & transform, const std::string & prefix);
+XpObjLib bool checkParameters(const Transform & transform, const std::string & prefix);
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class AnimVisibilityKey;
-	class AnimTrans;
-	class AnimTransKey;
-	class AnimRotate;
+class AnimVisibilityKey;
+class AnimTrans;
+class AnimTransKey;
+class AnimRotate;
 
-	XpObjLib bool checkParameters(const AnimVisibilityKey & key, const std::string & prefix);
-	XpObjLib bool checkParameters(const AnimTrans & anim, const std::string & prefix);
-	XpObjLib bool checkParameters(const AnimTransKey & key, const std::string & prefix);
-	XpObjLib bool checkParameters(const AnimRotate & anim, const std::string & prefix);
+XpObjLib bool checkParameters(const AnimVisibilityKey & key, const std::string & prefix);
+XpObjLib bool checkParameters(const AnimTrans & anim, const std::string & prefix);
+XpObjLib bool checkParameters(const AnimTransKey & key, const std::string & prefix);
+XpObjLib bool checkParameters(const AnimRotate & anim, const std::string & prefix);
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class ObjLightCustom;
-	class ObjLightNamed;
-	class ObjLightParam;
-	class ObjLightPoint;
-	class ObjLightSpillCust;
+class ObjLightCustom;
+class ObjLightNamed;
+class ObjLightParam;
+class ObjLightPoint;
+class ObjLightSpillCust;
 
-	XpObjLib bool checkParameters(const ObjLightCustom & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const ObjLightNamed & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const ObjLightParam & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const ObjLightPoint & inVal, const std::string & inPrefix);
-	XpObjLib bool checkParameters(const ObjLightSpillCust & inVal, const std::string & inPrefix);
+XpObjLib bool checkParameters(const ObjLightCustom & inVal, const std::string & inPrefix);
+XpObjLib bool checkParameters(const ObjLightNamed & inVal, const std::string & inPrefix);
+XpObjLib bool checkParameters(const ObjLightParam & inVal, const std::string & inPrefix);
+XpObjLib bool checkParameters(const ObjLightPoint & inVal, const std::string & inPrefix);
+XpObjLib bool checkParameters(const ObjLightSpillCust & inVal, const std::string & inPrefix);
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

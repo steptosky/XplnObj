@@ -32,68 +32,68 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrLayerGroup::AttrLayerGroup(ELayer layer, int32_t offset)
-		: mOffset(static_cast<uint8_t>(offset)),
-		mLayer(layer),
-		mIsEnabled(true) { }
+AttrLayerGroup::AttrLayerGroup(ELayer layer, int32_t offset)
+    : mOffset(static_cast<uint8_t>(offset)),
+      mLayer(layer),
+      mIsEnabled(true) { }
 
-	AttrLayerGroup::AttrLayerGroup()
-		: mOffset(0),
-		mLayer(ELayer(ELayer::objects)),
-		mIsEnabled(false) { }
+AttrLayerGroup::AttrLayerGroup()
+    : mOffset(0),
+      mLayer(ELayer(ELayer::objects)),
+      mIsEnabled(false) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrLayerGroup::operator bool() const {
-		return mIsEnabled;
-	}
+AttrLayerGroup::operator bool() const {
+    return mIsEnabled;
+}
 
-	void AttrLayerGroup::setEnabled(bool state) {
-		mIsEnabled = state;
-	}
+void AttrLayerGroup::setEnabled(bool state) {
+    mIsEnabled = state;
+}
 
-	bool AttrLayerGroup::operator==(const AttrLayerGroup & other) const {
-		return (mIsEnabled == other.mIsEnabled &&
-				mOffset == other.mOffset &&
-				mLayer == other.mLayer);
-	}
+bool AttrLayerGroup::operator==(const AttrLayerGroup & other) const {
+    return (mIsEnabled == other.mIsEnabled &&
+            mOffset == other.mOffset &&
+            mLayer == other.mLayer);
+}
 
-	bool AttrLayerGroup::operator!=(const AttrLayerGroup & other) const {
-		return !operator==(other);
-	}
+bool AttrLayerGroup::operator!=(const AttrLayerGroup & other) const {
+    return !operator==(other);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrLayerGroup::setOffset(int32_t offset) {
-		offset = std::min(offset, 5);
-		offset = std::max(offset, -5);
-		mOffset = static_cast<int8_t>(offset);
-		mIsEnabled = true;
-	}
+void AttrLayerGroup::setOffset(int32_t offset) {
+    offset = std::min(offset, 5);
+    offset = std::max(offset, -5);
+    mOffset = static_cast<int8_t>(offset);
+    mIsEnabled = true;
+}
 
-	int32_t AttrLayerGroup::offset() const {
-		return static_cast<int32_t>(mOffset);
-	}
+int32_t AttrLayerGroup::offset() const {
+    return static_cast<int32_t>(mOffset);
+}
 
-	void AttrLayerGroup::setLayer(ELayer layer) {
-		mLayer = layer;
-		mIsEnabled = true;
-	}
+void AttrLayerGroup::setLayer(ELayer layer) {
+    mLayer = layer;
+    mIsEnabled = true;
+}
 
-	ELayer AttrLayerGroup::layer() const {
-		return mLayer;
-	}
+ELayer AttrLayerGroup::layer() const {
+    return mLayer;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

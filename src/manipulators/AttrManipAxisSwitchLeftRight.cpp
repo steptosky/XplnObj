@@ -34,89 +34,89 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipAxisSwitchLeftRight::AttrManipAxisSwitchLeftRight()
-		: AttrManipBase(EManipulator(EManipulator::axis_switch_lr)) { }
+AttrManipAxisSwitchLeftRight::AttrManipAxisSwitchLeftRight()
+    : AttrManipBase(EManipulator(EManipulator::axis_switch_lr)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipAxisSwitchLeftRight::setClickDelta(float val) {
-		mClickDelta = val;
-	}
+void AttrManipAxisSwitchLeftRight::setClickDelta(float val) {
+    mClickDelta = val;
+}
 
-	void AttrManipAxisSwitchLeftRight::setHoldDelta(float val) {
-		mHoldDelta = val;
-	}
+void AttrManipAxisSwitchLeftRight::setHoldDelta(float val) {
+    mHoldDelta = val;
+}
 
-	void AttrManipAxisSwitchLeftRight::setMinimum(float val) {
-		mMin = val;
-	}
+void AttrManipAxisSwitchLeftRight::setMinimum(float val) {
+    mMin = val;
+}
 
-	void AttrManipAxisSwitchLeftRight::setMaximum(float val) {
-		mMax = val;
-	}
+void AttrManipAxisSwitchLeftRight::setMaximum(float val) {
+    mMax = val;
+}
 
-	float AttrManipAxisSwitchLeftRight::clickDelta() const {
-		return mClickDelta;
-	}
+float AttrManipAxisSwitchLeftRight::clickDelta() const {
+    return mClickDelta;
+}
 
-	float AttrManipAxisSwitchLeftRight::holdDelta() const {
-		return mHoldDelta;
-	}
+float AttrManipAxisSwitchLeftRight::holdDelta() const {
+    return mHoldDelta;
+}
 
-	float AttrManipAxisSwitchLeftRight::minimum() const {
-		return mMin;
-	}
+float AttrManipAxisSwitchLeftRight::minimum() const {
+    return mMin;
+}
 
-	float AttrManipAxisSwitchLeftRight::maximum() const {
-		return mMax;
-	}
+float AttrManipAxisSwitchLeftRight::maximum() const {
+    return mMax;
+}
 
-	void AttrManipAxisSwitchLeftRight::setDataref(const std::string & val) {
-		mDataref = val;
-	}
+void AttrManipAxisSwitchLeftRight::setDataref(const std::string & val) {
+    mDataref = val;
+}
 
-	const std::string & AttrManipAxisSwitchLeftRight::dataref() const {
-		return mDataref;
-	}
+const std::string & AttrManipAxisSwitchLeftRight::dataref() const {
+    return mDataref;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipAxisSwitchLeftRight::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipAxisSwitchLeftRight::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipAxisSwitchLeftRight * right = dynamic_cast<const AttrManipAxisSwitchLeftRight*>(manip);
-		if (!right)
-			return false;
+    const AttrManipAxisSwitchLeftRight * right = dynamic_cast<const AttrManipAxisSwitchLeftRight*>(manip);
+    if (!right)
+        return false;
 
-		const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-		if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
-			return false;
+    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
+    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
+        return false;
 
-		return (sts::isEqual(mClickDelta, right->mClickDelta) &&
-				sts::isEqual(mHoldDelta, right->mHoldDelta) &&
-				sts::isEqual(mMin, right->mMin) &&
-				sts::isEqual(mMax, right->mMax) &&
-				sts::isEqual(mDataref, right->mDataref));
-	}
+    return (sts::isEqual(mClickDelta, right->mClickDelta) &&
+            sts::isEqual(mHoldDelta, right->mHoldDelta) &&
+            sts::isEqual(mMin, right->mMin) &&
+            sts::isEqual(mMax, right->mMax) &&
+            sts::isEqual(mDataref, right->mDataref));
+}
 
-	AttrManipBase * AttrManipAxisSwitchLeftRight::clone() const {
-		return new AttrManipAxisSwitchLeftRight(*this);
-	}
+AttrManipBase * AttrManipAxisSwitchLeftRight::clone() const {
+    return new AttrManipAxisSwitchLeftRight(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

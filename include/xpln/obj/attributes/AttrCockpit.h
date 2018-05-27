@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,83 +29,81 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <cstdint>
 #include "xpln/XplnObjExport.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details ATTR_cockpi, ATTR_cockpit_region, ATTR_no_cockpit
-	 * \ingroup Attributes
-	 */
-	class AttrCockpit {
-	public:
+/*!
+ * \details ATTR_cockpi, ATTR_cockpit_region, ATTR_no_cockpit
+ * \ingroup Attributes
+ */
+class AttrCockpit {
+public:
 
-		enum eType : uint8_t {
-			cockpit,
-			region_1,
-			region_2,
-			region_3,
-			region_4
-		};
+    enum eType : uint8_t {
+        cockpit,
+        region_1,
+        region_2,
+        region_3,
+        region_4
+    };
 
-		/*!
-		 * \details Constructor default
-		 * \note Makes the disabled attribute.
-		 */
-		XpObjLib AttrCockpit();
+    /*!
+     * \details Constructor default
+     * \note Makes the disabled attribute.
+     */
+    XpObjLib AttrCockpit();
 
-		/*!
-		 * \details Constructor init.
-		 * \note Makes the enabled attribute.
-		 * \param [in] type
-		 */
-		XpObjLib AttrCockpit(eType type);
+    /*!
+     * \details Constructor init.
+     * \note Makes the enabled attribute.
+     * \param [in] type
+     */
+    XpObjLib AttrCockpit(eType type);
 
-		~AttrCockpit() = default;
+    ~AttrCockpit() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Check whether the attribute is enabled. 
-		 * \note All class's setters will enable this attribute.
-		 */
-		XpObjLib operator bool() const;
+    /*!
+     * \details Check whether the attribute is enabled. 
+     * \note All class's setters will enable this attribute.
+     */
+    XpObjLib operator bool() const;
 
-		/*!
-		 * \details Sets the attribute enabled/disabled.
-		 * \note All class's setters will enable this attribute.
-		 * \param [in] state 
-		 */
-		XpObjLib void setEnabled(bool state);
+    /*!
+     * \details Sets the attribute enabled/disabled.
+     * \note All class's setters will enable this attribute.
+     * \param [in] state 
+     */
+    XpObjLib void setEnabled(bool state);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrCockpit & other) const;
-		XpObjLib bool operator!=(const AttrCockpit & other) const;
+    XpObjLib bool operator==(const AttrCockpit & other) const;
+    XpObjLib bool operator!=(const AttrCockpit & other) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setType(eType type);
-		XpObjLib eType type() const;
+    XpObjLib void setType(eType type);
+    XpObjLib eType type() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		eType mType;
-		bool mIsEnabled : 1;
+    eType mType;
+    bool mIsEnabled : 1;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

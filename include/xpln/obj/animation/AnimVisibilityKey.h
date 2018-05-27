@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,62 +29,60 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/XplnObjExport.h"
 #include <string>
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the animation hide/show key
-	 * \warning eType::UNDEFINED means key isn't valid
-	 * \ingroup Animation
-	 */
-	class AnimVisibilityKey {
-	public:
+/*!
+ * \details Representation of the animation hide/show key
+ * \warning eType::UNDEFINED means key isn't valid
+ * \ingroup Animation
+ */
+class AnimVisibilityKey {
+public:
 
-		enum eType : uint8_t {
-			UNDEFINED = 0,
-			SHOW = 'S',
-			HIDE = 'H'
-		};
+    enum eType : uint8_t {
+        UNDEFINED = 0,
+        SHOW = 'S',
+        HIDE = 'H'
+    };
 
-		XpObjLib AnimVisibilityKey();
-		XpObjLib AnimVisibilityKey(eType type, float val1, float val2, const std::string & dataRef);
+    XpObjLib AnimVisibilityKey();
+    XpObjLib AnimVisibilityKey(eType type, float val1, float val2, const std::string & dataRef);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AnimVisibilityKey & other) const;
+    XpObjLib bool operator==(const AnimVisibilityKey & other) const;
 
-		bool operator!=(const AnimVisibilityKey & other) const {
-			return !this->operator==(other);
-		}
+    bool operator!=(const AnimVisibilityKey & other) const {
+        return !this->operator==(other);
+    }
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		void reset();
+    void reset();
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		eType pType;
-		float pValue1;
-		float pValue2;
-		std::string pDrf;
+    eType pType;
+    float pValue1;
+    float pValue2;
+    std::string pDrf;
 
-		float pLoopValue;
-		bool pHasLoop;
+    float pLoopValue;
+    bool pHasLoop;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

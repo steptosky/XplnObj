@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,74 +29,72 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/XplnObjExport.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details GLOBAL_specular
-	 * \ingroup Attributes
-	 */
-	class AttrSpecular {
-	public:
+/*!
+ * \details GLOBAL_specular
+ * \ingroup Attributes
+ */
+class AttrSpecular {
+public:
 
-		/*!
-		 * \details Constructor default.
-		 * \note Makes the disabled attribute.
-		 */
-		XpObjLib AttrSpecular();
+    /*!
+     * \details Constructor default.
+     * \note Makes the disabled attribute.
+     */
+    XpObjLib AttrSpecular();
 
-		/*!
-		 * \details Constructor init.
-		 * \note Makes the enabled attribute.
-		 * \param [in] ratio 
-		 */
-		XpObjLib AttrSpecular(float ratio);
+    /*!
+     * \details Constructor init.
+     * \note Makes the enabled attribute.
+     * \param [in] ratio 
+     */
+    XpObjLib AttrSpecular(float ratio);
 
-		~AttrSpecular() = default;
+    ~AttrSpecular() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Check whether the attribute is enabled. 
-		 * \note All class's setters will enable this attribute.
-		 */
-		XpObjLib operator bool() const;
+    /*!
+     * \details Check whether the attribute is enabled. 
+     * \note All class's setters will enable this attribute.
+     */
+    XpObjLib operator bool() const;
 
-		/*!
-		 * \details Sets the attribute enabled/disabled.
-		 * \note All class's setters will enable this attribute.
-		 * \param [in] state 
-		 */
-		XpObjLib void setEnabled(bool state);
+    /*!
+     * \details Sets the attribute enabled/disabled.
+     * \note All class's setters will enable this attribute.
+     * \param [in] state 
+     */
+    XpObjLib void setEnabled(bool state);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrSpecular & other) const;
-		XpObjLib bool operator!=(const AttrSpecular & other) const;
+    XpObjLib bool operator==(const AttrSpecular & other) const;
+    XpObjLib bool operator!=(const AttrSpecular & other) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setRatio(float ratio);
-		XpObjLib float ratio() const;
+    XpObjLib void setRatio(float ratio);
+    XpObjLib float ratio() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		float mRatio;
-		bool mIsEnabled : 1;
+    float mRatio;
+    bool mIsEnabled : 1;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

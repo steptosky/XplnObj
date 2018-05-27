@@ -34,115 +34,115 @@
 
 namespace sts_t {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details This class is using as a container for the TreeItem.
-	 */
-	template<typename TYPE>
-	class TreeItemContainerVector : public std::vector<TYPE *> {
+/*!
+ * \details This class is using as a container for the TreeItem.
+ */
+template<typename TYPE>
+class TreeItemContainerVector : public std::vector<TYPE *> {
 
-		typedef std::vector<TYPE *> Container;
+    typedef std::vector<TYPE *> Container;
 
-	public:
+public:
 
-		//--------------------------------------------
+    //--------------------------------------------
 
-		TYPE * operator[](size_t inIdx) {
-			return Container::operator[](inIdx);
-		}
+    TYPE * operator[](size_t inIdx) {
+        return Container::operator[](inIdx);
+    }
 
-		const TYPE * operator[](size_t inIdx) const {
-			return Container::operator[](inIdx);
-		}
+    const TYPE * operator[](size_t inIdx) const {
+        return Container::operator[](inIdx);
+    }
 
-		//--------------------------------------------
+    //--------------------------------------------
 
-		using Container::erase;
+    using Container::erase;
 
-		TYPE * erase(size_t inIndex) {
-			auto it = Container::begin() + inIndex;
-			TYPE * out = (*it);
-			Container::erase(it);
-			return out;
-		}
+    TYPE * erase(size_t inIndex) {
+        auto it = Container::begin() + inIndex;
+        TYPE * out = (*it);
+        Container::erase(it);
+        return out;
+    }
 
-		//--------------------------------------------
+    //--------------------------------------------
 
-		using Container::insert;
+    using Container::insert;
 
-		void insert(size_t inIndex, TYPE * inVal) {
-			Container::insert(Container::begin() + inIndex, inVal);
-		}
+    void insert(size_t inIndex, TYPE * inVal) {
+        Container::insert(Container::begin() + inIndex, inVal);
+    }
 
-		//--------------------------------------------
+    //--------------------------------------------
 
-		void push_front(TYPE * inVal) {
-			Container::insert(Container::begin(), inVal);
-		}
+    void push_front(TYPE * inVal) {
+        Container::insert(Container::begin(), inVal);
+    }
 
-		//--------------------------------------------
+    //--------------------------------------------
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details This class is using as a container for the TreeItem.
-	 */
-	template<typename TYPE>
-	class TreeItemContainerList : public std::list<TYPE *> {
+/*!
+ * \details This class is using as a container for the TreeItem.
+ */
+template<typename TYPE>
+class TreeItemContainerList : public std::list<TYPE *> {
 
-		typedef std::list<TYPE *> Container;
+    typedef std::list<TYPE *> Container;
 
-	public:
+public:
 
-		//--------------------------------------------
+    //--------------------------------------------
 
-		TYPE * operator[](size_t inIdx) {
-			auto it = Container::begin();
-			for (size_t i = 0; i < inIdx; ++i , ++it);
-			return (*it);
-		}
+    TYPE * operator[](size_t inIdx) {
+        auto it = Container::begin();
+        for (size_t i = 0; i < inIdx; ++i, ++it);
+        return (*it);
+    }
 
-		const TYPE * operator[](size_t inIdx) const {
-			auto it = Container::begin();
-			for (size_t i = 0; i < inIdx; ++i , ++it);
-			return (*it);
-		}
+    const TYPE * operator[](size_t inIdx) const {
+        auto it = Container::begin();
+        for (size_t i = 0; i < inIdx; ++i, ++it);
+        return (*it);
+    }
 
-		//--------------------------------------------
+    //--------------------------------------------
 
-		using Container::erase;
+    using Container::erase;
 
-		TYPE * erase(size_t inIndex) {
-			auto it = Container::begin();
-			for (size_t i = 0; i < inIndex; ++i , ++it);
-			TYPE * out = (*it);
-			Container::erase(it);
-			return out;
-		}
+    TYPE * erase(size_t inIndex) {
+        auto it = Container::begin();
+        for (size_t i = 0; i < inIndex; ++i, ++it);
+        TYPE * out = (*it);
+        Container::erase(it);
+        return out;
+    }
 
-		//--------------------------------------------
+    //--------------------------------------------
 
-		using Container::insert;
+    using Container::insert;
 
-		void insert(size_t inIndex, TYPE * inVal) {
-			auto it = Container::begin();
-			for (size_t i = 0; i < inIndex; ++i , ++it);
-			Container::insert(it, inVal);
-		}
+    void insert(size_t inIndex, TYPE * inVal) {
+        auto it = Container::begin();
+        for (size_t i = 0; i < inIndex; ++i, ++it);
+        Container::insert(it, inVal);
+    }
 
-		//--------------------------------------------
+    //--------------------------------------------
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

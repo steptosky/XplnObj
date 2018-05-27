@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,53 +29,51 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/obj/animation/AnimRotate.h"
 #include "xpln/obj/Transform.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details This class is helper for conversion from Euler XYZ to angle axis animation set.
-	 * \note The order is XYZ
-	 * \note Use one anim key to set the static rotate angle
-	 * \note The vector values are ignored and will be auto-calculated
-	 * \warning It supports only one animated axis now!
-	 */
-	class EulerXyzHelper {
-	public:
+/*!
+ * \details This class is helper for conversion from Euler XYZ to angle axis animation set.
+ * \note The order is XYZ
+ * \note Use one anim key to set the static rotate angle
+ * \note The vector values are ignored and will be auto-calculated
+ * \warning It supports only one animated axis now!
+ */
+class EulerXyzHelper {
+public:
 
-		EulerXyzHelper() = default;
+    EulerXyzHelper() = default;
 
-		EulerXyzHelper(const AnimRotate & x, const AnimRotate & y, const AnimRotate & z)
-			: pX(x),
-			pY(y),
-			pZ(z) {}
+    EulerXyzHelper(const AnimRotate & x, const AnimRotate & y, const AnimRotate & z)
+        : pX(x),
+          pY(y),
+          pZ(z) {}
 
-		XpObjLib AnimRotateList animation();
-		XpObjLib void addToTransform(Transform & inOutTransform);
+    XpObjLib AnimRotateList animation();
+    XpObjLib void addToTransform(Transform & inOutTransform);
 
-		AnimRotate pX;
-		AnimRotate pY;
-		AnimRotate pZ;
+    AnimRotate pX;
+    AnimRotate pY;
+    AnimRotate pZ;
 
-	private:
+private:
 
-		static bool isAnimated(const AnimRotate & r);
-		static float value(const AnimRotate & r);
+    static bool isAnimated(const AnimRotate & r);
+    static float value(const AnimRotate & r);
 
-		TMatrix prepareX() const;
-		TMatrix prepareY() const;
+    TMatrix prepareX() const;
+    TMatrix prepareY() const;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

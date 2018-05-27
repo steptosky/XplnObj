@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,8 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/XplnObjExport.h"
 #include <string>
 
@@ -36,67 +36,67 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Allows you to receive the messages from the library's log system into your own function.
-	 * \note The category \link LOG_CATEGORY_FOR_USER \endlink is set when the library wants to show current message to the end-user.
-	 */
-	class ExternalLog {
-	public:
+/*!
+ * \details Allows you to receive the messages from the library's log system into your own function.
+ * \note The category \link LOG_CATEGORY_FOR_USER \endlink is set when the library wants to show current message to the end-user.
+ */
+class ExternalLog {
+public:
 
-		enum eType {
-			Fatal = 0,
-			Critical = 1,
-			Error = 2,
-			Warning = 3,
-			Msg = 4,
-			Debug = 5,
-		};
+    enum eType {
+        Fatal = 0,
+        Critical = 1,
+        Error = 2,
+        Warning = 3,
+        Msg = 4,
+        Debug = 5,
+    };
 
-		/*!
-		 * \details Log callback.
-		 * \param [in] type function message type
-		 * \param [in] msg function message
-		 * \param [in] file function source file
-		 * \param [in] line function line of the source file
-		 * \param [in] function function function objectName
-		 * \param [in] function category category of the message
-		 */
-		typedef void (*CallBack)(eType type, const char * msg,
-								const char * file, int line, const char * function,
-								const char * category);
+    /*!
+     * \details Log callback.
+     * \param [in] type function message type
+     * \param [in] msg function message
+     * \param [in] file function source file
+     * \param [in] line function line of the source file
+     * \param [in] function function function objectName
+     * \param [in] function category category of the message
+     */
+    typedef void (*CallBack)(eType type, const char * msg,
+                             const char * file, int line, const char * function,
+                             const char * category);
 
-		/*!
-		 * \details If a callback is registered then all logs from this library will be sent to the callback.
-		 * \param [in] callBack function
-		 */
-		XpObjLib static void registerCallBack(CallBack callBack);
+    /*!
+     * \details If a callback is registered then all logs from this library will be sent to the callback.
+     * \param [in] callBack function
+     */
+    XpObjLib static void registerCallBack(CallBack callBack);
 
-		/*!
-		 * \details Unregisters current callback.
-		 */
-		XpObjLib static void unRegisterCallBack();
+    /*!
+     * \details Unregisters current callback.
+     */
+    XpObjLib static void unRegisterCallBack();
 
-		/*!
-		 * \details Generates the string that can be used in about window.
-		 * \param [in] useWinEol true = "\r\n", false = "\n"
-		 * \return ascii string for about window.
-		 */
-		XpObjLib static std::string about(bool useWinEol = false);
+    /*!
+     * \details Generates the string that can be used in about window.
+     * \param [in] useWinEol true = "\r\n", false = "\n"
+     * \return ascii string for about window.
+     */
+    XpObjLib static std::string about(bool useWinEol = false);
 
-		/*!
-		* \details Generates the short string that can be used in about window.
-		* \param [in] useWinEol true = "\r\n", false = "\n"
-		* \return ascii string for about window.
-		*/
-		XpObjLib static std::string shortAbout(bool useWinEol = false);
+    /*!
+    * \details Generates the short string that can be used in about window.
+    * \param [in] useWinEol true = "\r\n", false = "\n"
+    * \return ascii string for about window.
+    */
+    XpObjLib static std::string shortAbout(bool useWinEol = false);
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

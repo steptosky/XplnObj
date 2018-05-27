@@ -34,85 +34,85 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipCmdAxis::AttrManipCmdAxis()
-		: AttrManipBase(EManipulator(EManipulator::command_axis)) { }
+AttrManipCmdAxis::AttrManipCmdAxis()
+    : AttrManipBase(EManipulator(EManipulator::command_axis)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipCmdAxis::setX(float val) {
-		mX = val;
-	}
+void AttrManipCmdAxis::setX(float val) {
+    mX = val;
+}
 
-	void AttrManipCmdAxis::setY(float val) {
-		mY = val;
-	}
+void AttrManipCmdAxis::setY(float val) {
+    mY = val;
+}
 
-	void AttrManipCmdAxis::setZ(float val) {
-		mZ = val;
-	}
+void AttrManipCmdAxis::setZ(float val) {
+    mZ = val;
+}
 
-	float AttrManipCmdAxis::x() const {
-		return mX;
-	}
+float AttrManipCmdAxis::x() const {
+    return mX;
+}
 
-	float AttrManipCmdAxis::y() const {
-		return mY;
-	}
+float AttrManipCmdAxis::y() const {
+    return mY;
+}
 
-	float AttrManipCmdAxis::z() const {
-		return mZ;
-	}
+float AttrManipCmdAxis::z() const {
+    return mZ;
+}
 
-	const std::string & AttrManipCmdAxis::cmdPositive() const {
-		return mPosCommand;
-	}
+const std::string & AttrManipCmdAxis::cmdPositive() const {
+    return mPosCommand;
+}
 
-	void AttrManipCmdAxis::setCmdPositive(const std::string & val) {
-		mPosCommand = val;
-	}
+void AttrManipCmdAxis::setCmdPositive(const std::string & val) {
+    mPosCommand = val;
+}
 
-	const std::string & AttrManipCmdAxis::cmdNegative() const {
-		return mNegCommand;
-	}
+const std::string & AttrManipCmdAxis::cmdNegative() const {
+    return mNegCommand;
+}
 
-	void AttrManipCmdAxis::setCmdNegative(const std::string & val) {
-		mNegCommand = val;
-	}
+void AttrManipCmdAxis::setCmdNegative(const std::string & val) {
+    mNegCommand = val;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipCmdAxis::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipCmdAxis::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipCmdAxis * right = dynamic_cast<const AttrManipCmdAxis*>(manip);
-		if (!right)
-			return false;
+    const AttrManipCmdAxis * right = dynamic_cast<const AttrManipCmdAxis*>(manip);
+    if (!right)
+        return false;
 
-		return (sts::isEqual(mX, right->mX) &&
-				sts::isEqual(mY, right->mY) &&
-				sts::isEqual(mZ, right->mZ) &&
-				sts::isEqual(mPosCommand, right->mPosCommand) &&
-				sts::isEqual(mNegCommand, right->mNegCommand));
-	}
+    return (sts::isEqual(mX, right->mX) &&
+            sts::isEqual(mY, right->mY) &&
+            sts::isEqual(mZ, right->mZ) &&
+            sts::isEqual(mPosCommand, right->mPosCommand) &&
+            sts::isEqual(mNegCommand, right->mNegCommand));
+}
 
-	AttrManipBase * AttrManipCmdAxis::clone() const {
-		return new AttrManipCmdAxis(*this);
-	}
+AttrManipBase * AttrManipCmdAxis::clone() const {
+    return new AttrManipCmdAxis(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,8 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "gmock/gmock.h"
 #include "io/writer/AbstractWriter.h"
 
@@ -38,15 +38,15 @@
 
 class MockWriter : public xobj::AbstractWriter {
 
-	MockWriter(const MockWriter &) = delete;
-	MockWriter & operator =(const MockWriter &) = delete;
+    MockWriter(const MockWriter &) = delete;
+    MockWriter & operator =(const MockWriter &) = delete;
 
 public:
 
-	MOCK_METHOD1(printLine, void(const char *));
+    MOCK_METHOD1(printLine, void(const char *));
 
-	MockWriter() = default;
-	virtual ~MockWriter() = default;
+    MockWriter() = default;
+    virtual ~MockWriter() = default;
 
 };
 

@@ -51,150 +51,150 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	std::string toObjString(const MeshVertex & vertex, bool isTree) {
-		StringStream out;
-		out << MESH_VT << " " << vertex.pPosition.toString(PRECISION) << "  ";
+std::string toObjString(const MeshVertex & vertex, bool isTree) {
+    StringStream out;
+    out << MESH_VT << " " << vertex.pPosition.toString(PRECISION) << "  ";
 
-		if (isTree)
-			out << 0.0f << " " << 1.0f << " " << 0.0f;
-		else
-			out << vertex.pNormal.normalized().toString(PRECISION);
+    if (isTree)
+        out << 0.0f << " " << 1.0f << " " << 0.0f;
+    else
+        out << vertex.pNormal.normalized().toString(PRECISION);
 
-		out << "  " << vertex.pTexture.toString(PRECISION);
-		return out.str();
-	}
+    out << "  " << vertex.pTexture.toString(PRECISION);
+    return out.str();
+}
 
-	std::string toObjString(const LineVertex & vertex) {
-		StringStream out;
-		out << VLINE
-				<< " " << vertex.pPosition.toString(PRECISION)
-				<< " " << vertex.pColor.red()
-				<< " " << vertex.pColor.green()
-				<< " " << vertex.pColor.blue();
-		return out.str();
-	}
+std::string toObjString(const LineVertex & vertex) {
+    StringStream out;
+    out << VLINE
+            << " " << vertex.pPosition.toString(PRECISION)
+            << " " << vertex.pColor.red()
+            << " " << vertex.pColor.green()
+            << " " << vertex.pColor.blue();
+    return out.str();
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	std::string toObjString(const ObjLodGroup & obj, bool printName) {
-		StringStream out;
-		out << ATTR_LOD << " " << obj.nearVal() << " " << obj.farVal();
-		if (printName) {
-			out << " ## " << obj.objectName();
-		}
-		return out.str();
-	}
+std::string toObjString(const ObjLodGroup & obj, bool printName) {
+    StringStream out;
+    out << ATTR_LOD << " " << obj.nearVal() << " " << obj.farVal();
+    if (printName) {
+        out << " ## " << obj.objectName();
+    }
+    return out.str();
+}
 
-	std::string toObjString(const ObjSmoke & obj, bool printName) {
-		if (obj.smokeType() == ObjSmoke::none) {
-			// todo maybe warning about none?
-			return "";
-		}
-		StringStream out;
-		out << (obj.smokeType() == ObjSmoke::white ? SMOKE_WHITE : SMOKE_BLACK)
-				<< " " << obj.position().toString(PRECISION)
-				<< " " << obj.size();
-		if (printName) {
-			out << " ## " << obj.objectName();
-		}
-		return out.str();
-	}
+std::string toObjString(const ObjSmoke & obj, bool printName) {
+    if (obj.smokeType() == ObjSmoke::none) {
+        // todo maybe warning about none?
+        return "";
+    }
+    StringStream out;
+    out << (obj.smokeType() == ObjSmoke::white ? SMOKE_WHITE : SMOKE_BLACK)
+            << " " << obj.position().toString(PRECISION)
+            << " " << obj.size();
+    if (printName) {
+        out << " ## " << obj.objectName();
+    }
+    return out.str();
+}
 
-	std::string toObjString(const ObjDummy & obj, bool printName) {
-		StringStream out;
-		if (printName) {
-			out << "## Dummy: " << obj.objectName();
-		}
-		return out.str();
-	}
+std::string toObjString(const ObjDummy & obj, bool printName) {
+    StringStream out;
+    if (printName) {
+        out << "## Dummy: " << obj.objectName();
+    }
+    return out.str();
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	std::string toObjString(const ObjLightCustom & obj, bool printName) {
-		StringStream out;
-		if (printName) {
-			out << "## " << obj.objectName() << std::endl;
-		}
-		out << LIGHT_CUSTOM
-				<< " " << obj.position().toString(PRECISION)
-				<< " " << obj.color().toString(PRECISION)
-				<< " " << obj.size()
-				<< " " << obj.textureRect().point1().toString(PRECISION)
-				<< " " << obj.textureRect().point2().toString(PRECISION)
-				<< " " << (obj.dataRef().empty() ? "none" : obj.dataRef().c_str());
-		return out.str();
-	}
+std::string toObjString(const ObjLightCustom & obj, bool printName) {
+    StringStream out;
+    if (printName) {
+        out << "## " << obj.objectName() << std::endl;
+    }
+    out << LIGHT_CUSTOM
+            << " " << obj.position().toString(PRECISION)
+            << " " << obj.color().toString(PRECISION)
+            << " " << obj.size()
+            << " " << obj.textureRect().point1().toString(PRECISION)
+            << " " << obj.textureRect().point2().toString(PRECISION)
+            << " " << (obj.dataRef().empty() ? "none" : obj.dataRef().c_str());
+    return out.str();
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	std::string toObjString(const ObjLightNamed & obj, bool printName) {
-		StringStream out;
-		if (printName) {
-			out << "## " << obj.objectName() << std::endl;
-		}
-		out << LIGHT_NAMED
-				<< " " << obj.lightId().toString()
-				<< " " << obj.position().toString(PRECISION);
-		return out.str();
-	}
+std::string toObjString(const ObjLightNamed & obj, bool printName) {
+    StringStream out;
+    if (printName) {
+        out << "## " << obj.objectName() << std::endl;
+    }
+    out << LIGHT_NAMED
+            << " " << obj.lightId().toString()
+            << " " << obj.position().toString(PRECISION);
+    return out.str();
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	std::string toObjString(const ObjLightParam & obj, bool printName) {
-		StringStream out;
-		if (printName) {
-			out << "## " << obj.objectName() << std::endl;
-		}
-		if (obj.lightId() == ELightParams(ELightParams::light_params_custom)) {
-			out << LIGHT_PARAM << " " << obj.lightName();
-		}
-		else {
-			out << LIGHT_PARAM << " " << obj.lightId().toString();
-		}
-		out << " " << obj.position().toString(PRECISION) << " " << obj.additionalParams();
-		return out.str();
-	}
+std::string toObjString(const ObjLightParam & obj, bool printName) {
+    StringStream out;
+    if (printName) {
+        out << "## " << obj.objectName() << std::endl;
+    }
+    if (obj.lightId() == ELightParams(ELightParams::light_params_custom)) {
+        out << LIGHT_PARAM << " " << obj.lightName();
+    }
+    else {
+        out << LIGHT_PARAM << " " << obj.lightId().toString();
+    }
+    out << " " << obj.position().toString(PRECISION) << " " << obj.additionalParams();
+    return out.str();
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	std::string toObjString(const ObjLightPoint & obj, bool printName) {
-		StringStream out;
-		if (printName) {
-			out << "## " << obj.objectName() << std::endl;
-		}
-		const Color & c = obj.color();
-		out << VLIGHT << " " << obj.position().toString(PRECISION) << " "
-				<< c.red() << " " << c.green() << " " << c.blue();
-		return out.str();
-	}
+std::string toObjString(const ObjLightPoint & obj, bool printName) {
+    StringStream out;
+    if (printName) {
+        out << "## " << obj.objectName() << std::endl;
+    }
+    const Color & c = obj.color();
+    out << VLIGHT << " " << obj.position().toString(PRECISION) << " "
+            << c.red() << " " << c.green() << " " << c.blue();
+    return out.str();
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	std::string toObjString(const ObjLightSpillCust & obj, bool printName) {
-		StringStream out;
-		if (printName) {
-			out << "## " << obj.objectName() << std::endl;
-		}
-		out << LIGHT_SPILL_CUSTOM
-				<< " " << obj.position().toString(PRECISION)
-				<< " " << obj.color().toString(PRECISION)
-				<< " " << obj.size()
-				<< " " << obj.direction().toString(PRECISION)
-				<< " " << obj.semiRaw()
-				<< " " << (obj.dataRef().empty() ? "none" : obj.dataRef().c_str());
-		return out.str();
-	}
+std::string toObjString(const ObjLightSpillCust & obj, bool printName) {
+    StringStream out;
+    if (printName) {
+        out << "## " << obj.objectName() << std::endl;
+    }
+    out << LIGHT_SPILL_CUSTOM
+            << " " << obj.position().toString(PRECISION)
+            << " " << obj.color().toString(PRECISION)
+            << " " << obj.size()
+            << " " << obj.direction().toString(PRECISION)
+            << " " << obj.semiRaw()
+            << " " << (obj.dataRef().empty() ? "none" : obj.dataRef().c_str());
+    return out.str();
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

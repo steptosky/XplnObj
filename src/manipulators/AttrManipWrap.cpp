@@ -34,89 +34,89 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipWrap::AttrManipWrap()
-		: AttrManipBase(EManipulator(EManipulator::wrap)) { }
+AttrManipWrap::AttrManipWrap()
+    : AttrManipBase(EManipulator(EManipulator::wrap)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipWrap::setDown(float val) {
-		mDown = val;
-	}
+void AttrManipWrap::setDown(float val) {
+    mDown = val;
+}
 
-	void AttrManipWrap::setHold(float val) {
-		mHold = val;
-	}
+void AttrManipWrap::setHold(float val) {
+    mHold = val;
+}
 
-	void AttrManipWrap::setMinimum(float val) {
-		mMin = val;
-	}
+void AttrManipWrap::setMinimum(float val) {
+    mMin = val;
+}
 
-	void AttrManipWrap::setMaximum(float val) {
-		mMax = val;
-	}
+void AttrManipWrap::setMaximum(float val) {
+    mMax = val;
+}
 
-	float AttrManipWrap::down() const {
-		return mDown;
-	}
+float AttrManipWrap::down() const {
+    return mDown;
+}
 
-	float AttrManipWrap::hold() const {
-		return mHold;
-	}
+float AttrManipWrap::hold() const {
+    return mHold;
+}
 
-	float AttrManipWrap::minimum() const {
-		return mMin;
-	}
+float AttrManipWrap::minimum() const {
+    return mMin;
+}
 
-	float AttrManipWrap::maximum() const {
-		return mMax;
-	}
+float AttrManipWrap::maximum() const {
+    return mMax;
+}
 
-	void AttrManipWrap::setDataref(const std::string & val) {
-		mDataref = val;
-	}
+void AttrManipWrap::setDataref(const std::string & val) {
+    mDataref = val;
+}
 
-	const std::string & AttrManipWrap::dataref() const {
-		return mDataref;
-	}
+const std::string & AttrManipWrap::dataref() const {
+    return mDataref;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipWrap::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipWrap::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipWrap * right = dynamic_cast<const AttrManipWrap*>(manip);
-		if (!right)
-			return false;
+    const AttrManipWrap * right = dynamic_cast<const AttrManipWrap*>(manip);
+    if (!right)
+        return false;
 
-		const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-		if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
-			return false;
+    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
+    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
+        return false;
 
-		return (sts::isEqual(mDown, right->mDown) &&
-				sts::isEqual(mHold, right->mHold) &&
-				sts::isEqual(mMin, right->mMin) &&
-				sts::isEqual(mMax, right->mMax) &&
-				sts::isEqual(mDataref, right->mDataref));
-	}
+    return (sts::isEqual(mDown, right->mDown) &&
+            sts::isEqual(mHold, right->mHold) &&
+            sts::isEqual(mMin, right->mMin) &&
+            sts::isEqual(mMax, right->mMax) &&
+            sts::isEqual(mDataref, right->mDataref));
+}
 
-	AttrManipBase * AttrManipWrap::clone() const {
-		return new AttrManipWrap(*this);
-	}
+AttrManipBase * AttrManipWrap::clone() const {
+    return new AttrManipWrap(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

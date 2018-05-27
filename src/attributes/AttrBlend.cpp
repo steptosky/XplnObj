@@ -33,63 +33,63 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrBlend::AttrBlend(eType type, float ratio)
-		: mBlending(type),
-		mRatio(ratio),
-		mIsEnabled(true) {}
+AttrBlend::AttrBlend(eType type, float ratio)
+    : mBlending(type),
+      mRatio(ratio),
+      mIsEnabled(true) {}
 
-	AttrBlend::AttrBlend()
-		: mBlending(blend),
-		mRatio(0.5f),
-		mIsEnabled(false) {}
+AttrBlend::AttrBlend()
+    : mBlending(blend),
+      mRatio(0.5f),
+      mIsEnabled(false) {}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrBlend::operator bool() const {
-		return mIsEnabled;
-	}
+AttrBlend::operator bool() const {
+    return mIsEnabled;
+}
 
-	void AttrBlend::setEnabled(bool state) {
-		mIsEnabled = state;
-	}
+void AttrBlend::setEnabled(bool state) {
+    mIsEnabled = state;
+}
 
-	bool AttrBlend::operator==(const AttrBlend & other) const {
-		return (mIsEnabled == other.mIsEnabled &&
-				sts::isEqual(mRatio, other.mRatio, 0.01f) &&
-				mBlending == other.mBlending);
-	}
+bool AttrBlend::operator==(const AttrBlend & other) const {
+    return (mIsEnabled == other.mIsEnabled &&
+            sts::isEqual(mRatio, other.mRatio, 0.01f) &&
+            mBlending == other.mBlending);
+}
 
-	bool AttrBlend::operator!=(const AttrBlend & other) const {
-		return !operator==(other);
-	}
+bool AttrBlend::operator!=(const AttrBlend & other) const {
+    return !operator==(other);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrBlend::eType AttrBlend::type() const {
-		return mBlending;
-	}
+AttrBlend::eType AttrBlend::type() const {
+    return mBlending;
+}
 
-	void AttrBlend::setRatio(float inRatio) {
-		inRatio = std::min(inRatio, 1.0f);
-		inRatio = std::max(inRatio, 0.0f);
-		mIsEnabled = true;
-		mRatio = inRatio;
-	}
+void AttrBlend::setRatio(float inRatio) {
+    inRatio = std::min(inRatio, 1.0f);
+    inRatio = std::max(inRatio, 0.0f);
+    mIsEnabled = true;
+    mRatio = inRatio;
+}
 
-	float AttrBlend::ratio() const {
-		return mRatio;
-	}
+float AttrBlend::ratio() const {
+    return mRatio;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

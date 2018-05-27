@@ -100,65 +100,65 @@ using namespace xobj;
  *
  */
 TEST(DISABLED_TestTransform_case5, tr_case1) {
-	std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(tr_case1)).append(".obj"));
-	//-------------------
-	// make out data and save to file
+    std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(tr_case1)).append(".obj"));
+    //-------------------
+    // make out data and save to file
 
-	ObjMain mainOut;
-	TestUtils::setTestExportOptions(mainOut);
-	ObjLodGroup & lodOut = mainOut.addLod();
+    ObjMain mainOut;
+    TestUtils::setTestExportOptions(mainOut);
+    ObjLodGroup & lodOut = mainOut.addLod();
 
-	Transform & transformOut0 = lodOut.transform();
-	Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
-	Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
+    Transform & transformOut0 = lodOut.transform();
+    Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
+    Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
 
-	transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
-	transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
+    transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
+    transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-	mainOut.pMatrix.rotateDegreesY(90.0f);
-	mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.pMatrix.rotateDegreesY(90.0f);
+    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
-	transformOut1.pMatrix.rotateDegreesY(-90.0f);
-	transformOut2.pMatrix.rotateDegreesY(-90.0f);
-	transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
-	transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
+    transformOut1.pMatrix.rotateDegreesY(-90.0f);
+    transformOut2.pMatrix.rotateDegreesY(-90.0f);
+    transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
+    transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
 
-	TestUtils::createTestAnimRotate(transformOut2.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), TMatrix(), "test1");
-	TestUtils::createTestAnimTranslate(transformOut2.pAnimTrans, Point3(0.0f, 0.0f, 50.0f), TMatrix(), "test2");
-	ASSERT_TRUE(mainOut.exportToFile(path));
+    TestUtils::createTestAnimRotate(transformOut2.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), TMatrix(), "test1");
+    TestUtils::createTestAnimTranslate(transformOut2.pAnimTrans, Point3(0.0f, 0.0f, 50.0f), TMatrix(), "test2");
+    ASSERT_TRUE(mainOut.exportToFile(path));
 
-	//-------------------
-	// load data from file
+    //-------------------
+    // load data from file
 
-	ObjMain mainIn;
-	ASSERT_TRUE(mainIn.importFromFile(path));
+    ObjMain mainIn;
+    ASSERT_TRUE(mainIn.importFromFile(path));
 
-	// extract data
-	ObjLodGroup * lodIn = nullptr;
-	Transform * transformIn1 = nullptr;
-	ObjMesh * meshIn1 = nullptr;
-	ObjMesh * meshIn2 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
+    // extract data
+    ObjLodGroup * lodIn = nullptr;
+    Transform * transformIn1 = nullptr;
+    ObjMesh * meshIn1 = nullptr;
+    ObjMesh * meshIn2 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
 
-	//-------------------
-	// check results
+    //-------------------
+    // check results
 
-	Transform animResult1;
-	TestUtils::createTestAnimRotate(animResult1.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), TMatrix(), "test1");
-	TestUtils::createTestAnimTranslate(animResult1.pAnimTrans,
-										AnimTransKey(0.0f, 0.0f, 100.0f, -10.0f), AnimTransKey(-100.0f, 0.0f, 100.0f, 10.0f), "test2");
+    Transform animResult1;
+    TestUtils::createTestAnimRotate(animResult1.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), TMatrix(), "test1");
+    TestUtils::createTestAnimTranslate(animResult1.pAnimTrans,
+                                       AnimTransKey(0.0f, 0.0f, 100.0f, -10.0f), AnimTransKey(-100.0f, 0.0f, 100.0f, 10.0f), "test2");
 
-	std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
-	std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
 
-	ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
-	ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
-	ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
+    ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
+    ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
+    ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -213,67 +213,68 @@ TEST(DISABLED_TestTransform_case5, tr_case1) {
  *
  */
 TEST(DISABLED_TestTransform_case5, tr_case2) {
-	std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(tr_case2)).append(".obj"));
-	//-------------------
-	// make out data and save to file
+    std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(tr_case2)).append(".obj"));
+    //-------------------
+    // make out data and save to file
 
-	ObjMain mainOut;
-	TestUtils::setTestExportOptions(mainOut);
-	ObjLodGroup & lodOut = mainOut.addLod();
+    ObjMain mainOut;
+    TestUtils::setTestExportOptions(mainOut);
+    ObjLodGroup & lodOut = mainOut.addLod();
 
-	Transform & transformOut0 = lodOut.transform();
-	Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
-	Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
+    Transform & transformOut0 = lodOut.transform();
+    Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
+    Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
 
-	transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
-	transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
+    transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
+    transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-	mainOut.pMatrix.rotateDegreesY(90.0f);
-	mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.pMatrix.rotateDegreesY(90.0f);
+    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
-	transformOut1.pMatrix.rotateDegreesY(-90.0f);
-	transformOut2.pMatrix.rotateDegreesY(-90.0f);
-	transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
-	transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
+    transformOut1.pMatrix.rotateDegreesY(-90.0f);
+    transformOut2.pMatrix.rotateDegreesY(-90.0f);
+    transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
+    transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
 
-	TestUtils::createTestAnimRotate(transformOut2.pAnimRotate, Point3(0.0f, 0.0f, 1.0f), TMatrix(), "test1");
-	TestUtils::createTestAnimTranslate(transformOut2.pAnimTrans, Point3(0.0f, 0.0f, 50.0f), TMatrix(), "test2");
-	ASSERT_TRUE(mainOut.exportToFile(path));
+    TestUtils::createTestAnimRotate(transformOut2.pAnimRotate, Point3(0.0f, 0.0f, 1.0f), TMatrix(), "test1");
+    TestUtils::createTestAnimTranslate(transformOut2.pAnimTrans, Point3(0.0f, 0.0f, 50.0f), TMatrix(), "test2");
+    ASSERT_TRUE(mainOut.exportToFile(path));
 
-	//-------------------
-	// load data from file
+    //-------------------
+    // load data from file
 
-	ObjMain mainIn;
-	ASSERT_TRUE(mainIn.importFromFile(path));
+    ObjMain mainIn;
+    ASSERT_TRUE(mainIn.importFromFile(path));
 
-	// extract data
-	ObjLodGroup * lodIn = nullptr;
-	Transform * transformIn1 = nullptr;
-	ObjMesh * meshIn1 = nullptr;
-	ObjMesh * meshIn2 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
+    // extract data
+    ObjLodGroup * lodIn = nullptr;
+    Transform * transformIn1 = nullptr;
+    ObjMesh * meshIn1 = nullptr;
+    ObjMesh * meshIn2 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
 
-	//-------------------
-	// check results
+    //-------------------
+    // check results
 
-	Transform animResult1;
-	TestUtils::createTestAnimRotate(animResult1.pAnimRotate, Point3(0.0f, 0.0f, 1.0f), TMatrix(), "test1");
-	std::array<AnimTrans::Key, 2> tKeys = {
-		AnimTrans::Key(Point3(0.0f, 0.0f, 0.0f), -10.0f),
-		AnimTrans::Key(Point3(100.0f, 0.0f, 0.0f), 10.0f)};
-	TestUtils::createTestAnimTranslate(animResult1.pAnimTrans, tKeys.data(), tKeys.size(), TMatrix(), "test2");
+    Transform animResult1;
+    TestUtils::createTestAnimRotate(animResult1.pAnimRotate, Point3(0.0f, 0.0f, 1.0f), TMatrix(), "test1");
+    std::array<AnimTrans::Key, 2> tKeys = {
+        AnimTrans::Key(Point3(0.0f, 0.0f, 0.0f), -10.0f),
+        AnimTrans::Key(Point3(100.0f, 0.0f, 0.0f), 10.0f)
+    };
+    TestUtils::createTestAnimTranslate(animResult1.pAnimTrans, tKeys.data(), tKeys.size(), TMatrix(), "test2");
 
-	std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
-	std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
 
-	ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
-	ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
-	ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
+    ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
+    ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
+    ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -330,61 +331,61 @@ TEST(DISABLED_TestTransform_case5, tr_case2) {
  *
  */
 TEST(TestTransform_case5, r_case1) {
-	std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(r_case1)).append(".obj"));
-	//-------------------
-	// make out data and save to file
+    std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(r_case1)).append(".obj"));
+    //-------------------
+    // make out data and save to file
 
-	ObjMain mainOut;
-	TestUtils::setTestExportOptions(mainOut);
-	ObjLodGroup & lodOut = mainOut.addLod();
+    ObjMain mainOut;
+    TestUtils::setTestExportOptions(mainOut);
+    ObjLodGroup & lodOut = mainOut.addLod();
 
-	Transform & transformOut0 = lodOut.transform();
-	Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
-	Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
+    Transform & transformOut0 = lodOut.transform();
+    Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
+    Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
 
-	transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
-	transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
+    transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
+    transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-	mainOut.pMatrix.rotateDegreesY(90.0f);
-	mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.pMatrix.rotateDegreesY(90.0f);
+    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
-	transformOut1.pMatrix.rotateDegreesY(-90.0f);
-	transformOut2.pMatrix.rotateDegreesY(-90.0f);
-	transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
-	transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
+    transformOut1.pMatrix.rotateDegreesY(-90.0f);
+    transformOut2.pMatrix.rotateDegreesY(-90.0f);
+    transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
+    transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
 
-	TestUtils::createTestAnimRotate(transformOut2.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), TMatrix(), "test1");
-	ASSERT_TRUE(mainOut.exportToFile(path));
+    TestUtils::createTestAnimRotate(transformOut2.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), TMatrix(), "test1");
+    ASSERT_TRUE(mainOut.exportToFile(path));
 
-	//-------------------
-	// load data from file
+    //-------------------
+    // load data from file
 
-	ObjMain mainIn;
-	ASSERT_TRUE(mainIn.importFromFile(path));
+    ObjMain mainIn;
+    ASSERT_TRUE(mainIn.importFromFile(path));
 
-	// extract data
-	ObjLodGroup * lodIn = nullptr;
-	Transform * transformIn1 = nullptr;
-	ObjMesh * meshIn1 = nullptr;
-	ObjMesh * meshIn2 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
+    // extract data
+    ObjLodGroup * lodIn = nullptr;
+    Transform * transformIn1 = nullptr;
+    ObjMesh * meshIn1 = nullptr;
+    ObjMesh * meshIn2 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
 
-	//-------------------
-	// check results
+    //-------------------
+    // check results
 
-	Transform animResult1;
-	TestUtils::createTestAnimRotate(animResult1.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), TMatrix(), "test1");
-	std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
-	std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    Transform animResult1;
+    TestUtils::createTestAnimRotate(animResult1.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), TMatrix(), "test1");
+    std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
 
-	ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(50.0f, 0.0f, 0.0f));
-	ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
-	ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
+    ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(50.0f, 0.0f, 0.0f));
+    ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
+    ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -439,61 +440,61 @@ TEST(TestTransform_case5, r_case1) {
  *
  */
 TEST(TestTransform_case5, r_case2) {
-	std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(r_case2)).append(".obj"));
-	//-------------------
-	// make out data and save to file
+    std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(r_case2)).append(".obj"));
+    //-------------------
+    // make out data and save to file
 
-	ObjMain mainOut;
-	TestUtils::setTestExportOptions(mainOut);
-	ObjLodGroup & lodOut = mainOut.addLod();
+    ObjMain mainOut;
+    TestUtils::setTestExportOptions(mainOut);
+    ObjLodGroup & lodOut = mainOut.addLod();
 
-	Transform & transformOut0 = lodOut.transform();
-	Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
-	Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
+    Transform & transformOut0 = lodOut.transform();
+    Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
+    Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
 
-	transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
-	transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
+    transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
+    transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-	mainOut.pMatrix.rotateDegreesY(90.0f);
-	mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.pMatrix.rotateDegreesY(90.0f);
+    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
-	transformOut1.pMatrix.rotateDegreesY(-90.0f);
-	transformOut2.pMatrix.rotateDegreesY(-90.0f);
-	transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
-	transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
+    transformOut1.pMatrix.rotateDegreesY(-90.0f);
+    transformOut2.pMatrix.rotateDegreesY(-90.0f);
+    transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
+    transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
 
-	TestUtils::createTestAnimRotate(transformOut2.pAnimRotate, Point3(0.0f, 0.0f, 1.0f), TMatrix(), "test1");
-	ASSERT_TRUE(mainOut.exportToFile(path));
+    TestUtils::createTestAnimRotate(transformOut2.pAnimRotate, Point3(0.0f, 0.0f, 1.0f), TMatrix(), "test1");
+    ASSERT_TRUE(mainOut.exportToFile(path));
 
-	//-------------------
-	// load data from file
+    //-------------------
+    // load data from file
 
-	ObjMain mainIn;
-	ASSERT_TRUE(mainIn.importFromFile(path));
+    ObjMain mainIn;
+    ASSERT_TRUE(mainIn.importFromFile(path));
 
-	// extract data
-	ObjLodGroup * lodIn = nullptr;
-	Transform * transformIn1 = nullptr;
-	ObjMesh * meshIn1 = nullptr;
-	ObjMesh * meshIn2 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
+    // extract data
+    ObjLodGroup * lodIn = nullptr;
+    Transform * transformIn1 = nullptr;
+    ObjMesh * meshIn1 = nullptr;
+    ObjMesh * meshIn2 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
 
-	//-------------------
-	// check results
+    //-------------------
+    // check results
 
-	Transform animResult1;
-	TestUtils::createTestAnimRotate(animResult1.pAnimRotate, Point3(0.0f, 0.0f, 1.0f), TMatrix(), "test1");
-	std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
-	std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    Transform animResult1;
+    TestUtils::createTestAnimRotate(animResult1.pAnimRotate, Point3(0.0f, 0.0f, 1.0f), TMatrix(), "test1");
+    std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
 
-	ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(50.0f, 0.0f, 0.0f));
-	ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
-	ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
+    ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(50.0f, 0.0f, 0.0f));
+    ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
+    ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -550,65 +551,66 @@ TEST(TestTransform_case5, r_case2) {
  *
  */
 TEST(DISABLED_TestTransform_case5, t_case1) {
-	std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(t_case1)).append(".obj"));
-	//-------------------
-	// make out data and save to file
+    std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(t_case1)).append(".obj"));
+    //-------------------
+    // make out data and save to file
 
-	ObjMain mainOut;
-	TestUtils::setTestExportOptions(mainOut);
-	ObjLodGroup & lodOut = mainOut.addLod();
+    ObjMain mainOut;
+    TestUtils::setTestExportOptions(mainOut);
+    ObjLodGroup & lodOut = mainOut.addLod();
 
-	Transform & transformOut0 = lodOut.transform();
-	Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
-	Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
+    Transform & transformOut0 = lodOut.transform();
+    Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
+    Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
 
-	transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
-	transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
+    transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
+    transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-	mainOut.pMatrix.rotateDegreesY(90.0f);
-	mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.pMatrix.rotateDegreesY(90.0f);
+    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
-	transformOut1.pMatrix.rotateDegreesY(-90.0f);
-	transformOut2.pMatrix.rotateDegreesY(-90.0f);
-	transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
-	transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
+    transformOut1.pMatrix.rotateDegreesY(-90.0f);
+    transformOut2.pMatrix.rotateDegreesY(-90.0f);
+    transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
+    transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
 
-	TestUtils::createTestAnimTranslate(transformOut2.pAnimTrans, Point3(0.0f, 0.0f, 50.0f), TMatrix(), "test2");
-	ASSERT_TRUE(mainOut.exportToFile(path));
+    TestUtils::createTestAnimTranslate(transformOut2.pAnimTrans, Point3(0.0f, 0.0f, 50.0f), TMatrix(), "test2");
+    ASSERT_TRUE(mainOut.exportToFile(path));
 
-	//-------------------
-	// load data from file
+    //-------------------
+    // load data from file
 
-	ObjMain mainIn;
-	ASSERT_TRUE(mainIn.importFromFile(path));
+    ObjMain mainIn;
+    ASSERT_TRUE(mainIn.importFromFile(path));
 
-	// extract data
-	ObjLodGroup * lodIn = nullptr;
-	Transform * transformIn1 = nullptr;
-	ObjMesh * meshIn1 = nullptr;
-	ObjMesh * meshIn2 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
+    // extract data
+    ObjLodGroup * lodIn = nullptr;
+    Transform * transformIn1 = nullptr;
+    ObjMesh * meshIn1 = nullptr;
+    ObjMesh * meshIn2 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
 
-	//-------------------
-	// check results
+    //-------------------
+    // check results
 
-	Transform animResult1;
-	std::array<AnimTrans::Key, 2> tKeys = {
-		AnimTrans::Key(Point3(0.0f, 0.0f, 0.0f), -10.0f),
-		AnimTrans::Key(Point3(100.0f, 0.0f, 0.0f), 10.0f)};
-	TestUtils::createTestAnimTranslate(animResult1.pAnimTrans, tKeys.data(), tKeys.size(), TMatrix(), "test2");
+    Transform animResult1;
+    std::array<AnimTrans::Key, 2> tKeys = {
+        AnimTrans::Key(Point3(0.0f, 0.0f, 0.0f), -10.0f),
+        AnimTrans::Key(Point3(100.0f, 0.0f, 0.0f), 10.0f)
+    };
+    TestUtils::createTestAnimTranslate(animResult1.pAnimTrans, tKeys.data(), tKeys.size(), TMatrix(), "test2");
 
-	std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
-	std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
 
-	ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
-	ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
-	ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
+    ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
+    ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
+    ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -663,65 +665,66 @@ TEST(DISABLED_TestTransform_case5, t_case1) {
  *
  */
 TEST(DISABLED_TestTransform_case5, t_case2) {
-	std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(t_case2)).append(".obj"));
-	//-------------------
-	// make out data and save to file
+    std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(t_case2)).append(".obj"));
+    //-------------------
+    // make out data and save to file
 
-	ObjMain mainOut;
-	TestUtils::setTestExportOptions(mainOut);
-	ObjLodGroup & lodOut = mainOut.addLod();
+    ObjMain mainOut;
+    TestUtils::setTestExportOptions(mainOut);
+    ObjLodGroup & lodOut = mainOut.addLod();
 
-	Transform & transformOut0 = lodOut.transform();
-	Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
-	Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
+    Transform & transformOut0 = lodOut.transform();
+    Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
+    Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
 
-	transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
-	transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
+    transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
+    transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-	mainOut.pMatrix.rotateDegreesY(90.0f);
-	mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.pMatrix.rotateDegreesY(90.0f);
+    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
-	transformOut1.pMatrix.rotateDegreesY(-90.0f);
-	transformOut2.pMatrix.rotateDegreesY(-90.0f);
-	transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
-	transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
+    transformOut1.pMatrix.rotateDegreesY(-90.0f);
+    transformOut2.pMatrix.rotateDegreesY(-90.0f);
+    transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
+    transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
 
-	TestUtils::createTestAnimTranslate(transformOut2.pAnimTrans, Point3(50.0f, 0.0f, 0.0f), TMatrix(), "test2");
-	ASSERT_TRUE(mainOut.exportToFile(path));
+    TestUtils::createTestAnimTranslate(transformOut2.pAnimTrans, Point3(50.0f, 0.0f, 0.0f), TMatrix(), "test2");
+    ASSERT_TRUE(mainOut.exportToFile(path));
 
-	//-------------------
-	// load data from file
+    //-------------------
+    // load data from file
 
-	ObjMain mainIn;
-	ASSERT_TRUE(mainIn.importFromFile(path));
+    ObjMain mainIn;
+    ASSERT_TRUE(mainIn.importFromFile(path));
 
-	// extract data
-	ObjLodGroup * lodIn = nullptr;
-	Transform * transformIn1 = nullptr;
-	ObjMesh * meshIn1 = nullptr;
-	ObjMesh * meshIn2 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
+    // extract data
+    ObjLodGroup * lodIn = nullptr;
+    Transform * transformIn1 = nullptr;
+    ObjMesh * meshIn1 = nullptr;
+    ObjMesh * meshIn2 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
 
-	//-------------------
-	// check results
+    //-------------------
+    // check results
 
-	Transform animResult1;
-	std::array<AnimTrans::Key, 2> tKeys = {
-		AnimTrans::Key(Point3(50.0f, 0.0f, 50.0f), -10.0f),
-		AnimTrans::Key(Point3(50.0f, 0.0f, -50.0f), 10.0f)};
-	TestUtils::createTestAnimTranslate(animResult1.pAnimTrans, tKeys.data(), tKeys.size(), TMatrix(), "test2");
+    Transform animResult1;
+    std::array<AnimTrans::Key, 2> tKeys = {
+        AnimTrans::Key(Point3(50.0f, 0.0f, 50.0f), -10.0f),
+        AnimTrans::Key(Point3(50.0f, 0.0f, -50.0f), 10.0f)
+    };
+    TestUtils::createTestAnimTranslate(animResult1.pAnimTrans, tKeys.data(), tKeys.size(), TMatrix(), "test2");
 
-	std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
-	std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
 
-	ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
-	ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
-	ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
+    ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
+    ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
+    ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -776,65 +779,66 @@ TEST(DISABLED_TestTransform_case5, t_case2) {
 *
 */
 TEST(TestTransform_case5, t_case3) {
-	std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(t_case3)).append(".obj"));
-	//-------------------
-	// make out data and save to file
+    std::string path(std::string(TOTEXT(TestTransform_case5)).append(".").append(TOTEXT(t_case3)).append(".obj"));
+    //-------------------
+    // make out data and save to file
 
-	ObjMain mainOut;
-	TestUtils::setTestExportOptions(mainOut);
-	ObjLodGroup & lodOut = mainOut.addLod();
+    ObjMain mainOut;
+    TestUtils::setTestExportOptions(mainOut);
+    ObjLodGroup & lodOut = mainOut.addLod();
 
-	Transform & transformOut0 = lodOut.transform();
-	Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
-	Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
+    Transform & transformOut0 = lodOut.transform();
+    Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
+    Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
 
-	transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
-	transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
+    transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
+    transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-	mainOut.pMatrix.rotateDegreesY(90.0f);
-	mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.pMatrix.rotateDegreesY(90.0f);
+    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
-	transformOut1.pMatrix.rotateDegreesY(-90.0f);
-	transformOut2.pMatrix.rotateDegreesY(-90.0f);
-	transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
-	transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
+    transformOut1.pMatrix.rotateDegreesY(-90.0f);
+    transformOut2.pMatrix.rotateDegreesY(-90.0f);
+    transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
+    transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
 
-	TestUtils::createTestAnimTranslate(transformOut2.pAnimTrans, Point3(0.0f, 50.0f, 0.0f), TMatrix(), "test2");
-	ASSERT_TRUE(mainOut.exportToFile(path));
+    TestUtils::createTestAnimTranslate(transformOut2.pAnimTrans, Point3(0.0f, 50.0f, 0.0f), TMatrix(), "test2");
+    ASSERT_TRUE(mainOut.exportToFile(path));
 
-	//-------------------
-	// load data from file
+    //-------------------
+    // load data from file
 
-	ObjMain mainIn;
-	ASSERT_TRUE(mainIn.importFromFile(path));
+    ObjMain mainIn;
+    ASSERT_TRUE(mainIn.importFromFile(path));
 
-	// extract data
-	ObjLodGroup * lodIn = nullptr;
-	Transform * transformIn1 = nullptr;
-	ObjMesh * meshIn1 = nullptr;
-	ObjMesh * meshIn2 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
+    // extract data
+    ObjLodGroup * lodIn = nullptr;
+    Transform * transformIn1 = nullptr;
+    ObjMesh * meshIn1 = nullptr;
+    ObjMesh * meshIn2 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractTransform(lodIn->transform(), 0, transformIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(*transformIn1, 0, meshIn2));
 
-	//-------------------
-	// check results
+    //-------------------
+    // check results
 
-	Transform animResult1;
-	std::array<AnimTrans::Key, 2> tKeys = {
-		AnimTrans::Key(Point3(50.0f, -50.0f, 0.0f), -10.0f),
-		AnimTrans::Key(Point3(50.0f, 50.0f, 0.0f), 10.0f)};
-	TestUtils::createTestAnimTranslate(animResult1.pAnimTrans, tKeys.data(), tKeys.size(), TMatrix(), "test2");
+    Transform animResult1;
+    std::array<AnimTrans::Key, 2> tKeys = {
+        AnimTrans::Key(Point3(50.0f, -50.0f, 0.0f), -10.0f),
+        AnimTrans::Key(Point3(50.0f, 50.0f, 0.0f), 10.0f)
+    };
+    TestUtils::createTestAnimTranslate(animResult1.pAnimTrans, tKeys.data(), tKeys.size(), TMatrix(), "test2");
 
-	std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
-	std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
 
-	ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
-	ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
-	ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
+    ASSERT_TRUE(transformIn1->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
+    ASSERT_TRUE(transformIn1->pAnimRotate == animResult1.pAnimRotate);
+    ASSERT_TRUE(transformIn1->pAnimTrans == animResult1.pAnimTrans);
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/

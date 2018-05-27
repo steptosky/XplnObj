@@ -34,58 +34,58 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipCmdSwitchLeftRight::AttrManipCmdSwitchLeftRight()
-		: AttrManipBase(EManipulator(EManipulator::command_switch_lr)) { }
+AttrManipCmdSwitchLeftRight::AttrManipCmdSwitchLeftRight()
+    : AttrManipBase(EManipulator(EManipulator::command_switch_lr)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	const std::string & AttrManipCmdSwitchLeftRight::cmdPositive() const {
-		return mPosCommand;
-	}
+const std::string & AttrManipCmdSwitchLeftRight::cmdPositive() const {
+    return mPosCommand;
+}
 
-	void AttrManipCmdSwitchLeftRight::setCmdPositive(const std::string & val) {
-		mPosCommand = val;
-	}
+void AttrManipCmdSwitchLeftRight::setCmdPositive(const std::string & val) {
+    mPosCommand = val;
+}
 
-	const std::string & AttrManipCmdSwitchLeftRight::cmdNegative() const {
-		return mNegCommand;
-	}
+const std::string & AttrManipCmdSwitchLeftRight::cmdNegative() const {
+    return mNegCommand;
+}
 
-	void AttrManipCmdSwitchLeftRight::setCmdNegative(const std::string & val) {
-		mNegCommand = val;
-	}
+void AttrManipCmdSwitchLeftRight::setCmdNegative(const std::string & val) {
+    mNegCommand = val;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipCmdSwitchLeftRight::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipCmdSwitchLeftRight::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipCmdSwitchLeftRight * right = dynamic_cast<const AttrManipCmdSwitchLeftRight*>(manip);
-		if (!right)
-			return false;
+    const AttrManipCmdSwitchLeftRight * right = dynamic_cast<const AttrManipCmdSwitchLeftRight*>(manip);
+    if (!right)
+        return false;
 
-		return (sts::isEqual(mPosCommand, right->mPosCommand) &&
-				sts::isEqual(mNegCommand, right->mNegCommand));
-	}
+    return (sts::isEqual(mPosCommand, right->mPosCommand) &&
+            sts::isEqual(mNegCommand, right->mNegCommand));
+}
 
-	AttrManipBase * AttrManipCmdSwitchLeftRight::clone() const {
-		return new AttrManipCmdSwitchLeftRight(*this);
-	}
+AttrManipBase * AttrManipCmdSwitchLeftRight::clone() const {
+    return new AttrManipCmdSwitchLeftRight(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

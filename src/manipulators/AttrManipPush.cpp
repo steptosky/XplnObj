@@ -34,71 +34,71 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipPush::AttrManipPush()
-		: AttrManipBase(EManipulator(EManipulator::push)) { }
+AttrManipPush::AttrManipPush()
+    : AttrManipBase(EManipulator(EManipulator::push)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipPush::setDown(float val) {
-		mDown = val;
-	}
+void AttrManipPush::setDown(float val) {
+    mDown = val;
+}
 
-	void AttrManipPush::setUp(float val) {
-		mUp = val;
-	}
+void AttrManipPush::setUp(float val) {
+    mUp = val;
+}
 
-	float AttrManipPush::down() const {
-		return mDown;
-	}
+float AttrManipPush::down() const {
+    return mDown;
+}
 
-	float AttrManipPush::up() const {
-		return mUp;
-	}
+float AttrManipPush::up() const {
+    return mUp;
+}
 
-	const std::string & AttrManipPush::dataref() const {
-		return mDataref;
-	}
+const std::string & AttrManipPush::dataref() const {
+    return mDataref;
+}
 
-	void AttrManipPush::setDataref(const std::string & val) {
-		mDataref = val;
-	}
+void AttrManipPush::setDataref(const std::string & val) {
+    mDataref = val;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipPush::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipPush::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipPush * right = dynamic_cast<const AttrManipPush*>(manip);
-		if (!right)
-			return false;
+    const AttrManipPush * right = dynamic_cast<const AttrManipPush*>(manip);
+    if (!right)
+        return false;
 
-		const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-		if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
-			return false;
+    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
+    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
+        return false;
 
-		return (sts::isEqual(mDown, right->mDown) &&
-				sts::isEqual(mUp, right->mUp) &&
-				sts::isEqual(mDataref, right->mDataref));
-	}
+    return (sts::isEqual(mDown, right->mDown) &&
+            sts::isEqual(mUp, right->mUp) &&
+            sts::isEqual(mDataref, right->mDataref));
+}
 
-	AttrManipBase * AttrManipPush::clone() const {
-		return new AttrManipPush(*this);
-	}
+AttrManipBase * AttrManipPush::clone() const {
+    return new AttrManipPush(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

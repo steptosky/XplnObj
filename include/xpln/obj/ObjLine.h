@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,74 +29,72 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <vector>
 #include "ObjAbstract.h"
 #include "LineVertex.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the Line object
-	 * \ingroup Objects
-	 */
-	class ObjLine : public ObjAbstract {
+/*!
+ * \details Representation of the Line object
+ * \ingroup Objects
+ */
+class ObjLine : public ObjAbstract {
 
-		ObjLine & operator =(const ObjLine &) = delete;
+    ObjLine & operator =(const ObjLine &) = delete;
 
-	protected:
+protected:
 
-		XpObjLib ObjLine(const ObjLine & copy);
+    XpObjLib ObjLine(const ObjLine & copy);
 
-	public:
+public:
 
-		typedef LineVertex Vertex;
-		typedef std::vector<LineVertex> VertexList;
+    typedef LineVertex Vertex;
+    typedef std::vector<LineVertex> VertexList;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		XpObjLib ObjLine();
-		XpObjLib virtual ~ObjLine();
+    XpObjLib ObjLine();
+    XpObjLib virtual ~ObjLine();
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		XpObjLib VertexList & verticesList();
-		XpObjLib const VertexList & verticesList() const;
+    XpObjLib VertexList & verticesList();
+    XpObjLib const VertexList & verticesList() const;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		/*!
-		 * \details Attaches vertices from another line.
-		 * \param [in] otherLine
-		 */
-		XpObjLib void attach(const ObjLine & otherLine);
+    /*!
+     * \details Attaches vertices from another line.
+     * \param [in] otherLine
+     */
+    XpObjLib void attach(const ObjLine & otherLine);
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		/*! \copydoc ObjAbstract::objType */
-		XpObjLib eObjectType objType() const final;
+    /*! \copydoc ObjAbstract::objType */
+    XpObjLib eObjectType objType() const final;
 
-		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
+    /*! \copydoc ObjAbstract::applyTransform */
+    XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
 
-		/* \copydoc ObjAbstract::clone */
-		XpObjLib ObjAbstract * clone() const override;
+    /* \copydoc ObjAbstract::clone */
+    XpObjLib ObjAbstract * clone() const override;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-	private:
+private:
 
-		VertexList mVertices;
+    VertexList mVertices;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

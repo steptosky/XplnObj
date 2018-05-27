@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,67 +29,65 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "Transform.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the LOD object
-	 * \note This class should not be created outside the library, use \link ObjMain::addLod \endlink.
-	 * \ingroup Objects
-	 */
-	class ObjLodGroup {
+/*!
+ * \details Representation of the LOD object
+ * \note This class should not be created outside the library, use \link ObjMain::addLod \endlink.
+ * \ingroup Objects
+ */
+class ObjLodGroup {
 
-		ObjLodGroup(const ObjLodGroup &) = delete;
-		ObjLodGroup & operator =(const ObjLodGroup &) = delete;
+    ObjLodGroup(const ObjLodGroup &) = delete;
+    ObjLodGroup & operator =(const ObjLodGroup &) = delete;
 
-	protected:
+protected:
 
-		XpObjLib ObjLodGroup();
+    XpObjLib ObjLodGroup();
 
-	public:
+public:
 
-		virtual ~ObjLodGroup() = default;
+    virtual ~ObjLodGroup() = default;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		XpObjLib void setNearVal(float val);
-		XpObjLib void setFarVal(float val);
+    XpObjLib void setNearVal(float val);
+    XpObjLib void setFarVal(float val);
 
-		XpObjLib float nearVal() const;
-		XpObjLib float farVal() const;
+    XpObjLib float nearVal() const;
+    XpObjLib float farVal() const;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		XpObjLib void setObjectName(const std::string & mame);
-		XpObjLib const std::string & objectName() const;
+    XpObjLib void setObjectName(const std::string & mame);
+    XpObjLib const std::string & objectName() const;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		/*! \copydoc ObjAbstract::transform */
-		XpObjLib Transform & transform();
+    /*! \copydoc ObjAbstract::transform */
+    XpObjLib Transform & transform();
 
-		/*! \copydoc ObjAbstract::transform */
-		XpObjLib const Transform & transform() const;
+    /*! \copydoc ObjAbstract::transform */
+    XpObjLib const Transform & transform() const;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-	private:
+private:
 
-		Transform mObjTransform;
-		std::string mName;
-		float mNear;
-		float mFar;
+    Transform mObjTransform;
+    std::string mName;
+    float mNear;
+    float mFar;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

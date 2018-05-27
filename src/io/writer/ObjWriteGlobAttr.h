@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,51 +29,49 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <string>
 #include "xpln/XplnObjExport.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class AbstractWriter;
-	class ObjMain;
+class AbstractWriter;
+class ObjMain;
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class ObjWriteGlobAttr {
+class ObjWriteGlobAttr {
 
-		ObjWriteGlobAttr(const ObjWriteGlobAttr &) = delete;
-		ObjWriteGlobAttr & operator =(const ObjWriteGlobAttr &) = delete;
+    ObjWriteGlobAttr(const ObjWriteGlobAttr &) = delete;
+    ObjWriteGlobAttr & operator =(const ObjWriteGlobAttr &) = delete;
 
-	public:
+public:
 
-		ObjWriteGlobAttr() = default;
-		~ObjWriteGlobAttr() = default;
+    ObjWriteGlobAttr() = default;
+    ~ObjWriteGlobAttr() = default;
 
-		XpObjLib void write(AbstractWriter * writer, const ObjMain * obj);
-		XpObjLib void reset();
-		XpObjLib size_t count() const;
+    XpObjLib void write(AbstractWriter * writer, const ObjMain * obj);
+    XpObjLib void reset();
+    XpObjLib size_t count() const;
 
-	private:
+private:
 
-		void writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString);
-		void writeBool(AbstractWriter * inWriter, const char * inAttr, bool inState);
-		void writeString(AbstractWriter * inWriter, const std::string inStr);
+    void writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString);
+    void writeBool(AbstractWriter * inWriter, const char * inAttr, bool inState);
+    void writeString(AbstractWriter * inWriter, const std::string inStr);
 
-		const ObjMain * mObj;
-		size_t mCounter = 0;
+    const ObjMain * mObj;
+    size_t mCounter = 0;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

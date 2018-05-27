@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,54 +29,52 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/common/Point3.h"
 #include "xpln/common/Point2.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
-	/*!
-	 * \details Representation Vertex of the mesh object
-	 * \ingroup Objects
-	 */
-	class MeshVertex {
-	public:
+/*!
+ * \details Representation Vertex of the mesh object
+ * \ingroup Objects
+ */
+class MeshVertex {
+public:
 
-		MeshVertex() = default;
+    MeshVertex() = default;
 
-		MeshVertex(const Point3 & pos, const Point3 & normal, const Point2 & texCoord)
-			: pPosition(pos),
-			pNormal(normal),
-			pTexture(texCoord) {}
+    MeshVertex(const Point3 & pos, const Point3 & normal, const Point2 & texCoord)
+        : pPosition(pos),
+          pNormal(normal),
+          pTexture(texCoord) {}
 
-		//------------------------------------------------------------------
+    //------------------------------------------------------------------
 
-		bool operator==(const MeshVertex & other) const {
-			return pPosition == other.pPosition &&
-					pNormal == other.pNormal &&
-					pTexture == other.pTexture;
-		}
+    bool operator==(const MeshVertex & other) const {
+        return pPosition == other.pPosition &&
+               pNormal == other.pNormal &&
+               pTexture == other.pTexture;
+    }
 
-		bool operator!=(const MeshVertex & inOther) const {
-			return !this->operator==(inOther);
-		}
+    bool operator!=(const MeshVertex & inOther) const {
+        return !this->operator==(inOther);
+    }
 
-		//------------------------------------------------------------------
+    //------------------------------------------------------------------
 
-		Point3 pPosition;
-		Point3 pNormal;
-		Point2 pTexture; // (y)s - vertical, (x)t - horizontal
+    Point3 pPosition;
+    Point3 pNormal;
+    Point2 pTexture; // (y)s - vertical, (x)t - horizontal
 
-		//------------------------------------------------------------------
+    //------------------------------------------------------------------
 
-	};
+};
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 }

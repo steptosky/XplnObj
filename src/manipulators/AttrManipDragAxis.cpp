@@ -34,98 +34,98 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipDragAxis::AttrManipDragAxis()
-		: AttrManipBase(EManipulator(EManipulator::drag_axis)) { }
+AttrManipDragAxis::AttrManipDragAxis()
+    : AttrManipBase(EManipulator(EManipulator::drag_axis)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipDragAxis::setX(float val) {
-		mX = val;
-	}
+void AttrManipDragAxis::setX(float val) {
+    mX = val;
+}
 
-	void AttrManipDragAxis::setY(float val) {
-		mY = val;
-	}
+void AttrManipDragAxis::setY(float val) {
+    mY = val;
+}
 
-	void AttrManipDragAxis::setZ(float val) {
-		mZ = val;
-	}
+void AttrManipDragAxis::setZ(float val) {
+    mZ = val;
+}
 
-	float AttrManipDragAxis::x() const {
-		return mX;
-	}
+float AttrManipDragAxis::x() const {
+    return mX;
+}
 
-	float AttrManipDragAxis::y() const {
-		return mY;
-	}
+float AttrManipDragAxis::y() const {
+    return mY;
+}
 
-	float AttrManipDragAxis::z() const {
-		return mZ;
-	}
+float AttrManipDragAxis::z() const {
+    return mZ;
+}
 
-	void AttrManipDragAxis::setVal1(float val) {
-		mVal1 = val;
-	}
+void AttrManipDragAxis::setVal1(float val) {
+    mVal1 = val;
+}
 
-	void AttrManipDragAxis::setVal2(float val) {
-		mVal2 = val;
-	}
+void AttrManipDragAxis::setVal2(float val) {
+    mVal2 = val;
+}
 
-	float AttrManipDragAxis::val1() const {
-		return mVal1;
-	}
+float AttrManipDragAxis::val1() const {
+    return mVal1;
+}
 
-	float AttrManipDragAxis::val2() const {
-		return mVal2;
-	}
+float AttrManipDragAxis::val2() const {
+    return mVal2;
+}
 
-	const std::string & AttrManipDragAxis::dataref() const {
-		return mDataref;
-	}
+const std::string & AttrManipDragAxis::dataref() const {
+    return mDataref;
+}
 
-	void AttrManipDragAxis::setDataref(const std::string & val) {
-		mDataref = val;
-	}
+void AttrManipDragAxis::setDataref(const std::string & val) {
+    mDataref = val;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipDragAxis::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipDragAxis::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipDragAxis * right = dynamic_cast<const AttrManipDragAxis*>(manip);
-		if (!right)
-			return false;
+    const AttrManipDragAxis * right = dynamic_cast<const AttrManipDragAxis*>(manip);
+    if (!right)
+        return false;
 
-		const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-		if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
-			return false;
+    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
+    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
+        return false;
 
-		return (sts::isEqual(mX, right->mX) &&
-				sts::isEqual(mY, right->mY) &&
-				sts::isEqual(mZ, right->mZ) &&
-				sts::isEqual(mVal1, right->mVal1) &&
-				sts::isEqual(mVal2, right->mVal2) &&
-				sts::isEqual(mDataref, right->mDataref));
-	}
+    return (sts::isEqual(mX, right->mX) &&
+            sts::isEqual(mY, right->mY) &&
+            sts::isEqual(mZ, right->mZ) &&
+            sts::isEqual(mVal1, right->mVal1) &&
+            sts::isEqual(mVal2, right->mVal2) &&
+            sts::isEqual(mDataref, right->mDataref));
+}
 
-	AttrManipBase * AttrManipDragAxis::clone() const {
-		return new AttrManipDragAxis(*this);
-	}
+AttrManipBase * AttrManipDragAxis::clone() const {
+    return new AttrManipDragAxis(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

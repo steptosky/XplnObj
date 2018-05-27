@@ -34,89 +34,89 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipDelta::AttrManipDelta()
-		: AttrManipBase(EManipulator(EManipulator::delta)) { }
+AttrManipDelta::AttrManipDelta()
+    : AttrManipBase(EManipulator(EManipulator::delta)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipDelta::setDown(float val) {
-		mDown = val;
-	}
+void AttrManipDelta::setDown(float val) {
+    mDown = val;
+}
 
-	void AttrManipDelta::setHold(float val) {
-		mHold = val;
-	}
+void AttrManipDelta::setHold(float val) {
+    mHold = val;
+}
 
-	void AttrManipDelta::setMinimum(float val) {
-		mMin = val;
-	}
+void AttrManipDelta::setMinimum(float val) {
+    mMin = val;
+}
 
-	void AttrManipDelta::setMaximum(float val) {
-		mMax = val;
-	}
+void AttrManipDelta::setMaximum(float val) {
+    mMax = val;
+}
 
-	float AttrManipDelta::down() const {
-		return mDown;
-	}
+float AttrManipDelta::down() const {
+    return mDown;
+}
 
-	float AttrManipDelta::hold() const {
-		return mHold;
-	}
+float AttrManipDelta::hold() const {
+    return mHold;
+}
 
-	float AttrManipDelta::minimum() const {
-		return mMin;
-	}
+float AttrManipDelta::minimum() const {
+    return mMin;
+}
 
-	float AttrManipDelta::maximum() const {
-		return mMax;
-	}
+float AttrManipDelta::maximum() const {
+    return mMax;
+}
 
-	void AttrManipDelta::setDataref(const std::string & val) {
-		mDataref = val;
-	}
+void AttrManipDelta::setDataref(const std::string & val) {
+    mDataref = val;
+}
 
-	const std::string & AttrManipDelta::dataref() const {
-		return mDataref;
-	}
+const std::string & AttrManipDelta::dataref() const {
+    return mDataref;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipDelta::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipDelta::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipDelta * right = dynamic_cast<const AttrManipDelta*>(manip);
-		if (!right)
-			return false;
+    const AttrManipDelta * right = dynamic_cast<const AttrManipDelta*>(manip);
+    if (!right)
+        return false;
 
-		const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-		if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
-			return false;
+    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
+    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
+        return false;
 
-		return (sts::isEqual(mDown, right->mDown) &&
-				sts::isEqual(mHold, right->mHold) &&
-				sts::isEqual(mMin, right->mMin) &&
-				sts::isEqual(mMax, right->mMax) &&
-				sts::isEqual(mDataref, right->mDataref));
-	}
+    return (sts::isEqual(mDown, right->mDown) &&
+            sts::isEqual(mHold, right->mHold) &&
+            sts::isEqual(mMin, right->mMin) &&
+            sts::isEqual(mMax, right->mMax) &&
+            sts::isEqual(mDataref, right->mDataref));
+}
 
-	AttrManipBase * AttrManipDelta::clone() const {
-		return new AttrManipDelta(*this);
-	}
+AttrManipBase * AttrManipDelta::clone() const {
+    return new AttrManipDelta(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

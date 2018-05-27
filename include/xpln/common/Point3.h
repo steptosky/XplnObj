@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,94 +29,92 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 #include "xpln/XplnObjExport.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class Point3 {
-	public:
+class Point3 {
+public:
 
-		float x;
-		float y;
-		float z;
+    float x;
+    float y;
+    float z;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib Point3();
-		XpObjLib Point3(const Point3 & c);
-		XpObjLib explicit Point3(const float & v);
-		XpObjLib Point3(float inX, float inY, float inZ);
+    XpObjLib Point3();
+    XpObjLib Point3(const Point3 & c);
+    XpObjLib explicit Point3(const float & v);
+    XpObjLib Point3(float inX, float inY, float inZ);
 
-		~Point3() = default;
+    ~Point3() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib Point3 & operator =(const Point3 & c);
-		XpObjLib Point3 & operator =(const float v);
+    XpObjLib Point3 & operator =(const Point3 & c);
+    XpObjLib Point3 & operator =(const float v);
 
-		XpObjLib Point3 & operator +=(const Point3 & p);
-		XpObjLib Point3 & operator +=(const float v);
-		XpObjLib Point3 & operator -=(const Point3 & p);
-		XpObjLib Point3 & operator -=(const float v);
-		XpObjLib Point3 & operator *=(const Point3 & p);
-		XpObjLib Point3 & operator *=(const float v);
-		XpObjLib Point3 & operator /=(const Point3 & p);
-		XpObjLib Point3 & operator /=(const float v);
+    XpObjLib Point3 & operator +=(const Point3 & p);
+    XpObjLib Point3 & operator +=(const float v);
+    XpObjLib Point3 & operator -=(const Point3 & p);
+    XpObjLib Point3 & operator -=(const float v);
+    XpObjLib Point3 & operator *=(const Point3 & p);
+    XpObjLib Point3 & operator *=(const float v);
+    XpObjLib Point3 & operator /=(const Point3 & p);
+    XpObjLib Point3 & operator /=(const float v);
 
-		XpObjLib bool operator ==(const Point3 & p2) const;
-		XpObjLib bool operator ==(const float v) const;
-		XpObjLib bool operator !=(const Point3 & p2) const;
-		XpObjLib bool operator !=(const float v) const;
+    XpObjLib bool operator ==(const Point3 & p2) const;
+    XpObjLib bool operator ==(const float v) const;
+    XpObjLib bool operator !=(const Point3 & p2) const;
+    XpObjLib bool operator !=(const float v) const;
 
-		XpObjLib friend Point3 operator +(const Point3 & p1, const Point3 & p2);
-		XpObjLib friend Point3 operator +(const Point3 & p, float v);
-		XpObjLib friend Point3 operator +(float v, const Point3 & p);
+    XpObjLib friend Point3 operator +(const Point3 & p1, const Point3 & p2);
+    XpObjLib friend Point3 operator +(const Point3 & p, float v);
+    XpObjLib friend Point3 operator +(float v, const Point3 & p);
 
-		XpObjLib friend Point3 operator -(const Point3 & p1, const Point3 & p2);
-		XpObjLib friend Point3 operator -(const Point3 & p, float v);
-		XpObjLib friend Point3 operator -(float v, const Point3 & p);
+    XpObjLib friend Point3 operator -(const Point3 & p1, const Point3 & p2);
+    XpObjLib friend Point3 operator -(const Point3 & p, float v);
+    XpObjLib friend Point3 operator -(float v, const Point3 & p);
 
-		XpObjLib friend Point3 operator *(const Point3 & p1, const Point3 & p2);
-		XpObjLib friend Point3 operator *(const Point3 & p, float v);
-		XpObjLib friend Point3 operator *(float v, const Point3 & p);
+    XpObjLib friend Point3 operator *(const Point3 & p1, const Point3 & p2);
+    XpObjLib friend Point3 operator *(const Point3 & p, float v);
+    XpObjLib friend Point3 operator *(float v, const Point3 & p);
 
-		XpObjLib friend Point3 operator /(const Point3 & p1, const Point3 & p2);
-		XpObjLib friend Point3 operator /(const Point3 & p, float v);
-		XpObjLib friend Point3 operator /(float v, const Point3 & p);
+    XpObjLib friend Point3 operator /(const Point3 & p1, const Point3 & p2);
+    XpObjLib friend Point3 operator /(const Point3 & p, float v);
+    XpObjLib friend Point3 operator /(float v, const Point3 & p);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		void set(float inX, float inY, float inZ) {
-			x = inX;
-			y = inY;
-			z = inZ;
-		}
+    void set(float inX, float inY, float inZ) {
+        x = inX;
+        y = inY;
+        z = inZ;
+    }
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib float length() const;
-		XpObjLib void normalize();
-		XpObjLib Point3 normalized() const;
-		XpObjLib bool isEmpty() const;
-		XpObjLib void clear();
+    XpObjLib float length() const;
+    XpObjLib void normalize();
+    XpObjLib Point3 normalized() const;
+    XpObjLib bool isEmpty() const;
+    XpObjLib void clear();
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib std::string toString(uint8_t precision = 6) const;
+    XpObjLib std::string toString(uint8_t precision = 6) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

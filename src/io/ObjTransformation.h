@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,49 +29,47 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/obj/ObjMain.h"
 
 namespace xobj {
 
-	/**********************************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
 
-	class ObjTransformation {
+class ObjTransformation {
 
-		ObjTransformation() = default;
-		~ObjTransformation() = default;
+    ObjTransformation() = default;
+    ~ObjTransformation() = default;
 
-	public:
+public:
 
-		static void correctExportTransform(ObjMain & mainObj, const TMatrix & tm, bool useLodTm);
-		static void correctImportTransform(ObjMain & mainObj, const TMatrix & tm);
+    static void correctExportTransform(ObjMain & mainObj, const TMatrix & tm, bool useLodTm);
+    static void correctImportTransform(ObjMain & mainObj, const TMatrix & tm);
 
-	private:
+private:
 
-		static void correctTransform(ObjMain & mainObj, const TMatrix & tm, bool exp, bool useLodTm);
-		static void proccess(Transform & transform, const TMatrix & rootTransform, bool exp);
+    static void correctTransform(ObjMain & mainObj, const TMatrix & tm, bool exp, bool useLodTm);
+    static void proccess(Transform & transform, const TMatrix & rootTransform, bool exp);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		static void mapsExpCoordinates(ObjAbstract * obj, Transform & inOutTrans, const TMatrix & rootTm);
-		static void translationOfTransformToAnimTransKeys(Transform & inOutTrans);
+    static void mapsExpCoordinates(ObjAbstract * obj, Transform & inOutTrans, const TMatrix & rootTm);
+    static void translationOfTransformToAnimTransKeys(Transform & inOutTrans);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		static void mapsImpCoordinates(ObjAbstract * obj, Transform & inOutTrans, const TMatrix & rootTm);
-		static void AnimKeysToTransform(Transform & inOutTrans);
+    static void mapsImpCoordinates(ObjAbstract * obj, Transform & inOutTrans, const TMatrix & rootTm);
+    static void AnimKeysToTransform(Transform & inOutTrans);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		static void mapAnimTransKeys(AnimTransList & anims, const TMatrix & tm);
-		static void mapAnimRotateKeys(AnimRotateList & anims, const TMatrix & tm);
+    static void mapAnimTransKeys(AnimTransList & anims, const TMatrix & tm);
+    static void mapAnimRotateKeys(AnimRotateList & anims, const TMatrix & tm);
 
-	};
+};
 
-	/**********************************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
 }

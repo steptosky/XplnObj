@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,78 +29,76 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "ObjAbstract.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the smoke objects
-	 * \ingroup Objects
-	 */
-	class ObjSmoke : public ObjAbstract {
+/*!
+ * \details Representation of the smoke objects
+ * \ingroup Objects
+ */
+class ObjSmoke : public ObjAbstract {
 
-		ObjSmoke & operator =(const ObjSmoke &) = delete;
+    ObjSmoke & operator =(const ObjSmoke &) = delete;
 
-	protected:
+protected:
 
-		XpObjLib ObjSmoke(const ObjSmoke & copy);
+    XpObjLib ObjSmoke(const ObjSmoke & copy);
 
-	public:
+public:
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		enum eSmokeType {
-			none,
-			white,
-			black
-		};
+    enum eSmokeType {
+        none,
+        white,
+        black
+    };
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		XpObjLib ObjSmoke();
-		XpObjLib virtual ~ObjSmoke();
+    XpObjLib ObjSmoke();
+    XpObjLib virtual ~ObjSmoke();
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		XpObjLib void setSmokeType(eSmokeType type);
-		XpObjLib void setPosition(const Point3 & pos);
-		XpObjLib void setSize(float inSize);
+    XpObjLib void setSmokeType(eSmokeType type);
+    XpObjLib void setPosition(const Point3 & pos);
+    XpObjLib void setSize(float inSize);
 
-		XpObjLib eSmokeType smokeType() const;
-		XpObjLib const Point3 & position() const;
-		XpObjLib float size() const;
+    XpObjLib eSmokeType smokeType() const;
+    XpObjLib const Point3 & position() const;
+    XpObjLib float size() const;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		/*! \copydoc ObjAbstract::objType */
-		XpObjLib eObjectType objType() const final;
+    /*! \copydoc ObjAbstract::objType */
+    XpObjLib eObjectType objType() const final;
 
-		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
+    /*! \copydoc ObjAbstract::applyTransform */
+    XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		/* \copydoc ObjAbstract::clone */
-		XpObjLib ObjAbstract * clone() const override;
+    /* \copydoc ObjAbstract::clone */
+    XpObjLib ObjAbstract * clone() const override;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-	private:
+private:
 
-		float mSize = 1.0f;
-		Point3 mPosition;
-		eSmokeType mSmokeType = white;
+    float mSize = 1.0f;
+    Point3 mPosition;
+    eSmokeType mSmokeType = white;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

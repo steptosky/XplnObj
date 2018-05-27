@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,73 +29,71 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/XplnObjExport.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details ATTR_LOD_draped
-	 * \ingroup Attributes
-	 */
-	class AttrLodDrap {
-	public:
+/*!
+ * \details ATTR_LOD_draped
+ * \ingroup Attributes
+ */
+class AttrLodDrap {
+public:
 
-		/*!
-		 * \details Constructor default.
-		 * \note Makes the disabled attribute.
-		 */
-		XpObjLib AttrLodDrap();
+    /*!
+     * \details Constructor default.
+     * \note Makes the disabled attribute.
+     */
+    XpObjLib AttrLodDrap();
 
-		/*!
-		 * \details Constructor init.
-		 * \note Makes the enabled attribute.
-		 * \param [in] distance 
-		 */
-		XpObjLib AttrLodDrap(float distance);
+    /*!
+     * \details Constructor init.
+     * \note Makes the enabled attribute.
+     * \param [in] distance 
+     */
+    XpObjLib AttrLodDrap(float distance);
 
-		~AttrLodDrap() = default;
+    ~AttrLodDrap() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Check whether the attribute is enabled. 
-		 * \note All class's setters will enable this attribute.
-		 */
-		XpObjLib operator bool() const;
+    /*!
+     * \details Check whether the attribute is enabled. 
+     * \note All class's setters will enable this attribute.
+     */
+    XpObjLib operator bool() const;
 
-		/*!
-		 * \details Sets the attribute enabled/disabled.
-		 * \note All class's setters will enable this attribute.
-		 * \param [in] state 
-		 */
-		XpObjLib void setEnabled(bool state);
+    /*!
+     * \details Sets the attribute enabled/disabled.
+     * \note All class's setters will enable this attribute.
+     * \param [in] state 
+     */
+    XpObjLib void setEnabled(bool state);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrLodDrap & other) const;
-		XpObjLib bool operator!=(const AttrLodDrap & other) const;
+    XpObjLib bool operator==(const AttrLodDrap & other) const;
+    XpObjLib bool operator!=(const AttrLodDrap & other) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setDistance(float distance);
-		XpObjLib float distance() const;
+    XpObjLib void setDistance(float distance);
+    XpObjLib float distance() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		float mDistance;
-		bool mIsEnabled : 1;
+    float mDistance;
+    bool mIsEnabled : 1;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

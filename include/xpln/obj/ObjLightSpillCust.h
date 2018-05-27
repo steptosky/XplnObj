@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,75 +29,73 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "ObjAbstractLight.h"
 #include "xpln/common/Color.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the spill light
-	 * \ingroup Objects
-	 */
-	class ObjLightSpillCust : public ObjAbstractLight {
+/*!
+ * \details Representation of the spill light
+ * \ingroup Objects
+ */
+class ObjLightSpillCust : public ObjAbstractLight {
 
-		ObjLightSpillCust & operator =(const ObjLightSpillCust &) = delete;
+    ObjLightSpillCust & operator =(const ObjLightSpillCust &) = delete;
 
-	protected:
+protected:
 
-		XpObjLib ObjLightSpillCust(const ObjLightSpillCust & copy);
+    XpObjLib ObjLightSpillCust(const ObjLightSpillCust & copy);
 
-	public:
+public:
 
-		XpObjLib ObjLightSpillCust();
-		virtual ~ObjLightSpillCust() = default;
+    XpObjLib ObjLightSpillCust();
+    virtual ~ObjLightSpillCust() = default;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		XpObjLib void setColor(const Color & color);
-		XpObjLib void setSize(float size);
-		XpObjLib void setSemiRaw(float semi);
-		XpObjLib void setSemiAngle(float radians);
-		XpObjLib void setDirection(Point3 direction);
-		XpObjLib void setDataRef(const std::string & dataRef);
+    XpObjLib void setColor(const Color & color);
+    XpObjLib void setSize(float size);
+    XpObjLib void setSemiRaw(float semi);
+    XpObjLib void setSemiAngle(float radians);
+    XpObjLib void setDirection(Point3 direction);
+    XpObjLib void setDataRef(const std::string & dataRef);
 
-		XpObjLib Color color() const;
-		XpObjLib float size() const;
-		XpObjLib float semiRaw() const;
-		XpObjLib float semiAngle() const;
-		XpObjLib Point3 direction() const;
-		XpObjLib const std::string & dataRef() const;
+    XpObjLib Color color() const;
+    XpObjLib float size() const;
+    XpObjLib float semiRaw() const;
+    XpObjLib float semiAngle() const;
+    XpObjLib Point3 direction() const;
+    XpObjLib const std::string & dataRef() const;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		/*! \copydoc ObjAbstract::objType */
-		XpObjLib eObjectType objType() const final;
+    /*! \copydoc ObjAbstract::objType */
+    XpObjLib eObjectType objType() const final;
 
-		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
+    /*! \copydoc ObjAbstract::applyTransform */
+    XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
 
-		/* \copydoc ObjAbstract::clone */
-		XpObjLib ObjAbstract * clone() const override;
+    /* \copydoc ObjAbstract::clone */
+    XpObjLib ObjAbstract * clone() const override;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-	private:
+private:
 
-		float mSize;
-		float mSemi;
-		Color mColor;
-		Point3 mDirection;
-		std::string mDataRef;
+    float mSize;
+    float mSemi;
+    Color mColor;
+    Point3 mDirection;
+    std::string mDataRef;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

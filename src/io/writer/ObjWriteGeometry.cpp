@@ -50,312 +50,312 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	ObjWriteGeometry::ObjWriteGeometry(const ExportOptions * option, IOStatistic * outStat)
-		: mMeshFaceOffset(0),
-		mMeshVertexOffset(0),
-		mPointLightOffsetByObject(0) {
+ObjWriteGeometry::ObjWriteGeometry(const ExportOptions * option, IOStatistic * outStat)
+    : mMeshFaceOffset(0),
+      mMeshVertexOffset(0),
+      mPointLightOffsetByObject(0) {
 
-		assert(option);
-		assert(outStat);
+    assert(option);
+    assert(outStat);
 
-		mStat = outStat;
-		mOptions = option;
-	}
+    mStat = outStat;
+    mOptions = option;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjWriteGeometry::reset() {
-		mMeshVertexOffset = 0;
-		mMeshFaceOffset = 0;
-		mPointLightOffsetByObject = 0;
-	}
+void ObjWriteGeometry::reset() {
+    mMeshVertexOffset = 0;
+    mMeshFaceOffset = 0;
+    mPointLightOffsetByObject = 0;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjWriteGeometry::printMeshVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
-		for (auto objBase : transform.objList()) {
-			if (objBase->objType() == OBJ_MESH) {
-				const ObjMesh * mobj = static_cast<const ObjMesh*>(objBase);
+void ObjWriteGeometry::printMeshVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
+    for (auto objBase : transform.objList()) {
+        if (objBase->objType() == OBJ_MESH) {
+            const ObjMesh * mobj = static_cast<const ObjMesh*>(objBase);
 
-				if (mOptions->isEnabled(XOBJ_EXP_DEBUG)) {
-					writer.printLine(std::string("# ").append(mobj->objectName()));
-				}
+            if (mOptions->isEnabled(XOBJ_EXP_DEBUG)) {
+                writer.printLine(std::string("# ").append(mobj->objectName()));
+            }
 
-				for (const MeshVertex & v : mobj->pVertices) {
-					writer.printLine(toObjString(v, mobj->pAttr.isTree()));
-				}
-			}
-		}
+            for (const MeshVertex & v : mobj->pVertices) {
+                writer.printLine(toObjString(v, mobj->pAttr.isTree()));
+            }
+        }
+    }
 
-		for (Transform::TransformIndex i = 0; i < transform.childrenCount(); ++i) {
-			const Transform * ch = dynamic_cast<const Transform*>(transform.childAt(i));
-			assert(ch);
-			if (ch) {
-				printMeshVerticiesRecursive(writer, *ch);
-			}
-		}
-	}
+    for (Transform::TransformIndex i = 0; i < transform.childrenCount(); ++i) {
+        const Transform * ch = dynamic_cast<const Transform*>(transform.childAt(i));
+        assert(ch);
+        if (ch) {
+            printMeshVerticiesRecursive(writer, *ch);
+        }
+    }
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjWriteGeometry::printMeshFaceRecursive(AbstractWriter & writer, const ObjMain & main) const {
-		std::stringstream stream;
-		stream.precision(PRECISION);
-		stream << std::fixed;
+void ObjWriteGeometry::printMeshFaceRecursive(AbstractWriter & writer, const ObjMain & main) const {
+    std::stringstream stream;
+    stream.precision(PRECISION);
+    stream << std::fixed;
 
-		size_t idx = 0;
-		size_t offset = 0;
-		const size_t lodCount = main.lodCount();
-		for (size_t i = 0; i < lodCount; ++i) {
-			writeMeshFaceRecursive(stream, main.lod(i).transform(), idx, offset);
-		}
-		writer.printLine(stream.str());
-	}
+    size_t idx = 0;
+    size_t offset = 0;
+    const size_t lodCount = main.lodCount();
+    for (size_t i = 0; i < lodCount; ++i) {
+        writeMeshFaceRecursive(stream, main.lod(i).transform(), idx, offset);
+    }
+    writer.printLine(stream.str());
+}
 
-	void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Transform & inNode, size_t & idx,
-												size_t & offset) const {
-		for (const ObjAbstract * objBase : inNode.objList()) {
-			if (objBase->objType() != OBJ_MESH) {
-				continue;
-			}
+void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Transform & inNode, size_t & idx,
+                                              size_t & offset) const {
+    for (const ObjAbstract * objBase : inNode.objList()) {
+        if (objBase->objType() != OBJ_MESH) {
+            continue;
+        }
 
-			const ObjMesh * mobj = static_cast<const ObjMesh*>(objBase);
-			const ObjMesh::FaceList & faces = mobj->pFaces;
+        const ObjMesh * mobj = static_cast<const ObjMesh*>(objBase);
+        const ObjMesh::FaceList & faces = mobj->pFaces;
 
-			size_t idxNum = faces.size() * 3U;
-			size_t vEnd = mStat->pMeshFacesCount * 3U;
+        size_t idxNum = faces.size() * 3U;
+        size_t vEnd = mStat->pMeshFacesCount * 3U;
 
-			for (size_t currIdx = 0; currIdx < idxNum; ++currIdx) {
-				size_t last = (idx % 10);
-				size_t ost = (vEnd - idx);
-				++idx;
+        for (size_t currIdx = 0; currIdx < idxNum; ++currIdx) {
+            size_t last = (idx % 10);
+            size_t ost = (vEnd - idx);
+            ++idx;
 
-				if (last == 0) {
-					ost < 10 ? writer << std::endl << MESH_IDX << " " : writer << std::endl << MESH_IDX10 << " ";
-				}
-				else if (last + ost < 10) {
-					writer << std::endl << MESH_IDX << " ";
-				}
+            if (last == 0) {
+                ost < 10 ? writer << std::endl << MESH_IDX << " " : writer << std::endl << MESH_IDX10 << " ";
+            }
+            else if (last + ost < 10) {
+                writer << std::endl << MESH_IDX << " ";
+            }
 
-				size_t modulo = currIdx % 3U;
-				const MeshFace & f = faces.at(currIdx / 3U);
-				switch (modulo) {
-					case 0: writer << (f.pV0 + offset) << " ";
-						break;
-					case 2: writer << (f.pV2 + offset) << " ";
-						break;
-					default: writer << (f.pV1 + offset) << " ";
-						break;
-				}
-			}
-			offset += mobj->pVertices.size();
-		}
+            size_t modulo = currIdx % 3U;
+            const MeshFace & f = faces.at(currIdx / 3U);
+            switch (modulo) {
+                case 0: writer << (f.pV0 + offset) << " ";
+                    break;
+                case 2: writer << (f.pV2 + offset) << " ";
+                    break;
+                default: writer << (f.pV1 + offset) << " ";
+                    break;
+            }
+        }
+        offset += mobj->pVertices.size();
+    }
 
-		for (Transform::TransformIndex i = 0; i < inNode.childrenCount(); ++i) {
-			const Transform * ch = dynamic_cast<const Transform*>(inNode.childAt(i));
-			assert(ch);
-			if (ch) {
-				writeMeshFaceRecursive(writer, *ch, idx, offset);
-			}
-		}
-	}
+    for (Transform::TransformIndex i = 0; i < inNode.childrenCount(); ++i) {
+        const Transform * ch = dynamic_cast<const Transform*>(inNode.childAt(i));
+        assert(ch);
+        if (ch) {
+            writeMeshFaceRecursive(writer, *ch, idx, offset);
+        }
+    }
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjWriteGeometry::printLineVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
-		for (auto objBase : transform.objList()) {
-			if (objBase->objType() == OBJ_LINE) {
-				const ObjLine * lobj = static_cast<const ObjLine*>(objBase);
+void ObjWriteGeometry::printLineVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
+    for (auto objBase : transform.objList()) {
+        if (objBase->objType() == OBJ_LINE) {
+            const ObjLine * lobj = static_cast<const ObjLine*>(objBase);
 
-				if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_DEBUG)) {
-					writer.printLine(std::string("# ").append(lobj->objectName()));
-				}
+            if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_DEBUG)) {
+                writer.printLine(std::string("# ").append(lobj->objectName()));
+            }
 
-				for (const LineVertex & v : lobj->verticesList()) {
-					writer.printLine(toObjString(v));
-				}
-			}
-		}
+            for (const LineVertex & v : lobj->verticesList()) {
+                writer.printLine(toObjString(v));
+            }
+        }
+    }
 
-		for (Transform::TransformIndex i = 0; i < transform.childrenCount(); ++i) {
-			const Transform * ch = dynamic_cast<const Transform*>(transform.childAt(i));
-			assert(ch);
-			if (ch) {
-				printLineVerticiesRecursive(writer, *dynamic_cast<const Transform*>(transform.childAt(i)));
-			}
-		}
-	}
+    for (Transform::TransformIndex i = 0; i < transform.childrenCount(); ++i) {
+        const Transform * ch = dynamic_cast<const Transform*>(transform.childAt(i));
+        assert(ch);
+        if (ch) {
+            printLineVerticiesRecursive(writer, *dynamic_cast<const Transform*>(transform.childAt(i)));
+        }
+    }
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	void ObjWriteGeometry::printLightPointVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
-		for (auto objBase : transform.objList()) {
-			if (objBase->objType() == OBJ_LIGHT_POINT) {
-				const ObjLightPoint * lobj = static_cast<const ObjLightPoint*>(objBase);
-				writer.printLine(toObjString(*lobj, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LIGHT)));
-			}
-		}
+void ObjWriteGeometry::printLightPointVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
+    for (auto objBase : transform.objList()) {
+        if (objBase->objType() == OBJ_LIGHT_POINT) {
+            const ObjLightPoint * lobj = static_cast<const ObjLightPoint*>(objBase);
+            writer.printLine(toObjString(*lobj, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LIGHT)));
+        }
+    }
 
-		for (Transform::TransformIndex i = 0; i < transform.childrenCount(); ++i) {
-			const Transform * ch = dynamic_cast<const Transform*>(transform.childAt(i));
-			assert(ch);
-			if (ch) {
-				printLightPointVerticiesRecursive(writer, *dynamic_cast<const Transform*>(transform.childAt(i)));
-			}
-		}
-	}
+    for (Transform::TransformIndex i = 0; i < transform.childrenCount(); ++i) {
+        const Transform * ch = dynamic_cast<const Transform*>(transform.childAt(i));
+        assert(ch);
+        if (ch) {
+            printLightPointVerticiesRecursive(writer, *dynamic_cast<const Transform*>(transform.childAt(i)));
+        }
+    }
+}
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
+/********************************************************************************************************/
 
-	bool ObjWriteGeometry::printMeshObject(AbstractWriter & writer, const ObjAbstract & objBase) {
-		if (objBase.objType() == OBJ_MESH) {
-			const ObjMesh * mobj = static_cast<const ObjMesh*>(&objBase);
-			size_t numface = mobj->pFaces.size();
-			std::stringstream stream;
-			stream.precision(PRECISION);
-			stream << std::fixed;
+bool ObjWriteGeometry::printMeshObject(AbstractWriter & writer, const ObjAbstract & objBase) {
+    if (objBase.objType() == OBJ_MESH) {
+        const ObjMesh * mobj = static_cast<const ObjMesh*>(&objBase);
+        size_t numface = mobj->pFaces.size();
+        std::stringstream stream;
+        stream.precision(PRECISION);
+        stream << std::fixed;
 
-			if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_MESH)) {
-				stream << MESH_TRIS << " " << (mMeshFaceOffset * 3) << " " << (numface * 3) << " ## " << mobj->objectName().data();
-			}
-			else {
-				stream << MESH_TRIS << " " << (mMeshFaceOffset * 3) << " " << (numface * 3);
-			}
+        if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_MESH)) {
+            stream << MESH_TRIS << " " << (mMeshFaceOffset * 3) << " " << (numface * 3) << " ## " << mobj->objectName().data();
+        }
+        else {
+            stream << MESH_TRIS << " " << (mMeshFaceOffset * 3) << " " << (numface * 3);
+        }
 
-			writer.printLine(stream.str());
-			++mStat->pMeshObjCount;
-			mMeshFaceOffset += numface;
-			return true;
-		}
-		return false;
-	}
+        writer.printLine(stream.str());
+        ++mStat->pMeshObjCount;
+        mMeshFaceOffset += numface;
+        return true;
+    }
+    return false;
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	bool ObjWriteGeometry::printLightPointObject(AbstractWriter & writer, const ObjAbstract & objBase) {
-		if (objBase.objType() == OBJ_LIGHT_POINT) {
-			std::stringstream stream;
-			stream.precision(PRECISION);
-			stream << std::fixed;
+bool ObjWriteGeometry::printLightPointObject(AbstractWriter & writer, const ObjAbstract & objBase) {
+    if (objBase.objType() == OBJ_LIGHT_POINT) {
+        std::stringstream stream;
+        stream.precision(PRECISION);
+        stream << std::fixed;
 
-			stream << LIGHTS << " " << mPointLightOffsetByObject << " " << size_t(1);
+        stream << LIGHTS << " " << mPointLightOffsetByObject << " " << size_t(1);
 
-			if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LIGHT)) {
-				stream << " ## " << objBase.objectName().c_str();
-			}
+        if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LIGHT)) {
+            stream << " ## " << objBase.objectName().c_str();
+        }
 
-			writer.printLine(stream.str());
-			++mPointLightOffsetByObject;
-			++mStat->pLightObjPointCount;
-			return true;
-		}
-		return false;
-	}
+        writer.printLine(stream.str());
+        ++mPointLightOffsetByObject;
+        ++mStat->pLightObjPointCount;
+        return true;
+    }
+    return false;
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	template<typename T>
-	bool printLight(AbstractWriter & writer, const T & lobj, const ExportOptions & options, size_t & counter) {
-		std::string params = toObjString(lobj, options.isEnabled(XOBJ_EXP_MARK_LIGHT));
-		if (!params.empty()) {
-			writer.printLine(params.c_str());
-			++counter;
-		}
-		return true;
-	}
+template<typename T>
+bool printLight(AbstractWriter & writer, const T & lobj, const ExportOptions & options, size_t & counter) {
+    std::string params = toObjString(lobj, options.isEnabled(XOBJ_EXP_MARK_LIGHT));
+    if (!params.empty()) {
+        writer.printLine(params.c_str());
+        ++counter;
+    }
+    return true;
+}
 
-	bool ObjWriteGeometry::
-	printLightObject(AbstractWriter & writer, const ObjAbstract & objBase, const Transform &) const {
-		const eObjectType type = objBase.objType();
-		switch (type) {
-			case OBJ_LIGHT_NAMED:
-				return printLight<ObjLightNamed>(writer, static_cast<const ObjLightNamed&>(objBase), *mOptions,
-												mStat->pLightObjNamedCount);
-			case OBJ_LIGHT_CUSTOM:
-				return printLight<ObjLightCustom>(writer, static_cast<const ObjLightCustom&>(objBase), *mOptions,
-												mStat->pLightObjCustomCount);
-			case OBJ_LIGHT_PARAM:
-				return printLight<ObjLightParam>(writer, static_cast<const ObjLightParam&>(objBase), *mOptions,
-												mStat->pLightObjParamCount);
-			case OBJ_LIGHT_SPILL_CUSTOM:
-				return printLight<ObjLightSpillCust>(writer, static_cast<const ObjLightSpillCust&>(objBase), *mOptions,
-													mStat->pLightObjSpillCustCount);
-			default:
-				return false;
-		}
-	}
+bool ObjWriteGeometry::
+printLightObject(AbstractWriter & writer, const ObjAbstract & objBase, const Transform &) const {
+    const eObjectType type = objBase.objType();
+    switch (type) {
+        case OBJ_LIGHT_NAMED:
+            return printLight<ObjLightNamed>(writer, static_cast<const ObjLightNamed&>(objBase), *mOptions,
+                                             mStat->pLightObjNamedCount);
+        case OBJ_LIGHT_CUSTOM:
+            return printLight<ObjLightCustom>(writer, static_cast<const ObjLightCustom&>(objBase), *mOptions,
+                                              mStat->pLightObjCustomCount);
+        case OBJ_LIGHT_PARAM:
+            return printLight<ObjLightParam>(writer, static_cast<const ObjLightParam&>(objBase), *mOptions,
+                                             mStat->pLightObjParamCount);
+        case OBJ_LIGHT_SPILL_CUSTOM:
+            return printLight<ObjLightSpillCust>(writer, static_cast<const ObjLightSpillCust&>(objBase), *mOptions,
+                                                 mStat->pLightObjSpillCustCount);
+        default:
+            return false;
+    }
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	bool ObjWriteGeometry::printLineObject(AbstractWriter & writer, const ObjAbstract & objBase) {
-		if (objBase.objType() == OBJ_LINE) {
-			// todo something wrong with this code wasn't it written? Seems like copy/paste from mesh.
-			const ObjLine * lobj = static_cast<const ObjLine*>(&objBase);
-			size_t numvert = lobj->verticesList().size();
-			std::stringstream stream;
-			stream.precision(PRECISION);
-			stream << std::fixed;
+bool ObjWriteGeometry::printLineObject(AbstractWriter & writer, const ObjAbstract & objBase) {
+    if (objBase.objType() == OBJ_LINE) {
+        // todo something wrong with this code wasn't it written? Seems like copy/paste from mesh.
+        const ObjLine * lobj = static_cast<const ObjLine*>(&objBase);
+        size_t numvert = lobj->verticesList().size();
+        std::stringstream stream;
+        stream.precision(PRECISION);
+        stream << std::fixed;
 
-			if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LINE)) {
-				stream << LINES << " " << mMeshVertexOffset << " " << numvert << " ## " << lobj->objectName() << std::endl;
-			}
-			else {
-				stream << LINES << " " << mMeshVertexOffset << " " << numvert << std::endl;
-			}
+        if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LINE)) {
+            stream << LINES << " " << mMeshVertexOffset << " " << numvert << " ## " << lobj->objectName() << std::endl;
+        }
+        else {
+            stream << LINES << " " << mMeshVertexOffset << " " << numvert << std::endl;
+        }
 
-			writer.printLine(stream.str());
-			mMeshVertexOffset += numvert;
-			++mStat->pLineObjCount;
-			return true;
-		}
-		return false;
-	}
+        writer.printLine(stream.str());
+        mMeshVertexOffset += numvert;
+        ++mStat->pLineObjCount;
+        return true;
+    }
+    return false;
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	bool ObjWriteGeometry::printSmokeObject(AbstractWriter & writer, const ObjAbstract & objBase) const {
-		if (objBase.objType() == OBJ_SMOKE) {
-			const ObjSmoke & smoke = reinterpret_cast<const ObjSmoke&>(objBase);
-			std::string params = toObjString(smoke, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_SMOKE));
-			if (!params.empty()) {
-				writer.printLine(params);
-				++mStat->pSmokeObjCount;
-			}
-			return true;
-		}
-		return false;
-	}
+bool ObjWriteGeometry::printSmokeObject(AbstractWriter & writer, const ObjAbstract & objBase) const {
+    if (objBase.objType() == OBJ_SMOKE) {
+        const ObjSmoke & smoke = reinterpret_cast<const ObjSmoke&>(objBase);
+        std::string params = toObjString(smoke, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_SMOKE));
+        if (!params.empty()) {
+            writer.printLine(params);
+            ++mStat->pSmokeObjCount;
+        }
+        return true;
+    }
+    return false;
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	bool ObjWriteGeometry::printDummyObject(AbstractWriter & writer, const ObjAbstract & objBase) const {
-		if (objBase.objType() == OBJ_DUMMY) {
-			const ObjDummy & dummy = reinterpret_cast<const ObjDummy&>(objBase);
-			std::string params = toObjString(dummy, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_DUMMY));
-			if (!params.empty()) {
-				writer.printLine(params);
-				++mStat->pDummyObjCount;
-			}
-			return true;
-		}
-		return false;
-	}
+bool ObjWriteGeometry::printDummyObject(AbstractWriter & writer, const ObjAbstract & objBase) const {
+    if (objBase.objType() == OBJ_DUMMY) {
+        const ObjDummy & dummy = reinterpret_cast<const ObjDummy&>(objBase);
+        std::string params = toObjString(dummy, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_DUMMY));
+        if (!params.empty()) {
+            writer.printLine(params);
+            ++mStat->pDummyObjCount;
+        }
+        return true;
+    }
+    return false;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

@@ -32,78 +32,78 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrLightLevel::AttrLightLevel(float val1, float val2, const std::string & dataRef)
-		: mVal1(val1),
-		mVal2(val2),
-		mDataref(dataRef),
-		mIsEnabled(true) { }
+AttrLightLevel::AttrLightLevel(float val1, float val2, const std::string & dataRef)
+    : mVal1(val1),
+      mVal2(val2),
+      mDataref(dataRef),
+      mIsEnabled(true) { }
 
-	AttrLightLevel::AttrLightLevel()
-		: mVal1(0.0f),
-		mVal2(1.0f),
-		mDataref("none"),
-		mIsEnabled(false) { }
+AttrLightLevel::AttrLightLevel()
+    : mVal1(0.0f),
+      mVal2(1.0f),
+      mDataref("none"),
+      mIsEnabled(false) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrLightLevel::operator bool() const {
-		return mIsEnabled;
-	}
+AttrLightLevel::operator bool() const {
+    return mIsEnabled;
+}
 
-	void AttrLightLevel::setEnabled(bool state) {
-		mIsEnabled = state;
-	}
+void AttrLightLevel::setEnabled(bool state) {
+    mIsEnabled = state;
+}
 
-	bool AttrLightLevel::operator==(const AttrLightLevel & other) const {
-		return (mIsEnabled == other.mIsEnabled &&
-				mDataref == other.mDataref &&
-				sts::isEqual(mVal1, other.mVal1, 0.01f) &&
-				sts::isEqual(mVal2, other.mVal2, 0.01f));
-	}
+bool AttrLightLevel::operator==(const AttrLightLevel & other) const {
+    return (mIsEnabled == other.mIsEnabled &&
+            mDataref == other.mDataref &&
+            sts::isEqual(mVal1, other.mVal1, 0.01f) &&
+            sts::isEqual(mVal2, other.mVal2, 0.01f));
+}
 
-	bool AttrLightLevel::operator!=(const AttrLightLevel & other) const {
-		return !operator==(other);
-	}
+bool AttrLightLevel::operator!=(const AttrLightLevel & other) const {
+    return !operator==(other);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrLightLevel::setVal1(float val1) {
-		mIsEnabled = true;
-		mVal1 = val1;
-	}
+void AttrLightLevel::setVal1(float val1) {
+    mIsEnabled = true;
+    mVal1 = val1;
+}
 
-	void AttrLightLevel::setVal2(float val2) {
-		mIsEnabled = true;
-		mVal2 = val2;
-	}
+void AttrLightLevel::setVal2(float val2) {
+    mIsEnabled = true;
+    mVal2 = val2;
+}
 
-	void AttrLightLevel::setDataref(const std::string & dataRef) {
-		mIsEnabled = true;
-		mDataref = dataRef;
-	}
+void AttrLightLevel::setDataref(const std::string & dataRef) {
+    mIsEnabled = true;
+    mDataref = dataRef;
+}
 
-	float AttrLightLevel::val1() const {
-		return mVal1;
-	}
+float AttrLightLevel::val1() const {
+    return mVal1;
+}
 
-	float AttrLightLevel::val2() const {
-		return mVal2;
-	}
+float AttrLightLevel::val2() const {
+    return mVal2;
+}
 
-	const std::string & AttrLightLevel::dataref() const {
-		return mDataref;
-	}
+const std::string & AttrLightLevel::dataref() const {
+    return mDataref;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

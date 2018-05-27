@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,80 +29,78 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/XplnObjExport.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details GLOBAL_tint
-	 * \ingroup Attributes
-	 */
-	class AttrTint {
-	public:
+/*!
+ * \details GLOBAL_tint
+ * \ingroup Attributes
+ */
+class AttrTint {
+public:
 
-		/*!
-		 * \details Constructor default.
-		 * \note Makes the disabled attribute.
-		 */
-		XpObjLib AttrTint();
+    /*!
+     * \details Constructor default.
+     * \note Makes the disabled attribute.
+     */
+    XpObjLib AttrTint();
 
-		/*!
-		 * \details Constructor init.
-		 * \note Makes the enabled attribute.
-		 * \param [in] albedoRatio 
-		 * \param [in] emissiveRatio 
-		 */
-		XpObjLib AttrTint(float albedoRatio, float emissiveRatio);
+    /*!
+     * \details Constructor init.
+     * \note Makes the enabled attribute.
+     * \param [in] albedoRatio 
+     * \param [in] emissiveRatio 
+     */
+    XpObjLib AttrTint(float albedoRatio, float emissiveRatio);
 
-		~AttrTint() = default;
+    ~AttrTint() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Check whether the attribute is enabled. 
-		 * \note All class's setters will enable this attribute.
-		 */
-		XpObjLib operator bool() const;
+    /*!
+     * \details Check whether the attribute is enabled. 
+     * \note All class's setters will enable this attribute.
+     */
+    XpObjLib operator bool() const;
 
-		/*!
-		 * \details Sets the attribute enabled/disabled.
-		 * \note All class's setters will enable this attribute.
-		 * \param [in] state 
-		 */
-		XpObjLib void setEnabled(bool state);
+    /*!
+     * \details Sets the attribute enabled/disabled.
+     * \note All class's setters will enable this attribute.
+     * \param [in] state 
+     */
+    XpObjLib void setEnabled(bool state);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrTint & other) const;
-		XpObjLib bool operator!=(const AttrTint & other) const;
+    XpObjLib bool operator==(const AttrTint & other) const;
+    XpObjLib bool operator!=(const AttrTint & other) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void set(float albedoRatio, float emissiveRatio);
-		XpObjLib void setAlbedo(float albedoRatio);
-		XpObjLib void setEmissive(float emissiveRatio);
+    XpObjLib void set(float albedoRatio, float emissiveRatio);
+    XpObjLib void setAlbedo(float albedoRatio);
+    XpObjLib void setEmissive(float emissiveRatio);
 
-		XpObjLib float albedo() const;
-		XpObjLib float emissive() const;
+    XpObjLib float albedo() const;
+    XpObjLib float emissive() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		float mAlbedo;
-		float mEmissive;
-		bool mIsEnabled : 1;
+    float mAlbedo;
+    float mEmissive;
+    bool mIsEnabled : 1;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

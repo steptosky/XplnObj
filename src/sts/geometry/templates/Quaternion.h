@@ -38,111 +38,111 @@
 
 namespace sts_t {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	\details Quaternion
-	*/
-	template<class T>
-	class Quaternion {
-		static_assert(std::numeric_limits<T>::is_iec559,
-			"The class can use only floating types");
+/*!
+\details Quaternion
+*/
+template<class T>
+class Quaternion {
+    static_assert(std::numeric_limits<T>::is_iec559,
+        "The class can use only floating types");
 
-		T mData[4];
+    T mData[4];
 
-		const unsigned char ioVersion() const;
-		const unsigned ioIdSize() const;
-		const char * ioId() const;
+    const unsigned char ioVersion() const;
+    const unsigned ioIdSize() const;
+    const char * ioId() const;
 
-	public:
+public:
 
-		typedef T Type;
-		typedef Type value_type;
+    typedef T Type;
+    typedef Type value_type;
 
-		Quaternion();
-		Quaternion(Type inX, Type inY, Type inZ, Type inW);
-		~Quaternion() = default;
+    Quaternion();
+    Quaternion(Type inX, Type inY, Type inZ, Type inW);
+    ~Quaternion() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		bool operator ==(const Quaternion & inQ) const;
-		bool operator !=(const Quaternion & inQ) const;
+    bool operator ==(const Quaternion & inQ) const;
+    bool operator !=(const Quaternion & inQ) const;
 
-		const Type & operator[](size_t i) const;
-		Type & operator[](size_t i);
+    const Type & operator[](size_t i) const;
+    Type & operator[](size_t i);
 
-		Quaternion operator *(const Quaternion & inQ) const;
-		//Quaternion operator / (const Quaternion& inQ) const;
-		Quaternion operator *(Type inScalar) const;
-		Quaternion operator /(Type inScalar) const;
+    Quaternion operator *(const Quaternion & inQ) const;
+    //Quaternion operator / (const Quaternion& inQ) const;
+    Quaternion operator *(Type inScalar) const;
+    Quaternion operator /(Type inScalar) const;
 
-		Quaternion & operator *=(const Quaternion & inQ);
-		//Quaternion& operator /= (const Quaternion& inQ);
-		Quaternion & operator *=(Type inScalar);
-		Quaternion & operator /=(Type inScalar);
+    Quaternion & operator *=(const Quaternion & inQ);
+    //Quaternion& operator /= (const Quaternion& inQ);
+    Quaternion & operator *=(Type inScalar);
+    Quaternion & operator /=(Type inScalar);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		bool isIdentity() const;
-		bool isIdentityOrNull() const;
-		bool isNull() const;
+    bool isIdentity() const;
+    bool isIdentityOrNull() const;
+    bool isNull() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		void setX(const Type inX);
-		void setY(const Type inY);
-		void setZ(const Type inZ);
-		void setW(const Type inW);
+    void setX(const Type inX);
+    void setY(const Type inY);
+    void setZ(const Type inZ);
+    void setW(const Type inW);
 
-		Type x() const;
-		Type y() const;
-		Type z() const;
-		Type w() const;
+    Type x() const;
+    Type y() const;
+    Type z() const;
+    Type w() const;
 
-		void set(Type inX, Type inY, Type inZ, Type inW);
+    void set(Type inX, Type inY, Type inZ, Type inW);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		void conjugate();
-		Quaternion conjugated() const;
+    void conjugate();
+    Quaternion conjugated() const;
 
-		double length() const;
-		double dot(const Quaternion & q) const;
-		void normalize();
-		Quaternion normalized() const;
-		void clear();
-		void zero();
-		void identity();
+    double length() const;
+    double dot(const Quaternion & q) const;
+    void normalize();
+    Quaternion normalized() const;
+    void clear();
+    void zero();
+    void identity();
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		void save(std::ostream & outStream) const;
+    void save(std::ostream & outStream) const;
 
-		/*!
-		\exception std::runtime_error
-		*/
-		void load(std::istream & inStream);
+    /*!
+    \exception std::runtime_error
+    */
+    void load(std::istream & inStream);
 
-		template<class T2>
-		friend std::ostream & operator <<(std::ostream & stream, const Quaternion<T2> & inMtx);
+    template<class T2>
+    friend std::ostream & operator <<(std::ostream & stream, const Quaternion<T2> & inMtx);
 
-		/*!
-		\exception std::runtime_error
-		*/
-		template<class T2>
-		friend std::istream & operator >>(std::istream & stream, Quaternion<T2> & outMtx);
+    /*!
+    \exception std::runtime_error
+    */
+    template<class T2>
+    friend std::istream & operator >>(std::istream & stream, Quaternion<T2> & outMtx);
 
-		std::string toString(const std::string & inFormat = "%x %y %z %w", uint8_t precision = 6);
+    std::string toString(const std::string & inFormat = "%x %y %z %w", uint8_t precision = 6);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 #include "Quaternion.inl"
 

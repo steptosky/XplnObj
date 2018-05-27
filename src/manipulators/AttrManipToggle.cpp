@@ -34,71 +34,71 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipToggle::AttrManipToggle()
-		: AttrManipBase(EManipulator(EManipulator::toggle)) { }
+AttrManipToggle::AttrManipToggle()
+    : AttrManipBase(EManipulator(EManipulator::toggle)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipToggle::setOn(float val) {
-		mOn = val;
-	}
+void AttrManipToggle::setOn(float val) {
+    mOn = val;
+}
 
-	void AttrManipToggle::setOff(float val) {
-		mOff = val;
-	}
+void AttrManipToggle::setOff(float val) {
+    mOff = val;
+}
 
-	float AttrManipToggle::on() const {
-		return mOn;
-	}
+float AttrManipToggle::on() const {
+    return mOn;
+}
 
-	float AttrManipToggle::off() const {
-		return mOff;
-	}
+float AttrManipToggle::off() const {
+    return mOff;
+}
 
-	const std::string & AttrManipToggle::dataref() const {
-		return mDataref;
-	}
+const std::string & AttrManipToggle::dataref() const {
+    return mDataref;
+}
 
-	void AttrManipToggle::setDataref(const std::string & val) {
-		mDataref = val;
-	}
+void AttrManipToggle::setDataref(const std::string & val) {
+    mDataref = val;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipToggle::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipToggle::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipToggle * right = dynamic_cast<const AttrManipToggle*>(manip);
-		if (!right)
-			return false;
+    const AttrManipToggle * right = dynamic_cast<const AttrManipToggle*>(manip);
+    if (!right)
+        return false;
 
-		const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-		if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
-			return false;
+    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
+    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
+        return false;
 
-		return (sts::isEqual(mOn, right->mOn) &&
-				sts::isEqual(mOff, right->mOff) &&
-				sts::isEqual(mDataref, right->mDataref));
-	}
+    return (sts::isEqual(mOn, right->mOn) &&
+            sts::isEqual(mOff, right->mOff) &&
+            sts::isEqual(mDataref, right->mDataref));
+}
 
-	AttrManipBase * AttrManipToggle::clone() const {
-		return new AttrManipToggle(*this);
-	}
+AttrManipBase * AttrManipToggle::clone() const {
+    return new AttrManipToggle(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

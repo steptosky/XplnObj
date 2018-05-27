@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,58 +29,56 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/common/Point3.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the animation translate key
-	 * \ingroup Animation
-	 */
-	class AnimTransKey {
-	public:
+/*!
+ * \details Representation of the animation translate key
+ * \ingroup Animation
+ */
+class AnimTransKey {
+public:
 
-		AnimTransKey()
-			: pDrfValue(0.0f) {}
+    AnimTransKey()
+        : pDrfValue(0.0f) {}
 
-		AnimTransKey(float x, float y, float z, float dataRefValue)
-			: AnimTransKey(Point3(x, y, z), dataRefValue) {}
+    AnimTransKey(float x, float y, float z, float dataRefValue)
+        : AnimTransKey(Point3(x, y, z), dataRefValue) {}
 
-		AnimTransKey(const Point3 & pos, float dataRefValue)
-			: pPosition(pos),
-			pDrfValue(dataRefValue) {}
+    AnimTransKey(const Point3 & pos, float dataRefValue)
+        : pPosition(pos),
+          pDrfValue(dataRefValue) {}
 
-		//-----------------------------------------
+    //-----------------------------------------
 
-		XpObjLib bool operator==(const AnimTransKey & other) const;
+    XpObjLib bool operator==(const AnimTransKey & other) const;
 
-		bool operator!=(const AnimTransKey & other) const {
-			return !this->operator==(other);
-		}
+    bool operator!=(const AnimTransKey & other) const {
+        return !this->operator==(other);
+    }
 
-		//-----------------------------------------
+    //-----------------------------------------
 
-		void reset() {
-			pPosition.clear();
-			pDrfValue = 0.0f;
-		}
+    void reset() {
+        pPosition.clear();
+        pDrfValue = 0.0f;
+    }
 
-		//-----------------------------------------
+    //-----------------------------------------
 
-		Point3 pPosition;
-		float pDrfValue;
+    Point3 pPosition;
+    float pDrfValue;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

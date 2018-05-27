@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,48 +29,46 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <cstdint>
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Object types
-	 * \ingroup Enumerations
-	 */
-	enum eObjectType : uint32_t {
-		//!< Is not correct object
-		OBJ_NO = 0,
+/*!
+ * \details Object types
+ * \ingroup Enumerations
+ */
+enum eObjectType : uint32_t {
+    //!< Is not correct object
+    OBJ_NO = 0,
 
-		//!< Geometric line object
-		OBJ_LINE = 100,
-		//!< Dummy object
-		OBJ_DUMMY,
-		//!< Smoke object
-		OBJ_SMOKE,
-		//!< Geometric mesh object
-		OBJ_MESH,
+    //!< Geometric line object
+    OBJ_LINE = 100,
+    //!< Dummy object
+    OBJ_DUMMY,
+    //!< Smoke object
+    OBJ_SMOKE,
+    //!< Geometric mesh object
+    OBJ_MESH,
 
-		//!< Light named
-		OBJ_LIGHT_NAMED = 200,
-		//!< Light custom
-		OBJ_LIGHT_CUSTOM,
-		//!< Light param
-		OBJ_LIGHT_PARAM,
-		//!< Light spill custom
-		OBJ_LIGHT_SPILL_CUSTOM,
-		//!< Light point custom
-		OBJ_LIGHT_POINT,
+    //!< Light named
+    OBJ_LIGHT_NAMED = 200,
+    //!< Light custom
+    OBJ_LIGHT_CUSTOM,
+    //!< Light param
+    OBJ_LIGHT_PARAM,
+    //!< Light spill custom
+    OBJ_LIGHT_SPILL_CUSTOM,
+    //!< Light point custom
+    OBJ_LIGHT_POINT,
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

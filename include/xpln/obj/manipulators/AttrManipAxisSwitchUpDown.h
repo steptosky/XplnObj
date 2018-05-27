@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,62 +29,60 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "AttrManipBase.h"
 #include "AttrManipWheel.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
-	/*!
-	 * \details Delta ATTR_manip_axis_switch_up_down
-	 * \ingroup Manipulators
-	 */
-	class AttrManipAxisSwitchUpDown : public AttrManipBase, public AttrManipWheel {
-	public:
+/*!
+ * \details Delta ATTR_manip_axis_switch_up_down
+ * \ingroup Manipulators
+ */
+class AttrManipAxisSwitchUpDown : public AttrManipBase, public AttrManipWheel {
+public:
 
-		XpObjLib AttrManipAxisSwitchUpDown();
-		virtual ~AttrManipAxisSwitchUpDown() = default;
+    XpObjLib AttrManipAxisSwitchUpDown();
+    virtual ~AttrManipAxisSwitchUpDown() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setClickDelta(float val);
-		XpObjLib void setHoldDelta(float val);
-		XpObjLib void setMinimum(float val);
-		XpObjLib void setMaximum(float val);
-		XpObjLib float clickDelta() const;
-		XpObjLib float holdDelta() const;
-		XpObjLib float minimum() const;
-		XpObjLib float maximum() const;
+    XpObjLib void setClickDelta(float val);
+    XpObjLib void setHoldDelta(float val);
+    XpObjLib void setMinimum(float val);
+    XpObjLib void setMaximum(float val);
+    XpObjLib float clickDelta() const;
+    XpObjLib float holdDelta() const;
+    XpObjLib float minimum() const;
+    XpObjLib float maximum() const;
 
-		XpObjLib const std::string & dataref() const;
-		XpObjLib void setDataref(const std::string & val);
+    XpObjLib const std::string & dataref() const;
+    XpObjLib void setDataref(const std::string & val);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*! \copydoc AttrManipBase::equals */
-		XpObjLib bool equals(const AttrManipBase * manip) const override;
+    /*! \copydoc AttrManipBase::equals */
+    XpObjLib bool equals(const AttrManipBase * manip) const override;
 
-		/*! \copydoc AttrManipBase::clone */
-		XpObjLib AttrManipBase * clone() const override;
+    /*! \copydoc AttrManipBase::clone */
+    XpObjLib AttrManipBase * clone() const override;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		float mClickDelta = 0.0f;
-		float mHoldDelta = 0.0f;
-		float mMin = 0.0f;
-		float mMax = 0.0f;
-		std::string mDataref = "none";
+    float mClickDelta = 0.0f;
+    float mHoldDelta = 0.0f;
+    float mMin = 0.0f;
+    float mMax = 0.0f;
+    std::string mDataref = "none";
 
-	};
+};
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 }

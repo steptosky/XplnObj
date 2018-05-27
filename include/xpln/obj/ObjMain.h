@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,8 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <vector>
 #include "ObjLodGroup.h"
 #include "ExportOptions.h"
@@ -37,124 +37,124 @@
 
 namespace xobj {
 
-	class ObjLodGroup;
+class ObjLodGroup;
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the Root object
-	 * \ingroup Objects
-	 */
-	class ObjMain {
+/*!
+ * \details Representation of the Root object
+ * \ingroup Objects
+ */
+class ObjMain {
 
-		ObjMain(const ObjMain &) = delete;
-		ObjMain & operator =(const ObjMain &) = delete;
+    ObjMain(const ObjMain &) = delete;
+    ObjMain & operator =(const ObjMain &) = delete;
 
-	public:
+public:
 
-		XpObjLib ObjMain();
-		XpObjLib virtual ~ObjMain();
+    XpObjLib ObjMain();
+    XpObjLib virtual ~ObjMain();
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Set of the attributes.
-		 */
-		AttrGlobSet pAttr;
+    /*!
+     * \details Set of the attributes.
+     */
+    AttrGlobSet pAttr;
 
-		/*!
-		 * \details Export options.
-		 */
-		ExportOptions pExportOptions;
+    /*!
+     * \details Export options.
+     */
+    ExportOptions pExportOptions;
 
-		/*!
-		 * \details Transform matrix for applying while exporting/importing.
-		 * \details With this matrix you can move, rotate, convert to another system coordinates all the objects.
-		 */
-		TMatrix pMatrix;
+    /*!
+     * \details Transform matrix for applying while exporting/importing.
+     * \details With this matrix you can move, rotate, convert to another system coordinates all the objects.
+     */
+    TMatrix pMatrix;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Gets lod by index.
-		 * \param [in] index
-		 */
-		XpObjLib ObjLodGroup & lod(size_t index);
+    /*!
+     * \details Gets lod by index.
+     * \param [in] index
+     */
+    XpObjLib ObjLodGroup & lod(size_t index);
 
-		/*!
-		 * \details Gets lod by index.
-		 * \param [in] index
-		 */
-		XpObjLib const ObjLodGroup & lod(size_t index) const;
+    /*!
+     * \details Gets lod by index.
+     * \param [in] index
+     */
+    XpObjLib const ObjLodGroup & lod(size_t index) const;
 
-		/*!
-		 * \details Adds lods.
-		 * \return created lod which was added to the lods list.
-		 */
-		XpObjLib ObjLodGroup & addLod();
+    /*!
+     * \details Adds lods.
+     * \return created lod which was added to the lods list.
+     */
+    XpObjLib ObjLodGroup & addLod();
 
-		/*!
-		 * \details Removes lod by index.
-		 * \param [in] index
-		 */
-		XpObjLib void removeLod(size_t index);
+    /*!
+     * \details Removes lod by index.
+     * \param [in] index
+     */
+    XpObjLib void removeLod(size_t index);
 
-		/*!
-		 * \details Gets count of the lods.
-		 */
-		XpObjLib size_t lodCount() const;
+    /*!
+     * \details Gets count of the lods.
+     */
+    XpObjLib size_t lodCount() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Starts export to 'obj' file.
-		 * \param [in] path full path with filename and extension.
-		 * \return True if successful otherwise false.
-		 */
-		XpObjLib bool exportToFile(const std::string & path);
+    /*!
+     * \details Starts export to 'obj' file.
+     * \param [in] path full path with filename and extension.
+     * \return True if successful otherwise false.
+     */
+    XpObjLib bool exportToFile(const std::string & path);
 
-		/*!
-		 * \details Starts export to 'obj' file.
-		 * \param [in] path full path with filename and extension
-		 * \param [out] outStat export statistic.
-		 * \return True if successful otherwise false.
-		 */
-		XpObjLib bool exportToFile(const std::string & path, IOStatistic & outStat);
+    /*!
+     * \details Starts export to 'obj' file.
+     * \param [in] path full path with filename and extension
+     * \param [out] outStat export statistic.
+     * \return True if successful otherwise false.
+     */
+    XpObjLib bool exportToFile(const std::string & path, IOStatistic & outStat);
 
-		/*!
-		 * \details Starts import from 'obj' file.
-		 * \param [in] path full path with filename and extension.
-		 * \return True if successful otherwise false.
-		 */
-		XpObjLib bool importFromFile(const std::string & path);
+    /*!
+     * \details Starts import from 'obj' file.
+     * \param [in] path full path with filename and extension.
+     * \return True if successful otherwise false.
+     */
+    XpObjLib bool importFromFile(const std::string & path);
 
-		/*!
-		 * \details Start import from 'obj' file
-		 * \param [in] path full path with filename and extension
-		 * \param [out] outStat import statistic.
-		 * \return True if successful otherwise false.
-		 */
-		XpObjLib bool importFromFile(const std::string & path, IOStatistic & outStat);
+    /*!
+     * \details Start import from 'obj' file
+     * \param [in] path full path with filename and extension
+     * \param [out] outStat import statistic.
+     * \return True if successful otherwise false.
+     */
+    XpObjLib bool importFromFile(const std::string & path, IOStatistic & outStat);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setObjectName(const std::string & name);
-		XpObjLib const std::string & objectName() const;
+    XpObjLib void setObjectName(const std::string & name);
+    XpObjLib const std::string & objectName() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		void sortLod();
+    void sortLod();
 
-		std::string mName;
-		std::vector<ObjLodGroup*> mLods;
+    std::string mName;
+    std::vector<ObjLodGroup*> mLods;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

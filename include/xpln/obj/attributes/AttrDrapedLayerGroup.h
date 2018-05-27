@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,80 +29,78 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/XplnObjExport.h"
 #include "xpln/enums/ELayer.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details ATTR_layer_group_draped
-	 * \ingroup Attributes
-	 */
-	class AttrDrapedLayerGroup {
-	public:
+/*!
+ * \details ATTR_layer_group_draped
+ * \ingroup Attributes
+ */
+class AttrDrapedLayerGroup {
+public:
 
-		/*!
-		 * \details Constructor default.
-		 * \note Makes the disabled attribute.
-		 */
-		XpObjLib AttrDrapedLayerGroup();
+    /*!
+     * \details Constructor default.
+     * \note Makes the disabled attribute.
+     */
+    XpObjLib AttrDrapedLayerGroup();
 
-		/*!
-	     * \details Constructor init.
-		 * \note Makes the enabled attribute.
-		 * \param [in] layer 
-		 * \param [in] offset 
-		 */
-		XpObjLib AttrDrapedLayerGroup(ELayer layer, int32_t offset = 0);
+    /*!
+     * \details Constructor init.
+     * \note Makes the enabled attribute.
+     * \param [in] layer 
+     * \param [in] offset 
+     */
+    XpObjLib AttrDrapedLayerGroup(ELayer layer, int32_t offset = 0);
 
-		~AttrDrapedLayerGroup() = default;
+    ~AttrDrapedLayerGroup() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Check whether the attribute is enabled.
-		 * \note All class's setters will enable this attribute.
-		 */
-		XpObjLib operator bool() const;
+    /*!
+     * \details Check whether the attribute is enabled.
+     * \note All class's setters will enable this attribute.
+     */
+    XpObjLib operator bool() const;
 
-		/*!
-		 * \details Sets the attribute enabled/disabled.
-		 * \note All class's setters will enable this attribute.
-		 * \param [in] state
-		 */
-		XpObjLib void setEnabled(bool state);
+    /*!
+     * \details Sets the attribute enabled/disabled.
+     * \note All class's setters will enable this attribute.
+     * \param [in] state
+     */
+    XpObjLib void setEnabled(bool state);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrDrapedLayerGroup & other) const;
-		XpObjLib bool operator!=(const AttrDrapedLayerGroup & other) const;
+    XpObjLib bool operator==(const AttrDrapedLayerGroup & other) const;
+    XpObjLib bool operator!=(const AttrDrapedLayerGroup & other) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setOffset(int32_t offset);
-		XpObjLib void setLayer(ELayer layer);
+    XpObjLib void setOffset(int32_t offset);
+    XpObjLib void setLayer(ELayer layer);
 
-		XpObjLib int32_t offset() const;
-		XpObjLib ELayer layer() const;
+    XpObjLib int32_t offset() const;
+    XpObjLib ELayer layer() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		int8_t mOffset;
-		ELayer mLayer;
-		bool mIsEnabled : 1;
+    int8_t mOffset;
+    ELayer mLayer;
+    bool mIsEnabled : 1;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

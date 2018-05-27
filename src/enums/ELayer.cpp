@@ -34,137 +34,137 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	ELayer::List ELayer::mList;
+ELayer::List ELayer::mList;
 
-	namespace ELayersData {
+namespace ELayersData {
 
-		struct Data {
-			const char * mUi;
-			const char * mAttr;
-			ELayer::eId mId;
+    struct Data {
+        const char * mUi;
+        const char * mAttr;
+        ELayer::eId mId;
 
-			Data(const char * attr, const char * ui, ELayer::eId id)
-				: mUi(ui),
-				mAttr(attr),
-				mId(id) {}
-		};
+        Data(const char * attr, const char * ui, ELayer::eId id)
+            : mUi(ui),
+              mAttr(attr),
+              mId(id) {}
+    };
 
-		const Data gList[] = {
-			/*  0 */ Data(TOTEXT(none), "none", ELayer::none),
-			/*  1 */ Data(TOTEXT(terrain), "Terrain", ELayer::terrain),
-			/*  2 */ Data(TOTEXT(beaches), "Beaches", ELayer::beaches),
-			/*  3 */ Data(TOTEXT(shoulders), "Shoulders", ELayer::shoulders),
-			/*  4 */ Data(TOTEXT(taxiways), "Taxiways", ELayer::taxiways),
-			/*  5 */ Data(TOTEXT(runways), "Runways", ELayer::ranways),
-			/*  6 */ Data(TOTEXT(markings), "Markings", ELayer::markings),
-			/*  7 */ Data(TOTEXT(airports), "Airports", ELayer::airports),
-			/*  8 */ Data(TOTEXT(roads), "Roads", ELayer::roads),
-			/*  9 */ Data(TOTEXT(objects), "Objects", ELayer::objects),
-			/* 10 */ Data(TOTEXT(light_objects), "Light objects", ELayer::light_objects),
-			/* 11 */ Data(TOTEXT(cars), "Cars", ELayer::cars)
-		};
-	}
+    const Data gList[] = {
+        /*  0 */ Data(TOTEXT(none), "none", ELayer::none),
+        /*  1 */ Data(TOTEXT(terrain), "Terrain", ELayer::terrain),
+        /*  2 */ Data(TOTEXT(beaches), "Beaches", ELayer::beaches),
+        /*  3 */ Data(TOTEXT(shoulders), "Shoulders", ELayer::shoulders),
+        /*  4 */ Data(TOTEXT(taxiways), "Taxiways", ELayer::taxiways),
+        /*  5 */ Data(TOTEXT(runways), "Runways", ELayer::ranways),
+        /*  6 */ Data(TOTEXT(markings), "Markings", ELayer::markings),
+        /*  7 */ Data(TOTEXT(airports), "Airports", ELayer::airports),
+        /*  8 */ Data(TOTEXT(roads), "Roads", ELayer::roads),
+        /*  9 */ Data(TOTEXT(objects), "Objects", ELayer::objects),
+        /* 10 */ Data(TOTEXT(light_objects), "Light objects", ELayer::light_objects),
+        /* 11 */ Data(TOTEXT(cars), "Cars", ELayer::cars)
+    };
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	ELayer::ELayer()
-		: mId(none) {}
+ELayer::ELayer()
+    : mId(none) {}
 
-	ELayer::ELayer(eId id)
-		: mId(id) { }
+ELayer::ELayer(eId id)
+    : mId(id) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool ELayer::operator==(const ELayer & other) const {
-		return mId == other.mId;
-	}
+bool ELayer::operator==(const ELayer & other) const {
+    return mId == other.mId;
+}
 
-	bool ELayer::operator==(eId id) const {
-		return mId == id;
-	}
+bool ELayer::operator==(eId id) const {
+    return mId == id;
+}
 
-	bool ELayer::operator!=(const ELayer & other) const {
-		return mId != other.mId;
-	}
+bool ELayer::operator!=(const ELayer & other) const {
+    return mId != other.mId;
+}
 
-	bool ELayer::operator!=(eId id) const {
-		return mId != id;
-	}
+bool ELayer::operator!=(eId id) const {
+    return mId != id;
+}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	ELayer ELayer::fromUiString(const char * name) {
-		if (name) {
-			for (size_t i = 0; i < ARRAY_LENGTH(ELayersData::gList); ++i) {
-				if (strcmp(name, ELayersData::gList[i].mUi) == 0) {
-					return ELayer(ELayersData::gList[i].mId);
-				}
-			}
-			LError << TOTEXT(ELayer) << " Does not contain ui name: \"" << name << "\"";
-		}
-		return ELayer();
-	}
+ELayer ELayer::fromUiString(const char * name) {
+    if (name) {
+        for (size_t i = 0; i < ARRAY_LENGTH(ELayersData::gList); ++i) {
+            if (strcmp(name, ELayersData::gList[i].mUi) == 0) {
+                return ELayer(ELayersData::gList[i].mId);
+            }
+        }
+        LError << TOTEXT(ELayer) << " Does not contain ui name: \"" << name << "\"";
+    }
+    return ELayer();
+}
 
-	ELayer ELayer::fromString(const char * attrName) {
-		if (attrName) {
-			for (size_t i = 0; i < ARRAY_LENGTH(ELayersData::gList); ++i) {
-				if (strcmp(attrName, ELayersData::gList[i].mAttr) == 0) {
-					return ELayer(ELayersData::gList[i].mId);
-				}
-			}
-			LError << TOTEXT(ELayer) << " Does not contain attribute name: \"" << attrName << "\"";
-		}
-		return ELayer();
-	}
+ELayer ELayer::fromString(const char * attrName) {
+    if (attrName) {
+        for (size_t i = 0; i < ARRAY_LENGTH(ELayersData::gList); ++i) {
+            if (strcmp(attrName, ELayersData::gList[i].mAttr) == 0) {
+                return ELayer(ELayersData::gList[i].mId);
+            }
+        }
+        LError << TOTEXT(ELayer) << " Does not contain attribute name: \"" << attrName << "\"";
+    }
+    return ELayer();
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ELayer::makeList(List & outList) {
-		if (!outList.empty())
-			return;
-		for (size_t i = 0; i < ARRAY_LENGTH(ELayersData::gList); ++i) {
-			outList.emplace_back(ELayer(ELayersData::gList[i].mId));
-		}
-	}
+void ELayer::makeList(List & outList) {
+    if (!outList.empty())
+        return;
+    for (size_t i = 0; i < ARRAY_LENGTH(ELayersData::gList); ++i) {
+        outList.emplace_back(ELayer(ELayersData::gList[i].mId));
+    }
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool ELayer::isValid() const {
-		return mId != none;
-	}
+bool ELayer::isValid() const {
+    return mId != none;
+}
 
-	ELayer::eId ELayer::id() const {
-		return mId;
-	}
+ELayer::eId ELayer::id() const {
+    return mId;
+}
 
-	const char * ELayer::toString() const {
-		return ELayersData::gList[static_cast<size_t>(mId)].mAttr;
-	}
+const char * ELayer::toString() const {
+    return ELayersData::gList[static_cast<size_t>(mId)].mAttr;
+}
 
-	const char * ELayer::toUiString() const {
-		return ELayersData::gList[static_cast<size_t>(mId)].mUi;
-	}
+const char * ELayer::toUiString() const {
+    return ELayersData::gList[static_cast<size_t>(mId)].mUi;
+}
 
-	const ELayer::List & ELayer::list() {
-		makeList(mList);
-		return mList;
-	}
+const ELayer::List & ELayer::list() {
+    makeList(mList);
+    return mList;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

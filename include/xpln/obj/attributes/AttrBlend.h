@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,87 +29,85 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <cstdint>
 #include "xpln/XplnObjExport.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details ATTR_blend, ATTR_no_blend, ATTR_shadow_blend
-	 * \ingroup Attributes
-	 */
-	class AttrBlend {
-	public:
+/*!
+ * \details ATTR_blend, ATTR_no_blend, ATTR_shadow_blend
+ * \ingroup Attributes
+ */
+class AttrBlend {
+public:
 
-		enum eType : uint8_t {
-			// default
-			blend,
-			no_blend,
-			shadow_blend,
-		};
+    enum eType : uint8_t {
+        // default
+        blend,
+        no_blend,
+        shadow_blend,
+    };
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Constructor default.
-		 * \note Makes the disabled attribute.
-		 */
-		XpObjLib AttrBlend();
+    /*!
+     * \details Constructor default.
+     * \note Makes the disabled attribute.
+     */
+    XpObjLib AttrBlend();
 
-		/*!
-		 * \details Constructor init.
-		 * \note Makes the enabled attribute.
-		 * \param [in] type 
-		 * \param [in] ratio 
-		 */
-		XpObjLib AttrBlend(eType type, float ratio);
+    /*!
+     * \details Constructor init.
+     * \note Makes the enabled attribute.
+     * \param [in] type 
+     * \param [in] ratio 
+     */
+    XpObjLib AttrBlend(eType type, float ratio);
 
-		~AttrBlend() = default;
+    ~AttrBlend() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Check whether the attribute is enabled. 
-		 * \note All class's setters will enable this attribute.
-		 */
-		XpObjLib operator bool() const;
+    /*!
+     * \details Check whether the attribute is enabled. 
+     * \note All class's setters will enable this attribute.
+     */
+    XpObjLib operator bool() const;
 
-		/*!
-		 * \details Sets the attribute enabled/disabled.
-		 * \note All class's setters will enable this attribute.
-		 * \param [in] state 
-		 */
-		XpObjLib void setEnabled(bool state);
+    /*!
+     * \details Sets the attribute enabled/disabled.
+     * \note All class's setters will enable this attribute.
+     * \param [in] state 
+     */
+    XpObjLib void setEnabled(bool state);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrBlend & other) const;
-		XpObjLib bool operator!=(const AttrBlend & other) const;
+    XpObjLib bool operator==(const AttrBlend & other) const;
+    XpObjLib bool operator!=(const AttrBlend & other) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setRatio(float ratio);
-		XpObjLib float ratio() const;
-		XpObjLib eType type() const;
+    XpObjLib void setRatio(float ratio);
+    XpObjLib float ratio() const;
+    XpObjLib eType type() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		eType mBlending;
-		float mRatio;
-		bool mIsEnabled : 1;
+    eType mBlending;
+    float mRatio;
+    bool mIsEnabled : 1;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

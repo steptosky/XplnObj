@@ -40,17 +40,17 @@
 /**************************************************************************************************/
 
 GTEST_API_ int main(int argc, char ** argv) {
-	testing::InitGoogleTest(&argc, argv);
-	//testing::InitGoogleMock(&argc, argv);
+    testing::InitGoogleTest(&argc, argv);
+    //testing::InitGoogleMock(&argc, argv);
 
-	std::cout << xobj::ExternalLog::about() << std::endl;
-	int res = RUN_ALL_TESTS();
+    std::cout << xobj::ExternalLog::about() << std::endl;
+    int res = RUN_ALL_TESTS();
 
 #ifdef _MSC_VER
-	system("pause");
+    system("pause");
 #endif
 
-	return res;
+    return res;
 }
 
 /**************************************************************************************************/

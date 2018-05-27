@@ -55,12 +55,12 @@ using ::testing::InSequence;
 /**************************************************************************************************/
 
 void extractMesh(ObjMain & inMain, ObjMesh *& outAttr) {
-	ASSERT_EQ(1, inMain.lodCount());
-	const ObjLodGroup & inLGroup = inMain.lod(0);
-	ASSERT_EQ(1, inLGroup.transform().objList().size());
-	ObjAbstract * obj = *(inLGroup.transform().objList().begin());
-	ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
-	outAttr = static_cast<ObjMesh *>(obj);
+    ASSERT_EQ(1, inMain.lodCount());
+    const ObjLodGroup & inLGroup = inMain.lod(0);
+    ASSERT_EQ(1, inLGroup.transform().objList().size());
+    ObjAbstract * obj = *(inLGroup.transform().objList().begin());
+    ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
+    outAttr = static_cast<ObjMesh *>(obj);
 }
 
 /**************************************************************************************************/
@@ -68,75 +68,75 @@ void extractMesh(ObjMain & inMain, ObjMesh *& outAttr) {
 /**************************************************************************************************/
 
 TEST(TestAttributesIO, default_vals) {
-	ObjMain outObj;
-	IOStatistic stat;
+    ObjMain outObj;
+    IOStatistic stat;
 
-	ObjMesh * outM = TestUtilsObjMesh::createObjMesh("m1", 0.0);
-	ObjLodGroup & outLGroup = outObj.addLod();
-	outLGroup.transform().addObject(outM);
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIO), stat));
-	ASSERT_EQ(0, stat.pTrisAttrCount);
+    ObjMesh * outM = TestUtilsObjMesh::createObjMesh("m1", 0.0);
+    ObjLodGroup & outLGroup = outObj.addLod();
+    outLGroup.transform().addObject(outM);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIO), stat));
+    ASSERT_EQ(0, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIO), stat));
-	ASSERT_EQ(0, stat.pTrisAttrCount);
-	ObjMesh * inM = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIO), stat));
+    ASSERT_EQ(0, stat.pTrisAttrCount);
+    ObjMesh * inM = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
 
-	//-----------------------------
+    //-----------------------------
 
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshAttributes(outM, inM));
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshAttributes(outM, inM));
 }
 
 TEST(TestAttributesIO, not_default_vals_case_1) {
-	ObjMain outObj;
-	IOStatistic stat;
+    ObjMain outObj;
+    IOStatistic stat;
 
-	ObjMesh * outM = TestUtilsObjMesh::createObjMeshNotDefaultAttributes1("m1", 0.0);
-	ObjLodGroup & outLGroup = outObj.addLod();
-	outLGroup.transform().addObject(outM);
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIO), stat));
-	ASSERT_EQ(10, stat.pTrisAttrCount);
+    ObjMesh * outM = TestUtilsObjMesh::createObjMeshNotDefaultAttributes1("m1", 0.0);
+    ObjLodGroup & outLGroup = outObj.addLod();
+    outLGroup.transform().addObject(outM);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIO), stat));
+    ASSERT_EQ(10, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIO), stat));
-	ASSERT_EQ(10, stat.pTrisAttrCount);
-	ObjMesh * inM = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIO), stat));
+    ASSERT_EQ(10, stat.pTrisAttrCount);
+    ObjMesh * inM = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
 
-	//-----------------------------
+    //-----------------------------
 
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshAttributes(outM, inM));
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshAttributes(outM, inM));
 }
 
 TEST(TestAttributesIO, not_default_vals_case_2) {
-	ObjMain outObj;
-	IOStatistic stat;
+    ObjMain outObj;
+    IOStatistic stat;
 
-	ObjMesh * outM = TestUtilsObjMesh::createObjMeshNotDefaultAttributes2("m1", 0.0);
-	ObjLodGroup & outLGroup = outObj.addLod();
-	outLGroup.transform().addObject(outM);
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIO), stat));
-	ASSERT_EQ(10, stat.pTrisAttrCount);
+    ObjMesh * outM = TestUtilsObjMesh::createObjMeshNotDefaultAttributes2("m1", 0.0);
+    ObjLodGroup & outLGroup = outObj.addLod();
+    outLGroup.transform().addObject(outM);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIO), stat));
+    ASSERT_EQ(10, stat.pTrisAttrCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIO), stat));
-	ASSERT_EQ(10, stat.pTrisAttrCount);
-	ObjMesh * inM = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIO), stat));
+    ASSERT_EQ(10, stat.pTrisAttrCount);
+    ObjMesh * inM = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
 
-	//-----------------------------
+    //-----------------------------
 
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshAttributes(outM, inM));
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshAttributes(outM, inM));
 }
 
 /**************************************************************************************************/

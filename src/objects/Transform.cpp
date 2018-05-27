@@ -34,296 +34,296 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	class TreeItem : public sts_t::TreeItem<TreeItem> {
-	public:
+class TreeItem : public sts_t::TreeItem<TreeItem> {
+public:
 
-		TreeItem(Transform * inTransformTree)
-			: mIsCallDestructor(true),
-			mTransformTree(inTransformTree) { }
+    TreeItem(Transform * inTransformTree)
+        : mIsCallDestructor(true),
+          mTransformTree(inTransformTree) { }
 
-		void setData(Transform * val) {
-			mTransformTree = val;
-		}
+    void setData(Transform * val) {
+        mTransformTree = val;
+    }
 
-		Transform * data() {
-			return mTransformTree;
-		}
+    Transform * data() {
+        return mTransformTree;
+    }
 
-		TreeItem * clone() const override {
-			return nullptr;
-		}
+    TreeItem * clone() const override {
+        return nullptr;
+    }
 
-		~TreeItem() {
-			// remove loop calling of the destructors
-			if (mIsCallDestructor) {
-				mTransformTree->mTreePtr = nullptr;
-				delete mTransformTree;
-			}
-		}
+    ~TreeItem() {
+        // remove loop calling of the destructors
+        if (mIsCallDestructor) {
+            mTransformTree->mTreePtr = nullptr;
+            delete mTransformTree;
+        }
+    }
 
-	private:
+private:
 
-		// remove loop calling of the destructors
-		friend Transform;
+    // remove loop calling of the destructors
+    friend Transform;
 
-		bool mIsCallDestructor;
-		Transform * mTransformTree;
+    bool mIsCallDestructor;
+    Transform * mTransformTree;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	Transform::Transform() {
-		mTreePtr = new TreeItem(this);
-	}
+Transform::Transform() {
+    mTreePtr = new TreeItem(this);
+}
 
-	Transform::~Transform() {
-		for (auto & curr : mObjList) {
-			curr->mObjTransform = nullptr;
-			delete curr;
-		}
-		// remove loop calling of the destructors
-		if (mTreePtr) {
-			mTreePtr->mIsCallDestructor = false;
-			delete mTreePtr;
-		}
-	}
+Transform::~Transform() {
+    for (auto & curr : mObjList) {
+        curr->mObjTransform = nullptr;
+        delete curr;
+    }
+    // remove loop calling of the destructors
+    if (mTreePtr) {
+        mTreePtr->mIsCallDestructor = false;
+        delete mTreePtr;
+    }
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool Transform::isRoot() const {
-		return mTreePtr->isRoot();
-	}
+bool Transform::isRoot() const {
+    return mTreePtr->isRoot();
+}
 
-	void Transform::setParent(Transform * parent) {
-		mTreePtr->setParent(static_cast<TreeItem*>(parent->mTreePtr));
-	}
+void Transform::setParent(Transform * parent) {
+    mTreePtr->setParent(static_cast<TreeItem*>(parent->mTreePtr));
+}
 
-	Transform * Transform::parent() {
-		if (isRoot())
-			return nullptr;
-		return mTreePtr->parent()->data();
-	}
+Transform * Transform::parent() {
+    if (isRoot())
+        return nullptr;
+    return mTreePtr->parent()->data();
+}
 
-	const Transform * Transform::parent() const {
-		if (isRoot())
-			return nullptr;
-		return mTreePtr->parent()->data();
-	}
+const Transform * Transform::parent() const {
+    if (isRoot())
+        return nullptr;
+    return mTreePtr->parent()->data();
+}
 
-	Transform::TransformIndex Transform::childrenCount() const {
-		return static_cast<TransformIndex>(mTreePtr->childrenCount());
-	}
+Transform::TransformIndex Transform::childrenCount() const {
+    return static_cast<TransformIndex>(mTreePtr->childrenCount());
+}
 
-	Transform * Transform::childAt(TransformIndex index) {
-		return mTreePtr->childAt(index)->data();
-	}
+Transform * Transform::childAt(TransformIndex index) {
+    return mTreePtr->childAt(index)->data();
+}
 
-	const Transform * Transform::childAt(TransformIndex index) const {
-		return mTreePtr->childAt(index)->data();
-	}
+const Transform * Transform::childAt(TransformIndex index) const {
+    return mTreePtr->childAt(index)->data();
+}
 
-	bool Transform::isChildOf(const Transform * parent) const {
-		return mTreePtr->isChildOf(parent->mTreePtr);
-	}
+bool Transform::isChildOf(const Transform * parent) const {
+    return mTreePtr->isChildOf(parent->mTreePtr);
+}
 
-	Transform * Transform::takeChildAt(TransformIndex index) {
-		return mTreePtr->takeChildAt(index)->data();
-	}
+Transform * Transform::takeChildAt(TransformIndex index) {
+    return mTreePtr->takeChildAt(index)->data();
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	Transform * Transform::root() {
-		return mTreePtr->root()->data();
-	}
+Transform * Transform::root() {
+    return mTreePtr->root()->data();
+}
 
-	const Transform * Transform::root() const {
-		return mTreePtr->root()->data();
-	}
+const Transform * Transform::root() const {
+    return mTreePtr->root()->data();
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void Transform::addObject(ObjAbstract * baseObj) {
-		if (baseObj) {
-			for (auto curr : mObjList) {
-				if (curr == baseObj) {
-					LWarning << " You try to add an object which is already exist.";
-					return;
-				}
-			}
+void Transform::addObject(ObjAbstract * baseObj) {
+    if (baseObj) {
+        for (auto curr : mObjList) {
+            if (curr == baseObj) {
+                LWarning << " You try to add an object which is already exist.";
+                return;
+            }
+        }
 
-			baseObj->mObjTransform = this;
-			mObjList.push_back(baseObj);
-		}
-	}
+        baseObj->mObjTransform = this;
+        mObjList.push_back(baseObj);
+    }
+}
 
-	bool Transform::removeObject(ObjAbstract * baseObj) {
-		if (baseObj) {
-			for (auto it = mObjList.begin(); it != mObjList.end(); ++it) {
-				if (*it == baseObj) {
-					(*it)->mObjTransform = nullptr;
-					mObjList.erase(it);
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+bool Transform::removeObject(ObjAbstract * baseObj) {
+    if (baseObj) {
+        for (auto it = mObjList.begin(); it != mObjList.end(); ++it) {
+            if (*it == baseObj) {
+                (*it)->mObjTransform = nullptr;
+                mObjList.erase(it);
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
-	const Transform::ObjList & Transform::objList() const {
-		return mObjList;
-	}
+const Transform::ObjList & Transform::objList() const {
+    return mObjList;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool Transform::hierarchicalParity(const Transform & parent, bool state) {
-		if (parent.pMatrix.parity()) {
-			state = !state;
-		}
-		if (parent.isRoot()) {
-			return state;
-		}
-		return hierarchicalParity(*parent.parent(), state);
-	}
+bool Transform::hierarchicalParity(const Transform & parent, bool state) {
+    if (parent.pMatrix.parity()) {
+        state = !state;
+    }
+    if (parent.isRoot()) {
+        return state;
+    }
+    return hierarchicalParity(*parent.parent(), state);
+}
 
-	bool Transform::hierarchicalParity() const {
-		return hierarchicalParity(*this, false);
-	}
+bool Transform::hierarchicalParity() const {
+    return hierarchicalParity(*this, false);
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	const std::string & Transform::name() const {
-		return mName;
-	}
+const std::string & Transform::name() const {
+    return mName;
+}
 
-	void Transform::setName(const std::string & val) {
-		mName = val;
-	}
+void Transform::setName(const std::string & val) {
+    mName = val;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool Transform::hasAnim() const {
-		return hasAnimRotate() || hasAnimTrans() || hasAnimVis();
-	}
+bool Transform::hasAnim() const {
+    return hasAnimRotate() || hasAnimTrans() || hasAnimVis();
+}
 
-	bool Transform::hasAnimRotate() const {
-		for (auto & a : pAnimRotate) {
-			if (a.isAnimated()) {
-				return true;
-			}
-		}
-		return false;
-	}
+bool Transform::hasAnimRotate() const {
+    for (auto & a : pAnimRotate) {
+        if (a.isAnimated()) {
+            return true;
+        }
+    }
+    return false;
+}
 
-	bool Transform::hasAnimTrans() const {
-		for (auto & a : pAnimTrans) {
-			if (a.isAnimated()) {
-				return true;
-			}
-		}
-		return false;
-	}
+bool Transform::hasAnimTrans() const {
+    for (auto & a : pAnimTrans) {
+        if (a.isAnimated()) {
+            return true;
+        }
+    }
+    return false;
+}
 
-	bool Transform::hasAnimVis() const {
-		return pAnimVis.isAnimated();
-	}
+bool Transform::hasAnimVis() const {
+    return pAnimVis.isAnimated();
+}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool Transform::visitObjects(const std::function<bool(ObjAbstract &)> & function) {
-		for (auto o : mObjList) {
-			assert(o);
-			if (!function(*o)) {
-				return false;
-			}
-		}
-		return true;
-	}
+bool Transform::visitObjects(const std::function<bool(ObjAbstract &)> & function) {
+    for (auto o : mObjList) {
+        assert(o);
+        if (!function(*o)) {
+            return false;
+        }
+    }
+    return true;
+}
 
-	bool Transform::visitObjects(const std::function<bool(const ObjAbstract &)> & function) const {
-		for (const auto o : mObjList) {
-			assert(o);
-			if (!function(*o)) {
-				return false;
-			}
-		}
-		return true;
-	}
+bool Transform::visitObjects(const std::function<bool(const ObjAbstract &)> & function) const {
+    for (const auto o : mObjList) {
+        assert(o);
+        if (!function(*o)) {
+            return false;
+        }
+    }
+    return true;
+}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool Transform::visitAllOf(Transform * parent, const std::function<bool(Transform &)> & function) {
-		TransformIndex numChildren = parent->childrenCount();
-		for (TransformIndex idx = 0; idx < numChildren; ++idx) {
-			Transform * currNode = parent->childAt(idx);
-			if (!function(*currNode)) {
-				return false;
-			}
-			if (!visitAllOf(currNode, function)) {
-				return false;
-			}
-		}
-		return true;
-	}
+bool Transform::visitAllOf(Transform * parent, const std::function<bool(Transform &)> & function) {
+    TransformIndex numChildren = parent->childrenCount();
+    for (TransformIndex idx = 0; idx < numChildren; ++idx) {
+        Transform * currNode = parent->childAt(idx);
+        if (!function(*currNode)) {
+            return false;
+        }
+        if (!visitAllOf(currNode, function)) {
+            return false;
+        }
+    }
+    return true;
+}
 
-	bool Transform::visitAllOf(const Transform * parent, const std::function<bool(const Transform &)> & function) {
-		TransformIndex numChildren = parent->childrenCount();
-		for (TransformIndex idx = 0; idx < numChildren; ++idx) {
-			const Transform * currNode = parent->childAt(idx);
-			if (!function(*currNode)) {
-				return false;
-			}
-			if (!visitAllOf(currNode, function)) {
-				return false;
-			}
-		}
-		return true;
-	}
+bool Transform::visitAllOf(const Transform * parent, const std::function<bool(const Transform &)> & function) {
+    TransformIndex numChildren = parent->childrenCount();
+    for (TransformIndex idx = 0; idx < numChildren; ++idx) {
+        const Transform * currNode = parent->childAt(idx);
+        if (!function(*currNode)) {
+            return false;
+        }
+        if (!visitAllOf(currNode, function)) {
+            return false;
+        }
+    }
+    return true;
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	bool Transform::visitChildren(Transform * parent, const std::function<bool(Transform &)> & function) {
-		TransformIndex count = parent->childrenCount();
-		for (TransformIndex i = 0; i < count; ++i) {
-			if (!function(*parent->childAt(i))) {
-				return false;
-			}
-		}
-		return true;
-	}
+bool Transform::visitChildren(Transform * parent, const std::function<bool(Transform &)> & function) {
+    TransformIndex count = parent->childrenCount();
+    for (TransformIndex i = 0; i < count; ++i) {
+        if (!function(*parent->childAt(i))) {
+            return false;
+        }
+    }
+    return true;
+}
 
-	bool Transform::visitChildren(const Transform * parent, const std::function<bool(const Transform &)> & function) {
-		TransformIndex count = parent->childrenCount();
-		for (TransformIndex i = 0; i < count; ++i) {
-			if (!function(*parent->childAt(i))) {
-				return false;
-			}
-		}
-		return true;
-	}
+bool Transform::visitChildren(const Transform * parent, const std::function<bool(const Transform &)> & function) {
+    TransformIndex count = parent->childrenCount();
+    for (TransformIndex i = 0; i < count; ++i) {
+        if (!function(*parent->childAt(i))) {
+            return false;
+        }
+    }
+    return true;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

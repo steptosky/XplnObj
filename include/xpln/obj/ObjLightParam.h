@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,67 +29,65 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "ObjAbstractLight.h"
 #include "xpln/enums/ELightParams.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the parameterized light
-	 * \ingroup Objects
-	 */
-	class ObjLightParam : public ObjAbstractLight {
+/*!
+ * \details Representation of the parameterized light
+ * \ingroup Objects
+ */
+class ObjLightParam : public ObjAbstractLight {
 
-		ObjLightParam & operator =(const ObjLightParam &) = delete;
+    ObjLightParam & operator =(const ObjLightParam &) = delete;
 
-	protected:
+protected:
 
-		XpObjLib ObjLightParam(const ObjLightParam & copy);
+    XpObjLib ObjLightParam(const ObjLightParam & copy);
 
-	public:
+public:
 
-		XpObjLib ObjLightParam();
-		virtual ~ObjLightParam() = default;
+    XpObjLib ObjLightParam();
+    virtual ~ObjLightParam() = default;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		XpObjLib void setLightId(ELightParams id);
-		XpObjLib void setLightName(const std::string & name);
-		XpObjLib void setAdditionalParams(const std::string & params);
+    XpObjLib void setLightId(ELightParams id);
+    XpObjLib void setLightName(const std::string & name);
+    XpObjLib void setAdditionalParams(const std::string & params);
 
-		XpObjLib ELightParams lightId() const;
-		XpObjLib const std::string & lightName() const;
-		XpObjLib const std::string & additionalParams() const;
+    XpObjLib ELightParams lightId() const;
+    XpObjLib const std::string & lightName() const;
+    XpObjLib const std::string & additionalParams() const;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		/*! \copydoc ObjAbstract::objType */
-		XpObjLib eObjectType objType() const final;
+    /*! \copydoc ObjAbstract::objType */
+    XpObjLib eObjectType objType() const final;
 
-		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
+    /*! \copydoc ObjAbstract::applyTransform */
+    XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
 
-		/* \copydoc ObjAbstract::clone */
-		XpObjLib ObjAbstract * clone() const override;
+    /* \copydoc ObjAbstract::clone */
+    XpObjLib ObjAbstract * clone() const override;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-	private:
+private:
 
-		ELightParams mId;
-		std::string mLightName;
-		std::string mAdditional;
+    ELightParams mId;
+    std::string mLightName;
+    std::string mAdditional;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

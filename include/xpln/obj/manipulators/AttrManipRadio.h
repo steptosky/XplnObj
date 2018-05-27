@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,54 +29,52 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "AttrManipBase.h"
 #include "AttrManipWheel.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
-	/*!
-	 * \details ATTR_manip_radio
-	 * \ingroup Manipulators
-	 */
-	class AttrManipRadio : public AttrManipBase, public AttrManipWheel {
-	public:
+/*!
+ * \details ATTR_manip_radio
+ * \ingroup Manipulators
+ */
+class AttrManipRadio : public AttrManipBase, public AttrManipWheel {
+public:
 
-		XpObjLib AttrManipRadio();
-		virtual ~AttrManipRadio() = default;
+    XpObjLib AttrManipRadio();
+    virtual ~AttrManipRadio() = default;
 
-		//------------------------------------------------------------------------
+    //------------------------------------------------------------------------
 
-		XpObjLib void setDown(float val);
-		XpObjLib float down() const;
+    XpObjLib void setDown(float val);
+    XpObjLib float down() const;
 
-		XpObjLib void setDataref(const std::string & val);
-		XpObjLib const std::string & dataref() const;
+    XpObjLib void setDataref(const std::string & val);
+    XpObjLib const std::string & dataref() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*! \copydoc AttrManipBase::equals */
-		XpObjLib bool equals(const AttrManipBase * manip) const override;
+    /*! \copydoc AttrManipBase::equals */
+    XpObjLib bool equals(const AttrManipBase * manip) const override;
 
-		/*! \copydoc AttrManipBase::clone */
-		XpObjLib AttrManipBase * clone() const override;
+    /*! \copydoc AttrManipBase::clone */
+    XpObjLib AttrManipBase * clone() const override;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		float mDown = 0.0f;
-		std::string mDataref = "none";
+    float mDown = 0.0f;
+    std::string mDataref = "none";
 
-	};
+};
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
 }

@@ -83,13 +83,14 @@ class ConanVcs:
 
     def read_vcs_data(self):
         self.clear_data()
-        try:
-            self.vcs_branch = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']) \
-                .decode("utf-8").strip()
-            self.vcs_revision = subprocess.check_output(['git', 'log', '-1', '--pretty=format:%h']) \
-                .decode("utf-8").strip()
-        except Exception:
-            pass
+        if os.path.exists(".git"):
+            try:
+                self.vcs_branch = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']) \
+                    .decode("utf-8").strip()
+                self.vcs_revision = subprocess.check_output(['git', 'log', '-1', '--pretty=format:%h']) \
+                    .decode("utf-8").strip()
+            except Exception:
+                pass
         return self.has_valid_data()
 
     def load_vcs_data(self):

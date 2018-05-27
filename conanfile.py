@@ -34,7 +34,8 @@
 # //////////////////////////////////////////////////////////////////////////////////#
 # ----------------------------------------------------------------------------------#
 
-from conans import ConanFile, CMake
+import os
+from conans import ConanFile, CMake, tools
 from conanfile_vcs import ConanVcs
 
 vcs_data = ConanVcs()
@@ -49,52 +50,46 @@ class LibConan(ConanFile):
     description = "This library is for working with the X-Plane's obj format. It uses C++ 14."
     author = 'StepToSky <info@steptosky.com>'
     settings = "os", "compiler", "build_type", "arch"
-    options = {'shared': [True, False],
-               'include_pdbs': [True, False],
-               "fpic": [True, False]}
-    default_options = 'shared=False', 'include_pdbs=False', 'gtest:shared=False', 'fpic=False'
+    options = {'shared': [True, False]}
+    default_options = 'shared=False', 'gtest:shared=False', 'gtest:build_gmock=True'
     exports = 'vcs_data', 'conanfile_vcs.py'
     exports_sources = 'CMakeLists.txt', 'src/*', 'src-test/*', 'include/*', 'cmake/*', 'license*'
     generators = 'cmake'
-    build_policy = 'missing'
+    build_policy = 'outdated'
+
+    build_test_var = "CONAN_TEST_LIB"
+    test_dir_var = "CONAN_TEST_REPORT_DIR"
 
     def configure(self):
         if self.settings.compiler == "Visual Studio" and float(str(self.settings.compiler.version)) < 14:
-            raise Exception("Visual Studio >= 14 is required")
-
-    def config_options(self):
-        if self.settings.compiler != "Visual Studio":
-            try:  # It might have already been removed if required by more than 1 package
-                del self.options.include_pdbs
-            except Exception:
-                pass
+            raise Exception("Visual Studio 14 (2015) or higher is required")
 
     def requirements(self):
-        if self.scope.dev or self.scope.testing:
-            self.requires('gtest/1.8.0@lasote/stable', private=True)
+        if os.getenv(self.build_test_var, "") == "1":
+            self.requires('gtest/1.8.0@bincrafters/stable', private=True)
 
     def build(self):
+        build_tests = os.getenv(self.build_test_var, "")
+        test_dir = os.getenv(self.test_dir_var, "")
         cmake = CMake(self)
         vcs_data.setup_cmake(cmake)
-        cmake.definitions["BUILD_TESTS"] = 'ON' if self.scope.testing else 'OFF'
-        if self.scope.test_report_dir:
-            cmake.definitions["TEST_REPORT_DIR"] = self.scope.test_report_dir
-        if self.options.fpic:
-            cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = "ON"
+        cmake.definitions["BUILD_TESTS"] = 'ON' if build_tests == "1" else 'OFF'
+        if test_dir:
+            cmake.definitions["TEST_REPORT_DIR"] = test_dir
         cmake.configure()
         cmake.build()
         cmake.install()
-        if self.scope.testing:
+        if build_tests == "1":
             cmake.test()
 
     def package(self):
         self.copy("license*", src=".", dst="licenses", ignore_case=True, keep_path=False)
-        if self.settings.compiler == "Visual Studio" and self.options.include_pdbs:
-            self.copy(pattern="*/%s.pdb" % self.name, dst='%s' % self.settings.build_type, src=".", keep_path=False)
+        self.copy(pattern="*/%s.pdb" % self.name, dst='%s' % self.settings.build_type, src=".", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libdirs = ['%s' % self.settings.build_type]
-        self.cpp_info.libs = [self.name]
+        libDir = '%s' % self.settings.build_type
+        self.cpp_info.libdirs = [libDir]
+        self.cpp_info.libs = tools.collect_libs(self, libDir)
 
 # ----------------------------------------------------------------------------------#
 # //////////////////////////////////////////////////////////////////////////////////#

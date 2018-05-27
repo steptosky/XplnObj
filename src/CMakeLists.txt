@@ -2,7 +2,7 @@
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
 #
-#  Copyright (C) 2017, StepToSky
+#  Copyright (C) 2018, StepToSky
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,8 @@
 #----------------------------------------------------------------------------------#
 # project
 
+cmake_minimum_required (VERSION 3.10)
+
 set(PROJECT ${ProjectId})
 project(${PROJECT} VERSION ${ProjectVersion} LANGUAGES "CXX")
 
@@ -61,6 +63,15 @@ groupFiles("${CM_FILES}")
 add_library(${PROJECT} ${CM_FILES})
 
 #----------------------------------------------------------------------------------#
+# cxx standard 
+
+set_target_properties(${PROJECT} PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
+
+target_compile_features(${PROJECT} 
+	PUBLIC cxx_std_14
+)
+
+#----------------------------------------------------------------------------------#
 # linkage 
 
 target_include_directories(${PROJECT} 
@@ -74,20 +85,19 @@ target_include_directories(${PROJECT}
 
 target_compile_options(${PROJECT} 
 	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/W4>"
-	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:-D_CRT_SECURE_NO_WARNINGS>"
+	#PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/WX>"
 	
-	PUBLIC "$<$<CXX_COMPILER_ID:AppleClang>:-std=c++1y>"
-	PUBLIC  "$<$<CXX_COMPILER_ID:AppleClang>:-stdlib=libc++>"
 	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-pedantic>"
+	PRIVATE  "$<$<CXX_COMPILER_ID:AppleClang>:-Werror>"		
 	
-	PUBLIC "$<$<CXX_COMPILER_ID:Clang>:-std=c++1y>"
 	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-pedantic>"
+	PRIVATE  "$<$<CXX_COMPILER_ID:Clang>:-Werror>"	
 	
-	PUBLIC "$<$<CXX_COMPILER_ID:GNU>:-std=c++1y>"
 	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pedantic>"
+	PRIVATE  "$<$<CXX_COMPILER_ID:GNU>:-Werror>"
 )
 
 #----------------------------------------------------------------------------------#

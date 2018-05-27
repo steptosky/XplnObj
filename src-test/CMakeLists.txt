@@ -2,7 +2,7 @@
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
 #
-#  Copyright (C) 2017, StepToSky
+#  Copyright (C) 2018, StepToSky
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@
 #----------------------------------------------------------------------------------#
 # project
 
-set(PROJECT Test${ProjectId})
+set(PROJECT test-${ProjectId})
 project(${PROJECT} VERSION ${ProjectVersion} LANGUAGES "CXX")
 
 #----------------------------------------------------------------------------------#
@@ -56,6 +56,7 @@ groupFiles("${CM_FILES}")
 
 add_executable(${PROJECT} ${CM_FILES})
 add_dependencies(${PROJECT} ${ProjectId})
+add_definitions(-DTESTING)
 
 #----------------------------------------------------------------------------------#
 # linkage 
@@ -73,16 +74,19 @@ target_link_libraries(${PROJECT} "$<$<CXX_COMPILER_ID:Clang>:pthread>")
 
 target_compile_options(${PROJECT} 
 	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/W4>"
-	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:-D_CRT_SECURE_NO_WARNINGS>"
+    #PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/WX>"
 	
 	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-pedantic>"
+    PRIVATE  "$<$<CXX_COMPILER_ID:AppleClang>:-Werror>"
 	
 	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-pedantic>"
+	PRIVATE  "$<$<CXX_COMPILER_ID:Clang>:-Werror>"
 
 	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pedantic>"
+	PRIVATE  "$<$<CXX_COMPILER_ID:GNU>:-Werror>"
 )
 
 #----------------------------------------------------------------------------------#
@@ -90,9 +94,7 @@ target_compile_options(${PROJECT}
 #----------------------------------------------------------------------------------#
 # testing
 
-add_test(
-	NAME ${PROJECT}
-	COMMAND $<TARGET_FILE:${PROJECT}>  
+add_test(NAME ${PROJECT} COMMAND $<TARGET_FILE:${PROJECT}>  
 	"--gtest_output=xml:${TEST_REPORT_DIR}/${PROJECT}-$<CONFIG>.xml"
 )
 

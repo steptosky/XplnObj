@@ -2,7 +2,7 @@
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
 #
-#  Copyright (C) 2017, StepToSky
+#  Copyright (C) 2018, StepToSky
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -35,8 +35,9 @@
 #----------------------------------------------------------------------------------#
 # init
 
+cmake_minimum_required (VERSION 3.10)
+
 message(STATUS "==============================================")
-cmake_minimum_required (VERSION 3.7.0)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
  
 #----------------------------------------------------------------------------------#
@@ -56,18 +57,7 @@ genInfoFile(StsProjectDesc "${CMAKE_SOURCE_DIR}/include/xpln/Info.h")
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
-# conan.io
-
-include(StsConan)
-
-#----------------------------------------------------------------------------------#
-#//////////////////////////////////////////////////////////////////////////////////#
-#----------------------------------------------------------------------------------#
 # options 
- 
-if (NOT CMAKE_BUILD_TYPE)
-	set (CMAKE_BUILD_TYPE Release)
-endif()
 
 if (NOT TEST_REPORT_DIR)
 	set(TEST_REPORT_DIR ${CMAKE_SOURCE_DIR}/reports/tests)
@@ -80,13 +70,27 @@ endif()
 option(BUILD_TESTS "Build all of it's own tests." OFF) 
 
 message(STATUS "==============================================")
-message(STATUS "Build type = ${CMAKE_BUILD_TYPE}")
+if (NOT CMAKE_BUILD_TYPE)
+	message(STATUS "Build type = multi configuration or undefined")
+else()
+	message(STATUS "Build type = ${CMAKE_BUILD_TYPE}")
+endif()
 message(STATUS "Build tests = ${BUILD_TESTS}")
 message(STATUS "Shared lib = ${BUILD_SHARED_LIBS}")
 message(STATUS "Test report dir = ${TEST_REPORT_DIR}")
 message(STATUS "Installation prefix = ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "==============================================")
 
+#----------------------------------------------------------------------------------#
+#//////////////////////////////////////////////////////////////////////////////////#
+#----------------------------------------------------------------------------------#
+# conan.io this must be after options.
+
+include(StsConan)
+conan_cmake_run(CONANFILE conanfile.py
+                BASIC_SETUP CMAKE_TARGETS
+                BUILD outdated)				
+				
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#		

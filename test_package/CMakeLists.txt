@@ -34,8 +34,9 @@
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
 
-PROJECT(ConanTest)
 cmake_minimum_required (VERSION 3.7.0)
+PROJECT(ConanTest)
+set(TARGET_NAME mytest)
 
 #----------------------------------------------------------------------------------#
 
@@ -43,24 +44,25 @@ message(STATUS "== CONAN TEST PACKAGE ==========================================
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup(TARGETS)
 
-ADD_EXECUTABLE(mytest test_package.cpp)
-TARGET_LINK_LIBRARIES(mytest CONAN_PKG::XplnObj)
+add_executable(${TARGET_NAME} test_package.cpp)
+target_link_libraries(${TARGET_NAME} CONAN_PKG::XplnObj)
+set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
 
-target_compile_options(mytest 
+target_compile_options(${TARGET_NAME} 
 	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/W4>"
+    PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/WX>"
 	
-	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-std=c++1y>"
-	PUBLIC  "$<$<CXX_COMPILER_ID:AppleClang>:-stdlib=libc++>"
 	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-pedantic>"
+    PRIVATE  "$<$<CXX_COMPILER_ID:AppleClang>:-Werror>"
 	
-	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-std=c++1y>"
 	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-pedantic>"
-	
-	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-std=c++1y>"
+	PRIVATE  "$<$<CXX_COMPILER_ID:Clang>:-Werror>"
+
 	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-Wno-unknown-pragmas>"
 	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pedantic>"
+	PRIVATE  "$<$<CXX_COMPILER_ID:GNU>:-Werror>"
 )
 
 #----------------------------------------------------------------------------------#

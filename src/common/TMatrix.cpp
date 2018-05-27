@@ -30,7 +30,7 @@
 #include "xpln/common/TMatrix.h"
 #include "sts/geometry/Quaternion.h"
 #include "sts/geometry/Converters.h"
-#include "sts/string/StringConverters.h"
+#include "sts/string/StringUtils.h"
 
 namespace xobj {
 

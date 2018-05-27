@@ -28,7 +28,7 @@
 */
 
 #include "xpln/obj/ObjLightSpillCust.h"
-#include "sts/string/StringConverters.h"
+#include "sts/string/StringUtils.h"
 #include "common/Logger.h"
 #include <cmath>
 

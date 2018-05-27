@@ -29,7 +29,7 @@
 
 #include "xpln/obj/manipulators/AttrManipDragXy.h"
 #include "xpln/enums/EManipulator.h"
-#include "sts/string/StringConverters.h"
+#include "sts/string/StringUtils.h"
 #include "sts/utilities/Compare.h"
 
 namespace xobj {

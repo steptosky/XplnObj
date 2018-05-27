@@ -209,7 +209,7 @@ namespace xobj {
 			writer.printEol();
 			std::string s("## ");
 			s.append(signature);
-			sts::MbStrUtils::replace(s, "\r\n", "\n## ");
+			s = sts::MbStrUtils::replaceCopy(s, "\r\n", "\n## ");
 			writer.printLine(s);
 		}
 		std::string msg("## ");

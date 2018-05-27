@@ -50,7 +50,7 @@
 #include <xpln/obj/manipulators/AttrManipCmdSwitchUpDown.h>
 #include <xpln/obj/manipulators/AttrManipNone.h>
 #include <converters/Defines.h>
-#include <sts/string/StringConverters.h>
+#include <sts/string/StringUtils.h>
 
 using namespace xobj;
 

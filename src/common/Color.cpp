@@ -28,7 +28,7 @@
 */
 
 #include "xpln/common/Color.h"
-#include "sts/string/StringConverters.h"
+#include "sts/string/StringUtils.h"
 #include "sts/utilities/Compare.h"
 #include "converters/StringStream.h"
 

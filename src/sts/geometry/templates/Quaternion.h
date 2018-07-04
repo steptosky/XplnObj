@@ -30,6 +30,7 @@
 #pragma once
 
 #include <cassert>
+#include <stdexcept>
 #include <limits>
 #include <iostream>
 #include "Vector3.h"

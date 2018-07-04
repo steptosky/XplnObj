@@ -35,10 +35,10 @@
 #----------------------------------------------------------------------------------#
 # project
 
-cmake_minimum_required (VERSION 3.10)
+cmake_minimum_required (VERSION 3.7.0)
 
-set(PROJECT ${ProjectId})
-project(${PROJECT} VERSION ${ProjectVersion} LANGUAGES "CXX")
+set(TARGET ${ProjectId})
+project(${TARGET} VERSION ${ProjectVersion} LANGUAGES "CXX")
 
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
@@ -46,10 +46,10 @@ project(${PROJECT} VERSION ${ProjectVersion} LANGUAGES "CXX")
 # project files
 
 file(GLOB_RECURSE CM_FILES 
-	"*.h" "*.inl" "*.cpp" 
-	"${CMAKE_SOURCE_DIR}/include/*.h" 
-	"${CMAKE_SOURCE_DIR}/include/*.inl" 
-	"${CMAKE_SOURCE_DIR}/include/*.cpp"
+    "*.h" "*.inl" "*.cpp" 
+    "${CMAKE_SOURCE_DIR}/include/*.h" 
+    "${CMAKE_SOURCE_DIR}/include/*.inl" 
+    "${CMAKE_SOURCE_DIR}/include/*.cpp"
 )
 
 include(StsGroupFiles)
@@ -60,60 +60,50 @@ groupFiles("${CM_FILES}")
 #----------------------------------------------------------------------------------#
 # targets
 
-add_library(${PROJECT} ${CM_FILES})
+add_library(${TARGET} ${CM_FILES})
 
 #----------------------------------------------------------------------------------#
 # cxx standard 
 
-set_target_properties(${PROJECT} PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
-
-target_compile_features(${PROJECT} 
-	PUBLIC cxx_std_14
-)
+set_target_properties(${TARGET} PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
+target_compile_features(${TARGET} PUBLIC cxx_std_14)
 
 #----------------------------------------------------------------------------------#
 # linkage 
 
-target_include_directories(${PROJECT} 
-	PRIVATE "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>"
-	PRIVATE "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>"
-	PUBLIC  "$<INSTALL_INTERFACE:include>"
-)	
-		
+target_include_directories(${TARGET} 
+    PRIVATE "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>"
+    PRIVATE "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>"
+    PUBLIC  "$<INSTALL_INTERFACE:include>"
+)
+
 #----------------------------------------------------------------------------------#
 # compile options
 
-target_compile_options(${PROJECT} 
-	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/W4>"
-	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/WX>"
-    PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:-D_CRT_SECURE_NO_WARNINGS>"
-	
-	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-Wno-unknown-pragmas>"
-	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-pedantic>"
-	PRIVATE  "$<$<CXX_COMPILER_ID:AppleClang>:-Werror>"		
-	
-	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-Wno-unknown-pragmas>"
-	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-pedantic>"
-	PRIVATE  "$<$<CXX_COMPILER_ID:Clang>:-Werror>"	
-	
-	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-Wno-unknown-pragmas>"
-	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pedantic>"
-	PRIVATE  "$<$<CXX_COMPILER_ID:GNU>:-Werror>"
+target_compile_options(${TARGET} 
+    PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+    PRIVATE $<$<CXX_COMPILER_ID:MSVC>:-D_CRT_SECURE_NO_WARNINGS>
+
+    PRIVATE $<$<CXX_COMPILER_ID:AppleClang>:-Wno-unknown-pragmas>
+    PRIVATE $<$<CXX_COMPILER_ID:AppleClang>:-pedantic -Werror>
+
+    PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wno-unknown-pragmas>
+    PRIVATE $<$<CXX_COMPILER_ID:Clang>:-pedantic -Werror>
+
+    PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wno-unknown-pragmas>
+    PRIVATE $<$<CXX_COMPILER_ID:GNU>:-pedantic -Werror>
 )
 
 #----------------------------------------------------------------------------------#
+#//////////////////////////////////////////////////////////////////////////////////#
+#----------------------------------------------------------------------------------#
 # installation
 
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/include/" DESTINATION "include") 
-install(TARGETS ${PROJECT} EXPORT ${PROJECT} DESTINATION "$<CONFIG>")
-install(EXPORT ${PROJECT} NAMESPACE "${PROJECT}::" 
-	DESTINATION "cmake" FILE "${PROJECT}Config.cmake"
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/include/" DESTINATION "include")
+install(TARGETS ${TARGET} EXPORT ${TARGET} DESTINATION "$<CONFIG>")
+install(EXPORT ${TARGET} NAMESPACE "${ProjectGroupId}::" 
+    DESTINATION "cmake" FILE "${TARGET}Config.cmake"
 )
-
-export(EXPORT ${PROJECT} NAMESPACE "${PROJECT}::" 
-	FILE "${CMAKE_SOURCE_DIR}/output-dev/${PROJECT}Config.cmake"
-)
-export(PACKAGE ${PROJECT})
 
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
@@ -121,11 +111,11 @@ export(PACKAGE ${PROJECT})
 # export header file
 
 include(GenerateExportHeader)
-generate_export_header(${PROJECT} 
-	EXPORT_MACRO_NAME "XpObjLib" 
-	EXPORT_FILE_NAME ${CMAKE_SOURCE_DIR}/include/xpln/XplnObjExport.h
-	DEPRECATED_MACRO_NAME "XpObjLibDeprecated"
-	STATIC_DEFINE "XPLN_OBJ_STATIC_COMPILATION"
+generate_export_header(${TARGET} 
+    EXPORT_MACRO_NAME "XpObjLib" 
+    EXPORT_FILE_NAME ${CMAKE_SOURCE_DIR}/include/xpln/XplnObjExport.h
+    DEPRECATED_MACRO_NAME "XpObjLibDeprecated"
+    STATIC_DEFINE "XPLN_OBJ_STATIC_COMPILATION"
 )
 
 #----------------------------------------------------------------------------------#

@@ -35,34 +35,41 @@
 #----------------------------------------------------------------------------------#
 
 cmake_minimum_required (VERSION 3.7.0)
+
 PROJECT(ConanTest)
-set(TARGET_NAME mytest)
+set(TARGET conan-test-package)
 
 #----------------------------------------------------------------------------------#
 
 message(STATUS "== CONAN TEST PACKAGE ==========================================")
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup(TARGETS)
+include("${CMAKE_BINARY_DIR}/conanbuildinfo.cmake")
+conan_basic_setup(TARGETS KEEP_RPATHS)
 
-add_executable(${TARGET_NAME} test_package.cpp)
-target_link_libraries(${TARGET_NAME} CONAN_PKG::XplnObj)
-set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
+add_executable(${TARGET} test_package.cpp)
+target_link_libraries(${TARGET} CONAN_PKG::XplnObj)
+set_target_properties(${TARGET} PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
 
-target_compile_options(${TARGET_NAME} 
-	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/W4>"
-    PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/WX>"
-	
-	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-Wno-unknown-pragmas>"
-	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-pedantic>"
-    PRIVATE  "$<$<CXX_COMPILER_ID:AppleClang>:-Werror>"
-	
-	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-Wno-unknown-pragmas>"
-	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-pedantic>"
-	PRIVATE  "$<$<CXX_COMPILER_ID:Clang>:-Werror>"
+#----------------------------------------------------------------------------------#
+#//////////////////////////////////////////////////////////////////////////////////#
+#----------------------------------------------------------------------------------#
 
-	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-Wno-unknown-pragmas>"
-	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pedantic>"
-	PRIVATE  "$<$<CXX_COMPILER_ID:GNU>:-Werror>"
+set_target_properties(${PROJECT}
+    PROPERTIES
+    INSTALL_RPATH $<$<PLATFORM_ID:Darwin>:"@executable_path">
+    INSTALL_RPATH $<$<PLATFORM_ID:Linux>:"$ORIGIN">
+)
+
+target_compile_options(${TARGET} 
+    PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+
+    PRIVATE $<$<CXX_COMPILER_ID:AppleClang>:-Wno-unknown-pragmas>
+    PRIVATE $<$<CXX_COMPILER_ID:AppleClang>:-pedantic -Werror>
+
+    PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wno-unknown-pragmas>
+    PRIVATE $<$<CXX_COMPILER_ID:Clang>:-pedantic -Werror>
+
+    PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wno-unknown-pragmas>
+    PRIVATE $<$<CXX_COMPILER_ID:GNU>:-pedantic -Werror>
 )
 
 #----------------------------------------------------------------------------------#

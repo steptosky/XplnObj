@@ -30,7 +30,6 @@
 */
 
 #include "AttrManipBase.h"
-#include "xpln/enums/EManipulator.h"
 #include "xpln/obj/attributes/AttrCockpit.h"
 
 namespace xobj {

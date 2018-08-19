@@ -29,7 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <iostream>
+#include <iosfwd>
 #include <sstream>
 
 /**************************************************************************************************/

@@ -27,8 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/obj/ObjMesh.h"
-#include "sts/geometry/TMatrix3.h"
 
 namespace xobj {
 

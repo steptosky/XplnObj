@@ -35,8 +35,10 @@
 #----------------------------------------------------------------------------------#
 # project
 
-set(PROJECT test-${ProjectId})
-project(${PROJECT} VERSION ${ProjectVersion} LANGUAGES "CXX")
+cmake_minimum_required (VERSION 3.7.0)
+
+set(TARGET test-${ProjectId})
+project(${TARGET} VERSION ${ProjectVersion} LANGUAGES "CXX")
 
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
@@ -44,50 +46,69 @@ project(${PROJECT} VERSION ${ProjectVersion} LANGUAGES "CXX")
 # project files
 
 file(GLOB_RECURSE CM_FILES 
-	"*.h" "*.inl" "*.cpp"
+    "*.h" "*.inl" "*.cpp"
 )
 include(StsGroupFiles)
 groupFiles("${CM_FILES}")
- 
+
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
 # targets 
 
-add_executable(${PROJECT} ${CM_FILES})
-add_dependencies(${PROJECT} ${ProjectId})
+add_executable(${TARGET} ${CM_FILES})
+add_dependencies(${TARGET} ${ProjectId})
 add_definitions(-DTESTING)
 
 #----------------------------------------------------------------------------------#
 # linkage 
 
-target_include_directories(${PROJECT} PRIVATE ${CMAKE_SOURCE_DIR}/include)
-target_include_directories(${PROJECT} PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(${TARGET} PRIVATE "${CMAKE_SOURCE_DIR}/include")
+target_include_directories(${TARGET} PRIVATE "${CMAKE_SOURCE_DIR}/src")
+target_include_directories(${TARGET} PRIVATE "${CMAKE_SOURCE_DIR}/src-test")
 
-target_link_libraries(${PROJECT} CONAN_PKG::gtest)
-target_link_libraries(${PROJECT} ${ProjectId})
-target_link_libraries(${PROJECT} "$<$<CXX_COMPILER_ID:GNU>:pthread>")
-target_link_libraries(${PROJECT} "$<$<CXX_COMPILER_ID:Clang>:pthread>")
+target_link_libraries(${TARGET} ${ProjectId})
+target_link_libraries(${TARGET} CONAN_PKG::gtest)
 
 #----------------------------------------------------------------------------------#
 # compile options
 
-target_compile_options(${PROJECT} 
-	PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/W4>"
-    PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/WX>"
-    PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:-D_CRT_SECURE_NO_WARNINGS>"
-	
-	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-Wno-unknown-pragmas>"
-	PRIVATE "$<$<CXX_COMPILER_ID:AppleClang>:-pedantic>"
-    PRIVATE  "$<$<CXX_COMPILER_ID:AppleClang>:-Werror>"
-	
-	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-Wno-unknown-pragmas>"
-	PRIVATE "$<$<CXX_COMPILER_ID:Clang>:-pedantic>"
-	PRIVATE  "$<$<CXX_COMPILER_ID:Clang>:-Werror>"
+# pre-compile headers
+set_source_files_properties(ph/stdafx.cpp
+    PROPERTIES COMPILE_FLAGS $<$<CXX_COMPILER_ID:MSVC>:/Yc>
+)
 
-	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-Wno-unknown-pragmas>"
-	PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-pedantic>"
-	PRIVATE  "$<$<CXX_COMPILER_ID:GNU>:-Werror>"
+target_compile_options(${TARGET}
+    PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/Yuph/stdafx.h>   # pre-compile headers
+    PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/MP4>             # multi-processor compilation
+    PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+    PRIVATE $<$<CXX_COMPILER_ID:MSVC>:-D_CRT_SECURE_NO_WARNINGS>
+
+    PRIVATE $<$<CXX_COMPILER_ID:AppleClang>:-Wno-unknown-pragmas>
+    PRIVATE $<$<CXX_COMPILER_ID:AppleClang>:-pedantic -Werror>
+
+    PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wno-unknown-pragmas>
+    PRIVATE $<$<CXX_COMPILER_ID:Clang>:-pedantic -Werror>
+
+    PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wno-unknown-pragmas>
+    PRIVATE $<$<CXX_COMPILER_ID:GNU>:-pedantic -Werror>
+)
+
+#----------------------------------------------------------------------------------#
+#//////////////////////////////////////////////////////////////////////////////////#
+#----------------------------------------------------------------------------------#
+# copying the dynamic library
+
+add_custom_command(TARGET ${TARGET} 
+    POST_BUILD COMMAND 
+    ${CMAKE_COMMAND} -E copy_if_different 
+    "$<TARGET_FILE:${ProjectId}>" "$<TARGET_FILE_DIR:${TARGET}>"
+)
+
+set_target_properties(${TARGET}
+    PROPERTIES
+    INSTALL_RPATH $<$<PLATFORM_ID:Darwin>:"@executable_path">
+    INSTALL_RPATH $<$<PLATFORM_ID:Linux>:"$ORIGIN">
 )
 
 #----------------------------------------------------------------------------------#
@@ -95,8 +116,9 @@ target_compile_options(${PROJECT}
 #----------------------------------------------------------------------------------#
 # testing
 
-add_test(NAME ${PROJECT} COMMAND $<TARGET_FILE:${PROJECT}>  
-	"--gtest_output=xml:${TEST_REPORT_DIR}/${PROJECT}-$<CONFIG>.xml"
+add_test(NAME ${TARGET} 
+    COMMAND $<TARGET_FILE:${TARGET}>  
+    "--gtest_output=xml:${TESTING_REPORT_DIR}/${TARGET}-$<CONFIG>.xml"
 )
 
 #----------------------------------------------------------------------------------#

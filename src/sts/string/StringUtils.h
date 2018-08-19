@@ -38,6 +38,7 @@
 #include <cstdlib>
 #include <cstdint>
 #include <algorithm>
+#include "xpln/XplnObjExport.h"
 
 #ifndef DOUBLE_PRECISION_PRINT
 #	define DOUBLE_PRECISION_PRINT 8
@@ -647,10 +648,10 @@ inline float toFloat(const std::wstring & str) { return float(wcstof(str.data(),
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 /****************************************************************************************************/
 
-std::wstring toWString(const std::string & str);
-std::wstring toWString(const char * str);
-std::string toMbString(const std::wstring & str);
-std::string toMbString(const wchar_t * str);
+XpObjLib std::wstring toWString(const std::string & str);
+XpObjLib std::wstring toWString(const char * str);
+XpObjLib std::string toMbString(const std::wstring & str);
+XpObjLib std::string toMbString(const wchar_t * str);
 
 //-------------------------------------------------------------------------
 
@@ -672,9 +673,9 @@ inline std::string toMbString(const int32_t v) { return std::to_string(v); }
 inline std::string toMbString(const uint32_t v) { return std::to_string(v); }
 inline std::string toMbString(const int64_t v) { return std::to_string(v); }
 inline std::string toMbString(const uint64_t v) { return std::to_string(v); }
-std::string toMbString(const double v, uint8_t precision);
-std::string toMbString(const long double v, uint8_t precision);
-std::string toMbString(const float v, uint8_t precision);
+XpObjLib std::string toMbString(const double v, uint8_t precision);
+XpObjLib std::string toMbString(const long double v, uint8_t precision);
+XpObjLib std::string toMbString(const float v, uint8_t precision);
 inline std::string toMbString(const long double v) { return std::to_string(v); }
 inline std::string toMbString(const double v) { return std::to_string(v); }
 inline std::string toMbString(const float v) { return std::to_string(v); }
@@ -689,9 +690,9 @@ inline std::wstring toWString(const int32_t v) { return std::to_wstring(v); }
 inline std::wstring toWString(const uint32_t v) { return std::to_wstring(v); }
 inline std::wstring toWString(const int64_t v) { return std::to_wstring(v); }
 inline std::wstring toWString(const uint64_t v) { return std::to_wstring(v); }
-std::wstring toWString(const double v, uint8_t precision);
-std::wstring toWString(const long double v, uint8_t precision);
-std::wstring toWString(const float v, uint8_t precision);
+XpObjLib std::wstring toWString(const double v, uint8_t precision);
+XpObjLib std::wstring toWString(const long double v, uint8_t precision);
+XpObjLib std::wstring toWString(const float v, uint8_t precision);
 inline std::wstring toWString(const long double v) { return std::to_wstring(v); }
 inline std::wstring toWString(const double v) { return std::to_wstring(v); }
 inline std::wstring toWString(const float v) { return std::to_wstring(v); }

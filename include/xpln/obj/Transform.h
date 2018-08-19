@@ -29,7 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <list>
 #include <functional>
 #include "xpln/XplnObjExport.h"
 #include "xpln/common/TMatrix.h"
@@ -71,7 +70,7 @@ public:
     //-------------------------------------------------------------------------
 
     typedef size_t TransformIndex;
-    typedef std::list<ObjAbstract*> ObjList;
+    typedef std::vector<ObjAbstract*> ObjList;
 
     //-------------------------------------------------------------------------
 

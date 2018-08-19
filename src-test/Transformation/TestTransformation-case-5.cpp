@@ -27,14 +27,13 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "gtest/gtest.h"
+#include "ph/stdafx.h"
+
 #include <xpln/obj/ObjMain.h>
 #include <xpln/obj/ObjMesh.h>
 #include "../TestUtilsObjMesh.h"
 #include "../totext.h"
-#include <memory>
 #include "../TestUtils.h"
-#include <array>
 
 using namespace xobj;
 

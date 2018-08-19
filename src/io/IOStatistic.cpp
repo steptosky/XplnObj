@@ -27,6 +27,8 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/obj/IOStatistic.h"
 
 namespace xobj {
@@ -50,6 +52,7 @@ IOStatistic::IOStatistic()
       pDummyObjCount(0),
       pSmokeObjCount(0),
 
+      pCustomLinesCount(0),
       pGlobAttrCount(0),
       pTrisManipCount(0),
       pTrisAttrCount(0),

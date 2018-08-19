@@ -29,7 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <fstream>
 #include "sts/utilities/Logger.h"
 #include "xpln/common/ExternalLog.h"
 #include "BaseLogger.h"

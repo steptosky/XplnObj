@@ -27,9 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "ObjWriteManip.h"
-#include <cassert>
+#include "stdafx.h"
 
+#include "ObjWriteManip.h"
 #include "xpln/obj/manipulators/AttrManipBase.h"
 #include "AbstractWriter.h"
 
@@ -39,7 +39,6 @@
 #include "xpln/obj/ObjMesh.h"
 #include "xpln/obj/manipulators/AttrManipWheel.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
-#include "common/Logger.h"
 
 namespace xobj {
 

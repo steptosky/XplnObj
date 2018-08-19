@@ -30,6 +30,7 @@
 */
 
 #include <string>
+#include <vector>
 #include "xpln/XplnObjExport.h"
 #include "xpln/enums/eObjectType.h"
 #include "xpln/common/TMatrix.h"
@@ -113,12 +114,34 @@ public:
      */
     virtual ObjAbstract * clone() const = 0;
 
+    //--------------------------------------------------------v
+
+    /*!
+     * \details This adds text line that will be printed into .obj file before this object is processed.
+     *          This data is printed after animation, manipulators and attributes.
+     * \details This allows you to use new attributes manually until it is supported by the library.
+     * \param [in] string 
+     */
+    void addDataBefore(const std::string & string) { mDataBefore.emplace_back(string); }
+
+    /*!
+     * \details This adds text line that will be printed into .obj file after this object is processed.
+     * \details This allows you to use new attributes manually until it is supported by the library.
+     * \param [in] string
+     */
+    void addDataAfter(const std::string & string) { mDataAfter.emplace_back(string); }
+
+    const std::vector<std::string> & dataBefore() const { return mDataBefore; }
+    const std::vector<std::string> & dataAfter() const { return mDataAfter; }
+
     //--------------------------------------------------------
 
 private:
 
     Transform * mObjTransform = nullptr;
     std::string mName;
+    std::vector<std::string> mDataBefore;
+    std::vector<std::string> mDataAfter;
 
 };
 

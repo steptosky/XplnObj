@@ -27,9 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "ObjReadParser.h"
-#include <iostream>
-#include "common/Logger.h"
 
 namespace xobj {
 

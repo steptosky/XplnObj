@@ -27,9 +27,10 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "ObjWriteGlobAttr.h"
 
-#include <cassert>
 #include "AbstractWriter.h"
 #include "xpln/obj/ObjMain.h"
 #include "io/StringValidator.h"

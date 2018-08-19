@@ -27,6 +27,8 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "ObjWriteOptimize.h"
 #include "xpln/obj/ObjLodGroup.h"
 #include "ObjWriteAnim.h"

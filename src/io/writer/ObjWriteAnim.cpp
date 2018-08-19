@@ -27,11 +27,11 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "ObjWriteAnim.h"
 #include "io/ObjValidators.h"
-#include <cassert>
 #include "common/AttributeNames.h"
-#include "converters/StringStream.h"
 #include "converters/ObjAnimString.h"
 
 namespace xobj {

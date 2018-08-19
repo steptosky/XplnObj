@@ -27,9 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "ObjWriter.h"
-#include <sstream>
+#include "stdafx.h"
 
+#include "ObjWriter.h"
 #include "xpln/obj/ObjMain.h"
 #include "io/ObjValidators.h"
 
@@ -37,12 +37,10 @@
 #include "Writer.h"
 #include "xpln/obj/ObjLine.h"
 #include "sts/utilities/Compare.h"
-#include "sts/string/StringUtils.h"
 #include "converters/ObjString.h"
 #include "ObjWriteOptimize.h"
 #include "io/ObjTransformation.h"
 #include "ObjWriteInstancing.h"
-#include "common/Logger.h"
 
 namespace xobj {
 
@@ -249,10 +247,10 @@ void ObjWriter::calculateVerticiesAndFaces(const Transform & parent) {
 
 //-------------------------------------------------------------------------
 
-void ObjWriter::printGlobalInformation(AbstractWriter & writer, const ObjMain & ROOT) {
+void ObjWriter::printGlobalInformation(AbstractWriter & writer, const ObjMain & objRoot) {
     // write header
     writer.printLine("I\n800\nOBJ\n");
-    mWriteGlobAttr.write(&writer, &ROOT);
+    mWriteGlobAttr.write(&writer, &objRoot);
     mStatistic.pGlobAttrCount += mWriteGlobAttr.count();
 
     writer.printEol();
@@ -283,27 +281,35 @@ void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) 
 
         //--------------
 
+        mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataBefore());
+
         if (mObjWriteGeometry.printMeshObject(writer, *objBase)) {
+            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
             continue;
         }
 
         if (mObjWriteGeometry.printLightObject(writer, *objBase, parent)) {
+            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
             continue;
         }
 
         if (mObjWriteGeometry.printSmokeObject(writer, *objBase)) {
+            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
             continue;
         }
 
         if (mObjWriteGeometry.printDummyObject(writer, *objBase)) {
+            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
             continue;
         }
 
         if (mObjWriteGeometry.printLineObject(writer, *objBase)) {
+            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
             continue;
         }
 
         mObjWriteGeometry.printLightPointObject(writer, *objBase);
+        mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
 
         //--------------
     }
@@ -319,6 +325,13 @@ void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) 
     mAnimationWritter.printAnimationEnd(writer, parent);
 
     //-------------------------------------------------------------------------
+}
+
+size_t ObjWriter::printObjCustomData(AbstractWriter & writer, const std::vector<std::string> & strings) {
+    for (auto & str : strings) {
+        writer.printLine(str);
+    }
+    return strings.size();
 }
 
 /**************************************************************************************************/

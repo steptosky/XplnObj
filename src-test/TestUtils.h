@@ -67,7 +67,7 @@ public:
     static void extractMesh(Transform & transform, size_t meshNum, ObjMesh *& outMesh) {
         ASSERT_TRUE(transform.objList().size() > meshNum) << " value is " << meshNum;
         auto it = transform.objList().begin();
-        for (int i = 0; i < meshNum; ++i, ++it);
+        for (size_t i = 0; i < meshNum; ++i, ++it) {}
         ASSERT_EQ(eObjectType::OBJ_MESH, (*it)->objType());
         outMesh = static_cast<ObjMesh *>(*it);
     }

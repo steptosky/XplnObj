@@ -27,6 +27,8 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/obj/ObjLightCustom.h"
 
 namespace xobj {

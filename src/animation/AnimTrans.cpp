@@ -27,8 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/obj/animation/AnimTrans.h"
-#include "sts/utilities/Compare.h"
 
 namespace xobj {
 

@@ -2,7 +2,7 @@
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
 #
-#  Copyright (C) 2017, StepToSky
+#  Copyright (C) 2018, StepToSky
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@
 # StepToSky project description.
 #
 # Version 1.2.0 (21.04.2017) 
-#	- List of open source libraries
+#   - List of open source libraries
 # Version 1.1.0 (19.03.2017)
 # Version 1.0.0
 #
@@ -44,17 +44,19 @@
 # This file describes the project.
 # Use StsInfoFilesGenerator module for generation c++ .h file.
 #
-#	Usage example:
+#   Usage example:
 #
-#		# specify the folder where this module is.
-#		list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+#       # specify the folder where this module is.
+#       list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 #
-#		# include the modules
-#		include(StsProjectDesk)
-#		include(StsInfoFilesGenerator)
+#       # include the modules
+#       include(StsProjectDesk)
+#       include(StsInfoFilesGenerator)
 #
-#		# generate file
-#		genInfoFile(StsProjectDesk "${CMAKE_SOURCE_DIR}/include/Info.h")
+#       # generate file
+#       # generate file
+#       genInfoFile(StsProjectDesk "${CMAKE_SOURCE_DIR}/include/Info.h")
+#       genInfoFile(StsProjectDesk "${CMAKE_SOURCE_DIR}/include/Info.h")
 #
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
@@ -111,7 +113,7 @@ list(APPEND ProjectContributors "StepToSky <info@steptosky.com>")
 # example, the urls are empty: "XplnObj||Copyright (c) 2017 StepToSky||BSD|"
 
 set(ProjectLibraries "")
-                                                                                  
+
 #----------------------------------------------------------------------------------#
 # Other
 
@@ -125,7 +127,7 @@ set(ProjectDefPrefix "XOBJ_")
 # Checking
 
 if(NOT ProjectId)
-	message(FATAL_ERROR "ProjectId is not specified")
+    message(FATAL_ERROR "ProjectId is not specified")
 endif()
 
 #----------------------------------------------------------------------------------#

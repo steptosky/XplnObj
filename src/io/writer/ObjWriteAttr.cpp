@@ -27,15 +27,15 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "ObjWriteAttr.h"
 #include "ObjWriteManip.h"
 
-#include <cassert>
 #include "AbstractWriter.h"
 #include "common/AttributeNames.h"
 #include "converters/ObjAttrString.h"
 #include "xpln/obj/ObjMesh.h"
-#include <functional>
 
 namespace xobj {
 

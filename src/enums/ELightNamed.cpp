@@ -27,10 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
-#include  <cstring>
+#include "stdafx.h"
+
 #include "xpln/enums/ELightNamed.h"
-#include <utility>
-#include "common/Logger.h"
 #include "common/ArrayLength.h"
 
 namespace xobj {

@@ -27,8 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/obj/ObjAbstract.h"
-#include "common/Logger.h"
 #include "xpln/obj/Transform.h"
 
 namespace xobj {

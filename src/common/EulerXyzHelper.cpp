@@ -27,9 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/common/EulerXyzHelper.h"
-#include <cassert>
-#include "converters/StringStream.h"
 
 namespace xobj {
 

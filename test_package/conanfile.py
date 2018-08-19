@@ -41,6 +41,7 @@ import os
 class LibReuseConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
+    exec_name = "conan-test-package"
     artifact_name = "XplnObj"
 
     def build(self):
@@ -62,7 +63,7 @@ class LibReuseConan(ConanFile):
         self.copy(pattern="*.a", dst="bin", src="Debug")
 
     def test(self):
-        self.run("cd bin && .%smytest" % os.sep)
+        self.run("cd bin && .%s%s" % (os.sep, self.exec_name))
         assert os.path.exists(os.path.join(self.deps_cpp_info[self.artifact_name].rootpath, "licenses", "license.txt"))
 
 # ----------------------------------------------------------------------------------#

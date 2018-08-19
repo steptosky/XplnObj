@@ -66,6 +66,7 @@ public:
         command_switch_ud2,
         delta,
         drag_axis,
+        drag_rotate,
         drag_axis_pix,
         drag_xy,
         noop,

@@ -52,6 +52,7 @@
 #include "xpln/obj/manipulators/AttrManipCmdAxis.h"
 #include "xpln/obj/manipulators/AttrManipDelta.h"
 #include "xpln/obj/manipulators/AttrManipDragAxis.h"
+#include "xpln/obj/manipulators/AttrManipDragRotate.h"
 #include "xpln/obj/manipulators/AttrManipDragAxisPix.h"
 #include "xpln/obj/manipulators/AttrManipDragXy.h"
 #include "xpln/obj/manipulators/AttrManipNoop.h"
@@ -696,17 +697,17 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         mObjParserListener->gotTrisAttrManip(m);
         return true;
     }
-	if (parser.isMatch(ATTR_MANIP_COMMAND_KNOB2)) {
-		AttrManipCmdKnob2 m;
-		parser.skipSpace();
-		m.setCursor(ECursor::fromString(parser.extractWord().c_str()));
-		parser.skipSpace();
-		m.setCmd(parser.extractWord());
-		parser.skipSpace();
-		m.setToolTip(parser.extractWord());
-		mObjParserListener->gotTrisAttrManip(m);
-		return true;
-	}
+    if (parser.isMatch(ATTR_MANIP_COMMAND_KNOB2)) {
+        AttrManipCmdKnob2 m;
+        parser.skipSpace();
+        m.setCursor(ECursor::fromString(parser.extractWord().c_str()));
+        parser.skipSpace();
+        m.setCmd(parser.extractWord());
+        parser.skipSpace();
+        m.setToolTip(parser.extractWord());
+        mObjParserListener->gotTrisAttrManip(m);
+        return true;
+    }
     if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT)) {
         AttrManipCmdSwitchLeftRight m;
         parser.skipSpace();
@@ -720,17 +721,17 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         mObjParserListener->gotTrisAttrManip(m);
         return true;
     }
-	if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2)) {
-		AttrManipCmdSwitchLeftRight2 m;
-		parser.skipSpace();
-		m.setCursor(ECursor::fromString(parser.extractWord().c_str()));
-		parser.skipSpace();
-		m.setCmd(parser.extractWord());
-		parser.skipSpace();
-		m.setToolTip(parser.extractWord());
-		mObjParserListener->gotTrisAttrManip(m);
-		return true;
-	}
+    if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2)) {
+        AttrManipCmdSwitchLeftRight2 m;
+        parser.skipSpace();
+        m.setCursor(ECursor::fromString(parser.extractWord().c_str()));
+        parser.skipSpace();
+        m.setCmd(parser.extractWord());
+        parser.skipSpace();
+        m.setToolTip(parser.extractWord());
+        mObjParserListener->gotTrisAttrManip(m);
+        return true;
+    }
     if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN)) {
         AttrManipCmdSwitchUpDown m;
         parser.skipSpace();
@@ -744,17 +745,17 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         mObjParserListener->gotTrisAttrManip(m);
         return true;
     }
-	if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2)) {
-		AttrManipCmdSwitchUpDown2 m;
-		parser.skipSpace();
-		m.setCursor(ECursor::fromString(parser.extractWord().c_str()));
-		parser.skipSpace();
-		m.setCmd(parser.extractWord());
-		parser.skipSpace();
-		m.setToolTip(parser.extractWord());
-		mObjParserListener->gotTrisAttrManip(m);
-		return true;
-	}
+    if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2)) {
+        AttrManipCmdSwitchUpDown2 m;
+        parser.skipSpace();
+        m.setCursor(ECursor::fromString(parser.extractWord().c_str()));
+        parser.skipSpace();
+        m.setCmd(parser.extractWord());
+        parser.skipSpace();
+        m.setToolTip(parser.extractWord());
+        mObjParserListener->gotTrisAttrManip(m);
+        return true;
+    }
     if (parser.isMatch(ATTR_MANIP_DELTA)) {
         AttrManipDelta m;
         parser.skipSpace();
@@ -790,6 +791,45 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setVal2(parser.extractFloat());
         parser.skipSpace();
         m.setDataref(parser.extractWord());
+        parser.skipSpace();
+        m.setToolTip(parser.extractWord());
+        mObjParserListener->gotTrisAttrManip(m);
+        return true;
+    }
+    if (parser.isMatch(ATTR_MANIP_DRAG_ROTATE)) {
+        AttrManipDragRotate m;
+        parser.skipSpace();
+        m.setCursor(ECursor::fromString(parser.extractWord().c_str()));
+        parser.skipSpace();
+        m.setX(parser.extractFloat());
+        parser.skipSpace();
+        m.setY(parser.extractFloat());
+        parser.skipSpace();
+        m.setZ(parser.extractFloat());
+        parser.skipSpace();
+        m.setDirectionX(parser.extractFloat());
+        parser.skipSpace();
+        m.setDirectionY(parser.extractFloat());
+        parser.skipSpace();
+        m.setDirectionZ(parser.extractFloat());
+        parser.skipSpace();
+        m.setAngle1(parser.extractFloat());
+        parser.skipSpace();
+        m.setAngle2(parser.extractFloat());
+        parser.skipSpace();
+        m.setLift(parser.extractFloat());
+        parser.skipSpace();
+        m.setV1Min(parser.extractFloat());
+        parser.skipSpace();
+        m.setV1Max(parser.extractFloat());
+        parser.skipSpace();
+        m.setV2Min(parser.extractFloat());
+        parser.skipSpace();
+        m.setV2Max(parser.extractFloat());
+        parser.skipSpace();
+        m.setDataref1(parser.extractWord());
+        parser.skipSpace();
+        m.setDataref2(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
         mObjParserListener->gotTrisAttrManip(m);

@@ -33,6 +33,7 @@
 
 #include <xpln/obj/manipulators/AttrManipDragXy.h>
 #include <xpln/obj/manipulators/AttrManipDragAxis.h>
+#include <xpln/obj/manipulators/AttrManipDragRotate.h>
 #include <xpln/obj/manipulators/AttrManipCmd.h>
 #include <xpln/obj/manipulators/AttrManipCmdAxis.h>
 #include <xpln/obj/manipulators/AttrManipNoop.h>
@@ -283,20 +284,20 @@ TEST(TestManip, AttrManipCmdKnob) {
 //-------------------------------------------------------------------------
 
 TEST(TestManip, AttrManipCmdKnob2) {
-	AttrManipCmdKnob2 manip;
-	ECursor cursor(ECursor::eId::hand);
-	manip.setCursor(cursor);
-	manip.setToolTip("ToolTip");
+    AttrManipCmdKnob2 manip;
+    ECursor cursor(ECursor::eId::hand);
+    manip.setCursor(cursor);
+    manip.setToolTip("ToolTip");
 
-	manip.setCmd("command");
+    manip.setCmd("command");
 
-	ASSERT_STREQ(std::string("ATTR_manip_command_knob2 ").append(cursor.toString())
-				 .append(" command ToolTip").c_str(),
-				 toObjString(&manip).c_str());
+    ASSERT_STREQ(std::string("ATTR_manip_command_knob2 ").append(cursor.toString())
+        .append(" command ToolTip").c_str(),
+        toObjString(&manip).c_str());
 
-	// getters
-	ASSERT_STREQ("command", manip.cmd().c_str());
-	ASSERT_EQ(EManipulator(EManipulator::command_knob2), manip.type());
+    // getters
+    ASSERT_STREQ("command", manip.cmd().c_str());
+    ASSERT_EQ(EManipulator(EManipulator::command_knob2), manip.type());
 }
 
 //-------------------------------------------------------------------------
@@ -324,20 +325,20 @@ TEST(TestManip, AttrManipCmdSwitchLeftRight) {
 //-------------------------------------------------------------------------
 
 TEST(TestManip, AttrManipCmdSwitchLeftRight2) {
-	AttrManipCmdSwitchLeftRight2 manip;
-	ECursor cursor(ECursor::eId::hand);
-	manip.setCursor(cursor);
-	manip.setToolTip("ToolTip");
+    AttrManipCmdSwitchLeftRight2 manip;
+    ECursor cursor(ECursor::eId::hand);
+    manip.setCursor(cursor);
+    manip.setToolTip("ToolTip");
 
-	manip.setCmd("command");
+    manip.setCmd("command");
 
-	ASSERT_STREQ(std::string("ATTR_manip_command_switch_left_right2 ").append(cursor.toString())
-				 .append(" command ToolTip").c_str(),
-				 toObjString(&manip).c_str());
+    ASSERT_STREQ(std::string("ATTR_manip_command_switch_left_right2 ").append(cursor.toString())
+        .append(" command ToolTip").c_str(),
+        toObjString(&manip).c_str());
 
-	// getters
-	ASSERT_STREQ("command", manip.cmd().c_str());
-	ASSERT_EQ(EManipulator(EManipulator::command_switch_lr2), manip.type());
+    // getters
+    ASSERT_STREQ("command", manip.cmd().c_str());
+    ASSERT_EQ(EManipulator(EManipulator::command_switch_lr2), manip.type());
 }
 
 //-------------------------------------------------------------------------
@@ -365,20 +366,20 @@ TEST(TestManip, AttrManipCmdSwitchUpDown) {
 //-------------------------------------------------------------------------
 
 TEST(TestManip, AttrManipCmdSwitchUpDown2) {
-	AttrManipCmdSwitchUpDown2 manip;
-	ECursor cursor(ECursor::eId::hand);
-	manip.setCursor(cursor);
-	manip.setToolTip("ToolTip");
+    AttrManipCmdSwitchUpDown2 manip;
+    ECursor cursor(ECursor::eId::hand);
+    manip.setCursor(cursor);
+    manip.setToolTip("ToolTip");
 
-	manip.setCmd("command");
+    manip.setCmd("command");
 
-	ASSERT_STREQ(std::string("ATTR_manip_command_switch_up_down2 ").append(cursor.toString())
-				 .append(" command ToolTip").c_str(),
-				 toObjString(&manip).c_str());
+    ASSERT_STREQ(std::string("ATTR_manip_command_switch_up_down2 ").append(cursor.toString())
+        .append(" command ToolTip").c_str(),
+        toObjString(&manip).c_str());
 
-	// getters
-	ASSERT_STREQ("command", manip.cmd().c_str());
-	ASSERT_EQ(EManipulator(EManipulator::command_switch_ud2), manip.type());
+    // getters
+    ASSERT_STREQ("command", manip.cmd().c_str());
+    ASSERT_EQ(EManipulator(EManipulator::command_switch_ud2), manip.type());
 }
 
 //-------------------------------------------------------------------------
@@ -468,6 +469,76 @@ TEST(TestManip, AttrManipDragAxis) {
     ASSERT_STREQ("dataref", manip.dataref().c_str());
 
     ASSERT_EQ(EManipulator(EManipulator::drag_axis), manip.type());
+}
+
+//-------------------------------------------------------------------------
+
+TEST(TestManip, AttrManipDragRotate) {
+    AttrManipDragRotate manip;
+    ECursor cursor(ECursor::eId::hand);
+    manip.setCursor(cursor);
+    manip.setToolTip("ToolTip");
+
+    manip.setX(10.0f);
+    manip.setY(20.0f);
+    manip.setZ(30.0f);
+
+    manip.setDirectionX(40.0f);
+    manip.setDirectionY(50.0f);
+    manip.setDirectionZ(60.0f);
+
+    manip.setAngle1(70.0f);
+    manip.setAngle2(80.0f);
+
+    manip.setLift(90.0f);
+
+    manip.setV1Min(91.0f);
+    manip.setV1Max(92.0f);
+
+    manip.setV2Min(93.0f);
+    manip.setV2Max(94.0f);
+
+    manip.setDataref1("dataref-1");
+    manip.setDataref2("dataref-2");
+
+    ASSERT_STREQ(std::string("ATTR_manip_drag_rotate ")
+        .append(cursor.toString())
+        .append(" ")
+        .append(sts::toMbString(10.0f, PRECISION)).append(" ")
+        .append(sts::toMbString(20.0f, PRECISION)).append(" ")
+        .append(sts::toMbString(30.0f, PRECISION)).append(" ")
+        .append(sts::toMbString(40.0f, PRECISION)).append(" ")
+        .append(sts::toMbString(50.0f, PRECISION)).append(" ")
+        .append(sts::toMbString(60.0f, PRECISION)).append(" ")
+        .append(sts::toMbString(70.0f, PRECISION)).append(" ")
+        .append(sts::toMbString(80.0f, PRECISION)).append(" ")
+        .append(sts::toMbString(90.0f, PRECISION)).append(" ")
+        .append(sts::toMbString(91.0f, PRECISION)).append(" ")
+        .append(sts::toMbString(92.0f, PRECISION)).append(" ")
+        .append(sts::toMbString(93.0f, PRECISION)).append(" ")
+        .append(sts::toMbString(94.0f, PRECISION)).append(" ")
+        .append("dataref-1 dataref-2 ToolTip")
+        .c_str(),
+        toObjString(&manip).c_str());
+
+    // getters
+    ASSERT_EQ(10.0f, manip.x());
+    ASSERT_EQ(20.0f, manip.y());
+    ASSERT_EQ(30.0f, manip.z());
+    ASSERT_EQ(40.0f, manip.directionX());
+    ASSERT_EQ(50.0f, manip.directionY());
+    ASSERT_EQ(60.0f, manip.directionZ());
+    ASSERT_EQ(70.0f, manip.angle1());
+    ASSERT_EQ(80.0f, manip.angle2());
+    ASSERT_EQ(90.0f, manip.lift());
+    ASSERT_EQ(91.0f, manip.v1Min());
+    ASSERT_EQ(92.0f, manip.v1Max());
+    ASSERT_EQ(93.0f, manip.v2Min());
+    ASSERT_EQ(94.0f, manip.v2Max());
+    ASSERT_STREQ("dataref-1", manip.dataref1().c_str());
+    ASSERT_STREQ("dataref-2", manip.dataref2().c_str());
+
+    ASSERT_EQ(EManipulator(EManipulator::drag_rotate), manip.type());
 }
 
 //-------------------------------------------------------------------------

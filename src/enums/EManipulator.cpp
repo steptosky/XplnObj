@@ -75,6 +75,7 @@ namespace EManipulatorData {
         /* 11 */ Data(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2, "Command switch up-down VR compatible", EManipulator::command_switch_ud2),
         /* 12 */ Data(ATTR_MANIP_DELTA, "Delta", EManipulator::delta),
         /* 13 */ Data(ATTR_MANIP_DRAG_AXIS, "Drag axis", EManipulator::drag_axis),
+        /* 13 */ Data(ATTR_MANIP_DRAG_ROTATE, "Drag rotate", EManipulator::drag_rotate),
         /* 14 */ Data(ATTR_MANIP_DRAG_AXIS_PIX, "Drag axis pix", EManipulator::drag_axis_pix),
         /* 15 */ Data(ATTR_MANIP_DRAG_XY, "Drag xy", EManipulator::drag_xy),
         /* 16 */ Data(ATTR_MANIP_NOOP, "Noop", EManipulator::noop),

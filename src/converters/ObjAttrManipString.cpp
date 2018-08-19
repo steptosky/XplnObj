@@ -33,6 +33,7 @@
 #include "common/AttributeNames.h"
 #include "xpln/obj/manipulators/AttrManipDragXy.h"
 #include "xpln/obj/manipulators/AttrManipDragAxis.h"
+#include "xpln/obj/manipulators/AttrManipDragRotate.h"
 #include "xpln/obj/manipulators/AttrManipCmd.h"
 #include "xpln/obj/manipulators/AttrManipCmdAxis.h"
 #include "xpln/obj/manipulators/AttrManipNoop.h"
@@ -90,6 +91,8 @@ std::string toObjString(const AttrManipBase * manip) {
             return toObjString(*static_cast<const AttrManipDelta*>(manip));
         case EManipulator::eId::drag_axis:
             return toObjString(*static_cast<const AttrManipDragAxis*>(manip));
+        case EManipulator::eId::drag_rotate:
+            return toObjString(*static_cast<const AttrManipDragRotate*>(manip));
         case EManipulator::eId::drag_axis_pix:
             return toObjString(*static_cast<const AttrManipDragAxisPix*>(manip));
         case EManipulator::eId::drag_xy:
@@ -258,6 +261,29 @@ std::string toObjString(const AttrManipDragAxis & manip) {
     outStr << " " << manip.val1();
     outStr << " " << manip.val2();
     outStr << " " << manip.dataref();
+    outStr << " " << manip.toolTip();
+    return outStr.str();
+}
+
+std::string toObjString(const AttrManipDragRotate & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_DRAG_ROTATE;
+    outStr << " " << manip.cursor().toString();
+    outStr << " " << manip.x();
+    outStr << " " << manip.y();
+    outStr << " " << manip.z();
+    outStr << " " << manip.directionX();
+    outStr << " " << manip.directionY();
+    outStr << " " << manip.directionZ();
+    outStr << " " << manip.angle1();
+    outStr << " " << manip.angle2();
+    outStr << " " << manip.lift();
+    outStr << " " << manip.v1Min();
+    outStr << " " << manip.v1Max();
+    outStr << " " << manip.v2Min();
+    outStr << " " << manip.v2Max();
+    outStr << " " << manip.dataref1();
+    outStr << " " << manip.dataref2();
     outStr << " " << manip.toolTip();
     return outStr.str();
 }

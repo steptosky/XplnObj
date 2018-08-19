@@ -8,9 +8,10 @@ X-Plane Obj Library
              it is supported by the library or writing notes.
              This can be applied to any object types.
 - **Added:** New manipulators:
-             `ATTR_manip_command_switch_left_right2`
-             `ATTR_manip_command_switch_up_down2`
-             `ATTR_manip_command_knob2`
+             `ATTR_manip_command_switch_left_right2`,
+             `ATTR_manip_command_switch_up_down2`,
+             `ATTR_manip_command_knob2`,
+             `ATTR_manip_drag_rotate`
 - **Updated:** Build scripts.
 - **Fixed:** Incorrect attribute name inside `.obj` for the
              `ATTR_manip_command_switch_up_down` and `ATTR_manip_command_switch_left_right`.

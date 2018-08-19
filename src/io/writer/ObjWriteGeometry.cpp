@@ -27,9 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "ObjWriteGeometry.h"
-#include <cassert>
-#include "common/Logger.h"
 #include "converters/ObjString.h"
 
 #include "xpln/obj/ObjMain.h"

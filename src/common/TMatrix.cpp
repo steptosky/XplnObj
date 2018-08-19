@@ -27,10 +27,11 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/common/TMatrix.h"
 #include "sts/geometry/Quaternion.h"
 #include "sts/geometry/Converters.h"
-#include "sts/string/StringUtils.h"
 
 namespace xobj {
 

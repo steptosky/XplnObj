@@ -27,8 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "gtest/gtest.h"
-#include "gmock/gmock.h"
+#include "ph/stdafx.h"
 
 #include "MockIWriter.h"
 #include "xpln/obj/ObjMesh.h"

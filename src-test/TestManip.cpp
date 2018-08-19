@@ -27,7 +27,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "gtest/gtest.h"
+#include "ph/stdafx.h"
+
 #include "converters/ObjAttrManipString.h"
 
 #include <xpln/obj/manipulators/AttrManipDragXy.h>

@@ -27,10 +27,10 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "ObjString.h"
 
-#include "sts/string/StringUtils.h"
-#include "../common/Logger.h"
 #include "common/AttributeNames.h"
 
 #include "xpln/obj/MeshVertex.h"
@@ -47,7 +47,6 @@
 #include "xpln/obj/ObjDummy.h"
 
 #include "Defines.h"
-#include "StringStream.h"
 
 namespace xobj {
 

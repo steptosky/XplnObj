@@ -27,8 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/common/ExternalLog.h"
-#include "../common/Logger.h"
 #include "xpln/Info.h"
 
 #ifndef NDEBUG

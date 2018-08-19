@@ -27,9 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/obj/attributes/AttrShiny.h"
-#include <algorithm>
-#include "sts/utilities/Compare.h"
 
 namespace xobj {
 

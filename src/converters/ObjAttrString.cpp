@@ -27,6 +27,8 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "ObjAttrString.h"
 #include "common/AttributeNames.h"
 #include "xpln/obj/attributes/AttrWetDry.h"
@@ -44,7 +46,6 @@
 #include "xpln/obj/attributes/AttrSlopeLimit.h"
 #include "xpln/obj/attributes/AttrCockpitRegion.h"
 #include "xpln/obj/attributes/AttrCockpit.h"
-#include "StringStream.h"
 
 namespace xobj {
 

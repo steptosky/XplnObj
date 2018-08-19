@@ -1,5 +1,7 @@
+#pragma once
+
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -27,46 +29,30 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
-
-#include "ObjWriteOptimize.h"
-#include "xpln/obj/ObjLodGroup.h"
-#include "ObjWriteAnim.h"
-
-namespace xobj {
-
 /**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjWriteOptimize::optimize(ObjMain & mainObj) {
-    if (mainObj.pExportOptions.isEnabled(XOBJ_EXP_OPTIMIZATION)) {
-        const size_t lodCount = mainObj.lodCount();
-        for (size_t i = 0; i < lodCount; ++i) {
-            ObjLodGroup & lod = mainObj.lod(i);
-            Transform & rootTransform = lod.transform();
-            proccess(rootTransform);
-        }
-    }
-}
+#include <cassert>
+#include <string>
+#include <cstddef>
+#include <cstdint>
+#include <algorithm>
+#include <vector>
+#include <functional>
+#include <algorithm>
+#include <cstring>
 
-void ObjWriteOptimize::proccess(Transform & transform) {
-    //-------------------------------------------------------------------------
+#include <iostream>
+#include <sstream>
+#include <fstream>
 
-    // TODO Optimize
-
-    //-------------------------------------------------------------------------
-    // children
-
-    Transform::TransformIndex chCount = transform.childrenCount();
-    for (Transform::TransformIndex i = 0; i < chCount; ++i) {
-        proccess(*static_cast<Transform*>(transform.childAt(i)));
-    }
-
-    //-------------------------------------------------------------------------
-}
+#include "xpln/XplnObjExport.h"
+#include "sts/utilities/Compare.h"
+#include "sts/string/StringUtils.h"
+#include "converters/StringStream.h"
+#include "common/Logger.h"
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
-}

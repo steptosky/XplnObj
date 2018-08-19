@@ -47,9 +47,6 @@ project(${TARGET} VERSION ${ProjectVersion} LANGUAGES "CXX")
 
 file(GLOB_RECURSE CM_FILES 
     "*.h" "*.inl" "*.cpp"
-    "${CMAKE_SOURCE_DIR}/include/*.h" 
-    "${CMAKE_SOURCE_DIR}/include/*.inl" 
-    "${CMAKE_SOURCE_DIR}/include/*.cpp"
 )
 include(StsGroupFiles)
 groupFiles("${CM_FILES}")
@@ -68,6 +65,7 @@ add_definitions(-DTESTING)
 
 target_include_directories(${TARGET} PRIVATE "${CMAKE_SOURCE_DIR}/include")
 target_include_directories(${TARGET} PRIVATE "${CMAKE_SOURCE_DIR}/src")
+target_include_directories(${TARGET} PRIVATE "${CMAKE_SOURCE_DIR}/src-test")
 
 target_link_libraries(${TARGET} ${ProjectId})
 target_link_libraries(${TARGET} CONAN_PKG::gtest)
@@ -75,7 +73,14 @@ target_link_libraries(${TARGET} CONAN_PKG::gtest)
 #----------------------------------------------------------------------------------#
 # compile options
 
-target_compile_options(${TARGET} 
+# pre-compile headers
+set_source_files_properties(ph/stdafx.cpp
+    PROPERTIES COMPILE_FLAGS $<$<CXX_COMPILER_ID:MSVC>:/Yc>
+)
+
+target_compile_options(${TARGET}
+    PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/Yuph/stdafx.h>   # pre-compile headers
+    PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/MP4>             # multi-processor compilation
     PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
     PRIVATE $<$<CXX_COMPILER_ID:MSVC>:-D_CRT_SECURE_NO_WARNINGS>
 

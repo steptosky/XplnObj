@@ -27,6 +27,8 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "ObjAttrManipString.h"
 #include "common/AttributeNames.h"
 #include "xpln/obj/manipulators/AttrManipDragXy.h"
@@ -47,7 +49,6 @@
 #include "xpln/obj/manipulators/AttrManipCmdSwitchLeftRight.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown.h"
 #include "xpln/obj/manipulators/AttrManipNone.h"
-#include "StringStream.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
 
 #include "ObjAttrString.h"

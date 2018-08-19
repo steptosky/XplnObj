@@ -27,8 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/obj/attributes/AttrSlopeLimit.h"
-#include "sts/utilities/Compare.h"
 
 namespace xobj {
 

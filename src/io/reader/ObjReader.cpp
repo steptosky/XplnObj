@@ -27,10 +27,10 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "ObjReader.h"
 #include "ObjReadParser.h"
-#include "common//Logger.h"
-#include "sts/utilities/Compare.h"
 #include "common/AttributeNames.h"
 
 #include "xpln/obj/attributes/AttrBlend.h"

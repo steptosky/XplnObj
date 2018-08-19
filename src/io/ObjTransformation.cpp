@@ -27,14 +27,14 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "ObjTransformation.h"
 #include "xpln/obj/ObjLodGroup.h"
 #include "xpln/obj/ObjMesh.h"
 #include "io/ObjValidators.h"
-#include <cassert>
 #include "exceptions/defines.h"
 #include "writer/ObjWriteAnim.h"
-#include "converters/StringStream.h"
 
 namespace xobj {
 

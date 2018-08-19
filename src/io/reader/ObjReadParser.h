@@ -30,7 +30,7 @@
 */
 
 #include <string>
-#include <stdint.h>
+#include <cstdint>
 #include <cmath>
 #include <cassert>
 #include <stack>

@@ -27,13 +27,11 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "ObjReaderInterpreter.h"
-#include <cassert>
 #include "xpln/obj/ObjMain.h"
-#include <common/Logger.h>
-#include <sts/string/StringUtils.h>
 #include <exceptions/defines.h>
-#include <algorithm>
 #include "xpln/obj/manipulators/AttrManipWheel.h"
 #include "common/AttributeNames.h"
 #include "io/ObjTransformation.h"

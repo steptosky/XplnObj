@@ -27,10 +27,10 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/obj/manipulators/AttrManipDelta.h"
 #include "xpln/enums/EManipulator.h"
-#include "sts/string/StringUtils.h"
-#include "sts/utilities/Compare.h"
 
 namespace xobj {
 

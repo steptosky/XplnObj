@@ -27,13 +27,13 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "ObjAnimString.h"
 #include "common/AttributeNames.h"
 #include "xpln/obj/animation/AnimVisibilityKey.h"
 #include "xpln/obj/animation/AnimTrans.h"
 #include "xpln/obj/animation/AnimRotate.h"
-#include "common/Logger.h"
-#include "StringStream.h"
 
 namespace xobj {
 

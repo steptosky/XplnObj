@@ -27,9 +27,10 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/common/Color.h"
 #include "sts/string/StringUtils.h"
-#include "sts/utilities/Compare.h"
 #include "converters/StringStream.h"
 
 namespace xobj {

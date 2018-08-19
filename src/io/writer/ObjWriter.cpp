@@ -27,9 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "ObjWriter.h"
-#include <sstream>
+#include "stdafx.h"
 
+#include "ObjWriter.h"
 #include "xpln/obj/ObjMain.h"
 #include "io/ObjValidators.h"
 
@@ -37,12 +37,10 @@
 #include "Writer.h"
 #include "xpln/obj/ObjLine.h"
 #include "sts/utilities/Compare.h"
-#include "sts/string/StringUtils.h"
 #include "converters/ObjString.h"
 #include "ObjWriteOptimize.h"
 #include "io/ObjTransformation.h"
 #include "ObjWriteInstancing.h"
-#include "common/Logger.h"
 
 namespace xobj {
 

@@ -29,7 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <stdexcept>
+#include <string>
 #include "common/Logger.h"
 
 /**************************************************************************************************/

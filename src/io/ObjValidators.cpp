@@ -27,11 +27,10 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "ObjValidators.h"
-#include "sts/utilities/Compare.h"
+#include "stdafx.h"
 
+#include "ObjValidators.h"
 #include "io/StringValidator.h"
-#include "common/Logger.h"
 
 #include "xpln/obj/attributes/AttrGlobSet.h"
 

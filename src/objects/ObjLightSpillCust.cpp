@@ -27,9 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/obj/ObjLightSpillCust.h"
-#include "sts/string/StringUtils.h"
-#include "common/Logger.h"
 #include <cmath>
 
 namespace xobj {

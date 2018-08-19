@@ -27,7 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "gtest/gtest.h"
+#include "ph/stdafx.h"
 
 #include "xpln/obj/attributes/AttrWetDry.h"
 #include "xpln/obj/attributes/AttrTint.h"

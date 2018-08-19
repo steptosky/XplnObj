@@ -27,9 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "stdafx.h"
+
 #include "xpln/obj/ObjMain.h"
-#include <algorithm>
-#include <cassert>
 #include "io/writer/ObjWriter.h"
 #include "io/reader/ObjReader.h"
 #include "io/reader/ObjReaderInterpreter.h"

@@ -27,9 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
-#include  <cstring>
+#include "stdafx.h"
+
 #include "xpln/enums/EManipulator.h"
-#include "common/Logger.h"
 #include "common/ArrayLength.h"
 #include "common/AttributeNames.h"
 

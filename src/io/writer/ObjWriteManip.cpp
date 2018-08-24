@@ -148,7 +148,7 @@ void ObjWriteManip::print(AbstractWriter * writer, const AttrManipBase * manip) 
         const AttrManipWheel * wheel = dynamic_cast<const AttrManipWheel*>(manip);
         if (wheel && wheel->isWheelEnabled()) {
             writer->printLine(toObjString(*wheel));
-            // todo uncomment and fix the tests ++mManipCounter;
+            ++mManipCounter;
         }
         //--------------------------
         if (manip->type() == EManipulator::drag_rotate) {

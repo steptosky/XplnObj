@@ -138,7 +138,7 @@ TEST(TestManipIO, AttrManipAxisKnob) {
     stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -201,7 +201,7 @@ TEST(TestManipIO, AttrManipAxisSwitchLeftRight) {
     stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -264,7 +264,7 @@ TEST(TestManipIO, AttrManipAxisSwitchUpDown) {
     stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -491,7 +491,7 @@ TEST(TestManipIO, AttrManipDelta) {
     stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -552,7 +552,7 @@ TEST(TestManipIO, AttrManipDragAxis) {
     stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -617,7 +617,7 @@ TEST(TestManipIO, AttrManipDragAxisPix) {
     stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -743,7 +743,7 @@ TEST(TestManipIO, AttrManipPush) {
     stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -800,7 +800,7 @@ TEST(TestManipIO, AttrManipRadio) {
     stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -859,7 +859,7 @@ TEST(TestManipIO, AttrManipToggle) {
     stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -922,7 +922,7 @@ TEST(TestManipIO, AttrManipWrap) {
     stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
     //-----------------------------
 

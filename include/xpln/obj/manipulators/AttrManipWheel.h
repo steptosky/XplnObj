@@ -50,8 +50,8 @@ public:
 
     //-------------------------------------------------------------------------
 
-    bool operator==(const AttrManipWheel & other) const;
-    bool operator!=(const AttrManipWheel & other) const;
+    XpObjLib bool operator==(const AttrManipWheel & other) const;
+    XpObjLib bool operator!=(const AttrManipWheel & other) const;
 
     //-------------------------------------------------------------------------
 

@@ -11,7 +11,8 @@ X-Plane Obj Library
              `ATTR_manip_command_switch_left_right2`,
              `ATTR_manip_command_switch_up_down2`,
              `ATTR_manip_command_knob2`,
-             `ATTR_manip_drag_rotate`
+             `ATTR_manip_drag_rotate`,
+             `ATTR_manip_keyframe`
 - **Updated:** Build scripts.
 - **Fixed:** Incorrect attribute name inside `.obj` for the
              `ATTR_manip_command_switch_up_down` and `ATTR_manip_command_switch_left_right`.

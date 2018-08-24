@@ -125,6 +125,7 @@
 #define ATTR_MANIP_TOGGLE "ATTR_manip_toggle"
 #define ATTR_MANIP_COMMAND "ATTR_manip_command"
 #define ATTR_MANIP_DRAG_XY "ATTR_manip_drag_xy"
+#define ATTR_MANIP_KEYFRAME "ATTR_manip_keyframe"
 #define ATTR_MANIP_AXIS_KNOB "ATTR_manip_axis_knob"
 #define ATTR_MANIP_DRAG_AXIS "ATTR_manip_drag_axis"
 #define ATTR_MANIP_DRAG_ROTATE "ATTR_manip_drag_rotate"

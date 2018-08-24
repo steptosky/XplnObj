@@ -543,6 +543,24 @@ TEST(TestManip, AttrManipDragRotate) {
 
 //-------------------------------------------------------------------------
 
+TEST(TestManip, AttrManipKeyFrame) {
+    AttrManipKeyFrame manip(5.1f, 6.8f);
+    manip.setValue(8.5f);
+    manip.setAngle(10.6f);
+
+    ASSERT_STREQ(std::string("ATTR_manip_keyframe ")
+        .append(sts::toMbString(8.5f, PRECISION)).append(" ")
+        .append(sts::toMbString(10.6f, PRECISION))
+        .c_str(),
+        toObjString(manip).c_str());
+
+    // getters
+    ASSERT_EQ(8.5f, manip.value());
+    ASSERT_EQ(10.6f, manip.angle());
+}
+
+//-------------------------------------------------------------------------
+
 TEST(TestManip, AttrManipDragAxisPix) {
     AttrManipDragAxisPix manip;
     ECursor cursor(ECursor::eId::hand);

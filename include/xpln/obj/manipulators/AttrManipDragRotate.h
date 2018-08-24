@@ -30,6 +30,7 @@
 */
 
 #include "AttrManipBase.h"
+#include "AttrManipKeyFrame.h"
 
 namespace xobj {
 
@@ -43,6 +44,10 @@ namespace xobj {
  */
 class AttrManipDragRotate : public AttrManipBase {
 public:
+
+    typedef std::vector<AttrManipKeyFrame> Keys;
+
+    //-------------------------------------------------------------------------
 
     XpObjLib AttrManipDragRotate();
     virtual ~AttrManipDragRotate() = default;
@@ -86,6 +91,21 @@ public:
     XpObjLib const std::string & dataref1() const;
     XpObjLib const std::string & dataref2() const;
 
+    /*!
+     * \see AttrManipKeyFrame
+     */
+    void setKeys(const Keys & keys) { mKeys = keys; }
+
+    /*!
+     * \see AttrManipKeyFrame
+     */
+    Keys & keys() { return mKeys; }
+
+    /*!
+     * \see AttrManipKeyFrame
+     */
+    const Keys & keys() const { return mKeys; }
+
     //-------------------------------------------------------------------------
 
     /*! \copydoc AttrManipBase::equals */
@@ -119,6 +139,8 @@ private:
 
     std::string mDataref1 = "none";
     std::string mDataref2 = "none";
+
+    Keys mKeys;
 
 };
 

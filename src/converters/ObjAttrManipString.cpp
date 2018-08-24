@@ -34,6 +34,7 @@
 #include "xpln/obj/manipulators/AttrManipDragXy.h"
 #include "xpln/obj/manipulators/AttrManipDragAxis.h"
 #include "xpln/obj/manipulators/AttrManipDragRotate.h"
+#include "xpln/obj/manipulators/AttrManipKeyFrame.h"
 #include "xpln/obj/manipulators/AttrManipCmd.h"
 #include "xpln/obj/manipulators/AttrManipCmdAxis.h"
 #include "xpln/obj/manipulators/AttrManipNoop.h"
@@ -285,6 +286,14 @@ std::string toObjString(const AttrManipDragRotate & manip) {
     outStr << " " << manip.dataref1();
     outStr << " " << manip.dataref2();
     outStr << " " << manip.toolTip();
+    return outStr.str();
+}
+
+std::string toObjString(const AttrManipKeyFrame & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_KEYFRAME;
+    outStr << " " << manip.value();
+    outStr << " " << manip.angle();
     return outStr.str();
 }
 

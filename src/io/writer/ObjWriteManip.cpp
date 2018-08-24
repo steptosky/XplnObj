@@ -38,6 +38,7 @@
 #include "xpln/enums/eObjectType.h"
 #include "xpln/obj/ObjMesh.h"
 #include "xpln/obj/manipulators/AttrManipWheel.h"
+#include "xpln/obj/manipulators/AttrManipDragRotate.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
 
 namespace xobj {
@@ -142,11 +143,23 @@ void ObjWriteManip::write(AbstractWriter * writer, const AttrManipBase * manip) 
 void ObjWriteManip::print(AbstractWriter * writer, const AttrManipBase * manip) {
     if (manip) {
         writer->printLine(toObjString(manip));
+        ++mManipCounter;
+        //--------------------------
         const AttrManipWheel * wheel = dynamic_cast<const AttrManipWheel*>(manip);
         if (wheel && wheel->isWheelEnabled()) {
             writer->printLine(toObjString(*wheel));
+            // todo uncomment and fix the tests ++mManipCounter;
         }
-        ++mManipCounter;
+        //--------------------------
+        if (manip->type() == EManipulator::drag_rotate) {
+            const auto * drag = static_cast<const AttrManipDragRotate*>(manip);
+            const auto & keys = drag->keys();
+            for (const auto & k : keys) {
+                writer->printLine(toObjString(k));
+            }
+            mManipCounter += keys.size();
+        }
+        //--------------------------
     }
 }
 

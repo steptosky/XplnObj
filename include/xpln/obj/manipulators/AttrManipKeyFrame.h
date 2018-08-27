@@ -46,7 +46,14 @@ class AttrManipKeyFrame {
 public:
 
     XpObjLib explicit AttrManipKeyFrame(float value = 0.0f, float angle = 0.0f);
+
+    AttrManipKeyFrame(const AttrManipKeyFrame &) = default;
+    AttrManipKeyFrame(AttrManipKeyFrame &&) = default;
+
     virtual ~AttrManipKeyFrame() = default;
+
+    AttrManipKeyFrame & operator=(const AttrManipKeyFrame &) = default;
+    AttrManipKeyFrame & operator=(AttrManipKeyFrame &&) = default;
 
     //-------------------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,8 +29,7 @@
 
 #include "stdafx.h"
 
-#include "xpln/obj/manipulators/AttrManipDragAxis.h"
-#include "xpln/enums//EManipulator.h"
+#include "xpln/obj/manipulators/AttrAxisDetentRange.h"
 
 namespace xobj {
 
@@ -38,104 +37,46 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipDragAxis::AttrManipDragAxis()
-    : AttrManipBase(EManipulator(EManipulator::drag_axis)) { }
-
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipDragAxis::setX(float val) {
-    mX = val;
+bool AttrAxisDetentRange::operator==(const AttrAxisDetentRange & other) const {
+    return sts::isEqual(mStart, other.mStart) &&
+           sts::isEqual(mEnd, other.mEnd) &&
+           sts::isEqual(mHeight, other.mHeight);
 }
 
-void AttrManipDragAxis::setY(float val) {
-    mY = val;
-}
-
-void AttrManipDragAxis::setZ(float val) {
-    mZ = val;
-}
-
-float AttrManipDragAxis::x() const {
-    return mX;
-}
-
-float AttrManipDragAxis::y() const {
-    return mY;
-}
-
-float AttrManipDragAxis::z() const {
-    return mZ;
-}
-
-void AttrManipDragAxis::setVal1(const float val) {
-    mVal1 = val;
-}
-
-void AttrManipDragAxis::setVal2(const float val) {
-    mVal2 = val;
-}
-
-float AttrManipDragAxis::val1() const {
-    return mVal1;
-}
-
-float AttrManipDragAxis::val2() const {
-    return mVal2;
-}
-
-const std::string & AttrManipDragAxis::dataref() const {
-    return mDataref;
-}
-
-void AttrManipDragAxis::setDataref(const std::string & val) {
-    mDataref = val;
+bool AttrAxisDetentRange::operator!=(const AttrAxisDetentRange & other) const {
+    return !this->operator==(other);
 }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-const AttrAxisDetented & AttrManipDragAxis::axisDetented() const {
-    return mAxisDetented;
+void AttrAxisDetentRange::setStart(const float val) {
+    mStart = val;
 }
 
-void AttrManipDragAxis::setAxisDetented(const AttrAxisDetented & val) {
-    mAxisDetented = val;
+void AttrAxisDetentRange::setEnd(const float val) {
+    mEnd = val;
 }
 
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-bool AttrManipDragAxis::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const AttrManipDragAxis * right = dynamic_cast<const AttrManipDragAxis*>(manip);
-    if (!right)
-        return false;
-
-    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
-        return false;
-
-    return (sts::isEqual(mX, right->mX) &&
-            sts::isEqual(mY, right->mY) &&
-            sts::isEqual(mZ, right->mZ) &&
-            sts::isEqual(mVal1, right->mVal1) &&
-            sts::isEqual(mVal2, right->mVal2) &&
-            sts::isEqual(mAxisDetented, right->mAxisDetented) &&
-            sts::isEqual(mAxisDetentRanges, right->mAxisDetentRanges) &&
-            sts::isEqual(mDataref, right->mDataref));
+void AttrAxisDetentRange::setHeight(const float val) {
+    mHeight = val;
 }
 
-AttrManipBase * AttrManipDragAxis::clone() const {
-    return new AttrManipDragAxis(*this);
+float AttrAxisDetentRange::start() const {
+    return mStart;
+}
+
+float AttrAxisDetentRange::end() const {
+    return mEnd;
+}
+
+float AttrAxisDetentRange::height() const {
+    return mHeight;
 }
 
 /**************************************************************************************************/

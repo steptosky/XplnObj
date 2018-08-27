@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,12 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <vector>
-#include "AttrManipBase.h"
-#include "AttrManipWheel.h"
-#include "AttrAxisDetented.h"
-#include "AttrAxisDetentRange.h"
-
 namespace xobj {
 
 /********************************************************************************************************/
@@ -42,87 +36,67 @@ namespace xobj {
 /********************************************************************************************************/
 
 /*!
- * \details ATTR_manip_drag_axis
+ * \details ATTR_axis_detented
  * \ingroup Manipulators
  */
-class AttrManipDragAxis : public AttrManipBase, public AttrManipWheel {
+class AttrAxisDetented {
 public:
 
-    typedef std::vector<AttrAxisDetentRange> DetentRanges;
+    //-------------------------------------------------------------------------
+
+    AttrAxisDetented() = default;
+    AttrAxisDetented(const AttrAxisDetented &) = default;
+    AttrAxisDetented(AttrAxisDetented &&) = default;
+
+    virtual ~AttrAxisDetented() = default;
+
+    AttrAxisDetented & operator=(const AttrAxisDetented &) = default;
+    AttrAxisDetented & operator=(AttrAxisDetented &&) = default;
 
     //-------------------------------------------------------------------------
 
-    XpObjLib AttrManipDragAxis();
-    virtual ~AttrManipDragAxis() = default;
+    XpObjLib bool operator==(const AttrAxisDetented & other) const;
+    XpObjLib bool operator!=(const AttrAxisDetented & other) const;
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setX(float val);
-    XpObjLib void setY(float val);
-    XpObjLib void setZ(float val);
-    XpObjLib float x() const;
-    XpObjLib float y() const;
-    XpObjLib float z() const;
+    bool isEnabled() const { return mIsEnabled; }
 
-    XpObjLib void setVal1(float val);
-    XpObjLib void setVal2(float val);
-    XpObjLib float val1() const;
-    XpObjLib float val2() const;
+    //-------------------------------------------------------------------------
+
+    XpObjLib void setDirectionX(float val);
+    XpObjLib void setDirectionY(float val);
+    XpObjLib void setDirectionZ(float val);
+    XpObjLib float directionX() const;
+    XpObjLib float directionY() const;
+    XpObjLib float directionZ() const;
+
+    XpObjLib void setVMin(float val);
+    XpObjLib void setVMax(float val);
+    XpObjLib float vMin() const;
+    XpObjLib float vMax() const;
 
     XpObjLib void setDataref(const std::string & val);
     XpObjLib const std::string & dataref() const;
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setAxisDetented(const AttrAxisDetented & val);
-    XpObjLib const AttrAxisDetented & axisDetented() const;
-
-    //-------------------------------------------------------------------------
-
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
-
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
-
-    //-------------------------------------------------------------------------
-
-    /*!
-     * \see AttrAxisDetentRange
-     */
-    void setDetentRanges(const DetentRanges & ranges) {
-        mAxisDetentRanges = ranges;
-    }
-
-    /*!
-     * \see AttrAxisDetentRange
-     */
-    DetentRanges & detentRanges() {
-        return mAxisDetentRanges;
-    }
-
-    /*!
-     * \see AttrAxisDetentRange
-     */
-    const DetentRanges & detentRanges() const {
-        return mAxisDetentRanges;
-    }
-
-    //-------------------------------------------------------------------------
-
 private:
 
-    float mX = 0.0f;
-    float mY = 0.0f;
-    float mZ = 0.0f;
-    float mVal1 = 0.0f;
-    float mVal2 = 1.0f;
-    AttrAxisDetented mAxisDetented;
-    // todo there are some rules for ATTR_axis_detent_range that should be checked
-    // Implements checking and printing information.
-    // also this list must not be used if AttrAxisDetented isn't specified.
-    DetentRanges mAxisDetentRanges;
+    void setEnabled(const bool state = true) {
+        mIsEnabled = state;
+    }
+
+    float mDirX = 0.0f;
+    float mDirY = 0.0f;
+    float mDirZ = 0.0f;
+
+    float mVMin = 0.0f;
+    float mVMax = 1.0f;
+
     std::string mDataref = "none";
+
+    bool mIsEnabled = false;
 
 };
 

@@ -31,6 +31,7 @@
 
 #include "AttrManipBase.h"
 #include "AttrManipKeyFrame.h"
+#include "AttrAxisDetentRange.h"
 
 namespace xobj {
 
@@ -46,6 +47,7 @@ class AttrManipDragRotate : public AttrManipBase {
 public:
 
     typedef std::vector<AttrManipKeyFrame> Keys;
+    typedef std::vector<AttrAxisDetentRange> DetentRanges;
 
     //-------------------------------------------------------------------------
 
@@ -91,6 +93,8 @@ public:
     XpObjLib const std::string & dataref1() const;
     XpObjLib const std::string & dataref2() const;
 
+    //-------------------------------------------------------------------------
+
     /*!
      * \see AttrManipKeyFrame
      */
@@ -105,6 +109,29 @@ public:
      * \see AttrManipKeyFrame
      */
     const Keys & keys() const { return mKeys; }
+
+    //-------------------------------------------------------------------------
+
+    /*!
+     * \see AttrAxisDetentRange
+     */
+    void setDetentRanges(const DetentRanges & ranges) {
+        mAxisDetentRanges = ranges;
+    }
+
+    /*!
+     * \see AttrAxisDetentRange
+     */
+    DetentRanges & detentRanges() {
+        return mAxisDetentRanges;
+    }
+
+    /*!
+     * \see AttrAxisDetentRange
+     */
+    const DetentRanges & detentRanges() const {
+        return mAxisDetentRanges;
+    }
 
     //-------------------------------------------------------------------------
 
@@ -141,6 +168,9 @@ private:
     std::string mDataref2 = "none";
 
     Keys mKeys;
+    // todo there are some rules for ATTR_axis_detent_range that should be checked
+    // Implements checking and printing information.
+    DetentRanges mAxisDetentRanges;
 
 };
 

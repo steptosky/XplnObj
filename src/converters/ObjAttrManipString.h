@@ -69,6 +69,8 @@ class AttrManipCmdSwitchLeftRight2;
 class AttrManipCmdSwitchUpDown;
 class AttrManipCmdSwitchUpDown2;
 class AttrManipWheel;
+class AttrAxisDetented;
+class AttrAxisDetentRange;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,6 +102,8 @@ XpObjLib std::string toObjString(const AttrManipRadio & manip);
 XpObjLib std::string toObjString(const AttrManipToggle & manip);
 XpObjLib std::string toObjString(const AttrManipWrap & manip);
 XpObjLib std::string toObjString(const AttrManipWheel & manip);
+XpObjLib std::string toObjString(const AttrAxisDetented & manip);
+XpObjLib std::string toObjString(const AttrAxisDetentRange & manip);
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

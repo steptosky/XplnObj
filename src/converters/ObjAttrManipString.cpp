@@ -55,6 +55,8 @@
 #include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown2.h"
 #include "xpln/obj/manipulators/AttrManipNone.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
+#include "xpln/obj/manipulators/AttrAxisDetented.h"
+#include "xpln/obj/manipulators/AttrAxisDetentRange.h"
 
 #include "ObjAttrString.h"
 
@@ -393,6 +395,27 @@ std::string toObjString(const AttrManipWheel & manip) {
         return outStr.str();
     }
     return "";
+}
+
+std::string toObjString(const AttrAxisDetented & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_AXIS_DETENTED;
+    outStr << " " << manip.directionX();
+    outStr << " " << manip.directionY();
+    outStr << " " << manip.directionZ();
+    outStr << " " << manip.vMin();
+    outStr << " " << manip.vMax();
+    outStr << " " << manip.dataref();
+    return outStr.str();
+}
+
+std::string toObjString(const AttrAxisDetentRange & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_AXIS_DETENT_RANGE;
+    outStr << " " << manip.start();
+    outStr << " " << manip.end();
+    outStr << " " << manip.height();
+    return outStr.str();
 }
 
 /**************************************************************************************************/

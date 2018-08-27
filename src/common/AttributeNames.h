@@ -114,7 +114,10 @@
 #define ATTR_NO_CULL "ATTR_no_cull"
 #define ATTR_CULL "ATTR_cull"
 
-// manips
+// manipulators
+#define ATTR_MANIP_AXIS_DETENTED "ATTR_axis_detented"
+#define ATTR_MANIP_AXIS_DETENT_RANGE "ATTR_axis_detent_range"
+// manipulators
 #define ATTR_MANIP_NONE "ATTR_manip_none"
 #define ATTR_MANIP_WRAP "ATTR_manip_wrap"
 #define ATTR_MANIP_PUSH "ATTR_manip_push"

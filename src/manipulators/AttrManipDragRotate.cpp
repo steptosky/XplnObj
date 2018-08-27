@@ -206,8 +206,9 @@ bool AttrManipDragRotate::equals(const AttrManipBase * manip) const {
             sts::isEqual(mV2Min, right->mV2Min) &&
             sts::isEqual(mV2Max, right->mV2Max) &&
             sts::isEqual(mDataref1, right->mDataref1) &&
-            sts::isEqual(mDataref1, right->mDataref1) &&
-            sts::isEqual(mKeys, right->mKeys));
+            sts::isEqual(mDataref2, right->mDataref2) &&
+            sts::isEqual(mKeys, right->mKeys) &&
+            sts::isEqual(mAxisDetentRanges, right->mAxisDetentRanges));
 }
 
 AttrManipBase * AttrManipDragRotate::clone() const {

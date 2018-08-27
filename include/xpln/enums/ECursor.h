@@ -31,7 +31,7 @@
 
 #include <vector>
 #include <cstdint>
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 
 namespace xobj {
 

@@ -29,7 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 #include "xpln/common/Point3.h"
 #include <vector>
 #include "AnimRotateKey.h"

@@ -30,7 +30,7 @@
 */
 
 #include <string>
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 #include "io/reader/ObjReadParser.h"
 #include "xpln/obj/animation/AnimTrans.h"
 #include "xpln/obj/animation/AnimRotate.h"

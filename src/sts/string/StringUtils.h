@@ -38,7 +38,7 @@
 #include <cstdlib>
 #include <cstdint>
 #include <algorithm>
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 
 #ifndef DOUBLE_PRECISION_PRINT
 #	define DOUBLE_PRECISION_PRINT 8

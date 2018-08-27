@@ -47,7 +47,7 @@
 #include <sstream>
 #include <fstream>
 
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 #include "sts/utilities/Compare.h"
 #include "sts/string/StringUtils.h"
 #include "converters/StringStream.h"

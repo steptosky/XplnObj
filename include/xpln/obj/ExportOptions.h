@@ -31,7 +31,7 @@
 
 #include <string>
 #include <cstdint>
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 #include "xpln/enums/eExportOptions.h"
 
 namespace xobj {

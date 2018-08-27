@@ -120,7 +120,7 @@ install(EXPORT ${TARGET} NAMESPACE "${ProjectGroupId}::"
 include(GenerateExportHeader)
 generate_export_header(${TARGET} 
     EXPORT_MACRO_NAME "XpObjLib" 
-    EXPORT_FILE_NAME ${CMAKE_SOURCE_DIR}/include/xpln/XplnObjExport.h
+    EXPORT_FILE_NAME ${CMAKE_SOURCE_DIR}/include/xpln/Export.h
     DEPRECATED_MACRO_NAME "XpObjLibDeprecated"
     STATIC_DEFINE "XPLN_OBJ_STATIC_COMPILATION"
 )

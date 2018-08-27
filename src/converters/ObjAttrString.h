@@ -30,7 +30,7 @@
 */
 
 #include <string>
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 
 /*
 * Why this functions are not the methods of the corresponding classes?

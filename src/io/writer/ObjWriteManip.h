@@ -29,7 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 #include "xpln/obj/attributes/AttrCockpit.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
 

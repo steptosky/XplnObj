@@ -31,7 +31,7 @@
 
 #include <string>
 #include <vector>
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 #include "xpln/enums/eObjectType.h"
 #include "xpln/common/TMatrix.h"
 

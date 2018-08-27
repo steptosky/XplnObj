@@ -30,7 +30,7 @@
 */
 
 #include <functional>
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 #include "xpln/common/TMatrix.h"
 #include "xpln/obj/animation/AnimTrans.h"
 #include "xpln/obj/animation/AnimRotate.h"

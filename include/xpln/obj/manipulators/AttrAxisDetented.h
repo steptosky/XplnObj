@@ -66,6 +66,17 @@ public:
 
     //-------------------------------------------------------------------------
 
+    void setDirection(const float x, const float y, const float z) {
+        setDirectionX(x);
+        setDirectionY(y);
+        setDirectionZ(z);
+    }
+
+    void setValue(const float min, const float max) {
+        setVMin(min);
+        setVMax(max);
+    }
+
     XpObjLib void setDirectionX(float val);
     XpObjLib void setDirectionY(float val);
     XpObjLib void setDirectionZ(float val);

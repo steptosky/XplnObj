@@ -47,6 +47,12 @@ public:
     //-------------------------------------------------------------------------
 
     AttrAxisDetentRange() = default;
+
+    AttrAxisDetentRange(const float start, const float end, const float height)
+        : mStart(start),
+          mEnd(end),
+          mHeight(height) {}
+
     AttrAxisDetentRange(const AttrAxisDetentRange &) = default;
     AttrAxisDetentRange(AttrAxisDetentRange &&) = default;
 

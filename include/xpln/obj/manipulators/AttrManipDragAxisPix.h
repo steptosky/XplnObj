@@ -99,7 +99,7 @@ public:
     //-------------------------------------------------------------------------
 
     /*! \copydoc AttrManipBase::printObj */
-    XpObjLib virtual std::size_t printObj(AbstractWriter & writer) const final;
+    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
 
     //-------------------------------------------------------------------------
 

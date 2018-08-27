@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,23 +29,37 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "gmock/gmock.h"
-#include "io/writer/AbstractWriter.h"
+#include <io/writer/AbstractWriter.h>
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-class MockWriter : public xobj::AbstractWriter {
+class TestWriter : public xobj::AbstractWriter {
 public:
 
-    MockWriter(const MockWriter &) = delete;
-    MockWriter & operator =(const MockWriter &) = delete;
+    explicit TestWriter(const bool printEol = true)
+        : mPrintEol(printEol) {}
 
-    MOCK_METHOD1(printLine, void(const char *));
+    virtual ~TestWriter() = default;
 
-    MockWriter() = default;
-    virtual ~MockWriter() = default;
+    void printLine(const char * msg) override {
+        mResult.append(msg);
+        if (mPrintEol) {
+            mResult.append("\n");
+        }
+    }
+
+    TestWriter & clear() {
+        mResult.clear();
+        return *this;
+    }
+
+    std::string mResult;
+
+private:
+
+    bool mPrintEol;
 
 };
 

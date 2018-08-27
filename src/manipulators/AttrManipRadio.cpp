@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipRadio.h"
 #include "xpln/enums/EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -45,7 +47,7 @@ AttrManipRadio::AttrManipRadio()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipRadio::setDown(float val) {
+void AttrManipRadio::setDown(const float val) {
     mDown = val;
 }
 
@@ -72,20 +74,32 @@ bool AttrManipRadio::equals(const AttrManipBase * manip) const {
     if (!AttrManipBase::equals(manip))
         return false;
 
-    const AttrManipRadio * right = dynamic_cast<const AttrManipRadio*>(manip);
+    const auto * right = dynamic_cast<const AttrManipRadio*>(manip);
     if (!right)
         return false;
 
-    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
-        return false;
-
     return (sts::isEqual(mDown, right->mDown) &&
+            sts::isEqual(mWheel, right->mWheel) &&
             sts::isEqual(mDataref, right->mDataref));
 }
 
 AttrManipBase * AttrManipRadio::clone() const {
     return new AttrManipRadio(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipRadio::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_RADIO;
+    outStr << " " << cursor().toString();
+    outStr << " " << down();
+    outStr << " " << dataref();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1 + wheel().printObj(writer);
 }
 
 /**************************************************************************************************/

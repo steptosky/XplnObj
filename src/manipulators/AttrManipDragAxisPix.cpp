@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipDragAxisPix.h"
 #include "xpln/enums/EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -45,15 +47,15 @@ AttrManipDragAxisPix::AttrManipDragAxisPix()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipDragAxisPix::setDxPix(int val) {
+void AttrManipDragAxisPix::setDxPix(const int val) {
     mDxPix = val;
 }
 
-void AttrManipDragAxisPix::setStep(int val) {
+void AttrManipDragAxisPix::setStep(const int val) {
     mStep = val;
 }
 
-void AttrManipDragAxisPix::setExp(float val) {
+void AttrManipDragAxisPix::setExp(const float val) {
     mExp = val;
 }
 
@@ -69,11 +71,11 @@ float AttrManipDragAxisPix::exp() const {
     return mExp;
 }
 
-void AttrManipDragAxisPix::setVal1(float val) {
+void AttrManipDragAxisPix::setVal1(const float val) {
     mVal1 = val;
 }
 
-void AttrManipDragAxisPix::setVal2(float val) {
+void AttrManipDragAxisPix::setVal2(const float val) {
     mVal2 = val;
 }
 
@@ -104,12 +106,8 @@ bool AttrManipDragAxisPix::equals(const AttrManipBase * manip) const {
     if (!AttrManipBase::equals(manip))
         return false;
 
-    const AttrManipDragAxisPix * right = dynamic_cast<const AttrManipDragAxisPix*>(manip);
+    const auto * right = dynamic_cast<const AttrManipDragAxisPix*>(manip);
     if (!right)
-        return false;
-
-    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
         return false;
 
     return (sts::isEqual(mDxPix, right->mDxPix) &&
@@ -117,11 +115,31 @@ bool AttrManipDragAxisPix::equals(const AttrManipBase * manip) const {
             sts::isEqual(mExp, right->mExp) &&
             sts::isEqual(mVal1, right->mVal1) &&
             sts::isEqual(mVal2, right->mVal2) &&
+            sts::isEqual(mWheel, right->mWheel) &&
             sts::isEqual(mDataref, right->mDataref));
 }
 
 AttrManipBase * AttrManipDragAxisPix::clone() const {
     return new AttrManipDragAxisPix(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipDragAxisPix::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_DRAG_AXIS_PIX;
+    outStr << " " << cursor().toString();
+    outStr << " " << dxPix();
+    outStr << " " << step();
+    outStr << " " << exp();
+    outStr << " " << val1();
+    outStr << " " << val2();
+    outStr << " " << dataref();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1 + wheel().printObj(writer);
 }
 
 /**************************************************************************************************/

@@ -30,6 +30,8 @@
 #include "stdafx.h"
 
 #include "xpln/obj/manipulators/AttrManipNoop.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -56,6 +58,15 @@ bool AttrManipNoop::equals(const AttrManipBase * manip) const {
 
 AttrManipBase * AttrManipNoop::clone() const {
     return new AttrManipNoop(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipNoop::printObj(AbstractWriter & writer) const {
+    writer.printLine(ATTR_MANIP_NOOP);
+    return 1;
 }
 
 /**************************************************************************************************/

@@ -42,7 +42,7 @@ namespace xobj {
  * \details ATTR_manip_push
  * \ingroup Manipulators
  */
-class AttrManipPush : public AttrManipBase, public AttrManipWheel {
+class AttrManipPush : public AttrManipBase {
 public:
 
     XpObjLib AttrManipPush();
@@ -68,11 +68,40 @@ public:
 
     //-------------------------------------------------------------------------
 
+    /*!
+     * \see AttrManipWheel
+     */
+    void setWheel(const AttrManipWheel & ranges) {
+        mWheel = ranges;
+    }
+
+    /*!
+     * \see AttrManipWheel
+     */
+    AttrManipWheel & wheel() {
+        return mWheel;
+    }
+
+    /*!
+     * \see AttrManipWheel
+     */
+    const AttrManipWheel & wheel() const {
+        return mWheel;
+    }
+
+    //-------------------------------------------------------------------------
+
+    /*! \copydoc AttrManipBase::printObj */
+    XpObjLib virtual std::size_t printObj(AbstractWriter & writer) const final;
+
+    //-------------------------------------------------------------------------
+
 private:
 
     float mDown = 0.0f;
     float mUp = 0.0f;
     std::string mDataref = "none";
+    AttrManipWheel mWheel;
 
 };
 

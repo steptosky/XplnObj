@@ -77,6 +77,11 @@ public:
 
     //-------------------------------------------------------------------------
 
+    /*! \copydoc AttrManipBase::printObj */
+    XpObjLib virtual std::size_t printObj(AbstractWriter & writer) const final;
+
+    //-------------------------------------------------------------------------
+
 private:
 
     float mX = 0.0f;

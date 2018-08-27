@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipDragXy.h"
 #include "xpln/enums/EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -45,15 +47,15 @@ AttrManipDragXy::AttrManipDragXy()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipDragXy::setX(float val) {
+void AttrManipDragXy::setX(const float val) {
     mX = val;
 }
 
-void AttrManipDragXy::setXMin(float val) {
+void AttrManipDragXy::setXMin(const float val) {
     mXMin = val;
 }
 
-void AttrManipDragXy::setXMax(float val) {
+void AttrManipDragXy::setXMax(const float val) {
     mXMax = val;
 }
 
@@ -120,7 +122,7 @@ bool AttrManipDragXy::equals(const AttrManipBase * manip) const {
     if (!AttrManipBase::equals(manip))
         return false;
 
-    const AttrManipDragXy * right = dynamic_cast<const AttrManipDragXy*>(manip);
+    const auto * right = dynamic_cast<const AttrManipDragXy*>(manip);
     if (!right)
         return false;
 
@@ -136,6 +138,27 @@ bool AttrManipDragXy::equals(const AttrManipBase * manip) const {
 
 AttrManipBase * AttrManipDragXy::clone() const {
     return new AttrManipDragXy(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipDragXy::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_DRAG_XY;
+    outStr << " " << cursor().toString();
+    outStr << " " << x();
+    outStr << " " << y();
+    outStr << " " << xMin();
+    outStr << " " << xMax();
+    outStr << " " << yMin();
+    outStr << " " << yMax();
+    outStr << " " << xDataref();
+    outStr << " " << yDataref();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

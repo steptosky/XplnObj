@@ -42,7 +42,7 @@ namespace xobj {
  * \details ATTR_manip_drag_axis_pix
  * \ingroup Manipulators
  */
-class AttrManipDragAxisPix : public AttrManipBase, public AttrManipWheel {
+class AttrManipDragAxisPix : public AttrManipBase {
 public:
 
     XpObjLib AttrManipDragAxisPix();
@@ -67,11 +67,39 @@ public:
 
     //-------------------------------------------------------------------------
 
+    /*!
+     * \see AttrManipWheel
+     */
+    void setWheel(const AttrManipWheel & ranges) {
+        mWheel = ranges;
+    }
+
+    /*!
+     * \see AttrManipWheel
+     */
+    AttrManipWheel & wheel() {
+        return mWheel;
+    }
+
+    /*!
+     * \see AttrManipWheel
+     */
+    const AttrManipWheel & wheel() const {
+        return mWheel;
+    }
+
+    //-------------------------------------------------------------------------
+
     /*! \copydoc AttrManipBase::equals */
     XpObjLib bool equals(const AttrManipBase * manip) const override;
 
     /*! \copydoc AttrManipBase::clone */
     XpObjLib AttrManipBase * clone() const override;
+
+    //-------------------------------------------------------------------------
+
+    /*! \copydoc AttrManipBase::printObj */
+    XpObjLib virtual std::size_t printObj(AbstractWriter & writer) const final;
 
     //-------------------------------------------------------------------------
 
@@ -83,6 +111,7 @@ private:
     float mVal1 = 0.0f;
     float mVal2 = 1.0f;
     std::string mDataref = "none";
+    AttrManipWheel mWheel;
 
 };
 

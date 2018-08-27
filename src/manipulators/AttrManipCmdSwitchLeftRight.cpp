@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipCmdSwitchLeftRight.h"
 #include "xpln/enums/EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -72,7 +74,7 @@ bool AttrManipCmdSwitchLeftRight::equals(const AttrManipBase * manip) const {
     if (!AttrManipBase::equals(manip))
         return false;
 
-    const AttrManipCmdSwitchLeftRight * right = dynamic_cast<const AttrManipCmdSwitchLeftRight*>(manip);
+    const auto * right = dynamic_cast<const AttrManipCmdSwitchLeftRight*>(manip);
     if (!right)
         return false;
 
@@ -82,6 +84,21 @@ bool AttrManipCmdSwitchLeftRight::equals(const AttrManipBase * manip) const {
 
 AttrManipBase * AttrManipCmdSwitchLeftRight::clone() const {
     return new AttrManipCmdSwitchLeftRight(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipCmdSwitchLeftRight::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT;
+    outStr << " " << cursor().toString();
+    outStr << " " << cmdPositive();
+    outStr << " " << cmdNegative();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

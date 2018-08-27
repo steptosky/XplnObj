@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipDelta.h"
 #include "xpln/enums/EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -45,19 +47,19 @@ AttrManipDelta::AttrManipDelta()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipDelta::setDown(float val) {
+void AttrManipDelta::setDown(const float val) {
     mDown = val;
 }
 
-void AttrManipDelta::setHold(float val) {
+void AttrManipDelta::setHold(const float val) {
     mHold = val;
 }
 
-void AttrManipDelta::setMinimum(float val) {
+void AttrManipDelta::setMinimum(const float val) {
     mMin = val;
 }
 
-void AttrManipDelta::setMaximum(float val) {
+void AttrManipDelta::setMaximum(const float val) {
     mMax = val;
 }
 
@@ -96,23 +98,38 @@ bool AttrManipDelta::equals(const AttrManipBase * manip) const {
     if (!AttrManipBase::equals(manip))
         return false;
 
-    const AttrManipDelta * right = dynamic_cast<const AttrManipDelta*>(manip);
+    const auto * right = dynamic_cast<const AttrManipDelta*>(manip);
     if (!right)
-        return false;
-
-    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
         return false;
 
     return (sts::isEqual(mDown, right->mDown) &&
             sts::isEqual(mHold, right->mHold) &&
             sts::isEqual(mMin, right->mMin) &&
             sts::isEqual(mMax, right->mMax) &&
+            sts::isEqual(mWheel, right->mWheel) &&
             sts::isEqual(mDataref, right->mDataref));
 }
 
 AttrManipBase * AttrManipDelta::clone() const {
     return new AttrManipDelta(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipDelta::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_DELTA;
+    outStr << " " << cursor().toString();
+    outStr << " " << down();
+    outStr << " " << hold();
+    outStr << " " << minimum();
+    outStr << " " << maximum();
+    outStr << " " << dataref();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1 + wheel().printObj(writer);
 }
 
 /**************************************************************************************************/

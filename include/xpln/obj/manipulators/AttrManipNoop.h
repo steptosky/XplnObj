@@ -30,7 +30,6 @@
 */
 
 #include "AttrManipBase.h"
-#include "xpln/enums/EManipulator.h"
 
 namespace xobj {
 
@@ -55,6 +54,11 @@ public:
 
     /*! \copydoc AttrManipBase::clone */
     XpObjLib AttrManipBase * clone() const override;
+
+    //-------------------------------------------------------------------------
+
+    /*! \copydoc AttrManipBase::printObj */
+    XpObjLib virtual std::size_t printObj(AbstractWriter & writer) const final;
 
     //-------------------------------------------------------------------------
 

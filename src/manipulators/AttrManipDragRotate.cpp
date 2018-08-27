@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipDragRotate.h"
 #include "xpln/enums//EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -213,6 +215,46 @@ bool AttrManipDragRotate::equals(const AttrManipBase * manip) const {
 
 AttrManipBase * AttrManipDragRotate::clone() const {
     return new AttrManipDragRotate(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipDragRotate::printObj(AbstractWriter & writer) const {
+    std::size_t outCounter = 1;
+    StringStream outStr;
+    outStr << ATTR_MANIP_DRAG_ROTATE;
+    outStr << " " << cursor().toString();
+    outStr << " " << x();
+    outStr << " " << y();
+    outStr << " " << z();
+    outStr << " " << directionX();
+    outStr << " " << directionY();
+    outStr << " " << directionZ();
+    outStr << " " << angle1();
+    outStr << " " << angle2();
+    outStr << " " << lift();
+    outStr << " " << v1Min();
+    outStr << " " << v1Max();
+    outStr << " " << v2Min();
+    outStr << " " << v2Max();
+    outStr << " " << dataref1();
+    outStr << " " << dataref2();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+
+    const auto & keysList = keys();
+    for (const auto & k : keysList) {
+        outCounter += k.printObj(writer);
+    }
+
+    const auto & detentRangeList = detentRanges();
+    for (const auto & v : detentRangeList) {
+        outCounter += v.printObj(writer);
+    }
+
+    return outCounter;
 }
 
 /**************************************************************************************************/

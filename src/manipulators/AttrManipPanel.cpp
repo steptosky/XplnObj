@@ -30,6 +30,8 @@
 #include "stdafx.h"
 
 #include "xpln/obj/manipulators/AttrManipPanel.h"
+#include "converters/ObjAttrString.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -68,6 +70,20 @@ bool AttrManipPanel::equals(const AttrManipBase * manip) const {
 
 AttrManipBase * AttrManipPanel::clone() const {
     return new AttrManipPanel(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipPanel::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << toObjString(cockpit());
+#ifndef NDEBUG
+    outStr << " ## panel manip";
+#endif
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

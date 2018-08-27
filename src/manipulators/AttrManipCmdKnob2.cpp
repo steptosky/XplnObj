@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipCmdKnob2.h"
 #include "xpln/enums/EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -73,6 +75,20 @@ bool AttrManipCmdKnob2::equals(const AttrManipBase * manip) const {
 
 AttrManipBase * AttrManipCmdKnob2::clone() const {
     return new AttrManipCmdKnob2(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipCmdKnob2::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_KNOB2;
+    outStr << " " << cursor().toString();
+    outStr << " " << cmd();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

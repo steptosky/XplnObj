@@ -38,12 +38,11 @@ namespace xobj {
 /**************************************************************************************************/
 
 class AbstractWriter {
+public:
 
     AbstractWriter(const AbstractWriter &) = delete;
     AbstractWriter & operator =(const AbstractWriter &) = delete;
-
-public:
-
+        
     AbstractWriter() = default;
     virtual ~AbstractWriter() = default;
 
@@ -95,7 +94,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-inline void AbstractWriter::spaceEnable(bool state) {
+inline void AbstractWriter::spaceEnable(const bool state) {
     mIsSpaseEnabled = state;
 }
 

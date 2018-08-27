@@ -45,7 +45,7 @@ namespace xobj {
  * \details ATTR_manip_drag_axis
  * \ingroup Manipulators
  */
-class AttrManipDragAxis : public AttrManipBase, public AttrManipWheel {
+class AttrManipDragAxis : public AttrManipBase {
 public:
 
     typedef std::vector<AttrAxisDetentRange> DetentRanges;
@@ -87,6 +87,11 @@ public:
 
     //-------------------------------------------------------------------------
 
+    /*! \copydoc AttrManipBase::printObj */
+    XpObjLib virtual std::size_t printObj(AbstractWriter & writer) const final;
+
+    //-------------------------------------------------------------------------
+
     /*!
      * \see AttrAxisDetentRange
      */
@@ -110,6 +115,29 @@ public:
 
     //-------------------------------------------------------------------------
 
+    /*!
+     * \see AttrManipWheel
+     */
+    void setWheel(const AttrManipWheel & ranges) {
+        mWheel = ranges;
+    }
+
+    /*!
+     * \see AttrManipWheel
+     */
+    AttrManipWheel & wheel() {
+        return mWheel;
+    }
+
+    /*!
+     * \see AttrManipWheel
+     */
+    const AttrManipWheel & wheel() const {
+        return mWheel;
+    }
+
+    //-------------------------------------------------------------------------
+
 private:
 
     float mX = 0.0f;
@@ -123,6 +151,7 @@ private:
     // also this list must not be used if AttrAxisDetented isn't specified.
     DetentRanges mAxisDetentRanges;
     std::string mDataref = "none";
+    AttrManipWheel mWheel;
 
 };
 

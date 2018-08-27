@@ -30,6 +30,8 @@
 #include "stdafx.h"
 
 #include "xpln/obj/manipulators/AttrAxisDetentRange.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -77,6 +79,20 @@ float AttrAxisDetentRange::end() const {
 
 float AttrAxisDetentRange::height() const {
     return mHeight;
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrAxisDetentRange::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_AXIS_DETENT_RANGE;
+    outStr << " " << start();
+    outStr << " " << end();
+    outStr << " " << height();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

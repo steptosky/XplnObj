@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipCmd.h"
 #include "xpln/enums//EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -64,7 +66,7 @@ bool AttrManipCmd::equals(const AttrManipBase * manip) const {
     if (!AttrManipBase::equals(manip))
         return false;
 
-    const AttrManipCmd * right = dynamic_cast<const AttrManipCmd*>(manip);
+    const auto * right = dynamic_cast<const AttrManipCmd*>(manip);
     if (!right)
         return false;
 
@@ -73,6 +75,20 @@ bool AttrManipCmd::equals(const AttrManipBase * manip) const {
 
 AttrManipBase * AttrManipCmd::clone() const {
     return new AttrManipCmd(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipCmd::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND;
+    outStr << " " << cursor().toString();
+    outStr << " " << command();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

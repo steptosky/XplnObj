@@ -30,6 +30,8 @@
 #include "stdafx.h"
 
 #include "xpln/obj/manipulators/AttrAxisDetented.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -115,6 +117,23 @@ void AttrAxisDetented::setDataref(const std::string & val) {
 
 const std::string & AttrAxisDetented::dataref() const {
     return mDataref;
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrAxisDetented::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_AXIS_DETENTED;
+    outStr << " " << directionX();
+    outStr << " " << directionY();
+    outStr << " " << directionZ();
+    outStr << " " << vMin();
+    outStr << " " << vMax();
+    outStr << " " << dataref();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipToggle.h"
 #include "xpln/enums/EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -45,11 +47,11 @@ AttrManipToggle::AttrManipToggle()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipToggle::setOn(float val) {
+void AttrManipToggle::setOn(const float val) {
     mOn = val;
 }
 
-void AttrManipToggle::setOff(float val) {
+void AttrManipToggle::setOff(const float val) {
     mOff = val;
 }
 
@@ -80,21 +82,34 @@ bool AttrManipToggle::equals(const AttrManipBase * manip) const {
     if (!AttrManipBase::equals(manip))
         return false;
 
-    const AttrManipToggle * right = dynamic_cast<const AttrManipToggle*>(manip);
+    const auto * right = dynamic_cast<const AttrManipToggle*>(manip);
     if (!right)
-        return false;
-
-    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
         return false;
 
     return (sts::isEqual(mOn, right->mOn) &&
             sts::isEqual(mOff, right->mOff) &&
+            sts::isEqual(mWheel, right->mWheel) &&
             sts::isEqual(mDataref, right->mDataref));
 }
 
 AttrManipBase * AttrManipToggle::clone() const {
     return new AttrManipToggle(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipToggle::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_TOGGLE;
+    outStr << " " << cursor().toString();
+    outStr << " " << on();
+    outStr << " " << off();
+    outStr << " " << dataref();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1 + wheel().printObj(writer);
 }
 
 /**************************************************************************************************/

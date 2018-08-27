@@ -35,6 +35,8 @@
 
 namespace xobj {
 
+class AbstractWriter;
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
@@ -75,6 +77,14 @@ public:
     XpObjLib virtual bool equals(const AttrManipBase * manip) const;
 
     XpObjLib virtual AttrManipBase * clone() const = 0;
+
+    //-------------------------------------------------------------------------
+
+    /*!
+     * \param [in] writer 
+     * \return Number of manipulators attributes that were printed.
+     */
+    XpObjLib virtual std::size_t printObj(AbstractWriter & writer) const =0;
 
     //-------------------------------------------------------------------------
 

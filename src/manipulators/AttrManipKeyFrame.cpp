@@ -30,6 +30,8 @@
 #include "stdafx.h"
 
 #include "xpln/obj/manipulators/AttrManipKeyFrame.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -69,6 +71,19 @@ float AttrManipKeyFrame::value() const {
 
 float AttrManipKeyFrame::angle() const {
     return mAngle;
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipKeyFrame::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_KEYFRAME;
+    outStr << " " << value();
+    outStr << " " << angle();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

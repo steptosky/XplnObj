@@ -42,7 +42,7 @@ namespace xobj {
  * \details ATTR_manip_radio
  * \ingroup Manipulators
  */
-class AttrManipRadio : public AttrManipBase, public AttrManipWheel {
+class AttrManipRadio : public AttrManipBase {
 public:
 
     XpObjLib AttrManipRadio();
@@ -58,6 +58,29 @@ public:
 
     //-------------------------------------------------------------------------
 
+    /*!
+     * \see AttrManipWheel
+     */
+    void setWheel(const AttrManipWheel & ranges) {
+        mWheel = ranges;
+    }
+
+    /*!
+     * \see AttrManipWheel
+     */
+    AttrManipWheel & wheel() {
+        return mWheel;
+    }
+
+    /*!
+     * \see AttrManipWheel
+     */
+    const AttrManipWheel & wheel() const {
+        return mWheel;
+    }
+
+    //-------------------------------------------------------------------------
+
     /*! \copydoc AttrManipBase::equals */
     XpObjLib bool equals(const AttrManipBase * manip) const override;
 
@@ -66,10 +89,16 @@ public:
 
     //-------------------------------------------------------------------------
 
+    /*! \copydoc AttrManipBase::printObj */
+    XpObjLib virtual std::size_t printObj(AbstractWriter & writer) const final;
+
+    //-------------------------------------------------------------------------
+
 private:
 
     float mDown = 0.0f;
     std::string mDataref = "none";
+    AttrManipWheel mWheel;
 
 };
 

@@ -7,12 +7,15 @@ X-Plane Obj Library
              This allows you to use new attributes manually until
              it is supported by the library or writing notes.
              This can be applied to any object types.
-- **Added:** New manipulators:
-             `ATTR_manip_command_switch_left_right2`,
-             `ATTR_manip_command_switch_up_down2`,
-             `ATTR_manip_command_knob2`,
-             `ATTR_manip_drag_rotate`,
+- **Added:** New manipulators:  
+             `ATTR_manip_command_switch_left_right2`,  
+             `ATTR_manip_command_switch_up_down2`,  
+             `ATTR_manip_command_knob2`,  
+             `ATTR_manip_drag_rotate`,  
+             `ATTR_axis_detented`,  
+             `ATTR_axis_detent_range`,  
              `ATTR_manip_keyframe`
+- **Change breaks backward compatibility:** Manipulators were re-factored. The wheel manipulator is composed now.
 - **Updated:** Build scripts.
 - **Fixed:** Incorrect attribute name inside `.obj` for the
              `ATTR_manip_command_switch_up_down` and `ATTR_manip_command_switch_left_right`.

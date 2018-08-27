@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipAxisKnob.h"
 #include "xpln/enums/EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -45,19 +47,19 @@ AttrManipAxisKnob::AttrManipAxisKnob()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipAxisKnob::setClickDelta(float val) {
+void AttrManipAxisKnob::setClickDelta(const float val) {
     mClickDelta = val;
 }
 
-void AttrManipAxisKnob::setHoldDelta(float val) {
+void AttrManipAxisKnob::setHoldDelta(const float val) {
     mHoldDelta = val;
 }
 
-void AttrManipAxisKnob::setMinimum(float val) {
+void AttrManipAxisKnob::setMinimum(const float val) {
     mMin = val;
 }
 
-void AttrManipAxisKnob::setMaximum(float val) {
+void AttrManipAxisKnob::setMaximum(const float val) {
     mMax = val;
 }
 
@@ -96,23 +98,38 @@ bool AttrManipAxisKnob::equals(const AttrManipBase * manip) const {
     if (!AttrManipBase::equals(manip))
         return false;
 
-    const AttrManipAxisKnob * right = dynamic_cast<const AttrManipAxisKnob*>(manip);
+    const auto * right = dynamic_cast<const AttrManipAxisKnob*>(manip);
     if (!right)
-        return false;
-
-    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
         return false;
 
     return (sts::isEqual(mClickDelta, right->mClickDelta) &&
             sts::isEqual(mHoldDelta, right->mHoldDelta) &&
             sts::isEqual(mMin, right->mMin) &&
             sts::isEqual(mMax, right->mMax) &&
+            sts::isEqual(mWheel, right->mWheel) &&
             sts::isEqual(mDataref, right->mDataref));
 }
 
 AttrManipBase * AttrManipAxisKnob::clone() const {
     return new AttrManipAxisKnob(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipAxisKnob::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_AXIS_KNOB;
+    outStr << " " << cursor().toString();
+    outStr << " " << minimum();
+    outStr << " " << maximum();
+    outStr << " " << clickDelta();
+    outStr << " " << holdDelta();
+    outStr << " " << dataref();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1 + wheel().printObj(writer);
 }
 
 /**************************************************************************************************/

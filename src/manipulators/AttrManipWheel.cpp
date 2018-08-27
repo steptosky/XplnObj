@@ -30,6 +30,8 @@
 #include "stdafx.h"
 
 #include "xpln/obj/manipulators/AttrManipWheel.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -56,20 +58,35 @@ bool AttrManipWheel::operator!=(const AttrManipWheel & other) const {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipWheel::setWheelEnabled(bool state) {
+void AttrManipWheel::setEnabled(const bool state) {
     mWheel = state;
 }
 
-void AttrManipWheel::setWheelDelta(float delta) {
+void AttrManipWheel::setDelta(const float delta) {
     mWheelDelta = delta;
 }
 
-bool AttrManipWheel::isWheelEnabled() const {
+bool AttrManipWheel::isEnabled() const {
     return mWheel;
 }
 
-float AttrManipWheel::wheelDelta() const {
+float AttrManipWheel::delta() const {
     return mWheelDelta;
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipWheel::printObj(AbstractWriter & writer) const {
+    if (isEnabled()) {
+        StringStream outStr;
+        outStr << ATTR_MANIP_WHEEL;
+        outStr << " " << delta();
+        writer.printLine(outStr.str());
+        return 1;
+    }
+    return 0;
 }
 
 /**************************************************************************************************/

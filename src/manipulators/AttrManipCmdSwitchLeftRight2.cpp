@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipCmdSwitchLeftRight2.h"
 #include "xpln/enums/EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -73,6 +75,20 @@ bool AttrManipCmdSwitchLeftRight2::equals(const AttrManipBase * manip) const {
 
 AttrManipBase * AttrManipCmdSwitchLeftRight2::clone() const {
     return new AttrManipCmdSwitchLeftRight2(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipCmdSwitchLeftRight2::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2;
+    outStr << " " << cursor().toString();
+    outStr << " " << cmd();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

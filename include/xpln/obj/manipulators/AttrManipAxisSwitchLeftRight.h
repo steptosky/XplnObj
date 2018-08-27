@@ -42,7 +42,7 @@ namespace xobj {
  * \details ATTR_manip_axis_switch_left_right
  * \ingroup Manipulators
  */
-class AttrManipAxisSwitchLeftRight : public AttrManipBase, public AttrManipWheel {
+class AttrManipAxisSwitchLeftRight : public AttrManipBase {
 public:
 
     XpObjLib AttrManipAxisSwitchLeftRight();
@@ -64,11 +64,39 @@ public:
 
     //-------------------------------------------------------------------------
 
+    /*!
+     * \see AttrManipWheel
+     */
+    void setWheel(const AttrManipWheel & ranges) {
+        mWheel = ranges;
+    }
+
+    /*!
+     * \see AttrManipWheel
+     */
+    AttrManipWheel & wheel() {
+        return mWheel;
+    }
+
+    /*!
+     * \see AttrManipWheel
+     */
+    const AttrManipWheel & wheel() const {
+        return mWheel;
+    }
+
+    //-------------------------------------------------------------------------
+
     /*! \copydoc AttrManipBase::equals */
     XpObjLib bool equals(const AttrManipBase * manip) const override;
 
     /*! \copydoc AttrManipBase::clone */
     XpObjLib AttrManipBase * clone() const override;
+
+    //-------------------------------------------------------------------------
+
+    /*! \copydoc AttrManipBase::printObj */
+    XpObjLib virtual std::size_t printObj(AbstractWriter & writer) const final;
 
     //-------------------------------------------------------------------------
 
@@ -79,6 +107,7 @@ private:
     float mMin = 0.0f;
     float mMax = 0.0f;
     std::string mDataref = "none";
+    AttrManipWheel mWheel;
 
 };
 

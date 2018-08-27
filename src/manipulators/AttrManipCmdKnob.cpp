@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipCmdKnob.h"
 #include "xpln/enums//EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -72,7 +74,7 @@ bool AttrManipCmdKnob::equals(const AttrManipBase * manip) const {
     if (!AttrManipBase::equals(manip))
         return false;
 
-    const AttrManipCmdKnob * right = dynamic_cast<const AttrManipCmdKnob*>(manip);
+    const auto * right = dynamic_cast<const AttrManipCmdKnob*>(manip);
     if (!right)
         return false;
 
@@ -82,6 +84,21 @@ bool AttrManipCmdKnob::equals(const AttrManipBase * manip) const {
 
 AttrManipBase * AttrManipCmdKnob::clone() const {
     return new AttrManipCmdKnob(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipCmdKnob::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_KNOB;
+    outStr << " " << cursor().toString();
+    outStr << " " << cmdPositive();
+    outStr << " " << cmdNegative();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

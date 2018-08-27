@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipWrap.h"
 #include "xpln/enums/EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -45,19 +47,19 @@ AttrManipWrap::AttrManipWrap()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipWrap::setDown(float val) {
+void AttrManipWrap::setDown(const float val) {
     mDown = val;
 }
 
-void AttrManipWrap::setHold(float val) {
+void AttrManipWrap::setHold(const float val) {
     mHold = val;
 }
 
-void AttrManipWrap::setMinimum(float val) {
+void AttrManipWrap::setMinimum(const float val) {
     mMin = val;
 }
 
-void AttrManipWrap::setMaximum(float val) {
+void AttrManipWrap::setMaximum(const float val) {
     mMax = val;
 }
 
@@ -96,23 +98,38 @@ bool AttrManipWrap::equals(const AttrManipBase * manip) const {
     if (!AttrManipBase::equals(manip))
         return false;
 
-    const AttrManipWrap * right = dynamic_cast<const AttrManipWrap*>(manip);
+    const auto * right = dynamic_cast<const AttrManipWrap*>(manip);
     if (!right)
-        return false;
-
-    const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-    if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
         return false;
 
     return (sts::isEqual(mDown, right->mDown) &&
             sts::isEqual(mHold, right->mHold) &&
             sts::isEqual(mMin, right->mMin) &&
-            sts::isEqual(mMax, right->mMax) &&
+            sts::isEqual(mMin, right->mMin) &&
+            sts::isEqual(mWheel, right->mWheel) &&
             sts::isEqual(mDataref, right->mDataref));
 }
 
 AttrManipBase * AttrManipWrap::clone() const {
     return new AttrManipWrap(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipWrap::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_WRAP;
+    outStr << " " << cursor().toString();
+    outStr << " " << down();
+    outStr << " " << hold();
+    outStr << " " << minimum();
+    outStr << " " << maximum();
+    outStr << " " << dataref();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1 + wheel().printObj(writer);
 }
 
 /**************************************************************************************************/

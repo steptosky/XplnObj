@@ -33,6 +33,8 @@
 
 namespace xobj {
 
+class AbstractWriter;
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
@@ -55,10 +57,15 @@ public:
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setWheelEnabled(bool state);
-    XpObjLib void setWheelDelta(float delta);
-    XpObjLib bool isWheelEnabled() const;
-    XpObjLib float wheelDelta() const;
+    XpObjLib void setEnabled(bool state);
+    XpObjLib void setDelta(float delta);
+    XpObjLib bool isEnabled() const;
+    XpObjLib float delta() const;
+
+    //-------------------------------------------------------------------------
+
+    /*! \copydoc AttrManipBase::printObj */
+    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
 
     //-------------------------------------------------------------------------
 

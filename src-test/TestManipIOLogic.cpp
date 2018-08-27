@@ -51,10 +51,10 @@ using ::testing::InSequence;
 /**************************************************************************************************/
 
 /* 
- * This tests are for checking mnipulators logic of the chain 'mesh objects->file | file->mesh objects'.
- * So they test writter and reader for mnipulators of mesh objects.
+ * This tests are for checking manipulators logic of the chain 'mesh objects->file | file->mesh objects'.
+ * So they test writer and reader for manipulators of mesh objects.
  * The manipulators have some logic for writing and reading you can see it in other tests like TestManipWrite.
- * Acttualy this tests are like as TestManipWrite except they test full chain (not only writing).
+ * Actually this tests are like as TestManipWrite except they test full chain (not only writing).
  */
 
 /**************************************************************************************************/
@@ -62,18 +62,15 @@ using ::testing::InSequence;
 /**************************************************************************************************/
 
 class TestManipIOLogic : public ::testing::Test {
+public:
 
     TestManipIOLogic(const TestManipIOLogic &) = delete;
     TestManipIOLogic & operator =(const TestManipIOLogic &) = delete;
 
-public:
-
     TestManipIOLogic() = default;
     virtual ~TestManipIOLogic() = default;
 
-public:
-
-    static void extractMesh(const ObjMain & inMain, size_t inLodNumber, size_t inMeshNumber, ObjMesh *& outMesh) {
+    static void extractMesh(const ObjMain & inMain, const size_t inLodNumber, const size_t inMeshNumber, ObjMesh *& outMesh) {
         ASSERT_TRUE(inLodNumber < inMain.lodCount());
         const ObjLodGroup & inLGroup = inMain.lod(inLodNumber);
         ASSERT_TRUE(inMeshNumber < inLGroup.transform().objList().size());
@@ -87,7 +84,7 @@ public:
     }
 
     template<typename MANIP>
-    static void extractManip(const ObjMain & inMain, size_t inLodNumber, size_t inMeshNumber, const MANIP *& outAttr) {
+    static void extractManip(const ObjMain & inMain, const size_t inLodNumber, const size_t inMeshNumber, const MANIP *& outAttr) {
         ObjMesh * inM = nullptr;
         extractMesh(inMain, inLodNumber, inMeshNumber, inM);
         outAttr = inM->pAttr.manipulator() == nullptr ? nullptr : static_cast<const MANIP *>(inM->pAttr.manipulator());

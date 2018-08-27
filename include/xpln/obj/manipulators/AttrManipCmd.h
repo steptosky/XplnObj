@@ -62,6 +62,11 @@ public:
 
     //-------------------------------------------------------------------------
 
+    /*! \copydoc AttrManipBase::printObj */
+    XpObjLib virtual std::size_t printObj(AbstractWriter & writer) const final;
+
+    //-------------------------------------------------------------------------
+
 private:
 
     std::string mCommand = "none";

@@ -31,6 +31,8 @@
 
 #include "xpln/obj/manipulators/AttrManipCmdAxis.h"
 #include "xpln/enums//EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -45,15 +47,15 @@ AttrManipCmdAxis::AttrManipCmdAxis()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipCmdAxis::setX(float val) {
+void AttrManipCmdAxis::setX(const float val) {
     mX = val;
 }
 
-void AttrManipCmdAxis::setY(float val) {
+void AttrManipCmdAxis::setY(const float val) {
     mY = val;
 }
 
-void AttrManipCmdAxis::setZ(float val) {
+void AttrManipCmdAxis::setZ(const float val) {
     mZ = val;
 }
 
@@ -96,7 +98,7 @@ bool AttrManipCmdAxis::equals(const AttrManipBase * manip) const {
     if (!AttrManipBase::equals(manip))
         return false;
 
-    const AttrManipCmdAxis * right = dynamic_cast<const AttrManipCmdAxis*>(manip);
+    const auto * right = dynamic_cast<const AttrManipCmdAxis*>(manip);
     if (!right)
         return false;
 
@@ -109,6 +111,24 @@ bool AttrManipCmdAxis::equals(const AttrManipBase * manip) const {
 
 AttrManipBase * AttrManipCmdAxis::clone() const {
     return new AttrManipCmdAxis(*this);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipCmdAxis::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_AXIS;
+    outStr << " " << cursor().toString();
+    outStr << " " << x();
+    outStr << " " << y();
+    outStr << " " << z();
+    outStr << " " << cmdPositive();
+    outStr << " " << cmdNegative();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,45 +27,53 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/XplnObjExport.h"
+#include "stdafx.h"
+
+#include "xpln/obj/manipulators/AttrManipCmdKnob2.h"
+#include "xpln/enums/EManipulator.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-/*!
- * \details Base class for all manipulators that support mouse wheel.
- * \note You should not directly use this class.
- * \ingroup Manipulators
- */
-class AttrManipWheel {
-public:
+AttrManipCmdKnob2::AttrManipCmdKnob2()
+    : AttrManipBase(EManipulator(EManipulator::command_knob2)) { }
 
-    XpObjLib AttrManipWheel();
-    virtual ~AttrManipWheel() = default;
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-    //-------------------------------------------------------------------------
+void AttrManipCmdKnob2::setCmd(const std::string & val) {
+    mCommand = val;
+}
 
-    XpObjLib bool operator==(const AttrManipWheel & other) const;
-    XpObjLib bool operator!=(const AttrManipWheel & other) const;
+const std::string & AttrManipCmdKnob2::cmd() const {
+    return mCommand;
+}
 
-    //-------------------------------------------------------------------------
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-    XpObjLib void setWheelEnabled(bool state);
-    XpObjLib void setWheelDelta(float delta);
-    XpObjLib bool isWheelEnabled() const;
-    XpObjLib float wheelDelta() const;
+bool AttrManipCmdKnob2::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-    //-------------------------------------------------------------------------
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-private:
+    const auto * right = dynamic_cast<const AttrManipCmdKnob2*>(manip);
+    if (!right)
+        return false;
 
-    bool mWheel : 1;
-    float mWheelDelta = 0.0f;
+    return sts::isEqual(mCommand, right->mCommand);
+}
 
-};
+AttrManipBase * AttrManipCmdKnob2::clone() const {
+    return new AttrManipCmdKnob2(*this);
+}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

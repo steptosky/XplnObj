@@ -69,11 +69,11 @@ float AttrManipDragAxis::z() const {
     return mZ;
 }
 
-void AttrManipDragAxis::setVal1(float val) {
+void AttrManipDragAxis::setVal1(const float val) {
     mVal1 = val;
 }
 
-void AttrManipDragAxis::setVal2(float val) {
+void AttrManipDragAxis::setVal2(const float val) {
     mVal2 = val;
 }
 
@@ -91,6 +91,18 @@ const std::string & AttrManipDragAxis::dataref() const {
 
 void AttrManipDragAxis::setDataref(const std::string & val) {
     mDataref = val;
+}
+
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
+
+const AttrAxisDetented & AttrManipDragAxis::axisDetented() const {
+    return mAxisDetented;
+}
+
+void AttrManipDragAxis::setAxisDetented(const AttrAxisDetented & val) {
+    mAxisDetented = val;
 }
 
 /**************************************************************************************************/
@@ -117,6 +129,8 @@ bool AttrManipDragAxis::equals(const AttrManipBase * manip) const {
             sts::isEqual(mZ, right->mZ) &&
             sts::isEqual(mVal1, right->mVal1) &&
             sts::isEqual(mVal2, right->mVal2) &&
+            sts::isEqual(mAxisDetented, right->mAxisDetented) &&
+            sts::isEqual(mAxisDetentRanges, right->mAxisDetentRanges) &&
             sts::isEqual(mDataref, right->mDataref));
 }
 

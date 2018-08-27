@@ -38,6 +38,9 @@
 #include "xpln/enums/eObjectType.h"
 #include "xpln/obj/ObjMesh.h"
 #include "xpln/obj/manipulators/AttrManipWheel.h"
+#include "xpln/obj/manipulators/AttrManipDragRotate.h"
+#include "xpln/obj/manipulators/AttrManipDragAxis.h"
+#include "xpln/obj/manipulators/AttrAxisDetented.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
 
 namespace xobj {
@@ -142,11 +145,43 @@ void ObjWriteManip::write(AbstractWriter * writer, const AttrManipBase * manip) 
 void ObjWriteManip::print(AbstractWriter * writer, const AttrManipBase * manip) {
     if (manip) {
         writer->printLine(toObjString(manip));
+        ++mManipCounter;
+        //--------------------------
         const AttrManipWheel * wheel = dynamic_cast<const AttrManipWheel*>(manip);
         if (wheel && wheel->isWheelEnabled()) {
             writer->printLine(toObjString(*wheel));
+            ++mManipCounter;
         }
-        ++mManipCounter;
+        //--------------------------
+        if (manip->type() == EManipulator::drag_rotate) {
+            const auto * drag = static_cast<const AttrManipDragRotate*>(manip);
+            const auto & keys = drag->keys();
+            for (const auto & k : keys) {
+                writer->printLine(toObjString(k));
+            }
+            mManipCounter += keys.size();
+
+            const auto & detentRanges = drag->detentRanges();
+            for (const auto & v : detentRanges) {
+                writer->printLine(toObjString(v));
+            }
+            mManipCounter += detentRanges.size();
+        }
+        //--------------------------
+        if (manip->type() == EManipulator::drag_axis) {
+            const auto * drag = static_cast<const AttrManipDragAxis*>(manip);
+            const auto & axisDetented = drag->axisDetented();
+            if (axisDetented.isEnabled()) {
+                writer->printLine(toObjString(axisDetented));
+                ++mManipCounter;
+                const auto & detentRanges = drag->detentRanges();
+                for (const auto & v : detentRanges) {
+                    writer->printLine(toObjString(v));
+                }
+                mManipCounter += detentRanges.size();
+            }
+        }
+        //--------------------------
     }
 }
 

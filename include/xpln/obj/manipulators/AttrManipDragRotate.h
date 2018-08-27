@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,10 +29,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <vector>
 #include "AttrManipBase.h"
-#include "AttrManipWheel.h"
-#include "AttrAxisDetented.h"
+#include "AttrManipKeyFrame.h"
 #include "AttrAxisDetentRange.h"
 
 namespace xobj {
@@ -42,18 +40,19 @@ namespace xobj {
 /********************************************************************************************************/
 
 /*!
- * \details ATTR_manip_drag_axis
+ * \details ATTR_manip_drag_rotate
  * \ingroup Manipulators
  */
-class AttrManipDragAxis : public AttrManipBase, public AttrManipWheel {
+class AttrManipDragRotate : public AttrManipBase {
 public:
 
+    typedef std::vector<AttrManipKeyFrame> Keys;
     typedef std::vector<AttrAxisDetentRange> DetentRanges;
 
     //-------------------------------------------------------------------------
 
-    XpObjLib AttrManipDragAxis();
-    virtual ~AttrManipDragAxis() = default;
+    XpObjLib AttrManipDragRotate();
+    virtual ~AttrManipDragRotate() = default;
 
     //-------------------------------------------------------------------------
 
@@ -64,26 +63,52 @@ public:
     XpObjLib float y() const;
     XpObjLib float z() const;
 
-    XpObjLib void setVal1(float val);
-    XpObjLib void setVal2(float val);
-    XpObjLib float val1() const;
-    XpObjLib float val2() const;
+    XpObjLib void setDirectionX(float val);
+    XpObjLib void setDirectionY(float val);
+    XpObjLib void setDirectionZ(float val);
+    XpObjLib float directionX() const;
+    XpObjLib float directionY() const;
+    XpObjLib float directionZ() const;
 
-    XpObjLib void setDataref(const std::string & val);
-    XpObjLib const std::string & dataref() const;
+    XpObjLib void setAngle1(float val);
+    XpObjLib void setAngle2(float val);
+    XpObjLib float angle1() const;
+    XpObjLib float angle2() const;
+
+    XpObjLib void setLift(float val);
+    XpObjLib float lift() const;
+
+    XpObjLib void setV1Min(float val);
+    XpObjLib void setV1Max(float val);
+    XpObjLib float v1Min() const;
+    XpObjLib float v1Max() const;
+
+    XpObjLib void setV2Min(float val);
+    XpObjLib void setV2Max(float val);
+    XpObjLib float v2Min() const;
+    XpObjLib float v2Max() const;
+
+    XpObjLib void setDataref1(const std::string & val);
+    XpObjLib void setDataref2(const std::string & val);
+    XpObjLib const std::string & dataref1() const;
+    XpObjLib const std::string & dataref2() const;
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setAxisDetented(const AttrAxisDetented & val);
-    XpObjLib const AttrAxisDetented & axisDetented() const;
+    /*!
+     * \see AttrManipKeyFrame
+     */
+    void setKeys(const Keys & keys) { mKeys = keys; }
 
-    //-------------------------------------------------------------------------
+    /*!
+     * \see AttrManipKeyFrame
+     */
+    Keys & keys() { return mKeys; }
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
-
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
+    /*!
+     * \see AttrManipKeyFrame
+     */
+    const Keys & keys() const { return mKeys; }
 
     //-------------------------------------------------------------------------
 
@@ -110,19 +135,42 @@ public:
 
     //-------------------------------------------------------------------------
 
+    /*! \copydoc AttrManipBase::equals */
+    XpObjLib bool equals(const AttrManipBase * manip) const override;
+
+    /*! \copydoc AttrManipBase::clone */
+    XpObjLib AttrManipBase * clone() const override;
+
+    //-------------------------------------------------------------------------
+
 private:
 
     float mX = 0.0f;
     float mY = 0.0f;
     float mZ = 0.0f;
-    float mVal1 = 0.0f;
-    float mVal2 = 1.0f;
-    AttrAxisDetented mAxisDetented;
+
+    float mDirX = 0.0f;
+    float mDirY = 0.0f;
+    float mDirZ = 0.0f;
+
+    float mAngle1 = 0.0f;
+    float mAngle2 = 0.0f;
+
+    float mLift = 0.0f;
+
+    float mV1Min = 0.0f;
+    float mV1Max = 1.0f;
+
+    float mV2Min = 0.0f;
+    float mV2Max = 1.0f;
+
+    std::string mDataref1 = "none";
+    std::string mDataref2 = "none";
+
+    Keys mKeys;
     // todo there are some rules for ATTR_axis_detent_range that should be checked
     // Implements checking and printing information.
-    // also this list must not be used if AttrAxisDetented isn't specified.
     DetentRanges mAxisDetentRanges;
-    std::string mDataref = "none";
 
 };
 

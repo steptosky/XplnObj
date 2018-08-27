@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,47 +27,60 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/XplnObjExport.h"
+#include "stdafx.h"
+
+#include "xpln/obj/manipulators/AttrAxisDetentRange.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
+
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
+
+bool AttrAxisDetentRange::operator==(const AttrAxisDetentRange & other) const {
+    return sts::isEqual(mStart, other.mStart) &&
+           sts::isEqual(mEnd, other.mEnd) &&
+           sts::isEqual(mHeight, other.mHeight);
+}
+
+bool AttrAxisDetentRange::operator!=(const AttrAxisDetentRange & other) const {
+    return !this->operator==(other);
+}
+
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
+
+void AttrAxisDetentRange::setStart(const float val) {
+    mStart = val;
+}
+
+void AttrAxisDetentRange::setEnd(const float val) {
+    mEnd = val;
+}
+
+void AttrAxisDetentRange::setHeight(const float val) {
+    mHeight = val;
+}
+
+float AttrAxisDetentRange::start() const {
+    return mStart;
+}
+
+float AttrAxisDetentRange::end() const {
+    return mEnd;
+}
+
+float AttrAxisDetentRange::height() const {
+    return mHeight;
+}
+
+/**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-/*!
- * \details Base class for all manipulators that support mouse wheel.
- * \note You should not directly use this class.
- * \ingroup Manipulators
- */
-class AttrManipWheel {
-public:
-
-    XpObjLib AttrManipWheel();
-    virtual ~AttrManipWheel() = default;
-
-    //-------------------------------------------------------------------------
-
-    XpObjLib bool operator==(const AttrManipWheel & other) const;
-    XpObjLib bool operator!=(const AttrManipWheel & other) const;
-
-    //-------------------------------------------------------------------------
-
-    XpObjLib void setWheelEnabled(bool state);
-    XpObjLib void setWheelDelta(float delta);
-    XpObjLib bool isWheelEnabled() const;
-    XpObjLib float wheelDelta() const;
-
-    //-------------------------------------------------------------------------
-
-private:
-
-    bool mWheel : 1;
-    float mWheelDelta = 0.0f;
-
-};
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
 }

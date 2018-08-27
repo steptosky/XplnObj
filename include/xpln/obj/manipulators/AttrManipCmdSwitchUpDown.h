@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -38,8 +38,7 @@ namespace xobj {
 /********************************************************************************************************/
 
 /*!
- * \details ATTR_manip_switch_up_down
- * \note Mouse wheel support for this manipulators is automatic – each single click of the mouse wheel runs the increase or decrease command once.
+ * \details ATTR_manip_command_switch_up_down
  * \ingroup Manipulators
  */
 class AttrManipCmdSwitchUpDown : public AttrManipBase {

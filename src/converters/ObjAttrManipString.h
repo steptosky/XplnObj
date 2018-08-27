@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -49,6 +49,8 @@ class AttrManipCmd;
 class AttrManipCmdAxis;
 class AttrManipDelta;
 class AttrManipDragAxis;
+class AttrManipDragRotate;
+class AttrManipKeyFrame;
 class AttrManipDragAxisPix;
 class AttrManipDragXy;
 class AttrManipNoop;
@@ -61,9 +63,14 @@ class AttrManipAxisKnob;
 class AttrManipAxisSwitchLeftRight;
 class AttrManipAxisSwitchUpDown;
 class AttrManipCmdKnob;
+class AttrManipCmdKnob2;
 class AttrManipCmdSwitchLeftRight;
+class AttrManipCmdSwitchLeftRight2;
 class AttrManipCmdSwitchUpDown;
+class AttrManipCmdSwitchUpDown2;
 class AttrManipWheel;
+class AttrAxisDetented;
+class AttrAxisDetentRange;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,10 +84,15 @@ XpObjLib std::string toObjString(const AttrManipAxisSwitchUpDown & manip);
 XpObjLib std::string toObjString(const AttrManipCmd & manip);
 XpObjLib std::string toObjString(const AttrManipCmdAxis & manip);
 XpObjLib std::string toObjString(const AttrManipCmdKnob & manip);
+XpObjLib std::string toObjString(const AttrManipCmdKnob2 & manip);
 XpObjLib std::string toObjString(const AttrManipCmdSwitchLeftRight & manip);
+XpObjLib std::string toObjString(const AttrManipCmdSwitchLeftRight2 & manip);
 XpObjLib std::string toObjString(const AttrManipCmdSwitchUpDown & manip);
+XpObjLib std::string toObjString(const AttrManipCmdSwitchUpDown2 & manip);
 XpObjLib std::string toObjString(const AttrManipDelta & manip);
 XpObjLib std::string toObjString(const AttrManipDragAxis & manip);
+XpObjLib std::string toObjString(const AttrManipDragRotate & manip);
+XpObjLib std::string toObjString(const AttrManipKeyFrame & manip);
 XpObjLib std::string toObjString(const AttrManipDragAxisPix & manip);
 XpObjLib std::string toObjString(const AttrManipDragXy & manip);
 XpObjLib std::string toObjString(const AttrManipNoop & manip);
@@ -90,6 +102,8 @@ XpObjLib std::string toObjString(const AttrManipRadio & manip);
 XpObjLib std::string toObjString(const AttrManipToggle & manip);
 XpObjLib std::string toObjString(const AttrManipWrap & manip);
 XpObjLib std::string toObjString(const AttrManipWheel & manip);
+XpObjLib std::string toObjString(const AttrAxisDetented & manip);
+XpObjLib std::string toObjString(const AttrAxisDetentRange & manip);
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

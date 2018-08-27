@@ -29,8 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
-
 namespace xobj {
 
 /********************************************************************************************************/
@@ -38,41 +36,49 @@ namespace xobj {
 /********************************************************************************************************/
 
 /*!
- * \details ATTR_manip_command_knob
+ * \details ATTR_axis_detent_range
  * \ingroup Manipulators
  */
-class AttrManipCmdKnob : public AttrManipBase {
+class AttrAxisDetentRange {
 public:
 
-    XpObjLib AttrManipCmdKnob();
-    virtual ~AttrManipCmdKnob() = default;
+    //-------------------------------------------------------------------------
+
+    AttrAxisDetentRange() = default;
+    AttrAxisDetentRange(const AttrAxisDetentRange &) = default;
+    AttrAxisDetentRange(AttrAxisDetentRange &&) = default;
+
+    virtual ~AttrAxisDetentRange() = default;
+
+    AttrAxisDetentRange & operator=(const AttrAxisDetentRange &) = default;
+    AttrAxisDetentRange & operator=(AttrAxisDetentRange &&) = default;
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setCmdNegative(const std::string & val);
-    XpObjLib void setCmdPositive(const std::string & val);
-    XpObjLib const std::string & cmdNegative() const;
-    XpObjLib const std::string & cmdPositive() const;
+    XpObjLib bool operator==(const AttrAxisDetentRange & other) const;
+    XpObjLib bool operator!=(const AttrAxisDetentRange & other) const;
 
     //-------------------------------------------------------------------------
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
+    XpObjLib void setStart(float val);
+    XpObjLib void setEnd(float val);
+    XpObjLib void setHeight(float val);
 
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
+    XpObjLib float start() const;
+    XpObjLib float end() const;
+    XpObjLib float height() const;
 
     //-------------------------------------------------------------------------
 
 private:
 
-    std::string mPosCommand = "none";
-    std::string mNegCommand = "none";
+    float mStart = 0.0f;
+    float mEnd = 0.0f;
+    float mHeight = 0.0f;
 
 };
 
 /********************************************************************************************************/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 /********************************************************************************************************/
-
 }

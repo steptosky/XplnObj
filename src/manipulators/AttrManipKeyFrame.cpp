@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,47 +27,52 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/XplnObjExport.h"
+#include "stdafx.h"
+
+#include "xpln/obj/manipulators/AttrManipKeyFrame.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
+
+AttrManipKeyFrame::AttrManipKeyFrame(const float value, const float angle)
+    : mValue(value),
+      mAngle(angle) {}
+
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
+
+bool AttrManipKeyFrame::operator==(const AttrManipKeyFrame & other) const {
+    return sts::isEqual(mValue, other.mValue) && sts::isEqual(mAngle, other.mAngle);
+}
+
+bool AttrManipKeyFrame::operator!=(const AttrManipKeyFrame & other) const {
+    return !this->operator==(other);
+}
+
+//-------------------------------------------------------------------------
+
+void AttrManipKeyFrame::setValue(const float vales) {
+    mValue = vales;
+}
+
+void AttrManipKeyFrame::setAngle(const float angle) {
+    mAngle = angle;
+}
+
+float AttrManipKeyFrame::value() const {
+    return mValue;
+}
+
+float AttrManipKeyFrame::angle() const {
+    return mAngle;
+}
+
+/**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-/*!
- * \details Base class for all manipulators that support mouse wheel.
- * \note You should not directly use this class.
- * \ingroup Manipulators
- */
-class AttrManipWheel {
-public:
-
-    XpObjLib AttrManipWheel();
-    virtual ~AttrManipWheel() = default;
-
-    //-------------------------------------------------------------------------
-
-    XpObjLib bool operator==(const AttrManipWheel & other) const;
-    XpObjLib bool operator!=(const AttrManipWheel & other) const;
-
-    //-------------------------------------------------------------------------
-
-    XpObjLib void setWheelEnabled(bool state);
-    XpObjLib void setWheelDelta(float delta);
-    XpObjLib bool isWheelEnabled() const;
-    XpObjLib float wheelDelta() const;
-
-    //-------------------------------------------------------------------------
-
-private:
-
-    bool mWheel : 1;
-    float mWheelDelta = 0.0f;
-
-};
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
 }

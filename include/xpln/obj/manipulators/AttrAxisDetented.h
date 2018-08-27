@@ -29,8 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
-
 namespace xobj {
 
 /********************************************************************************************************/
@@ -38,41 +36,71 @@ namespace xobj {
 /********************************************************************************************************/
 
 /*!
- * \details ATTR_manip_command_knob
+ * \details ATTR_axis_detented
  * \ingroup Manipulators
  */
-class AttrManipCmdKnob : public AttrManipBase {
+class AttrAxisDetented {
 public:
 
-    XpObjLib AttrManipCmdKnob();
-    virtual ~AttrManipCmdKnob() = default;
+    //-------------------------------------------------------------------------
+
+    AttrAxisDetented() = default;
+    AttrAxisDetented(const AttrAxisDetented &) = default;
+    AttrAxisDetented(AttrAxisDetented &&) = default;
+
+    virtual ~AttrAxisDetented() = default;
+
+    AttrAxisDetented & operator=(const AttrAxisDetented &) = default;
+    AttrAxisDetented & operator=(AttrAxisDetented &&) = default;
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setCmdNegative(const std::string & val);
-    XpObjLib void setCmdPositive(const std::string & val);
-    XpObjLib const std::string & cmdNegative() const;
-    XpObjLib const std::string & cmdPositive() const;
+    XpObjLib bool operator==(const AttrAxisDetented & other) const;
+    XpObjLib bool operator!=(const AttrAxisDetented & other) const;
 
     //-------------------------------------------------------------------------
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
+    bool isEnabled() const { return mIsEnabled; }
 
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
+    //-------------------------------------------------------------------------
+
+    XpObjLib void setDirectionX(float val);
+    XpObjLib void setDirectionY(float val);
+    XpObjLib void setDirectionZ(float val);
+    XpObjLib float directionX() const;
+    XpObjLib float directionY() const;
+    XpObjLib float directionZ() const;
+
+    XpObjLib void setVMin(float val);
+    XpObjLib void setVMax(float val);
+    XpObjLib float vMin() const;
+    XpObjLib float vMax() const;
+
+    XpObjLib void setDataref(const std::string & val);
+    XpObjLib const std::string & dataref() const;
 
     //-------------------------------------------------------------------------
 
 private:
 
-    std::string mPosCommand = "none";
-    std::string mNegCommand = "none";
+    void setEnabled(const bool state = true) {
+        mIsEnabled = state;
+    }
+
+    float mDirX = 0.0f;
+    float mDirY = 0.0f;
+    float mDirZ = 0.0f;
+
+    float mVMin = 0.0f;
+    float mVMax = 1.0f;
+
+    std::string mDataref = "none";
+
+    bool mIsEnabled = false;
 
 };
 
 /********************************************************************************************************/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 /********************************************************************************************************/
-
 }

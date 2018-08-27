@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2018, StepToSky
+**  Copyright(C) 2017, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,50 +29,54 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
+#include "xpln/XplnObjExport.h"
 
 namespace xobj {
 
-/********************************************************************************************************/
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-/********************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 /*!
- * \details ATTR_manip_command_knob
+ * \details Key frame for \link AttrManipDragRotate \endlink.
+ * \details ATTR_manip_keyframe
  * \ingroup Manipulators
  */
-class AttrManipCmdKnob : public AttrManipBase {
+class AttrManipKeyFrame {
 public:
 
-    XpObjLib AttrManipCmdKnob();
-    virtual ~AttrManipCmdKnob() = default;
+    XpObjLib explicit AttrManipKeyFrame(float value = 0.0f, float angle = 0.0f);
+
+    AttrManipKeyFrame(const AttrManipKeyFrame &) = default;
+    AttrManipKeyFrame(AttrManipKeyFrame &&) = default;
+
+    virtual ~AttrManipKeyFrame() = default;
+
+    AttrManipKeyFrame & operator=(const AttrManipKeyFrame &) = default;
+    AttrManipKeyFrame & operator=(AttrManipKeyFrame &&) = default;
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setCmdNegative(const std::string & val);
-    XpObjLib void setCmdPositive(const std::string & val);
-    XpObjLib const std::string & cmdNegative() const;
-    XpObjLib const std::string & cmdPositive() const;
+    XpObjLib bool operator==(const AttrManipKeyFrame & other) const;
+    XpObjLib bool operator!=(const AttrManipKeyFrame & other) const;
 
     //-------------------------------------------------------------------------
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
-
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
+    XpObjLib void setValue(float vales);
+    XpObjLib void setAngle(float angle);
+    XpObjLib float value() const;
+    XpObjLib float angle() const;
 
     //-------------------------------------------------------------------------
 
 private:
 
-    std::string mPosCommand = "none";
-    std::string mNegCommand = "none";
+    float mValue = 0.0f;
+    float mAngle = 0.0f;
 
 };
 
-/********************************************************************************************************/
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-/********************************************************************************************************/
-
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

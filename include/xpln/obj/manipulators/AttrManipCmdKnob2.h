@@ -38,21 +38,20 @@ namespace xobj {
 /********************************************************************************************************/
 
 /*!
- * \details ATTR_manip_command_knob
+ * \details ATTR_manip_command_knob2
+ * \details For VR
  * \ingroup Manipulators
  */
-class AttrManipCmdKnob : public AttrManipBase {
+class AttrManipCmdKnob2 : public AttrManipBase {
 public:
 
-    XpObjLib AttrManipCmdKnob();
-    virtual ~AttrManipCmdKnob() = default;
+    XpObjLib AttrManipCmdKnob2();
+    virtual ~AttrManipCmdKnob2() = default;
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setCmdNegative(const std::string & val);
-    XpObjLib void setCmdPositive(const std::string & val);
-    XpObjLib const std::string & cmdNegative() const;
-    XpObjLib const std::string & cmdPositive() const;
+    XpObjLib void setCmd(const std::string & val);
+    XpObjLib const std::string & cmd() const;
 
     //-------------------------------------------------------------------------
 
@@ -66,8 +65,7 @@ public:
 
 private:
 
-    std::string mPosCommand = "none";
-    std::string mNegCommand = "none";
+    std::string mCommand = "none";
 
 };
 

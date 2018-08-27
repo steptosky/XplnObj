@@ -1,5 +1,5 @@
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -33,6 +33,8 @@
 #include "common/AttributeNames.h"
 #include "xpln/obj/manipulators/AttrManipDragXy.h"
 #include "xpln/obj/manipulators/AttrManipDragAxis.h"
+#include "xpln/obj/manipulators/AttrManipDragRotate.h"
+#include "xpln/obj/manipulators/AttrManipKeyFrame.h"
 #include "xpln/obj/manipulators/AttrManipCmd.h"
 #include "xpln/obj/manipulators/AttrManipCmdAxis.h"
 #include "xpln/obj/manipulators/AttrManipNoop.h"
@@ -46,10 +48,15 @@
 #include "xpln/obj/manipulators/AttrManipAxisSwitchLeftRight.h"
 #include "xpln/obj/manipulators/AttrManipAxisSwitchUpDown.h"
 #include "xpln/obj/manipulators/AttrManipCmdKnob.h"
+#include "xpln/obj/manipulators/AttrManipCmdKnob2.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchLeftRight.h"
+#include "xpln/obj/manipulators/AttrManipCmdSwitchLeftRight2.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown.h"
+#include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown2.h"
 #include "xpln/obj/manipulators/AttrManipNone.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
+#include "xpln/obj/manipulators/AttrAxisDetented.h"
+#include "xpln/obj/manipulators/AttrAxisDetentRange.h"
 
 #include "ObjAttrString.h"
 
@@ -73,14 +80,22 @@ std::string toObjString(const AttrManipBase * manip) {
             return toObjString(*static_cast<const AttrManipCmdAxis*>(manip));
         case EManipulator::command_knob:
             return toObjString(*static_cast<const AttrManipCmdKnob*>(manip));
+        case EManipulator::command_knob2:
+            return toObjString(*static_cast<const AttrManipCmdKnob2*>(manip));
         case EManipulator::command_switch_lr:
             return toObjString(*static_cast<const AttrManipCmdSwitchLeftRight*>(manip));
+        case EManipulator::command_switch_lr2:
+            return toObjString(*static_cast<const AttrManipCmdSwitchLeftRight2*>(manip));
         case EManipulator::command_switch_ud:
             return toObjString(*static_cast<const AttrManipCmdSwitchUpDown*>(manip));
+        case EManipulator::command_switch_ud2:
+            return toObjString(*static_cast<const AttrManipCmdSwitchUpDown2*>(manip));
         case EManipulator::eId::delta:
             return toObjString(*static_cast<const AttrManipDelta*>(manip));
         case EManipulator::eId::drag_axis:
             return toObjString(*static_cast<const AttrManipDragAxis*>(manip));
+        case EManipulator::eId::drag_rotate:
+            return toObjString(*static_cast<const AttrManipDragRotate*>(manip));
         case EManipulator::eId::drag_axis_pix:
             return toObjString(*static_cast<const AttrManipDragAxisPix*>(manip));
         case EManipulator::eId::drag_xy:
@@ -179,9 +194,18 @@ std::string toObjString(const AttrManipCmdKnob & manip) {
     return outStr.str();
 }
 
+std::string toObjString(const AttrManipCmdKnob2 & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_KNOB2;
+    outStr << " " << manip.cursor().toString();
+    outStr << " " << manip.cmd();
+    outStr << " " << manip.toolTip();
+    return outStr.str();
+}
+
 std::string toObjString(const AttrManipCmdSwitchLeftRight & manip) {
     StringStream outStr;
-    outStr << ATTR_MANIP_SWITCH_LEFT_RIGHT;
+    outStr << ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT;
     outStr << " " << manip.cursor().toString();
     outStr << " " << manip.cmdPositive();
     outStr << " " << manip.cmdNegative();
@@ -189,12 +213,30 @@ std::string toObjString(const AttrManipCmdSwitchLeftRight & manip) {
     return outStr.str();
 }
 
+std::string toObjString(const AttrManipCmdSwitchLeftRight2 & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2;
+    outStr << " " << manip.cursor().toString();
+    outStr << " " << manip.cmd();
+    outStr << " " << manip.toolTip();
+    return outStr.str();
+}
+
 std::string toObjString(const AttrManipCmdSwitchUpDown & manip) {
     StringStream outStr;
-    outStr << ATTR_MANIP_SWITCH_UP_DOWN;
+    outStr << ATTR_MANIP_COMMAND_SWITCH_UP_DOWN;
     outStr << " " << manip.cursor().toString();
     outStr << " " << manip.cmdPositive();
     outStr << " " << manip.cmdNegative();
+    outStr << " " << manip.toolTip();
+    return outStr.str();
+}
+
+std::string toObjString(const AttrManipCmdSwitchUpDown2 & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2;
+    outStr << " " << manip.cursor().toString();
+    outStr << " " << manip.cmd();
     outStr << " " << manip.toolTip();
     return outStr.str();
 }
@@ -223,6 +265,37 @@ std::string toObjString(const AttrManipDragAxis & manip) {
     outStr << " " << manip.val2();
     outStr << " " << manip.dataref();
     outStr << " " << manip.toolTip();
+    return outStr.str();
+}
+
+std::string toObjString(const AttrManipDragRotate & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_DRAG_ROTATE;
+    outStr << " " << manip.cursor().toString();
+    outStr << " " << manip.x();
+    outStr << " " << manip.y();
+    outStr << " " << manip.z();
+    outStr << " " << manip.directionX();
+    outStr << " " << manip.directionY();
+    outStr << " " << manip.directionZ();
+    outStr << " " << manip.angle1();
+    outStr << " " << manip.angle2();
+    outStr << " " << manip.lift();
+    outStr << " " << manip.v1Min();
+    outStr << " " << manip.v1Max();
+    outStr << " " << manip.v2Min();
+    outStr << " " << manip.v2Max();
+    outStr << " " << manip.dataref1();
+    outStr << " " << manip.dataref2();
+    outStr << " " << manip.toolTip();
+    return outStr.str();
+}
+
+std::string toObjString(const AttrManipKeyFrame & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_KEYFRAME;
+    outStr << " " << manip.value();
+    outStr << " " << manip.angle();
     return outStr.str();
 }
 
@@ -322,6 +395,27 @@ std::string toObjString(const AttrManipWheel & manip) {
         return outStr.str();
     }
     return "";
+}
+
+std::string toObjString(const AttrAxisDetented & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_AXIS_DETENTED;
+    outStr << " " << manip.directionX();
+    outStr << " " << manip.directionY();
+    outStr << " " << manip.directionZ();
+    outStr << " " << manip.vMin();
+    outStr << " " << manip.vMax();
+    outStr << " " << manip.dataref();
+    return outStr.str();
+}
+
+std::string toObjString(const AttrAxisDetentRange & manip) {
+    StringStream outStr;
+    outStr << ATTR_MANIP_AXIS_DETENT_RANGE;
+    outStr << " " << manip.start();
+    outStr << " " << manip.end();
+    outStr << " " << manip.height();
+    return outStr.str();
 }
 
 /**************************************************************************************************/

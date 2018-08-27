@@ -158,7 +158,7 @@ bool ObjReader::readFile(const std::string & filePath) const {
         mObjParserListener->gotMeshFaces(idx);
     }
     else {
-        ObjReaderListener::FaceIndexArray empty;
+        const ObjReaderListener::FaceIndexArray empty;
         mObjParserListener->gotMeshFaces(empty);
     }
 
@@ -212,7 +212,7 @@ bool ObjReader::readHeader(ObjReadParser & parser) {
     parser.nextLine();
 
     // LINE 2: version
-    int vers = parser.extractInt();
+    const int vers = parser.extractInt();
     if (vers != 800) {
         ULError << "Header LINE 2 (Version) is incorrect! Must be 800.";
         return false;
@@ -299,9 +299,9 @@ bool ObjReader::readIndexes(ObjReadParser & parser, ObjReaderListener::FaceIndex
 bool ObjReader::readLod(ObjReadParser & parser) const {
     if (parser.isMatch(ATTR_LOD)) {
         parser.skipSpace();
-        float near = parser.extractFloat();
+        const float near = parser.extractFloat();
         parser.skipSpace();
-        float far = parser.extractFloat();
+        const float far = parser.extractFloat();
         parser.skipSpace();
         mObjParserListener->gotLod(near, far, parser.extractLineTilEol());
         return true;
@@ -344,9 +344,9 @@ bool ObjReader::readGlobalAttribute(ObjReadParser & parser) const {
     }
     if (parser.isMatch(ATTR_GLOBAL_TINT)) {
         parser.skipSpace();
-        float albedo = parser.extractFloat();
+        const float albedo = parser.extractFloat();
         parser.skipSpace();
-        float emissive = parser.extractFloat();
+        const float emissive = parser.extractFloat();
         mObjParserListener->gotGlobAttrTint(AttrTint(albedo, emissive));
         return true;
     }
@@ -381,19 +381,19 @@ bool ObjReader::readGlobalAttribute(ObjReadParser & parser) const {
         parser.skipSpace();
         std::string group = parser.extractWord();
         parser.skipSpace();
-        int offset = parser.extractInt();
+        const int offset = parser.extractInt();
         mObjParserListener->gotGlobAttrLayerGroup(AttrLayerGroup(ELayer::fromString(group.c_str()), offset));
         return true;
     }
     if (parser.isMatch(ATTR_GLOBAL_SLOPE_LIMIT)) {
         parser.skipSpace();
-        float minPitch = parser.extractFloat();
+        const float minPitch = parser.extractFloat();
         parser.skipSpace();
-        float maxPitch = parser.extractFloat();
+        const float maxPitch = parser.extractFloat();
         parser.skipSpace();
-        float minRoll = parser.extractFloat();
+        const float minRoll = parser.extractFloat();
         parser.skipSpace();
-        float maxRoll = parser.extractFloat();
+        const float maxRoll = parser.extractFloat();
         mObjParserListener->gotGlobAttrSlopeLimit(AttrSlopeLimit(minPitch, maxPitch, minRoll, maxRoll));
         return true;
     }
@@ -404,13 +404,13 @@ bool ObjReader::readGlobalAttribute(ObjReadParser & parser) const {
     }
     if (parser.isMatch(ATTR_GLOBAL_COCKPIT_REGION)) {
         parser.skipSpace();
-        int32_t left = parser.extractInt();
+        const int32_t left = parser.extractInt();
         parser.skipSpace();
-        int32_t bottom = parser.extractInt();
+        const int32_t bottom = parser.extractInt();
         parser.skipSpace();
-        int32_t right = parser.extractInt();
+        const int32_t right = parser.extractInt();
         parser.skipSpace();
-        int32_t top = parser.extractInt();
+        const int32_t top = parser.extractInt();
         mObjParserListener->gotGlobAttrCockpitRegion(AttrCockpitRegion(left, bottom, right, top));
         return true;
     }
@@ -423,7 +423,7 @@ bool ObjReader::readGlobalAttribute(ObjReadParser & parser) const {
         parser.skipSpace();
         std::string group = parser.extractWord();
         parser.skipSpace();
-        int offset = parser.extractInt();
+        const int offset = parser.extractInt();
         mObjParserListener->gotGlobAttrLayerGroupDraped(AttrDrapedLayerGroup(ELayer::fromString(group.c_str()), offset));
         return true;
     }
@@ -494,7 +494,7 @@ bool ObjReader::readAttribute(ObjReadParser & parser) const {
     }
     if (parser.isMatch(ATTR_COCKPIT_REGION)) {
         parser.skipSpace();
-        int32_t region = parser.extractInt();
+        const int32_t region = parser.extractInt();
         switch (region) {
             case 0: mObjParserListener->gotTrisAttrCockpit(AttrCockpit(AttrCockpit::region_1));
                 break;
@@ -568,7 +568,7 @@ bool ObjReader::readAttribute(ObjReadParser & parser) const {
 
     if (parser.isMatch(ATTR_POLY_OS)) {
         parser.skipSpace();
-        float offset = parser.extractFloat();
+        const float offset = parser.extractFloat();
         if (sts::isEqual(0.0f, offset, 0.001f)) {
             mObjParserListener->gotTrisAttrPolyOffset(AttrPolyOffset());
         }
@@ -961,9 +961,9 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
 bool ObjReader::readTris(ObjReadParser & parser) const {
     if (parser.isMatch(MESH_TRIS)) {
         parser.skipSpace();
-        ObjReaderListener::Index pos = parser.extractInt();
+        const ObjReaderListener::Index pos = parser.extractInt();
         parser.skipSpace();
-        ObjReaderListener::Index count = parser.extractInt();
+        const ObjReaderListener::Index count = parser.extractInt();
         parser.skipSpace();
         mObjParserListener->gotTris(pos, count, parser.extractLineTilEol());
         return true;
@@ -1059,13 +1059,13 @@ bool ObjReader::readTranslateAnim(ObjReadParser & parser) const {
         }
 
         parser.skipSpace();
-        std::string dataref = std::move(parser.extractWord());
+        std::string dataref = parser.extractWord();
         if (dataref == DATAREF_DEFAULT_VAL) {
             dataref.clear();
         }
 
         float loopVal = 0.0f;
-        bool hasLoop = readAnimLoop(parser, loopVal);
+        const bool hasLoop = readAnimLoop(parser, loopVal);
         mObjParserListener->gotTranslateAnim(keys, dataref, hasLoop, loopVal);
         return true;
     }
@@ -1099,12 +1099,12 @@ bool ObjReader::readRotateAnim(ObjReadParser & parser) const {
         }
 
         parser.skipSpace();
-        std::string dataref = std::move(parser.extractWord());
+        std::string dataref = parser.extractWord();
         if (dataref == DATAREF_DEFAULT_VAL)
             dataref.clear();
 
         float loopVal = 0.0f;
-        bool hasLoop = readAnimLoop(parser, loopVal);
+        const bool hasLoop = readAnimLoop(parser, loopVal);
         mObjParserListener->gotRotateAnim(keys, vector, dataref, hasLoop, loopVal);
         return true;
     }
@@ -1114,7 +1114,7 @@ bool ObjReader::readRotateAnim(ObjReadParser & parser) const {
 bool ObjReader::readTranslateKeysAnim(ObjReadParser & parser) const {
     if (parser.isMatch(ATTR_TRANS_BEGIN)) {
         parser.skipSpace();
-        std::string dataref = std::move(parser.extractWord());
+        std::string dataref = parser.extractWord();
         if (dataref == DATAREF_DEFAULT_VAL)
             dataref.clear();
         parser.nextLine();
@@ -1135,7 +1135,7 @@ bool ObjReader::readTranslateKeysAnim(ObjReadParser & parser) const {
 
         if (parser.isMatch(ATTR_TRANS_END)) {
             float loopVal = 0.0f;
-            bool hasLoop = readAnimLoop(parser, loopVal);
+            const bool hasLoop = readAnimLoop(parser, loopVal);
             mObjParserListener->gotTranslateAnim(keys, dataref, hasLoop, loopVal);
         }
         else {
@@ -1158,7 +1158,7 @@ bool ObjReader::readRotateKeysAnim(ObjReadParser & parser) const {
         vector[2] = parser.extractFloat();
 
         parser.skipSpace();
-        std::string dataref = std::move(parser.extractWord());
+        std::string dataref = parser.extractWord();
         if (dataref == DATAREF_DEFAULT_VAL)
             dataref.clear();
         parser.nextLine();
@@ -1175,7 +1175,7 @@ bool ObjReader::readRotateKeysAnim(ObjReadParser & parser) const {
 
         if (parser.isMatch(ATTR_ROTATE_END)) {
             float loopVal = 0.0f;
-            bool hasLoop = readAnimLoop(parser, loopVal);
+            const bool hasLoop = readAnimLoop(parser, loopVal);
             mObjParserListener->gotRotateAnim(keys, vector, dataref, hasLoop, loopVal);
         }
         else {

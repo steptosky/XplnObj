@@ -99,7 +99,7 @@ public:
     /*! Constructor copy  */
     RectangleI(const RectangleI & other);
 
-    virtual ~RectangleI() { }
+    virtual ~RectangleI() = default;
 
 private:
 
@@ -144,15 +144,15 @@ inline RectangleI & RectangleI::operator=(const RectangleI & other) {
     return *this;
 }
 
-inline RectangleI::RectangleI() { }
+inline RectangleI::RectangleI() = default;
 
-inline RectangleI::RectangleI(const Point2 & inLeftBottom, const Point2 & inRightTop)
-    : mPoint1(inLeftBottom),
-      mPoint2(inRightTop) { }
+inline RectangleI::RectangleI(const Point2 & p1, const Point2 & p2)
+    : mPoint1(p1),
+      mPoint2(p2) { }
 
-inline RectangleI::RectangleI(const RectangleI & inOther)
-    : mPoint1(inOther.mPoint1),
-      mPoint2(inOther.mPoint2) { }
+inline RectangleI::RectangleI(const RectangleI & other)
+    : mPoint1(other.mPoint1),
+      mPoint2(other.mPoint2) { }
 
 /***********************************************************************************************/
 /////////////////////////////////////////////////////////////////////////////////////////////////

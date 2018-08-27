@@ -43,9 +43,6 @@ namespace xobj {
  * \ingroup Objects
  */
 class ObjLightNamed : public ObjAbstractLight {
-
-    ObjLightNamed & operator =(const ObjLightNamed &) = delete;
-
 protected:
 
     XpObjLib ObjLightNamed(const ObjLightNamed & copy);
@@ -53,6 +50,7 @@ protected:
 public:
 
     XpObjLib ObjLightNamed();
+    ObjLightNamed & operator =(const ObjLightNamed &) = delete;
     virtual ~ObjLightNamed() = default;
 
     //-----------------------------------------------------
@@ -66,7 +64,7 @@ public:
     XpObjLib eObjectType objType() const final;
 
     /*! \copydoc ObjAbstract::applyTransform */
-    XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
+    XpObjLib void applyTransform(const TMatrix & tm, bool useParity) override final;
 
     /* \copydoc ObjAbstract::clone */
     XpObjLib ObjAbstract * clone() const override;

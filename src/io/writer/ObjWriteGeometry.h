@@ -61,6 +61,10 @@ class ObjWriteGeometry {
 public:
 
     ObjWriteGeometry(const ExportOptions * option, IOStatistic * outStat);
+
+    ObjWriteGeometry(const ObjWriteGeometry &) = delete;
+    ObjWriteGeometry & operator =(const ObjWriteGeometry &) = delete;
+
     ~ObjWriteGeometry() = default;
 
     void printMeshVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const;
@@ -79,10 +83,7 @@ public:
 
 private:
 
-    ObjWriteGeometry(const ObjWriteGeometry &) = delete;
-    ObjWriteGeometry & operator =(const ObjWriteGeometry &) = delete;
-
-    void writeMeshFaceRecursive(std::ostream & writer, const Transform & parent, size_t & idx, size_t & offset) const;
+    void writeMeshFaceRecursive(std::ostream & writer, const Transform & inNode, size_t & idx, size_t & offset) const;
 
     IOStatistic * mStat;
     const ExportOptions * mOptions;

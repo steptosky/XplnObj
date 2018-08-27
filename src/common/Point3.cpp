@@ -54,7 +54,7 @@ Point3::Point3(const Point3 & c)
 Point3::Point3(const float & v)
     : Point3(v, v, v) { }
 
-Point3::Point3(float inX, float inY, float inZ)
+Point3::Point3(const float inX, const float inY, const float inZ)
     : x(inX),
       y(inY),
       z(inZ) { }
@@ -140,77 +140,77 @@ bool Point3::operator!=(const float v) const {
 /**************************************************************************************************/
 
 Point3 operator +(const Point3 & p1, const Point3 & p2) {
-    const Point * pp1 = reinterpret_cast<const Point*>(&p1);
-    const Point * pp2 = reinterpret_cast<const Point*>(&p2);
+    const auto * pp1 = reinterpret_cast<const Point*>(&p1);
+    const auto * pp2 = reinterpret_cast<const Point*>(&p2);
     Point res = *pp1 + *pp2;
     return *reinterpret_cast<const Point3*>(&res);
 }
 
-Point3 operator +(const Point3 & p, float v) {
-    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+Point3 operator +(const Point3 & p, const float v) {
+    const auto * pp1 = reinterpret_cast<const Point*>(&p);
     Point res = *pp1 + v;
     return *reinterpret_cast<const Point3*>(&res);
 }
 
-Point3 operator +(float v, const Point3 & p) {
-    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+Point3 operator +(const float v, const Point3 & p) {
+    const auto * pp1 = reinterpret_cast<const Point*>(&p);
     Point res = v + *pp1;
     return *reinterpret_cast<const Point3*>(&res);
 }
 
 Point3 operator -(const Point3 & p1, const Point3 & p2) {
-    const Point * pp1 = reinterpret_cast<const Point*>(&p1);
-    const Point * pp2 = reinterpret_cast<const Point*>(&p2);
+    const auto * pp1 = reinterpret_cast<const Point*>(&p1);
+    const auto * pp2 = reinterpret_cast<const Point*>(&p2);
     Point res = *pp1 - *pp2;
     return *reinterpret_cast<const Point3*>(&res);
 }
 
-Point3 operator -(const Point3 & p, float v) {
-    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+Point3 operator -(const Point3 & p, const float v) {
+    const auto * pp1 = reinterpret_cast<const Point*>(&p);
     Point res = *pp1 - v;
     return *reinterpret_cast<const Point3*>(&res);
 }
 
-Point3 operator -(float v, const Point3 & p) {
-    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+Point3 operator -(const float v, const Point3 & p) {
+    const auto * pp1 = reinterpret_cast<const Point*>(&p);
     Point res = v - *pp1;
     return *reinterpret_cast<const Point3*>(&res);
 }
 
 Point3 operator *(const Point3 & p1, const Point3 & p2) {
-    const Point * pp1 = reinterpret_cast<const Point*>(&p1);
-    const Point * pp2 = reinterpret_cast<const Point*>(&p2);
+    const auto * pp1 = reinterpret_cast<const Point*>(&p1);
+    const auto * pp2 = reinterpret_cast<const Point*>(&p2);
     Point res = *pp1 * *pp2;
     return *reinterpret_cast<const Point3*>(&res);
 }
 
-Point3 operator *(const Point3 & p, float v) {
-    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+Point3 operator *(const Point3 & p, const float v) {
+    const auto * pp1 = reinterpret_cast<const Point*>(&p);
     Point res = *pp1 * v;
     return *reinterpret_cast<const Point3*>(&res);
 }
 
-Point3 operator *(float v, const Point3 & p) {
-    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+Point3 operator *(const float v, const Point3 & p) {
+    const auto * pp1 = reinterpret_cast<const Point*>(&p);
     Point res = v * *pp1;
     return *reinterpret_cast<const Point3*>(&res);
 }
 
 Point3 operator /(const Point3 & p1, const Point3 & p2) {
-    const Point * pp1 = reinterpret_cast<const Point*>(&p1);
-    const Point * pp2 = reinterpret_cast<const Point*>(&p2);
+    const auto * pp1 = reinterpret_cast<const Point*>(&p1);
+    const auto * pp2 = reinterpret_cast<const Point*>(&p2);
     Point res = *pp1 / *pp2;
     return *reinterpret_cast<const Point3*>(&res);
 }
 
-Point3 operator /(const Point3 & p, float v) {
-    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+Point3 operator /(const Point3 & p, const float v) {
+    const auto * pp1 = reinterpret_cast<const Point*>(&p);
     Point res = *pp1 / v;
     return *reinterpret_cast<const Point3*>(&res);
 }
 
-Point3 operator /(float v, const Point3 & p) {
-    const Point * pp1 = reinterpret_cast<const Point*>(&p);
+Point3 operator /(const float v, const Point3 & p) {
+    const auto * pp1 = reinterpret_cast<const Point*>(&p);
     Point res = v / *pp1;
     return *reinterpret_cast<const Point3*>(&res);
 }
@@ -219,7 +219,7 @@ Point3 operator /(float v, const Point3 & p) {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-std::string Point3::toString(uint8_t precision /*= 4*/) const {
+std::string Point3::toString(const uint8_t precision /*= 4*/) const {
     return reinterpret_cast<const Point*>(this)->toString("%x %y %z", precision);
 }
 

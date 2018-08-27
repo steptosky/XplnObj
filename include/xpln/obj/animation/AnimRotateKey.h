@@ -48,7 +48,7 @@ public:
         : pAngleDegrees(0.0f),
           pDrfValue(0.0f) {}
 
-    AnimRotateKey(float angleDegrees, float dataRefValue)
+    AnimRotateKey(const float angleDegrees, const float dataRefValue)
         : pAngleDegrees(angleDegrees),
           pDrfValue(dataRefValue) {}
 

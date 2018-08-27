@@ -69,6 +69,13 @@ public:
         Debug = 6,
     };
 
+    //-------------------------------------------------------------------------
+
+    BaseLogger(const BaseLogger &) = delete;
+    BaseLogger & operator=(const BaseLogger &) = delete;
+
+    //-------------------------------------------------------------------------
+
     /*!
      * \warning Don't forget to check the parameters for nullptr.
      */
@@ -88,7 +95,7 @@ public:
     //-------------------------------------------------------------------------
 
     void log(eType inType, const char * inMsg,
-             const char * inFile, int inLine, const char * inFunction,
+             const char * inFile, const int inLine, const char * inFunction,
              const char * inCategory) const {
 
         if (inType <= mLevel) {
@@ -98,7 +105,7 @@ public:
 
     //-------------------------------------------------------------------------
 
-    void setLevel(eType inLevel) {
+    void setLevel(const eType inLevel) {
         mLevel = inLevel;
     }
 
@@ -108,7 +115,7 @@ public:
 
     //-------------------------------------------------------------------------
 
-    void setCallBack(CallBack inCallBack) {
+    void setCallBack(const CallBack inCallBack) {
         mCallBack = inCallBack;
     }
 
@@ -116,7 +123,7 @@ public:
         mCallBack = defaultCallBack;
     }
 
-    static const char * typeAsString(eType inType) {
+    static const char * typeAsString(const eType inType) {
         switch (inType) {
             case Msg: return "";
             case Info: return "INF";
@@ -131,10 +138,10 @@ public:
 
 private:
 
-    static void defaultCallBack(eType inType,
+    static void defaultCallBack(const eType inType,
                                 const char * inMsg,
                                 const char * inFile,
-                                int inLine,
+                                const int inLine,
                                 const char * inFunction,
                                 const char * inCategory) {
 
@@ -153,8 +160,6 @@ private:
 
     BaseLogger() = default;
     ~BaseLogger() = default;
-    BaseLogger(const BaseLogger &) = delete;
-    BaseLogger & operator=(const BaseLogger &) = delete;
 
     eType mLevel = Debug;
     CallBack mCallBack = defaultCallBack;
@@ -189,10 +194,10 @@ public:
     explicit LogMessage(const char * category)
         : LogMessage(nullptr, 0, nullptr, category) {}
 
-    LogMessage(const char * file, int line, const char * function)
+    LogMessage(const char * file, const int line, const char * function)
         : LogMessage(file, line, function, nullptr) {}
 
-    LogMessage(const char * file, int line, const char * function, const char * category)
+    LogMessage(const char * file, const int line, const char * function, const char * category)
         : mLog(&BaseLogger::instance()),
           mFile(file),
           mFunction(function),

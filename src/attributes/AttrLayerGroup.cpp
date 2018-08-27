@@ -37,7 +37,7 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrLayerGroup::AttrLayerGroup(ELayer layer, int32_t offset)
+AttrLayerGroup::AttrLayerGroup(const ELayer layer, const int32_t offset)
     : mOffset(static_cast<uint8_t>(offset)),
       mLayer(layer),
       mIsEnabled(true) { }
@@ -55,7 +55,7 @@ AttrLayerGroup::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrLayerGroup::setEnabled(bool state) {
+void AttrLayerGroup::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 

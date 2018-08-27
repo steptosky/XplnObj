@@ -55,7 +55,6 @@ class AttrSet;
 class ObjAbstract {
 
     friend Transform;
-    ObjAbstract & operator =(const ObjAbstract &) = delete;
 
 protected:
 
@@ -74,6 +73,8 @@ protected:
 public:
 
     //-----------------------------------------------------
+
+    ObjAbstract & operator =(const ObjAbstract &) = delete;
 
     XpObjLib virtual ~ObjAbstract();
 
@@ -107,7 +108,7 @@ public:
      * \param [in] tm transform matrix.
      * \param [in] useParity \see \link TMatrix::parity \endlink
      */
-    virtual void applyTransform(const TMatrix & tm, const bool useParity = false) = 0;
+    virtual void applyTransform(const TMatrix & tm, bool useParity = false) = 0;
 
     /*!
      * \return Cloned object.

@@ -76,7 +76,7 @@ using namespace xobj;
  *
  */
 TEST(TestTransform_case3, case1) {
-    std::string path(std::string(TOTEXT(TestTransform_case3)).append(".").append(TOTEXT(case1)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case3)).append(".").append(TOTEXT(case1)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -175,7 +175,7 @@ TEST(TestTransform_case3, case1) {
  *
  */
 TEST(TestTransform_case3, case2) {
-    std::string path(std::string(TOTEXT(TestTransform_case3)).append(".").append(TOTEXT(case2)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case3)).append(".").append(TOTEXT(case2)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -258,11 +258,11 @@ TEST(TestTransform_case3, case2) {
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /*
- * This test repruduce the case when animation transllate is the position of animation rotation axis.
+ * This test reproduces the case when animation translate is the position of animation rotation axis.
  * Root <- (T)obj1 <- (T)obj2 <- (T)obj3
  */
 TEST(TestTransform_case3, case3) {
-    std::string path(std::string(TOTEXT(TestTransform_case3)).append(".").append(TOTEXT(case3)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case3)).append(".").append(TOTEXT(case3)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -368,7 +368,7 @@ TEST(TestTransform_case3, case3) {
  *
  */
 TEST(TestTransform_case3, case4) {
-    std::string path(std::string(TOTEXT(TestTransform_case3)).append(".").append(TOTEXT(case4)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case3)).append(".").append(TOTEXT(case4)).append(".obj"));
     //-------------------
     // make out data and save to file
 

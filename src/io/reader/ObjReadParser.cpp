@@ -94,7 +94,7 @@ void ObjReadParser::close() {
 
 unsigned ObjReadParser::fileSize(FILE * file) {
     fseek(file, 0L, SEEK_END);
-    unsigned filesize = static_cast<unsigned>(ftell(file));
+    const auto filesize = static_cast<unsigned>(ftell(file));
     fseek(file, 0L, SEEK_SET);
     return unsigned(filesize);
 }

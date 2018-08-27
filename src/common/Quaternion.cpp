@@ -60,7 +60,7 @@ Quaternion::Quaternion(const Quaternion & copy) {
 
 //-------------------------------------------------------------------------
 
-Quaternion::Quaternion(float x, float y, float z, float w) {
+Quaternion::Quaternion(const float x, const float y, const float z, const float w) {
     mData = new sts::QuaternionF(x, y, z, w);
 }
 
@@ -84,31 +84,31 @@ Quaternion & Quaternion::operator =(const Quaternion & copy) {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void Quaternion::setX(float x) {
+void Quaternion::setX(const float x) {
     QUAT_PTR->setX(x);
 }
 
 //-------------------------------------------------------------------------
 
-void Quaternion::setY(float y) {
+void Quaternion::setY(const float y) {
     QUAT_PTR->setY(y);
 }
 
 //-------------------------------------------------------------------------
 
-void Quaternion::setZ(float z) {
+void Quaternion::setZ(const float z) {
     QUAT_PTR->setZ(z);
 }
 
 //-------------------------------------------------------------------------
 
-void Quaternion::setW(float w) {
+void Quaternion::setW(const float w) {
     QUAT_PTR->setW(w);
 }
 
 //-------------------------------------------------------------------------
 
-void Quaternion::setValues(float x, float y, float z, float w) {
+void Quaternion::setValues(const float x, const float y, const float z, const float w) {
     QUAT_PTR->set(x, y, z, w);
 }
 

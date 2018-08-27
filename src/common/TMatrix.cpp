@@ -75,27 +75,27 @@ bool TMatrix::operator!=(const TMatrix & tr) const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void TMatrix::rotateRadiansX(float inAngleRadians) {
+void TMatrix::rotateRadiansX(const float inAngleRadians) {
     reinterpret_cast<Mtx3*>(this)->rotateX(inAngleRadians);
 }
 
-void TMatrix::rotateRadiansY(float inAngleRadians) {
+void TMatrix::rotateRadiansY(const float inAngleRadians) {
     reinterpret_cast<Mtx3*>(this)->rotateY(inAngleRadians);
 }
 
-void TMatrix::rotateRadiansZ(float inAngleRadians) {
+void TMatrix::rotateRadiansZ(const float inAngleRadians) {
     reinterpret_cast<Mtx3*>(this)->rotateZ(inAngleRadians);
 }
 
-void TMatrix::rotateDegreesX(float inAngleRadians) {
+void TMatrix::rotateDegreesX(const float inAngleRadians) {
     reinterpret_cast<Mtx3*>(this)->rotateX(sts::toRadians(inAngleRadians));
 }
 
-void TMatrix::rotateDegreesY(float inAngleRadians) {
+void TMatrix::rotateDegreesY(const float inAngleRadians) {
     reinterpret_cast<Mtx3*>(this)->rotateY(sts::toRadians(inAngleRadians));
 }
 
-void TMatrix::rotateDegreesZ(float inAngleRadians) {
+void TMatrix::rotateDegreesZ(const float inAngleRadians) {
     reinterpret_cast<Mtx3*>(this)->rotateZ(sts::toRadians(inAngleRadians));
 }
 
@@ -123,15 +123,13 @@ bool TMatrix::parity() const {
 }
 
 Point3 TMatrix::row(size_t i) const {
-    return Point3(
-                  (*reinterpret_cast<const Mtx3*>(this))(i, 0),
+    return Point3((*reinterpret_cast<const Mtx3*>(this))(i, 0),
                   (*reinterpret_cast<const Mtx3*>(this))(i, 1),
                   (*reinterpret_cast<const Mtx3*>(this))(i, 2));
 }
 
 Point3 TMatrix::position() const {
-    return Point3(
-                  (*reinterpret_cast<const Mtx3*>(this))(3, 0),
+    return Point3((*reinterpret_cast<const Mtx3*>(this))(3, 0),
                   (*reinterpret_cast<const Mtx3*>(this))(3, 1),
                   (*reinterpret_cast<const Mtx3*>(this))(3, 2));
 }
@@ -145,27 +143,27 @@ Quaternion TMatrix::rotation() const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void TMatrix::transformPoints(Point3 * inArray, unsigned inCount) const {
+void TMatrix::transformPoints(Point3 * inArray, const unsigned inCount) const {
     if (!inArray || !inCount)
         return;
-    Point * p = reinterpret_cast<Point*>(&inArray);
+    auto * p = reinterpret_cast<Point*>(&inArray);
     reinterpret_cast<const Mtx3*>(this)->mapPoints(p, inCount);
 }
 
-void TMatrix::transformVectors(Point3 * inArray, unsigned inCount) const {
+void TMatrix::transformVectors(Point3 * inArray, const unsigned inCount) const {
     if (!inArray || !inCount)
         return;
-    Point * p = reinterpret_cast<Point*>(&inArray);
+    auto * p = reinterpret_cast<Point*>(&inArray);
     reinterpret_cast<const Mtx3*>(this)->mapVectors(p, inCount);
 }
 
 void TMatrix::transformPoint(Point3 & inPoint) const {
-    Point * p = reinterpret_cast<Point*>(&inPoint);
+    auto * p = reinterpret_cast<Point*>(&inPoint);
     *p = reinterpret_cast<const Mtx3*>(this)->mapPoint(*p);
 }
 
 void TMatrix::transformVector(Point3 & inVec) const {
-    Point * p = reinterpret_cast<Point*>(& inVec);
+    auto * p = reinterpret_cast<Point*>(& inVec);
     *p = reinterpret_cast<const Mtx3*>(this)->mapVector(*p);
 }
 
@@ -211,12 +209,11 @@ std::string TMatrix::toString() const {
 }
 
 void TMatrix::set(
-    float m00, float m01, float m02,
-    float m10, float m11, float m12,
-    float m20, float m21, float m22,
-    float m30, float m31, float m32) {
-    reinterpret_cast<Mtx3*>(this)->set(
-                                       m00, m01, m02,
+    const float m00, const float m01, const float m02,
+    const float m10, const float m11, const float m12,
+    const float m20, const float m21, const float m22,
+    const float m30, const float m31, const float m32) {
+    reinterpret_cast<Mtx3*>(this)->set(m00, m01, m02,
                                        m10, m11, m12,
                                        m20, m21, m22,
                                        m30, m31, m32);

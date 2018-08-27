@@ -73,7 +73,7 @@ public:
     void setBlend(const AttrBlend & attr);
     void setLayerGroup(const AttrLayerGroup & attr);
     void setLayerGroupDraped(const AttrDrapedLayerGroup & attr);
-    void setLodDrap(const AttrLodDrap & val);
+    void setLodDrap(const AttrLodDrap & attr);
     void setSlungLoadWeight(const AttrSlungLoadWeight & attr);
     void setSpecular(const AttrSpecular & attr);
     void setTint(const AttrTint & attr);
@@ -209,7 +209,7 @@ inline const std::string & AttrGlobSet::textureNormal() const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-inline void AttrGlobSet::setNormalMetalness(bool val) {
+inline void AttrGlobSet::setNormalMetalness(const bool val) {
     mNormalMetalness = val;
 }
 
@@ -217,7 +217,7 @@ inline bool AttrGlobSet::isNormalMetalness() const {
     return mNormalMetalness;
 }
 
-inline void AttrGlobSet::setBlendGlass(bool val) {
+inline void AttrGlobSet::setBlendGlass(const bool val) {
     mBlendClass = val;
 }
 
@@ -225,7 +225,7 @@ inline bool AttrGlobSet::isBlendGlass() const {
     return mBlendClass;
 }
 
-inline void AttrGlobSet::setTilted(bool val) {
+inline void AttrGlobSet::setTilted(const bool val) {
     mTilted = val;
 }
 
@@ -233,7 +233,7 @@ inline bool AttrGlobSet::isTilted() const {
     return mTilted;
 }
 
-inline void AttrGlobSet::setNoShadow(bool val) {
+inline void AttrGlobSet::setNoShadow(const bool val) {
     mDropShadow = val;
 }
 
@@ -241,11 +241,11 @@ inline bool AttrGlobSet::isNoShadow() const {
     return mDropShadow;
 }
 
-inline void AttrGlobSet::setCockpitLit(bool val) {
+inline void AttrGlobSet::setCockpitLit(const bool val) {
     mIsCockpitLit = val;
 }
 
-inline void AttrGlobSet::setDebug(bool val) {
+inline void AttrGlobSet::setDebug(const bool val) {
     mIsDebug = val;
 }
 
@@ -333,11 +333,11 @@ inline const AttrSlopeLimit & AttrGlobSet::slopeLimit() const {
     return mAttrSlopeLimit;
 }
 
-inline void AttrGlobSet::setCockpitRegion(const AttrCockpitRegion & attr, AttrCockpitRegion::eNum num) {
+inline void AttrGlobSet::setCockpitRegion(const AttrCockpitRegion & attr, const AttrCockpitRegion::eNum num) {
     mAttrCockpitRegion[static_cast<size_t>(num)] = attr;
 }
 
-inline const AttrCockpitRegion & AttrGlobSet::cockpitRegion(AttrCockpitRegion::eNum num) const {
+inline const AttrCockpitRegion & AttrGlobSet::cockpitRegion(const AttrCockpitRegion::eNum num) const {
     return mAttrCockpitRegion[static_cast<size_t>(num)];
 }
 

@@ -52,9 +52,9 @@ private:
 
     static void printBreakInstancing(const char * objName, const char * reason);
 
-    static void proccessTransform(Transform & transform, bool & result);
-    static void proccessObjects(Transform & transform, bool & result);
-    static void proccessAttributes(ObjMesh & mesh, bool & result);
+    static void proccessTransform(Transform & transform, bool & outResult);
+    static void proccessObjects(Transform & transform, bool & outResult);
+    static void proccessAttributes(ObjMesh & mesh, bool & outResult);
 
 };
 

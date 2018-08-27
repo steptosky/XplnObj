@@ -81,7 +81,7 @@ void ObjWriteInstancing::proccessTransform(Transform & transform, bool & outResu
     //-------------------------------------------------------------------------
     // children
 
-    Transform::TransformIndex chCount = transform.childrenCount();
+    const auto chCount = transform.childrenCount();
     for (Transform::TransformIndex i = 0; i < chCount; ++i) {
         proccessTransform(*static_cast<Transform*>(transform.childAt(i)), outResult);
     }
@@ -101,7 +101,7 @@ void ObjWriteInstancing::proccessObjects(Transform & transform, bool & outResult
             outResult = false;
         }
         if (curr->objType() == OBJ_MESH) {
-            ObjMesh * mesh = reinterpret_cast<ObjMesh*>(curr);
+            auto * mesh = reinterpret_cast<ObjMesh*>(curr);
             proccessAttributes(*mesh, outResult);
         }
         // TODO What about the lights?

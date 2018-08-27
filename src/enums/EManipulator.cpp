@@ -52,7 +52,7 @@ namespace EManipulatorData {
         const char * mAttr;
         EManipulator::eId mId;
 
-        Data(const char * attr, const char * ui, EManipulator::eId id)
+        Data(const char * attr, const char * ui, const EManipulator::eId id)
             : mUi(ui),
               mAttr(attr),
               mId(id) {}
@@ -94,7 +94,7 @@ namespace EManipulatorData {
 EManipulator::EManipulator()
     : EManipulator(none) { }
 
-EManipulator::EManipulator(eId id)
+EManipulator::EManipulator(const eId id)
     : mId(id) { }
 
 /**************************************************************************************************/
@@ -105,7 +105,7 @@ bool EManipulator::operator==(const EManipulator & other) const {
     return mId == other.mId;
 }
 
-bool EManipulator::operator==(eId id) const {
+bool EManipulator::operator==(const eId id) const {
     return mId == id;
 }
 
@@ -113,7 +113,7 @@ bool EManipulator::operator!=(const EManipulator & other) const {
     return mId != other.mId;
 }
 
-bool EManipulator::operator!=(eId id) const {
+bool EManipulator::operator!=(const eId id) const {
     return mId != id;
 }
 

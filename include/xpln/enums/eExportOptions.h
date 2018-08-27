@@ -71,8 +71,8 @@ enum eExportOptions : uint64_t {
     XOBJ_EXP_MARK_SMOKE = 1 << 7,
 
     /*!
-     * \details Applying the lod transform matrix to the hierarchy.
-     * \details Use it if you want the lod's transform matrix to affect all its children,
+     * \details Applying the LOD transform matrix to the hierarchy.
+     * \details Use it if you want the LOD's transform matrix to affect all its children,
      * for example it can be used for align object relative the lods.
      */
     XOBJ_EXP_APPLY_LOD_TM = 1 << 21,

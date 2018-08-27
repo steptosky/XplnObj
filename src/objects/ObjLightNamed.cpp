@@ -64,7 +64,7 @@ eObjectType ObjLightNamed::objType() const {
     return OBJ_LIGHT_NAMED;
 }
 
-void ObjLightNamed::setLightId(ELightNamed id) {
+void ObjLightNamed::setLightId(const ELightNamed id) {
     mId = id;
 }
 

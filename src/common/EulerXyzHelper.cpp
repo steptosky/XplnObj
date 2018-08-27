@@ -58,7 +58,7 @@ bool EulerXyzHelper::isAnimated(const AnimRotate & r) {
 
 float EulerXyzHelper::value(const AnimRotate & r) {
     float v = 0.0f;
-    if (r.pKeys.size() > 0) {
+    if (!r.pKeys.empty()) {
         assert(r.pKeys.size() == 1);
         v = r.pKeys[0].pAngleDegrees;
     }

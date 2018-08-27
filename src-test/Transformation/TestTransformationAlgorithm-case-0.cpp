@@ -27,7 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-
 #include "ph/stdafx.h"
 
 #include <xpln/obj/ObjMain.h>
@@ -47,7 +46,7 @@ using namespace xobj;
  * Without root matrix
  */
 TEST(TestTransformationAlgorithm_case0, case1) {
-    std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case0)).append(".").append(TOTEXT(case1)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case0)).append(".").append(TOTEXT(case1)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -99,7 +98,7 @@ TEST(TestTransformationAlgorithm_case0, case1) {
  * With root matrix
  */
 TEST(TestTransformationAlgorithm_case0, case2) {
-    std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case0)).append(".").append(TOTEXT(case2)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case0)).append(".").append(TOTEXT(case2)).append(".obj"));
     //-------------------
     // make out data and save to file
 

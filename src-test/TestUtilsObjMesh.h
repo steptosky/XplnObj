@@ -49,7 +49,7 @@ public:
             inName = "unnamed test mesh";
         }
 
-        ObjMesh * mesh = new ObjMesh();
+        auto * mesh = new ObjMesh();
         mesh->setObjectName(inName);
 
         mesh->pVertices.emplace_back(ObjMesh::Vertex(Point3(0.0f, 0.0f, -50.0f),
@@ -116,7 +116,7 @@ public:
     }
 
     static ObjMesh * createObjMesh(const char * inName, float inValShift) {
-        ObjMesh * outMesh = new ObjMesh();
+        auto * outMesh = new ObjMesh();
 
         outMesh->pVertices.emplace_back(ObjMesh::Vertex(Point3(-1.0f, -1.0f, 0.0f) + inValShift,
                                                         Point3(1.0f, 0.0f, 0.0f),
@@ -152,7 +152,7 @@ public:
         ASSERT_TRUE(m1->pFaces == m2->pFaces);
     }
 
-    static ObjMesh * createObjMeshNotDefaultAttributes1(const char * inName, float inValShift) {
+    static ObjMesh * createObjMeshNotDefaultAttributes1(const char * inName, const float inValShift) {
         ObjMesh * outMesh = createObjMesh2StatesNotDefaultAttributes(inName, inValShift);
         outMesh->pAttr.setBlend(AttrBlend(AttrBlend::no_blend, 0.2f));
         outMesh->pAttr.setHard(AttrHard(ESurface(ESurface::concrete), true));
@@ -160,7 +160,7 @@ public:
         return outMesh;
     }
 
-    static ObjMesh * createObjMeshNotDefaultAttributes2(const char * inName, float inValShift) {
+    static ObjMesh * createObjMeshNotDefaultAttributes2(const char * inName, const float inValShift) {
         ObjMesh * outMesh = createObjMesh2StatesNotDefaultAttributes(inName, inValShift);
         outMesh->pAttr.setBlend(AttrBlend(AttrBlend::shadow_blend, 0.2f));
         outMesh->pAttr.setHard(AttrHard(ESurface(ESurface::concrete), false));
@@ -170,7 +170,7 @@ public:
 
 private:
 
-    static ObjMesh * createObjMesh2StatesNotDefaultAttributes(const char * inName, float inValShift) {
+    static ObjMesh * createObjMesh2StatesNotDefaultAttributes(const char * inName, const float inValShift) {
         ObjMesh * outMesh = createObjMesh(inName, inValShift);
         outMesh->pAttr.setDraw(false);
         outMesh->pAttr.setDraped(true);

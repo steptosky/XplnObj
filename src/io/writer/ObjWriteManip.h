@@ -59,13 +59,11 @@ class ObjMesh;
  *          This class just uses the manipulators and does not take ownership.
  */
 class ObjWriteManip {
-
-    ObjWriteManip(const ObjWriteManip &) = delete;
-    ObjWriteManip & operator =(const ObjWriteManip &) = delete;
-
 public:
 
     ObjWriteManip() = default;
+    ObjWriteManip(const ObjWriteManip &) = delete;
+    ObjWriteManip & operator =(const ObjWriteManip &) = delete;
     ~ObjWriteManip() = default;
 
     XpObjLib void write(AbstractWriter * writer, const ObjAbstract * obj);

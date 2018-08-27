@@ -46,13 +46,13 @@ using namespace xobj;
  * Rotation + Translation
  * Without root matrix
  * The parent is animated and it is rotated 90 degrees relative to Z in world space and it has offset.
- * Anim moving the parent along world's X, so as the result in the world space the movig will be along X axis.
- * Anim rotate the parent around perent's X, so as the result in the world space the rotation will be around X axis
- * Anim moving the child along perent's X, so as the result in the world space the movig will be along Y axis.
- * Anim rotate the child around perent's X, so as the result in the world space the rotation will be around Y axis
+ * Animation moving the parent along world's X, so as the result in the world space the moving will be along X axis.
+ * Animation rotate the parent around parent's X, so as the result in the world space the rotation will be around X axis
+ * Animation moving the child along parent's X, so as the result in the world space the moving will be along Y axis.
+ * Animation rotate the child around parent's X, so as the result in the world space the rotation will be around Y axis
  */
 TEST(TestTransformationAlgorithm_case8, case1) {
-    std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case8)).append(".").append(TOTEXT(case1)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case8)).append(".").append(TOTEXT(case1)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -126,14 +126,14 @@ TEST(TestTransformationAlgorithm_case8, case1) {
  * Rotation + Translation
  * With root matrix
  * The parent is animated and it is rotated 90 degrees relative to Z in world space and it has offset.
- * Anim moving the parent along world's X, so as the result in the world space the movig will be along Y axis.
- * Anim rotate the parent around perent's X, so as the result in the world space the rotation will be around Y axis
- * Anim moving the child along perent's X, so as the result in the world space the movig will be along X axis.
- * Anim rotate the child around perent's X, so as the result in the world space the rotation will be around X axis
- * Then roatate the whole scene back with global matrix.
+ * Animation moving the parent along world's X, so as the result in the world space the moving will be along Y axis.
+ * Animation rotate the parent around parent's X, so as the result in the world space the rotation will be around Y axis
+ * Animation moving the child along parent's X, so as the result in the world space the moving will be along X axis.
+ * Animation rotate the child around parent's X, so as the result in the world space the rotation will be around X axis
+ * Then rotate the whole scene back with global matrix.
  */
 TEST(TestTransformationAlgorithm_case8, case2) {
-    std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case8)).append(".").append(TOTEXT(case2)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case8)).append(".").append(TOTEXT(case2)).append(".obj"));
     //-------------------
     // make out data and save to file
 

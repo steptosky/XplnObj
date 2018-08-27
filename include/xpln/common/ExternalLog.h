@@ -62,8 +62,8 @@ public:
      * \param [in] msg function message
      * \param [in] file function source file
      * \param [in] line function line of the source file
-     * \param [in] function function function objectName
-     * \param [in] function category category of the message
+     * \param [in] function objectName
+     * \param [in] category of the message
      */
     typedef void (*CallBack)(eType type, const char * msg,
                              const char * file, int line, const char * function,
@@ -83,14 +83,14 @@ public:
     /*!
      * \details Generates the string that can be used in about window.
      * \param [in] useWinEol true = "\r\n", false = "\n"
-     * \return ascii string for about window.
+     * \return ASCII string for about window.
      */
     XpObjLib static std::string about(bool useWinEol = false);
 
     /*!
     * \details Generates the short string that can be used in about window.
     * \param [in] useWinEol true = "\r\n", false = "\n"
-    * \return ascii string for about window.
+    * \return ASCII string for about window.
     */
     XpObjLib static std::string shortAbout(bool useWinEol = false);
 

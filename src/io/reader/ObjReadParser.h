@@ -53,15 +53,15 @@ namespace xobj {
  *          then you can not use parsing methods!
  */
 class ObjReadParser {
-
-    ObjReadParser(const ObjReadParser &) = delete;
-    ObjReadParser & operator =(const ObjReadParser &) = delete;
-
 public:
 
     //-------------------------------------------------------------------------
 
     explicit ObjReadParser(const std::string & filePath = "");
+
+    ObjReadParser(const ObjReadParser &) = delete;
+    ObjReadParser & operator =(const ObjReadParser &) = delete;
+
     virtual ~ObjReadParser();
 
     //-------------------------------------------------------------------------
@@ -80,7 +80,7 @@ public:
     std::string extractWord();
     int extractInt();
     float extractFloat();
-    bool isMatch(const char * input, bool skipMatched = true);
+    bool isMatch(const char * inString, bool skipMatched = true);
     bool isEnd() const;
     void skipWord();
     void skipSpace();
@@ -255,9 +255,10 @@ inline float ObjReadParser::extractFloat() {
  * \details Check for match.
  * \remark If specified string is not match then current position will be back otherwise the current position will be after.
  * \param [in] inString string that will be checked for matching.
+ * \param [in] skipMatched
  * \return True if contains specified string otherwise false.
  */
-inline bool ObjReadParser::isMatch(const char * inString, bool skipMatched) {
+inline bool ObjReadParser::isMatch(const char * inString, const bool skipMatched) {
     assert(isValid());
     skipSpace();
     if (!inString)
@@ -288,7 +289,7 @@ inline void ObjReadParser::pushPosition() const {
     mStack.emplace(mMemCurr);
 }
 
-inline void ObjReadParser::popPosition(bool apply) {
+inline void ObjReadParser::popPosition(const bool apply) {
     if (!mStack.empty()) {
         if (apply) {
             mMemCurr = mStack.top();

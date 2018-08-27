@@ -47,10 +47,10 @@ public:
     AnimTransKey()
         : pDrfValue(0.0f) {}
 
-    AnimTransKey(float x, float y, float z, float dataRefValue)
+    AnimTransKey(const float x, const float y, const float z, const float dataRefValue)
         : AnimTransKey(Point3(x, y, z), dataRefValue) {}
 
-    AnimTransKey(const Point3 & pos, float dataRefValue)
+    AnimTransKey(const Point3 & pos, const float dataRefValue)
         : pPosition(pos),
           pDrfValue(dataRefValue) {}
 

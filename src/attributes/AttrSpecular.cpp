@@ -37,7 +37,7 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrSpecular::AttrSpecular(float ratio)
+AttrSpecular::AttrSpecular(const float ratio)
     : mRatio(ratio),
       mIsEnabled(true) { }
 
@@ -53,7 +53,7 @@ AttrSpecular::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrSpecular::setEnabled(bool state) {
+void AttrSpecular::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 

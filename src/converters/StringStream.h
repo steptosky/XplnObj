@@ -45,7 +45,7 @@ public:
     StringStream()
         : StringStream(PRECISION) {}
 
-    StringStream(uint8_t precision) {
+    explicit StringStream(const uint8_t precision) {
         this->precision(precision);
         *this << std::fixed;
     }

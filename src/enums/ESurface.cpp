@@ -47,7 +47,7 @@ namespace ESurfacesData {
         const char * mAttr;
         ESurface::eId mId;
 
-        Data(const char * attr, const char * ui, ESurface::eId id)
+        Data(const char * attr, const char * ui, const ESurface::eId id)
             : mUi(ui),
               mAttr(attr),
               mId(id) {}
@@ -75,7 +75,7 @@ namespace ESurfacesData {
 ESurface::ESurface()
     : mId(none) { }
 
-ESurface::ESurface(eId id)
+ESurface::ESurface(const eId id)
     : mId(id) { }
 
 /**************************************************************************************************/
@@ -86,7 +86,7 @@ bool ESurface::operator==(const ESurface & other) const {
     return mId == other.mId;
 }
 
-bool ESurface::operator==(eId id) const {
+bool ESurface::operator==(const eId id) const {
     return mId == id;
 }
 
@@ -94,7 +94,7 @@ bool ESurface::operator!=(const ESurface & other) const {
     return mId != other.mId;
 }
 
-bool ESurface::operator!=(eId id) const {
+bool ESurface::operator!=(const eId id) const {
     return mId != id;
 }
 

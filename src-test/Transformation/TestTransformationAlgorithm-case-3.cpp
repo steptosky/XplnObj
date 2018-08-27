@@ -45,10 +45,10 @@ using namespace xobj;
  * Root <- obj1 <- obj2(T)
  * Without root matrix
  * The parent is not animated and it is rotated 90 degrees relative to Z in world space.
- * Anim moving the child along perent's X, so as the result in the world space the movig will be along Y axis
+ * Animation moving the child along parent's X, so as the result in the world space the moving will be along Y axis
  */
 TEST(TestTransformationAlgorithm_case3, case1) {
-    std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case3)).append(".").append(TOTEXT(case1)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case3)).append(".").append(TOTEXT(case1)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -106,11 +106,11 @@ TEST(TestTransformationAlgorithm_case3, case1) {
  * Root <- obj1 <- obj2(T)
  * With root matrix
  * The parent is not animated and it is rotated 90 degrees relative to Z in world space.
- * Anim moving the child along perent's X and then roatate the whole scene back with global matrix,
- *     so as the result in the world space the movig will be along X axis
+ * Animation moving the child along parent's X and then rotate the whole scene back with global matrix,
+ *     so as the result in the world space the moving will be along X axis
  */
 TEST(TestTransformationAlgorithm_case3, case2) {
-    std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case3)).append(".").append(TOTEXT(case2)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case3)).append(".").append(TOTEXT(case2)).append(".obj"));
     //-------------------
     // make out data and save to file
 

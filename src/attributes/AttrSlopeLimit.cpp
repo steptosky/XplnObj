@@ -37,7 +37,8 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrSlopeLimit::AttrSlopeLimit(float minPitch, float maxPitch, float minRoll, float maxRoll)
+AttrSlopeLimit::AttrSlopeLimit(const float minPitch, const float maxPitch,
+                               const float minRoll, const float maxRoll)
     : mMinPitch(minPitch),
       mMaxPitch(maxPitch),
       mMinRoll(minRoll),
@@ -59,7 +60,7 @@ AttrSlopeLimit::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrSlopeLimit::setEnabled(bool state) {
+void AttrSlopeLimit::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 
@@ -79,22 +80,22 @@ bool AttrSlopeLimit::operator!=(const AttrSlopeLimit & other) const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrSlopeLimit::setMinPitch(float minPitch) {
+void AttrSlopeLimit::setMinPitch(const float minPitch) {
     mMinPitch = minPitch;
     mIsEnabled = true;
 }
 
-void AttrSlopeLimit::setMaxPitch(float maxPitch) {
+void AttrSlopeLimit::setMaxPitch(const float maxPitch) {
     mMaxPitch = maxPitch;
     mIsEnabled = true;
 }
 
-void AttrSlopeLimit::setMinRoll(float minRoll) {
+void AttrSlopeLimit::setMinRoll(const float minRoll) {
     mMinRoll = minRoll;
     mIsEnabled = true;
 }
 
-void AttrSlopeLimit::setMaxRoll(float maxRoll) {
+void AttrSlopeLimit::setMaxRoll(const float maxRoll) {
     mMaxRoll = maxRoll;
     mIsEnabled = true;
 }

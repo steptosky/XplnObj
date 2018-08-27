@@ -37,7 +37,7 @@ namespace xobj {
 //////////////////////////////////////////* Static area *///////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrPolyOffset::AttrPolyOffset(float offset)
+AttrPolyOffset::AttrPolyOffset(const float offset)
     : mOffset(offset),
       mIsEnabled(true) { }
 
@@ -53,7 +53,7 @@ AttrPolyOffset::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrPolyOffset::setEnabled(bool state) {
+void AttrPolyOffset::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 
@@ -69,7 +69,7 @@ bool AttrPolyOffset::operator!=(const AttrPolyOffset & other) const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrPolyOffset::setOffset(float offset) {
+void AttrPolyOffset::setOffset(const float offset) {
     mIsEnabled = true;
     mOffset = offset;
 }

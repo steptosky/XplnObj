@@ -39,15 +39,15 @@ namespace xobj {
 /**************************************************************************************************/
 
 class Writer : public AbstractWriter {
-
-    Writer(const Writer &) = delete;
-    Writer & operator =(const Writer &) = delete;
-
 public:
 
     //-------------------------------------------------------------------------
 
     Writer() = default;
+
+    Writer(const Writer &) = delete;
+    Writer & operator =(const Writer &) = delete;
+
     virtual ~Writer();
 
     //-------------------------------------------------------------------------

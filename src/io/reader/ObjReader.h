@@ -51,7 +51,7 @@ public:
 
 private:
 
-    bool readFile(const std::string & inFilePath) const;
+    bool readFile(const std::string & filePath) const;
 
     static bool readCounts(ObjReadParser & parser,
                            size_t & outVertices,

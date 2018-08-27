@@ -45,7 +45,7 @@ AnimVisibilityKey::AnimVisibilityKey()
       pLoopValue(0.0f),
       pHasLoop(false) {}
 
-AnimVisibilityKey::AnimVisibilityKey(eType type, float val1, float val2, const std::string & dataRef)
+AnimVisibilityKey::AnimVisibilityKey(const eType type, const float val1, const float val2, const std::string & dataRef)
     : pType(type),
       pValue1(val1),
       pValue2(val2),

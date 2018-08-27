@@ -62,7 +62,7 @@ public:
     //-------------------------------------------------------------------------
 
     [[deprecated("use setTree instead")]]
-    void setSunLight(bool state) { setTree(!state); }
+    void setSunLight(const bool state) { setTree(!state); }
 
     void setTree(bool state);
     void setTwoSided(bool state);
@@ -207,27 +207,27 @@ inline bool AttrSet::operator!=(const AttrSet & other) const {
 
 //-------------------------------------------------------------------------
 
-inline void AttrSet::setTree(bool state) {
+inline void AttrSet::setTree(const bool state) {
     mIsTree = state;
 }
 
-inline void AttrSet::setTwoSided(bool state) {
+inline void AttrSet::setTwoSided(const bool state) {
     mIsTwoSided = state;
 }
 
-inline void AttrSet::setDraw(bool state) {
+inline void AttrSet::setDraw(const bool state) {
     mIsDraw = state;
 }
 
-inline void AttrSet::setDraped(bool state) {
+inline void AttrSet::setDraped(const bool state) {
     mIsDraped = state;
 }
 
-inline void AttrSet::setCastShadow(bool state) {
+inline void AttrSet::setCastShadow(const bool state) {
     mIsCastShadow = state;
 }
 
-inline void AttrSet::setSolidForCamera(bool state) {
+inline void AttrSet::setSolidForCamera(const bool state) {
     mIsSolidForCamera = state;
 }
 

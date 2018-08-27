@@ -54,7 +54,7 @@ namespace xobj {
 //////////////////////////////////////////* Static area *///////////////////////////////////////////
 /**************************************************************************************************/
 
-void ExternalLog::registerCallBack(CallBack callback) {
+void ExternalLog::registerCallBack(const CallBack callback) {
     sts::BaseLogger::instance().setCallBack(reinterpret_cast<sts::BaseLogger::CallBack>(callback));
     sts::BaseLogger::instance().setLevel(LOGLEVEL);
 }
@@ -67,7 +67,7 @@ void ExternalLog::unRegisterCallBack() {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-std::string ExternalLog::about(bool useWinEol) {
+std::string ExternalLog::about(const bool useWinEol) {
     std::stringstream stream;
     const char * eol = useWinEol ? "\r\n" : "\n";
     //-------------------------------------------------------------------------
@@ -95,7 +95,7 @@ std::string ExternalLog::about(bool useWinEol) {
     return stream.str();
 }
 
-std::string ExternalLog::shortAbout(bool useWinEol) {
+std::string ExternalLog::shortAbout(const bool useWinEol) {
     std::stringstream stream;
     const char * eol = useWinEol ? "\r\n" : "\n";
     //-------------------------------------------------------------------------

@@ -144,7 +144,7 @@ public:
     //-------------------------------------------------------------------------
 
     /*!
-     * \details Makes from string which is used in the ui.
+     * \details Makes from string which is used in the UI.
      * \param [in] name
      */
     XpObjLib static ELightNamed fromUiString(const char * name);

@@ -96,7 +96,7 @@ class AttrWriter {
 public:
     template<typename T>
     static void writeAttr(AbstractWriter * writer, const T & attr, T & inOutActiveAttr, const char * offStr, size_t & outCounter,
-                          std::function<void(const T &)> attrEnable = nullptr, std::function<void()> attrDisable = nullptr) {
+                          std::function<void(const T &)> attrEnable = nullptr, const std::function<void()> & attrDisable = nullptr) {
         if (!attr) {
             if (inOutActiveAttr) {
                 writer->printLine(offStr);
@@ -133,7 +133,7 @@ public:
     }
 };
 
-void ObjWriteAttr::writeBool(bool currVal, uint32_t flag, const char * attrOn, const char * attrOff) {
+void ObjWriteAttr::writeBool(const bool currVal, const uint32_t flag, const char * attrOn, const char * attrOff) {
     if (!currVal) {
         if (Flags::hasFlag(mFlags, flag)) {
             mWriter->printLine(attrOff);
@@ -152,12 +152,12 @@ void ObjWriteAttr::writeBool(bool currVal, uint32_t flag, const char * attrOn, c
 
 void ObjWriteAttr::writeAttributes(const AttrSet & obj) {
 
-    std::function<void(const AttrCockpit &)> manipPanelEnabled = [&](const AttrCockpit & cockpit) {
+    const auto manipPanelEnabled = [&](const AttrCockpit & cockpit) {
         if (mManipWriter) {
             mManipWriter->setPanelEnabled(cockpit);
         }
     };
-    std::function<void()> manipPanelDisabled = [&]() {
+    const auto manipPanelDisabled = [&]() {
         if (mManipWriter) {
             mManipWriter->setPanelDisabled();
         }

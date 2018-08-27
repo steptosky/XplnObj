@@ -45,10 +45,10 @@ using namespace xobj;
  * Root <- obj1 <- obj2(R)
  * Without root matrix
  * The parent is not animated and it is rotated 90 degrees relative to Z in world space.
- * Anim rotate the child around perent's X, so as the result in the world space the rotation will be around Y axis
+ * Animation rotate the child around parent's X, so as the result in the world space the rotation will be around Y axis
  */
 TEST(TestTransformationAlgorithm_case6, case1) {
-    std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case6)).append(".").append(TOTEXT(case1)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case6)).append(".").append(TOTEXT(case1)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -105,10 +105,10 @@ TEST(TestTransformationAlgorithm_case6, case1) {
  * Without root matrix
  * The parent is not animated and it is rotated 90 degrees relative to Z in world space.
  * The child has also the rotation around it's Z axis in its transform matrix.
- * Anim rotate the child around perent's X, so as the result in the world space the rotation will be around Y axis
+ * Animation rotate the child around parent's X, so as the result in the world space the rotation will be around Y axis
  */
 TEST(TestTransformationAlgorithm_case6, case2) {
-    std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case6)).append(".").append(TOTEXT(case2)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case6)).append(".").append(TOTEXT(case2)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -165,11 +165,11 @@ TEST(TestTransformationAlgorithm_case6, case2) {
  * Root <- obj1 <- obj2(R)
  * With root matrix
  * The parent is not animated and it is rotated 90 degrees relative to Z in world space.
- * Anim rotate the child around perent's X and then roatate the whole scene back with global matrix,
+ * Animation rotate the child around parent's X and then rotate the whole scene back with global matrix,
  *     so as the result in the world space the rotation will be around X axis
  */
 TEST(TestTransformationAlgorithm_case6, case3) {
-    std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case6)).append(".").append(TOTEXT(case3)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case6)).append(".").append(TOTEXT(case3)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -231,10 +231,10 @@ TEST(TestTransformationAlgorithm_case6, case3) {
 * Rotation + Translation
 * Without root matrix
 * The parent is not animated and it is rotated 90 degrees relative to Z in world space.
-* Anim rotate the child around perent's X, so as the result in the world space the rotation will be around Y axis
+* Animation rotate the child around parent's X, so as the result in the world space the rotation will be around Y axis
 */
 TEST(TestTransformationAlgorithm_case6, case4) {
-    std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case6)).append(".").append(TOTEXT(case4)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case6)).append(".").append(TOTEXT(case4)).append(".obj"));
     //-------------------
     // make out data and save to file
 

@@ -94,7 +94,7 @@ public:
     //-------------------------------------------------------------------------
 
     /*!
-     * \details Makes from string which is used in the ui.
+     * \details Makes from string which is used in the UI.
      * \param [in] name
      */
     XpObjLib static ESurface fromUiString(const char * name);

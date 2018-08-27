@@ -42,7 +42,7 @@ namespace xobj {
 Color::Color()
     : Color(0.0, 0.0, 0.0, 1.0) { }
 
-Color::Color(float red, float green, float blue, float alpha) {
+Color::Color(const float red, const float green, const float blue, const float alpha) {
     mColor[0] = red;
     mColor[1] = green;
     mColor[2] = blue;
@@ -99,19 +99,19 @@ float Color::alpha() const {
     return mColor[3];
 }
 
-void Color::setRed(float val) {
+void Color::setRed(const float val) {
     mColor[0] = val;
 }
 
-void Color::setGreen(float val) {
+void Color::setGreen(const float val) {
     mColor[1] = val;
 }
 
-void Color::setBlue(float val) {
+void Color::setBlue(const float val) {
     mColor[2] = val;
 }
 
-void Color::setAlpha(float val) {
+void Color::setAlpha(const float val) {
     mColor[3] = val;
 }
 
@@ -119,7 +119,7 @@ void Color::setAlpha(float val) {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-std::string Color::toString(uint8_t precision /*= 4*/) const {
+std::string Color::toString(const uint8_t precision /*= 4*/) const {
     StringStream outStr(precision);
     outStr << red() << " " << green() << " " << blue() << " " << alpha();
     return outStr.str();

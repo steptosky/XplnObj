@@ -76,7 +76,7 @@ using namespace xobj;
  *
  */
 TEST(TestTransform_case0, case1) {
-    std::string path(std::string(TOTEXT(TestTransform_case0)).append(".").append(TOTEXT(case1)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case0)).append(".").append(TOTEXT(case1)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -134,7 +134,7 @@ TEST(TestTransform_case0, case1) {
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 /*
- * Root <- obj1 <- obj2 [aplly root matrix with Y rotation and translate by X]
+ * Root <- obj1 <- obj2 [apply root matrix with Y rotation and translate by X]
  *
  *  +==============================================+
  *  | Result of obj files                          |
@@ -162,7 +162,7 @@ TEST(TestTransform_case0, case1) {
  *
  */
 TEST(TestTransform_case0, case2) {
-    std::string path(std::string(TOTEXT(TestTransform_case0)).append(".").append(TOTEXT(case2)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case0)).append(".").append(TOTEXT(case2)).append(".obj"));
     //-------------------
     // make out data and save to file
 

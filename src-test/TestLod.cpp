@@ -71,7 +71,7 @@ public:
 /**************************************************************************************************/
 
 /*
-* Saving meshes in separated lods to the file then read, parse and compare wrote data.
+* Saving meshes in separated LODs to the file then read, parse and compare wrote data.
 */
 TEST_F(TestLod, lods_grouping) {
     ObjMain mainOut;
@@ -99,7 +99,7 @@ TEST_F(TestLod, lods_grouping) {
     lgroup3.transform().addObject(m4);
 
     //-------------------------------------------------------------------------
-    // Lods are owners for its children, 
+    // LODs are owners for its children, 
     // so we need to make mesh pointer as nullptr for turning off deleting it by the TestLod class.
 
     ObjMesh * mesh1 = m1;
@@ -121,7 +121,7 @@ TEST_F(TestLod, lods_grouping) {
     mainIn.importFromFile(TOTEXT(TestLod));
 
     //-------------------------------------------------------------------------
-    // WARNING: After export the lods are sorted so they have reversed order!
+    // WARNING: After export the LODs are sorted so they have reversed order!
 
     ASSERT_EQ(3, mainIn.lodCount());
 
@@ -133,7 +133,7 @@ TEST_F(TestLod, lods_grouping) {
     ASSERT_EQ(1500.0, lod1.farVal());
     const Transform::ObjList & objList1 = lod1.transform().objList();
     ASSERT_EQ(1, objList1.size());
-    const ObjMesh * obj1 = dynamic_cast<const ObjMesh*>(*objList1.begin());
+    const auto * obj1 = dynamic_cast<const ObjMesh*>(*objList1.begin());
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMesh(mesh1, obj1));
 
     //-------------------------
@@ -145,7 +145,7 @@ TEST_F(TestLod, lods_grouping) {
 
     const Transform::ObjList & objList2 = lod2.transform().objList();
     ASSERT_EQ(1, objList2.size());
-    const ObjMesh * obj2 = dynamic_cast<const ObjMesh*>(*objList2.begin());
+    const auto * obj2 = dynamic_cast<const ObjMesh*>(*objList2.begin());
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMesh(mesh2, obj2));
 
     //-------------------------
@@ -157,8 +157,8 @@ TEST_F(TestLod, lods_grouping) {
 
     const Transform::ObjList & objList3 = lod3.transform().objList();
     ASSERT_EQ(2, objList3.size());
-    const ObjMesh * objMesh3 = dynamic_cast<const ObjMesh*>(*objList3.begin());
-    const ObjMesh * objMesh4 = dynamic_cast<const ObjMesh*>(*(++objList3.begin()));
+    const auto * objMesh3 = dynamic_cast<const ObjMesh*>(*objList3.begin());
+    const auto * objMesh4 = dynamic_cast<const ObjMesh*>(*(++objList3.begin()));
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMesh(mesh3, objMesh3));
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMesh(mesh4, objMesh4));
 }
@@ -168,7 +168,7 @@ TEST_F(TestLod, lods_grouping) {
 /**************************************************************************************************/
 
 /*
-* Lods shall have particular order from nearVal to farVal.
+* LODs shall have particular order from nearVal to farVal.
 */
 TEST_F(TestLod, lods_sorting) {
     ObjMain main;
@@ -217,7 +217,7 @@ TEST(TestLodAccess, property_access) {
 
 /*
 * Validator.
-* The lods can be adjustment incorrect so the validator checks this situation.
+* The LODs can be adjustment incorrect so the validator checks this situation.
 */
 TEST_F(TestLod, validator) {
     ObjMain main;

@@ -47,7 +47,7 @@ namespace EObjLightNamedData {
         const char * mAttr;
         ELightNamed::eId mId;
 
-        Data(const char * attr, const char * ui, ELightNamed::eId id)
+        Data(const char * attr, const char * ui, const ELightNamed::eId id)
             : mUi(ui),
               mAttr(attr),
               mId(id) {}
@@ -126,7 +126,7 @@ namespace EObjLightNamedData {
 ELightNamed::ELightNamed()
     : mId(none) {}
 
-ELightNamed::ELightNamed(eId id)
+ELightNamed::ELightNamed(const eId id)
     : mId(id) { }
 
 /**************************************************************************************************/
@@ -137,7 +137,7 @@ bool ELightNamed::operator==(const ELightNamed & other) const {
     return mId == other.mId;
 }
 
-bool ELightNamed::operator==(eId id) const {
+bool ELightNamed::operator==(const eId id) const {
     return mId == id;
 }
 
@@ -145,7 +145,7 @@ bool ELightNamed::operator!=(const ELightNamed & other) const {
     return mId != other.mId;
 }
 
-bool ELightNamed::operator!=(eId id) const {
+bool ELightNamed::operator!=(const eId id) const {
     return mId != id;
 }
 

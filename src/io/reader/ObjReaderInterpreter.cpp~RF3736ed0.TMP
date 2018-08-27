@@ -201,7 +201,7 @@ void ObjReaderInterpreter::gotGlobAttrDebug() {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjReaderInterpreter::gotLod(const float near, const float far, const std::string & endLineComment) {
+void ObjReaderInterpreter::gotLod(const  float near, const   float far, const std::string & endLineComment) {
     ObjLodGroup & l = mObjMain->addLod();
     l.setNearVal(near);
     l.setFarVal(far);
@@ -243,12 +243,12 @@ void ObjReaderInterpreter::gotTrisAttrBlend(const AttrBlend & attr) {
     ++mIOStatistic->pTrisAttrCount;
 }
 
-void ObjReaderInterpreter::gotTrisAttrShadow(const bool state) {
+void ObjReaderInterpreter::gotTrisAttrShadow(const  bool state) {
     mCurrentAttrSet.setCastShadow(state);
     ++mIOStatistic->pTrisAttrCount;
 }
 
-void ObjReaderInterpreter::gotTrisAttrDraped(const bool state) {
+void ObjReaderInterpreter::gotTrisAttrDraped(const  bool state) {
     mCurrentAttrSet.setDraped(state);
     ++mIOStatistic->pTrisAttrCount;
 }
@@ -273,12 +273,12 @@ void ObjReaderInterpreter::gotTrisAttrLightLevel(const AttrLightLevel & attr) {
     ++mIOStatistic->pTrisAttrCount;
 }
 
-void ObjReaderInterpreter::gotTrisAttrDrawEnable(const bool state) {
+void ObjReaderInterpreter::gotTrisAttrDrawEnable(const  bool state) {
     mCurrentAttrSet.setDraw(state);
     ++mIOStatistic->pTrisAttrCount;
 }
 
-void ObjReaderInterpreter::gotTrisAttrSolidCamera(const bool state) {
+void ObjReaderInterpreter::gotTrisAttrSolidCamera(const  bool state) {
     mCurrentAttrSet.setSolidForCamera(state);
     ++mIOStatistic->pTrisAttrCount;
 }
@@ -326,7 +326,7 @@ void ObjReaderInterpreter::gotTrisAttrManip(const AttrManipBase & manip) {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjReaderInterpreter::gotTris(const Index offset, const Index count, const std::string & endLineComment) {
+void ObjReaderInterpreter::gotTris(const  Index offset, const   Index count, const std::string & endLineComment) {
     checkForCreateLod();
     assert(mCurrentTransform);
 
@@ -449,7 +449,7 @@ void ObjReaderInterpreter::gotAnimShow(const AnimVisibility::Key & key) {
 }
 
 void ObjReaderInterpreter::gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
-                                            const bool hasLoop, const float loopVal) {
+                                            const   bool hasLoop, const   float loopVal) {
     checkForCreateLod();
     if (mCurrentTransform) {
         mCurrentTransform->pAnimTrans.emplace_back();
@@ -462,7 +462,7 @@ void ObjReaderInterpreter::gotTranslateAnim(AnimTrans::KeyList & key, std::strin
 }
 
 void ObjReaderInterpreter::gotRotateAnim(AnimRotate::KeyList & key, float ( & inVector)[3], std::string & dataref,
-                                         const bool hasLoop, const float loopVal) {
+                                         const   bool hasLoop, const   float loopVal) {
     checkForCreateLod();
     if (mCurrentTransform) {
         mCurrentTransform->pAnimRotate.emplace_back();

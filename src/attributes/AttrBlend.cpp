@@ -37,7 +37,7 @@ namespace xobj {
 //////////////////////////////////////////* Static area *///////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrBlend::AttrBlend(eType type, float ratio)
+AttrBlend::AttrBlend(const eType type, const float ratio)
     : mBlending(type),
       mRatio(ratio),
       mIsEnabled(true) {}
@@ -55,7 +55,7 @@ AttrBlend::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrBlend::setEnabled(bool state) {
+void AttrBlend::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 
@@ -77,11 +77,11 @@ AttrBlend::eType AttrBlend::type() const {
     return mBlending;
 }
 
-void AttrBlend::setRatio(float inRatio) {
-    inRatio = std::min(inRatio, 1.0f);
-    inRatio = std::max(inRatio, 0.0f);
+void AttrBlend::setRatio(float ratio) {
+    ratio = std::min(ratio, 1.0f);
+    ratio = std::max(ratio, 0.0f);
     mIsEnabled = true;
-    mRatio = inRatio;
+    mRatio = ratio;
 }
 
 float AttrBlend::ratio() const {

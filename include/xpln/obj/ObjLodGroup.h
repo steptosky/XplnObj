@@ -43,15 +43,14 @@ namespace xobj {
  * \ingroup Objects
  */
 class ObjLodGroup {
-
-    ObjLodGroup(const ObjLodGroup &) = delete;
-    ObjLodGroup & operator =(const ObjLodGroup &) = delete;
-
 protected:
 
     XpObjLib ObjLodGroup();
 
 public:
+
+    ObjLodGroup(const ObjLodGroup &) = delete;
+    ObjLodGroup & operator =(const ObjLodGroup &) = delete;
 
     virtual ~ObjLodGroup() = default;
 

@@ -112,7 +112,7 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
 
         //-------------------------------------------------------------------------
         // calculate count
-        size_t lodCount = mMain->lodCount();
+        const size_t lodCount = mMain->lodCount();
         for (size_t i = 0; i < lodCount; ++i) {
             calculateVerticiesAndFaces(mMain->lod(i).transform());
         }
@@ -183,7 +183,7 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
     }
 }
 
-void ObjWriter::printLOD(AbstractWriter & writer, const ObjLodGroup & lod, size_t count) const {
+void ObjWriter::printLOD(AbstractWriter & writer, const ObjLodGroup & lod, const size_t count) const {
     if (count < 2 && sts::isEqual(lod.nearVal(), lod.farVal(), 0.1f)) {
         return;
     }
@@ -203,7 +203,7 @@ inline std::string currentDateTime() {
 }
 
 void ObjWriter::printSignature(AbstractWriter & writer, const std::string & signature) {
-    if (signature.size()) {
+    if (!signature.empty()) {
         writer.printEol();
         std::string s("## ");
         s.append(signature);

@@ -48,13 +48,13 @@ class ObjLodGroup;
  * \ingroup Objects
  */
 class ObjMain {
+public:
+
+    XpObjLib ObjMain();
 
     ObjMain(const ObjMain &) = delete;
     ObjMain & operator =(const ObjMain &) = delete;
 
-public:
-
-    XpObjLib ObjMain();
     XpObjLib virtual ~ObjMain();
 
     //-------------------------------------------------------------------------
@@ -78,25 +78,25 @@ public:
     //-------------------------------------------------------------------------
 
     /*!
-     * \details Gets lod by index.
+     * \details Gets LOD by index.
      * \param [in] index
      */
     XpObjLib ObjLodGroup & lod(size_t index);
 
     /*!
-     * \details Gets lod by index.
+     * \details Gets LOD by index.
      * \param [in] index
      */
     XpObjLib const ObjLodGroup & lod(size_t index) const;
 
     /*!
      * \details Adds lods.
-     * \return created lod which was added to the lods list.
+     * \return created LOD which was added to the lods list.
      */
     XpObjLib ObjLodGroup & addLod();
 
     /*!
-     * \details Removes lod by index.
+     * \details Removes LOD by index.
      * \param [in] index
      */
     XpObjLib void removeLod(size_t index);

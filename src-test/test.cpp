@@ -37,7 +37,6 @@
 
 GTEST_API_ int main(int argc, char ** argv) {
     testing::InitGoogleMock(&argc, argv);
-
     std::cout << xobj::ExternalLog::about() << std::endl;
     const int res = RUN_ALL_TESTS();
     return res;

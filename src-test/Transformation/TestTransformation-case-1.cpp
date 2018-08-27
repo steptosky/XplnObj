@@ -105,7 +105,7 @@ using namespace xobj;
  *
  */
 TEST(TestTransform_case1, tr_case1) {
-    std::string path(std::string(TOTEXT(TestTransform_case1)).append(".").append(TOTEXT(tr_case1)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case1)).append(".").append(TOTEXT(tr_case1)).append(".obj"));
     //-------------------
     // make out data and save to file [animation rotate axis Y]
 
@@ -232,7 +232,7 @@ TEST(TestTransform_case1, tr_case1) {
 *
 */
 TEST(TestTransform_case1, tr_case2) {
-    std::string path(std::string(TOTEXT(TestTransform_case1)).append(".").append(TOTEXT(tr_case2)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case1)).append(".").append(TOTEXT(tr_case2)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -359,7 +359,7 @@ TEST(TestTransform_case1, tr_case2) {
 *
 */
 TEST(TestTransform_case1, tr_case3) {
-    std::string path(std::string(TOTEXT(TestTransform_case1)).append(".").append(TOTEXT(tr_case3)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case1)).append(".").append(TOTEXT(tr_case3)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -452,7 +452,7 @@ TEST(TestTransform_case1, tr_case3) {
  *
  */
 TEST(TestTransform_case1, r_case1) {
-    std::string path(std::string(TOTEXT(TestTransform_case1)).append(".").append(TOTEXT(r_case1)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case1)).append(".").append(TOTEXT(r_case1)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -547,7 +547,7 @@ TEST(TestTransform_case1, r_case1) {
  *
  */
 TEST(TestTransform_case1, r_case2) {
-    std::string path(std::string(TOTEXT(TestTransform_case1)).append(".").append(TOTEXT(r_case2)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case1)).append(".").append(TOTEXT(r_case2)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -643,7 +643,7 @@ TEST(TestTransform_case1, r_case2) {
  *
  */
 TEST(TestTransform_case1, t_case1) {
-    std::string path(std::string(TOTEXT(TestTransform_case1)).append(".").append(TOTEXT(t_case1)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case1)).append(".").append(TOTEXT(t_case1)).append(".obj"));
     //-------------------
     // make out data and save to file
 

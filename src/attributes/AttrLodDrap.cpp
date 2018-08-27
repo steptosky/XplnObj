@@ -37,7 +37,7 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrLodDrap::AttrLodDrap(float distance)
+AttrLodDrap::AttrLodDrap(const float distance)
     : mDistance(distance),
       mIsEnabled(true) { }
 
@@ -53,7 +53,7 @@ AttrLodDrap::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrLodDrap::setEnabled(bool state) {
+void AttrLodDrap::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 
@@ -69,7 +69,7 @@ bool AttrLodDrap::operator!=(const AttrLodDrap & other) const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrLodDrap::setDistance(float distance) {
+void AttrLodDrap::setDistance(const float distance) {
     mDistance = distance;
     mIsEnabled = true;
 }

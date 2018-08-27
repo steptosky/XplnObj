@@ -50,14 +50,14 @@ class ObjAbstract;
  * \note It takes ownership for all its children.
  */
 class Transform {
-
     friend TreeItem;
-    Transform(const Transform &) = delete;
-    Transform & operator=(const Transform &) = delete;
-
 public:
 
     XpObjLib Transform();
+
+    Transform(const Transform &) = delete;
+    Transform & operator=(const Transform &) = delete;
+
     XpObjLib virtual ~Transform();
 
     //-------------------------------------------------------------------------
@@ -259,7 +259,7 @@ inline TMatrix Transform::parentMatrix() const {
 }
 
 inline Transform & Transform::createChild(const char * inName) {
-    Transform * tr = new Transform;
+    auto * tr = new Transform;
     tr->setParent(this);
     if (inName) {
         tr->setName(inName);

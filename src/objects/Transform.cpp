@@ -42,7 +42,7 @@ namespace xobj {
 class TreeItem : public sts_t::TreeItem<TreeItem> {
 public:
 
-    TreeItem(Transform * inTransformTree)
+    explicit TreeItem(Transform * inTransformTree)
         : mIsCallDestructor(true),
           mTransformTree(inTransformTree) { }
 
@@ -124,11 +124,11 @@ Transform::TransformIndex Transform::childrenCount() const {
     return static_cast<TransformIndex>(mTreePtr->childrenCount());
 }
 
-Transform * Transform::childAt(TransformIndex index) {
+Transform * Transform::childAt(const TransformIndex index) {
     return mTreePtr->childAt(index)->data();
 }
 
-const Transform * Transform::childAt(TransformIndex index) const {
+const Transform * Transform::childAt(const TransformIndex index) const {
     return mTreePtr->childAt(index)->data();
 }
 
@@ -136,7 +136,7 @@ bool Transform::isChildOf(const Transform * parent) const {
     return mTreePtr->isChildOf(parent->mTreePtr);
 }
 
-Transform * Transform::takeChildAt(TransformIndex index) {
+Transform * Transform::takeChildAt(const TransformIndex index) {
     return mTreePtr->takeChildAt(index)->data();
 }
 
@@ -274,7 +274,7 @@ bool Transform::visitObjects(const std::function<bool(const ObjAbstract &)> & fu
 /**************************************************************************************************/
 
 bool Transform::visitAllOf(Transform * parent, const std::function<bool(Transform &)> & function) {
-    TransformIndex numChildren = parent->childrenCount();
+    const TransformIndex numChildren = parent->childrenCount();
     for (TransformIndex idx = 0; idx < numChildren; ++idx) {
         Transform * currNode = parent->childAt(idx);
         if (!function(*currNode)) {
@@ -288,7 +288,7 @@ bool Transform::visitAllOf(Transform * parent, const std::function<bool(Transfor
 }
 
 bool Transform::visitAllOf(const Transform * parent, const std::function<bool(const Transform &)> & function) {
-    TransformIndex numChildren = parent->childrenCount();
+    const TransformIndex numChildren = parent->childrenCount();
     for (TransformIndex idx = 0; idx < numChildren; ++idx) {
         const Transform * currNode = parent->childAt(idx);
         if (!function(*currNode)) {
@@ -304,7 +304,7 @@ bool Transform::visitAllOf(const Transform * parent, const std::function<bool(co
 //-------------------------------------------------------------------------
 
 bool Transform::visitChildren(Transform * parent, const std::function<bool(Transform &)> & function) {
-    TransformIndex count = parent->childrenCount();
+    const TransformIndex count = parent->childrenCount();
     for (TransformIndex i = 0; i < count; ++i) {
         if (!function(*parent->childAt(i))) {
             return false;
@@ -314,7 +314,7 @@ bool Transform::visitChildren(Transform * parent, const std::function<bool(Trans
 }
 
 bool Transform::visitChildren(const Transform * parent, const std::function<bool(const Transform &)> & function) {
-    TransformIndex count = parent->childrenCount();
+    const TransformIndex count = parent->childrenCount();
     for (TransformIndex i = 0; i < count; ++i) {
         if (!function(*parent->childAt(i))) {
             return false;

@@ -37,7 +37,7 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrCockpit::AttrCockpit(eType type)
+AttrCockpit::AttrCockpit(const eType type)
     : mType(type),
       mIsEnabled(true) { }
 
@@ -53,7 +53,7 @@ AttrCockpit::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrCockpit::setEnabled(bool state) {
+void AttrCockpit::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 
@@ -70,7 +70,7 @@ bool AttrCockpit::operator!=(const AttrCockpit & other) const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrCockpit::setType(eType type) {
+void AttrCockpit::setType(const eType type) {
     mType = type;
     mIsEnabled = true;
 }

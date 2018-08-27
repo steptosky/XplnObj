@@ -47,7 +47,7 @@ namespace ELayersData {
         const char * mAttr;
         ELayer::eId mId;
 
-        Data(const char * attr, const char * ui, ELayer::eId id)
+        Data(const char * attr, const char * ui, const ELayer::eId id)
             : mUi(ui),
               mAttr(attr),
               mId(id) {}
@@ -76,7 +76,7 @@ namespace ELayersData {
 ELayer::ELayer()
     : mId(none) {}
 
-ELayer::ELayer(eId id)
+ELayer::ELayer(const eId id)
     : mId(id) { }
 
 /**************************************************************************************************/
@@ -87,7 +87,7 @@ bool ELayer::operator==(const ELayer & other) const {
     return mId == other.mId;
 }
 
-bool ELayer::operator==(eId id) const {
+bool ELayer::operator==(const eId id) const {
     return mId == id;
 }
 
@@ -95,7 +95,7 @@ bool ELayer::operator!=(const ELayer & other) const {
     return mId != other.mId;
 }
 
-bool ELayer::operator!=(eId id) const {
+bool ELayer::operator!=(const eId id) const {
     return mId != id;
 }
 

@@ -85,7 +85,7 @@ bool findHardPolygons(const ObjAbstract & baseObj, const std::string & lodName) 
     if (baseObj.objType() != eObjectType::OBJ_MESH) {
         return false;
     }
-    const ObjMesh * mesh = static_cast<const ObjMesh*>(&baseObj);
+    const auto * mesh = static_cast<const ObjMesh*>(&baseObj);
     if (!mesh->pAttr.hard()) {
         return false;
     }
@@ -165,7 +165,7 @@ bool checkParameters(const ObjMesh & obj, const std::string & prefix) {
     }
     {
         std::vector<bool> vertUsed(obj.pVertices.size(), false);
-        size_t vertSize = vertUsed.size();
+        const size_t vertSize = vertUsed.size();
         for (size_t i = 0; i < obj.pFaces.size(); ++i) {
             const MeshFace & currFace = obj.pFaces[i];
             if (currFace.pV0 >= vertSize || currFace.pV1 >= vertSize || currFace.pV2 >= vertSize) {
@@ -178,7 +178,7 @@ bool checkParameters(const ObjMesh & obj, const std::string & prefix) {
             vertUsed[currFace.pV2] = true;
         }
         for (size_t i = 0; i < vertUsed.size(); ++i) {
-            if (vertUsed[i] == false) {
+            if (!vertUsed[i]) {
                 result = false;
                 LError << prefix << " - The vertex [" << i << "] is isolated.";
             }
@@ -263,7 +263,7 @@ bool checkParameters(const AnimTrans & anim, const std::string & prefix) {
     }
 
     if (anim.pKeys.size() != 2) {
-        if (anim.pDrf.empty() || anim.pDrf.compare("none") == 0) {
+        if (anim.pDrf.empty() || anim.pDrf == "none") {
             result = false;
             ULError << prefix << " - Dataref isn't specified.";
         }
@@ -293,7 +293,7 @@ bool checkParameters(const AnimRotate & anim, const std::string & prefix) {
     }
 
     if (anim.pKeys.size() != 2) {
-        if (anim.pDrf.empty() || anim.pDrf.compare("none") == 0) {
+        if (anim.pDrf.empty() || anim.pDrf == "none") {
             result = false;
             ULError << prefix.c_str() << " - Dataref isn't specified.";
         }
@@ -311,25 +311,25 @@ bool checkParameters(const AnimRotate & anim, const std::string & prefix) {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool checkParameters(const ObjLightCustom & inVal, const std::string & prefix) {
+bool checkParameters(const ObjLightCustom & inVal, const std::string & inPrefix) {
     bool result = true;
     if (inVal.size() < 1.0f) {
-        ULWarning << prefix << " - Using too small the light size. Perhaps it is a mistake.";
+        ULWarning << inPrefix << " - Using too small the light size. Perhaps it is a mistake.";
     }
 
     const RectangleI & rect = inVal.textureRect();
     if (sts::isEqual(rect.point1().x, rect.point2().x)) {
         result = false;
-        ULWarning << prefix << " - S1 and S2 should not be equaled.";
+        ULWarning << inPrefix << " - S1 and S2 should not be equaled.";
     }
     if (sts::isEqual(rect.point1().y, rect.point2().y)) {
         result = false;
-        ULWarning << prefix << " - T1 and T2 can't be equaled.";
+        ULWarning << inPrefix << " - T1 and T2 can't be equaled.";
     }
 
     if (StringValidator::hasIllegalSymbols(inVal.dataRef())) {
         result = false;
-        ULError << prefix << " - Dataref contains illegal symbols.";
+        ULError << inPrefix << " - Dataref contains illegal symbols.";
     }
 
     return result;
@@ -337,89 +337,89 @@ bool checkParameters(const ObjLightCustom & inVal, const std::string & prefix) {
 
 //-------------------------------------------------------------------------
 
-bool checkParameters(const ObjLightNamed & inVal, const std::string & prefix) {
+bool checkParameters(const ObjLightNamed & inVal, const std::string & inPrefix) {
     bool result = true;
     if (!inVal.lightId().isValid()) {
         result = false;
-        ULError << prefix << " - Light objectName isn't specified.";
+        ULError << inPrefix << " - Light objectName isn't specified.";
     }
     return result;
 }
 
 //-------------------------------------------------------------------------
 
-bool checkParameters(const ObjLightParam & inVal, const std::string & prefix) {
+bool checkParameters(const ObjLightParam & inVal, const std::string & inPrefix) {
     bool result = true;
     if (!inVal.lightId().isValid()) {
         result = false;
-        ULError << prefix << " - Light objectName isn't specified.";
+        ULError << inPrefix << " - Light objectName isn't specified.";
     }
     if (inVal.lightId() == ELightParams(ELightParams::light_params_custom)) {
         if (inVal.lightName().empty()) {
             result = false;
-            ULError << prefix << " - Custom light name isn't specified.";
+            ULError << inPrefix << " - Custom light name isn't specified.";
         }
     }
     if (inVal.additionalParams().empty()) {
         result = false;
-        ULError << prefix << " - Parameters isn't specified.";
+        ULError << inPrefix << " - Parameters isn't specified.";
     }
     return result;
 }
 
 //-------------------------------------------------------------------------
 
-bool checkParameters(const ObjLightPoint & inVal, const std::string & prefix) {
+bool checkParameters(const ObjLightPoint & inVal, const std::string & inPrefix) {
     bool result = true;
     if (inVal.color().red() == 0.0 &&
         inVal.color().green() == 0.0 &&
         inVal.color().blue() == 0.0) {
         result = false;
-        ULError << prefix << " - Color isn't specified.";
+        ULError << inPrefix << " - Color isn't specified.";
     }
     return result;
 }
 
 //-------------------------------------------------------------------------
 
-bool checkParameters(const ObjLightSpillCust & inVal, const std::string & prefix) {
+bool checkParameters(const ObjLightSpillCust & inVal, const std::string & inPrefix) {
     bool result = true;
-    float semmi = inVal.semiRaw();
+    const float semmi = inVal.semiRaw();
     if (semmi > 1.0f || semmi < 0.0f) {
         result = false;
-        ULError << prefix << " - The semi value must be between 0.0 - 1.0";
+        ULError << inPrefix << " - The semi value must be between 0.0 - 1.0";
     }
 
     if (semmi < 1.0f && semmi > 0.98f) {
-        ULWarning << prefix << " - Using too small cone angle. Perhaps it is a mistake.";
+        ULWarning << inPrefix << " - Using too small cone angle. Perhaps it is a mistake.";
     }
 
     if (semmi < 1.0f) {
         Point3 p = inVal.direction();
         if (p == 0.0) {
             result = false;
-            ULError << prefix << " - Using as not Omni light but direction isn't specified.";
+            ULError << inPrefix << " - Using as not Omni light but direction isn't specified.";
         }
     }
 
-    const std::string drf = inVal.dataRef();
+    const std::string & drf = inVal.dataRef();
     if (drf == "none" || drf.empty()) {
-        ULInfo << prefix <<
+        ULInfo << inPrefix <<
                 " - Hasn't got dataref value, consider to use param light instead spill custom if you don't need dataref.";
     }
 
     if (StringValidator::hasIllegalSymbols(drf)) {
         result = false;
-        ULError << prefix << " - Dataref contains illegal symbols.";
+        ULError << inPrefix << " - Dataref contains illegal symbols.";
     }
 
     if (inVal.size() < 0.0f) {
         result = false;
-        ULError << prefix << " - The light size can't be negative.";
+        ULError << inPrefix << " - The light size can't be negative.";
     }
 
     if (inVal.size() < 1.0f) {
-        ULWarning << prefix << " - Using too small the light size. Perhaps it is a mistake.";
+        ULWarning << inPrefix << " - Using too small the light size. Perhaps it is a mistake.";
     }
 
     return result;

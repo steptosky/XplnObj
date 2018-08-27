@@ -36,9 +36,6 @@
 #include "TestUtilsObjMesh.h"
 
 using namespace xobj;
-using ::testing::_;
-using ::testing::StrEq;
-using ::testing::InSequence;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +43,7 @@ using ::testing::InSequence;
 
 /* 
  * This tests are for checking attributes of the chain 'mesh object->file | file->mesh object'.
- * So they test writter and reader for attributes of one mesh object.
+ * So they test writer and reader for attributes of one mesh object.
  */
 
 /**************************************************************************************************/

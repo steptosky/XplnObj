@@ -90,14 +90,14 @@ void ObjWriteGlobAttr::writeTexture(AbstractWriter * inWriter, const char * inAt
     }
 }
 
-void ObjWriteGlobAttr::writeBool(AbstractWriter * inWriter, const char * inAttr, bool inState) {
+void ObjWriteGlobAttr::writeBool(AbstractWriter * inWriter, const char * inAttr, const bool inState) {
     if (inState) {
         inWriter->printLine(inAttr);
         ++mCounter;
     }
 }
 
-void ObjWriteGlobAttr::writeString(AbstractWriter * inWriter, const std::string inStr) {
+void ObjWriteGlobAttr::writeString(AbstractWriter * inWriter, const std::string & inStr) {
     if (!inStr.empty()) {
         inWriter->printLine(inStr);
         ++mCounter;

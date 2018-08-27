@@ -57,8 +57,8 @@ ObjLightSpillCust::ObjLightSpillCust()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjLightSpillCust::setSemiAngle(float inRadians) {
-    mSemi = std::cos(inRadians / 2.0f);
+void ObjLightSpillCust::setSemiAngle(const float radians) {
+    mSemi = std::cos(radians / 2.0f);
 }
 
 float ObjLightSpillCust::semiAngle() const {
@@ -91,7 +91,7 @@ Point3 ObjLightSpillCust::direction() const {
     return mDirection;
 }
 
-void ObjLightSpillCust::setDirection(Point3 direction) {
+void ObjLightSpillCust::setDirection(const Point3 & direction) {
     mDirection = direction;
     mDirection.normalize();
 }
@@ -108,7 +108,7 @@ float ObjLightSpillCust::semiRaw() const {
     return mSemi;
 }
 
-void ObjLightSpillCust::setSemiRaw(float semi) {
+void ObjLightSpillCust::setSemiRaw(const float semi) {
     mSemi = semi;
 }
 
@@ -116,7 +116,7 @@ float ObjLightSpillCust::size() const {
     return mSize;
 }
 
-void ObjLightSpillCust::setSize(float size) {
+void ObjLightSpillCust::setSize(const float size) {
     mSize = size;
 }
 

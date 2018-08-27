@@ -57,21 +57,21 @@ public:
     //-------------------------------------------------------------------------
 
     XpObjLib Point2 & operator =(const Point2 & c);
-    XpObjLib Point2 & operator =(const float v);
+    XpObjLib Point2 & operator =(float v);
 
     XpObjLib Point2 & operator +=(const Point2 & p);
-    XpObjLib Point2 & operator +=(const float v);
+    XpObjLib Point2 & operator +=(float v);
     XpObjLib Point2 & operator -=(const Point2 & p);
-    XpObjLib Point2 & operator -=(const float v);
+    XpObjLib Point2 & operator -=(float v);
     XpObjLib Point2 & operator *=(const Point2 & p);
-    XpObjLib Point2 & operator *=(const float v);
+    XpObjLib Point2 & operator *=(float v);
     XpObjLib Point2 & operator /=(const Point2 & p);
-    XpObjLib Point2 & operator /=(const float v);
+    XpObjLib Point2 & operator /=(float v);
 
-    XpObjLib bool operator ==(const Point2 & p2) const;
-    XpObjLib bool operator ==(const float v) const;
-    XpObjLib bool operator !=(const Point2 & p2) const;
-    XpObjLib bool operator !=(const float v) const;
+    XpObjLib bool operator ==(const Point2 & p) const;
+    XpObjLib bool operator ==(float v) const;
+    XpObjLib bool operator !=(const Point2 & p) const;
+    XpObjLib bool operator !=(float v) const;
 
     XpObjLib friend Point2 operator +(const Point2 & p1, const Point2 & p2);
     XpObjLib friend Point2 operator +(const Point2 & p, float v);
@@ -91,7 +91,7 @@ public:
 
     //-------------------------------------------------------------------------
 
-    void set(float inX, float inY) {
+    void set(const float inX, const float inY) {
         x = inX;
         y = inY;
     }

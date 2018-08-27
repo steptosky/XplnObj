@@ -78,7 +78,7 @@ const std::string & ObjLightParam::additionalParams() const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjLightParam::setLightId(ELightParams id) {
+void ObjLightParam::setLightId(const ELightParams id) {
     mId = id;
 }
 

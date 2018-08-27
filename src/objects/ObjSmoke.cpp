@@ -69,7 +69,7 @@ float ObjSmoke::size() const {
     return mSize;
 }
 
-void ObjSmoke::setSmokeType(eSmokeType type) {
+void ObjSmoke::setSmokeType(const eSmokeType type) {
     mSmokeType = type;
 }
 

@@ -37,7 +37,7 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrSlungLoadWeight::AttrSlungLoadWeight(float weight)
+AttrSlungLoadWeight::AttrSlungLoadWeight(const float weight)
     : mWeight(weight),
       mIsEnabled(true) { }
 
@@ -53,7 +53,7 @@ AttrSlungLoadWeight::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrSlungLoadWeight::setEnabled(bool state) {
+void AttrSlungLoadWeight::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 
@@ -69,7 +69,7 @@ bool AttrSlungLoadWeight::operator!=(const AttrSlungLoadWeight & other) const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrSlungLoadWeight::setWeight(float weight) {
+void AttrSlungLoadWeight::setWeight(const float weight) {
     mIsEnabled = true;
     mWeight = weight;
 }

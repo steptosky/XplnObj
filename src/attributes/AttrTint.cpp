@@ -37,7 +37,7 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrTint::AttrTint(float albedoRatio, float emissiveRatio)
+AttrTint::AttrTint(const float albedoRatio, const float emissiveRatio)
     : mAlbedo(albedoRatio),
       mEmissive(emissiveRatio),
       mIsEnabled(true) { }
@@ -55,7 +55,7 @@ AttrTint::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrTint::setEnabled(bool state) {
+void AttrTint::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 
@@ -73,12 +73,12 @@ bool AttrTint::operator!=(const AttrTint & other) const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrTint::setAlbedo(float albedoRatio) {
+void AttrTint::setAlbedo(const float albedoRatio) {
     mAlbedo = albedoRatio;
     mIsEnabled = true;
 }
 
-void AttrTint::setEmissive(float emissiveRatio) {
+void AttrTint::setEmissive(const float emissiveRatio) {
     mEmissive = emissiveRatio;
     mIsEnabled = true;
 }
@@ -91,7 +91,7 @@ float AttrTint::emissive() const {
     return mEmissive;
 }
 
-void AttrTint::set(float albedoRatio, float emissiveRatio) {
+void AttrTint::set(const float albedoRatio, const float emissiveRatio) {
     mAlbedo = albedoRatio;
     mEmissive = emissiveRatio;
 }

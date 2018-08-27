@@ -37,7 +37,7 @@ namespace xobj {
 //////////////////////////////////////////* Static area *///////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrShiny::AttrShiny(float ratio)
+AttrShiny::AttrShiny(const float ratio)
     : mRatio(ratio),
       mIsEnabled(true) { }
 
@@ -53,7 +53,7 @@ AttrShiny::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrShiny::setEnabled(bool state) {
+void AttrShiny::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 

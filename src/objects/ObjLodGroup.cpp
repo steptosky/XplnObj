@@ -70,11 +70,11 @@ Transform & ObjLodGroup::transform() {
     return mObjTransform;
 }
 
-void ObjLodGroup::setFarVal(float val) {
+void ObjLodGroup::setFarVal(const float val) {
     mFar = val;
 }
 
-void ObjLodGroup::setNearVal(float val) {
+void ObjLodGroup::setNearVal(const float val) {
     mNear = val;
 }
 

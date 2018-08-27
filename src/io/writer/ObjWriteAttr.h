@@ -50,14 +50,13 @@ class ObjWriteManip;
 /**************************************************************************************************/
 
 class ObjWriteAttr {
-
-    ObjWriteAttr(const ObjWriteAttr &) = delete;
-    ObjWriteAttr & operator =(const ObjWriteAttr &) = delete;
-
 public:
 
     explicit ObjWriteAttr(ObjWriteManip * manipWriter)
         : mManipWriter(manipWriter) {}
+
+    ObjWriteAttr(const ObjWriteAttr &) = delete;
+    ObjWriteAttr & operator =(const ObjWriteAttr &) = delete;
 
     ~ObjWriteAttr() = default;
 

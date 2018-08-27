@@ -37,7 +37,7 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrDrapedLayerGroup::AttrDrapedLayerGroup(ELayer layer, int32_t offset)
+AttrDrapedLayerGroup::AttrDrapedLayerGroup(const ELayer layer, const int32_t offset)
     : mOffset(static_cast<uint8_t>(offset)),
       mLayer(layer),
       mIsEnabled(true) { }
@@ -55,7 +55,7 @@ AttrDrapedLayerGroup::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrDrapedLayerGroup::setEnabled(bool state) {
+void AttrDrapedLayerGroup::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 
@@ -82,7 +82,7 @@ int32_t AttrDrapedLayerGroup::offset() const {
     return static_cast<int32_t>(mOffset);
 }
 
-void AttrDrapedLayerGroup::setLayer(ELayer layer) {
+void AttrDrapedLayerGroup::setLayer(const ELayer layer) {
     mLayer = layer;
     mIsEnabled = true;
 }

@@ -27,7 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-
 #include "ph/stdafx.h"
 
 #include <xpln/obj/ObjMain.h>
@@ -84,8 +83,8 @@ TEST(TestTransformCommon, anim_enabled) {
     // visibility
 
     AnimVisibility & animVis = lod.transform().pAnimVis;
-    animVis.pKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 1.0f, 2.0f, "drf"));
-    animVis.pKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 3.0f, 4.0f, "drf"));
+    animVis.pKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 1.0f, 2.0f, "data-ref"));
+    animVis.pKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 3.0f, 4.0f, "data-ref"));
 
     ASSERT_TRUE(lod.transform().hasAnimTrans());
     ASSERT_TRUE(lod.transform().hasAnim());
@@ -114,17 +113,17 @@ TEST(TestTransformCommon, apliing_root_transformation) {
     transformOut1.pMatrix.setPosition(Point3(10.0f));
     transformOut1.pMatrix.setRotate(Quaternion(0.5f, 0.5f, 0.5f, 0.5f));
 
-    ASSERT_TRUE(mainOut.exportToFile(std::string(TOTEXT(apliing_root_transformation)).append(".obj").c_str()));
+    ASSERT_TRUE(mainOut.exportToFile(std::string(TOTEXT(apliing_root_transformation)).append(".obj")));
 
     //-------------------
     // load data from file
 
     ObjMain mainIn;
-    ASSERT_TRUE(mainIn.importFromFile(std::string(TOTEXT(apliing_root_transformation)).append(".obj").c_str()));
+    ASSERT_TRUE(mainIn.importFromFile(std::string(TOTEXT(apliing_root_transformation)).append(".obj")));
 
     ObjLodGroup * lodIn = nullptr;
     ObjMesh * meshIn1 = nullptr;
-    // One transform was optimized during export, it became lod's transform
+    // One transform was optimized during export, it became LOD's transform
     ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
     ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
 

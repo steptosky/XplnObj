@@ -47,7 +47,7 @@ namespace EObjLightParamsData {
         const char * mAttr;
         ELightParams::eId mId;
 
-        Data(const char * attr, const char * ui, ELightParams::eId id)
+        Data(const char * attr, const char * ui, const ELightParams::eId id)
             : mUi(ui),
               mAttr(attr),
               mId(id) {}
@@ -109,7 +109,7 @@ namespace EObjLightParamsData {
 ELightParams::ELightParams()
     : mId(none) {}
 
-ELightParams::ELightParams(eId id)
+ELightParams::ELightParams(const eId id)
     : mId(id) { }
 
 /**************************************************************************************************/
@@ -120,7 +120,7 @@ bool ELightParams::operator==(const ELightParams & other) const {
     return mId == other.mId;
 }
 
-bool ELightParams::operator==(eId id) const {
+bool ELightParams::operator==(const eId id) const {
     return mId == id;
 }
 
@@ -128,7 +128,7 @@ bool ELightParams::operator!=(const ELightParams & other) const {
     return mId != other.mId;
 }
 
-bool ELightParams::operator!=(eId id) const {
+bool ELightParams::operator!=(const eId id) const {
     return mId != id;
 }
 

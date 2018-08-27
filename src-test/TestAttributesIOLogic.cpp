@@ -37,9 +37,6 @@
 #include "TestUtilsObjMesh.h"
 
 using namespace xobj;
-using ::testing::_;
-using ::testing::StrEq;
-using ::testing::InSequence;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,9 +44,9 @@ using ::testing::InSequence;
 
 /*
  * This tests are for checking attributes logic of the chain 'mesh objects->file | file->mesh objects'.
- * So they test writter and reader for attribute of mesh objects.
+ * So they test writer and reader for attribute of mesh objects.
  * The attributes have some logic for writing and reading you can see it in other tests like TestAttributesWrite.
- * Acttualy this tests are like as TestAttributesWrite except they test full chain (not only writing) for one attribute.
+ * Actually this tests are like as TestAttributesWrite except they test full chain (not only writing) for one attribute.
  */
 
 /**************************************************************************************************/
@@ -57,11 +54,10 @@ using ::testing::InSequence;
 /**************************************************************************************************/
 
 class TestAttributesIOLogic : public ::testing::Test {
+public:
 
     TestAttributesIOLogic(const TestAttributesIOLogic &) = delete;
     TestAttributesIOLogic & operator =(const TestAttributesIOLogic &) = delete;
-
-public:
 
     TestAttributesIOLogic() = default;
     virtual ~TestAttributesIOLogic() = default;

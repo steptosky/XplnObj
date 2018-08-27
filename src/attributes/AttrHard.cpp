@@ -37,7 +37,7 @@ namespace xobj {
 //////////////////////////////////////////* Static area *///////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrHard::AttrHard(ESurface surface, bool deck)
+AttrHard::AttrHard(const ESurface surface, const bool deck)
     : mESurface(surface),
       mIsDeck(deck),
       mIsEnabled(true) { }
@@ -55,7 +55,7 @@ AttrHard::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrHard::setEnabled(bool state) {
+void AttrHard::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 
@@ -73,7 +73,7 @@ bool AttrHard::operator!=(const AttrHard & other) const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrHard::setESurface(const ESurface & surface, bool deck) {
+void AttrHard::setESurface(const ESurface & surface, const bool deck) {
     mIsEnabled = true;
     mESurface = surface;
     mIsDeck = deck;

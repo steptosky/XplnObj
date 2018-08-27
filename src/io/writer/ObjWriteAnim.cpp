@@ -249,7 +249,7 @@ void ObjWriteAnim::printVisible(const AnimVisibility & inAnim, const Transform &
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjWriteAnim::printLoop(float val) const {
+void ObjWriteAnim::printLoop(const float val) const {
     StringStream stream;
     stream << ANIM_KEYFRAME_LOOP << " " << val;
     mWriter->printLine(stream.str());

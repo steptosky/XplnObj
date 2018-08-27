@@ -48,7 +48,7 @@ public:
 
     MeshFace() = default;
 
-    MeshFace(value_type v0, value_type v1, value_type v2)
+    MeshFace(const value_type v0, const value_type v1, const value_type v2)
         : pV0(v0),
           pV1(v1),
           pV2(v2) {}

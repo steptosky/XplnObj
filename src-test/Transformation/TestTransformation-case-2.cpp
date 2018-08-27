@@ -104,7 +104,7 @@ using namespace xobj;
  *
  */
 TEST(TestTransform_case2, case1) {
-    std::string path(std::string(TOTEXT(TestTransform_case2)).append(".").append(TOTEXT(case1)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case2)).append(".").append(TOTEXT(case1)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -241,7 +241,7 @@ TEST(TestTransform_case2, case1) {
  *
  */
 TEST(TestTransform_case2, case2) {
-    std::string path(std::string(TOTEXT(TestTransform_case2)).append(".").append(TOTEXT(case2)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransform_case2)).append(".").append(TOTEXT(case2)).append(".obj"));
     //-------------------
     // make out data and save to file
 

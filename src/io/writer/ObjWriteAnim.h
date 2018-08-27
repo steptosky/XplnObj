@@ -43,11 +43,13 @@ namespace xobj {
  * details Class helper that write animation for ObjWritter
  */
 class ObjWriteAnim {
-    ObjWriteAnim(const ObjWriteAnim &) = delete;
-    ObjWriteAnim & operator =(const ObjWriteAnim &) = delete;
 public:
 
     ObjWriteAnim(const ExportOptions * option, IOStatistic * outStat);
+
+    ObjWriteAnim(const ObjWriteAnim &) = delete;
+    ObjWriteAnim & operator =(const ObjWriteAnim &) = delete;
+
     ~ObjWriteAnim();
 
     //-------------------------------------------------------------------------

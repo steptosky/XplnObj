@@ -37,7 +37,7 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrWetDry::AttrWetDry(eState state)
+AttrWetDry::AttrWetDry(const eState state)
     : mState(state),
       mIsEnabled(true) { }
 
@@ -53,7 +53,7 @@ AttrWetDry::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrWetDry::setEnabled(bool state) {
+void AttrWetDry::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 
@@ -69,7 +69,7 @@ bool AttrWetDry::operator!=(const AttrWetDry & other) const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrWetDry::setState(eState state) {
+void AttrWetDry::setState(const eState state) {
     mIsEnabled = true;
     mState = state;
 }

@@ -46,13 +46,13 @@ class ObjMain;
 /**************************************************************************************************/
 
 class ObjWriteGlobAttr {
+public:
+
+    ObjWriteGlobAttr() = default;
 
     ObjWriteGlobAttr(const ObjWriteGlobAttr &) = delete;
     ObjWriteGlobAttr & operator =(const ObjWriteGlobAttr &) = delete;
 
-public:
-
-    ObjWriteGlobAttr() = default;
     ~ObjWriteGlobAttr() = default;
 
     XpObjLib void write(AbstractWriter * writer, const ObjMain * obj);
@@ -63,7 +63,7 @@ private:
 
     void writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString);
     void writeBool(AbstractWriter * inWriter, const char * inAttr, bool inState);
-    void writeString(AbstractWriter * inWriter, const std::string inStr);
+    void writeString(AbstractWriter * inWriter, const std::string & inStr);
 
     const ObjMain * mObj;
     size_t mCounter = 0;

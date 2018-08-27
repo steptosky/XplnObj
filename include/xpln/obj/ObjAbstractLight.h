@@ -42,9 +42,6 @@ namespace xobj {
  * \ingroup Objects
  */
 class ObjAbstractLight : public ObjAbstract {
-
-    ObjAbstractLight & operator =(const ObjAbstractLight &) = delete;
-
 protected:
 
     //-----------------------------------------------------
@@ -55,6 +52,8 @@ protected:
     //-----------------------------------------------------
 
 public:
+
+    ObjAbstractLight & operator =(const ObjAbstractLight &) = delete;
 
     virtual ~ObjAbstractLight() = default;
 

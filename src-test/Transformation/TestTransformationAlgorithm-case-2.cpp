@@ -45,11 +45,11 @@ using namespace xobj;
  * Root <- obj1(RT) <- obj2
  * Without root matrix
  * The parent is animated and it is rotated 90 degrees relative to Z in world space and it has offset.
- * Anim moving the parent along world's X, so as the result in the world space the movig will be along X axis.
- * Anim rotate the parent around perent's X, so as the result in the world space the rotation will be around X axis
+ * Animation moving the parent along world's X, so as the result in the world space the moving will be along X axis.
+ * Animation rotate the parent around parent's X, so as the result in the world space the rotation will be around X axis
  */
 TEST(TestTransformationAlgorithm_case2, case1) {
-    std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case2)).append(".").append(TOTEXT(case1)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case2)).append(".").append(TOTEXT(case1)).append(".obj"));
     //-------------------
     // make out data and save to file
 
@@ -110,12 +110,12 @@ TEST(TestTransformationAlgorithm_case2, case1) {
  * Root <- obj1(T) <- obj2
  * With root matrix
  * The parent is animated and it is rotated 90 degrees relative to Z in world space and it has offset.
- * Anim moving the parent along world's X, so as the result in the world space the movig will be along Y axis.
- * Anim rotate the parent around perent's X, so as the result in the world space the rotation will be around Y axis
- * Then roatate the whole scene back with global matrix.
+ * Animation moving the parent along world's X, so as the result in the world space the moving will be along Y axis.
+ * Animation rotate the parent around parent's X, so as the result in the world space the rotation will be around Y axis
+ * Then rotate the whole scene back with global matrix.
  */
 TEST(TestTransformationAlgorithm_case2, case2) {
-    std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case2)).append(".").append(TOTEXT(case2)).append(".obj"));
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case2)).append(".").append(TOTEXT(case2)).append(".obj"));
     //-------------------
     // make out data and save to file
 

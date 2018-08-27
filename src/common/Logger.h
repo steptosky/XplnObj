@@ -37,7 +37,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-// Nessage with a category for user showing (UL = user log)
+// Message with a category for user showing (UL = user log)
 #define ULMessage    CategoryMessage(LOG_CATEGORY_FOR_USER)
 #define ULDebug      CategoryDebug(LOG_CATEGORY_FOR_USER)
 #define ULFatal      CategoryFatal(LOG_CATEGORY_FOR_USER)

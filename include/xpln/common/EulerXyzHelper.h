@@ -41,7 +41,7 @@ namespace xobj {
 /*!
  * \details This class is helper for conversion from Euler XYZ to angle axis animation set.
  * \note The order is XYZ
- * \note Use one anim key to set the static rotate angle
+ * \note Use one animation key to set the static rotate angle
  * \note The vector values are ignored and will be auto-calculated
  * \warning It supports only one animated axis now!
  */

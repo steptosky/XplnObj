@@ -37,7 +37,7 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrLightLevel::AttrLightLevel(float val1, float val2, const std::string & dataRef)
+AttrLightLevel::AttrLightLevel(const float val1, const float val2, const std::string & dataRef)
     : mVal1(val1),
       mVal2(val2),
       mDataref(dataRef),
@@ -57,7 +57,7 @@ AttrLightLevel::operator bool() const {
     return mIsEnabled;
 }
 
-void AttrLightLevel::setEnabled(bool state) {
+void AttrLightLevel::setEnabled(const bool state) {
     mIsEnabled = state;
 }
 
@@ -76,12 +76,12 @@ bool AttrLightLevel::operator!=(const AttrLightLevel & other) const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrLightLevel::setVal1(float val1) {
+void AttrLightLevel::setVal1(const float val1) {
     mIsEnabled = true;
     mVal1 = val1;
 }
 
-void AttrLightLevel::setVal2(float val2) {
+void AttrLightLevel::setVal2(const float val2) {
     mIsEnabled = true;
     mVal2 = val2;
 }

@@ -44,9 +44,6 @@ namespace xobj {
  * \ingroup Objects
  */
 class ObjLine : public ObjAbstract {
-
-    ObjLine & operator =(const ObjLine &) = delete;
-
 protected:
 
     XpObjLib ObjLine(const ObjLine & copy);
@@ -59,6 +56,7 @@ public:
     //-----------------------------------------------------
 
     XpObjLib ObjLine();
+    ObjLine & operator =(const ObjLine &) = delete;
     XpObjLib virtual ~ObjLine();
 
     //--------------------------------------------------------
@@ -80,7 +78,7 @@ public:
     XpObjLib eObjectType objType() const final;
 
     /*! \copydoc ObjAbstract::applyTransform */
-    XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
+    XpObjLib void applyTransform(const TMatrix & tm, bool useParity) override final;
 
     /* \copydoc ObjAbstract::clone */
     XpObjLib ObjAbstract * clone() const override;

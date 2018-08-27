@@ -65,7 +65,7 @@ void ExportOptions::reset() {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ExportOptions::setOptionFlags(uint64_t flags) {
+void ExportOptions::setOptionFlags(const uint64_t flags) {
     mOptionFlags = flags;
 }
 
@@ -73,15 +73,15 @@ uint64_t ExportOptions::optionFlags() const {
     return mOptionFlags;
 }
 
-void ExportOptions::disable(eExportOptions option) {
+void ExportOptions::disable(const eExportOptions option) {
     mOptionFlags &= ~option;
 }
 
-bool ExportOptions::isEnabled(eExportOptions option) const {
+bool ExportOptions::isEnabled(const eExportOptions option) const {
     return ((mOptionFlags & option) == option);
 }
 
-void ExportOptions::enable(eExportOptions option) {
+void ExportOptions::enable(const eExportOptions option) {
     mOptionFlags |= option;
 }
 

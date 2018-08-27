@@ -42,7 +42,7 @@ public:
 
     AbstractWriter(const AbstractWriter &) = delete;
     AbstractWriter & operator =(const AbstractWriter &) = delete;
-        
+
     AbstractWriter() = default;
     virtual ~AbstractWriter() = default;
 

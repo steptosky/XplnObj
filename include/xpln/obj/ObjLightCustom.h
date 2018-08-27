@@ -44,9 +44,6 @@ namespace xobj {
  * \ingroup Objects
  */
 class ObjLightCustom : public ObjAbstractLight {
-
-    ObjLightCustom & operator =(const ObjLightCustom &) = delete;
-
 protected:
 
     XpObjLib ObjLightCustom(const ObjLightCustom & copy);
@@ -54,6 +51,7 @@ protected:
 public:
 
     XpObjLib ObjLightCustom();
+    ObjLightCustom & operator =(const ObjLightCustom &) = delete;
     virtual ~ObjLightCustom() = default;
 
     //--------------------------------------------------------
@@ -74,7 +72,7 @@ public:
     XpObjLib eObjectType objType() const final;
 
     /*! \copydoc ObjAbstract::applyTransform */
-    XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
+    XpObjLib void applyTransform(const TMatrix & tm, bool useParity) override final;
 
     /* \copydoc ObjAbstract::clone */
     XpObjLib ObjAbstract * clone() const override;

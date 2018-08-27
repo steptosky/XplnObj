@@ -54,17 +54,17 @@ public:
 
     //-----------------------------------------------------
 
-    static void extractLod(ObjMain & main, size_t lodNum, ObjLodGroup *& outLod) {
+    static void extractLod(ObjMain & main, const size_t lodNum, ObjLodGroup *& outLod) {
         ASSERT_TRUE(main.lodCount() > lodNum) << " value is " << lodNum;
         outLod = &main.lod(lodNum);
     }
 
-    static void extractTransform(Transform & transform, size_t numTransform, Transform *& outTrans) {
+    static void extractTransform(Transform & transform, const size_t numTransform, Transform *& outTrans) {
         ASSERT_TRUE(transform.childrenCount() > numTransform) << " value is " << numTransform;
         outTrans = static_cast<Transform*>(transform.childAt(numTransform));
     }
 
-    static void extractMesh(Transform & transform, size_t meshNum, ObjMesh *& outMesh) {
+    static void extractMesh(Transform & transform, const size_t meshNum, ObjMesh *& outMesh) {
         ASSERT_TRUE(transform.objList().size() > meshNum) << " value is " << meshNum;
         auto it = transform.objList().begin();
         for (size_t i = 0; i < meshNum; ++i, ++it) {}
@@ -129,7 +129,7 @@ public:
         createTestAnimTranslate(outAnim, Point3(50.0f, 50.0f, 50.0f), inMtx, inDrf);
     }
 
-    static void createTestAnimTranslate(AnimTransList & outAnim, float inRotate, const char * inDrf = nullptr) {
+    static void createTestAnimTranslate(AnimTransList & outAnim, const float inRotate, const char * inDrf = nullptr) {
         TMatrix tm;
         if (inRotate != 0.0f) {
             tm.rotateDegreesY(inRotate);

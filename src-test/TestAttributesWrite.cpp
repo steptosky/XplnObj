@@ -365,17 +365,17 @@ TEST(TestAttributesWrite, parameterized_case1) {
     main1.pAttr.setCockpit(AttrCockpit(AttrCockpit::region_3));
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.1f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend,0.3f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(5.0f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(3.0f, 4.0f, "test")).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_3)).c_str()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.1f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend,0.3f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(5.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(3.0f, 4.0f, "test"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_3))))).Times(1);
 
     EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_HARD))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny()).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend()).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f)).c_str()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny())))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend())))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_LIGHT_LEVEL_RESET))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
 
@@ -409,26 +409,26 @@ TEST(TestAttributesWrite, parameterized_case2) {
     main3.pAttr.setCockpit(AttrCockpit(AttrCockpit::region_3));
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.8f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::shadow_blend,0.7f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(4.0f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(2.0f, 6.0f, "test")).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_2)).c_str()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.8f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::shadow_blend,0.7f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(4.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_2))))).Times(1);
 
     EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_HARD))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny()).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend()).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f)).c_str()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny())))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend())))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_LIGHT_LEVEL_RESET))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::concrete), true)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(10.0f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::shadow_blend,0.3f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(5.0f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(3.0f, 4.0f, "test2")).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_3)).c_str()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::concrete), true))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(10.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::shadow_blend,0.3f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(5.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(3.0f, 4.0f, "test2"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_3))))).Times(1);
 
     // enable
     attrWriter.write(&writer, &main1);
@@ -461,17 +461,17 @@ TEST(TestAttributesWrite, parameterized_case3) {
     main2.pAttr.setCockpit(AttrCockpit(AttrCockpit::region_1));
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.8f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend, 0.7f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(4.0f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(2.0f, 6.0f, "test")).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_1)).c_str()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.8f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend, 0.7f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(4.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_1))))).Times(1);
 
     EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_HARD))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny()).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend()).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f)).c_str()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny())))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend())))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_LIGHT_LEVEL_RESET))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
 
@@ -506,24 +506,24 @@ TEST(TestAttributesWrite, parameterized_case4) {
     main2.pAttr.setCockpit(AttrCockpit(AttrCockpit::cockpit));
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.8f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend, 0.7f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(4.0f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(2.0f, 6.0f, "test")).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_1)).c_str()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.8f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend, 0.7f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(4.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_1))))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::concrete), true)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(10.0f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend, 0.3f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(5.0f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(3.0f, 4.0f, "test2")).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::cockpit)).c_str()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::concrete), true))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(10.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend, 0.3f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(5.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(3.0f, 4.0f, "test2"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::cockpit))))).Times(1);
 
     EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_HARD))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny()).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend()).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f)).c_str()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny())))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend())))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_LIGHT_LEVEL_RESET))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
 
@@ -551,17 +551,17 @@ TEST(TestAttributesWrite, parameterized_case5) {
     main2.pAttr.setCockpit(AttrCockpit(AttrCockpit::cockpit));
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.1f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend, 0.3f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(5.0f)).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(3.0f, 4.0f, "test")).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::cockpit)).c_str()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.1f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend, 0.3f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(5.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(3.0f, 4.0f, "test"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::cockpit))))).Times(1);
 
     EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_HARD))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny()).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend()).c_str()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f)).c_str()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny())))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend())))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_LIGHT_LEVEL_RESET))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
 

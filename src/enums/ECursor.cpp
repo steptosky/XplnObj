@@ -47,7 +47,7 @@ namespace EObjCursorsData {
         const char * mAttr;
         ECursor::eId mId;
 
-        Data(const char * attr, const char * ui, ECursor::eId id)
+        Data(const char * attr, const char * ui, const ECursor::eId id)
             : mUi(ui),
               mAttr(attr),
               mId(id) {}
@@ -84,7 +84,7 @@ namespace EObjCursorsData {
 ECursor::ECursor()
     : mId(none) { }
 
-ECursor::ECursor(eId id)
+ECursor::ECursor(const eId id)
     : mId(id) { }
 
 /**************************************************************************************************/
@@ -95,7 +95,7 @@ bool ECursor::operator==(const ECursor & other) const {
     return mId == other.mId;
 }
 
-bool ECursor::operator==(eId id) const {
+bool ECursor::operator==(const eId id) const {
     return mId == id;
 }
 
@@ -103,7 +103,7 @@ bool ECursor::operator!=(const ECursor & other) const {
     return mId != other.mId;
 }
 
-bool ECursor::operator!=(eId id) const {
+bool ECursor::operator!=(const eId id) const {
     return mId != id;
 }
 

@@ -5,8 +5,6 @@ environment:
 
     CONAN_USERNAME: "steptosky"
     CONAN_CHANNEL: "testing"
-
-    GIT_BRANCH: $APPVEYOR_REPO_BRANCH
     
     matrix:
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017

@@ -1,4 +1,4 @@
-# Cross-platform C++ library for working with X-Plane obj format
+# Cross-platform C++ library for working with the X-Plane .obj format
 
 | CI        | master | develop | last commit |
 | --------- |:------:|:-------:|:-----------:|
@@ -7,8 +7,8 @@
 
 ---
 
-- The library is distributed under [BSD (3-Clause)](http://opensource.org/licenses/BSD-3-Clause) 
-  license for more information read the [license](license.txt) file.
+- The library is distributed under [BSD (3-Clause)](http://opensource.org/licenses/BSD-3-Clause) license.
+  For more information read the [license](license.txt) file.
 - The library uses [SemVer](http://semver.org/).
 - The library requires C++ 14 or higher.
 - The library's versions from the ```master``` branch are available in our 
@@ -17,59 +17,74 @@
 - The X-Plane [official website](http://www.x-plane.com/).
 - The X-Plane [obj specification](http://developer.x-plane.com/?article=obj8-file-format-specification).
 
-
-## Build
 #### warning 
-- As the library hasn't got the major version 
+- As the library hasn't got the major version yet
   the library's interface and logic are not stable and can be changed at any time.
 
 
 #### dependencies
-- [Cmake 3.7+](https://cmake.org) - build tool.
-- [Conan 1.5+](https://www.conan.io) - dependency tool.
+- [Cmake 3.7+](https://cmake.org) - building tool.
+- [Conan 1.6+](https://www.conan.io) - dependency tool.
+- [Conan Package Tools](https://github.com/conan-io/conan-package-tools) - if you want to build the project with those tools.
 - [Python 2 or 3](https://www.python.org) - is needed for the Conan.
 - [Doxygen](http://www.stack.nl/~dimitri/doxygen) - if you want to generate the documentation.
-- [Gtest and Gmock 1.8](https://github.com/google/googletest) - testing (used through the Conan) . 
+- [Gtest and Gmock 1.8](https://github.com/google/googletest) - testing (is used via the conan) . 
 
 #### documentation
 Run from the root folder ```doxygen doxyfile``` the result will be in the ```doc-generated``` folder.  
 The ```doxygen``` has to be accessible through your ```PATH``` environment variable.
 
-#### conan evironment variables
-- **CONAN_TESTING_REPORT_DIR**=(string path) - A path for storing tests results. Default value is specified in the cmake script.
-- **CONAN_BUILD_TESTING**=(0 or 1) - Enables/disables building and running the tests.  
-  If you set ```BUILD_TESTING=ON``` as a parameter while running ```cmake``` command it will auto-set ```CONAN_BUILD_TESTING=1```.
+#### evironment variables
+| Tools  | Variables | Type | Description |
+|-------:|----------:|:----:|:------------|
+| conan  | **CONAN_TESTING_REPORT_DIR** | _string_ | A path for storing tests results. Default value is specified in the cmake script. |
+| conan  |      **CONAN_BUILD_TESTING** |  _0/1_   | Enables/disables building and running the tests.  If you set ```BUILD_TESTING=ON``` as a parameter while running ```cmake``` command it will auto-set ```CONAN_BUILD_TESTING=1```.  |
+| cmake  |       **TESTING_REPORT_DIR** | _string_ | You can specify the directory for the tests reports, it can be useful for CI. Default value is specified in the cmake script. |
+| cmake  |            **BUILD_TESTING** | _ON/OFF_ | Enables/disables building test projects. This is standard cmake variable. |
 
-#### cmake variables
-- **BUILD_TESTING**=(ON/OFF) - Enables/disables building test projects. It is standard cmake variable.
-- **TESTING_REPORT_DIR**=(string path) - You can specify the directory for the tests reports, it can be useful for CI.
-
-Sometimes you will need to delete the file ```cmake/conan.cmake``` then the newer version of this file will be downloaded from the Internet while running ```cmake``` command.  
+**Note:** sometimes you will need to delete the file ```cmake/conan.cmake``` then the newer version of this file will be downloaded from the Internet while running ```cmake``` command.  
 This file is responsible for cmake and conan interaction.
 
-### Build scripts examples
-These are just examples, 
-probably you will need to adjust them for your purposes.
+## Memo for the library developers
+- [release-checklist](release-checklist.md) see this file when you are making the release.
+- [change log](changelog.md) this file has to be filled during the release process and contains information about changes.
+- [lasote docker hub](https://hub.docker.com/u/lasote/) - docker containers for some conan use cases, for example for [travis](.travis.yml) settings.
 
 
-##### Windows (.bat) For Visual Studio 2017
+## Building
+
+You may use 3 ways to build this library.
+1. **Using cmake as usually.**   
+    _These scripts are just examples probably you will need to adjust them for your purposes._  
+    This approach will do:  
+    - build the library or just generate project for your IDE.
+    - test the library if you specify necessary environment variables.
+    - install it into specified directory.
+  
+Usually this approach is for developing.  
+
+**Examples:**  
+Windows (.bat) For Visual Studio 2017.
 ``` batch
 ::==========================================================
 @echo off
-:: Fix problems with some symbols
+:: Fix problems with some symbols.
 REM change CHCP to UTF-8
 CHCP 1252
 CLS
 ::==========================================================
-set dir="msvc"
+:: Creating building DIR and use it as working one.
+set dir="msvc-2017"
 if not exist %dir% mkdir %dir%
 cd %dir%
 ::==========================================================
-::conan user userName -r remote -p password
-::==========================================================
+:: Generating Visual Studio project.
 call cmake -G "Visual Studio 15 Win64" ../ ^
+    -DBUILD_SHARED_LIBS=OFF ^
     -DCMAKE_INSTALL_PREFIX=../output ^
     -DBUILD_TESTING=ON
+::==========================================================
+:: Building
 :: Keep it commented if you want to generate VS project only
 :: (without building), otherwise uncomment it.
 ::call cmake --build . --target install --config Release
@@ -81,126 +96,124 @@ pause
 ```
 
 
-##### Linux (.sh)
+Unix (Linux/Mac (.sh)).
 ``` bash
 #===========================================================
+# Setting building dir name
 dir_name="build-release"
 #===========================================================
+# Creating building DIR and use it as working one.
 rm -r ${dir_name}
 mkdir ${dir_name}
 cd ${dir_name}
 #===========================================================
-#conan user userName -r remote -p password
-#===========================================================
+# Generating make files
 cmake -G"Unix Makefiles" ../ \
     -DCMAKE_BUILD_TYPE="Release" \
     -DCMAKE_INSTALL_PREFIX=../output \
     -DBUILD_TESTING=ON
+#===========================================================
+# Building
 cmake --build . --target install
+#===========================================================
 cd ../
 #===========================================================
 ```
+---
 
+2. **Using [conan create](https://docs.conan.io/en/latest/reference/commands/creator/create.html).**  
+    _These scripts are just examples probably you will need to adjust them for your purposes._   
+    This approach will do:  
+    - export conan recipe.
+    - build the library in conan local cache.
+    - test the library if you specify necessary environment variables.
+    - test conan package (`test_package`).
+    - as the result you have the library in your local conan cache in the channel you have specified.
 
-##### Mac OS (.sh)
-``` bash
-#===========================================================
-dir_name="build-release"
-#===========================================================
-rm -r ${dir_name}
-mkdir ${dir_name}
-cd ${dir_name}
-#===========================================================
-#conan user userName -r remote -p password
-#===========================================================
-cmake -G"Unix Makefiles" ../ \
-    -DCMAKE_BUILD_TYPE="Release" \
-    -DCMAKE_INSTALL_PREFIX=../output \
-    -DBUILD_TESTING=ON
-cmake --build . --target install
-cd ../
-#===========================================================
-```
+Usually this approach is used when you want to build and put the library into conan local cache with certain settings.  
+You may also [upload](https://docs.conan.io/en/latest/reference/commands/creator/upload.html) the built library into external conan remote later.
 
-
-#### Build with the conan 'create' and 'conan package tools'.
-These are just examples for Windows, 
-probably you will need to adjust them for your purposes.
-
-
-##### Windows (.bat) For Visual Studio 2017 x64
+**Examples:**  
+Windows (.bat) For Visual Studio 2017 x64.
 
 ``` batch
-::==========================================================
-::conan user userName -r remote -p password
-::==========================================================
 call conan create . steptosky/develop ^
      -s compiler="Visual Studio" ^
      -s compiler.version=15 ^
      -s compiler.runtime=MD ^
      -s build_type=Release ^
-     -o XplnObj:shared=True ^
+     -o XplnObj:shared=False ^
      -e CONAN_TESTING_REPORT_DIR="report/conan-test" ^
      -e CONAN_BUILD_TESTING=1 ^
-    --build=XplnObj ^
-    --build=outdated
-    
-call conan create . steptosky/develop ^
-     -s compiler="Visual Studio" ^
-     -s compiler.version=15 ^
-     -s compiler.runtime=MDd ^
-     -s build_type=Debug ^
-     -o XplnObj:shared=True ^
-     -e CONAN_TESTING_REPORT_DIR="report/conan-test" ^
-     -e CONAN_BUILD_TESTING=1 ^
-    --build=XplnObj ^
-    --build=outdated
+     -e CTEST_OUTPUT_ON_FAILURE=1 ^
+    --build=XplnObj
 
 pause
-:: remove build dir
+:: remove build dir in test package
 rd /s/q "test_package/build"
 ```
 
+Unix (Linux/Mac (.sh)). Fix the example for you use case.
+``` bash
+conan create . steptosky/develop \
+     -s compiler="apple-clang" \
+     -s compiler.version=9.1 \
+     -s build_type=Release \
+     -o XplnObj:shared=False \
+     -e CONAN_TESTING_REPORT_DIR="report/conan-test" \
+     -e CONAN_BUILD_TESTING=1 \
+     -e CTEST_OUTPUT_ON_FAILURE=1 \
+    --build=XplnObj
+```
+---
 
-##### Windows (.bat) building with the conan package tools
+3. **Using [conan package tools](https://github.com/conan-io/conan-package-tools).**   
+    _These scripts are just examples probably you will need to adjust them for your purposes._   
+    This approach will do:  
+    - create matrix with various configurations.
+    - run conan create for each configuration.
+    - as the result you have the library in your local conan cache in the channel you have specified with various configurations.
+    - the builds may also be auto-uploaded into external conan remote.
+
+Usually this approach is used in CI for building various configurations.  
+
+**Examples:**  
+Windows (.bat) building with the conan package tools.
 ``` batch
-::==========================================================
-::conan user userName -r remote -p password
-::==========================================================
-:: https://github.com/conan-io/conan-package-tools
-
 set CONAN_USERNAME=steptosky
 set CONAN_CHANNEL=testing
 set CONAN_BUILD_TESTING=1
-set CONAN_TESTING_REPORT_DIR=report
-set CONAN_BUILD_POLICY=missing
-set CONAN_STABLE_BRANCH_PATTERN=master
-set CONAN_UPLOAD_ONLY_WHEN_STABLE=1
+set CONAN_BUILD_POLICY=outdated
 set CONAN_VISUAL_VERSIONS=15
+set CONAN_ARCHS=x86_64
 set CTEST_OUTPUT_ON_FAILURE=1
 
 call python build.py
 
-:: uncomment it if you want to
-:: remove all packages from all versions 
-:: from testing channel
-:: conan remove XplnObj/*@steptosky/testing -f
+:: uncomment next line if you want to remove all packages from all versions from specified channel
+:: call conan remove XplnObj/*@steptosky/testing -f
 
 pause
 
-:: remove build dir
+:: remove build dir in test package
 rd /s/q "test_package/build"
 ```
-After building the package will be available in the conan local cache,
-so you can use it in your other projects on local PC.   
 
----
+Unix (Linux/Mac (.sh)). Fix the example for you use case.
+``` bash
+CONAN_USERNAME=steptosky
+CONAN_CHANNEL=testing
+CONAN_BUILD_TESTING=1
+CONAN_BUILD_POLICY=outdated
+CONAN_APPLE_CLANG_VERSIONS=9.1
+CONAN_ARCHS=x86_64
+CTEST_OUTPUT_ON_FAILURE=1
 
-## For the library developers
-- [release-checklist](release-checklist.md) see this file when you are making the release.
-- [changelog](changelog.md) this file has to be filled during the release process and contains information about changes.
-- [conan-package-tools](https://github.com/conan-io/conan-package-tools).
-- [lasote docker hub](https://hub.docker.com/u/lasote/).
+python build.py
+
+# uncomment next line if you want to remove all packages from all versions from specified channel
+# conan remove XplnObj/*@steptosky/testing -f
+```
 
 ---
 

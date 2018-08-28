@@ -1,8 +1,7 @@
 ## Release checklist
-- Check whether this release-checklist is correct.
-- Check whether the [changelog](changelog.md) log is correct.
-- Check whether the doxygen does not have unexpected warnings and errors while generating the documentation.
-- Check whether the variables of the build system (CMake) in the file [readme.md](readme.md) are described correctly if they were changed, deleted, added.
+
+- Check whether the [change log](changelog.md) is correct.
+- Check whether the `doxygen` does not have unexpected warnings and errors while generating the documentation.
 - Check whether the dependencies and their version are described correctly in the [readme.md](readme.md) file. 
 
 #### [StsProjectDesc.cmake](cmake/StsProjectDesc.cmake)
@@ -10,7 +9,5 @@
 
 #### [conanfile.py](conanfile.py)
 - Set the correct version.
-- Check whether the implementation corresponds to the cmake settings and options, 
-  if they were changed in the cmake scripts.
-- Check whether the implementation uses the correct dependencies and their version.
-- Check whether the _test_package_ works correctly, see [readme.md](readme.md).
+- Check whether the file uses the correct dependencies and their version.
+- Check whether the conan ```test_package``` works correctly.

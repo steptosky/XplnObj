@@ -1,13 +1,13 @@
 build: false
 platform: x64
 environment:
-    PYTHON: "C:\\Python27"
-    PYTHON_VERSION: "2.7.8"
-    PYTHON_ARCH: "32"
+    PYTHON: "C:\\Python36-x64"
 
     CONAN_USERNAME: "steptosky"
     CONAN_CHANNEL: "testing"
 
+    GIT_BRANCH: $APPVEYOR_REPO_BRANCH
+    
     matrix:
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
           CONAN_VISUAL_VERSIONS: 14

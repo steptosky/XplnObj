@@ -91,7 +91,7 @@ message(STATUS "==============================================")
 include(StsConan)
 conan_cmake_run(CONANFILE conanfile.py
                 BASIC_SETUP CMAKE_TARGETS KEEP_RPATHS
-                BUILD outdated)
+                BUILD missing)
 
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#

@@ -36,10 +36,7 @@
 
 import os
 from conans import ConanFile, CMake, tools
-from conanfile_vcs import ConanVcs
-
-vcs_data = ConanVcs()
-vcs_data.load_vcs_data()
+from vcs_info import VcsInfo
 
 
 class LibConan(ConanFile):
@@ -47,21 +44,32 @@ class LibConan(ConanFile):
     name = 'XplnObj'
     url = 'https://github.com/steptosky/XplnObj'
     license = 'BSD 3-Clause'
-    description = "This library is for working with the X-Plane's obj format. It uses C++ 14."
+    description = "This library is for working with the X-Plane's obj format. It requires C++ 14."
     author = 'StepToSky <info@steptosky.com>'
-    settings = "os", "compiler", "build_type", "arch"
-    options = {'shared': [True, False]}
-    default_options = 'shared=False', 'gtest:shared=False', 'gtest:build_gmock=True'
-    exports = 'vcs_data', 'conanfile_vcs.py'
-    exports_sources = 'CMakeLists.txt', 'src/*', 'src-test/*', 'include/*', 'cmake/*', 'license*'
-    generators = 'cmake'
 
+    settings = "os", "compiler", "build_type", "arch"
+
+    options = {'shared': [True, False], "fPIC": [True, False]}
+    default_options = 'shared=False', "fPIC=False", 'gtest:shared=False', 'gtest:build_gmock=True'
+
+    exports = 'vcs_data', 'vcs_info.py'
+    exports_sources = 'CMakeLists.txt', 'src/*', 'src-test/*', 'include/*', 'cmake/*', 'license*'
+
+    generators = 'cmake'
+    build_policy = 'missing'
+        
     build_test_var = "CONAN_BUILD_TESTING"
     test_dir_var = "CONAN_TESTING_REPORT_DIR"
+    
+    vcs_data = VcsInfo()
 
     def configure(self):
         if self.settings.compiler == "Visual Studio" and float(str(self.settings.compiler.version)) < 14:
             raise Exception("Visual Studio 14 (2015) or higher is required")
+
+    def config_options(self):
+        if self.settings.os == "Windows":
+            del self.options.fPIC
 
     def requirements(self):
         if os.getenv(self.build_test_var, "0") == "1":
@@ -71,7 +79,7 @@ class LibConan(ConanFile):
         build_testing = os.getenv(self.build_test_var, "0")
         test_dir = os.getenv(self.test_dir_var, "")
         cmake = CMake(self)
-        vcs_data.setup_cmake(cmake)
+        self.vcs_data.setup_cmake(cmake)
         cmake.definitions["BUILD_TESTING"] = 'ON' if build_testing == "1" else 'OFF'
         if test_dir:
             cmake.definitions["TESTING_REPORT_DIR"] = test_dir
@@ -83,13 +91,12 @@ class LibConan(ConanFile):
 
     def package(self):
         self.copy("license*", src=".", dst="licenses", ignore_case=True, keep_path=False)
-        # uncomment it if you want to package PDB too
-        #self.copy(pattern="*/%s.pdb" % self.name, dst='%s' % self.settings.build_type, src=".", keep_path=False)
+        self.copy(pattern="*/%s.pdb" % self.name, dst='%s' % self.settings.build_type, src=".", keep_path=False)
 
     def package_info(self):
-        libDir = '%s' % self.settings.build_type
-        self.cpp_info.libdirs = [libDir]
-        self.cpp_info.libs = tools.collect_libs(self, libDir)
+        lib_dir = '%s' % self.settings.build_type
+        self.cpp_info.libdirs = [lib_dir]
+        self.cpp_info.libs = tools.collect_libs(self, lib_dir)
 
 # ----------------------------------------------------------------------------------#
 # //////////////////////////////////////////////////////////////////////////////////#

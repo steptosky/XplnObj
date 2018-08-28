@@ -47,27 +47,27 @@ AttrManipDragRotate::AttrManipDragRotate()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipDragRotate::setX(const float val) {
+void AttrManipDragRotate::setPosX(const float val) {
     mX = val;
 }
 
-void AttrManipDragRotate::setY(const float val) {
+void AttrManipDragRotate::setPosY(const float val) {
     mY = val;
 }
 
-void AttrManipDragRotate::setZ(const float val) {
+void AttrManipDragRotate::setPosZ(const float val) {
     mZ = val;
 }
 
-float AttrManipDragRotate::x() const {
+float AttrManipDragRotate::posX() const {
     return mX;
 }
 
-float AttrManipDragRotate::y() const {
+float AttrManipDragRotate::posY() const {
     return mY;
 }
 
-float AttrManipDragRotate::z() const {
+float AttrManipDragRotate::posZ() const {
     return mZ;
 }
 
@@ -226,9 +226,9 @@ std::size_t AttrManipDragRotate::printObj(AbstractWriter & writer) const {
     StringStream outStr;
     outStr << ATTR_MANIP_DRAG_ROTATE;
     outStr << " " << cursor().toString();
-    outStr << " " << x();
-    outStr << " " << y();
-    outStr << " " << z();
+    outStr << " " << posX();
+    outStr << " " << posY();
+    outStr << " " << posZ();
     outStr << " " << directionX();
     outStr << " " << directionY();
     outStr << " " << directionZ();

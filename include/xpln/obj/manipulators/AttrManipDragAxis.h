@@ -57,12 +57,23 @@ public:
 
     //-------------------------------------------------------------------------
 
+    void setPos(const float x, const float y, const float z) {
+        setX(x);
+        setY(y);
+        setZ(z);
+    }
+
     XpObjLib void setX(float val);
     XpObjLib void setY(float val);
     XpObjLib void setZ(float val);
     XpObjLib float x() const;
     XpObjLib float y() const;
     XpObjLib float z() const;
+
+    void setValues(const float x1, const float x2) {
+        setVal1(x1);
+        setVal2(x2);
+    }
 
     XpObjLib void setVal1(float val);
     XpObjLib void setVal2(float val);

@@ -56,12 +56,24 @@ public:
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setX(float val);
-    XpObjLib void setY(float val);
-    XpObjLib void setZ(float val);
-    XpObjLib float x() const;
-    XpObjLib float y() const;
-    XpObjLib float z() const;
+    void setPos(const float x, const float y, const float z) {
+        setPosX(x);
+        setPosY(y);
+        setPosZ(z);
+    }
+
+    XpObjLib void setPosX(float val);
+    XpObjLib void setPosY(float val);
+    XpObjLib void setPosZ(float val);
+    XpObjLib float posX() const;
+    XpObjLib float posY() const;
+    XpObjLib float posZ() const;
+
+    void setDirection(const float x, const float y, const float z) {
+        setDirectionX(x);
+        setDirectionY(y);
+        setDirectionZ(z);
+    }
 
     XpObjLib void setDirectionX(float val);
     XpObjLib void setDirectionY(float val);
@@ -69,6 +81,11 @@ public:
     XpObjLib float directionX() const;
     XpObjLib float directionY() const;
     XpObjLib float directionZ() const;
+
+    void setAngles(const float a1, const float a2) {
+        setAngle1(a1);
+        setAngle2(a2);
+    }
 
     XpObjLib void setAngle1(float val);
     XpObjLib void setAngle2(float val);
@@ -78,15 +95,32 @@ public:
     XpObjLib void setLift(float val);
     XpObjLib float lift() const;
 
+    // todo min max checking (min <= max)
+
+    void setV1(const float min, const float max) {
+        setV1Min(min);
+        setV1Max(max);
+    }
+
     XpObjLib void setV1Min(float val);
     XpObjLib void setV1Max(float val);
     XpObjLib float v1Min() const;
     XpObjLib float v1Max() const;
 
+    void setV2(const float min, const float max) {
+        setV2Min(min);
+        setV2Max(max);
+    }
+
     XpObjLib void setV2Min(float val);
     XpObjLib void setV2Max(float val);
     XpObjLib float v2Min() const;
     XpObjLib float v2Max() const;
+
+    void setDatarefs(const std::string & drf1, const std::string & drf2) {
+        setDataref1(drf1);
+        setDataref2(drf2);
+    }
 
     XpObjLib void setDataref1(const std::string & val);
     XpObjLib void setDataref2(const std::string & val);

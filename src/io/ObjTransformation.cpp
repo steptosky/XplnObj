@@ -296,73 +296,73 @@ mapsImpCoordinates(ObjAbstract * /*obj*/, Transform & objTransform, const TMatri
 
     if (objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && !transParent && !rotateParent) {
         // TODO implementation
-        LInfo << " !!! 1";
+        // LInfo << " !!! 1";
     }
     else if (objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && transParent && !rotateParent) {
         // TODO implementation
-        LInfo << " !!! 2";
+        // LInfo << " !!! 2";
     }
     else if (objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && !transParent && rotateParent) {
         // TODO implementation
-        LInfo << " !!! 3";
+        // LInfo << " !!! 3";
     }
     else if (objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && transParent && rotateParent) {
         // TODO implementation
-        LInfo << " !!! 4";
+        // LInfo << " !!! 4";
     }
         //------------------------------------------------------------------------------------------
 
     else if (!objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && !transParent && !rotateParent) {
         // TODO implementation
-        LInfo << " !!! 5";
+        // LInfo << " !!! 5";
     }
     else if (!objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && transParent && !rotateParent) {
         // TODO implementation
-        LInfo << " !!! 6";
+        // LInfo << " !!! 6";
     }
     else if (!objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && !transParent && rotateParent) {
         // TODO implementation
-        LInfo << " !!! 7";
+        // LInfo << " !!! 7";
     }
     else if (!objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && transParent && rotateParent) {
         // TODO implementation
-        LInfo << " !!! 8";
+        // LInfo << " !!! 8";
     }
         //------------------------------------------------------------------------------------------
 
     else if (!objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && !transParent && !rotateParent) {
         // TODO implementation
-        LInfo << " !!! 9";
+        // LInfo << " !!! 9";
     }
     else if (!objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && transParent && !rotateParent) {
         // TODO implementation
-        LInfo << " !!! 10";
+        // LInfo << " !!! 10";
     }
     else if (!objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && !transParent && rotateParent) {
         // TODO implementation
-        LInfo << " !!! 11";
+        // LInfo << " !!! 11";
     }
     else if (!objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && transParent && rotateParent) {
         // TODO implementation
-        LInfo << " !!! 12";
+        // LInfo << " !!! 12";
     }
         //------------------------------------------------------------------------------------------
 
     else if (objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && !transParent && !rotateParent) {
         // TODO implementation
-        LInfo << " !!! 13";
+        // LInfo << " !!! 13";
     }
     else if (objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && transParent && !rotateParent) {
         // TODO implementation
-        LInfo << " !!! 14";
+        // LInfo << " !!! 14";
     }
     else if (objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && !transParent && rotateParent) {
         // TODO implementation
-        LInfo << " !!! 15";
+        // LInfo << " !!! 15";
     }
     else if (objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && transParent && rotateParent) {
         // TODO implementation
-        LInfo << " !!! 16";
+        // LInfo << " !!! 16";
     }
         //------------------------------------------------------------------------------------------
 

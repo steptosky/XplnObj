@@ -39,8 +39,9 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipWheel::AttrManipWheel()
-    : mWheel(false) { }
+AttrManipWheel::AttrManipWheel(const float delta)
+    : mWheel(true),
+      mWheelDelta(delta) {}
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
@@ -64,6 +65,7 @@ void AttrManipWheel::setEnabled(const bool state) {
 
 void AttrManipWheel::setDelta(const float delta) {
     mWheelDelta = delta;
+    setEnabled(true);
 }
 
 bool AttrManipWheel::isEnabled() const {

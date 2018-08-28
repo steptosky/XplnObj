@@ -804,11 +804,11 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         parser.skipSpace();
         m.setCursor(ECursor::fromString(parser.extractWord().c_str()));
         parser.skipSpace();
-        m.setX(parser.extractFloat());
+        m.setPosX(parser.extractFloat());
         parser.skipSpace();
-        m.setY(parser.extractFloat());
+        m.setPosY(parser.extractFloat());
         parser.skipSpace();
-        m.setZ(parser.extractFloat());
+        m.setPosZ(parser.extractFloat());
         parser.skipSpace();
         m.setDirectionX(parser.extractFloat());
         parser.skipSpace();

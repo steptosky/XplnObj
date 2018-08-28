@@ -40,14 +40,14 @@ class AbstractWriter;
 /**************************************************************************************************/
 
 /*!
- * \details Base class for all manipulators that support mouse wheel.
- * \note You should not directly use this class.
+ * \details ATTR_manip_wheel
  * \ingroup Manipulators
  */
 class AttrManipWheel {
 public:
 
-    XpObjLib AttrManipWheel();
+    AttrManipWheel() = default;
+    XpObjLib explicit AttrManipWheel(float delta);
     virtual ~AttrManipWheel() = default;
 
     //-------------------------------------------------------------------------
@@ -71,7 +71,7 @@ public:
 
 private:
 
-    bool mWheel : 1;
+    bool mWheel = false;
     float mWheelDelta = 0.0f;
 
 };

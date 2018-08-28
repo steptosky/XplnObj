@@ -87,6 +87,64 @@ TEST(TestManip, AttrManipBase) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
+TEST(TestManip, AttrAxisDetented) {
+    TestWriter w;
+    AttrAxisDetented manip;
+    manip.setDirectionX(1.0f);
+    manip.setDirectionY(2.0f);
+    manip.setDirectionZ(3.0f);
+
+    manip.setVMin(4.0f);
+    manip.setVMax(5.0f);
+    manip.setDataref("dataref");
+
+    const auto result = std::string("ATTR_axis_detented ")
+                        .append(sts::toMbString(1.0f, PRECISION)).append(" ")
+                        .append(sts::toMbString(2.0f, PRECISION)).append(" ")
+                        .append(sts::toMbString(3.0f, PRECISION)).append(" ")
+                        .append(sts::toMbString(4.0f, PRECISION)).append(" ")
+                        .append(sts::toMbString(5.0f, PRECISION))
+                        .append(" dataref\n");
+
+    const auto manipCount = manip.printObj(w);
+    ASSERT_STREQ(result.c_str(), w.mResult.c_str());
+    ASSERT_EQ(1, manipCount);
+
+    // getters
+    ASSERT_EQ(1.0f, manip.directionX());
+    ASSERT_EQ(2.0f, manip.directionY());
+    ASSERT_EQ(3.0f, manip.directionZ());
+    ASSERT_EQ(4.0f, manip.vMin());
+    ASSERT_EQ(5.0f, manip.vMax());
+    ASSERT_STREQ("dataref", manip.dataref().c_str());
+}
+
+//-------------------------------------------------------------------------
+
+TEST(TestManip, AttrAxisDetentRange) {
+    TestWriter w;
+    AttrAxisDetentRange manip;
+    manip.setStart(1.0f);
+    manip.setEnd(2.0f);
+    manip.setHeight(3.0f);
+
+    const auto result = std::string("ATTR_axis_detent_range ")
+                        .append(sts::toMbString(1.0f, PRECISION)).append(" ")
+                        .append(sts::toMbString(2.0f, PRECISION)).append(" ")
+                        .append(sts::toMbString(3.0f, PRECISION)).append("\n");
+
+    const auto manipCount = manip.printObj(w);
+    ASSERT_STREQ(result.c_str(), w.mResult.c_str());
+    ASSERT_EQ(1, manipCount);
+
+    // getters
+    ASSERT_EQ(1.0f, manip.start());
+    ASSERT_EQ(2.0f, manip.end());
+    ASSERT_EQ(3.0f, manip.height());
+}
+
+//-------------------------------------------------------------------------
+
 TEST(TestManip, AttrManipAxisKnob) {
     TestWriter w;
     AttrManipAxisKnob manip;
@@ -584,122 +642,6 @@ TEST(TestManip, AttrManipDragAxis) {
 
 //-------------------------------------------------------------------------
 
-TEST(TestManip, AttrManipDragRotate) {
-    TestWriter w;
-    AttrManipDragRotate manip;
-    ECursor cursor(ECursor::eId::hand);
-    manip.setCursor(cursor);
-    manip.setToolTip("ToolTip");
-
-    manip.setX(10.0f);
-    manip.setY(20.0f);
-    manip.setZ(30.0f);
-
-    manip.setDirectionX(40.0f);
-    manip.setDirectionY(50.0f);
-    manip.setDirectionZ(60.0f);
-
-    manip.setAngle1(70.0f);
-    manip.setAngle2(80.0f);
-
-    manip.setLift(90.0f);
-
-    manip.setV1Min(91.0f);
-    manip.setV1Max(92.0f);
-
-    manip.setV2Min(93.0f);
-    manip.setV2Max(94.0f);
-
-    manip.setDataref1("dataref-1");
-    manip.setDataref2("dataref-2");
-
-    auto result = std::string("ATTR_manip_drag_rotate ")
-                  .append(cursor.toString())
-                  .append(" ")
-                  .append(sts::toMbString(10.0f, PRECISION)).append(" ")
-                  .append(sts::toMbString(20.0f, PRECISION)).append(" ")
-                  .append(sts::toMbString(30.0f, PRECISION)).append(" ")
-                  .append(sts::toMbString(40.0f, PRECISION)).append(" ")
-                  .append(sts::toMbString(50.0f, PRECISION)).append(" ")
-                  .append(sts::toMbString(60.0f, PRECISION)).append(" ")
-                  .append(sts::toMbString(70.0f, PRECISION)).append(" ")
-                  .append(sts::toMbString(80.0f, PRECISION)).append(" ")
-                  .append(sts::toMbString(90.0f, PRECISION)).append(" ")
-                  .append(sts::toMbString(91.0f, PRECISION)).append(" ")
-                  .append(sts::toMbString(92.0f, PRECISION)).append(" ")
-                  .append(sts::toMbString(93.0f, PRECISION)).append(" ")
-                  .append(sts::toMbString(94.0f, PRECISION)).append(" ")
-                  .append("dataref-1 dataref-2 ToolTip\n");
-
-    auto manipCount = manip.printObj(w);
-    ASSERT_STREQ(result.c_str(), w.mResult.c_str());
-    ASSERT_EQ(1, manipCount);
-
-    // getters
-    ASSERT_EQ(10.0f, manip.x());
-    ASSERT_EQ(20.0f, manip.y());
-    ASSERT_EQ(30.0f, manip.z());
-    ASSERT_EQ(40.0f, manip.directionX());
-    ASSERT_EQ(50.0f, manip.directionY());
-    ASSERT_EQ(60.0f, manip.directionZ());
-    ASSERT_EQ(70.0f, manip.angle1());
-    ASSERT_EQ(80.0f, manip.angle2());
-    ASSERT_EQ(90.0f, manip.lift());
-    ASSERT_EQ(91.0f, manip.v1Min());
-    ASSERT_EQ(92.0f, manip.v1Max());
-    ASSERT_EQ(93.0f, manip.v2Min());
-    ASSERT_EQ(94.0f, manip.v2Max());
-    ASSERT_STREQ("dataref-1", manip.dataref1().c_str());
-    ASSERT_STREQ("dataref-2", manip.dataref2().c_str());
-
-    ASSERT_EQ(EManipulator(EManipulator::drag_rotate), manip.type());
-
-    manip.setKeys({AttrManipKeyFrame(1.0f, 2.0f), AttrManipKeyFrame(3.0f, 4.0f)});
-    manip.setDetentRanges({AttrAxisDetentRange(1.0f, 2.0f, 3.0f), AttrAxisDetentRange(4.0f, 5.0f, 6.0f)});
-
-    result.append("ATTR_manip_keyframe ")
-          .append(sts::toMbString(1.0f, PRECISION)).append(" ")
-          .append(sts::toMbString(2.0f, PRECISION)).append("\n")
-          .append("ATTR_manip_keyframe ")
-          .append(sts::toMbString(3.0f, PRECISION)).append(" ")
-          .append(sts::toMbString(4.0f, PRECISION)).append("\n")
-          .append("ATTR_axis_detent_range ")
-          .append(sts::toMbString(1.0f, PRECISION)).append(" ")
-          .append(sts::toMbString(2.0f, PRECISION)).append(" ")
-          .append(sts::toMbString(3.0f, PRECISION)).append("\n")
-          .append("ATTR_axis_detent_range ")
-          .append(sts::toMbString(4.0f, PRECISION)).append(" ")
-          .append(sts::toMbString(5.0f, PRECISION)).append(" ")
-          .append(sts::toMbString(6.0f, PRECISION)).append("\n");
-
-    manipCount = manip.printObj(w.clear());
-    ASSERT_STREQ(result.c_str(), w.mResult.c_str());
-    ASSERT_EQ(5, manipCount);
-}
-
-//-------------------------------------------------------------------------
-
-TEST(TestManip, AttrManipKeyFrame) {
-    TestWriter w;
-    AttrManipKeyFrame manip(5.1f, 6.8f);
-    manip.setValue(8.5f);
-    manip.setAngle(10.6f);
-
-    const auto result = std::string("ATTR_manip_keyframe ")
-                        .append(sts::toMbString(8.5f, PRECISION)).append(" ")
-                        .append(sts::toMbString(10.6f, PRECISION)).append("\n");
-
-    const auto manipCount = manip.printObj(w);
-    ASSERT_STREQ(result.c_str(), w.mResult.c_str());
-    ASSERT_EQ(1, manipCount);
-
-    // getters
-    ASSERT_EQ(8.5f, manip.value());
-    ASSERT_EQ(10.6f, manip.angle());
-}
-
-//-------------------------------------------------------------------------
-
 TEST(TestManip, AttrManipDragAxisPix) {
     TestWriter w;
     AttrManipDragAxisPix manip;
@@ -747,6 +689,87 @@ TEST(TestManip, AttrManipDragAxisPix) {
     ASSERT_STREQ("dataref", manip.dataref().c_str());
 
     ASSERT_EQ(EManipulator(EManipulator::drag_axis_pix), manip.type());
+}
+
+//-------------------------------------------------------------------------
+
+TEST(TestManip, AttrManipDragRotate) {
+    TestWriter w;
+    AttrManipDragRotate manip;
+    ECursor cursor(ECursor::eId::hand);
+    manip.setCursor(cursor);
+    manip.setToolTip("ToolTip");
+
+    manip.setPos(10.0f, 20.0f, 30.0f);
+    manip.setDirection(40.0f, 50.0f, 60.0f);
+    manip.setAngles(70.0f, 80.0f);
+    manip.setLift(90.0f);
+    manip.setV1(91.0f, 92.0f);
+    manip.setV2(93.0f, 94.0f);
+    manip.setDatarefs("dataref-1", "dataref-2");
+
+    auto result = std::string("ATTR_manip_drag_rotate ")
+                  .append(cursor.toString())
+                  .append(" ")
+                  .append(sts::toMbString(10.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(20.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(30.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(40.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(50.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(60.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(70.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(80.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(90.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(91.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(92.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(93.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(94.0f, PRECISION)).append(" ")
+                  .append("dataref-1 dataref-2 ToolTip\n");
+
+    auto manipCount = manip.printObj(w);
+    ASSERT_STREQ(result.c_str(), w.mResult.c_str());
+    ASSERT_EQ(1, manipCount);
+
+    // getters
+    ASSERT_EQ(10.0f, manip.posX());
+    ASSERT_EQ(20.0f, manip.posY());
+    ASSERT_EQ(30.0f, manip.posZ());
+    ASSERT_EQ(40.0f, manip.directionX());
+    ASSERT_EQ(50.0f, manip.directionY());
+    ASSERT_EQ(60.0f, manip.directionZ());
+    ASSERT_EQ(70.0f, manip.angle1());
+    ASSERT_EQ(80.0f, manip.angle2());
+    ASSERT_EQ(90.0f, manip.lift());
+    ASSERT_EQ(91.0f, manip.v1Min());
+    ASSERT_EQ(92.0f, manip.v1Max());
+    ASSERT_EQ(93.0f, manip.v2Min());
+    ASSERT_EQ(94.0f, manip.v2Max());
+    ASSERT_STREQ("dataref-1", manip.dataref1().c_str());
+    ASSERT_STREQ("dataref-2", manip.dataref2().c_str());
+
+    ASSERT_EQ(EManipulator(EManipulator::drag_rotate), manip.type());
+
+    manip.setKeys({AttrManipKeyFrame(1.0f, 2.0f), AttrManipKeyFrame(3.0f, 4.0f)});
+    manip.setDetentRanges({AttrAxisDetentRange(1.0f, 2.0f, 3.0f), AttrAxisDetentRange(4.0f, 5.0f, 6.0f)});
+
+    result.append("ATTR_manip_keyframe ")
+          .append(sts::toMbString(1.0f, PRECISION)).append(" ")
+          .append(sts::toMbString(2.0f, PRECISION)).append("\n")
+          .append("ATTR_manip_keyframe ")
+          .append(sts::toMbString(3.0f, PRECISION)).append(" ")
+          .append(sts::toMbString(4.0f, PRECISION)).append("\n")
+          .append("ATTR_axis_detent_range ")
+          .append(sts::toMbString(1.0f, PRECISION)).append(" ")
+          .append(sts::toMbString(2.0f, PRECISION)).append(" ")
+          .append(sts::toMbString(3.0f, PRECISION)).append("\n")
+          .append("ATTR_axis_detent_range ")
+          .append(sts::toMbString(4.0f, PRECISION)).append(" ")
+          .append(sts::toMbString(5.0f, PRECISION)).append(" ")
+          .append(sts::toMbString(6.0f, PRECISION)).append("\n");
+
+    manipCount = manip.printObj(w.clear());
+    ASSERT_STREQ(result.c_str(), w.mResult.c_str());
+    ASSERT_EQ(5, manipCount);
 }
 
 //-------------------------------------------------------------------------
@@ -799,19 +822,23 @@ TEST(TestManip, AttrManipDragXy) {
 
 //-------------------------------------------------------------------------
 
-TEST(TestManip, AttrManipNoop) {
+TEST(TestManip, AttrManipKeyFrame) {
     TestWriter w;
-    AttrManipNoop manip;
-    const ECursor cursor(ECursor::eId::hand);
-    manip.setCursor(cursor);
-    manip.setToolTip("ToolTip");
+    AttrManipKeyFrame manip(5.1f, 6.8f);
+    manip.setValue(8.5f);
+    manip.setAngle(10.6f);
 
-    const auto result = std::string("ATTR_manip_noop\n");
+    const auto result = std::string("ATTR_manip_keyframe ")
+                        .append(sts::toMbString(8.5f, PRECISION)).append(" ")
+                        .append(sts::toMbString(10.6f, PRECISION)).append("\n");
+
     const auto manipCount = manip.printObj(w);
     ASSERT_STREQ(result.c_str(), w.mResult.c_str());
     ASSERT_EQ(1, manipCount);
 
-    ASSERT_EQ(EManipulator(EManipulator::noop), manip.type());
+    // getters
+    ASSERT_EQ(8.5f, manip.value());
+    ASSERT_EQ(10.6f, manip.angle());
 }
 
 //-------------------------------------------------------------------------
@@ -829,6 +856,23 @@ TEST(TestManip, AttrManipNone) {
     ASSERT_EQ(1, manipCount);
 
     ASSERT_EQ(EManipulator(EManipulator::none), manip.type());
+}
+
+//-------------------------------------------------------------------------
+
+TEST(TestManip, AttrManipNoop) {
+    TestWriter w;
+    AttrManipNoop manip;
+    const ECursor cursor(ECursor::eId::hand);
+    manip.setCursor(cursor);
+    manip.setToolTip("ToolTip");
+
+    const auto result = std::string("ATTR_manip_noop\n");
+    const auto manipCount = manip.printObj(w);
+    ASSERT_STREQ(result.c_str(), w.mResult.c_str());
+    ASSERT_EQ(1, manipCount);
+
+    ASSERT_EQ(EManipulator(EManipulator::noop), manip.type());
 }
 
 //-------------------------------------------------------------------------
@@ -987,6 +1031,26 @@ TEST(TestManip, AttrManipToggle) {
 
 //-------------------------------------------------------------------------
 
+TEST(TestManip, AttrManipWheel) {
+    TestWriter w;
+    AttrManipWheel manip(5.1f);
+    manip.setDelta(8.5f);
+
+    const auto result = std::string("ATTR_manip_wheel ")
+                        .append(sts::toMbString(8.5f, PRECISION))
+                        .append("\n");
+
+    const auto manipCount = manip.printObj(w);
+    ASSERT_STREQ(result.c_str(), w.mResult.c_str());
+    ASSERT_EQ(1, manipCount);
+
+    // getters
+    ASSERT_TRUE( manip.isEnabled());
+    ASSERT_EQ(8.5f, manip.delta());
+}
+
+//-------------------------------------------------------------------------
+
 TEST(TestManip, AttrManipWrap) {
     TestWriter w;
     AttrManipWrap manip;
@@ -1034,64 +1098,6 @@ TEST(TestManip, AttrManipWrap) {
     ASSERT_STREQ("dataref", manip.dataref().c_str());
 
     ASSERT_EQ(EManipulator(EManipulator::wrap), manip.type());
-}
-
-//-------------------------------------------------------------------------
-
-TEST(TestManip, AttrAxisDetented) {
-    TestWriter w;
-    AttrAxisDetented manip;
-    manip.setDirectionX(1.0f);
-    manip.setDirectionY(2.0f);
-    manip.setDirectionZ(3.0f);
-
-    manip.setVMin(4.0f);
-    manip.setVMax(5.0f);
-    manip.setDataref("dataref");
-
-    const auto result = std::string("ATTR_axis_detented ")
-                        .append(sts::toMbString(1.0f, PRECISION)).append(" ")
-                        .append(sts::toMbString(2.0f, PRECISION)).append(" ")
-                        .append(sts::toMbString(3.0f, PRECISION)).append(" ")
-                        .append(sts::toMbString(4.0f, PRECISION)).append(" ")
-                        .append(sts::toMbString(5.0f, PRECISION))
-                        .append(" dataref\n");
-
-    const auto manipCount = manip.printObj(w);
-    ASSERT_STREQ(result.c_str(), w.mResult.c_str());
-    ASSERT_EQ(1, manipCount);
-
-    // getters
-    ASSERT_EQ(1.0f, manip.directionX());
-    ASSERT_EQ(2.0f, manip.directionY());
-    ASSERT_EQ(3.0f, manip.directionZ());
-    ASSERT_EQ(4.0f, manip.vMin());
-    ASSERT_EQ(5.0f, manip.vMax());
-    ASSERT_STREQ("dataref", manip.dataref().c_str());
-}
-
-//-------------------------------------------------------------------------
-
-TEST(TestManip, AttrAxisDetentRange) {
-    TestWriter w;
-    AttrAxisDetentRange manip;
-    manip.setStart(1.0f);
-    manip.setEnd(2.0f);
-    manip.setHeight(3.0f);
-
-    const auto result = std::string("ATTR_axis_detent_range ")
-                        .append(sts::toMbString(1.0f, PRECISION)).append(" ")
-                        .append(sts::toMbString(2.0f, PRECISION)).append(" ")
-                        .append(sts::toMbString(3.0f, PRECISION)).append("\n");
-
-    const auto manipCount = manip.printObj(w);
-    ASSERT_STREQ(result.c_str(), w.mResult.c_str());
-    ASSERT_EQ(1, manipCount);
-
-    // getters
-    ASSERT_EQ(1.0f, manip.start());
-    ASSERT_EQ(2.0f, manip.end());
-    ASSERT_EQ(3.0f, manip.height());
 }
 
 /**************************************************************************************************/

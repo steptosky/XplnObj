@@ -42,9 +42,6 @@
 #include "TestUtilsObjMesh.h"
 
 using namespace xobj;
-using ::testing::_;
-using ::testing::StrEq;
-using ::testing::InSequence;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,9 +49,9 @@ using ::testing::InSequence;
 
 /* 
  * This tests are for checking manipulators logic of the chain 'mesh objects->file | file->mesh objects'.
- * So they test writer and reader for manipulators of mesh objects.
- * The manipulators have some logic for writing and reading you can see it in other tests like TestManipWrite.
- * Actually this tests are like as TestManipWrite except they test full chain (not only writing).
+ * They test writer and reader for manipulators of one mesh object.
+ * The manipulators have some logic for writing and reading you can see it in other tests like ManipsStates.
+ * Actually this tests are like as ManipsStates except they test full chain (not only writing).
  */
 
 /**************************************************************************************************/
@@ -160,7 +157,7 @@ TEST_F(TestManipIOLogic, case_2) {
     // mObjMesh4
 
     ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -208,7 +205,7 @@ TEST_F(TestManipIOLogic, case_3) {
     // mObjMesh4
 
     ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -257,7 +254,7 @@ TEST_F(TestManipIOLogic, case_4) {
     // mObjMesh4
 
     ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -474,7 +471,7 @@ TEST_F(TestManipIOLogic, case_8) {
     // mObjMesh4
 
     ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(3, stat.pTrisManipCount);
+    ASSERT_EQ(4, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -576,7 +573,7 @@ TEST_F(TestManipIOLogic, case_10) {
     outM4->pAttr.setManipulator(mManipPush.clone());
 
     ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(3, stat.pTrisManipCount);
+    ASSERT_EQ(4, stat.pTrisManipCount);
 
     //-----------------------------
 
@@ -627,7 +624,7 @@ TEST_F(TestManipIOLogic, case_11) {
     // mObjMesh4
 
     ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ASSERT_EQ(4, stat.pTrisManipCount);
 
     //-----------------------------
 

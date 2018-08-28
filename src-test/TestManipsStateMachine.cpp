@@ -165,7 +165,7 @@ TEST_F(ManipsStates, one_manip) {
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count, mObjWriteManip.count());
+    ASSERT_EQ(count + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -197,7 +197,7 @@ TEST_F(ManipsStates, two_manips_with_the_same_vals) {
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count, mObjWriteManip.count());
+    ASSERT_EQ(count + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -229,7 +229,7 @@ TEST_F(ManipsStates, three_manips_with_the_same_vals) {
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count, mObjWriteManip.count());
+    ASSERT_EQ(count + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -391,7 +391,7 @@ TEST_F(ManipsStates, three_different_manips) {
     EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count1 + count2 + count3, mObjWriteManip.count());
+    ASSERT_EQ(count1 + count2 + count3 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -468,7 +468,7 @@ TEST_F(ManipsStates, one_manip_and_two_different_manips) {
     EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w4.mResult))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count1 + count3 + count4, mObjWriteManip.count());
+    ASSERT_EQ(count1 + count3 + count4 + 1, mObjWriteManip.count()); //  + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -508,7 +508,7 @@ TEST_F(ManipsStates, two_different_manips) {
     EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count1 + count3, mObjWriteManip.count());
+    ASSERT_EQ(count1 + count3 + 1 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -600,8 +600,8 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case1) {
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
-    // check counter
-    ASSERT_EQ(1, mObjWriteManip.count());
+    // check counter + ATTR_MANIP_NONE
+    ASSERT_EQ(1 + 1, mObjWriteManip.count());
     //---------------------------
 }
 
@@ -643,8 +643,8 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case2) {
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
-    // check counter
-    ASSERT_EQ(1, mObjWriteManip.count());
+    // check counter + ATTR_MANIP_NONE
+    ASSERT_EQ(1 + 1, mObjWriteManip.count());
     //---------------------------
 }
 
@@ -771,8 +771,8 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case5) {
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
-    // check counter
-    ASSERT_EQ(0, mObjWriteManip.count());
+    // check counter + ATTR_MANIP_NONE
+    ASSERT_EQ(1 + 1, mObjWriteManip.count());
     //---------------------------
 }
 
@@ -811,8 +811,8 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_1) {
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
-    // check counter
-    ASSERT_EQ(0, mObjWriteManip.count());
+    // check counter + ATTR_MANIP_NONE
+    ASSERT_EQ(1, mObjWriteManip.count());
     //---------------------------
 }
 
@@ -857,8 +857,8 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_2) {
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
-    // check counter
-    ASSERT_EQ(1, mObjWriteManip.count());
+    // check counter + ATTR_MANIP_NONE
+    ASSERT_EQ(1 + 1, mObjWriteManip.count());
     //---------------------------
 }
 
@@ -1272,7 +1272,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_3) {
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
-    ASSERT_EQ(1, mObjWriteManip.count());
+    ASSERT_EQ(1 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
     //---------------------------
 }
 
@@ -1331,7 +1331,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_4) {
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
-    ASSERT_EQ(1, mObjWriteManip.count());
+    ASSERT_EQ(1 + 1 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
     //---------------------------
 }
 
@@ -1391,7 +1391,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_5) {
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
-    ASSERT_EQ(1, mObjWriteManip.count());
+    ASSERT_EQ(1 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
     //---------------------------
 }
 

@@ -37,6 +37,7 @@
 #include "xpln/enums/eObjectType.h"
 #include "xpln/obj/ObjMesh.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
+#include "xpln/obj/manipulators/AttrManipNone.h"
 
 namespace xobj {
 
@@ -85,12 +86,12 @@ const AttrManipBase * ObjWriteManip::prepareManip(const AttrManipBase * manip) c
         else if (manip->type() == EManipulator::panel) {
             if (!mIsPanelManip) {
                 ULError << "The object <" << mObj->objectName() << "> uses <" << manip->type().toUiString()
-                        << "> manipulator but the object has not the attribute <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
+                        << "> manipulator but the object hasn't the attribute <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
                         << "> the <" << manip->type().toUiString() << "> can be used only for the geometry with one of those attributes.";
                 return nullptr;
             }
 
-            // todo const cast is not a good idea
+            // todo const cast isn't a good idea
             auto * panel = const_cast<AttrManipPanel*>(static_cast<const AttrManipPanel*>(manip));
             panel->setCockpit(mObj->pAttr.cockpit());
         }
@@ -113,7 +114,8 @@ void ObjWriteManip::write(AbstractWriter * writer, const AttrManipBase * manip) 
     //------------------------------
     if (!manip) {
         if (mActiveManip) {
-            writer->printLine(ATTR_MANIP_NONE);
+            AttrManipNone none;
+            print(writer, &none);
             mActiveManip = nullptr;
         }
     }

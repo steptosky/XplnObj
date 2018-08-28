@@ -142,6 +142,7 @@ call conan create . steptosky/develop ^
      -s compiler.version=15 ^
      -s compiler.runtime=MD ^
      -s build_type=Release ^
+     -s arch=x86_64 ^
      -o XplnObj:shared=False ^
      -e CONAN_TESTING_REPORT_DIR="report/conan-test" ^
      -e CONAN_BUILD_TESTING=1 ^
@@ -159,6 +160,7 @@ conan create . steptosky/develop \
      -s compiler="apple-clang" \
      -s compiler.version=9.1 \
      -s build_type=Release \
+     -s arch=x86_64 \
      -o XplnObj:shared=False \
      -e CONAN_TESTING_REPORT_DIR="report/conan-test" \
      -e CONAN_BUILD_TESTING=1 \

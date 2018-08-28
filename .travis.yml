@@ -23,9 +23,9 @@ osx: &osx
 matrix:
    include:
       - <<: *linux
-        env: CONAN_GCC_VERSIONS=6 CONAN_DOCKER_IMAGE=lasote/conangcc72
+        env: CONAN_GCC_VERSIONS=7.2 CONAN_DOCKER_IMAGE=lasote/conangcc72
       - <<: *linux
-        env: CONAN_GCC_VERSIONS=7 CONAN_DOCKER_IMAGE=lasote/conangcc8
+        env: CONAN_GCC_VERSIONS=8.0 CONAN_DOCKER_IMAGE=lasote/conangcc8
       - <<: *linux
         env: CONAN_CLANG_VERSIONS=5.0 CONAN_DOCKER_IMAGE=lasote/conanclang50
       - <<: *linux

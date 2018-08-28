@@ -30,6 +30,7 @@
 #include "ph/stdafx.h"
 #include <gtest/gtest.h>
 
+#include "common/Logger.h"
 #include "xpln/obj/ObjMain.h"
 #include "xpln/obj/ObjMesh.h"
 

@@ -12,7 +12,7 @@
 - The library uses [SemVer](http://semver.org/).
 - The library requires C++ 14 or higher.
 - The library's versions from the ```master``` branch are available in our 
-  [[bintray]](https://bintray.com/steptosky/conan-open-source/XplnObj:steptosky) conan remote.  
+  [[bintray]](https://bintray.com/steptosky/conan-open-source/XplnObj:steptosky) conan remote without pre-built packages.  
   ```XplnObj/X.Y.Z@steptosky/stable```
 - The X-Plane [official website](http://www.x-plane.com/).
 - The X-Plane [obj specification](http://developer.x-plane.com/?article=obj8-file-format-specification).

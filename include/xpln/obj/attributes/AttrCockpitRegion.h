@@ -29,8 +29,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/Export.h"
 #include <cstdint>
+#include "xpln/Export.h"
 
 namespace xobj {
 
@@ -66,7 +66,8 @@ public:
      * \param [in] right 
      * \param [in] top 
      */
-    XpObjLib AttrCockpitRegion(int32_t left, int32_t bottom, int32_t right, int32_t top);
+    XpObjLib AttrCockpitRegion(std::int32_t left, std::int32_t bottom,
+                               std::int32_t right, std::int32_t top);
 
     ~AttrCockpitRegion() = default;
 
@@ -106,10 +107,10 @@ public:
 
 private:
 
-    int32_t mLeft;
-    int32_t mBottom;
-    int32_t mRight;
-    int32_t mTop;
+    std::int32_t mLeft;
+    std::int32_t mBottom;
+    std::int32_t mRight;
+    std::int32_t mTop;
     bool mIsEnabled : 1;
 
 };

@@ -69,7 +69,7 @@ public:
 
     //-------------------------------------------------------------------------
 
-    typedef size_t TransformIndex;
+    typedef std::size_t TransformIndex;
     typedef std::vector<ObjAbstract*> ObjList;
 
     //-------------------------------------------------------------------------

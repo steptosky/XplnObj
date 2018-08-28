@@ -29,6 +29,7 @@
 
 #include "stdafx.h"
 
+#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipCmd.h"
 #include "xpln/enums//EManipulator.h"
 #include "common/AttributeNames.h"

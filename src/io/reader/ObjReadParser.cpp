@@ -30,6 +30,7 @@
 #include "stdafx.h"
 
 #include "ObjReadParser.h"
+#include "common/Logger.h"
 
 namespace xobj {
 

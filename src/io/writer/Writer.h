@@ -29,7 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <iosfwd>
+#include <fstream>
 #include "AbstractWriter.h"
 
 namespace xobj {

@@ -28,6 +28,7 @@
 */
 
 #include "stdafx.h"
+#include <cassert>
 
 #include "ObjWriteInstancing.h"
 #include "xpln/obj/ObjLodGroup.h"

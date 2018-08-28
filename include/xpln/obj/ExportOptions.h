@@ -72,7 +72,7 @@ public:
      * \remark It can be useful for serialization/deserialization.
      * \param [in] flags
      */
-    XpObjLib void setOptionFlags(uint64_t flags);
+    XpObjLib void setOptionFlags(std::uint64_t flags);
 
     //------------------------------------------------------------
 
@@ -93,7 +93,7 @@ public:
 
 private:
 
-    uint64_t mOptionFlags;
+    std::uint64_t mOptionFlags;
     std::string mSignature;
 
 };

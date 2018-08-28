@@ -30,6 +30,7 @@
 #include "stdafx.h"
 
 #include "xpln/obj/ObjLightNamed.h"
+#include "xpln/obj/Transform.h"
 
 namespace xobj {
 

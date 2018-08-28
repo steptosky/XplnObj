@@ -31,6 +31,7 @@
 
 #include "xpln/obj/ObjAbstract.h"
 #include "xpln/obj/Transform.h"
+#include "common/Logger.h"
 
 namespace xobj {
 

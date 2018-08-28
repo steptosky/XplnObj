@@ -29,6 +29,8 @@
 
 #include "stdafx.h"
 
+#include "sts/utilities/Compare.h"
+#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipCmdKnob2.h"
 #include "xpln/enums/EManipulator.h"
 #include "common/AttributeNames.h"

@@ -11,6 +11,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
+#ifdef _MSC_VER
+#   define ENABLE_PRECOMPILED_HEADERS
+#endif
+
+#ifdef ENABLE_PRECOMPILED_HEADERS
+
 #include <cstddef>
 #include <cstdint>
 #include <vector>
@@ -22,6 +28,12 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+
+#include "../totext.h"
+#include "../TestUtils.h"
+#include "../TestUtilsObjMesh.h"
+
+#endif
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

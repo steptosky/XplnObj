@@ -62,17 +62,17 @@ public:
 
     XpObjLib void write(AbstractWriter * writer, const ObjAbstract * obj);
     XpObjLib void reset();
-    XpObjLib size_t count() const;
+    XpObjLib std::size_t count() const;
 
 private:
 
     void writeAttributes(const AttrSet & obj);
-    void writeBool(bool currVal, uint32_t flag, const char * attrOn, const char * attrOff);
+    void writeBool(bool currVal, std::uint32_t flag, const char * attrOn, const char * attrOff);
 
     ObjWriteManip * mManipWriter = nullptr;
     AbstractWriter * mWriter = nullptr;
-    size_t mCounter = 0;
-    uint32_t mFlags = 0;
+    std::size_t mCounter = 0;
+    std::uint32_t mFlags = 0;
 
     AttrLightLevel mActiveAttrLightLevel;
     AttrPolyOffset mActiveAttrPolyOffset;

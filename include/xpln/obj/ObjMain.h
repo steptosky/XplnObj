@@ -81,13 +81,13 @@ public:
      * \details Gets LOD by index.
      * \param [in] index
      */
-    XpObjLib ObjLodGroup & lod(size_t index);
+    XpObjLib ObjLodGroup & lod(std::size_t index);
 
     /*!
      * \details Gets LOD by index.
      * \param [in] index
      */
-    XpObjLib const ObjLodGroup & lod(size_t index) const;
+    XpObjLib const ObjLodGroup & lod(std::size_t index) const;
 
     /*!
      * \details Adds lods.
@@ -99,12 +99,12 @@ public:
      * \details Removes LOD by index.
      * \param [in] index
      */
-    XpObjLib void removeLod(size_t index);
+    XpObjLib void removeLod(std::size_t index);
 
     /*!
      * \details Gets count of the lods.
      */
-    XpObjLib size_t lodCount() const;
+    XpObjLib std::size_t lodCount() const;
 
     //-------------------------------------------------------------------------
 

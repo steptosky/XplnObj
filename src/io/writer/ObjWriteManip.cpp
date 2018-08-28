@@ -28,6 +28,7 @@
 */
 
 #include "stdafx.h"
+#include <cassert>
 
 #include "ObjWriteManip.h"
 #include "xpln/obj/manipulators/AttrManipBase.h"
@@ -40,6 +41,7 @@
 #include "xpln/obj/manipulators/AttrManipNone.h"
 #include "xpln/obj/manipulators/AttrManipDragAxis.h"
 #include "xpln/obj/manipulators/AttrManipDragRotate.h"
+#include "common/Logger.h"
 
 namespace xobj {
 

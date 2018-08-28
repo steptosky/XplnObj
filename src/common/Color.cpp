@@ -30,7 +30,7 @@
 #include "stdafx.h"
 
 #include "xpln/common/Color.h"
-#include "sts/string/StringUtils.h"
+#include "sts/utilities/Compare.h"
 #include "converters/StringStream.h"
 
 namespace xobj {
@@ -119,7 +119,7 @@ void Color::setAlpha(const float val) {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-std::string Color::toString(const uint8_t precision /*= 4*/) const {
+std::string Color::toString(const std::uint8_t precision /*= 4*/) const {
     StringStream outStr(precision);
     outStr << red() << " " << green() << " " << blue() << " " << alpha();
     return outStr.str();

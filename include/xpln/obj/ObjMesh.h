@@ -31,7 +31,6 @@
 #include "ObjAbstract.h"
 #include "MeshVertex.h"
 #include "MeshFace.h"
-
 #include "xpln/obj/attributes/AttrSet.h"
 
 namespace xobj {

@@ -29,6 +29,8 @@
 
 #include "stdafx.h"
 
+#include "sts/utilities/Compare.h"
+#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipWheel.h"
 #include "common/AttributeNames.h"
 #include "io/writer/AbstractWriter.h"

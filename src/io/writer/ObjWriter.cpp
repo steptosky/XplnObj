@@ -41,6 +41,8 @@
 #include "ObjWriteOptimize.h"
 #include "io/ObjTransformation.h"
 #include "ObjWriteInstancing.h"
+#include "common/Logger.h"
+#include "sts/string/StringUtils.h"
 
 namespace xobj {
 

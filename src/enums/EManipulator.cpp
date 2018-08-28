@@ -28,10 +28,12 @@
 */
 
 #include "stdafx.h"
+#include <cstring>
 
 #include "xpln/enums/EManipulator.h"
 #include "common/ArrayLength.h"
 #include "common/AttributeNames.h"
+#include "common/Logger.h"
 
 namespace xobj {
 

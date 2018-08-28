@@ -50,7 +50,7 @@ public:
      * \note It is NOT guaranteed that the existing indexes will be constant when new data is added.
      *       So you can consider it when you design your serialization solution. You can use obj string (toString()).
      */
-    enum eId : int32_t {
+    enum eId : std::int32_t {
         none = 0,
         four_arrows,
         hand,

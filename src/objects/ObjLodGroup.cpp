@@ -30,6 +30,7 @@
 #include "stdafx.h"
 
 #include "xpln/obj/ObjLodGroup.h"
+#include "common/Logger.h"
 
 namespace xobj {
 

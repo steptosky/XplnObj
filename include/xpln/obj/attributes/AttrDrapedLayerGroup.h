@@ -29,7 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/Export.h"
+#include <cstdint>
 #include "xpln/enums/ELayer.h"
 
 namespace xobj {
@@ -57,7 +57,7 @@ public:
      * \param [in] layer 
      * \param [in] offset 
      */
-    XpObjLib AttrDrapedLayerGroup(ELayer layer, int32_t offset = 0);
+    XpObjLib AttrDrapedLayerGroup(ELayer layer, std::int32_t offset = 0);
 
     ~AttrDrapedLayerGroup() = default;
 
@@ -83,7 +83,7 @@ public:
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setOffset(int32_t offset);
+    XpObjLib void setOffset(std::int32_t offset);
     XpObjLib void setLayer(ELayer layer);
 
     XpObjLib int32_t offset() const;
@@ -93,7 +93,7 @@ public:
 
 private:
 
-    int8_t mOffset;
+    std::int8_t mOffset;
     ELayer mLayer;
     bool mIsEnabled : 1;
 

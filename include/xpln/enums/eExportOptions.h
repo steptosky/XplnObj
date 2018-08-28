@@ -41,7 +41,7 @@ namespace xobj {
  * \details Export options
  * \ingroup Enumerations
  */
-enum eExportOptions : uint64_t {
+enum eExportOptions : std::uint64_t {
 
     /*! \details No options */
     XOBJ_EXP_NO_OPT = 0,

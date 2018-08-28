@@ -29,9 +29,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <vector>
 #include "xpln/Export.h"
 #include "xpln/common/Point3.h"
-#include <vector>
 #include "AnimRotateKey.h"
 
 namespace xobj {

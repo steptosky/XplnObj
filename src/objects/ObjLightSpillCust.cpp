@@ -28,9 +28,10 @@
 */
 
 #include "stdafx.h"
+#include <cmath>
 
 #include "xpln/obj/ObjLightSpillCust.h"
-#include <cmath>
+#include "xpln/obj/Transform.h"
 
 namespace xobj {
 

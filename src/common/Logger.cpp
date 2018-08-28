@@ -29,6 +29,7 @@
 
 #include "stdafx.h"
 
+#include "common/Logger.h"
 #include "xpln/common/ExternalLog.h"
 #include "xpln/Info.h"
 

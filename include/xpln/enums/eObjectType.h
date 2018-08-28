@@ -41,7 +41,7 @@ namespace xobj {
  * \details Object types
  * \ingroup Enumerations
  */
-enum eObjectType : uint32_t {
+enum eObjectType : std::int32_t {
     //!< Is not correct object
     OBJ_NO = 0,
 

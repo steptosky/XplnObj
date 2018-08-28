@@ -45,7 +45,7 @@ namespace xobj {
 class AttrBlend {
 public:
 
-    enum eType : uint8_t {
+    enum eType : std::uint8_t {
         // default
         blend,
         no_blend,

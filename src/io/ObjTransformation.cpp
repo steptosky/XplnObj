@@ -35,6 +35,7 @@
 #include "io/ObjValidators.h"
 #include "exceptions/defines.h"
 #include "writer/ObjWriteAnim.h"
+#include "converters/StringStream.h"
 
 namespace xobj {
 

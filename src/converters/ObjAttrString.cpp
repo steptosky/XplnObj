@@ -29,6 +29,7 @@
 
 #include "stdafx.h"
 
+#include "converters/StringStream.h"
 #include "ObjAttrString.h"
 #include "common/AttributeNames.h"
 #include "xpln/obj/attributes/AttrWetDry.h"

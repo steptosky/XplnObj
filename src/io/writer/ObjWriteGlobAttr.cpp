@@ -28,6 +28,7 @@
 */
 
 #include "stdafx.h"
+#include <cassert>
 
 #include "ObjWriteGlobAttr.h"
 

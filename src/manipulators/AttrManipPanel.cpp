@@ -29,6 +29,7 @@
 
 #include "stdafx.h"
 
+#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
 #include "converters/ObjAttrString.h"
 #include "io/writer/AbstractWriter.h"

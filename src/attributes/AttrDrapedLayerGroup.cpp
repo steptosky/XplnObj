@@ -28,6 +28,7 @@
 */
 
 #include "stdafx.h"
+#include <algorithm>
 
 #include "xpln/obj/attributes/AttrDrapedLayerGroup.h"
 
@@ -37,7 +38,7 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrDrapedLayerGroup::AttrDrapedLayerGroup(const ELayer layer, const int32_t offset)
+AttrDrapedLayerGroup::AttrDrapedLayerGroup(const ELayer layer, const std::int32_t offset)
     : mOffset(static_cast<uint8_t>(offset)),
       mLayer(layer),
       mIsEnabled(true) { }
@@ -71,15 +72,15 @@ bool AttrDrapedLayerGroup::operator!=(const AttrDrapedLayerGroup & other) const 
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrDrapedLayerGroup::setOffset(int32_t offset) {
+void AttrDrapedLayerGroup::setOffset(std::int32_t offset) {
     offset = std::min(offset, 5);
     offset = std::max(offset, -5);
-    mOffset = static_cast<int8_t>(offset);
+    mOffset = static_cast<std::int8_t>(offset);
     mIsEnabled = true;
 }
 
-int32_t AttrDrapedLayerGroup::offset() const {
-    return static_cast<int32_t>(mOffset);
+std::int32_t AttrDrapedLayerGroup::offset() const {
+    return static_cast<std::int32_t>(mOffset);
 }
 
 void AttrDrapedLayerGroup::setLayer(const ELayer layer) {

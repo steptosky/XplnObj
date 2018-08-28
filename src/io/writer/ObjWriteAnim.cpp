@@ -29,6 +29,7 @@
 
 #include "stdafx.h"
 
+#include "converters/StringStream.h"
 #include "ObjWriteAnim.h"
 #include "io/ObjValidators.h"
 #include "common/AttributeNames.h"

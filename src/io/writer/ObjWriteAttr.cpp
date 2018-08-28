@@ -28,6 +28,8 @@
 */
 
 #include "stdafx.h"
+#include <cassert>
+#include <functional>
 
 #include "ObjWriteAttr.h"
 #include "ObjWriteManip.h"
@@ -75,7 +77,7 @@ void ObjWriteAttr::reset() {
     mCounter = 0;
 }
 
-size_t ObjWriteAttr::count() const {
+std::size_t ObjWriteAttr::count() const {
     return mCounter;
 }
 
@@ -133,7 +135,7 @@ public:
     }
 };
 
-void ObjWriteAttr::writeBool(const bool currVal, const uint32_t flag, const char * attrOn, const char * attrOff) {
+void ObjWriteAttr::writeBool(const bool currVal, const std::uint32_t flag, const char * attrOn, const char * attrOff) {
     if (!currVal) {
         if (Flags::hasFlag(mFlags, flag)) {
             mWriter->printLine(attrOff);
@@ -175,8 +177,7 @@ void ObjWriteAttr::writeAttributes(const AttrSet & obj) {
     AttrWriter::writeAttr<AttrBlend>(mWriter, obj.blend(), mActiveAttrBlend, toObjString(AttrBlend()).c_str(), mCounter);
     AttrWriter::writeAttr<AttrPolyOffset>(mWriter, obj.polyOffset(), mActiveAttrPolyOffset, toObjString(AttrPolyOffset(0.0f)).c_str(), mCounter);
     AttrWriter::writeAttr<AttrLightLevel>(mWriter, obj.lightLevel(), mActiveAttrLightLevel, ATTR_LIGHT_LEVEL_RESET, mCounter);
-    AttrWriter::writeAttr<AttrCockpit>(mWriter, obj.cockpit(), mActiveAttrCockpit, ATTR_NO_COCKPIT, mCounter,
-                                       manipPanelEnabled, manipPanelDisabled);
+    AttrWriter::writeAttr<AttrCockpit>(mWriter, obj.cockpit(), mActiveAttrCockpit, ATTR_NO_COCKPIT, mCounter, manipPanelEnabled, manipPanelDisabled);
 }
 
 /**************************************************************************************************/

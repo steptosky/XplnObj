@@ -28,6 +28,7 @@
 */
 
 #include "ph/stdafx.h"
+#include <gtest/gtest.h>
 
 #include "totext.h"
 

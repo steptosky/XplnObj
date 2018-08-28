@@ -108,7 +108,7 @@ public:
 
     //-------------------------------------------------------------------------
 
-    XpObjLib std::string toString(uint8_t precision = 6) const;
+    XpObjLib std::string toString(std::uint8_t precision = 6) const;
 
     //-------------------------------------------------------------------------
 

@@ -33,7 +33,6 @@
 #include <vector>
 #include "xpln/Export.h"
 #include "xpln/enums/eObjectType.h"
-#include "xpln/common/TMatrix.h"
 
 namespace xobj {
 
@@ -42,6 +41,7 @@ namespace xobj {
 /**************************************************************************************************/
 
 class Transform;
+class TMatrix;
 class AttrSet;
 
 /**************************************************************************************************/

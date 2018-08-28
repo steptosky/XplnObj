@@ -65,7 +65,7 @@ void ExportOptions::reset() {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ExportOptions::setOptionFlags(const uint64_t flags) {
+void ExportOptions::setOptionFlags(const std::uint64_t flags) {
     mOptionFlags = flags;
 }
 

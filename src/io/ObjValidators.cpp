@@ -31,6 +31,8 @@
 
 #include "ObjValidators.h"
 #include "io/StringValidator.h"
+#include "common/Logger.h"
+#include "sts/utilities/Compare.h"
 
 #include "xpln/obj/attributes/AttrGlobSet.h"
 

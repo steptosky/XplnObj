@@ -30,6 +30,7 @@
 */
 
 #include "ObjAbstract.h"
+#include "xpln/common/Point3.h"
 
 namespace xobj {
 

@@ -45,7 +45,7 @@ namespace xobj {
 class AttrCockpit {
 public:
 
-    enum eType : uint8_t {
+    enum eType : std::uint8_t {
         cockpit,
         region_1,
         region_2,

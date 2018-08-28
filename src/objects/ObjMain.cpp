@@ -28,6 +28,8 @@
 */
 
 #include "stdafx.h"
+#include <cassert>
+#include <algorithm>
 
 #include "xpln/obj/ObjMain.h"
 #include "io/writer/ObjWriter.h"
@@ -98,14 +100,14 @@ bool ObjMain::importFromFile(const std::string & path, IOStatistic & outStat) {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-ObjLodGroup & ObjMain::lod(const size_t index) {
+ObjLodGroup & ObjMain::lod(const std::size_t index) {
     assert(index < mLods.size());
     return *(mLods.at(index));
 }
 
 //-------------------------------------------------------------------------
 
-const ObjLodGroup & ObjMain::lod(const size_t index) const {
+const ObjLodGroup & ObjMain::lod(const std::size_t index) const {
     assert(index < mLods.size());
     return *(mLods.at(index));
 }
@@ -120,14 +122,14 @@ ObjLodGroup & ObjMain::addLod() {
 
 //-------------------------------------------------------------------------
 
-void ObjMain::removeLod(const size_t index) {
+void ObjMain::removeLod(const std::size_t index) {
     assert(index < mLods.size());
     mLods.erase(mLods.begin() + index);
 }
 
 //-------------------------------------------------------------------------
 
-size_t ObjMain::lodCount() const {
+std::size_t ObjMain::lodCount() const {
     return mLods.size();
 }
 

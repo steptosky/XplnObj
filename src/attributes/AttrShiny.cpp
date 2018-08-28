@@ -28,7 +28,9 @@
 */
 
 #include "stdafx.h"
+#include <algorithm>
 
+#include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrShiny.h"
 
 namespace xobj {

@@ -53,7 +53,7 @@ const std::string & AttrManipBase::toolTip() const {
     return mToolType;
 }
 
-void AttrManipBase::setCursor(ECursor cursor) {
+void AttrManipBase::setCursor(const ECursor cursor) {
     mCursor = cursor;
 }
 

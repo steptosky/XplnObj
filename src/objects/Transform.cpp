@@ -32,6 +32,7 @@
 #include "xpln/obj/Transform.h"
 #include "sts/utilities/templates/TreeItem.h"
 #include "xpln/obj/ObjAbstract.h"
+#include "common/BaseLogger.h"
 
 namespace xobj {
 

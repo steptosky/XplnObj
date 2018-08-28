@@ -29,6 +29,8 @@
 
 #include "stdafx.h"
 
+#include "converters/StringStream.h"
+#include "common/Logger.h"
 #include "ObjAnimString.h"
 #include "common/AttributeNames.h"
 #include "xpln/obj/animation/AnimVisibilityKey.h"

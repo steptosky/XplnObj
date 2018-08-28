@@ -29,6 +29,7 @@
 
 #include "stdafx.h"
 
+#include "sts/string/StringUtils.h"
 #include "xpln/common/TMatrix.h"
 #include "sts/geometry/Quaternion.h"
 #include "sts/geometry/Converters.h"
@@ -122,7 +123,7 @@ bool TMatrix::parity() const {
     return reinterpret_cast<const Mtx3*>(this)->isParity();
 }
 
-Point3 TMatrix::row(size_t i) const {
+Point3 TMatrix::row(std::size_t i) const {
     return Point3((*reinterpret_cast<const Mtx3*>(this))(i, 0),
                   (*reinterpret_cast<const Mtx3*>(this))(i, 1),
                   (*reinterpret_cast<const Mtx3*>(this))(i, 2));

@@ -28,6 +28,8 @@
 */
 
 #include "ph/stdafx.h"
+#include <gtest/gtest.h>
+#include <array>
 
 #include <xpln/obj/ObjMain.h>
 #include <xpln/obj/ObjMesh.h>

@@ -29,8 +29,9 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/Export.h"
+#include <cstdint>
 #include <string>
+#include "xpln/Export.h"
 
 namespace xobj {
 
@@ -46,7 +47,7 @@ namespace xobj {
 class AnimVisibilityKey {
 public:
 
-    enum eType : uint8_t {
+    enum eType : std::uint8_t {
         UNDEFINED = 0,
         SHOW = 'S',
         HIDE = 'H'

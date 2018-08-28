@@ -83,17 +83,17 @@ public:
 
 private:
 
-    void writeMeshFaceRecursive(std::ostream & writer, const Transform & inNode, size_t & idx, size_t & offset) const;
+    void writeMeshFaceRecursive(std::ostream & writer, const Transform & inNode, std::size_t & idx, std::size_t & offset) const;
 
     IOStatistic * mStat;
     const ExportOptions * mOptions;
 
     // Mesh
-    size_t mMeshFaceOffset;
-    size_t mMeshVertexOffset;
+    std::size_t mMeshFaceOffset;
+    std::size_t mMeshVertexOffset;
 
     // Light
-    size_t mPointLightOffsetByObject;
+    std::size_t mPointLightOffsetByObject;
 
 };
 

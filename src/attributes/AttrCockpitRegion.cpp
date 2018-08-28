@@ -37,7 +37,8 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrCockpitRegion::AttrCockpitRegion(const int32_t left, const int32_t bottom, const int32_t right, const int32_t top)
+AttrCockpitRegion::AttrCockpitRegion(const std::int32_t left, const std::int32_t bottom,
+                                     const std::int32_t right, const std::int32_t top)
     : mLeft(left),
       mBottom(bottom),
       mRight(right),

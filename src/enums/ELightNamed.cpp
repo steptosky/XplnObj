@@ -28,9 +28,11 @@
 */
 
 #include "stdafx.h"
+#include <cstring>
 
 #include "xpln/enums/ELightNamed.h"
 #include "common/ArrayLength.h"
+#include "common/Logger.h"
 
 namespace xobj {
 

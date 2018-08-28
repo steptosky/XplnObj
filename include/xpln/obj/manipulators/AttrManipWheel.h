@@ -29,6 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <cstddef>
 #include "xpln/Export.h"
 
 namespace xobj {

@@ -29,8 +29,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/Export.h"
 #include <string>
+#include "xpln/Export.h"
 
 #define LOG_CATEGORY_FOR_USER "Xlb"
 

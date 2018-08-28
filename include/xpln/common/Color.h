@@ -79,7 +79,7 @@ public:
 
     //-------------------------------------------------------------------------
 
-    std::string toString(uint8_t precision = 4) const;
+    std::string toString(std::uint8_t precision = 4) const;
 
 private:
 

@@ -44,7 +44,7 @@ namespace xobj {
 class MeshFace {
 public:
 
-    typedef size_t value_type;
+    typedef std::size_t value_type;
 
     MeshFace() = default;
 

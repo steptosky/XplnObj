@@ -28,6 +28,8 @@
 */
 
 #include "ph/stdafx.h"
+#include <gtest/gtest.h>
+#include <sts/string/StringUtils.h>
 
 #include "xpln/obj/attributes/AttrWetDry.h"
 #include "xpln/obj/attributes/AttrTint.h"
@@ -47,7 +49,6 @@
 
 #include "converters/ObjAttrString.h"
 #include "converters/Defines.h"
-#include <sts/string/StringUtils.h>
 
 using namespace xobj;
 

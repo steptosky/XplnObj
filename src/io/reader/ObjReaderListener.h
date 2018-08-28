@@ -29,8 +29,11 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <cstddef>
 #include "xpln/obj/ObjMesh.h"
-#include "xpln/obj/Transform.h"
+#include "xpln/obj/animation/AnimVisibility.h"
+#include "xpln/obj/animation/AnimTrans.h"
+#include "xpln/obj/animation/AnimRotate.h"
 
 namespace xobj {
 
@@ -79,7 +82,7 @@ protected:
 
 public:
 
-    typedef size_t Index;
+    typedef std::size_t Index;
     typedef Index FaceIndex;
     typedef std::vector<FaceIndex> FaceIndexArray;
 

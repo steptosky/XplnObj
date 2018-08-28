@@ -28,9 +28,11 @@
 */
 
 #include "stdafx.h"
+#include <cassert>
 
 #include "ObjWriteGeometry.h"
 #include "converters/ObjString.h"
+#include "converters/StringStream.h"
 
 #include "xpln/obj/ObjMain.h"
 #include "xpln/obj/ObjMesh.h"
@@ -113,17 +115,17 @@ void ObjWriteGeometry::printMeshFaceRecursive(AbstractWriter & writer, const Obj
     stream.precision(PRECISION);
     stream << std::fixed;
 
-    size_t idx = 0;
-    size_t offset = 0;
-    const size_t lodCount = main.lodCount();
-    for (size_t i = 0; i < lodCount; ++i) {
+    std::size_t idx = 0;
+    std::size_t offset = 0;
+    const std::size_t lodCount = main.lodCount();
+    for (std::size_t i = 0; i < lodCount; ++i) {
         writeMeshFaceRecursive(stream, main.lod(i).transform(), idx, offset);
     }
     writer.printLine(stream.str());
 }
 
-void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Transform & inNode, size_t & idx,
-                                              size_t & offset) const {
+void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Transform & inNode, std::size_t & idx,
+                                              std::size_t & offset) const {
     for (const ObjAbstract * objBase : inNode.objList()) {
         if (objBase->objType() != OBJ_MESH) {
             continue;
@@ -132,12 +134,12 @@ void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Trans
         const auto * mobj = static_cast<const ObjMesh*>(objBase);
         const ObjMesh::FaceList & faces = mobj->pFaces;
 
-        const size_t idxNum = faces.size() * 3U;
-        const size_t vEnd = mStat->pMeshFacesCount * 3U;
+        const std::size_t idxNum = faces.size() * 3U;
+        const std::size_t vEnd = mStat->pMeshFacesCount * 3U;
 
         for (size_t currIdx = 0; currIdx < idxNum; ++currIdx) {
-            size_t last = (idx % 10);
-            size_t ost = (vEnd - idx);
+            const std::size_t last = (idx % 10);
+            const std::size_t ost = (vEnd - idx);
             ++idx;
 
             if (last == 0) {
@@ -147,7 +149,7 @@ void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Trans
                 writer << std::endl << MESH_IDX << " ";
             }
 
-            const size_t modulo = currIdx % 3U;
+            const std::size_t modulo = currIdx % 3U;
             const MeshFace & f = faces.at(currIdx / 3U);
             switch (modulo) {
                 case 0: writer << (f.pV0 + offset) << " ";
@@ -224,7 +226,7 @@ void ObjWriteGeometry::printLightPointVerticiesRecursive(AbstractWriter & writer
 bool ObjWriteGeometry::printMeshObject(AbstractWriter & writer, const ObjAbstract & objBase) {
     if (objBase.objType() == OBJ_MESH) {
         const auto * mobj = static_cast<const ObjMesh*>(&objBase);
-        const size_t numface = mobj->pFaces.size();
+        const std::size_t numface = mobj->pFaces.size();
         std::stringstream stream;
         stream.precision(PRECISION);
         stream << std::fixed;
@@ -252,7 +254,7 @@ bool ObjWriteGeometry::printLightPointObject(AbstractWriter & writer, const ObjA
         stream.precision(PRECISION);
         stream << std::fixed;
 
-        stream << LIGHTS << " " << mPointLightOffsetByObject << " " << size_t(1);
+        stream << LIGHTS << " " << mPointLightOffsetByObject << " " << std::size_t(1);
 
         if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LIGHT)) {
             stream << " ## " << objBase.objectName().c_str();
@@ -269,7 +271,7 @@ bool ObjWriteGeometry::printLightPointObject(AbstractWriter & writer, const ObjA
 //-------------------------------------------------------------------------
 
 template<typename T>
-bool printLight(AbstractWriter & writer, const T & lobj, const ExportOptions & options, size_t & counter) {
+bool printLight(AbstractWriter & writer, const T & lobj, const ExportOptions & options, std::size_t & counter) {
     std::string params = toObjString(lobj, options.isEnabled(XOBJ_EXP_MARK_LIGHT));
     if (!params.empty()) {
         writer.printLine(params.c_str());

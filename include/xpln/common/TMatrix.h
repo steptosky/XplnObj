@@ -29,6 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <cstddef>
 #include "Point3.h"
 #include "Quaternion.h"
 
@@ -112,7 +113,7 @@ public:
 
     //-------------------------------------------------------------------------
 
-    Point3 row(size_t i) const;
+    Point3 row(std::size_t i) const;
 
     //-------------------------------------------------------------------------
 
@@ -143,7 +144,7 @@ public:
 private:
 
     float mData[4][3];
-    uint32_t mFlags;
+    std::uint32_t mFlags;
 
 };
 

@@ -29,6 +29,8 @@
 
 #include "stdafx.h"
 
+#include "sts/utilities/Compare.h"
+#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipAxisSwitchLeftRight.h"
 #include "xpln/enums/EManipulator.h"
 #include "common/AttributeNames.h"

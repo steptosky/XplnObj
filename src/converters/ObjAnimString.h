@@ -32,9 +32,6 @@
 #include <string>
 #include "xpln/Export.h"
 #include "io/reader/ObjReadParser.h"
-#include "xpln/obj/animation/AnimTrans.h"
-#include "xpln/obj/animation/AnimRotate.h"
-#include "xpln/obj/animation/AnimVisibilityKey.h"
 
 /*
  * Why this functions are not the methods of the corresponding classes?
@@ -42,6 +39,10 @@
  */
 
 namespace xobj {
+
+class AnimVisibilityKey;
+class AnimTransKey;
+class AnimRotateKey;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

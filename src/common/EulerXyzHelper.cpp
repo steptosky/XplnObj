@@ -28,8 +28,10 @@
 */
 
 #include "stdafx.h"
+#include <cassert>
 
 #include "xpln/common/EulerXyzHelper.h"
+#include "xpln/obj/Transform.h"
 
 namespace xobj {
 

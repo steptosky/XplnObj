@@ -29,9 +29,11 @@
 
 #include "stdafx.h"
 
+#include "sts/utilities/Compare.h"
 #include "ObjReader.h"
 #include "ObjReadParser.h"
 #include "common/AttributeNames.h"
+#include "common/Logger.h"
 
 #include "xpln/obj/attributes/AttrBlend.h"
 #include "xpln/obj/attributes/AttrDrapedLayerGroup.h"

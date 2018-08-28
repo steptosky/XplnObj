@@ -219,7 +219,7 @@ Point3 operator /(const float v, const Point3 & p) {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-std::string Point3::toString(const uint8_t precision /*= 4*/) const {
+std::string Point3::toString(const std::uint8_t precision /*= 4*/) const {
     return reinterpret_cast<const Point*>(this)->toString("%x %y %z", precision);
 }
 

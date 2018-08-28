@@ -217,7 +217,7 @@ Point2 operator /(const float v, const Point2 & p) {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-std::string Point2::toString(const uint8_t precision /*= 4*/) const {
+std::string Point2::toString(const std::uint8_t precision /*= 4*/) const {
     return reinterpret_cast<const Point*>(this)->toString("%x %y", precision);
 }
 

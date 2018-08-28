@@ -29,6 +29,7 @@
 
 #include "stdafx.h"
 
+#include "sts/utilities/Compare.h"
 #include "xpln/obj/animation/AnimRotate.h"
 
 namespace xobj {

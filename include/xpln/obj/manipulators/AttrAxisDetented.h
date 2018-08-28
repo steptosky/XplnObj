@@ -29,6 +29,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <string>
+#include "xpln/Export.h"
+
 namespace xobj {
 
 class AbstractWriter;

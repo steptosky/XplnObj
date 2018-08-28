@@ -28,6 +28,7 @@
 */
 
 #include "ph/stdafx.h"
+#include <gtest/gtest.h>
 
 #include <xpln/obj/manipulators/AttrManipDragXy.h>
 #include <xpln/obj/manipulators/AttrManipDragAxis.h>

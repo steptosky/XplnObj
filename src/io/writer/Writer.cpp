@@ -30,6 +30,7 @@
 #include "stdafx.h"
 
 #include "Writer.h"
+#include "common/Logger.h"
 
 namespace xobj {
 

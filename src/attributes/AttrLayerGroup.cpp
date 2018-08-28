@@ -28,6 +28,7 @@
 */
 
 #include "stdafx.h"
+#include <algorithm>
 
 #include "xpln/obj/attributes/AttrLayerGroup.h"
 
@@ -37,7 +38,7 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrLayerGroup::AttrLayerGroup(const ELayer layer, const int32_t offset)
+AttrLayerGroup::AttrLayerGroup(const ELayer layer, const std::int32_t offset)
     : mOffset(static_cast<uint8_t>(offset)),
       mLayer(layer),
       mIsEnabled(true) { }
@@ -73,18 +74,18 @@ bool AttrLayerGroup::operator!=(const AttrLayerGroup & other) const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrLayerGroup::setOffset(int32_t offset) {
+void AttrLayerGroup::setOffset(std::int32_t offset) {
     offset = std::min(offset, 5);
     offset = std::max(offset, -5);
-    mOffset = static_cast<int8_t>(offset);
+    mOffset = static_cast<std::int8_t>(offset);
     mIsEnabled = true;
 }
 
-int32_t AttrLayerGroup::offset() const {
-    return static_cast<int32_t>(mOffset);
+std::int32_t AttrLayerGroup::offset() const {
+    return static_cast<std::int32_t>(mOffset);
 }
 
-void AttrLayerGroup::setLayer(ELayer layer) {
+void AttrLayerGroup::setLayer(const ELayer layer) {
     mLayer = layer;
     mIsEnabled = true;
 }

@@ -29,6 +29,7 @@
 
 #include "stdafx.h"
 
+#include "sts/string/StringUtils.h"
 #include "ObjReaderInterpreter.h"
 #include "xpln/obj/ObjMain.h"
 #include <exceptions/defines.h>

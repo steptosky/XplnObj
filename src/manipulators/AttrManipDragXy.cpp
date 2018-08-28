@@ -29,6 +29,8 @@
 
 #include "stdafx.h"
 
+#include "sts/utilities/Compare.h"
+#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipDragXy.h"
 #include "xpln/enums/EManipulator.h"
 #include "common/AttributeNames.h"
@@ -71,15 +73,15 @@ float AttrManipDragXy::xMax() const {
     return mXMax;
 }
 
-void AttrManipDragXy::setY(float val) {
+void AttrManipDragXy::setY(const float val) {
     mY = val;
 }
 
-void AttrManipDragXy::setYMin(float val) {
+void AttrManipDragXy::setYMin(const float val) {
     mYMin = val;
 }
 
-void AttrManipDragXy::setYMax(float val) {
+void AttrManipDragXy::setYMax(const float val) {
     mYMax = val;
 }
 

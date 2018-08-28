@@ -30,6 +30,7 @@
 #include "stdafx.h"
 
 #include "ObjString.h"
+#include "converters/StringStream.h"
 
 #include "common/AttributeNames.h"
 

@@ -1,1 +1,17 @@
 *.orig
+msvc/
+msvc.bat
+include/xpln/Info.h
+include/xpln/XplnObjExport.h
+include/xpln/Export.h
+output/
+output-dev/
+test_package/build/
+reports/
+build/
+doc/generated/
+test_package/__pycache__/
+__pycache__/
+vcs_data
+test.bat
+doc.bat

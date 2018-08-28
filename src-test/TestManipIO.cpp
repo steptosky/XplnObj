@@ -91,8 +91,7 @@ void addManip(ObjMain & inOutMain, AttrManipBase * inManip) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-// todo enable when import of wheel manip will be corrected
-TEST(TestManipIO, DISABLED_AttrManipAxisKnob) {
+TEST(TestManipIO, AttrManipAxisKnob) {
     auto * outManip = new AttrManipAxisKnob;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -155,8 +154,7 @@ TEST(TestManipIO, DISABLED_AttrManipAxisKnob) {
 
 /**************************************************************************************************/
 
-// todo enable when import of wheel manip will be corrected
-TEST(TestManipIO, DISABLED_AttrManipAxisSwitchLeftRight) {
+TEST(TestManipIO, AttrManipAxisSwitchLeftRight) {
     auto * outManip = new AttrManipAxisSwitchLeftRight;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -219,8 +217,7 @@ TEST(TestManipIO, DISABLED_AttrManipAxisSwitchLeftRight) {
 
 /**************************************************************************************************/
 
-// todo enable when import of wheel manip will be corrected
-TEST(TestManipIO, DISABLED_AttrManipAxisSwitchUpDown) {
+TEST(TestManipIO, AttrManipAxisSwitchUpDown) {
     auto * outManip = new AttrManipAxisSwitchUpDown;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -447,8 +444,7 @@ TEST(TestManipIO, AttrManipCmdSwitchUpDown) {
 
 /**************************************************************************************************/
 
-// todo enable when import of wheel manip will be corrected
-TEST(TestManipIO, DISABLED_AttrManipDelta) {
+TEST(TestManipIO, AttrManipDelta) {
     auto * outManip = new AttrManipDelta;
     outManip->setCursor(ECursor(ECursor::left));
     outManip->setToolTip("ToolTip");
@@ -511,8 +507,7 @@ TEST(TestManipIO, DISABLED_AttrManipDelta) {
 
 /**************************************************************************************************/
 
-// todo enable when import of wheel manip will be corrected
-TEST(TestManipIO, DISABLED_AttrManipDragAxis) {
+TEST(TestManipIO, AttrManipDragAxis) {
     auto * outManip = new AttrManipDragAxis;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -573,8 +568,7 @@ TEST(TestManipIO, DISABLED_AttrManipDragAxis) {
 
 /**************************************************************************************************/
 
-// todo enable when import of wheel manip will be corrected
-TEST(TestManipIO, DISABLED_AttrManipDragAxisPix) {
+TEST(TestManipIO, AttrManipDragAxisPix) {
     auto * outManip = new AttrManipDragAxisPix;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -706,8 +700,7 @@ TEST(TestManipIO, AttrManipNoop) {
 
 /**************************************************************************************************/
 
-// todo enable when import of wheel manip will be corrected
-TEST(TestManipIO, DISABLED_AttrManipPush) {
+TEST(TestManipIO, AttrManipPush) {
     auto * outManip = new AttrManipPush;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -766,8 +759,7 @@ TEST(TestManipIO, DISABLED_AttrManipPush) {
 
 /**************************************************************************************************/
 
-// todo enable when import of wheel manip will be corrected
-TEST(TestManipIO, DISABLED_AttrManipRadio) {
+TEST(TestManipIO, AttrManipRadio) {
     auto * outManip = new AttrManipRadio;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -824,8 +816,7 @@ TEST(TestManipIO, DISABLED_AttrManipRadio) {
 
 /**************************************************************************************************/
 
-// todo enable when import of wheel manip will be corrected
-TEST(TestManipIO, DISABLED_AttrManipToggle) {
+TEST(TestManipIO, AttrManipToggle) {
     auto * outManip = new AttrManipToggle;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -884,8 +875,7 @@ TEST(TestManipIO, DISABLED_AttrManipToggle) {
 
 /**************************************************************************************************/
 
-// todo enable when import of wheel manip will be corrected
-TEST(TestManipIO, DISABLED_AttrManipWrap) {
+TEST(TestManipIO, AttrManipWrap) {
     auto * outManip = new AttrManipWrap;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");

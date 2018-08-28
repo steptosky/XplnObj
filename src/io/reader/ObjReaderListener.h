@@ -51,6 +51,9 @@ class AttrManipRadio;
 class AttrManipToggle;
 class AttrManipWrap;
 class AttrManipCommand;
+class AttrAxisDetented;
+class AttrAxisDetentRange;
+class AttrManipKeyFrame;
 class AttrManipWheel;
 
 class AttrWetDry;
@@ -139,6 +142,9 @@ public:
     // Objects' manipulators
 
     virtual void gotTrisAttrManipNo() = 0;
+    virtual void gotTrisAttrManipAxisDetented(const AttrAxisDetented & manip) = 0;
+    virtual void gotTrisAttrManipAxisDetentRange(const AttrAxisDetentRange & manip) = 0;
+    virtual void gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & manip) = 0;
     virtual void gotTrisAttrManipWheel(const AttrManipWheel & manip) = 0;
     virtual void gotTrisAttrManip(const AttrManipBase & manip) = 0;
 

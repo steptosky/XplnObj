@@ -102,6 +102,9 @@ protected:
     //-----------------------------------------------------
 
     void gotTrisAttrManipNo() override;
+    void gotTrisAttrManipAxisDetented(const AttrAxisDetented & manip) override;
+    void gotTrisAttrManipAxisDetentRange(const AttrAxisDetentRange & manip) override;
+    void gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & manip) override;
     void gotTrisAttrManipWheel(const AttrManipWheel & manip) override;
     void gotTrisAttrManip(const AttrManipBase & manip) override;
 

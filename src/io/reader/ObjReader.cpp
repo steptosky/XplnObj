@@ -69,6 +69,9 @@
 #include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown2.h"
 #include "xpln/obj/manipulators/AttrManipAxisKnob.h"
+#include "xpln/obj/manipulators/AttrAxisDetented.h"
+#include "xpln/obj/manipulators/AttrAxisDetentRange.h"
+#include "xpln/obj/manipulators/AttrManipKeyFrame.h"
 
 namespace xobj {
 
@@ -233,7 +236,7 @@ bool ObjReader::readCounts(ObjReadParser & parser,
                            size_t & outLines,
                            size_t & outLites,
                            size_t & outFaces) {
-    // POINT_COUNTS tris lines lites geo indices
+    // POINT_COUNTS tris lines lites geometry indices
     if (parser.isMatch(POINT_COUNTS)) {
         parser.skipSpace();
         outVertices = parser.extractInt();
@@ -928,14 +931,6 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         mObjParserListener->gotTrisAttrManip(m);
         return true;
     }
-    if (parser.isMatch(ATTR_MANIP_WHEEL)) {
-        parser.skipSpace();
-        AttrManipWheel m;
-        m.setEnabled(true);
-        m.setDelta(parser.extractFloat());
-        mObjParserListener->gotTrisAttrManipWheel(m);
-        return true;
-    }
     if (parser.isMatch(ATTR_MANIP_WRAP)) {
         AttrManipWrap m;
         parser.skipSpace();
@@ -953,6 +948,51 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
         mObjParserListener->gotTrisAttrManip(m);
+        return true;
+    }
+    if (parser.isMatch(ATTR_MANIP_WHEEL)) {
+        AttrManipWheel m;
+        parser.skipSpace();
+        m.setEnabled(true);
+        m.setDelta(parser.extractFloat());
+        mObjParserListener->gotTrisAttrManipWheel(m);
+        return true;
+    }
+    if (parser.isMatch(ATTR_MANIP_KEYFRAME)) {
+        AttrManipKeyFrame m;
+        parser.skipSpace();
+        m.setValue(parser.extractFloat());
+        parser.skipSpace();
+        m.setAngle(parser.extractFloat());
+        mObjParserListener->gotTrisAttrManipKeyFrame(m);
+        return true;
+    }
+    if (parser.isMatch(ATTR_MANIP_AXIS_DETENTED)) {
+        AttrAxisDetented m;
+        parser.skipSpace();
+        m.setDirectionX(parser.extractFloat());
+        parser.skipSpace();
+        m.setDirectionY(parser.extractFloat());
+        parser.skipSpace();
+        m.setDirectionZ(parser.extractFloat());
+        parser.skipSpace();
+        m.setVMin(parser.extractFloat());
+        parser.skipSpace();
+        m.setVMax(parser.extractFloat());
+        parser.skipSpace();
+        m.setDataref(parser.extractWord());
+        mObjParserListener->gotTrisAttrManipAxisDetented(m);
+        return true;
+    }
+    if (parser.isMatch(ATTR_MANIP_AXIS_DETENT_RANGE)) {
+        AttrAxisDetentRange m;
+        parser.skipSpace();
+        m.setStart(parser.extractFloat());
+        parser.skipSpace();
+        m.setEnd(parser.extractFloat());
+        parser.skipSpace();
+        m.setHeight(parser.extractFloat());
+        mObjParserListener->gotTrisAttrManipAxisDetentRange(m);
         return true;
     }
     return false;

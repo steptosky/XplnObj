@@ -2,12 +2,9 @@ env:
    global:
      - CONAN_USERNAME: "steptosky"
      - CONAN_CHANNEL: "testing"
-     - CONAN_UPLOAD: "https://api.bintray.com/conan/steptosky/conan-open-source@True"
-     - CONAN_STABLE_BRANCH_PATTERN: "master"
      - CONAN_BUILD_TESTING: 1
      - CONAN_TESTING_REPORT_DIR: report
-     - CONAN_BUILD_POLICY: missing
-     - CONAN_UPLOAD_ONLY_WHEN_STABLE: 1
+     - CONAN_BUILD_POLICY: outdated
      - CTEST_OUTPUT_ON_FAILURE: 1
 
 linux: &linux

@@ -52,7 +52,7 @@ public:
 
     /*!
      * \details Panel manipulator can be enabled with the cockpit attribute only.
-     *          This method sets the cockpit attribute which will be used for enable the manipulator.
+     *          This method sets the cockpit attribute which will be used for enabling the manipulator.
      * \note This method is for internal using only! The developer must not use it.
      * \param cockpit 
      */

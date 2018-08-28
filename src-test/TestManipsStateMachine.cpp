@@ -151,7 +151,7 @@ TEST_F(ManipsStates, one_manip) {
     MockWriter writer;
     // 1 manipulator
 
-    mManipCmd.setCommand("test");
+    mManipCmd.setCmd("test");
     // Manip
     mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     // No Manip
@@ -183,7 +183,7 @@ TEST_F(ManipsStates, two_manips_with_the_same_vals) {
     MockWriter writer;
     // 2 the same manipulators
 
-    mManipCmd.setCommand("test");
+    mManipCmd.setCmd("test");
     // Manip
     mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
@@ -215,7 +215,7 @@ TEST_F(ManipsStates, three_manips_with_the_same_vals) {
     MockWriter writer;
     // 3 the same manipulators
 
-    mManipCmd.setCommand("test");
+    mManipCmd.setCmd("test");
     // Manip
     mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
@@ -246,7 +246,7 @@ TEST_F(ManipsStates, four_manips_with_the_same_vals) {
     MockWriter writer;
     // 4 the same manipulators
 
-    mManipCmd.setCommand("test");
+    mManipCmd.setCmd("test");
     // Manip
     mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
@@ -279,16 +279,16 @@ TEST_F(ManipsStates, four_manips_with_the_different_vals) {
     // 4 different manipulators
 
     // Manip
-    mManipCmd.setCommand("test1");
+    mManipCmd.setCmd("test1");
     mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     // Manip
-    mManipCmd.setCommand("test2");
+    mManipCmd.setCmd("test2");
     mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     // Manip
-    mManipCmd.setCommand("test3");
+    mManipCmd.setCmd("test3");
     mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     // Manip
-    mManipCmd.setCommand("test4");
+    mManipCmd.setCmd("test4");
     mObjMesh4.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
 
     TestWriter w1(false);

@@ -49,8 +49,8 @@ public:
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setCommand(const std::string & cmd);
-    XpObjLib const std::string & command() const;
+    XpObjLib void setCmd(const std::string & cmd);
+    XpObjLib const std::string & cmd() const;
 
     //-------------------------------------------------------------------------
 

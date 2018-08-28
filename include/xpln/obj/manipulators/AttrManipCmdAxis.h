@@ -49,12 +49,18 @@ public:
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setX(float val);
-    XpObjLib void setY(float val);
-    XpObjLib void setZ(float val);
-    XpObjLib float x() const;
-    XpObjLib float y() const;
-    XpObjLib float z() const;
+    void setDirection(const float x, const float y, const float z) {
+        setDirectionX(x);
+        setDirectionY(y);
+        setDirectionZ(z);
+    }
+
+    XpObjLib void setDirectionX(float val);
+    XpObjLib void setDirectionY(float val);
+    XpObjLib void setDirectionZ(float val);
+    XpObjLib float directionX() const;
+    XpObjLib float directionY() const;
+    XpObjLib float directionZ() const;
 
     XpObjLib void setCmdNegative(const std::string & val);
     XpObjLib void setCmdPositive(const std::string & val);

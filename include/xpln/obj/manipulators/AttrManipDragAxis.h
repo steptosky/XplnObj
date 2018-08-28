@@ -57,18 +57,18 @@ public:
 
     //-------------------------------------------------------------------------
 
-    void setPos(const float x, const float y, const float z) {
-        setX(x);
-        setY(y);
-        setZ(z);
+    void setDirection(const float x, const float y, const float z) {
+        setDirectionX(x);
+        setDirectionY(y);
+        setDirectionZ(z);
     }
 
-    XpObjLib void setX(float val);
-    XpObjLib void setY(float val);
-    XpObjLib void setZ(float val);
-    XpObjLib float x() const;
-    XpObjLib float y() const;
-    XpObjLib float z() const;
+    XpObjLib void setDirectionX(float val);
+    XpObjLib void setDirectionY(float val);
+    XpObjLib void setDirectionZ(float val);
+    XpObjLib float directionX() const;
+    XpObjLib float directionY() const;
+    XpObjLib float directionZ() const;
 
     void setValues(const float x1, const float x2) {
         setVal1(x1);
@@ -157,9 +157,6 @@ private:
     float mVal1 = 0.0f;
     float mVal2 = 1.0f;
     AttrAxisDetented mAxisDetented;
-    // todo there are some rules for ATTR_axis_detent_range that should be checked
-    // Implements checking and printing information.
-    // also this list must not be used if AttrAxisDetented isn't specified.
     DetentRanges mAxisDetentRanges;
     std::string mDataref = "none";
     AttrManipWheel mWheel;

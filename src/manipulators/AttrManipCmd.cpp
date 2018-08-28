@@ -47,11 +47,11 @@ AttrManipCmd::AttrManipCmd()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipCmd::setCommand(const std::string & cmd) {
+void AttrManipCmd::setCmd(const std::string & cmd) {
     mCommand = cmd.empty() ? "none" : cmd;
 }
 
-const std::string & AttrManipCmd::command() const {
+const std::string & AttrManipCmd::cmd() const {
     return mCommand;
 }
 
@@ -85,7 +85,7 @@ std::size_t AttrManipCmd::printObj(AbstractWriter & writer) const {
     StringStream outStr;
     outStr << ATTR_MANIP_COMMAND;
     outStr << " " << cursor().toString();
-    outStr << " " << command();
+    outStr << " " << cmd();
     outStr << " " << toolTip();
     writer.printLine(outStr.str());
     return 1;

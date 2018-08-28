@@ -47,27 +47,27 @@ AttrManipDragAxis::AttrManipDragAxis()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipDragAxis::setX(const float val) {
+void AttrManipDragAxis::setDirectionX(const float val) {
     mX = val;
 }
 
-void AttrManipDragAxis::setY(const float val) {
+void AttrManipDragAxis::setDirectionY(const float val) {
     mY = val;
 }
 
-void AttrManipDragAxis::setZ(const float val) {
+void AttrManipDragAxis::setDirectionZ(const float val) {
     mZ = val;
 }
 
-float AttrManipDragAxis::x() const {
+float AttrManipDragAxis::directionX() const {
     return mX;
 }
 
-float AttrManipDragAxis::y() const {
+float AttrManipDragAxis::directionY() const {
     return mY;
 }
 
-float AttrManipDragAxis::z() const {
+float AttrManipDragAxis::directionZ() const {
     return mZ;
 }
 
@@ -146,9 +146,9 @@ std::size_t AttrManipDragAxis::printObj(AbstractWriter & writer) const {
     StringStream outStr;
     outStr << ATTR_MANIP_DRAG_AXIS;
     outStr << " " << cursor().toString();
-    outStr << " " << x();
-    outStr << " " << y();
-    outStr << " " << z();
+    outStr << " " << directionX();
+    outStr << " " << directionY();
+    outStr << " " << directionZ();
     outStr << " " << val1();
     outStr << " " << val2();
     outStr << " " << dataref();

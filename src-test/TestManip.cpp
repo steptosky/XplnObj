@@ -301,7 +301,7 @@ TEST(TestManip, AttrManipCmd) {
     ECursor cursor(ECursor::eId::hand);
     manip.setCursor(cursor);
     manip.setToolTip("ToolTip");
-    manip.setCommand("command");
+    manip.setCmd("command");
 
     const auto result = std::string("ATTR_manip_command ")
                         .append(cursor.toString())
@@ -312,7 +312,7 @@ TEST(TestManip, AttrManipCmd) {
     ASSERT_EQ(1, manipCount);
 
     // getters
-    ASSERT_STREQ("command", manip.command().c_str());
+    ASSERT_STREQ("command", manip.cmd().c_str());
 
     ASSERT_EQ(EManipulator(EManipulator::command), manip.type());
 }
@@ -326,9 +326,9 @@ TEST(TestManip, AttrManipCmdAxis) {
     manip.setCursor(cursor);
     manip.setToolTip("ToolTip");
 
-    manip.setX(10.0f);
-    manip.setY(20.0f);
-    manip.setZ(30.0f);
+    manip.setDirectionX(10.0f);
+    manip.setDirectionY(20.0f);
+    manip.setDirectionZ(30.0f);
 
     manip.setCmdPositive("p-command");
     manip.setCmdNegative("n-command");
@@ -346,9 +346,9 @@ TEST(TestManip, AttrManipCmdAxis) {
     ASSERT_EQ(1, manipCount);
 
     // getters
-    ASSERT_EQ(10.0f, manip.x());
-    ASSERT_EQ(20.0f, manip.y());
-    ASSERT_EQ(30.0f, manip.z());
+    ASSERT_EQ(10.0f, manip.directionX());
+    ASSERT_EQ(20.0f, manip.directionY());
+    ASSERT_EQ(30.0f, manip.directionZ());
     ASSERT_STREQ("p-command", manip.cmdPositive().c_str());
     ASSERT_STREQ("n-command", manip.cmdNegative().c_str());
 
@@ -568,9 +568,9 @@ TEST(TestManip, AttrManipDragAxis) {
     manip.setCursor(cursor);
     manip.setToolTip("ToolTip");
 
-    manip.setX(10.0f);
-    manip.setY(20.0f);
-    manip.setZ(30.0f);
+    manip.setDirectionX(10.0f);
+    manip.setDirectionY(20.0f);
+    manip.setDirectionZ(30.0f);
 
     manip.setVal1(40.0f);
     manip.setVal2(50.0f);
@@ -628,9 +628,9 @@ TEST(TestManip, AttrManipDragAxis) {
     ASSERT_EQ(5, manipCount);
 
     // getters
-    ASSERT_EQ(10.0f, manip.x());
-    ASSERT_EQ(20.0f, manip.y());
-    ASSERT_EQ(30.0f, manip.z());
+    ASSERT_EQ(10.0f, manip.directionX());
+    ASSERT_EQ(20.0f, manip.directionY());
+    ASSERT_EQ(30.0f, manip.directionZ());
     ASSERT_EQ(40.0f, manip.val1());
     ASSERT_EQ(50.0f, manip.val2());
     ASSERT_EQ(15.0f, manip.wheel().delta());
@@ -700,7 +700,7 @@ TEST(TestManip, AttrManipDragRotate) {
     manip.setCursor(cursor);
     manip.setToolTip("ToolTip");
 
-    manip.setPos(10.0f, 20.0f, 30.0f);
+    manip.setOrigin(10.0f, 20.0f, 30.0f);
     manip.setDirection(40.0f, 50.0f, 60.0f);
     manip.setAngles(70.0f, 80.0f);
     manip.setLift(90.0f);
@@ -731,9 +731,9 @@ TEST(TestManip, AttrManipDragRotate) {
     ASSERT_EQ(1, manipCount);
 
     // getters
-    ASSERT_EQ(10.0f, manip.posX());
-    ASSERT_EQ(20.0f, manip.posY());
-    ASSERT_EQ(30.0f, manip.posZ());
+    ASSERT_EQ(10.0f, manip.originX());
+    ASSERT_EQ(20.0f, manip.originY());
+    ASSERT_EQ(30.0f, manip.originZ());
     ASSERT_EQ(40.0f, manip.directionX());
     ASSERT_EQ(50.0f, manip.directionY());
     ASSERT_EQ(60.0f, manip.directionZ());

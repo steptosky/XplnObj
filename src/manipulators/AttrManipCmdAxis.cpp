@@ -47,27 +47,27 @@ AttrManipCmdAxis::AttrManipCmdAxis()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void AttrManipCmdAxis::setX(const float val) {
+void AttrManipCmdAxis::setDirectionX(const float val) {
     mX = val;
 }
 
-void AttrManipCmdAxis::setY(const float val) {
+void AttrManipCmdAxis::setDirectionY(const float val) {
     mY = val;
 }
 
-void AttrManipCmdAxis::setZ(const float val) {
+void AttrManipCmdAxis::setDirectionZ(const float val) {
     mZ = val;
 }
 
-float AttrManipCmdAxis::x() const {
+float AttrManipCmdAxis::directionX() const {
     return mX;
 }
 
-float AttrManipCmdAxis::y() const {
+float AttrManipCmdAxis::directionY() const {
     return mY;
 }
 
-float AttrManipCmdAxis::z() const {
+float AttrManipCmdAxis::directionZ() const {
     return mZ;
 }
 
@@ -121,9 +121,9 @@ std::size_t AttrManipCmdAxis::printObj(AbstractWriter & writer) const {
     StringStream outStr;
     outStr << ATTR_MANIP_COMMAND_AXIS;
     outStr << " " << cursor().toString();
-    outStr << " " << x();
-    outStr << " " << y();
-    outStr << " " << z();
+    outStr << " " << directionX();
+    outStr << " " << directionY();
+    outStr << " " << directionZ();
     outStr << " " << cmdPositive();
     outStr << " " << cmdNegative();
     outStr << " " << toolTip();

@@ -148,7 +148,7 @@ TEST_F(TestManipIOLogic, case_2) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mManipComd.setCommand("test");
+    mManipComd.setCmd("test");
     // Manip
     outM1->pAttr.setManipulator(mManipComd.clone());
     // No Manip
@@ -196,7 +196,7 @@ TEST_F(TestManipIOLogic, case_3) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mManipComd.setCommand("test");
+    mManipComd.setCmd("test");
     // Manip
     outM1->pAttr.setManipulator(mManipComd.clone());
     outM2->pAttr.setManipulator(mManipComd.clone());
@@ -245,7 +245,7 @@ TEST_F(TestManipIOLogic, case_4) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mManipComd.setCommand("test");
+    mManipComd.setCmd("test");
     // Manip
     outM1->pAttr.setManipulator(mManipComd.clone());
     outM2->pAttr.setManipulator(mManipComd.clone());
@@ -295,7 +295,7 @@ TEST_F(TestManipIOLogic, case_5) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mManipComd.setCommand("test");
+    mManipComd.setCmd("test");
     // Manip
     outM1->pAttr.setManipulator(mManipComd.clone());
     outM2->pAttr.setManipulator(mManipComd.clone());
@@ -346,16 +346,16 @@ TEST_F(TestManipIOLogic, case_6) {
     outLGroup.transform().addObject(outM4);
 
     // Manip
-    mManipComd.setCommand("test1");
+    mManipComd.setCmd("test1");
     outM1->pAttr.setManipulator(mManipComd.clone());
     // Manip
-    mManipComd.setCommand("test2");
+    mManipComd.setCmd("test2");
     outM2->pAttr.setManipulator(mManipComd.clone());
     // Manip
-    mManipComd.setCommand("test3");
+    mManipComd.setCmd("test3");
     outM3->pAttr.setManipulator(mManipComd.clone());
     // Manip
-    mManipComd.setCommand("test4");
+    mManipComd.setCmd("test4");
     outM4->pAttr.setManipulator(mManipComd.clone());
 
     ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
@@ -373,22 +373,22 @@ TEST_F(TestManipIOLogic, case_6) {
     const AttrManipBase * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
     ASSERT_NE(nullptr, inManip);
-    mManipComd.setCommand("test1");
+    mManipComd.setCmd("test1");
     ASSERT_TRUE(inManip->equals(&mManipComd));
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
     ASSERT_NE(nullptr, inManip);
-    mManipComd.setCommand("test2");
+    mManipComd.setCmd("test2");
     ASSERT_TRUE(inManip->equals(&mManipComd));
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
     ASSERT_NE(nullptr, inManip);
-    mManipComd.setCommand("test3");
+    mManipComd.setCmd("test3");
     ASSERT_TRUE(inManip->equals(&mManipComd));
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
     ASSERT_NE(nullptr, inManip);
-    mManipComd.setCommand("test4");
+    mManipComd.setCmd("test4");
     ASSERT_TRUE(inManip->equals(&mManipComd));
 }
 

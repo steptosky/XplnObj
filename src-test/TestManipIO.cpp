@@ -294,7 +294,7 @@ TEST(TestManipIO, AttrManipCmd) {
     auto * outManip = new AttrManipCmd;
     outManip->setCursor(ECursor(ECursor::left));
     outManip->setToolTip("ToolTip");
-    outManip->setCommand("I'm/a/Command");
+    outManip->setCmd("I'm/a/Command");
 
     ObjMain outObj;
     IOStatistic stat;
@@ -315,7 +315,7 @@ TEST(TestManipIO, AttrManipCmd) {
 
     ASSERT_EQ(outManip->cursor(), inManip->cursor());
     ASSERT_STREQ(outManip->toolTip().c_str(), inManip->toolTip().c_str());
-    ASSERT_STREQ(outManip->command().c_str(), inManip->command().c_str());
+    ASSERT_STREQ(outManip->cmd().c_str(), inManip->cmd().c_str());
 }
 
 /**************************************************************************************************/
@@ -328,9 +328,9 @@ TEST(TestManipIO, AttrManipCmdAxis) {
     outManip->setToolTip("ToolTip");
     outManip->setCmdNegative("I'm/a/Negative/Command");
     outManip->setCmdPositive("I'm/a/Positive/Command");
-    outManip->setX(5.0f);
-    outManip->setY(10.0f);
-    outManip->setZ(20.0f);
+    outManip->setDirectionX(5.0f);
+    outManip->setDirectionY(10.0f);
+    outManip->setDirectionZ(20.0f);
 
     ObjMain outObj;
     IOStatistic stat;
@@ -351,9 +351,9 @@ TEST(TestManipIO, AttrManipCmdAxis) {
 
     ASSERT_EQ(outManip->cursor(), inManip->cursor());
     ASSERT_STREQ(outManip->toolTip().c_str(), inManip->toolTip().c_str());
-    ASSERT_EQ(outManip->x(), inManip->x());
-    ASSERT_EQ(outManip->y(), inManip->y());
-    ASSERT_EQ(outManip->z(), inManip->z());
+    ASSERT_EQ(outManip->directionX(), inManip->directionX());
+    ASSERT_EQ(outManip->directionY(), inManip->directionY());
+    ASSERT_EQ(outManip->directionZ(), inManip->directionZ());
     ASSERT_STREQ(outManip->cmdNegative().c_str() ,inManip->cmdNegative().c_str());
     ASSERT_STREQ(outManip->cmdPositive().c_str(), inManip->cmdPositive().c_str());
 }
@@ -630,7 +630,7 @@ TEST(TestManipIO, AttrManipDragAxis) {
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
     outManip->setDataref("I'm/a/dataref-1");
-    outManip->setPos(5.0f, 10.0f, 20.0f);
+    outManip->setDirection(5.0f, 10.0f, 20.0f);
     outManip->setValues(50.0f, 51.0f);
 
     outManip->wheel().setEnabled(true);
@@ -664,9 +664,9 @@ TEST(TestManipIO, AttrManipDragAxis) {
     ASSERT_EQ(outManip->cursor(), inManip->cursor());
     ASSERT_STREQ(outManip->toolTip().c_str(), inManip->toolTip().c_str());
     ASSERT_STREQ(outManip->dataref().c_str(), inManip->dataref().c_str());
-    ASSERT_EQ(outManip->x(), inManip->x());
-    ASSERT_EQ(outManip->y(), inManip->y());
-    ASSERT_EQ(outManip->z(), inManip->z());
+    ASSERT_EQ(outManip->directionX(), inManip->directionX());
+    ASSERT_EQ(outManip->directionY(), inManip->directionY());
+    ASSERT_EQ(outManip->directionZ(), inManip->directionZ());
     ASSERT_EQ(outManip->val1(), inManip->val1());
     ASSERT_EQ(outManip->val2(), inManip->val2());
 
@@ -761,7 +761,7 @@ TEST(TestManipIO, AttrManipDragRotate) {
     auto * outManip = new AttrManipDragRotate;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
-    outManip->setPos(1.0f, 2.0f, 3.0f);
+    outManip->setOrigin(1.0f, 2.0f, 3.0f);
     outManip->setDirection(4.0f, 5.0f, 6.0f);
     outManip->setAngles(7.0f, 8.0f);
     outManip->setLift(8.5f);
@@ -793,9 +793,9 @@ TEST(TestManipIO, AttrManipDragRotate) {
     ASSERT_STREQ(outManip->toolTip().c_str(), inManip->toolTip().c_str());
     ASSERT_STREQ(outManip->dataref1().c_str(), inManip->dataref1().c_str());
     ASSERT_STREQ(outManip->dataref2().c_str(), inManip->dataref2().c_str());
-    ASSERT_EQ(outManip->posX(), inManip->posX());
-    ASSERT_EQ(outManip->posY(), inManip->posY());
-    ASSERT_EQ(outManip->posZ(), inManip->posZ());
+    ASSERT_EQ(outManip->originX(), inManip->originX());
+    ASSERT_EQ(outManip->originY(), inManip->originY());
+    ASSERT_EQ(outManip->originZ(), inManip->originZ());
     ASSERT_EQ(outManip->directionX(), inManip->directionX());
     ASSERT_EQ(outManip->directionY(), inManip->directionY());
     ASSERT_EQ(outManip->directionZ(), inManip->directionZ());

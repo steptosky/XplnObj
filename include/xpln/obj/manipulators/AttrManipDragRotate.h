@@ -56,18 +56,18 @@ public:
 
     //-------------------------------------------------------------------------
 
-    void setPos(const float x, const float y, const float z) {
-        setPosX(x);
-        setPosY(y);
-        setPosZ(z);
+    void setOrigin(const float x, const float y, const float z) {
+        setOriginX(x);
+        setOriginY(y);
+        setOriginZ(z);
     }
 
-    XpObjLib void setPosX(float val);
-    XpObjLib void setPosY(float val);
-    XpObjLib void setPosZ(float val);
-    XpObjLib float posX() const;
-    XpObjLib float posY() const;
-    XpObjLib float posZ() const;
+    XpObjLib void setOriginX(float val);
+    XpObjLib void setOriginY(float val);
+    XpObjLib void setOriginZ(float val);
+    XpObjLib float originX() const;
+    XpObjLib float originY() const;
+    XpObjLib float originZ() const;
 
     void setDirection(const float x, const float y, const float z) {
         setDirectionX(x);
@@ -207,8 +207,6 @@ private:
     std::string mDataref2 = "none";
 
     Keys mKeys;
-    // todo there are some rules for ATTR_axis_detent_range that should be checked
-    // Implements checking and printing information.
     DetentRanges mAxisDetentRanges;
 
 };

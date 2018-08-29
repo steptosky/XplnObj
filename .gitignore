@@ -1,6 +1,5 @@
 *.orig
 msvc/
-msvc.bat
 include/xpln/Info.h
 include/xpln/XplnObjExport.h
 include/xpln/Export.h
@@ -10,8 +9,7 @@ test_package/build/
 reports/
 build/
 doc/generated/
-test_package/__pycache__/
-__pycache__/
 vcs_data
-test.bat
 doc.bat
+doc-generated/
+msvc-2017/

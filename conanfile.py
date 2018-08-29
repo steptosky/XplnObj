@@ -34,6 +34,7 @@
 # //////////////////////////////////////////////////////////////////////////////////#
 # ----------------------------------------------------------------------------------#
 
+import os
 from conans import ConanFile, CMake
 from conanfile_vcs import ConanVcs
 
@@ -48,15 +49,23 @@ class LibConan(ConanFile):
     license = 'BSD 3-Clause'
     description = "This library is for working with the X-Plane's obj format. It uses C++ 14."
     author = 'StepToSky <info@steptosky.com>'
+
     settings = "os", "compiler", "build_type", "arch"
+
     options = {'shared': [True, False],
                'include_pdbs': [True, False],
                "fpic": [True, False]}
     default_options = 'shared=False', 'include_pdbs=False', 'gtest:shared=False', 'fpic=False'
+
     exports = 'vcs_data', 'conanfile_vcs.py'
     exports_sources = 'CMakeLists.txt', 'src/*', 'src-test/*', 'include/*', 'cmake/*', 'license*'
+
     generators = 'cmake'
+
     build_policy = 'missing'
+
+    build_test_var = "CONAN_BUILD_TESTING"
+    test_dir_var = "CONAN_TESTING_REPORT_DIR"
 
     def configure(self):
         if self.settings.compiler == "Visual Studio" and float(str(self.settings.compiler.version)) < 14:
@@ -70,21 +79,23 @@ class LibConan(ConanFile):
                 pass
 
     def requirements(self):
-        if self.scope.dev or self.scope.testing:
-            self.requires('gtest/1.8.0@lasote/stable', private=True)
+        if os.getenv(self.build_test_var, "0") == "1":
+            self.requires('gtest/1.8.0@bincrafters/stable', private=True)
 
     def build(self):
+        build_testing = os.getenv(self.build_test_var, "0")
+        test_dir = os.getenv(self.test_dir_var, "")
         cmake = CMake(self)
         vcs_data.setup_cmake(cmake)
-        cmake.definitions["BUILD_TESTS"] = 'ON' if self.scope.testing else 'OFF'
-        if self.scope.test_report_dir:
-            cmake.definitions["TEST_REPORT_DIR"] = self.scope.test_report_dir
+        cmake.definitions["BUILD_TESTS"] = 'ON' if build_testing == "1" else 'OFF'
+        if test_dir:
+            cmake.definitions["TEST_REPORT_DIR"] = test_dir
         if self.options.fpic:
             cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = "ON"
         cmake.configure()
         cmake.build()
         cmake.install()
-        if self.scope.testing:
+        if build_testing == "1":
             cmake.test()
 
     def package(self):

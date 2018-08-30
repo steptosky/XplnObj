@@ -6,6 +6,12 @@ REM change CHCP to UTF-8
 CHCP 1252
 CLS
 ::==========================================================
+:: Sometimes conan asks you about to login to private repositories
+:: if you have added ones. So you can put into the root repository folder
+:: the file called 'set-conan-user.bat' and write there something like this:
+::      call conan user userName -r RemoteAlias -p Password
+if exist set-conan-user.bat call set-conan-user.bat
+::==========================================================
 :: Creating building DIR and use it as working one.
 set dir="msvc-2017"
 if not exist %dir% mkdir %dir%

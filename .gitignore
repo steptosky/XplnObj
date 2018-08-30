@@ -14,3 +14,4 @@ doc-generated
 vcs_data
 test.bat
 doc.bat
+bintray-upload.bat

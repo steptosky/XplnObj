@@ -68,6 +68,12 @@ REM change CHCP to UTF-8
 CHCP 1252
 CLS
 ::==========================================================
+:: Sometimes conan asks you about to login to private repositories
+:: if you have added ones. So you can put into the root repository folder
+:: the file called 'set-conan-user.bat' and write there something like this:
+::      call conan user -p <password> -r <remote alias> <user name>
+if exist set-conan-user.bat call set-conan-user.bat
+::==========================================================
 :: Creating building DIR and use it as working one.
 set dir="msvc-2017"
 if not exist %dir% mkdir %dir%
@@ -192,6 +198,13 @@ Usually this approach is used in CI for building various configurations.
 **Examples:**  
 Windows (.bat) building with the conan package tools.
 ``` batch
+::==========================================================
+:: Sometimes conan asks you about to login to private repositories
+:: if you have added ones. So you can put into the root repository folder
+:: the file called 'set-conan-user.bat' and write there something like this:
+::      call conan user -p <password> -r <remote alias> <user name>
+if exist set-conan-user.bat call set-conan-user.bat
+::==========================================================
 set CONAN_USERNAME=steptosky
 set CONAN_CHANNEL=testing
 set CONAN_BUILD_TESTING=1
@@ -199,6 +212,7 @@ set CONAN_BUILD_POLICY=outdated
 set CONAN_VISUAL_VERSIONS=15
 set CONAN_ARCHS=x86_64
 set CTEST_OUTPUT_ON_FAILURE=1
+::==========================================================
 
 call python build.py
 
@@ -232,11 +246,21 @@ python build.py
 - [release-checklist](release-checklist.md) see this file when you are making the release.
 - [change log](changelog.md) this file has to be filled during the release process and contains information about changes.
 - [lasote docker hub](https://hub.docker.com/u/lasote/) - docker containers for some conan use cases, for example for [travis](.travis.yml) settings.
-- Uploading to steptosky bintray:
-  ``` batch
-    conan export . steptosky/stable
-    conan user steptosky -r sts-bintray -p api-key
-    conan upload XplnObj/[set-current-version]@steptosky/stable -r sts-bintray -c --retry 2 --retry-wait 5
+- Uploading to steptosky bintray:  
+Windows (bintray-upload.bat) Example:
+``` batch
+ECHO "WARNING You are going to upload the conan recipe to bintray"
+pause
+::==========================================================
+:: You have to put into the root repository folder
+:: the file called 'set-conan-user.bat' and write there something like this:
+::      conan user -p <api-key> -r sts-bintray <user>
+if exist set-conan-user.bat call set-conan-user.bat
+::==========================================================
+conan export . steptosky/stable
+conan upload XplnObj/[set-current-version]@steptosky/stable -r sts-bintray -c --retry 2 --retry-wait 5
+::==========================================================
+pause
   ```
 
 

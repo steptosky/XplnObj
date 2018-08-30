@@ -114,6 +114,10 @@ public:
 
     /*!
      * \details Makes from string which is used in the obj files.
+     * \note This method contains the following side effects: <br>
+     *          \li converts the string <tt>ATTR_manip_switch_up_down</tt>  to  <tt>ATTR_manip_command_switch_up_down</tt> <br>
+     *          \li converts the string <tt>ATTR_manip_switch_left_right</tt>  to  <tt>ATTR_manip_command_switch_left_right</tt> <br>
+     *          This was introduced for backward-compatibility. See <tt>#50c1d3a</tt>
      * \param [in] attrName
      */
     XpObjLib static EManipulator fromString(const char * attrName);

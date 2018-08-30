@@ -136,6 +136,16 @@ EManipulator EManipulator::fromUiString(const char * name) {
 
 EManipulator EManipulator::fromString(const char * attrName) {
     if (attrName) {
+        //-----------------------------------------------------
+        // backward compatibility fixes for attribute name fix.
+        // Read the tests for more information.
+        if(strcmp(attrName,"ATTR_manip_switch_up_down") == 0) {
+            attrName = ATTR_MANIP_COMMAND_SWITCH_UP_DOWN;
+        }
+        else if (strcmp(attrName, "ATTR_manip_switch_left_right") == 0) {
+            attrName = ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT;
+        }
+        //-----------------------------------------------------
         for (size_t i = 0; i < ARRAY_LENGTH(EManipulatorData::gList); ++i) {
             if (strcmp(attrName, EManipulatorData::gList[i].mAttr) == 0) {
                 return EManipulator(EManipulatorData::gList[i].mId);

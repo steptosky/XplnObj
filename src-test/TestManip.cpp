@@ -595,6 +595,7 @@ TEST(TestManip, AttrManipDragAxis) {
     manip.wheel().setDelta(15.0f);
 
     AttrAxisDetented detented;
+    detented.setEnabled(true);
     detented.setDirection(1.0f, 2.0f, 3.0f);
     detented.setValue(4.0, 5.0f);
     detented.setDataref("dataref-2");
@@ -1033,8 +1034,9 @@ TEST(TestManip, AttrManipToggle) {
 
 TEST(TestManip, AttrManipWheel) {
     TestWriter w;
-    AttrManipWheel manip(5.1f);
+    AttrManipWheel manip;
     manip.setDelta(8.5f);
+    manip.setEnabled(true);
 
     const auto result = std::string("ATTR_manip_wheel ")
                         .append(sts::toMbString(8.5f, PRECISION))
@@ -1045,7 +1047,7 @@ TEST(TestManip, AttrManipWheel) {
     ASSERT_EQ(1, manipCount);
 
     // getters
-    ASSERT_TRUE( manip.isEnabled());
+    ASSERT_TRUE(manip.isEnabled());
     ASSERT_EQ(8.5f, manip.delta());
 }
 

@@ -36,19 +36,11 @@
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrManipWheel::AttrManipWheel(const float delta)
-    : mWheel(true),
-      mWheelDelta(delta) {}
-
-/**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
 bool AttrManipWheel::operator==(const AttrManipWheel & other) const {
-    return mWheel == other.mWheel && sts::isEqual(mWheelDelta, other.mWheelDelta);
+    return mIsEnabled == other.mIsEnabled && sts::isEqual(mWheelDelta, other.mWheelDelta);
 }
 
 bool AttrManipWheel::operator!=(const AttrManipWheel & other) const {
@@ -60,16 +52,15 @@ bool AttrManipWheel::operator!=(const AttrManipWheel & other) const {
 /**************************************************************************************************/
 
 void AttrManipWheel::setEnabled(const bool state) {
-    mWheel = state;
+    mIsEnabled = state;
 }
 
 void AttrManipWheel::setDelta(const float delta) {
     mWheelDelta = delta;
-    setEnabled(true);
 }
 
 bool AttrManipWheel::isEnabled() const {
-    return mWheel;
+    return mIsEnabled;
 }
 
 float AttrManipWheel::delta() const {

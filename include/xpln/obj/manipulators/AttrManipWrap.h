@@ -30,7 +30,7 @@
 */
 
 #include "AttrManipBase.h"
-#include "AttrManipWheel.h"
+#include "embeddable/AttrManipWheel.h"
 
 namespace xobj {
 

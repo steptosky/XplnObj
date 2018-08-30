@@ -31,9 +31,9 @@
 
 #include <vector>
 #include "AttrManipBase.h"
-#include "AttrManipWheel.h"
-#include "AttrAxisDetented.h"
-#include "AttrAxisDetentRange.h"
+#include "embeddable/AttrManipWheel.h"
+#include "embeddable/AttrAxisDetented.h"
+#include "embeddable/AttrAxisDetentRange.h"
 
 namespace xobj {
 

@@ -29,7 +29,7 @@
 
 #include "sts/utilities/Compare.h"
 #include "converters/StringStream.h"
-#include "xpln/obj/manipulators/AttrAxisDetented.h"
+#include "xpln/obj/manipulators/embeddable/AttrAxisDetented.h"
 #include "common/AttributeNames.h"
 #include "io/writer/AbstractWriter.h"
 

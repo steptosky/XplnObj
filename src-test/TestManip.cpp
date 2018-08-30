@@ -52,8 +52,8 @@
 #include <xpln/obj/manipulators/AttrManipCmdSwitchUpDown.h>
 #include <xpln/obj/manipulators/AttrManipCmdSwitchUpDown2.h>
 #include <xpln/obj/manipulators/AttrManipNone.h>
-#include <xpln/obj/manipulators/AttrAxisDetented.h>
-#include <xpln/obj/manipulators/AttrAxisDetentRange.h>
+#include <xpln/obj/manipulators/embeddable/AttrAxisDetented.h>
+#include <xpln/obj/manipulators/embeddable/AttrAxisDetentRange.h>
 #include <converters/Defines.h>
 #include <sts/string/StringUtils.h>
 #include "TestWriter.h"

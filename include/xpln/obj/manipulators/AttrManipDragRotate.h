@@ -30,8 +30,8 @@
 */
 
 #include "AttrManipBase.h"
-#include "AttrManipKeyFrame.h"
-#include "AttrAxisDetentRange.h"
+#include "embeddable/AttrManipKeyFrame.h"
+#include "embeddable/AttrAxisDetentRange.h"
 
 namespace xobj {
 

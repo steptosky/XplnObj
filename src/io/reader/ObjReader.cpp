@@ -69,9 +69,9 @@
 #include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown2.h"
 #include "xpln/obj/manipulators/AttrManipAxisKnob.h"
-#include "xpln/obj/manipulators/AttrAxisDetented.h"
-#include "xpln/obj/manipulators/AttrAxisDetentRange.h"
-#include "xpln/obj/manipulators/AttrManipKeyFrame.h"
+#include "xpln/obj/manipulators/embeddable/AttrAxisDetented.h"
+#include "xpln/obj/manipulators/embeddable/AttrAxisDetentRange.h"
+#include "xpln/obj/manipulators/embeddable/AttrManipKeyFrame.h"
 
 namespace xobj {
 

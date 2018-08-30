@@ -30,9 +30,9 @@
 #include "sts/string/StringUtils.h"
 #include "ObjReaderInterpreter.h"
 #include "xpln/obj/ObjMain.h"
-#include <exceptions/defines.h>
+#include "exceptions/defines.h"
 #include "xpln/obj/manipulators/AttrManipDragAxis.h"
-#include "xpln/obj/manipulators/AttrManipWheel.h"
+#include "xpln/obj/manipulators/embeddable/AttrManipWheel.h"
 #include "common/AttributeNames.h"
 #include "io/ObjTransformation.h"
 #include "xpln/obj/manipulators/AttrManipDragRotate.h"

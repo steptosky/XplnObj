@@ -34,7 +34,7 @@
 Run from the root folder ```doxygen doxyfile``` the result will be in the ```doc-generated``` folder.  
 The ```doxygen``` has to be accessible through your ```PATH``` environment variable.
 
-#### evironment variables
+#### environment variables
 | Tools  | Variables | Type | Description |
 |-------:|----------:|:----:|:------------|
 | conan  | **CONAN_TESTING_REPORT_DIR** | _string_ | A path for storing tests results. Default value is specified in the cmake script. |
@@ -47,6 +47,10 @@ This file is responsible for cmake and conan interaction.
 
 
 ## Building
+
+- You have to install `conan` and [add](https://docs.conan.io/en/latest/reference/commands/misc/remote.html):  
+    - If it isn't available [conan-center](https://bintray.com/conan/conan-center) remote the link can be `https://conan.bintray.com`.
+    - [bincrafters bintray](https://bintray.com/bincrafters/public-conan) remote.
 
 You may use some ways to build this library.
 1. **Using cmake as usually.**   

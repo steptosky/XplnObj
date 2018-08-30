@@ -57,6 +57,26 @@ public:
 
     //-------------------------------------------------------------------------
 
+    [[deprecated("use setDirectionX")]]
+    void setX(const float val) { setDirectionX(val); }
+
+    [[deprecated("use setDirectionY")]]
+    void setY(const float val) { setDirectionY(val); }
+
+    [[deprecated("use setDirectionZ")]]
+    void setZ(const float val) { setDirectionZ(val); }
+
+    [[deprecated("use directionX")]]
+    float x() const { return directionX(); }
+
+    [[deprecated("use directionY")]]
+    float y() const { return directionY(); }
+
+    [[deprecated("use directionZ")]]
+    float z() const { return directionZ(); }
+
+    //-------------------------------------------------------------------------
+
     void setDirection(const float x, const float y, const float z) {
         setDirectionX(x);
         setDirectionY(y);
@@ -146,6 +166,20 @@ public:
     const AttrManipWheel & wheel() const {
         return mWheel;
     }
+        
+    //------------------------------------------
+
+    [[deprecated("use wheel().serEnabled()")]]
+    void setWheelEnabled(const bool state) { wheel().setEnabled(state); }
+
+    [[deprecated("use wheel().setDelta()")]]
+    void setWheelDelta(const float delta) { wheel().setDelta(delta); }
+
+    [[deprecated("use wheel().isEnabled()")]]
+    bool isWheelEnabled() const { return wheel().isEnabled(); }
+
+    [[deprecated("use wheel().delta()")]]
+    float wheelDelta() const { return wheel().delta(); }
 
     //-------------------------------------------------------------------------
 

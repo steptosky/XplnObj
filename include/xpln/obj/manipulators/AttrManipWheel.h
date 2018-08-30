@@ -65,6 +65,20 @@ public:
 
     //-------------------------------------------------------------------------
 
+    [[deprecated("use serEnabled()")]]
+    void setWheelEnabled(const bool state) { setEnabled(state); }
+
+    [[deprecated("use setDelta()")]]
+    void setWheelDelta(const float delta) { setDelta(delta); }
+
+    [[deprecated("use isEnabled()")]]
+    bool isWheelEnabled() const { return isEnabled(); }
+
+    [[deprecated("use delta()")]]
+    float wheelDelta() const { return delta(); }
+
+    //-------------------------------------------------------------------------
+
     /*! \copydoc AttrManipBase::printObj */
     XpObjLib std::size_t printObj(AbstractWriter & writer) const;
 

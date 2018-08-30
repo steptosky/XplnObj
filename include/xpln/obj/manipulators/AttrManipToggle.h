@@ -80,6 +80,20 @@ public:
     const AttrManipWheel & wheel() const {
         return mWheel;
     }
+        
+    //------------------------------------------
+
+    [[deprecated("use wheel().serEnabled()")]]
+    void setWheelEnabled(const bool state) { wheel().setEnabled(state); }
+
+    [[deprecated("use wheel().setDelta()")]]
+    void setWheelDelta(const float delta) { wheel().setDelta(delta); }
+
+    [[deprecated("use wheel().isEnabled()")]]
+    bool isWheelEnabled() const { return wheel().isEnabled(); }
+
+    [[deprecated("use wheel().delta()")]]
+    float wheelDelta() const { return wheel().delta(); }
 
     //-------------------------------------------------------------------------
 

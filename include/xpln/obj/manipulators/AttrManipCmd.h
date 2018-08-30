@@ -49,6 +49,14 @@ public:
 
     //-------------------------------------------------------------------------
 
+    [[deprecated("use setCmd")]]
+    void setCommand(const std::string & cmd) { setCmd(cmd); }
+
+    [[deprecated("use cmd")]]
+    const std::string & command() const { return cmd(); }
+
+    //-------------------------------------------------------------------------
+
     XpObjLib void setCmd(const std::string & cmd);
     XpObjLib const std::string & cmd() const;
 

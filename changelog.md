@@ -15,9 +15,8 @@ StepToSky: X-Plane Obj Library
              `ATTR_axis_detented`,  
              `ATTR_axis_detent_range`,  
              `ATTR_manip_keyframe`
-- **Changes break backward compatibility:** Manipulators were re-factored.  
-             The wheel manipulator is composed now.  
-             Some methods of manipulators were renamed/corrected according to .the obj specification.  
+- **Changes break backward compatibility:** The wheel manipulator is composed now.  
+- **Updated:** Some methods of manipulators were renamed/corrected according to .the obj specification.  
 - **Updated:** Build scripts and their documentation.
 - **Fixed:** Incorrect attribute name inside `.obj` for the
              `ATTR_manip_command_switch_up_down` and `ATTR_manip_command_switch_left_right`.

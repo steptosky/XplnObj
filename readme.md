@@ -1,4 +1,4 @@
-# Cross-platform C++ library for working with the X-Plane .obj format
+# Cross-platform C++ library for working with the X-Plane .obj format.
 
 | CI        | master | develop | last commit |
 | --------- |:------:|:-------:|:-----------:|
@@ -12,7 +12,7 @@
 - The library uses [SemVer](http://semver.org/).
 - The library requires C++ 14 or higher.
 - The library's versions from the ```master``` branch are available in our 
-  [[bintray]](https://bintray.com/steptosky/conan-open-source/XplnObj:steptosky) conan remote without pre-built packages.  
+  [[bintray]](https://bintray.com/steptosky/conan-open-source) conan remote without pre-built packages.  
   ```XplnObj/X.Y.Z@steptosky/stable```
 - The X-Plane [official website](http://www.x-plane.com/).
 - The X-Plane [obj specification](http://developer.x-plane.com/?article=obj8-file-format-specification).
@@ -24,7 +24,7 @@
 
 #### dependencies
 - [Cmake 3.7+](https://cmake.org) - building tool.
-- [Conan 1.6+](https://www.conan.io) - dependency tool.
+- [Conan 1.6+](https://www.conan.io) - package manager.
 - [Conan Package Tools](https://github.com/conan-io/conan-package-tools) - if you want to build the project with those tools.
 - [Python 2 or 3](https://www.python.org) - is needed for the Conan.
 - [Doxygen](http://www.stack.nl/~dimitri/doxygen) - if you want to generate the documentation.

@@ -27,7 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
 #include <cassert>
 
 #include "ObjWriteGeometry.h"

@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
-
 #include "xpln/common/Quaternion.h"
 #include "sts/geometry/Quaternion.h"
 

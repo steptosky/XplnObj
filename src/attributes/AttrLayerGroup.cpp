@@ -27,7 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
 #include <algorithm>
 
 #include "xpln/obj/attributes/AttrLayerGroup.h"

@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
-
 #include "Writer.h"
 #include "common/Logger.h"
 

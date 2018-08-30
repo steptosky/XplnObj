@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
-
 #include "xpln/common/Point2.h"
 #include "sts/geometry/templates/Vector2.h"
 #include "converters/Defines.h"

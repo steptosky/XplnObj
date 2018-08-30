@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
-
 #include "ObjReadParser.h"
 #include "common/Logger.h"
 

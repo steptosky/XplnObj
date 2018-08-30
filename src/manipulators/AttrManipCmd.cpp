@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
-
 #include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipCmd.h"
 #include "xpln/enums//EManipulator.h"

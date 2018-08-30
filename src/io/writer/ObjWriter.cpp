@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
-
 #include "ObjWriter.h"
 #include "xpln/obj/ObjMain.h"
 #include "io/ObjValidators.h"

@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
-
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrSlungLoadWeight.h"
 

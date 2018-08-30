@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
-
 #include "ObjValidators.h"
 #include "io/StringValidator.h"
 #include "common/Logger.h"

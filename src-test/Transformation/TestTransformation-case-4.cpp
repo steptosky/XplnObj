@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "ph/stdafx.h"
-
 #include <xpln/obj/ObjMesh.h>
 
 using namespace xobj;

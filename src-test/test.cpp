@@ -27,7 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "ph/stdafx.h"
 #include <gmock/gmock.h>
 #include <xpln/common/ExternalLog.h>
 

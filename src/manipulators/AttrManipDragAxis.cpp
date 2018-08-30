@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
-
 #include "sts/utilities/Compare.h"
 #include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipDragAxis.h"

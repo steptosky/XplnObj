@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
-
 #include "xpln/obj/ObjLodGroup.h"
 #include "common/Logger.h"
 

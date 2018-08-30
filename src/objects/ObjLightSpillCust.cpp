@@ -27,7 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "stdafx.h"
 #include <cmath>
 
 #include "xpln/obj/ObjLightSpillCust.h"

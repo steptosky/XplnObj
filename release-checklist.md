@@ -1,6 +1,6 @@
 ## Release checklist
 
-- Check whether the [change log](changelog.md) is correct.
+- Check whether the [change log](changelog.md) is correct. Make sure the date and version are correct as well.
 - Check whether the `doxygen` does not have unexpected warnings and errors while generating the documentation.
 - Check whether the dependencies and their version are described correctly in the [readme.md](readme.md) file. 
 

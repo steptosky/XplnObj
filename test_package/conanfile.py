@@ -37,16 +37,12 @@
 from conans import ConanFile, CMake
 import os
 
-username = os.getenv("CONAN_PACKAGE_USER", "steptosky")
-channel = os.getenv("CONAN_PACKAGE_CHANNEL", "develop")
-version = os.getenv("CONAN_PACKAGE_VERSION", "0.5.0")
-artifact_name = os.getenv("CONAN_PACKAGE_NAME", "XplnObj")
-
 
 class LibReuseConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "%s/%s@%s/%s" % (artifact_name, version, username, channel)
-    generators = 'cmake'
+    generators = "cmake"
+    exec_name = "conan-test-package"
+    artifact_name = "XplnObj"
 
     def build(self):
         cmake = CMake(self)
@@ -55,15 +51,20 @@ class LibReuseConan(ConanFile):
 
     def imports(self):
         self.copy(pattern="*.dll", dst="bin", src="Release")
-        self.copy(pattern="*.dll", dst="bin", src="Debug")
         self.copy(pattern="*.pdb", dst="bin", src="Release")
-        self.copy(pattern="*.pdb", dst="bin", src="Debug")
         self.copy(pattern="*.dylib", dst="bin", src="Release")
+        self.copy(pattern="*.so", dst="bin", src="Release")
+        self.copy(pattern="*.a", dst="bin", src="Release")
+
+        self.copy(pattern="*.dll", dst="bin", src="Debug")
+        self.copy(pattern="*.pdb", dst="bin", src="Debug")
         self.copy(pattern="*.dylib", dst="bin", src="Debug")
+        self.copy(pattern="*.so", dst="bin", src="Debug")
+        self.copy(pattern="*.a", dst="bin", src="Debug")
 
     def test(self):
-        self.run("cd bin && .%smytest" % os.sep)
-        assert os.path.exists(os.path.join(self.deps_cpp_info[artifact_name].rootpath, "licenses", "license.txt"))
+        self.run("cd bin && .%s%s" % (os.sep, self.exec_name))
+        assert os.path.exists(os.path.join(self.deps_cpp_info[self.artifact_name].rootpath, "licenses", "license.txt"))
 
 # ----------------------------------------------------------------------------------#
 # //////////////////////////////////////////////////////////////////////////////////#

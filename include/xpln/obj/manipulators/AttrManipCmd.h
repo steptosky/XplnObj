@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,49 +29,60 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "AttrManipBase.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
-	/*!
-	 * \details ATTR_manip_command
-     * \ingroup Manipulators
-	 */
-	class AttrManipCmd : public AttrManipBase {
-	public:
+/*!
+ * \details ATTR_manip_command
+ * \ingroup Manipulators
+ */
+class AttrManipCmd : public AttrManipBase {
+public:
 
-		XpObjLib AttrManipCmd();
-		virtual ~AttrManipCmd() = default;
+    XpObjLib AttrManipCmd();
+    virtual ~AttrManipCmd() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setCommand(const std::string & cmd);
-		XpObjLib const std::string & command() const;
+    [[deprecated("use setCmd")]]
+    void setCommand(const std::string & cmd) { setCmd(cmd); }
 
-		//-------------------------------------------------------------------------
+    [[deprecated("use cmd")]]
+    const std::string & command() const { return cmd(); }
 
-		/*! \copydoc AttrManipBase::equals */
-		XpObjLib bool equals(const AttrManipBase * manip) const override;
+    //-------------------------------------------------------------------------
 
-		/*! \copydoc AttrManipBase::clone */
-		XpObjLib AttrManipBase * clone() const override;
+    XpObjLib void setCmd(const std::string & cmd);
+    XpObjLib const std::string & cmd() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+    /*! \copydoc AttrManipBase::equals */
+    XpObjLib bool equals(const AttrManipBase * manip) const override;
 
-		std::string mCommand = "none";
+    /*! \copydoc AttrManipBase::clone */
+    XpObjLib AttrManipBase * clone() const override;
 
-	};
+    //-------------------------------------------------------------------------
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+    /*! \copydoc AttrManipBase::printObj */
+    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
+
+    //-------------------------------------------------------------------------
+
+private:
+
+    std::string mCommand = "none";
+
+};
+
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
 }

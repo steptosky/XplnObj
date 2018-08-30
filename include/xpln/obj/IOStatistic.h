@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,61 +29,60 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <cstddef>
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 
 namespace xobj {
 
-	class ObjReader;
-	class ObjWriter;
+class ObjReader;
+class ObjWriter;
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Statistic of the 'obj' Reader/Writer.
-	 */
-	class IOStatistic {
-	public:
+/*!
+ * \details Statistic of the 'obj' Reader/Writer.
+ */
+class IOStatistic {
+public:
 
-		/*! \details Constructor default. */
-		XpObjLib IOStatistic();
+    /*! \details Constructor default. */
+    XpObjLib IOStatistic();
 
-		//-----------------------------------
+    //-----------------------------------
 
-		size_t pMeshVerticesCount; //!< Mesh vertices count
-		size_t pMeshFacesCount; //!< Mesh faces count (triangles)
-		size_t pLineVerticesCount; //!< Line vertices count
+    std::size_t pMeshVerticesCount; //!< Mesh vertices count
+    std::size_t pMeshFacesCount;    //!< Mesh faces count (triangles)
+    std::size_t pLineVerticesCount; //!< Line vertices count
 
-		size_t pMeshObjCount; //!< Mesh objects count
-		size_t pLineObjCount; //!< Line objects count
-		size_t pLightObjPointCount; //!< Light named objects count
-		size_t pLightObjNamedCount; //!< Light named objects count
-		size_t pLightObjCustomCount; //!< Light custom objects count
-		size_t pLightObjParamCount; //!< Light param objects count
-		size_t pLightObjSpillCustCount; //!< Light spill custom objects count
-		size_t pDummyObjCount; //!< Dummy objects count
-		size_t pSmokeObjCount; //!< Dummy objects count
+    std::size_t pMeshObjCount;           //!< Mesh objects count
+    std::size_t pLineObjCount;           //!< Line objects count
+    std::size_t pLightObjPointCount;     //!< Light named objects count
+    std::size_t pLightObjNamedCount;     //!< Light named objects count
+    std::size_t pLightObjCustomCount;    //!< Light custom objects count
+    std::size_t pLightObjParamCount;     //!< Light param objects count
+    std::size_t pLightObjSpillCustCount; //!< Light spill custom objects count
+    std::size_t pDummyObjCount;          //!< Dummy objects count
+    std::size_t pSmokeObjCount;          //!< Dummy objects count
 
-		size_t pGlobAttrCount; //!< Global attributes count
-		size_t pTrisManipCount; //!< Object manipulators count
-		size_t pTrisAttrCount; //!< Object attributes count
+    std::size_t pCustomLinesCount; //!< Count of lines that are printed before and after objects.
+    std::size_t pGlobAttrCount;    //!< Global attributes count
+    std::size_t pTrisManipCount;   //!< Object manipulators count
+    std::size_t pTrisAttrCount;    //!< Object attributes count
 
-		size_t pAnimAttrCount; //!< Animations rotation count
+    std::size_t pAnimAttrCount;
 
-		//------------------------------------------------------------
+    //------------------------------------------------------------
 
-		XpObjLib void reset();
+    XpObjLib void reset();
 
-		//------------------------------------------------------------
+    //------------------------------------------------------------
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

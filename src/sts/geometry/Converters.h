@@ -35,67 +35,67 @@
 
 namespace sts {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	template<class Type>
-	static sts_t::AxisAngle<Type> & fromQuat(sts_t::AxisAngle<Type> & inOutAxisAngle, const sts_t::Quaternion<Type> & inQuat);
+template<class Type>
+static sts_t::AxisAngle<Type> & fromQuat(sts_t::AxisAngle<Type> & inOutAxisAngle, const sts_t::Quaternion<Type> & inQuat);
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	template<class Type>
-	static sts_t::Quaternion<Type> & fromAxisAngle(sts_t::Quaternion<Type> & inOutQuat, const sts_t::AxisAngle<Type> & inAxisAngle);
+template<class Type>
+static sts_t::Quaternion<Type> & fromAxisAngle(sts_t::Quaternion<Type> & inOutQuat, const sts_t::AxisAngle<Type> & inAxisAngle);
 
-	template<class Type>
-	static sts_t::Quaternion<Type> & fromAxisAngle(sts_t::Quaternion<Type> & inOutQuat, const sts_t::Vector3<Type> & inAxis, Type inAngle);
+template<class Type>
+static sts_t::Quaternion<Type> & fromAxisAngle(sts_t::Quaternion<Type> & inOutQuat, const sts_t::Vector3<Type> & inAxis, Type inAngle);
 
-	template<class Type>
-	static sts_t::Quaternion<Type> & fromTMatrix3(sts_t::Quaternion<Type> & inOutQuat, const sts_t::TMatrix3<Type> & inMtx);
+template<class Type>
+static sts_t::Quaternion<Type> & fromTMatrix3(sts_t::Quaternion<Type> & inOutQuat, const sts_t::TMatrix3<Type> & inMtx);
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	template<class Type>
-	static sts_t::TMatrix3<Type> & fromQuat(sts_t::TMatrix3<Type> & inOutMtx, const sts_t::Quaternion<Type> & inQuat);
+template<class Type>
+static sts_t::TMatrix3<Type> & fromQuat(sts_t::TMatrix3<Type> & inOutMtx, const sts_t::Quaternion<Type> & inQuat);
 
-	template<class Type>
-	static sts_t::TMatrix3<Type> & fromAxisAngle(sts_t::TMatrix3<Type> & inOutMtx, const sts_t::AxisAngle<Type> & inAxisAngle);
+template<class Type>
+static sts_t::TMatrix3<Type> & fromAxisAngle(sts_t::TMatrix3<Type> & inOutMtx, const sts_t::AxisAngle<Type> & inAxisAngle);
 
-	template<class Type>
-	static sts_t::TMatrix3<Type> & fromAxisAngle(sts_t::TMatrix3<Type> & inOutMtx, const sts_t::Vector3<Type> & inAxis, Type inAngle);
+template<class Type>
+static sts_t::TMatrix3<Type> & fromAxisAngle(sts_t::TMatrix3<Type> & inOutMtx, const sts_t::Vector3<Type> & inAxis, Type inAngle);
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	template<class Type>
-	static sts_t::AxisAngle<Type> toAxisAngle(const sts_t::Quaternion<Type> & inQuat);
+template<class Type>
+static sts_t::AxisAngle<Type> toAxisAngle(const sts_t::Quaternion<Type> & inQuat);
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	template<class Type>
-	static sts_t::Quaternion<Type> toQuat(const sts_t::AxisAngle<Type> & inAxisAngle);
+template<class Type>
+static sts_t::Quaternion<Type> toQuat(const sts_t::AxisAngle<Type> & inAxisAngle);
 
-	template<class Type>
-	static sts_t::Quaternion<Type> toQuat(const sts_t::Vector3<Type> & inAxis, Type inAngle);
+template<class Type>
+static sts_t::Quaternion<Type> toQuat(const sts_t::Vector3<Type> & inAxis, Type inAngle);
 
-	template<class Type>
-	static sts_t::Quaternion<Type> toQuat(const sts_t::TMatrix3<Type> & inMtx);
+template<class Type>
+static sts_t::Quaternion<Type> toQuat(const sts_t::TMatrix3<Type> & inMtx);
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	template<class Type>
-	static sts_t::TMatrix3<Type> toTMatrix3(const sts_t::Quaternion<Type> & inQuat);
+template<class Type>
+static sts_t::TMatrix3<Type> toTMatrix3(const sts_t::Quaternion<Type> & inQuat);
 
-	template<class Type>
-	static sts_t::TMatrix3<Type> toTMatrix3(const sts_t::AxisAngle<Type> & inAxisAngle);
+template<class Type>
+static sts_t::TMatrix3<Type> toTMatrix3(const sts_t::AxisAngle<Type> & inAxisAngle);
 
-	template<class Type>
-	static sts_t::TMatrix3<Type> toTMatrix3(const sts_t::Vector3<Type> & inAxis, Type inAngle);
+template<class Type>
+static sts_t::TMatrix3<Type> toTMatrix3(const sts_t::Vector3<Type> & inAxis, Type inAngle);
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 #include "_inl_/Converters.inl"
 

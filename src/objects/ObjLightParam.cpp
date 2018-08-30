@@ -28,80 +28,81 @@
 */
 
 #include "xpln/obj/ObjLightParam.h"
+#include "xpln/obj/Transform.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
+/********************************************************************************************************/
 
-	ObjLightParam::ObjLightParam(const ObjLightParam & copy)
-		: ObjAbstractLight(copy),
-		mId(copy.mId),
-		mLightName(copy.mLightName),
-		mAdditional(copy.mAdditional) {}
+ObjLightParam::ObjLightParam(const ObjLightParam & copy)
+    : ObjAbstractLight(copy),
+      mId(copy.mId),
+      mLightName(copy.mLightName),
+      mAdditional(copy.mAdditional) {}
 
-	ObjLightParam::ObjLightParam()
-		: mId(ELightParams::none) {
-		setObjectName("Light Param");
-	}
+ObjLightParam::ObjLightParam()
+    : mId(ELightParams::none) {
+    setObjectName("Light Param");
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjLightParam::applyTransform(const TMatrix & tm, const bool) {
-		Point3 pos = mPosition;
-		tm.transformPoint(pos);
-		mPosition = pos;
-	}
+void ObjLightParam::applyTransform(const TMatrix & tm, const bool) {
+    Point3 pos = mPosition;
+    tm.transformPoint(pos);
+    mPosition = pos;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	eObjectType ObjLightParam::objType() const {
-		return OBJ_LIGHT_PARAM;
-	}
+eObjectType ObjLightParam::objType() const {
+    return OBJ_LIGHT_PARAM;
+}
 
-	void ObjLightParam::setAdditionalParams(const std::string & params) {
-		mAdditional = params;
-	}
+void ObjLightParam::setAdditionalParams(const std::string & params) {
+    mAdditional = params;
+}
 
-	const std::string & ObjLightParam::additionalParams() const {
-		return mAdditional;
-	}
+const std::string & ObjLightParam::additionalParams() const {
+    return mAdditional;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjLightParam::setLightId(ELightParams id) {
-		mId = id;
-	}
+void ObjLightParam::setLightId(const ELightParams id) {
+    mId = id;
+}
 
-	void ObjLightParam::setLightName(const std::string & name) {
-		mLightName = name;
-	}
+void ObjLightParam::setLightName(const std::string & name) {
+    mLightName = name;
+}
 
-	const std::string & ObjLightParam::lightName() const {
-		return mLightName;
-	}
+const std::string & ObjLightParam::lightName() const {
+    return mLightName;
+}
 
-	ELightParams ObjLightParam::lightId() const {
-		return mId;
-	}
+ELightParams ObjLightParam::lightId() const {
+    return mId;
+}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	ObjAbstract * ObjLightParam::clone() const {
-		return new ObjLightParam(*this);
-	}
+ObjAbstract * ObjLightParam::clone() const {
+    return new ObjLightParam(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

@@ -35,7 +35,7 @@
 # StepToSky project description.
 #
 # Version 1.2.0 (21.04.2017) 
-#	- List of open source libraries
+#   - List of open source libraries
 # Version 1.1.0 (19.03.2017)
 # Version 1.0.0
 #
@@ -44,17 +44,17 @@
 # This file describes the project.
 # Use StsInfoFilesGenerator module for generation c++ .h file.
 #
-#	Usage example:
+#   Usage example:
 #
-#		# specify the folder where this module is.
-#		list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+#       # specify the folder where this module is.
+#       list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 #
-#		# include the modules
-#		include(StsProjectDesk)
-#		include(StsInfoFilesGenerator)
+#       # include the modules
+#       include(StsProjectDesk)
+#       include(StsInfoFilesGenerator)
 #
-#		# generate file
-#		genInfoFile(StsProjectDesk "${CMAKE_SOURCE_DIR}/include/Info.h")
+#       # generate file
+#       genInfoFile(StsProjectDesk "${CMAKE_SOURCE_DIR}/include/Info.h")
 #
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
@@ -72,23 +72,31 @@ set(ProjectOrganizationWebLink "www.steptosky.com")
 #----------------------------------------------------------------------------------#
 # Project info
 
-set(ProjectName "X-Plane Obj Library")
-set(ProjectShortName "XplnObj")
+set(ProjectName "XplnObj")
+set(ProjectFullName "X-Plane Obj Library")
 set(ProjectDescription "This library is for working with the X-Plane's obj format.")
 set(ProjectWebLink "www.steptosky.com")
-set(ProjectSourcesWebLink "https://github.com/steptosky/XplnObj")
+set(ProjectSourcesWebLink "https://github.com/steptosky/3DsMax-XplnObj")
+
+set(ProjectGroupId "steptosky")
+set(ProjectId ${ProjectName})
 
 #----------------------------------------------------------------------------------#
 # Version / Dependency's system
 
+# Set it to ON if you are in unstable branch otherwise set it to OFF
+set(ProjectVersionSnapshot OFF)
 set(ProjectVersionMajor 0)
-set(ProjectVersionMinor 5)
+set(ProjectVersionMinor 6)
 set(ProjectVersionPatch 0)
 set(ProjectVersion "${ProjectVersionMajor}.${ProjectVersionMinor}.${ProjectVersionPatch}")
-set(ProjectReleaseType "beta") # You can use any string you wish
 
-set(ProjectGroupId "steptosky")
-set(ProjectId ${ProjectShortName})
+# You can use any string you wish, 
+# but i will be changed to snapshot if it is enabled. 
+set(ProjectReleaseType "beta")
+if (ProjectVersionSnapshot)
+    set(ProjectReleaseType "snapshot")
+endif()
 
 #----------------------------------------------------------------------------------#
 # License
@@ -111,7 +119,7 @@ list(APPEND ProjectContributors "StepToSky <info@steptosky.com>")
 # example, the urls are empty: "XplnObj||Copyright (c) 2017 StepToSky||BSD|"
 
 set(ProjectLibraries "")
-                                                                                  
+
 #----------------------------------------------------------------------------------#
 # Other
 
@@ -119,13 +127,13 @@ set(ProjectLibraries "")
 set(ProjectVcsType "git") 
 
 # Prefix for the defines.
-set(ProjectDefPrefix "XOBJ_") 
+set(ProjectDefinePrefix "XOBJ_") 
 
 #----------------------------------------------------------------------------------#
 # Checking
 
 if(NOT ProjectId)
-	message(FATAL_ERROR "ProjectId is not specified")
+    message(FATAL_ERROR "ProjectId is not specified")
 endif()
 
 #----------------------------------------------------------------------------------#

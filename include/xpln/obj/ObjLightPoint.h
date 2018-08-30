@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,65 +29,61 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "ObjAbstract.h"
 #include "xpln/common/Color.h"
 #include "xpln/common/Point3.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the point light
-	 * \ingroup Objects
-	 */
-	class ObjLightPoint : public ObjAbstract {
+/*!
+ * \details Representation of the point light
+ * \ingroup Objects
+ */
+class ObjLightPoint : public ObjAbstract {
+protected:
 
-		ObjLightPoint & operator =(const ObjLightPoint &) = delete;
+    XpObjLib ObjLightPoint(const ObjLightPoint & copy);
 
-	protected:
+public:
 
-		XpObjLib ObjLightPoint(const ObjLightPoint & copy);
+    XpObjLib ObjLightPoint();
+    ObjLightPoint & operator =(const ObjLightPoint &) = delete;
+    virtual ~ObjLightPoint() = default;
 
-	public:
+    //--------------------------------------------------------
 
-		XpObjLib ObjLightPoint();
-		virtual ~ObjLightPoint() = default;
+    XpObjLib void setColor(const Color & color);
+    XpObjLib void setPosition(const Point3 & pos);
 
-		//--------------------------------------------------------
+    XpObjLib const Color & color() const;
+    XpObjLib const Point3 & position() const;
 
-		XpObjLib void setColor(const Color & color);
-		XpObjLib void setPosition(const Point3 & pos);
+    //--------------------------------------------------------
 
-		XpObjLib const Color & color() const;
-		XpObjLib const Point3 & position() const;
+    /*! \copydoc ObjAbstract::objType */
+    XpObjLib eObjectType objType() const final;
 
-		//--------------------------------------------------------
+    /*! \copydoc ObjAbstract::applyTransform */
+    XpObjLib void applyTransform(const TMatrix & tm, bool useParity = false) override final;
 
-		/*! \copydoc ObjAbstract::objType */
-		XpObjLib eObjectType objType() const final;
+    /* \copydoc ObjAbstract::clone */
+    XpObjLib ObjAbstract * clone() const override;
 
-		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
+    //--------------------------------------------------------
 
-		/* \copydoc ObjAbstract::clone */
-		XpObjLib ObjAbstract * clone() const override;
+private:
 
-		//--------------------------------------------------------
+    Color mColor;
+    Point3 mPosition;
 
-	private:
+};
 
-		Color mColor;
-		Point3 mPosition;
-
-	};
-
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

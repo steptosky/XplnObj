@@ -38,16 +38,16 @@
  */
 template<typename TYPE, typename CONTAINER>
 TreeItem<TYPE, CONTAINER>::TreeItem(const TreeItem<TYPE, CONTAINER> & tr)
-	: mParent(nullptr),
-	mRemoveFromParent(true) {
-	_clone(&tr.mChildren);
+    : mParent(nullptr),
+      mRemoveFromParent(true) {
+    _clone(&tr.mChildren);
 }
 
 /*! \details Constructor default */
 template<typename TYPE, typename CONTAINER>
 TreeItem<TYPE, CONTAINER>::TreeItem()
-	: mParent(nullptr),
-	mRemoveFromParent(true) {}
+    : mParent(nullptr),
+      mRemoveFromParent(true) {}
 
 /*!
  * \details Constructor init parent
@@ -55,10 +55,10 @@ TreeItem<TYPE, CONTAINER>::TreeItem()
  */
 template<typename TYPE, typename CONTAINER>
 TreeItem<TYPE, CONTAINER>::TreeItem(TreeItem<TYPE, CONTAINER> * inParent)
-	: mParent(nullptr),
-	mRemoveFromParent(true) {
-	assert(inParent);
-	TreeItem::setParent(static_cast<TYPE*>(inParent));
+    : mParent(nullptr),
+      mRemoveFromParent(true) {
+    assert(inParent);
+    TreeItem::setParent(static_cast<TYPE*>(inParent));
 }
 
 /*!
@@ -67,12 +67,12 @@ TreeItem<TYPE, CONTAINER>::TreeItem(TreeItem<TYPE, CONTAINER> * inParent)
  */
 template<typename TYPE, typename CONTAINER>
 TreeItem<TYPE, CONTAINER>::~TreeItem() {
-	if (mRemoveFromParent)
-		TreeItem::setParent(nullptr);
-	for (auto & it : mChildren) {
-		it->mRemoveFromParent = false;
-		delete it;
-	}
+    if (mRemoveFromParent)
+        TreeItem::setParent(nullptr);
+    for (auto & it : mChildren) {
+        it->mRemoveFromParent = false;
+        delete it;
+    }
 }
 
 /**************************************************************************************************/
@@ -88,17 +88,17 @@ TreeItem<TYPE, CONTAINER>::~TreeItem() {
  */
 template<typename TYPE, typename CONTAINER>
 TreeItem<TYPE, CONTAINER> & TreeItem<TYPE, CONTAINER>::operator =(const TreeItem<TYPE, CONTAINER> & inCopy) {
-	assert(this != &inCopy);
-	if (this != &inCopy) {
-		TreeItem<TYPE, CONTAINER> tmp(inCopy);
-		deleteChildren();
-		for (auto & it : tmp.mChildren) {
-			it->mParent = static_cast<TYPE*>(this);
-			mChildren.push_back(it);
-		}
-		tmp.mChildren.clear(); // tmp can't delete clones now
-	}
-	return *this;
+    assert(this != &inCopy);
+    if (this != &inCopy) {
+        TreeItem<TYPE, CONTAINER> tmp(inCopy);
+        deleteChildren();
+        for (auto & it : tmp.mChildren) {
+            it->mParent = static_cast<TYPE*>(this);
+            mChildren.push_back(it);
+        }
+        tmp.mChildren.clear(); // tmp can't delete clones now
+    }
+    return *this;
 }
 
 /**************************************************************************************************/
@@ -111,7 +111,7 @@ TreeItem<TYPE, CONTAINER> & TreeItem<TYPE, CONTAINER>::operator =(const TreeItem
  */
 template<typename TYPE, typename CONTAINER>
 bool TreeItem<TYPE, CONTAINER>::isRoot() const {
-	return (mParent == nullptr);
+    return (mParent == nullptr);
 }
 
 /*!
@@ -120,7 +120,7 @@ bool TreeItem<TYPE, CONTAINER>::isRoot() const {
  */
 template<typename TYPE, typename CONTAINER>
 TYPE * TreeItem<TYPE, CONTAINER>::root() {
-	return static_cast<TYPE *>(TreeItem<TYPE, CONTAINER>::_getRootNc(this));
+    return static_cast<TYPE *>(TreeItem<TYPE, CONTAINER>::_getRootNc(this));
 }
 
 /*!
@@ -129,7 +129,7 @@ TYPE * TreeItem<TYPE, CONTAINER>::root() {
  */
 template<typename TYPE, typename CONTAINER>
 const TYPE * TreeItem<TYPE, CONTAINER>::root() const {
-	return static_cast<const TYPE *>(TreeItem<TYPE, CONTAINER>::_getRootC(this));
+    return static_cast<const TYPE *>(TreeItem<TYPE, CONTAINER>::_getRootC(this));
 }
 
 /*!
@@ -139,9 +139,9 @@ const TYPE * TreeItem<TYPE, CONTAINER>::root() const {
  */
 template<typename TYPE, typename CONTAINER>
 const TreeItem<TYPE, CONTAINER> * TreeItem<TYPE, CONTAINER>::_getRootC(const TreeItem<TYPE, CONTAINER> * inCurrentItem) {
-	if (inCurrentItem->isRoot())
-		return inCurrentItem;
-	return TreeItem<TYPE, CONTAINER>::_getRootC(inCurrentItem->parent());
+    if (inCurrentItem->isRoot())
+        return inCurrentItem;
+    return TreeItem<TYPE, CONTAINER>::_getRootC(inCurrentItem->parent());
 }
 
 /*!
@@ -151,9 +151,9 @@ const TreeItem<TYPE, CONTAINER> * TreeItem<TYPE, CONTAINER>::_getRootC(const Tre
  */
 template<typename TYPE, typename CONTAINER>
 TreeItem<TYPE, CONTAINER> * TreeItem<TYPE, CONTAINER>::_getRootNc(TreeItem<TYPE, CONTAINER> * inCurrentItem) {
-	if (inCurrentItem->isRoot())
-		return inCurrentItem;
-	return TreeItem<TYPE, CONTAINER>::_getRootNc(inCurrentItem->parent());
+    if (inCurrentItem->isRoot())
+        return inCurrentItem;
+    return TreeItem<TYPE, CONTAINER>::_getRootNc(inCurrentItem->parent());
 }
 
 /**************************************************************************************************/
@@ -167,12 +167,12 @@ TreeItem<TYPE, CONTAINER> * TreeItem<TYPE, CONTAINER>::_getRootNc(TreeItem<TYPE,
  */
 template<typename TYPE, typename CONTAINER>
 void TreeItem<TYPE, CONTAINER>::setParent(TYPE * inParent) {
-	if (mParent == inParent)
-		return;
-	if (inParent == nullptr)
-		_removeParent();
-	else
-		inParent->appendChild(static_cast<TYPE*>(this));
+    if (mParent == inParent)
+        return;
+    if (inParent == nullptr)
+        _removeParent();
+    else
+        inParent->appendChild(static_cast<TYPE*>(this));
 }
 
 /*!
@@ -181,7 +181,7 @@ void TreeItem<TYPE, CONTAINER>::setParent(TYPE * inParent) {
  */
 template<typename TYPE, typename CONTAINER>
 TYPE * TreeItem<TYPE, CONTAINER>::parent() {
-	return mParent;
+    return mParent;
 }
 
 /*!
@@ -190,7 +190,7 @@ TYPE * TreeItem<TYPE, CONTAINER>::parent() {
  */
 template<typename TYPE, typename CONTAINER>
 const TYPE * TreeItem<TYPE, CONTAINER>::parent() const {
-	return mParent;
+    return mParent;
 }
 
 /**************************************************************************************************/
@@ -203,7 +203,7 @@ const TYPE * TreeItem<TYPE, CONTAINER>::parent() const {
  */
 template<typename TYPE, typename CONTAINER>
 size_t TreeItem<TYPE, CONTAINER>::childrenCount() const {
-	return mChildren.size();
+    return mChildren.size();
 }
 
 /*!
@@ -213,8 +213,8 @@ size_t TreeItem<TYPE, CONTAINER>::childrenCount() const {
  */
 template<typename TYPE, typename CONTAINER>
 TYPE * TreeItem<TYPE, CONTAINER>::childAt(Index inIndex) {
-	assert(inIndex < mChildren.size());
-	return mChildren[inIndex];
+    assert(inIndex < mChildren.size());
+    return mChildren[inIndex];
 }
 
 /*!
@@ -224,8 +224,8 @@ TYPE * TreeItem<TYPE, CONTAINER>::childAt(Index inIndex) {
  */
 template<typename TYPE, typename CONTAINER>
 const TYPE * TreeItem<TYPE, CONTAINER>::childAt(Index inIndex) const {
-	assert(inIndex < mChildren.size());
-	return mChildren[inIndex];
+    assert(inIndex < mChildren.size());
+    return mChildren[inIndex];
 }
 
 /*!
@@ -236,10 +236,10 @@ const TYPE * TreeItem<TYPE, CONTAINER>::childAt(Index inIndex) const {
  */
 template<typename TYPE, typename CONTAINER>
 TYPE * TreeItem<TYPE, CONTAINER>::takeChildAt(Index inIndex) {
-	assert(inIndex < mChildren.size());
-	TYPE * t = mChildren.erase(inIndex);
-	t->mParent = nullptr;
-	return t;
+    assert(inIndex < mChildren.size());
+    TYPE * t = mChildren.erase(inIndex);
+    t->mParent = nullptr;
+    return t;
 }
 
 /*!
@@ -248,7 +248,7 @@ TYPE * TreeItem<TYPE, CONTAINER>::takeChildAt(Index inIndex) {
  */
 template<typename TYPE, typename CONTAINER>
 const CONTAINER & TreeItem<TYPE, CONTAINER>::children() const {
-	return mChildren;
+    return mChildren;
 }
 
 /*!
@@ -258,7 +258,7 @@ const CONTAINER & TreeItem<TYPE, CONTAINER>::children() const {
  */
 template<typename TYPE, typename CONTAINER>
 CONTAINER & TreeItem<TYPE, CONTAINER>::children() {
-	return mChildren;
+    return mChildren;
 }
 
 /**************************************************************************************************/
@@ -273,12 +273,12 @@ CONTAINER & TreeItem<TYPE, CONTAINER>::children() {
  */
 template<typename TYPE, typename CONTAINER>
 TYPE * TreeItem<TYPE, CONTAINER>::prependChild(TYPE * inTreeItem) {
-	assert(inTreeItem);
-	assert(inTreeItem->parent() != this);
-	inTreeItem->_removeParent();
-	inTreeItem->mParent = static_cast<TYPE*>(this);
-	mChildren.push_front(inTreeItem);
-	return inTreeItem;
+    assert(inTreeItem);
+    assert(inTreeItem->parent() != this);
+    inTreeItem->_removeParent();
+    inTreeItem->mParent = static_cast<TYPE*>(this);
+    mChildren.push_front(inTreeItem);
+    return inTreeItem;
 }
 
 /*!
@@ -290,13 +290,13 @@ TYPE * TreeItem<TYPE, CONTAINER>::prependChild(TYPE * inTreeItem) {
  */
 template<typename TYPE, typename CONTAINER>
 TYPE * TreeItem<TYPE, CONTAINER>::insertChild(Index inWhere, TYPE * inTreeItem) {
-	assert(inTreeItem);
-	assert(inWhere <= mChildren.size());
-	assert(inTreeItem->parent() != this);
-	inTreeItem->_removeParent();
-	inTreeItem->mParent = static_cast<TYPE*>(this);
-	mChildren.insert(inWhere, inTreeItem);
-	return inTreeItem;
+    assert(inTreeItem);
+    assert(inWhere <= mChildren.size());
+    assert(inTreeItem->parent() != this);
+    inTreeItem->_removeParent();
+    inTreeItem->mParent = static_cast<TYPE*>(this);
+    mChildren.insert(inWhere, inTreeItem);
+    return inTreeItem;
 }
 
 /*!
@@ -307,12 +307,12 @@ TYPE * TreeItem<TYPE, CONTAINER>::insertChild(Index inWhere, TYPE * inTreeItem) 
  */
 template<typename TYPE, typename CONTAINER>
 TYPE * TreeItem<TYPE, CONTAINER>::appendChild(TYPE * inTreeItem) {
-	assert(inTreeItem);
-	assert(inTreeItem->parent() != this);
-	inTreeItem->_removeParent();
-	inTreeItem->mParent = static_cast<TYPE*>(this);
-	mChildren.push_back(inTreeItem);
-	return inTreeItem;
+    assert(inTreeItem);
+    assert(inTreeItem->parent() != this);
+    inTreeItem->_removeParent();
+    inTreeItem->mParent = static_cast<TYPE*>(this);
+    mChildren.push_back(inTreeItem);
+    return inTreeItem;
 }
 
 /**************************************************************************************************/
@@ -325,10 +325,10 @@ TYPE * TreeItem<TYPE, CONTAINER>::appendChild(TYPE * inTreeItem) {
  */
 template<typename TYPE, typename CONTAINER>
 void TreeItem<TYPE, CONTAINER>::deleteChild(Index inIndex) {
-	assert(inIndex < mChildren.size());
-	TYPE * val = mChildren.erase(inIndex);
-	val->mRemoveFromParent = false;
-	delete val;
+    assert(inIndex < mChildren.size());
+    TYPE * val = mChildren.erase(inIndex);
+    val->mRemoveFromParent = false;
+    delete val;
 }
 
 /*!
@@ -336,11 +336,11 @@ void TreeItem<TYPE, CONTAINER>::deleteChild(Index inIndex) {
  */
 template<typename TYPE, typename CONTAINER>
 void TreeItem<TYPE, CONTAINER>::deleteChildren() {
-	for (auto & it : mChildren) {
-		it->mRemoveFromParent = false;
-		delete it;
-	}
-	mChildren.clear();
+    for (auto & it : mChildren) {
+        it->mRemoveFromParent = false;
+        delete it;
+    }
+    mChildren.clear();
 }
 
 /*!
@@ -350,12 +350,12 @@ void TreeItem<TYPE, CONTAINER>::deleteChildren() {
  */
 template<typename TYPE, typename CONTAINER>
 bool TreeItem<TYPE, CONTAINER>::deleteChild(TYPE * inPtr) {
-	assert(inPtr);
-	size_t index = indexOf(inPtr);
-	if (index == npos)
-		return false;
-	deleteChild(index);
-	return true;
+    assert(inPtr);
+    size_t index = indexOf(inPtr);
+    if (index == npos)
+        return false;
+    deleteChild(index);
+    return true;
 }
 
 /**************************************************************************************************/
@@ -368,7 +368,7 @@ bool TreeItem<TYPE, CONTAINER>::deleteChild(TYPE * inPtr) {
  */
 template<typename TYPE, typename CONTAINER>
 bool TreeItem<TYPE, CONTAINER>::hasChildren() const {
-	return !mChildren.empty();
+    return !mChildren.empty();
 }
 
 /*!
@@ -378,14 +378,14 @@ bool TreeItem<TYPE, CONTAINER>::hasChildren() const {
  */
 template<typename TYPE, typename CONTAINER>
 size_t TreeItem<TYPE, CONTAINER>::indexOf(const TYPE * inTreeItem) const {
-	assert(inTreeItem);
-	Index outIndex = 0;
-	for (auto & it : mChildren) {
-		if (it == inTreeItem)
-			return outIndex;
-		++outIndex;
-	}
-	return npos;
+    assert(inTreeItem);
+    Index outIndex = 0;
+    for (auto & it : mChildren) {
+        if (it == inTreeItem)
+            return outIndex;
+        ++outIndex;
+    }
+    return npos;
 }
 
 /**************************************************************************************************/
@@ -399,7 +399,7 @@ size_t TreeItem<TYPE, CONTAINER>::indexOf(const TYPE * inTreeItem) const {
  */
 template<typename TYPE, typename CONTAINER>
 bool TreeItem<TYPE, CONTAINER>::isLeaf() const {
-	return mChildren.empty();
+    return mChildren.empty();
 }
 
 /*!
@@ -409,7 +409,7 @@ bool TreeItem<TYPE, CONTAINER>::isLeaf() const {
  */
 template<typename TYPE, typename CONTAINER>
 bool TreeItem<TYPE, CONTAINER>::isBranch() const {
-	return !mChildren.empty();
+    return !mChildren.empty();
 }
 
 /*!
@@ -420,13 +420,13 @@ bool TreeItem<TYPE, CONTAINER>::isBranch() const {
  */
 template<typename TYPE, typename CONTAINER>
 bool TreeItem<TYPE, CONTAINER>::isChildOf(const TYPE * inParent) const {
-	if (!mParent) {
-		return false;
-	}
-	if (mParent == inParent) {
-		return true;
-	}
-	return mParent->isChildOf(inParent);
+    if (!mParent) {
+        return false;
+    }
+    if (mParent == inParent) {
+        return true;
+    }
+    return mParent->isChildOf(inParent);
 }
 
 /**************************************************************************************************/
@@ -440,7 +440,7 @@ bool TreeItem<TYPE, CONTAINER>::isChildOf(const TYPE * inParent) const {
  */
 template<typename TYPE, typename CONTAINER>
 TYPE * TreeItem<TYPE, CONTAINER>::clone() const {
-	return nullptr;
+    return nullptr;
 }
 
 /**************************************************************************************************/
@@ -452,11 +452,11 @@ TYPE * TreeItem<TYPE, CONTAINER>::clone() const {
  */
 template<typename TYPE, typename CONTAINER>
 void TreeItem<TYPE, CONTAINER>::_removeParent() {
-	if (mParent != nullptr) {
-		assert(mParent->indexOf(static_cast<TYPE*>(this)) != npos);
-		_remove(&mParent->mChildren, this);
-		mParent = nullptr;
-	}
+    if (mParent != nullptr) {
+        assert(mParent->indexOf(static_cast<TYPE*>(this)) != npos);
+        _remove(&mParent->mChildren, this);
+        mParent = nullptr;
+    }
 }
 
 /*!
@@ -465,9 +465,9 @@ void TreeItem<TYPE, CONTAINER>::_removeParent() {
  */
 template<typename TYPE, typename CONTAINER>
 void TreeItem<TYPE, CONTAINER>::_clone(const Children * inList) {
-	assert(inList);
-	for (auto it = inList->begin(); it != inList->end(); ++it)
-		appendChild((*it)->clone());
+    assert(inList);
+    for (auto it = inList->begin(); it != inList->end(); ++it)
+        appendChild((*it)->clone());
 }
 
 /*!
@@ -477,14 +477,14 @@ void TreeItem<TYPE, CONTAINER>::_clone(const Children * inList) {
  */
 template<typename TYPE, typename CONTAINER>
 void TreeItem<TYPE, CONTAINER>::_remove(Children * inOutList, TreeItem<TYPE, CONTAINER> * inPtr) {
-	assert(inOutList);
-	assert(inPtr);
-	for (auto it = inOutList->begin(); it != inOutList->end(); ++it) {
-		if (*it == inPtr) {
-			inOutList->erase(it);
-			return;
-		}
-	}
+    assert(inOutList);
+    assert(inPtr);
+    for (auto it = inOutList->begin(); it != inOutList->end(); ++it) {
+        if (*it == inPtr) {
+            inOutList->erase(it);
+            return;
+        }
+    }
 }
 
 /********************************************************************************************************/

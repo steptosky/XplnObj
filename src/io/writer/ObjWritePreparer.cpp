@@ -35,85 +35,85 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool ObjWritePreparer::prepare(ObjMain & mainObj) {
-		const size_t lodCount = mainObj.lodCount();
-		for (size_t i = 0; i < lodCount; ++i) {
-			ObjLodGroup & lod = mainObj.lod(i);
-			Transform & rootTransform = lod.transform();
-			if (!checkParameters(lod, lod.objectName())) {
-				return false;
-			}
-			if (!proccessTransform(rootTransform, i, lod)) {
-				return false;
-			}
-		}
-		return true;
-	}
+bool ObjWritePreparer::prepare(ObjMain & mainObj) {
+    const size_t lodCount = mainObj.lodCount();
+    for (size_t i = 0; i < lodCount; ++i) {
+        ObjLodGroup & lod = mainObj.lod(i);
+        Transform & rootTransform = lod.transform();
+        if (!checkParameters(lod, lod.objectName())) {
+            return false;
+        }
+        if (!proccessTransform(rootTransform, i, lod)) {
+            return false;
+        }
+    }
+    return true;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool ObjWritePreparer::proccessTransform(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod) {
-		if (!checkParameters(transform, transform.name())) {
-			return false;
-		}
+bool ObjWritePreparer::proccessTransform(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod) {
+    if (!checkParameters(transform, transform.name())) {
+        return false;
+    }
 
-		if (!proccessObjects(transform, lodNumber, lod)) {
-			return false;
-		}
-		//-------------------------------------------------------------------------
-		// children
+    if (!proccessObjects(transform, lodNumber, lod)) {
+        return false;
+    }
+    //-------------------------------------------------------------------------
+    // children
 
-		const Transform::TransformIndex chCount = transform.childrenCount();
-		for (Transform::TransformIndex i = 0; i < chCount; ++i) {
-			if (!proccessTransform(*static_cast<Transform*>(transform.childAt(i)), lodNumber, lod)) {
-				return false;
-			}
-		}
-		//-------------------------------------------------------------------------
+    const Transform::TransformIndex chCount = transform.childrenCount();
+    for (Transform::TransformIndex i = 0; i < chCount; ++i) {
+        if (!proccessTransform(*static_cast<Transform*>(transform.childAt(i)), lodNumber, lod)) {
+            return false;
+        }
+    }
+    //-------------------------------------------------------------------------
 
-		return true;
-	}
+    return true;
+}
 
-	bool ObjWritePreparer::proccessObjects(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod) {
-		Transform::ObjList objToDelete;
-		for (auto & curr : transform.objList()) {
-			if (!checkParameters(*curr, curr->objectName())) {
-				objToDelete.emplace_back(curr);
-			}
-			else if (lodNumber > 0 && findHardPolygons(*curr, lod.objectName())) {
-				objToDelete.emplace_back(curr);
-			}
-			else {
-				checkForTwoSided(*curr);
-			}
-		}
-		for (auto & curr : objToDelete) {
-			transform.removeObject(curr);
-		}
-		return true;
-	}
+bool ObjWritePreparer::proccessObjects(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod) {
+    Transform::ObjList objToDelete;
+    for (auto & curr : transform.objList()) {
+        if (!checkParameters(*curr, curr->objectName())) {
+            objToDelete.emplace_back(curr);
+        }
+        else if (lodNumber > 0 && findHardPolygons(*curr, lod.objectName())) {
+            objToDelete.emplace_back(curr);
+        }
+        else {
+            checkForTwoSided(*curr);
+        }
+    }
+    for (auto & curr : objToDelete) {
+        transform.removeObject(curr);
+    }
+    return true;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjWritePreparer::checkForTwoSided(ObjAbstract & obj) {
-		if (obj.objType() != OBJ_MESH) {
-			return;
-		}
-		ObjMesh * mesh = static_cast<ObjMesh*>(&obj);
-		if (mesh->pAttr.isTwoSided()) {
-			mesh->makeTwoSided();
-		}
-	}
+void ObjWritePreparer::checkForTwoSided(ObjAbstract & obj) {
+    if (obj.objType() != OBJ_MESH) {
+        return;
+    }
+    auto * mesh = static_cast<ObjMesh*>(&obj);
+    if (mesh->pAttr.isTwoSided()) {
+        mesh->makeTwoSided();
+    }
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

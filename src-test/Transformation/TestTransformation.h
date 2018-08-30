@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,20 +29,18 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
-
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+
 // TODO tests for transforms without objects.
 // Example: Root <- (T)no_obj <- (T)no_obj <- obj3
 // Also all this tests need to be rewritten to unit tests, because this module tests is too difficult to understanding.
 
 /*
 |* Transform cases.
-|* T - anim translate
-|* R - anim rotate
+|* T - animation translate
+|* R - animation rotate
 |*
 |* Keep in mind that the rotate animation can't be without translation animation,
 |* so implementation for some test can be skipped. For example R and T|R are identical.

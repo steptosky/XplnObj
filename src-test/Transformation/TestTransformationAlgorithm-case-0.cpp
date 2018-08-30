@@ -27,8 +27,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <memory>
 #include <gtest/gtest.h>
+
 #include <xpln/obj/ObjMain.h>
 #include <xpln/obj/ObjMesh.h>
 #include "../TestUtilsObjMesh.h"
@@ -46,51 +46,51 @@ using namespace xobj;
  * Without root matrix
  */
 TEST(TestTransformationAlgorithm_case0, case1) {
-	std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case0)).append(".").append(TOTEXT(case1)).append(".obj"));
-	//-------------------
-	// make out data and save to file
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case0)).append(".").append(TOTEXT(case1)).append(".obj"));
+    //-------------------
+    // make out data and save to file
 
-	ObjMain mainOut;
-	TestUtils::setTestExportOptions(mainOut);
-	ObjLodGroup & lodOut = mainOut.addLod();
+    ObjMain mainOut;
+    TestUtils::setTestExportOptions(mainOut);
+    ObjLodGroup & lodOut = mainOut.addLod();
 
-	Transform & transformOut0 = lodOut.transform();
-	Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
-	Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
+    Transform & transformOut0 = lodOut.transform();
+    Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
+    Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
 
-	transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
-	transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
+    transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
+    transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-	transformOut1.pMatrix.rotateDegreesY(+90.0f);
-	transformOut2.pMatrix.rotateDegreesY(-90.0f);
+    transformOut1.pMatrix.rotateDegreesY(+90.0f);
+    transformOut2.pMatrix.rotateDegreesY(-90.0f);
 
-	transformOut1.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
-	transformOut2.pMatrix.setPosition(Point3(50.0f, 0.0f, 0.0f));
+    transformOut1.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    transformOut2.pMatrix.setPosition(Point3(50.0f, 0.0f, 0.0f));
 
-	ASSERT_TRUE(mainOut.exportToFile(path));
+    ASSERT_TRUE(mainOut.exportToFile(path));
 
-	//-------------------
-	// load data from file
+    //-------------------
+    // load data from file
 
-	ObjMain mainIn;
-	ASSERT_TRUE(mainIn.importFromFile(path));
+    ObjMain mainIn;
+    ASSERT_TRUE(mainIn.importFromFile(path));
 
-	// extract data
-	ObjLodGroup * lodIn = nullptr;
-	ObjMesh * meshIn1 = nullptr;
-	ObjMesh * meshIn2 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 1, meshIn2));
+    // extract data
+    ObjLodGroup * lodIn = nullptr;
+    ObjMesh * meshIn1 = nullptr;
+    ObjMesh * meshIn2 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 1, meshIn2));
 
-	//-------------------
-	// check results
+    //-------------------
+    // check results
 
-	std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(-50.0f, 0.0f, 0.0f), +90.0f));
-	std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(50.0f, 0.0f, 0.0f), -90.0f));
+    std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(-50.0f, 0.0f, 0.0f), +90.0f));
+    std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(50.0f, 0.0f, 0.0f), -90.0f));
 
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
 }
 
 /*
@@ -98,44 +98,44 @@ TEST(TestTransformationAlgorithm_case0, case1) {
  * With root matrix
  */
 TEST(TestTransformationAlgorithm_case0, case2) {
-	std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case0)).append(".").append(TOTEXT(case2)).append(".obj"));
-	//-------------------
-	// make out data and save to file
+    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case0)).append(".").append(TOTEXT(case2)).append(".obj"));
+    //-------------------
+    // make out data and save to file
 
-	ObjMain mainOut;
-	TestUtils::setTestExportOptions(mainOut);
-	ObjLodGroup & lodOut = mainOut.addLod();
+    ObjMain mainOut;
+    TestUtils::setTestExportOptions(mainOut);
+    ObjLodGroup & lodOut = mainOut.addLod();
 
-	Transform & transformOut0 = lodOut.transform();
-	Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
-	transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
+    Transform & transformOut0 = lodOut.transform();
+    Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
+    transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
 
-	mainOut.pMatrix.rotateDegreesY(-90.0f);
-	mainOut.pMatrix.setPosition(Point3(50.0f, 0.0f, 0.0f));
+    mainOut.pMatrix.rotateDegreesY(-90.0f);
+    mainOut.pMatrix.setPosition(Point3(50.0f, 0.0f, 0.0f));
 
-	transformOut1.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
-	transformOut1.pMatrix.rotateDegreesY(+90.0f);
+    transformOut1.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    transformOut1.pMatrix.rotateDegreesY(+90.0f);
 
-	ASSERT_TRUE(mainOut.exportToFile(path));
+    ASSERT_TRUE(mainOut.exportToFile(path));
 
-	//-------------------
-	// load data from file
+    //-------------------
+    // load data from file
 
-	ObjMain mainIn;
-	ASSERT_TRUE(mainIn.importFromFile(path));
+    ObjMain mainIn;
+    ASSERT_TRUE(mainIn.importFromFile(path));
 
-	// extract data
-	ObjLodGroup * lodIn = nullptr;
-	ObjMesh * meshIn1 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
+    // extract data
+    ObjLodGroup * lodIn = nullptr;
+    ObjMesh * meshIn1 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
 
-	//-------------------
-	// check results
+    //-------------------
+    // check results
 
-	std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
+    std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
 
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/

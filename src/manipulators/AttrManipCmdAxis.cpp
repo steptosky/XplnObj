@@ -27,92 +27,112 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "sts/utilities/Compare.h"
+#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipCmdAxis.h"
 #include "xpln/enums//EManipulator.h"
-#include "sts/string/StringConverters.h"
-#include "sts/utilities/Compare.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipCmdAxis::AttrManipCmdAxis()
-		: AttrManipBase(EManipulator(EManipulator::command_axis)) { }
+AttrManipCmdAxis::AttrManipCmdAxis()
+    : AttrManipBase(EManipulator(EManipulator::command_axis)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipCmdAxis::setX(float val) {
-		mX = val;
-	}
+void AttrManipCmdAxis::setDirectionX(const float val) {
+    mX = val;
+}
 
-	void AttrManipCmdAxis::setY(float val) {
-		mY = val;
-	}
+void AttrManipCmdAxis::setDirectionY(const float val) {
+    mY = val;
+}
 
-	void AttrManipCmdAxis::setZ(float val) {
-		mZ = val;
-	}
+void AttrManipCmdAxis::setDirectionZ(const float val) {
+    mZ = val;
+}
 
-	float AttrManipCmdAxis::x() const {
-		return mX;
-	}
+float AttrManipCmdAxis::directionX() const {
+    return mX;
+}
 
-	float AttrManipCmdAxis::y() const {
-		return mY;
-	}
+float AttrManipCmdAxis::directionY() const {
+    return mY;
+}
 
-	float AttrManipCmdAxis::z() const {
-		return mZ;
-	}
+float AttrManipCmdAxis::directionZ() const {
+    return mZ;
+}
 
-	const std::string & AttrManipCmdAxis::cmdPositive() const {
-		return mPosCommand;
-	}
+const std::string & AttrManipCmdAxis::cmdPositive() const {
+    return mPosCommand;
+}
 
-	void AttrManipCmdAxis::setCmdPositive(const std::string & val) {
-		mPosCommand = val;
-	}
+void AttrManipCmdAxis::setCmdPositive(const std::string & val) {
+    mPosCommand = val;
+}
 
-	const std::string & AttrManipCmdAxis::cmdNegative() const {
-		return mNegCommand;
-	}
+const std::string & AttrManipCmdAxis::cmdNegative() const {
+    return mNegCommand;
+}
 
-	void AttrManipCmdAxis::setCmdNegative(const std::string & val) {
-		mNegCommand = val;
-	}
+void AttrManipCmdAxis::setCmdNegative(const std::string & val) {
+    mNegCommand = val;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipCmdAxis::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipCmdAxis::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipCmdAxis * right = dynamic_cast<const AttrManipCmdAxis*>(manip);
-		if (!right)
-			return false;
+    const auto * right = dynamic_cast<const AttrManipCmdAxis*>(manip);
+    if (!right)
+        return false;
 
-		return (sts::isEqual(mX, right->mX) &&
-				sts::isEqual(mY, right->mY) &&
-				sts::isEqual(mZ, right->mZ) &&
-				sts::isEqual(mPosCommand, right->mPosCommand) &&
-				sts::isEqual(mNegCommand, right->mNegCommand));
-	}
+    return (sts::isEqual(mX, right->mX) &&
+            sts::isEqual(mY, right->mY) &&
+            sts::isEqual(mZ, right->mZ) &&
+            sts::isEqual(mPosCommand, right->mPosCommand) &&
+            sts::isEqual(mNegCommand, right->mNegCommand));
+}
 
-	AttrManipBase * AttrManipCmdAxis::clone() const {
-		return new AttrManipCmdAxis(*this);
-	}
+AttrManipBase * AttrManipCmdAxis::clone() const {
+    return new AttrManipCmdAxis(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipCmdAxis::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_AXIS;
+    outStr << " " << cursor().toString();
+    outStr << " " << directionX();
+    outStr << " " << directionY();
+    outStr << " " << directionZ();
+    outStr << " " << cmdPositive();
+    outStr << " " << cmdNegative();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1;
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

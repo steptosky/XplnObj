@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,74 +29,70 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <vector>
 #include "ObjAbstract.h"
 #include "LineVertex.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the Line object
-	 * \ingroup Objects
-	 */
-	class ObjLine : public ObjAbstract {
+/*!
+ * \details Representation of the Line object
+ * \ingroup Objects
+ */
+class ObjLine : public ObjAbstract {
+protected:
 
-		ObjLine & operator =(const ObjLine &) = delete;
+    XpObjLib ObjLine(const ObjLine & copy);
 
-	protected:
+public:
 
-		XpObjLib ObjLine(const ObjLine & copy);
+    typedef LineVertex Vertex;
+    typedef std::vector<LineVertex> VertexList;
 
-	public:
+    //-----------------------------------------------------
 
-		typedef LineVertex Vertex;
-		typedef std::vector<LineVertex> VertexList;
+    XpObjLib ObjLine();
+    ObjLine & operator =(const ObjLine &) = delete;
+    XpObjLib virtual ~ObjLine();
 
-		//-----------------------------------------------------
+    //--------------------------------------------------------
 
-		XpObjLib ObjLine();
-		XpObjLib virtual ~ObjLine();
+    XpObjLib VertexList & verticesList();
+    XpObjLib const VertexList & verticesList() const;
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		XpObjLib VertexList & verticesList();
-		XpObjLib const VertexList & verticesList() const;
+    /*!
+     * \details Attaches vertices from another line.
+     * \param [in] otherLine
+     */
+    XpObjLib void attach(const ObjLine & otherLine);
 
-		//--------------------------------------------------------
+    //--------------------------------------------------------
 
-		/*!
-		 * \details Attaches vertices from another line.
-		 * \param [in] otherLine
-		 */
-		XpObjLib void attach(const ObjLine & otherLine);
+    /*! \copydoc ObjAbstract::objType */
+    XpObjLib eObjectType objType() const final;
 
-		//--------------------------------------------------------
+    /*! \copydoc ObjAbstract::applyTransform */
+    XpObjLib void applyTransform(const TMatrix & tm, bool useParity = false) override final;
 
-		/*! \copydoc ObjAbstract::objType */
-		XpObjLib eObjectType objType() const final;
+    /* \copydoc ObjAbstract::clone */
+    XpObjLib ObjAbstract * clone() const override;
 
-		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
+    //--------------------------------------------------------
 
-		/* \copydoc ObjAbstract::clone */
-		XpObjLib ObjAbstract * clone() const override;
+private:
 
-		//--------------------------------------------------------
+    VertexList mVertices;
 
-	private:
+};
 
-		VertexList mVertices;
-
-	};
-
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

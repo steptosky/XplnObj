@@ -2,7 +2,7 @@
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
 #
-#  Copyright (C) 2017, StepToSky
+#  Copyright (C) 2018, StepToSky
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -35,70 +35,63 @@
 #----------------------------------------------------------------------------------#
 # init
 
-message(STATUS "==============================================")
 cmake_minimum_required (VERSION 3.7.0)
+
+message(STATUS "==============================================")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
- 
+
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
 # Solution
 
-project("XplnObj" LANGUAGES "CXX")
+include(StsProjectDesc)
+project(${ProjectId} LANGUAGES "CXX")
 
 #----------------------------------------------------------------------------------#
 # Info file
 
-include(StsProjectDesc)
 include(StsInfoFilesGenerator)
 genInfoFile(StsProjectDesc "${CMAKE_SOURCE_DIR}/include/xpln/Info.h")
 
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
-# conan.io
-
-include(StsConan)
-
-#----------------------------------------------------------------------------------#
-#//////////////////////////////////////////////////////////////////////////////////#
-#----------------------------------------------------------------------------------#
 # options 
- 
-if (NOT CMAKE_BUILD_TYPE)
-	set (CMAKE_BUILD_TYPE Release)
-endif()
 
-if (NOT TEST_REPORT_DIR)
-	set(TEST_REPORT_DIR ${CMAKE_SOURCE_DIR}/reports/tests)
+if (NOT TESTING_REPORT_DIR)
+    set(TESTING_REPORT_DIR "${CMAKE_SOURCE_DIR}/reports/tests")
 endif()
 
 if (NOT BUILD_SHARED_LIBS)
-	set (BUILD_SHARED_LIBS OFF)
+    set (BUILD_SHARED_LIBS OFF)
 endif()
 
-option(BUILD_TESTS "Build all of it's own tests." OFF) 
+if (NOT BUILD_TESTING)
+    set (BUILD_TESTING OFF)
+endif()
 
 message(STATUS "==============================================")
-message(STATUS "Build type = ${CMAKE_BUILD_TYPE}")
-message(STATUS "Build tests = ${BUILD_TESTS}")
+if (NOT CMAKE_BUILD_TYPE)
+    message(STATUS "Build type = multi configuration or undefined")
+else()
+    message(STATUS "Build type = ${CMAKE_BUILD_TYPE}")
+endif()
+message(STATUS "Build testing = ${BUILD_TESTING}")
 message(STATUS "Shared lib = ${BUILD_SHARED_LIBS}")
-message(STATUS "Test report dir = ${TEST_REPORT_DIR}")
+message(STATUS "Testing report dir = ${TESTING_REPORT_DIR}")
 message(STATUS "Installation prefix = ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "==============================================")
 
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
-#----------------------------------------------------------------------------------#		
-# help targets
+#----------------------------------------------------------------------------------#
+# conan.io this must be after options.
 
-add_custom_target("Clean-Install-Dir"
-	COMMAND cmake -E remove_directory ${CMAKE_INSTALL_PREFIX}
-)
-
-add_custom_target("Clean-Tests-Report"
-	COMMAND cmake -E remove_directory ${TEST_REPORT_DIR}
-)
+include(StsConan)
+conan_cmake_run(CONANFILE conanfile.py
+                BASIC_SETUP CMAKE_TARGETS KEEP_RPATHS
+                BUILD missing)
 
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#
@@ -106,9 +99,9 @@ add_custom_target("Clean-Tests-Report"
 # sub projects
 
 add_subdirectory(src)
-if(BUILD_TESTS)
-	enable_testing()
-	add_subdirectory(src-test)
+if(BUILD_TESTING)
+    enable_testing()
+    add_subdirectory(src-test)
 endif()
 
 #----------------------------------------------------------------------------------#
@@ -120,12 +113,12 @@ include(CMakePackageConfigHelpers)
 set(LIB_CONFIG_VER "${CMAKE_CURRENT_BINARY_DIR}/${ProjectId}ConfigVersion.cmake")
 # COMPATIBILITY (AnyNewerVersion|SameMajorVersion|ExactVersion)
 write_basic_package_version_file(
-	${LIB_CONFIG_VER}
-	VERSION ${ProjectVersion} 
-	COMPATIBILITY SameMajorVersion
+    ${LIB_CONFIG_VER}
+    VERSION ${ProjectVersion}
+    COMPATIBILITY SameMajorVersion
 )
 
-install(FILES ${LIB_CONFIG_VER} DESTINATION cmake)								
+install(FILES ${LIB_CONFIG_VER} DESTINATION cmake)
 
 #----------------------------------------------------------------------------------#
 #//////////////////////////////////////////////////////////////////////////////////#

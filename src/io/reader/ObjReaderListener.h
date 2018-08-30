@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,151 +29,158 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
+#include <cstddef>
 #include "xpln/obj/ObjMesh.h"
-#include "xpln/obj/Transform.h"
+#include "xpln/obj/animation/AnimVisibility.h"
+#include "xpln/obj/animation/AnimTrans.h"
+#include "xpln/obj/animation/AnimRotate.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class ObjReader;
+class ObjReader;
 
-	class AttrManipCommandAxis;
-	class AttrManipDelta;
-	class AttrManipDragAxis;
-	class AttrManipDragAxisPix;
-	class AttrManipDragXy;
-	class AttrManipNoop;
-	class AttrManipPush;
-	class AttrManipRadio;
-	class AttrManipToggle;
-	class AttrManipWrap;
-	class AttrManipCommand;
-	class AttrManipWheel;
+class AttrManipCommandAxis;
+class AttrManipDelta;
+class AttrManipDragAxis;
+class AttrManipDragAxisPix;
+class AttrManipDragXy;
+class AttrManipNoop;
+class AttrManipPush;
+class AttrManipRadio;
+class AttrManipToggle;
+class AttrManipWrap;
+class AttrManipCommand;
+class AttrAxisDetented;
+class AttrAxisDetentRange;
+class AttrManipKeyFrame;
+class AttrManipWheel;
 
-	class AttrWetDry;
-	class AttrTint;
-	class AttrSpecular;
-	class AttrLodDrap;
-	class AttrLayerGroup;
-	class AttrSlopeLimit;
-	class AttrBlend;
-	class AttrSlungLoadWeight;
-	class AttrDrapedLayerGroup;
-	class AttrCockpit;
-	class AttrCockpitRegion;
+class AttrWetDry;
+class AttrTint;
+class AttrSpecular;
+class AttrLodDrap;
+class AttrLayerGroup;
+class AttrSlopeLimit;
+class AttrBlend;
+class AttrSlungLoadWeight;
+class AttrDrapedLayerGroup;
+class AttrCockpit;
+class AttrCockpitRegion;
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class ObjReaderListener {
-	protected:
+class ObjReaderListener {
+protected:
 
-		ObjReaderListener() = default;
+    ObjReaderListener() = default;
 
-	public:
+public:
 
-		typedef size_t Index;
-		typedef Index FaceIndex;
-		typedef std::vector<FaceIndex> FaceIndexArray;
+    typedef std::size_t Index;
+    typedef Index FaceIndex;
+    typedef std::vector<FaceIndex> FaceIndexArray;
 
-		virtual ~ObjReaderListener() = default;
+    virtual ~ObjReaderListener() = default;
 
-		//-----------------------------------------------------
-		// Global attributes
+    //-----------------------------------------------------
+    // Global attributes
 
-		virtual void gotGlobAttrTexture(const std::string & val) = 0;
-		virtual void gotGlobAttrTextureLit(const std::string & val) = 0;
-		virtual void gotGlobAttrTextureNormal(const std::string & val) = 0;
+    virtual void gotGlobAttrTexture(const std::string & val) = 0;
+    virtual void gotGlobAttrTextureLit(const std::string & val) = 0;
+    virtual void gotGlobAttrTextureNormal(const std::string & val) = 0;
 
-		//-----------------------------------------------------
-		// Global attributes
+    //-----------------------------------------------------
+    // Global attributes
 
-		virtual void gotGlobAttrTint(const AttrTint & globAttr) = 0;
-		virtual void gotGlobAttrWetDry(const AttrWetDry & globAttr) = 0;
-		virtual void gotGlobAttrBlend(const AttrBlend & globAttr) = 0;
-		virtual void gotGlobAttrSpecular(const AttrSpecular & globAttr) = 0;
-		virtual void gotGlobAttrLodDraped(const AttrLodDrap & globAttr) = 0;
-		virtual void gotGlobAttrLayerGroup(const AttrLayerGroup & globAttr) = 0;
-		virtual void gotGlobAttrSlopeLimit(const AttrSlopeLimit & globAttr) = 0;
-		virtual void gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & globAttr) = 0;
-		virtual void gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGroup & globAttr) = 0;
-		virtual void gotGlobAttrCockpitRegion(const AttrCockpitRegion & globAttr) = 0;
-		virtual void gotGlobAttrDebug() = 0;
-		virtual void gotGlobAttrTilted() = 0;
-		virtual void gotGlobAttrNoShadow() = 0;
-		virtual void gotGlobAttrCockpitLit() = 0;
-		virtual void gotGlobAttrNormalMetalness() = 0;
-		virtual void gotGlobAttrBlendGlass() = 0;
+    virtual void gotGlobAttrTint(const AttrTint & globAttr) = 0;
+    virtual void gotGlobAttrWetDry(const AttrWetDry & globAttr) = 0;
+    virtual void gotGlobAttrBlend(const AttrBlend & globAttr) = 0;
+    virtual void gotGlobAttrSpecular(const AttrSpecular & globAttr) = 0;
+    virtual void gotGlobAttrLodDraped(const AttrLodDrap & globAttr) = 0;
+    virtual void gotGlobAttrLayerGroup(const AttrLayerGroup & globAttr) = 0;
+    virtual void gotGlobAttrSlopeLimit(const AttrSlopeLimit & globAttr) = 0;
+    virtual void gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & globAttr) = 0;
+    virtual void gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGroup & globAttr) = 0;
+    virtual void gotGlobAttrCockpitRegion(const AttrCockpitRegion & globAttr) = 0;
+    virtual void gotGlobAttrDebug() = 0;
+    virtual void gotGlobAttrTilted() = 0;
+    virtual void gotGlobAttrNoShadow() = 0;
+    virtual void gotGlobAttrCockpitLit() = 0;
+    virtual void gotGlobAttrNormalMetalness() = 0;
+    virtual void gotGlobAttrBlendGlass() = 0;
 
-		//-----------------------------------------------------
-		// Lods
+    //-----------------------------------------------------
+    // Lods
 
-		virtual void gotLod(float near, float far, const std::string & endLineComment) = 0;
+    virtual void gotLod(float near, float far, const std::string & endLineComment) = 0;
 
-		//-----------------------------------------------------
-		// Global Objects' data
+    //-----------------------------------------------------
+    // Global Objects' data
 
-		virtual void gotMeshVertices(const ObjMesh::VertexList & vertices) = 0;
-		virtual void gotMeshFaces(const FaceIndexArray & indices) = 0;
+    virtual void gotMeshVertices(const ObjMesh::VertexList & vertices) = 0;
+    virtual void gotMeshFaces(const FaceIndexArray & indices) = 0;
 
-		//-----------------------------------------------------
-		// Objects' data
+    //-----------------------------------------------------
+    // Objects' data
 
-		virtual void gotTrisAttrHard(const AttrHard & attr) = 0;
-		virtual void gotTrisAttrShiny(const AttrShiny & attr) = 0;
-		virtual void gotTrisAttrBlend(const AttrBlend & attr) = 0;
-		virtual void gotTrisAttrPolyOffset(const AttrPolyOffset & attr) = 0;
-		virtual void gotTrisAttrLightLevel(const AttrLightLevel & attr) = 0;
-		virtual void gotTrisAttrCockpit(const AttrCockpit & attr) = 0;
-		virtual void gotTrisAttrShadow(bool state) = 0;
-		virtual void gotTrisAttrDraped(bool state) = 0;
-		virtual void gotTrisAttrDrawEnable(bool state) = 0;
-		virtual void gotTrisAttrSolidCamera(bool state) = 0;
-		virtual void gotTrisAttrReset() = 0;
+    virtual void gotTrisAttrHard(const AttrHard & attr) = 0;
+    virtual void gotTrisAttrShiny(const AttrShiny & attr) = 0;
+    virtual void gotTrisAttrBlend(const AttrBlend & attr) = 0;
+    virtual void gotTrisAttrPolyOffset(const AttrPolyOffset & attr) = 0;
+    virtual void gotTrisAttrLightLevel(const AttrLightLevel & attr) = 0;
+    virtual void gotTrisAttrCockpit(const AttrCockpit & attr) = 0;
+    virtual void gotTrisAttrShadow(bool state) = 0;
+    virtual void gotTrisAttrDraped(bool state) = 0;
+    virtual void gotTrisAttrDrawEnable(bool state) = 0;
+    virtual void gotTrisAttrSolidCamera(bool state) = 0;
+    virtual void gotTrisAttrReset() = 0;
 
-		//-----------------------------------------------------
-		// Objects' manipulators
+    //-----------------------------------------------------
+    // Objects' manipulators
 
-		virtual void gotTrisAttrManipNo() = 0;
-		virtual void gotTrisAttrManipWheel(const AttrManipWheel & manip) = 0;
-		virtual void gotTrisAttrManip(const AttrManipBase & manip) = 0;
+    virtual void gotTrisAttrManipNo() = 0;
+    virtual void gotTrisAttrManipAxisDetented(const AttrAxisDetented & manip) = 0;
+    virtual void gotTrisAttrManipAxisDetentRange(const AttrAxisDetentRange & manip) = 0;
+    virtual void gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & manip) = 0;
+    virtual void gotTrisAttrManipWheel(const AttrManipWheel & manip) = 0;
+    virtual void gotTrisAttrManip(const AttrManipBase & manip) = 0;
 
-		//-----------------------------------------------------
-		// Objects
+    //-----------------------------------------------------
+    // Objects
 
-		virtual void gotTris(Index offset, Index count, const std::string & endLineComment) = 0;
+    virtual void gotTris(Index offset, Index count, const std::string & endLineComment) = 0;
 
-		//-----------------------------------------------------
-		// Animation data
+    //-----------------------------------------------------
+    // Animation data
 
-		virtual void gotAnimBegin() = 0;
-		virtual void gotAnimEnd() = 0;
+    virtual void gotAnimBegin() = 0;
+    virtual void gotAnimEnd() = 0;
 
-		virtual void gotAnimHide(const AnimVisibility::Key & key) = 0;
-		virtual void gotAnimShow(const AnimVisibility::Key & key) = 0;
-		virtual void gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
-									bool hasLoop, float loopVal) = 0;
-		virtual void gotRotateAnim(AnimRotate::KeyList & keys, float (&inVector)[3], std::string & dataref,
-									bool hasLoop, float loopVal) = 0;
+    virtual void gotAnimHide(const AnimVisibility::Key & key) = 0;
+    virtual void gotAnimShow(const AnimVisibility::Key & key) = 0;
+    virtual void gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
+                                  bool hasLoop, float loopVal) = 0;
+    virtual void gotRotateAnim(AnimRotate::KeyList & keys, float (&inVector)[3], std::string & dataref,
+                               bool hasLoop, float loopVal) = 0;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		virtual void gotFinished() = 0;
+    virtual void gotFinished() = 0;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		virtual void reset() = 0;
+    virtual void reset() = 0;
 
-		//-----------------------------------------------------
-	};
+    //-----------------------------------------------------
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

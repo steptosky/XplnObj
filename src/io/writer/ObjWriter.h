@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,8 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "AbstractWriter.h"
 
 #include "xpln/obj/ExportOptions.h"
@@ -43,51 +43,53 @@
 
 namespace xobj {
 
-	class ObjMain;
-	class ObjAbstract;
-	class ObjAbstractLight;
-	class ObjLodGroup;
-	class Transform;
+class ObjMain;
+class ObjAbstract;
+class ObjAbstractLight;
+class ObjLodGroup;
+class Transform;
 
-	/**********************************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**********************************************************************************************************************/
-	/*!
-	 *	\brief X-Plane obj writer
-	 *	\details X-Plane obj writer
-	 */
-	class ObjWriter {
-	public:
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
+/*!
+ *	\brief X-Plane obj writer
+ *	\details X-Plane obj writer
+ */
+class ObjWriter {
+public:
 
-		bool writeFile(ObjMain * root, const std::string & path, const std::string & signature,
-						IOStatistic & outStat, const TMatrix & tm);
-		void reset();
-		ObjWriter();
-		~ObjWriter();
+    bool writeFile(ObjMain * root, const std::string & path, const std::string & signature,
+                   IOStatistic & outStat, const TMatrix & tm);
+    void reset();
+    ObjWriter();
+    ~ObjWriter();
 
-	private:
+private:
 
-		ExportOptions mExportOptions;
-		IOStatistic mStatistic;
+    ExportOptions mExportOptions;
+    IOStatistic mStatistic;
 
-		ObjWriteAnim mAnimationWritter;
-		ObjWriteGeometry mObjWriteGeometry;
-		ObjWriteManip mObjWriteManip;
-		ObjWriteGlobAttr mWriteGlobAttr;
-		ObjWriteAttr mWriteAttr;
+    ObjWriteAnim mAnimationWritter;
+    ObjWriteGeometry mObjWriteGeometry;
+    ObjWriteManip mObjWriteManip;
+    ObjWriteGlobAttr mWriteGlobAttr;
+    ObjWriteAttr mWriteAttr;
 
-		ObjMain * mMain;
+    ObjMain * mMain;
 
-		void calculateVerticiesAndFaces(const Transform & parent);
-		void printGlobalInformation(AbstractWriter & writer, const ObjMain & objRoot);
-		void printObjects(AbstractWriter & writer, const Transform & parent);
+    void calculateVerticiesAndFaces(const Transform & parent);
+    void printGlobalInformation(AbstractWriter & writer, const ObjMain & objRoot);
+    void printObjects(AbstractWriter & writer, const Transform & parent);
 
-		static void printSignature(AbstractWriter & writer, const std::string & signature);
-		void printLOD(AbstractWriter & writer, const ObjLodGroup & lod, size_t count) const;
+    static void printSignature(AbstractWriter & writer, const std::string & signature);
+    void printLOD(AbstractWriter & writer, const ObjLodGroup & lod, size_t count) const;
 
-	};
+    static size_t printObjCustomData(AbstractWriter & writer, const std::vector<std::string> & strings);
 
-	/**********************************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**********************************************************************************************************************/
+};
+
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
 }

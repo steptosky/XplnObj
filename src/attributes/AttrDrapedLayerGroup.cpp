@@ -27,71 +27,72 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/attributes/AttrDrapedLayerGroup.h"
 #include <algorithm>
+
+#include "xpln/obj/attributes/AttrDrapedLayerGroup.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrDrapedLayerGroup::AttrDrapedLayerGroup(ELayer layer, int32_t offset)
-		: mOffset(static_cast<uint8_t>(offset)),
-		mLayer(layer),
-		mIsEnabled(true) { }
+AttrDrapedLayerGroup::AttrDrapedLayerGroup(const ELayer layer, const std::int32_t offset)
+    : mOffset(static_cast<uint8_t>(offset)),
+      mLayer(layer),
+      mIsEnabled(true) { }
 
-	AttrDrapedLayerGroup::AttrDrapedLayerGroup()
-		: mOffset(0),
-		mLayer(ELayer(ELayer::objects)),
-		mIsEnabled(false) { }
+AttrDrapedLayerGroup::AttrDrapedLayerGroup()
+    : mOffset(0),
+      mLayer(ELayer(ELayer::objects)),
+      mIsEnabled(false) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrDrapedLayerGroup::operator bool() const {
-		return mIsEnabled;
-	}
+AttrDrapedLayerGroup::operator bool() const {
+    return mIsEnabled;
+}
 
-	void AttrDrapedLayerGroup::setEnabled(bool state) {
-		mIsEnabled = state;
-	}
+void AttrDrapedLayerGroup::setEnabled(const bool state) {
+    mIsEnabled = state;
+}
 
-	bool AttrDrapedLayerGroup::operator==(const AttrDrapedLayerGroup & other) const {
-		return (mIsEnabled == other.mIsEnabled && mOffset == other.mOffset && mLayer == other.mLayer);
-	}
+bool AttrDrapedLayerGroup::operator==(const AttrDrapedLayerGroup & other) const {
+    return (mIsEnabled == other.mIsEnabled && mOffset == other.mOffset && mLayer == other.mLayer);
+}
 
-	bool AttrDrapedLayerGroup::operator!=(const AttrDrapedLayerGroup & other) const {
-		return !operator==(other);
-	}
+bool AttrDrapedLayerGroup::operator!=(const AttrDrapedLayerGroup & other) const {
+    return !operator==(other);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrDrapedLayerGroup::setOffset(int32_t offset) {
-		offset = std::min(offset, 5);
-		offset = std::max(offset, -5);
-		mOffset = static_cast<int8_t>(offset);
-		mIsEnabled = true;
-	}
+void AttrDrapedLayerGroup::setOffset(std::int32_t offset) {
+    offset = std::min(offset, 5);
+    offset = std::max(offset, -5);
+    mOffset = static_cast<std::int8_t>(offset);
+    mIsEnabled = true;
+}
 
-	int32_t AttrDrapedLayerGroup::offset() const {
-		return static_cast<int32_t>(mOffset);
-	}
+std::int32_t AttrDrapedLayerGroup::offset() const {
+    return static_cast<std::int32_t>(mOffset);
+}
 
-	void AttrDrapedLayerGroup::setLayer(ELayer layer) {
-		mLayer = layer;
-		mIsEnabled = true;
-	}
+void AttrDrapedLayerGroup::setLayer(const ELayer layer) {
+    mLayer = layer;
+    mIsEnabled = true;
+}
 
-	ELayer AttrDrapedLayerGroup::layer() const {
-		return mLayer;
-	}
+ELayer AttrDrapedLayerGroup::layer() const {
+    return mLayer;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

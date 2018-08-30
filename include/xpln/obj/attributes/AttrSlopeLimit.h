@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,87 +29,85 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details SLOPE_LIMIT
-	 * \ingroup Attributes
-	 */
-	class AttrSlopeLimit {
-	public:
+/*!
+ * \details SLOPE_LIMIT
+ * \ingroup Attributes
+ */
+class AttrSlopeLimit {
+public:
 
-		/*!
-		 * \details Constructor default.
-		 * \note Makes the disabled attribute.
-		 */
-		XpObjLib AttrSlopeLimit();
+    /*!
+     * \details Constructor default.
+     * \note Makes the disabled attribute.
+     */
+    XpObjLib AttrSlopeLimit();
 
-		/*!
-		 * \details Constructor init.
-		 * \note Makes the enabled attribute.
-		 * \param [in] minPitch 
-		 * \param [in] maxPitch 
-		 * \param [in] minRoll 
-		 * \param [in] maxRoll 
-		 */
-		XpObjLib AttrSlopeLimit(float minPitch, float maxPitch, float minRoll, float maxRoll);
+    /*!
+     * \details Constructor init.
+     * \note Makes the enabled attribute.
+     * \param [in] minPitch 
+     * \param [in] maxPitch 
+     * \param [in] minRoll 
+     * \param [in] maxRoll 
+     */
+    XpObjLib AttrSlopeLimit(float minPitch, float maxPitch, float minRoll, float maxRoll);
 
-		~AttrSlopeLimit() = default;
+    ~AttrSlopeLimit() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Check whether the attribute is enabled. 
-		 * \note All class's setters will enable this attribute.
-		 */
-		XpObjLib operator bool() const;
+    /*!
+     * \details Check whether the attribute is enabled. 
+     * \note All class's setters will enable this attribute.
+     */
+    XpObjLib operator bool() const;
 
-		/*!
-		 * \details Sets the attribute enabled/disabled.
-		 * \note All class's setters will enable this attribute.
-		 * \param [in] state 
-		 */
-		XpObjLib void setEnabled(bool state);
+    /*!
+     * \details Sets the attribute enabled/disabled.
+     * \note All class's setters will enable this attribute.
+     * \param [in] state 
+     */
+    XpObjLib void setEnabled(bool state);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrSlopeLimit & other) const;
-		XpObjLib bool operator!=(const AttrSlopeLimit & other) const;
+    XpObjLib bool operator==(const AttrSlopeLimit & other) const;
+    XpObjLib bool operator!=(const AttrSlopeLimit & other) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setMinPitch(float minPitch);
-		XpObjLib void setMaxPitch(float maxPitch);
-		XpObjLib void setMinRoll(float minRoll);
-		XpObjLib void setMaxRoll(float maxRoll);
+    XpObjLib void setMinPitch(float minPitch);
+    XpObjLib void setMaxPitch(float maxPitch);
+    XpObjLib void setMinRoll(float minRoll);
+    XpObjLib void setMaxRoll(float maxRoll);
 
-		XpObjLib float minPitch() const;
-		XpObjLib float maxPitch() const;
-		XpObjLib float minRoll() const;
-		XpObjLib float maxRoll() const;
+    XpObjLib float minPitch() const;
+    XpObjLib float maxPitch() const;
+    XpObjLib float minRoll() const;
+    XpObjLib float maxRoll() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		float mMinPitch;
-		float mMaxPitch;
-		float mMinRoll;
-		float mMaxRoll;
-		bool mIsEnabled : 1;
+    float mMinPitch;
+    float mMaxPitch;
+    float mMinRoll;
+    float mMaxRoll;
+    bool mIsEnabled : 1;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

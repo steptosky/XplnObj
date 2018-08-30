@@ -27,8 +27,8 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "common/Logger.h"
 #include "xpln/common/ExternalLog.h"
-#include "../common/Logger.h"
 #include "xpln/Info.h"
 
 #ifndef NDEBUG
@@ -49,67 +49,67 @@ sts::BaseLogger * sts::BaseLogger::mInstance = nullptr;
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ExternalLog::registerCallBack(CallBack callback) {
-		sts::BaseLogger::instance().setCallBack(reinterpret_cast<sts::BaseLogger::CallBack>(callback));
-		sts::BaseLogger::instance().setLevel(LOGLEVEL);
-	}
+void ExternalLog::registerCallBack(const CallBack callback) {
+    sts::BaseLogger::instance().setCallBack(reinterpret_cast<sts::BaseLogger::CallBack>(callback));
+    sts::BaseLogger::instance().setLevel(LOGLEVEL);
+}
 
-	void ExternalLog::unRegisterCallBack() {
-		sts::BaseLogger::instance().removeCallBack();
-	}
+void ExternalLog::unRegisterCallBack() {
+    sts::BaseLogger::instance().removeCallBack();
+}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	std::string ExternalLog::about(bool useWinEol) {
-		std::stringstream stream;
-		const char * eol = useWinEol ? "\r\n" : "\n";
-		//-------------------------------------------------------------------------
+std::string ExternalLog::about(const bool useWinEol) {
+    std::stringstream stream;
+    const char * eol = useWinEol ? "\r\n" : "\n";
+    //-------------------------------------------------------------------------
 
-		stream << "Project: " << XOBJ_PROJECT_NAME << eol;
-		stream << "Organization: " << XOBJ_ORGANIZATION_NAME << " (" << XOBJ_ORGANIZATION_WEBLINK << ")" << eol;
-		stream << "Desc: " << XOBJ_PROJECT_DESCRIPTION << eol;
-		stream << "Link: " << XOBJ_PROJECT_WEBLINK << eol;
+    stream << "Project: " << XOBJ_PROJECT_NAME << eol;
+    stream << "Organization: " << XOBJ_ORGANIZATION_NAME << " (" << XOBJ_ORGANIZATION_WEBLINK << ")" << eol;
+    stream << "Desc: " << XOBJ_PROJECT_DESCRIPTION << eol;
+    stream << "Link: " << XOBJ_PROJECT_WEBLINK << eol;
 
-		stream << "Version: " XOBJ_VERSION_STRING << "-" << XOBJ_RELEASE_TYPE << "+" << XOBJ_VCS_REVISION << " (" << XOBJ_VCS_BRANCH << ") "
-				<< XOBJ_COMPILE_DATE << Debug(" (" << XOBJ_COMPILE_TIME << ") " << "DEBUG" <<) eol;
+    stream << "Version: " XOBJ_VERSION_STRING << "-" << XOBJ_RELEASE_TYPE << "+" << XOBJ_VCS_REVISION << " (" << XOBJ_VCS_BRANCH << ") "
+            << XOBJ_COMPILE_DATE << Debug(" (" << XOBJ_COMPILE_TIME << ") " << "DEBUG" <<) eol;
 
-		stream << "Compiler: " << XOBJ_COMPILER_NAME << " " << XOBJ_COMPILER_VERSION << eol;
-		stream << XOBJ_COPYRIGHT << eol;
-		stream << "Contacts: " << XOBJ_ORGANIZATION_WEBLINK << eol;
-		stream << "License: " << XOBJ_LICENSE_TYPE << eol;
-		stream << "Sources: " << XOBJ_PROJECT_SOURCES_WEBLINK << eol;
+    stream << "Compiler: " << XOBJ_COMPILER_NAME << " " << XOBJ_COMPILER_VERSION << eol;
+    stream << XOBJ_COPYRIGHT << eol;
+    stream << "Contacts: " << XOBJ_ORGANIZATION_WEBLINK << eol;
+    stream << "License: " << XOBJ_LICENSE_TYPE << eol;
+    stream << "Sources: " << XOBJ_PROJECT_SOURCES_WEBLINK << eol;
 
-		stream << "Contributors: " << eol;
-		for (size_t i = 0; i < XOBJ_ARRAY_LENGTH(XOBJ_CONTRIBUTORS); ++i) {
-			stream << "    " << XOBJ_CONTRIBUTORS[i] << eol;
-		}
+    stream << "Contributors: " << eol;
+    for (size_t i = 0; i < XOBJ_ARRAY_LENGTH(XOBJ_CONTRIBUTORS); ++i) {
+        stream << "    " << XOBJ_CONTRIBUTORS[i] << eol;
+    }
 
-		//-------------------------------------------------------------------------
-		return stream.str();
-	}
+    //-------------------------------------------------------------------------
+    return stream.str();
+}
 
-	std::string ExternalLog::shortAbout(bool useWinEol) {
-		std::stringstream stream;
-		const char * eol = useWinEol ? "\r\n" : "\n";
-		//-------------------------------------------------------------------------
+std::string ExternalLog::shortAbout(const bool useWinEol) {
+    std::stringstream stream;
+    const char * eol = useWinEol ? "\r\n" : "\n";
+    //-------------------------------------------------------------------------
 
-		stream << "Project: " << XOBJ_PROJECT_NAME << eol;
-		stream << "Version: " XOBJ_VERSION_STRING << "-" << XOBJ_RELEASE_TYPE << "+" << XOBJ_VCS_REVISION << " (" << XOBJ_VCS_BRANCH << ") "
-				<< XOBJ_COMPILE_DATE << Debug(" (" << XOBJ_COMPILE_TIME << ") " << "DEBUG" << ) eol;
-		stream << "Compiler: " << XOBJ_COMPILER_NAME << " " << XOBJ_COMPILER_VERSION << eol;
+    stream << "Project: " << XOBJ_PROJECT_NAME << eol;
+    stream << "Version: " XOBJ_VERSION_STRING << "-" << XOBJ_RELEASE_TYPE << "+" << XOBJ_VCS_REVISION << " (" << XOBJ_VCS_BRANCH << ") "
+            << XOBJ_COMPILE_DATE << Debug(" (" << XOBJ_COMPILE_TIME << ") " << "DEBUG" << ) eol;
+    stream << "Compiler: " << XOBJ_COMPILER_NAME << " " << XOBJ_COMPILER_VERSION << eol;
 
-		//-------------------------------------------------------------------------
-		return stream.str();
-	}
+    //-------------------------------------------------------------------------
+    return stream.str();
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

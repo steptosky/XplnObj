@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,8 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <iostream>
 #include <sstream>
 
@@ -48,235 +48,240 @@
 
 namespace sts {
 
-	/*! 
-	 * \details This is a base logger interface. By default it prints all messages to std::cout.
-	 * \pre Before you will be able to use this logger you must create its variable somewhere, this logger implements pattern singlton.
-	 * \code sts::BaseLogger * sts::BaseLogger::mInstance = nullptr; \endcode
-	 * \details Default log level is \"Debug\".
-	 * \note The logger supports categories.
-	 * \code CategoryMessage("my category") << "my message"; \endcode
-	 */
-	class BaseLogger {
-	public:
+/*! 
+ * \details This is a base logger interface. By default it prints all messages to std::cout.
+ * \pre Before you will be able to use this logger you must create its variable somewhere, this logger implements pattern singlton.
+ * \code sts::BaseLogger * sts::BaseLogger::mInstance = nullptr; \endcode
+ * \details Default log level is \"Debug\".
+ * \note The logger supports categories.
+ * \code CategoryMessage("my category") << "my message"; \endcode
+ */
+class BaseLogger {
+public:
 
-		enum eType {
-			Fatal = 0,
-			Critical = 1,
-			Error = 2,
-			Warning = 3,
-			Info = 4,
-			Msg = 5,
-			Debug = 6,
-		};
+    enum eType {
+        Fatal = 0,
+        Critical = 1,
+        Error = 2,
+        Warning = 3,
+        Info = 4,
+        Msg = 5,
+        Debug = 6,
+    };
 
-		/*!
-		 * \warning Don't forget to check the parameters for nullptr.
-		 */
-		typedef void (*CallBack)(eType type, const char * msg,
-								const char * file, int line, const char * function,
-								const char * category);
+    //-------------------------------------------------------------------------
 
-		//-------------------------------------------------------------------------
+    BaseLogger(const BaseLogger &) = delete;
+    BaseLogger & operator=(const BaseLogger &) = delete;
 
-		static BaseLogger & instance() {
-			if (mInstance == nullptr) {
-				mInstance = new BaseLogger;
-			}
-			return *mInstance;
-		}
+    //-------------------------------------------------------------------------
 
-		//-------------------------------------------------------------------------
+    /*!
+     * \warning Don't forget to check the parameters for nullptr.
+     */
+    typedef void (*CallBack)(eType type, const char * msg,
+                             const char * file, int line, const char * function,
+                             const char * category);
 
-		void log(eType inType, const char * inMsg,
-				const char * inFile, int inLine, const char * inFunction,
-				const char * inCategory) const {
+    //-------------------------------------------------------------------------
 
-			if (inType <= mLevel) {
-				mCallBack(inType, inMsg, inFile, inLine, inFunction, inCategory);
-			}
-		}
+    static BaseLogger & instance() {
+        if (mInstance == nullptr) {
+            mInstance = new BaseLogger;
+        }
+        return *mInstance;
+    }
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		void setLevel(eType inLevel) {
-			mLevel = inLevel;
-		}
+    void log(eType inType, const char * inMsg,
+             const char * inFile, const int inLine, const char * inFunction,
+             const char * inCategory) const {
 
-		eType level() const {
-			return mLevel;
-		}
+        if (inType <= mLevel) {
+            mCallBack(inType, inMsg, inFile, inLine, inFunction, inCategory);
+        }
+    }
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		void setCallBack(CallBack inCallBack) {
-			mCallBack = inCallBack;
-		}
+    void setLevel(const eType inLevel) {
+        mLevel = inLevel;
+    }
 
-		void removeCallBack() {
-			mCallBack = defaultCallBack;
-		}
+    eType level() const {
+        return mLevel;
+    }
 
-		static const char * typeAsString(eType inType) {
-			switch (inType) {
-				case Msg: return "";
-				case Info: return "INF";
-				case Warning: return "WRN";
-				case Error: return "ERR";
-				case Critical: return "CRL";
-				case Fatal: return "FTL";
-				case Debug: return "DBG";
-				default: return "";
-			}
-		}
+    //-------------------------------------------------------------------------
 
-	private:
+    void setCallBack(const CallBack inCallBack) {
+        mCallBack = inCallBack;
+    }
 
-		static void defaultCallBack(eType inType,
-									const char * inMsg,
-									const char * inFile,
-									int inLine,
-									const char * inFunction,
-									const char * inCategory) {
+    void removeCallBack() {
+        mCallBack = defaultCallBack;
+    }
 
-			if (inType == Msg || inType == Info) {
-				std::cout << typeAsString(inType) << ": "
-						<< (inCategory ? inCategory : "") << (inCategory ? " " : "")
-						<< (inMsg ? inMsg : "") << std::endl;
-			}
-			else {
-				std::cout << typeAsString(inType) << ": "
-						<< (inCategory ? inCategory : "") << (inCategory ? " " : "") << (inMsg ? inMsg : "") << "\n\t<"
-						<< (inFunction ? inFunction : "") << " -> " << (inFile ? inFile : "") << "(" << inLine << ")>"
-						<< std::endl;
-			}
-		}
+    static const char * typeAsString(const eType inType) {
+        switch (inType) {
+            case Msg: return "";
+            case Info: return "INF";
+            case Warning: return "WRN";
+            case Error: return "ERR";
+            case Critical: return "CRL";
+            case Fatal: return "FTL";
+            case Debug: return "DBG";
+            default: return "";
+        }
+    }
 
-		BaseLogger() = default;
-		~BaseLogger() = default;
-		BaseLogger(const BaseLogger &) = delete;
-		BaseLogger & operator=(const BaseLogger &) = delete;
+private:
 
-		eType mLevel = Debug;
-		CallBack mCallBack = defaultCallBack;
-		static BaseLogger * mInstance;
+    static void defaultCallBack(const eType inType,
+                                const char * inMsg,
+                                const char * inFile,
+                                const int inLine,
+                                const char * inFunction,
+                                const char * inCategory) {
 
-	};
+        if (inType == Msg || inType == Info) {
+            std::cout << typeAsString(inType) << ": "
+                    << (inCategory ? inCategory : "") << (inCategory ? " " : "")
+                    << (inMsg ? inMsg : "") << std::endl;
+        }
+        else {
+            std::cout << typeAsString(inType) << ": "
+                    << (inCategory ? inCategory : "") << (inCategory ? " " : "") << (inMsg ? inMsg : "") << "\n\t<"
+                    << (inFunction ? inFunction : "") << " -> " << (inFile ? inFile : "") << "(" << inLine << ")>"
+                    << std::endl;
+        }
+    }
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+    BaseLogger() = default;
+    ~BaseLogger() = default;
 
-	/*!
-	 * \details Represents one log message.
-	 * \note In normal way you should not use this class directly use macros instead.
-	 * \code LWarning << "My warning";
-	 * \note The message will be printed when destructor is called 
-	 * or if you manually force printing with the method LogMessage::push() or operator << with LogMessage::CmdPush param.
-	 * \code LWarning << "My warning" << LPush; \endcode
-	 * It can be needed when you process exceptions.
-	 */
-	class LogMessage {
-	public:
+    eType mLevel = Debug;
+    CallBack mCallBack = defaultCallBack;
+    static BaseLogger * mInstance;
 
-		struct CmdPush {};
+};
 
-		//-------------------------------------------------------------------------
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-		LogMessage()
-			: mLog(&BaseLogger::instance()),
-			mPushed(false) {}
+/*!
+ * \details Represents one log message.
+ * \note In normal way you should not use this class directly use macros instead.
+ * \code LWarning << "My warning";
+ * \note The message will be printed when destructor is called 
+ * or if you manually force printing with the method LogMessage::push() or operator << with LogMessage::CmdPush param.
+ * \code LWarning << "My warning" << LPush; \endcode
+ * It can be needed when you process exceptions.
+ */
+class LogMessage {
+public:
 
-		explicit LogMessage(const char * category)
-			: LogMessage(nullptr, 0, nullptr, category) {}
+    struct CmdPush {};
 
-		LogMessage(const char * file, int line, const char * function)
-			: LogMessage(file, line, function, nullptr) {}
+    //-------------------------------------------------------------------------
 
-		LogMessage(const char * file, int line, const char * function, const char * category)
-			: mLog(&BaseLogger::instance()),
-			mFile(file),
-			mFunction(function),
-			mCategory(category),
-			mLine(line),
-			mPushed(false) {}
+    LogMessage()
+        : mLog(&BaseLogger::instance()),
+          mPushed(false) {}
 
-		~LogMessage() {
-			push();
-		}
+    explicit LogMessage(const char * category)
+        : LogMessage(nullptr, 0, nullptr, category) {}
 
-		//-------------------------------------------------------------------------
+    LogMessage(const char * file, const int line, const char * function)
+        : LogMessage(file, line, function, nullptr) {}
 
-		template<class T>
-		LogMessage & operator<<(const T & msg) {
-			if (mType <= mLog->level()) {
-				mStream << msg;
-			}
-			return *this;
-		}
+    LogMessage(const char * file, const int line, const char * function, const char * category)
+        : mLog(&BaseLogger::instance()),
+          mFile(file),
+          mFunction(function),
+          mCategory(category),
+          mLine(line),
+          mPushed(false) {}
 
-		LogMessage & operator<<(const CmdPush &) {
-			push();
-			return *this;
-		}
+    ~LogMessage() {
+        push();
+    }
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		LogMessage & debug() {
-			mType = BaseLogger::Debug;
-			return *this;
-		}
+    template<class T>
+    LogMessage & operator<<(const T & msg) {
+        if (mType <= mLog->level()) {
+            mStream << msg;
+        }
+        return *this;
+    }
 
-		LogMessage & warning() {
-			mType = BaseLogger::Warning;
-			return *this;
-		}
+    LogMessage & operator<<(const CmdPush &) {
+        push();
+        return *this;
+    }
 
-		LogMessage & error() {
-			mType = BaseLogger::Error;
-			return *this;
-		}
+    //-------------------------------------------------------------------------
 
-		LogMessage & critical() {
-			mType = BaseLogger::Critical;
-			return *this;
-		}
+    LogMessage & debug() {
+        mType = BaseLogger::Debug;
+        return *this;
+    }
 
-		LogMessage & fatal() {
-			mType = BaseLogger::Fatal;
-			return *this;
-		}
+    LogMessage & warning() {
+        mType = BaseLogger::Warning;
+        return *this;
+    }
 
-		LogMessage & info() {
-			mType = BaseLogger::Info;
-			return *this;
-		}
+    LogMessage & error() {
+        mType = BaseLogger::Error;
+        return *this;
+    }
 
-		LogMessage & message() {
-			mType = BaseLogger::Msg;
-			return *this;
-		}
+    LogMessage & critical() {
+        mType = BaseLogger::Critical;
+        return *this;
+    }
 
-		//-------------------------------------------------------------------------
+    LogMessage & fatal() {
+        mType = BaseLogger::Fatal;
+        return *this;
+    }
 
-		void push() {
-			if (!mPushed) {
-				mLog->log(mType, mStream.str().c_str(), mFile, mLine, mFunction, mCategory);
-				mPushed = true;
-			}
-		}
+    LogMessage & info() {
+        mType = BaseLogger::Info;
+        return *this;
+    }
 
-	private:
+    LogMessage & message() {
+        mType = BaseLogger::Msg;
+        return *this;
+    }
 
-		BaseLogger::eType mType = BaseLogger::Msg;
-		std::stringstream mStream;
-		BaseLogger * mLog = nullptr;
-		const char * mFile = nullptr;
-		const char * mFunction = nullptr;
-		const char * mCategory = nullptr;
-		int mLine = 0;
-		bool mPushed:1;
+    //-------------------------------------------------------------------------
 
-	};
+    void push() {
+        if (!mPushed) {
+            mLog->log(mType, mStream.str().c_str(), mFile, mLine, mFunction, mCategory);
+            mPushed = true;
+        }
+    }
+
+private:
+
+    BaseLogger::eType mType = BaseLogger::Msg;
+    std::stringstream mStream;
+    BaseLogger * mLog = nullptr;
+    const char * mFile = nullptr;
+    const char * mFunction = nullptr;
+    const char * mCategory = nullptr;
+    int mLine = 0;
+    bool mPushed:1;
+
+};
 }
 
 /**************************************************************************************************/

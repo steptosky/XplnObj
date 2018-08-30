@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,14 +29,9 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <string>
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 #include "io/reader/ObjReadParser.h"
-#include "xpln/obj/animation/AnimTrans.h"
-#include "xpln/obj/animation/AnimRotate.h"
-#include "xpln/obj/animation/AnimVisibilityKey.h"
 
 /*
  * Why this functions are not the methods of the corresponding classes?
@@ -43,24 +40,28 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+class AnimVisibilityKey;
+class AnimTransKey;
+class AnimRotateKey;
 
-	XpObjLib std::string toObjString(const AnimVisibilityKey & key);
-	XpObjLib std::string toObjString(const AnimTransKey & key);
-	XpObjLib std::string toObjString(const AnimRotateKey & key);
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+XpObjLib std::string toObjString(const AnimVisibilityKey & key);
+XpObjLib std::string toObjString(const AnimTransKey & key);
+XpObjLib std::string toObjString(const AnimRotateKey & key);
 
-	XpObjLib bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser);
-	XpObjLib bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser);
-	XpObjLib bool fromObjString(AnimRotateKey & outVal, ObjReadParser & parser);
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+XpObjLib bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser);
+XpObjLib bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser);
+XpObjLib bool fromObjString(AnimRotateKey & outVal, ObjReadParser & parser);
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

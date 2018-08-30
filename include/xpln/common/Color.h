@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,68 +29,66 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
-#include <stdint.h>
+#include <cstdint>
 #include <string>
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Color (red, green, blue, alpha)
-	 */
-	class XpObjLib Color {
-	public:
+/*!
+ * \details Color (red, green, blue, alpha)
+ */
+class XpObjLib Color {
+public:
 
-		Color();
-		Color(float red, float green, float blue, float alpha = 1.0f);
-		Color(const Color & p);
-		~Color() = default;
+    Color();
+    Color(float red, float green, float blue, float alpha = 1.0f);
+    Color(const Color & p);
+    ~Color() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*! Operator copy */
-		Color & operator =(const Color & p);
+    /*! Operator copy */
+    Color & operator =(const Color & p);
 
-		bool operator ==(const Color & c) const;
-		bool operator !=(const Color & c) const;
+    bool operator ==(const Color & c) const;
+    bool operator !=(const Color & c) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		float red() const;
-		float green() const;
-		float blue() const;
-		float alpha() const;
+    float red() const;
+    float green() const;
+    float blue() const;
+    float alpha() const;
 
-		void setRed(float val);
-		void setGreen(float val);
-		void setBlue(float val);
-		void setAlpha(float val);
+    void setRed(float val);
+    void setGreen(float val);
+    void setBlue(float val);
+    void setAlpha(float val);
 
-		void setValues(float red, float green, float blue, float alpha) {
-			setRed(red);
-			setGreen(green);
-			setBlue(blue);
-			setAlpha(alpha);
-		}
+    void setValues(float red, float green, float blue, float alpha) {
+        setRed(red);
+        setGreen(green);
+        setBlue(blue);
+        setAlpha(alpha);
+    }
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		std::string toString(uint8_t precision = 4) const;
+    std::string toString(std::uint8_t precision = 4) const;
 
-	private:
+private:
 
-		float mColor[4];
+    float mColor[4];
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

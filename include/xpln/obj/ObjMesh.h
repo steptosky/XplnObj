@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -26,101 +28,95 @@
 **
 **  Contacts: www.steptosky.com
 */
-
-#pragma once
-
 #include "ObjAbstract.h"
 #include "MeshVertex.h"
 #include "MeshFace.h"
-
 #include "xpln/obj/attributes/AttrSet.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the geometry mesh object
-	 * \ingroup Objects
-	 */
-	class ObjMesh : public ObjAbstract {
+/*!
+ * \details Representation of the geometry mesh object
+ * \ingroup Objects
+ */
+class ObjMesh : public ObjAbstract {
+protected:
 
-		ObjMesh & operator =(const ObjMesh &) = delete;
+    XpObjLib ObjMesh(const ObjMesh & copy);
 
-	protected:
+public:
 
-		XpObjLib ObjMesh(const ObjMesh & copy);
+    typedef MeshVertex Vertex;
+    typedef MeshFace Face;
+    typedef std::vector<MeshVertex> VertexList;
+    typedef std::vector<MeshFace> FaceList;
 
-	public:
+    //-------------------------------------------------------------------------
 
-		typedef MeshVertex Vertex;
-		typedef MeshFace Face;
-		typedef std::vector<MeshVertex> VertexList;
-		typedef std::vector<MeshFace> FaceList;
+    XpObjLib ObjMesh();
+    ObjMesh & operator =(const ObjMesh &) = delete;
+    XpObjLib virtual ~ObjMesh();
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib ObjMesh();
-		XpObjLib virtual ~ObjMesh();
+    /*!
+     * \details Attributes set.
+     */
+    AttrSet pAttr;
 
-		//-------------------------------------------------------------------------
+    /*!
+     * \details Vertices list.
+     */
+    VertexList pVertices;
 
-		/*!
-		 * \details Attributes set.
-		 */
-		AttrSet pAttr;
+    /*!
+     * \details Faces list.
+     */
+    FaceList pFaces;
 
-		/*!
-		 * \details Vertices list.
-		 */
-		VertexList pVertices;
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Faces list.
-		 */
-		FaceList pFaces;
+    /*!
+     * \details Attaches vertices and faces from another mesh.
+     * \param [in] otherMesh
+     */
+    XpObjLib void attach(const ObjMesh & otherMesh);
 
-		//-------------------------------------------------------------------------
+    /*!
+     * \details Flips mesh normals.
+     */
+    XpObjLib void flipNormals();
 
-		/*!
-		 * \details Attaches vertices and faces from another mesh.
-		 * \param [in] otherMesh
-		 */
-		XpObjLib void attach(const ObjMesh & otherMesh);
+    /*!
+     * \details It makes mesh copy at the same location and flips its normals.
+     */
+    XpObjLib void makeTwoSided();
 
-		/*!
-		 * \details Flips mesh normals.
-		 */
-		XpObjLib void flipNormals();
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details It makes mesh copy at the same location and flips its normals.
-		 */
-		XpObjLib void makeTwoSided();
+    /*! \copydoc ObjAbstract::objType */
+    XpObjLib eObjectType objType() const final;
 
-		//-------------------------------------------------------------------------
+    /*! \copydoc ObjAbstract::applyTransform */
+    XpObjLib void applyTransform(const TMatrix & tm, bool useParity = false) override final;
 
-		/*! \copydoc ObjAbstract::objType */
-		XpObjLib eObjectType objType() const final;
+    /* \copydoc ObjAbstract::clone */
+    XpObjLib ObjAbstract * clone() const override;
 
-		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
+    //-------------------------------------------------------------------------
 
-		/* \copydoc ObjAbstract::clone */
-		XpObjLib ObjAbstract * clone() const override;
+private:
 
-		//-------------------------------------------------------------------------
+    bool mTwoSided = false;
 
-	private:
+};
 
-		bool mTwoSided = false;
-
-	};
-
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

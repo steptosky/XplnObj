@@ -27,128 +27,129 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/ObjMain.h"
-#include <algorithm>
 #include <cassert>
+#include <algorithm>
+
+#include "xpln/obj/ObjMain.h"
 #include "io/writer/ObjWriter.h"
 #include "io/reader/ObjReader.h"
 #include "io/reader/ObjReaderInterpreter.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	class LodGroupCreator : public ObjLodGroup {
-	public:
-		LodGroupCreator() { }
-	};
+class LodGroupCreator : public ObjLodGroup {
+public:
+    LodGroupCreator() { }
+};
 
-	bool gSortLod(ObjLodGroup * i, ObjLodGroup * j) {
-		return (i->nearVal() < j->nearVal());
-	}
+bool gSortLod(ObjLodGroup * i, ObjLodGroup * j) {
+    return (i->nearVal() < j->nearVal());
+}
 
-	/********************************************************************************************************/
-	///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
+/********************************************************************************************************/
 
-	ObjMain::ObjMain() { }
+ObjMain::ObjMain() { }
 
-	ObjMain::~ObjMain() {
-		for (auto it = mLods.begin(); it != mLods.end(); ++it) {
-			delete *it;
-		}
-		mLods.clear();
-	}
+ObjMain::~ObjMain() {
+    for (auto it = mLods.begin(); it != mLods.end(); ++it) {
+        delete *it;
+    }
+    mLods.clear();
+}
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
+/********************************************************************************************************/
 
-	bool ObjMain::exportToFile(const std::string & path) {
-		IOStatistic outStat;
-		return exportToFile(path, outStat);
-	}
+bool ObjMain::exportToFile(const std::string & path) {
+    IOStatistic outStat;
+    return exportToFile(path, outStat);
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	bool ObjMain::importFromFile(const std::string & path) {
-		IOStatistic outStat;
-		return importFromFile(path, outStat);
-	}
+bool ObjMain::importFromFile(const std::string & path) {
+    IOStatistic outStat;
+    return importFromFile(path, outStat);
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	bool ObjMain::exportToFile(const std::string & path, IOStatistic & outStat) {
-		sortLod();
-		outStat.reset();
-		return ObjWriter().writeFile(this, path, pExportOptions.signature(), outStat, pMatrix);
-	}
+bool ObjMain::exportToFile(const std::string & path, IOStatistic & outStat) {
+    sortLod();
+    outStat.reset();
+    return ObjWriter().writeFile(this, path, pExportOptions.signature(), outStat, pMatrix);
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	bool ObjMain::importFromFile(const std::string & path, IOStatistic & outStat) {
-		outStat.reset();
-		ObjReaderInterpreter interpreter(this, pMatrix, &outStat);
-		return ObjReader::readFile(path, interpreter);
-	}
+bool ObjMain::importFromFile(const std::string & path, IOStatistic & outStat) {
+    outStat.reset();
+    ObjReaderInterpreter interpreter(this, pMatrix, &outStat);
+    return ObjReader::readFile(path, interpreter);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	ObjLodGroup & ObjMain::lod(size_t index) {
-		assert(index < mLods.size());
-		return *(mLods.at(index));
-	}
+ObjLodGroup & ObjMain::lod(const std::size_t index) {
+    assert(index < mLods.size());
+    return *(mLods.at(index));
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	const ObjLodGroup & ObjMain::lod(size_t index) const {
-		assert(index < mLods.size());
-		return *(mLods.at(index));
-	}
+const ObjLodGroup & ObjMain::lod(const std::size_t index) const {
+    assert(index < mLods.size());
+    return *(mLods.at(index));
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	ObjLodGroup & ObjMain::addLod() {
-		ObjLodGroup * lod = new LodGroupCreator();
-		mLods.push_back(lod);
-		return *lod;
-	}
+ObjLodGroup & ObjMain::addLod() {
+    ObjLodGroup * lod = new LodGroupCreator();
+    mLods.push_back(lod);
+    return *lod;
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	void ObjMain::removeLod(size_t index) {
-		assert(index < mLods.size());
-		mLods.erase(mLods.begin() + index);
-	}
+void ObjMain::removeLod(const std::size_t index) {
+    assert(index < mLods.size());
+    mLods.erase(mLods.begin() + index);
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	size_t ObjMain::lodCount() const {
-		return mLods.size();
-	}
+std::size_t ObjMain::lodCount() const {
+    return mLods.size();
+}
 
-	void ObjMain::sortLod() {
-		std::sort(mLods.begin(), mLods.end(), gSortLod);
-	}
+void ObjMain::sortLod() {
+    std::sort(mLods.begin(), mLods.end(), gSortLod);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjMain::setObjectName(const std::string & name) {
-		mName = name;
-	}
+void ObjMain::setObjectName(const std::string & name) {
+    mName = name;
+}
 
-	const std::string & ObjMain::objectName() const {
-		return mName;
-	}
+const std::string & ObjMain::objectName() const {
+    return mName;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

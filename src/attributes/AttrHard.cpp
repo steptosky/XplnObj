@@ -31,62 +31,62 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrHard::AttrHard(ESurface surface, bool deck)
-		: mESurface(surface),
-		mIsDeck(deck),
-		mIsEnabled(true) { }
+AttrHard::AttrHard(const ESurface surface, const bool deck)
+    : mESurface(surface),
+      mIsDeck(deck),
+      mIsEnabled(true) { }
 
-	AttrHard::AttrHard()
-		: mESurface(ESurface::eId::none),
-		mIsDeck(false),
-		mIsEnabled(false) { }
+AttrHard::AttrHard()
+    : mESurface(ESurface::eId::none),
+      mIsDeck(false),
+      mIsEnabled(false) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrHard::operator bool() const {
-		return mIsEnabled;
-	}
+AttrHard::operator bool() const {
+    return mIsEnabled;
+}
 
-	void AttrHard::setEnabled(bool state) {
-		mIsEnabled = state;
-	}
+void AttrHard::setEnabled(const bool state) {
+    mIsEnabled = state;
+}
 
-	bool AttrHard::operator==(const AttrHard & other) const {
-		return (mIsEnabled == other.mIsEnabled &&
-				mIsDeck == other.mIsDeck &&
-				mESurface == other.mESurface);
-	}
+bool AttrHard::operator==(const AttrHard & other) const {
+    return (mIsEnabled == other.mIsEnabled &&
+            mIsDeck == other.mIsDeck &&
+            mESurface == other.mESurface);
+}
 
-	bool AttrHard::operator!=(const AttrHard & other) const {
-		return !operator==(other);
-	}
+bool AttrHard::operator!=(const AttrHard & other) const {
+    return !operator==(other);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrHard::setESurface(const ESurface & surface, bool deck) {
-		mIsEnabled = true;
-		mESurface = surface;
-		mIsDeck = deck;
-	}
+void AttrHard::setESurface(const ESurface & surface, const bool deck) {
+    mIsEnabled = true;
+    mESurface = surface;
+    mIsDeck = deck;
+}
 
-	const ESurface & AttrHard::surface() const {
-		return mESurface;
-	}
+const ESurface & AttrHard::surface() const {
+    return mESurface;
+}
 
-	bool AttrHard::isDeck() const {
-		return mIsDeck;
-	}
+bool AttrHard::isDeck() const {
+    return mIsDeck;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

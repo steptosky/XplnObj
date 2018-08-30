@@ -1,0 +1,40 @@
+env:
+   global:
+     - CONAN_USERNAME: "steptosky"
+     - CONAN_CHANNEL: "testing"
+     - CONAN_BUILD_TESTING: 1
+     - CONAN_TESTING_REPORT_DIR: report
+     - CONAN_BUILD_POLICY: outdated
+     - CTEST_OUTPUT_ON_FAILURE: 1
+
+linux: &linux
+   os: linux
+   sudo: required
+   language: python
+   python: "3.6"
+   services:
+     - docker
+osx: &osx
+   os: osx
+   language: generic
+matrix:
+   include:
+      - <<: *linux
+        env: CONAN_GCC_VERSIONS=7 CONAN_DOCKER_IMAGE=lasote/conangcc72
+      - <<: *linux
+        env: CONAN_GCC_VERSIONS=8 CONAN_DOCKER_IMAGE=lasote/conangcc8
+      - <<: *linux
+        env: CONAN_CLANG_VERSIONS=5.0 CONAN_DOCKER_IMAGE=lasote/conanclang50
+      - <<: *linux
+        env: CONAN_CLANG_VERSIONS=6.0 CONAN_DOCKER_IMAGE=lasote/conanclang60
+      - <<: *osx
+        osx_image: xcode9.3
+        env: CONAN_APPLE_CLANG_VERSIONS=9.1
+
+install:
+  - chmod +x .ci/travis-install.sh
+  - ./.ci/travis-install.sh
+
+script:
+  - chmod +x .ci/travis-run.sh
+  - ./.ci/travis-run.sh

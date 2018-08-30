@@ -33,17 +33,17 @@
 
 template<class Type>
 inline const unsigned char Quaternion<Type>::ioVersion() const {
-	return 0;
+    return 0;
 }
 
 template<class Type>
 inline const unsigned Quaternion<Type>::ioIdSize() const {
-	return 5;
+    return 5;
 }
 
 template<class Type>
 inline const char * Quaternion<Type>::ioId() const {
-	return "@QUAT";
+    return "@QUAT";
 }
 
 /**************************************************************************************************/
@@ -52,14 +52,14 @@ inline const char * Quaternion<Type>::ioId() const {
 
 template<class Type>
 inline Quaternion<Type>::Quaternion()
-	: Quaternion(Type(0), Type(0), Type(0), Type(1)) {}
+    : Quaternion(Type(0), Type(0), Type(0), Type(1)) {}
 
 template<class Type>
 inline Quaternion<Type>::Quaternion(Type inX, Type inY, Type inZ, Type inW) {
-	mData[0] = inX;
-	mData[1] = inY;
-	mData[2] = inZ;
-	mData[3] = inW;
+    mData[0] = inX;
+    mData[1] = inY;
+    mData[2] = inZ;
+    mData[3] = inW;
 }
 
 /**************************************************************************************************/
@@ -68,22 +68,22 @@ inline Quaternion<Type>::Quaternion(Type inX, Type inY, Type inZ, Type inW) {
 
 template<class Type>
 inline bool Quaternion<Type>::operator !=(const Quaternion<Type> & inRight) const {
-	return (
-		mData[0] != inRight.mData[0] ||
-		mData[1] != inRight.mData[1] ||
-		mData[2] != inRight.mData[2] ||
-		mData[3] != inRight.mData[3]
-	);
+    return (
+        mData[0] != inRight.mData[0] ||
+        mData[1] != inRight.mData[1] ||
+        mData[2] != inRight.mData[2] ||
+        mData[3] != inRight.mData[3]
+    );
 }
 
 template<class Type>
 inline bool Quaternion<Type>::operator ==(const Quaternion<Type> & inRight) const {
-	return (
-		mData[0] == inRight.mData[0] &&
-		mData[1] == inRight.mData[1] &&
-		mData[2] == inRight.mData[2] &&
-		mData[3] == inRight.mData[3]
-	);
+    return (
+        mData[0] == inRight.mData[0] &&
+        mData[1] == inRight.mData[1] &&
+        mData[2] == inRight.mData[2] &&
+        mData[3] == inRight.mData[3]
+    );
 }
 
 //-------------------------------------------------------------------------
@@ -95,8 +95,8 @@ inline bool Quaternion<Type>::operator ==(const Quaternion<Type> & inRight) cons
 */
 template<class Type>
 inline const Type & Quaternion<Type>::operator[](size_t i) const {
-	assert(i < 4);
-	return reinterpret_cast<const Type*>(mData)[i];
+    assert(i < 4);
+    return reinterpret_cast<const Type*>(mData)[i];
 }
 
 /*!
@@ -106,8 +106,8 @@ inline const Type & Quaternion<Type>::operator[](size_t i) const {
 */
 template<class Type>
 inline Type & Quaternion<Type>::operator[](size_t i) {
-	assert(i < 4);
-	return reinterpret_cast<Type*>(mData)[i];
+    assert(i < 4);
+    return reinterpret_cast<Type*>(mData)[i];
 }
 
 //-------------------------------------------------------------------------
@@ -123,7 +123,7 @@ inline Type & Quaternion<Type>::operator[](size_t i) {
 */
 template<class Type>
 inline Quaternion<Type> Quaternion<Type>::operator *(const Quaternion<Type> & inQ) const {
-	return Quaternion<Type>(*this) *= inQ;
+    return Quaternion<Type>(*this) *= inQ;
 }
 
 // template<class Type>
@@ -133,46 +133,46 @@ inline Quaternion<Type> Quaternion<Type>::operator *(const Quaternion<Type> & in
 
 template<class Type>
 inline Quaternion<Type> Quaternion<Type>::operator *(Type inScalar) const {
-	return Quaternion(
-					 mData[0] * inScalar,
-					 mData[1] * inScalar,
-					 mData[2] * inScalar,
-					 mData[3] * inScalar
-					);
+    return Quaternion(
+                      mData[0] * inScalar,
+                      mData[1] * inScalar,
+                      mData[2] * inScalar,
+                      mData[3] * inScalar
+                     );
 }
 
 template<class Type>
 inline Quaternion<Type> Quaternion<Type>::operator /(Type inScalar) const {
-	return Quaternion<Type>(*this) /= inScalar;
+    return Quaternion<Type>(*this) /= inScalar;
 }
 
 //-------------------------------------------------------------------------
 
 template<class Type>
 inline Quaternion<Type> & Quaternion<Type>::operator *=(const Quaternion & inQ) {
-	set(
-		 // (X) q0 = q3 * p0 + q0 * p3 + q1 * p2 - q2 * p1
-		 mData[3] * inQ.mData[0] +
-		 mData[0] * inQ.mData[3] +
-		 mData[1] * inQ.mData[2] -
-		 mData[2] * inQ.mData[1],
-		 // (Y) q1 = q3 * p1 - q0 * p2 + q1 * p3 + q2 * p0
-		 mData[3] * inQ.mData[1] -
-		 mData[0] * inQ.mData[2] +
-		 mData[1] * inQ.mData[3] +
-		 mData[2] * inQ.mData[0],
-		 // (Z) q2 = q3 * p2 + q0 * p1 - q1 * p0 + q2 * p3
-		 mData[3] * inQ.mData[2] +
-		 mData[0] * inQ.mData[1] -
-		 mData[1] * inQ.mData[0] +
-		 mData[2] * inQ.mData[3],
-		 // (W) q3 = q3 * p3 - q0 * p0 - q1 * p1 - q2 * p2
-		 mData[3] * inQ.mData[3] -
-		 mData[0] * inQ.mData[0] -
-		 mData[1] * inQ.mData[1] -
-		 mData[2] * inQ.mData[2]
-		);
-	return *this;
+    set(
+        // (X) q0 = q3 * p0 + q0 * p3 + q1 * p2 - q2 * p1
+        mData[3] * inQ.mData[0] +
+        mData[0] * inQ.mData[3] +
+        mData[1] * inQ.mData[2] -
+        mData[2] * inQ.mData[1],
+        // (Y) q1 = q3 * p1 - q0 * p2 + q1 * p3 + q2 * p0
+        mData[3] * inQ.mData[1] -
+        mData[0] * inQ.mData[2] +
+        mData[1] * inQ.mData[3] +
+        mData[2] * inQ.mData[0],
+        // (Z) q2 = q3 * p2 + q0 * p1 - q1 * p0 + q2 * p3
+        mData[3] * inQ.mData[2] +
+        mData[0] * inQ.mData[1] -
+        mData[1] * inQ.mData[0] +
+        mData[2] * inQ.mData[3],
+        // (W) q3 = q3 * p3 - q0 * p0 - q1 * p1 - q2 * p2
+        mData[3] * inQ.mData[3] -
+        mData[0] * inQ.mData[0] -
+        mData[1] * inQ.mData[1] -
+        mData[2] * inQ.mData[2]
+       );
+    return *this;
 }
 
 /*
@@ -188,22 +188,22 @@ This creates a result quaternion r = p/q, such that q*r = p. (Order of multiplic
 
 template<class Type>
 inline Quaternion<Type> & Quaternion<Type>::operator *=(Type inScalar) {
-	mData[0] *= inScalar;
-	mData[1] *= inScalar;
-	mData[2] *= inScalar;
-	mData[3] *= inScalar;
-	return *this;
+    mData[0] *= inScalar;
+    mData[1] *= inScalar;
+    mData[2] *= inScalar;
+    mData[3] *= inScalar;
+    return *this;
 }
 
 template<class Type>
 inline Quaternion<Type> & Quaternion<Type>::operator /=(Type inScalar) {
-	if (!sts::isEqual(inScalar, Type(0))) {
-		Type invScalar = Type(1) / inScalar;
-		*this *= invScalar;
-		return *this;
-	}
-	clear();
-	return *this;
+    if (!sts::isEqual(inScalar, Type(0))) {
+        Type invScalar = Type(1) / inScalar;
+        *this *= invScalar;
+        return *this;
+    }
+    clear();
+    return *this;
 }
 
 /**************************************************************************************************/
@@ -215,12 +215,12 @@ inline Quaternion<Type> & Quaternion<Type>::operator /=(Type inScalar) {
 */
 template<class Type>
 inline double Quaternion<Type>::length() const {
-	return sqrt(
-				 mData[0] * mData[0] +
-				 mData[1] * mData[1] +
-				 mData[2] * mData[2] +
-				 mData[3] * mData[3]
-				);
+    return sqrt(
+                mData[0] * mData[0] +
+                mData[1] * mData[1] +
+                mData[2] * mData[2] +
+                mData[3] * mData[3]
+               );
 }
 
 /*!
@@ -229,12 +229,12 @@ inline double Quaternion<Type>::length() const {
 */
 template<class Type>
 inline double Quaternion<Type>::dot(const Quaternion<Type> & q) const {
-	return (
-		mData[0] * q.mData[0] +
-		mData[1] * q.mData[1] +
-		mData[2] * q.mData[2] +
-		mData[3] * q.mData[3]
-	);
+    return (
+        mData[0] * q.mData[0] +
+        mData[1] * q.mData[1] +
+        mData[2] * q.mData[2] +
+        mData[3] * q.mData[3]
+    );
 }
 
 /*!
@@ -242,16 +242,16 @@ inline double Quaternion<Type>::dot(const Quaternion<Type> & q) const {
 */
 template<class Type>
 inline void Quaternion<Type>::normalize() {
-	double len = length();
-	if (sts::isEqual(len, Type(0))) {
-		clear();
-		return;
-	}
-	double invLength = Type(1) / len;
-	mData[0] *= invLength;
-	mData[1] *= invLength;
-	mData[2] *= invLength;
-	mData[3] *= invLength;
+    double len = length();
+    if (sts::isEqual(len, Type(0))) {
+        clear();
+        return;
+    }
+    double invLength = Type(1) / len;
+    mData[0] *= invLength;
+    mData[1] *= invLength;
+    mData[2] *= invLength;
+    mData[3] *= invLength;
 }
 
 /*!
@@ -259,9 +259,9 @@ inline void Quaternion<Type>::normalize() {
 */
 template<class Type>
 inline Quaternion<Type> Quaternion<Type>::normalized() const {
-	Quaternion<Type> out(*this);
-	out.normalize();
-	return out;
+    Quaternion<Type> out(*this);
+    out.normalize();
+    return out;
 }
 
 /*!
@@ -270,9 +270,9 @@ inline Quaternion<Type> Quaternion<Type>::normalized() const {
 */
 template<class Type>
 inline void Quaternion<Type>::conjugate() {
-	mData[0] = -mData[0];
-	mData[1] = -mData[1];
-	mData[2] = -mData[2];
+    mData[0] = -mData[0];
+    mData[1] = -mData[1];
+    mData[2] = -mData[2];
 }
 
 /*!
@@ -281,7 +281,7 @@ inline void Quaternion<Type>::conjugate() {
 */
 template<class Type>
 inline Quaternion<Type> Quaternion<Type>::conjugated() const {
-	return Quaternion<Type>(-mData[0], -mData[1], -mData[2], mData[3]);
+    return Quaternion<Type>(-mData[0], -mData[1], -mData[2], mData[3]);
 }
 
 /**************************************************************************************************/
@@ -290,50 +290,50 @@ inline Quaternion<Type> Quaternion<Type>::conjugated() const {
 
 template<class Type>
 inline void Quaternion<Type>::setX(const Type inX) {
-	mData[0] = inX;
+    mData[0] = inX;
 }
 
 template<class Type>
 inline void Quaternion<Type>::setY(const Type inY) {
-	mData[1] = inY;
+    mData[1] = inY;
 }
 
 template<class Type>
 inline void Quaternion<Type>::setZ(const Type inZ) {
-	mData[2] = inZ;
+    mData[2] = inZ;
 }
 
 template<class Type>
 inline void Quaternion<Type>::setW(const Type inW) {
-	mData[3] = inW;
+    mData[3] = inW;
 }
 
 template<class Type>
 inline Type Quaternion<Type>::x() const {
-	return mData[0];
+    return mData[0];
 }
 
 template<class Type>
 inline Type Quaternion<Type>::y() const {
-	return mData[1];
+    return mData[1];
 }
 
 template<class Type>
 inline Type Quaternion<Type>::z() const {
-	return mData[2];
+    return mData[2];
 }
 
 template<class Type>
 inline Type Quaternion<Type>::w() const {
-	return mData[3];
+    return mData[3];
 }
 
 template<class Type>
 inline void Quaternion<Type>::set(Type inX, Type inY, Type inZ, Type inW) {
-	mData[0] = inX;
-	mData[1] = inY;
-	mData[2] = inZ;
-	mData[3] = inW;
+    mData[0] = inX;
+    mData[1] = inY;
+    mData[2] = inZ;
+    mData[3] = inW;
 }
 
 /**************************************************************************************************/
@@ -342,52 +342,52 @@ inline void Quaternion<Type>::set(Type inX, Type inY, Type inZ, Type inW) {
 
 template<class Type>
 inline void Quaternion<Type>::clear() {
-	zero();
+    zero();
 }
 
 template<class Type>
 inline void Quaternion<Type>::identity() {
-	mData[0] = Type(0);
-	mData[1] = Type(0);
-	mData[2] = Type(0);
-	mData[3] = Type(1);
+    mData[0] = Type(0);
+    mData[1] = Type(0);
+    mData[2] = Type(0);
+    mData[3] = Type(1);
 }
 
 template<class Type>
 inline bool Quaternion<Type>::isIdentity() const {
-	return (
-		sts::isEqual(mData[0], Type(0)) &&
-		sts::isEqual(mData[1], Type(0)) &&
-		sts::isEqual(mData[2], Type(0)) &&
-		mData[3] > Type(0)
-	);
+    return (
+        sts::isEqual(mData[0], Type(0)) &&
+        sts::isEqual(mData[1], Type(0)) &&
+        sts::isEqual(mData[2], Type(0)) &&
+        mData[3] > Type(0)
+    );
 }
 
 template<class Type>
 inline bool Quaternion<Type>::isNull() const {
-	return (
-		sts::isEqual(mData[0], Type(0)) &&
-		sts::isEqual(mData[1], Type(0)) &&
-		sts::isEqual(mData[2], Type(0)) &&
-		sts::isEqual(mData[3], Type(0))
-	);
+    return (
+        sts::isEqual(mData[0], Type(0)) &&
+        sts::isEqual(mData[1], Type(0)) &&
+        sts::isEqual(mData[2], Type(0)) &&
+        sts::isEqual(mData[3], Type(0))
+    );
 }
 
 template<class Type>
 inline bool Quaternion<Type>::isIdentityOrNull() const {
-	return (
-		sts::isEqual(mData[0], Type(0)) &&
-		sts::isEqual(mData[1], Type(0)) &&
-		sts::isEqual(mData[2], Type(0))
-	);
+    return (
+        sts::isEqual(mData[0], Type(0)) &&
+        sts::isEqual(mData[1], Type(0)) &&
+        sts::isEqual(mData[2], Type(0))
+    );
 }
 
 template<class Type>
 inline void Quaternion<Type>::zero() {
-	mData[0] = Type(0);
-	mData[1] = Type(0);
-	mData[2] = Type(0);
-	mData[3] = Type(0);
+    mData[0] = Type(0);
+    mData[1] = Type(0);
+    mData[2] = Type(0);
+    mData[3] = Type(0);
 }
 
 /**************************************************************************************************/
@@ -397,58 +397,58 @@ inline void Quaternion<Type>::zero() {
 /*! \details Saves data to a stream */
 template<class Type>
 inline void Quaternion<Type>::save(std::ostream & outStream) const {
-	unsigned char typeSize = sizeof(Type);
-	unsigned char version = ioVersion();
-	outStream.write(ioId(), ioIdSize());
-	outStream.write(reinterpret_cast<const char*>(&version), sizeof(version));
-	outStream.write(reinterpret_cast<const char*>(&typeSize), sizeof(typeSize));
-	outStream.write(reinterpret_cast<const char*>(mData), sizeof(mData));
+    unsigned char typeSize = sizeof(Type);
+    unsigned char version = ioVersion();
+    outStream.write(ioId(), ioIdSize());
+    outStream.write(reinterpret_cast<const char*>(&version), sizeof(version));
+    outStream.write(reinterpret_cast<const char*>(&typeSize), sizeof(typeSize));
+    outStream.write(reinterpret_cast<const char*>(mData), sizeof(mData));
 }
 
 /*! \details Loads data from a stream */
 template<class Type>
 inline void Quaternion<Type>::load(std::istream & inStream) {
-	//-------------------------------------------------------------------------
-	char * id = new char[ioIdSize()];
-	inStream.read(id, ioIdSize());
-	std::string strId(id, ioIdSize());
-	delete[] id;
-	if (strId != ioId()) {
-		throw std::runtime_error(std::string(__FUNCTION__) +
-								" Incorrect data \"id\". Input: <" + strId +
-								"> must be <" + ioId() + ">.\n");
-	}
-	//-------------------------------------------------------------------------
-	unsigned char version = 0;
-	inStream.read(reinterpret_cast<char*>(&version), sizeof(version));
-	if (version != ioVersion()) {
-		throw std::runtime_error(std::string(__FUNCTION__) +
-								" Incorrect data \"Version\". Input: <" + std::to_string(version) +
-								"> must be <" + std::to_string(ioVersion()) + ">.\n");
-	}
-	//-------------------------------------------------------------------------
-	unsigned char typeSize = 0;
-	inStream.read(reinterpret_cast<char*>(&typeSize), sizeof(typeSize));
-	if (typeSize != static_cast<unsigned char>(sizeof(Type))) {
-		throw std::runtime_error(std::string(__FUNCTION__) +
-								" Incorrect data \"Type size\". Input: <" + strId.c_str() +
-								"> must be <" + std::to_string(sizeof(Type)) + ">.\n");
-	}
-	//-------------------------------------------------------------------------
-	inStream.read(reinterpret_cast<char*>(mData), sizeof(mData));
-	//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
+    char * id = new char[ioIdSize()];
+    inStream.read(id, ioIdSize());
+    std::string strId(id, ioIdSize());
+    delete[] id;
+    if (strId != ioId()) {
+        throw std::runtime_error(std::string(__FUNCTION__) +
+                                 " Incorrect data \"id\". Input: <" + strId +
+                                 "> must be <" + ioId() + ">.\n");
+    }
+    //-------------------------------------------------------------------------
+    unsigned char version = 0;
+    inStream.read(reinterpret_cast<char*>(&version), sizeof(version));
+    if (version != ioVersion()) {
+        throw std::runtime_error(std::string(__FUNCTION__) +
+                                 " Incorrect data \"Version\". Input: <" + std::to_string(version) +
+                                 "> must be <" + std::to_string(ioVersion()) + ">.\n");
+    }
+    //-------------------------------------------------------------------------
+    unsigned char typeSize = 0;
+    inStream.read(reinterpret_cast<char*>(&typeSize), sizeof(typeSize));
+    if (typeSize != static_cast<unsigned char>(sizeof(Type))) {
+        throw std::runtime_error(std::string(__FUNCTION__) +
+                                 " Incorrect data \"Type size\". Input: <" + strId.c_str() +
+                                 "> must be <" + std::to_string(sizeof(Type)) + ">.\n");
+    }
+    //-------------------------------------------------------------------------
+    inStream.read(reinterpret_cast<char*>(mData), sizeof(mData));
+    //-------------------------------------------------------------------------
 }
 
 template<class Type>
 inline std::ostream & operator <<(std::ostream & stream, const Quaternion<Type> & inMtx) {
-	inMtx.save(stream);
-	return stream;
+    inMtx.save(stream);
+    return stream;
 }
 
 template<class Type>
 inline std::istream & operator >>(std::istream & stream, Quaternion<Type> & outMtx) {
-	outMtx.load(stream);
-	return stream;
+    outMtx.load(stream);
+    return stream;
 }
 
 /**************************************************************************************************/
@@ -457,32 +457,32 @@ inline std::istream & operator >>(std::istream & stream, Quaternion<Type> & outM
 
 template<class Type>
 std::string Quaternion<Type>::toString(const std::string & inFormat, uint8_t precision) {
-	std::stringstream out;
-	out.precision(precision);
-	bool val = false;
-	for (const char & curr : inFormat) {
-		if (val) {
-			switch (curr) {
-				case 'x': out << mData[0];
-					break;
-				case 'y': out << mData[1];
-					break;
-				case 'z': out << mData[2];
-					break;
-				case 'w': out << mData[3];
-					break;
-			}
-			val = false;
-			continue;
-		}
-		if (curr == '%') {
-			val = true;
-			continue;
-		}
+    std::stringstream out;
+    out.precision(precision);
+    bool val = false;
+    for (const char & curr : inFormat) {
+        if (val) {
+            switch (curr) {
+                case 'x': out << mData[0];
+                    break;
+                case 'y': out << mData[1];
+                    break;
+                case 'z': out << mData[2];
+                    break;
+                case 'w': out << mData[3];
+                    break;
+            }
+            val = false;
+            continue;
+        }
+        if (curr == '%') {
+            val = true;
+            continue;
+        }
 
-		out << curr;
-	}
-	return out.str();
+        out << curr;
+    }
+    return out.str();
 }
 
 /**************************************************************************************************/

@@ -27,61 +27,62 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/attributes/AttrShiny.h"
 #include <algorithm>
+
 #include "sts/utilities/Compare.h"
+#include "xpln/obj/attributes/AttrShiny.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrShiny::AttrShiny(float ratio)
-		: mRatio(ratio),
-		mIsEnabled(true) { }
+AttrShiny::AttrShiny(const float ratio)
+    : mRatio(ratio),
+      mIsEnabled(true) { }
 
-	AttrShiny::AttrShiny()
-		: mRatio(0.0f),
-		mIsEnabled(false) { }
+AttrShiny::AttrShiny()
+    : mRatio(0.0f),
+      mIsEnabled(false) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrShiny::operator bool() const {
-		return mIsEnabled;
-	}
+AttrShiny::operator bool() const {
+    return mIsEnabled;
+}
 
-	void AttrShiny::setEnabled(bool state) {
-		mIsEnabled = state;
-	}
+void AttrShiny::setEnabled(const bool state) {
+    mIsEnabled = state;
+}
 
-	bool AttrShiny::operator==(const AttrShiny & other) const {
-		return (mIsEnabled == other.mIsEnabled && sts::isEqual(mRatio, other.mRatio, 0.01f));
-	}
+bool AttrShiny::operator==(const AttrShiny & other) const {
+    return (mIsEnabled == other.mIsEnabled && sts::isEqual(mRatio, other.mRatio, 0.01f));
+}
 
-	bool AttrShiny::operator!=(const AttrShiny & other) const {
-		return !operator==(other);
-	}
+bool AttrShiny::operator!=(const AttrShiny & other) const {
+    return !operator==(other);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrShiny::setRatio(float ratio) {
-		ratio = std::min(ratio, 1.0f);
-		ratio = std::max(ratio, 0.0f);
-		mIsEnabled = true;
-		mRatio = ratio;
-	}
+void AttrShiny::setRatio(float ratio) {
+    ratio = std::min(ratio, 1.0f);
+    ratio = std::max(ratio, 0.0f);
+    mIsEnabled = true;
+    mRatio = ratio;
+}
 
-	float AttrShiny::ratio() const {
-		return mRatio;
-	}
+float AttrShiny::ratio() const {
+    return mRatio;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

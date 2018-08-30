@@ -27,9 +27,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "gtest/gtest.h"
-#include "gmock/gmock.h"
-#include "converters/ObjAttrManipString.h"
+#include <gtest/gtest.h>
+
 #include "converters/ObjAttrString.h"
 
 #include "MockIWriter.h"
@@ -46,6 +45,7 @@
 #include "xpln/obj/manipulators/AttrManipPanel.h"
 #include "xpln/obj/manipulators/AttrManipNone.h"
 #include "totext.h"
+#include "TestWriter.h"
 
 using namespace xobj;
 using ::testing::_;
@@ -66,58 +66,57 @@ using ::testing::InSequence;
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 class ManipsStates : public ::testing::Test {
-
-	ManipsStates(const ManipsStates &) = delete;
-	ManipsStates & operator =(const ManipsStates &) = delete;
-
 public:
 
-	ManipsStates()
-		: mObjWriteAttr(&mObjWriteManip) {
-		mObjMesh1.setObjectName(TOTEXT(mObjMesh1));
-		mObjMesh2.setObjectName(TOTEXT(mObjMesh2));
-		mObjMesh3.setObjectName(TOTEXT(mObjMesh3));
-		mObjMesh4.setObjectName(TOTEXT(mObjMesh4));
-	}
+    ManipsStates(const ManipsStates &) = delete;
+    ManipsStates & operator =(const ManipsStates &) = delete;
 
-	virtual ~ManipsStates() = default;
+    ManipsStates()
+        : mObjWriteAttr(&mObjWriteManip) {
+        mObjMesh1.setObjectName(TOTEXT(mObjMesh1));
+        mObjMesh2.setObjectName(TOTEXT(mObjMesh2));
+        mObjMesh3.setObjectName(TOTEXT(mObjMesh3));
+        mObjMesh4.setObjectName(TOTEXT(mObjMesh4));
+    }
 
-	/*!
-	 * \details Processes all the meshes with the specified writer.
-	 * \param writer
-	 */
-	void processMeshes(AbstractWriter * writer) {
-		processMesh(writer, mObjMesh1);
-		processMesh(writer, mObjMesh2);
-		processMesh(writer, mObjMesh3);
-		processMesh(writer, mObjMesh4);
-	}
+    virtual ~ManipsStates() = default;
 
-	/*!
-	 * \details Processes the specified mesh with the specified writer.
-	 * \param writer 
-	 * \param mesh 
-	 */
-	void processMesh(AbstractWriter * writer, ObjMesh & mesh) {
-		mObjWriteAttr.write(writer, &mesh);
-		mObjWriteManip.write(writer, &mesh);
-	}
+    /*!
+     * \details Processes all the meshes with the specified writer.
+     * \param writer
+     */
+    void processMeshes(AbstractWriter * writer) {
+        processMesh(writer, mObjMesh1);
+        processMesh(writer, mObjMesh2);
+        processMesh(writer, mObjMesh3);
+        processMesh(writer, mObjMesh4);
+    }
 
-	ObjWriteManip mObjWriteManip;
-	ObjWriteAttr mObjWriteAttr;
+    /*!
+     * \details Processes the specified mesh with the specified writer.
+     * \param writer 
+     * \param mesh 
+     */
+    void processMesh(AbstractWriter * writer, ObjMesh & mesh) {
+        mObjWriteAttr.write(writer, &mesh);
+        mObjWriteManip.write(writer, &mesh);
+    }
 
-	ObjMesh mObjMesh1;
-	ObjMesh mObjMesh2;
-	ObjMesh mObjMesh3;
-	ObjMesh mObjMesh4;
+    ObjWriteManip mObjWriteManip;
+    ObjWriteAttr mObjWriteAttr;
 
-	AttrManipCmd mManipCmd;
-	AttrManipCmdAxis mManipComdAxis;
-	AttrManipNoop mManipNoop;
-	AttrManipPush mManipPush;
+    ObjMesh mObjMesh1;
+    ObjMesh mObjMesh2;
+    ObjMesh mObjMesh3;
+    ObjMesh mObjMesh4;
 
-	AttrManipPanel mManipPanel;
-	AttrManipNone mManipNone;
+    AttrManipCmd mManipCmd;
+    AttrManipCmdAxis mManipComdAxis;
+    AttrManipNoop mManipNoop;
+    AttrManipPush mManipPush;
+
+    AttrManipPanel mManipPanel;
+    AttrManipNone mManipNone;
 
 };
 
@@ -127,10 +126,10 @@ public:
 
 // The objects do not have any manipulator.
 TEST_F(ManipsStates, no_manips) {
-	MockWriter writer;
-	EXPECT_CALL(writer, printLine(_)).Times(0);
-	processMeshes(&writer);
-	ASSERT_EQ(0, mObjWriteManip.count());
+    MockWriter writer;
+    EXPECT_CALL(writer, printLine(_)).Times(0);
+    processMeshes(&writer);
+    ASSERT_EQ(0, mObjWriteManip.count());
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -148,22 +147,25 @@ TEST_F(ManipsStates, no_manips) {
  *    -     [obj4]
 \* ================================================ */
 TEST_F(ManipsStates, one_manip) {
-	InSequence dummy;
-	MockWriter writer;
-	// 1 manipulator
+    InSequence dummy;
+    MockWriter writer;
+    // 1 manipulator
 
-	mManipCmd.setCommand("test");
-	// Manip
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	// No Manip
-	// mObjMesh2
-	// mObjMesh3
-	// mObjMesh4
+    mManipCmd.setCmd("test");
+    // Manip
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    // No Manip
+    // mObjMesh2
+    // mObjMesh3
+    // mObjMesh4
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh1.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMeshes(&writer);
-	ASSERT_EQ(1, mObjWriteManip.count());
+    TestWriter w(false);
+    const auto count = mObjMesh1.pAttr.manipulator()->printObj(w);
+
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMeshes(&writer);
+    ASSERT_EQ(count + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -177,22 +179,25 @@ TEST_F(ManipsStates, one_manip) {
  *    -     [obj4]
 \* ================================================ */
 TEST_F(ManipsStates, two_manips_with_the_same_vals) {
-	InSequence dummy;
-	MockWriter writer;
-	// 2 the same manipulators
+    InSequence dummy;
+    MockWriter writer;
+    // 2 the same manipulators
 
-	mManipCmd.setCommand("test");
-	// Manip
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	// No Manip
-	// mObjMesh3
-	// mObjMesh4
+    mManipCmd.setCmd("test");
+    // Manip
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    // No Manip
+    // mObjMesh3
+    // mObjMesh4
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh1.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMeshes(&writer);
-	ASSERT_EQ(1, mObjWriteManip.count());
+    TestWriter w(false);
+    const auto count = mObjMesh1.pAttr.manipulator()->printObj(w);
+
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMeshes(&writer);
+    ASSERT_EQ(count + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -206,22 +211,25 @@ TEST_F(ManipsStates, two_manips_with_the_same_vals) {
  *    -     [obj4]
 \* ================================================ */
 TEST_F(ManipsStates, three_manips_with_the_same_vals) {
-	InSequence dummy;
-	MockWriter writer;
-	// 3 the same manipulators
+    InSequence dummy;
+    MockWriter writer;
+    // 3 the same manipulators
 
-	mManipCmd.setCommand("test");
-	// Manip
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	// No Manip
-	// mObjMesh4
+    mManipCmd.setCmd("test");
+    // Manip
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    // No Manip
+    // mObjMesh4
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh1.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMeshes(&writer);
-	ASSERT_EQ(1, mObjWriteManip.count());
+    TestWriter w(false);
+    const auto count = mObjMesh1.pAttr.manipulator()->printObj(w);
+
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMeshes(&writer);
+    ASSERT_EQ(count + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -234,20 +242,23 @@ TEST_F(ManipsStates, three_manips_with_the_same_vals) {
  *    -     [obj4]
 \* ================================================ */
 TEST_F(ManipsStates, four_manips_with_the_same_vals) {
-	InSequence dummy;
-	MockWriter writer;
-	// 4 the same manipulators
+    InSequence dummy;
+    MockWriter writer;
+    // 4 the same manipulators
 
-	mManipCmd.setCommand("test");
-	// Manip
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	mObjMesh4.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mManipCmd.setCmd("test");
+    // Manip
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh4.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh1.pAttr.manipulator()).c_str()))).Times(1);
-	processMeshes(&writer);
-	ASSERT_EQ(1, mObjWriteManip.count());
+    TestWriter w(false);
+    const auto count = mObjMesh1.pAttr.manipulator()->printObj(w);
+
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMeshes(&writer);
+    ASSERT_EQ(count, mObjWriteManip.count());
 }
 
 /* ================================================ *\
@@ -263,29 +274,38 @@ TEST_F(ManipsStates, four_manips_with_the_same_vals) {
  *    -     [obj4]
 \* ================================================ */
 TEST_F(ManipsStates, four_manips_with_the_different_vals) {
-	InSequence dummy;
-	MockWriter writer;
-	// 4 different manipulators
+    InSequence dummy;
+    MockWriter writer;
+    // 4 different manipulators
 
-	// Manip
-	mManipCmd.setCommand("test1");
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	// Manip
-	mManipCmd.setCommand("test2");
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	// Manip
-	mManipCmd.setCommand("test3");
-	mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	// Manip
-	mManipCmd.setCommand("test4");
-	mObjMesh4.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    // Manip
+    mManipCmd.setCmd("test1");
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    // Manip
+    mManipCmd.setCmd("test2");
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    // Manip
+    mManipCmd.setCmd("test3");
+    mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    // Manip
+    mManipCmd.setCmd("test4");
+    mObjMesh4.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh1.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh2.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh3.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh4.pAttr.manipulator()).c_str()))).Times(1);
-	processMeshes(&writer);
-	ASSERT_EQ(4, mObjWriteManip.count());
+    TestWriter w1(false);
+    TestWriter w2(false);
+    TestWriter w3(false);
+    TestWriter w4(false);
+    const auto count1 = mObjMesh1.pAttr.manipulator()->printObj(w1);
+    const auto count2 = mObjMesh2.pAttr.manipulator()->printObj(w2);
+    const auto count3 = mObjMesh3.pAttr.manipulator()->printObj(w3);
+    const auto count4 = mObjMesh4.pAttr.manipulator()->printObj(w4);
+
+    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w2.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w4.mResult))).Times(1);
+    processMeshes(&writer);
+    ASSERT_EQ(count1 + count2 + count3 + count4, mObjWriteManip.count());
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -305,25 +325,33 @@ TEST_F(ManipsStates, four_manips_with_the_different_vals) {
  *    -     [obj4]
 \* ================================================ */
 TEST_F(ManipsStates, four_different_manips) {
-	InSequence dummy;
-	MockWriter writer;
+    InSequence dummy;
+    MockWriter writer;
 
-	// Manip
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	// Manip
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmdAxis(mManipComdAxis));
-	// Manip
-	mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
-	// Manip
-	mObjMesh4.pAttr.setManipulator(new AttrManipPush(mManipPush));
+    // Manip
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    // Manip
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmdAxis(mManipComdAxis));
+    // Manip
+    mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
+    // Manip
+    mObjMesh4.pAttr.setManipulator(new AttrManipPush(mManipPush));
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh1.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh2.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh3.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh4.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(dynamic_cast<const AttrManipWheel&>(*mObjMesh4.pAttr.manipulator())).c_str()))).Times(0);
-	processMeshes(&writer);
-	ASSERT_EQ(4, mObjWriteManip.count());
+    TestWriter w1(false);
+    TestWriter w2(false);
+    TestWriter w3(false);
+    TestWriter w4(false);
+    const auto count1 = mObjMesh1.pAttr.manipulator()->printObj(w1);
+    const auto count2 = mObjMesh2.pAttr.manipulator()->printObj(w2);
+    const auto count3 = mObjMesh3.pAttr.manipulator()->printObj(w3);
+    const auto count4 = mObjMesh4.pAttr.manipulator()->printObj(w4);
+
+    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w2.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w4.mResult))).Times(1);
+    processMeshes(&writer);
+    ASSERT_EQ(count1 + count2 + count3 + count4, mObjWriteManip.count());
 }
 
 /* ================================================ *\
@@ -339,24 +367,31 @@ TEST_F(ManipsStates, four_different_manips) {
  *    -     [obj4]
 \* ================================================ */
 TEST_F(ManipsStates, three_different_manips) {
-	InSequence dummy;
-	MockWriter writer;
+    InSequence dummy;
+    MockWriter writer;
 
-	// Manip
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	// Manip
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmdAxis(mManipComdAxis));
-	// Manip
-	mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
-	// No Manip
-	// mObjMesh4
+    // Manip
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    // Manip
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmdAxis(mManipComdAxis));
+    // Manip
+    mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
+    // No Manip
+    // mObjMesh4
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh1.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh2.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh3.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMeshes(&writer);
-	ASSERT_EQ(3, mObjWriteManip.count());
+    TestWriter w1(false);
+    TestWriter w2(false);
+    TestWriter w3(false);
+    const auto count1 = mObjMesh1.pAttr.manipulator()->printObj(w1);
+    const auto count2 = mObjMesh2.pAttr.manipulator()->printObj(w2);
+    const auto count3 = mObjMesh3.pAttr.manipulator()->printObj(w3);
+
+    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w2.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMeshes(&writer);
+    ASSERT_EQ(count1 + count2 + count3 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -371,23 +406,29 @@ TEST_F(ManipsStates, three_different_manips) {
  *    -     [obj4]
 \* ================================================ */
 TEST_F(ManipsStates, two_the_same_and_two_different_manips) {
-	InSequence dummy;
-	MockWriter writer;
+    InSequence dummy;
+    MockWriter writer;
 
-	// Manip
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	// Manip
-	mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
-	// Manip
-	mObjMesh4.pAttr.setManipulator(new AttrManipPush(mManipPush));
+    // Manip
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    // Manip
+    mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
+    // Manip
+    mObjMesh4.pAttr.setManipulator(new AttrManipPush(mManipPush));
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh1.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh3.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh4.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(dynamic_cast<const AttrManipWheel&>(*mObjMesh4.pAttr.manipulator())).c_str()))).Times(0);
-	processMeshes(&writer);
-	ASSERT_EQ(3, mObjWriteManip.count());
+    TestWriter w1(false);
+    TestWriter w3(false);
+    TestWriter w4(false);
+    const auto count1 = mObjMesh1.pAttr.manipulator()->printObj(w1);
+    const auto count3 = mObjMesh3.pAttr.manipulator()->printObj(w3);
+    const auto count4 = mObjMesh4.pAttr.manipulator()->printObj(w4);
+
+    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w4.mResult))).Times(1);
+    processMeshes(&writer);
+    ASSERT_EQ(count1 + count3 + count4, mObjWriteManip.count());
 }
 
 /* ================================================ *\
@@ -403,25 +444,31 @@ TEST_F(ManipsStates, two_the_same_and_two_different_manips) {
  *    -     [obj4]
 \* ================================================ */
 TEST_F(ManipsStates, one_manip_and_two_different_manips) {
-	InSequence dummy;
-	MockWriter writer;
+    InSequence dummy;
+    MockWriter writer;
 
-	// Manip
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	// No Manip
-	// mObjMesh2
-	// Manip
-	mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
-	// Manip
-	mObjMesh4.pAttr.setManipulator(new AttrManipPush(mManipPush));
+    // Manip
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    // No Manip
+    // mObjMesh2
+    // Manip
+    mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
+    // Manip
+    mObjMesh4.pAttr.setManipulator(new AttrManipPush(mManipPush));
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh1.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh3.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh4.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(dynamic_cast<const AttrManipWheel&>(*mObjMesh4.pAttr.manipulator())).c_str()))).Times(0);
-	processMeshes(&writer);
-	ASSERT_EQ(3, mObjWriteManip.count());
+    TestWriter w1(false);
+    TestWriter w3(false);
+    TestWriter w4(false);
+    const auto count1 = mObjMesh1.pAttr.manipulator()->printObj(w1);
+    const auto count3 = mObjMesh3.pAttr.manipulator()->printObj(w3);
+    const auto count4 = mObjMesh4.pAttr.manipulator()->printObj(w4);
+
+    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w4.mResult))).Times(1);
+    processMeshes(&writer);
+    ASSERT_EQ(count1 + count3 + count4 + 1, mObjWriteManip.count()); //  + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -437,24 +484,31 @@ TEST_F(ManipsStates, one_manip_and_two_different_manips) {
  *    -     [obj4]
 \* ================================================ */
 TEST_F(ManipsStates, two_different_manips) {
-	InSequence dummy;
-	MockWriter writer;
+    InSequence dummy;
+    MockWriter writer;
 
-	// Manip
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	// No Manip
-	// mObjMesh2
-	// Manip
-	mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
-	// No Manip
-	// mObjMesh4
+    // Manip
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    // No Manip
+    // mObjMesh2
+    // Manip
+    mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
+    // No Manip
+    // mObjMesh4
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh1.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mObjMesh3.pAttr.manipulator()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMeshes(&writer);
-	ASSERT_EQ(2, mObjWriteManip.count());
+    TestWriter w1(false);
+    TestWriter w2(false);
+    TestWriter w3(false);
+    TestWriter w4(false);
+    const auto count1 = mObjMesh1.pAttr.manipulator()->printObj(w1);
+    const auto count3 = mObjMesh3.pAttr.manipulator()->printObj(w3);
+
+    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMeshes(&writer);
+    ASSERT_EQ(count1 + count3 + 1 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -475,22 +529,21 @@ TEST_F(ManipsStates, two_different_manips) {
  *
 \* ================================================ */
 TEST_F(ManipsStates, manip_panel_relation_simple_case2) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::region_1);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(_)).Times(0);
-	processMesh(&writer, mObjMesh1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(0, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(_)).Times(0);
+    processMesh(&writer, mObjMesh1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check counter
+    ASSERT_EQ(0, mObjWriteManip.count());
+    //---------------------------
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -523,30 +576,33 @@ TEST_F(ManipsStates, manip_panel_relation_simple_case2) {
  *
 \* ================================================ */
 TEST_F(ManipsStates, manip_panel_disabling_panel_case1) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::region_1);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr1);
-	mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
-	mManipPanel.setCockpit(cpAttr1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StartsWith(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipPanel).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(1, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::region_1);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    mManipPanel.setCockpit(cpAttr1);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StartsWith(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    TestWriter w(false);
+    const auto result = mManipPanel.printObj(w);
+    ASSERT_EQ(1, result);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check counter + ATTR_MANIP_NONE
+    ASSERT_EQ(1 + 1, mObjWriteManip.count());
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -564,29 +620,32 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case1) {
  *
 \* ================================================ */
 TEST_F(ManipsStates, manip_panel_disabling_panel_case2) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr1);
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(1, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    TestWriter w(false);
+    const auto result = mManipCmd.printObj(w);
+    ASSERT_EQ(1, result);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check counter + ATTR_MANIP_NONE
+    ASSERT_EQ(1 + 1, mObjWriteManip.count());
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -605,29 +664,29 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case2) {
  *
 \* ================================================ */
 TEST_F(ManipsStates, manip_panel_disabling_panel_case3) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr1);
-	mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(_)).Times(0);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(0, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(_)).Times(0);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check counter
+    ASSERT_EQ(0, mObjWriteManip.count());
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -646,30 +705,33 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case3) {
  *
 \* ================================================ */
 TEST_F(ManipsStates, manip_panel_disabling_panel_case4) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr1);
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(_)).Times(0);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(1, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //---------------------------
+    // check printing
+    TestWriter w(false);
+    const auto result = mManipCmd.printObj(w);
+    ASSERT_EQ(1, result);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(_)).Times(0);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check counter
+    ASSERT_EQ(1, mObjWriteManip.count());
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -688,30 +750,30 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case4) {
  *
 \* ================================================ */
 TEST_F(ManipsStates, manip_panel_disabling_panel_case5) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	AttrCockpit cpAttr2(AttrCockpit::region_1);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr2);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr2).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(0, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    const AttrCockpit cpAttr2(AttrCockpit::region_1);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr2);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr2)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check counter + ATTR_MANIP_NONE
+    ASSERT_EQ(1 + 1, mObjWriteManip.count());
+    //---------------------------
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -732,26 +794,26 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case5) {
  *
 \* ================================================ */
 TEST_F(ManipsStates, manip_cockpit_relation_simple_case_1) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	//---------------------------
-	// set data
-	mObjMesh2.pAttr.setCockpit(cpAttr1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(_)).Times(0);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(0, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    //---------------------------
+    // set data
+    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(_)).Times(0);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check counter + ATTR_MANIP_NONE
+    ASSERT_EQ(1, mObjWriteManip.count());
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -769,32 +831,35 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_1) {
  *
  \* ================================================ */
 TEST_F(ManipsStates, manip_cockpit_relation_simple_case_2) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr1);
-	//------
-	// mObjMesh3
-	//------
-	// mObjMesh4
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(1, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    //------
+    // mObjMesh3
+    //------
+    // mObjMesh4
+    //---------------------------
+    // check printing
+    TestWriter w(false);
+    const auto result = mManipCmd.printObj(w);
+    ASSERT_EQ(1, result);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check counter + ATTR_MANIP_NONE
+    ASSERT_EQ(1 + 1, mObjWriteManip.count());
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -813,30 +878,33 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_2) {
  *
 \* ================================================ */
 TEST_F(ManipsStates, manip_cockpit_relation_simple_case_4) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//------
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(2, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //------
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //---------------------------
+    // check printing
+    TestWriter w(false);
+    const auto result = mManipCmd.printObj(w);
+    ASSERT_EQ(1, result);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check counter
+    ASSERT_EQ(2, mObjWriteManip.count());
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -854,30 +922,30 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_4) {
  *
 \* ================================================ */
 TEST_F(ManipsStates, manip_cockpit_relation_simple_case_5) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	AttrCockpit cpAttr2(AttrCockpit::region_1);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr2);
-	mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr2).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(0, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    const AttrCockpit cpAttr2(AttrCockpit::region_1);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr2);
+    mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr2)))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check counter
+    ASSERT_EQ(0, mObjWriteManip.count());
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -895,32 +963,35 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_5) {
  *
 \* ================================================ */
 TEST_F(ManipsStates, manip_cockpit_relation_simple_case_6) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	AttrCockpit cpAttr2(AttrCockpit::region_1);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr2);
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr2).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(2, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    const AttrCockpit cpAttr2(AttrCockpit::region_1);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr2);
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //---------------------------
+    // check printing
+    TestWriter w(false);
+    const auto result = mManipCmd.printObj(w);
+    ASSERT_EQ(1, result);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr2)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check counter
+    ASSERT_EQ(2, mObjWriteManip.count());
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -939,31 +1010,34 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_6) {
  *
 \* ================================================ */
 TEST_F(ManipsStates, manip_cockpit_relation_simple_case_7) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	AttrCockpit cpAttr2(AttrCockpit::region_1);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr2);
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr2).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(1, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    const AttrCockpit cpAttr2(AttrCockpit::region_1);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr2);
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    TestWriter w(false);
+    const auto result = mManipCmd.printObj(w);
+    ASSERT_EQ(1, result);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr2)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check counter
+    ASSERT_EQ(1, mObjWriteManip.count());
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -982,31 +1056,34 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_7) {
 *
 \* ================================================ */
 TEST_F(ManipsStates, manip_cockpit_relation_simple_case_8) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	AttrCockpit cpAttr2(AttrCockpit::region_1);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr2);
-	mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr2).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(1, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    const AttrCockpit cpAttr2(AttrCockpit::region_1);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr2);
+    mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    //---------------------------
+    // check printing
+    TestWriter w(false);
+    const auto result = mManipCmd.printObj(w);
+    ASSERT_EQ(1, result);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr2)))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check counter
+    ASSERT_EQ(1, mObjWriteManip.count());
+    //---------------------------
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -1033,45 +1110,48 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_8) {
  * 
 \* ================================================ */
 TEST_F(ManipsStates, manip_cockpit_relation_complex_case_1) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	AttrCockpit cpAttr2(AttrCockpit::region_1);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr2);
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//------
-	mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//------
-	mObjMesh4.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr2).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh3);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(_)).Times(0);
-	processMesh(&writer, mObjMesh4);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(3, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    const AttrCockpit cpAttr2(AttrCockpit::region_1);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr2);
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //------
+    mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //------
+    mObjMesh4.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //---------------------------
+    // check printing
+    TestWriter w(false);
+    const auto result = mManipCmd.printObj(w);
+    ASSERT_EQ(1, result);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr2)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh3);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(_)).Times(0);
+    processMesh(&writer, mObjMesh4);
+    //---------------------------
+    // check counter
+    ASSERT_EQ(3, mObjWriteManip.count());
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -1093,42 +1173,51 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_1) {
  * 
 \* ================================================ */
 TEST_F(ManipsStates, manip_cockpit_relation_complex_case_2) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr1);
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmdAxis(mManipComdAxis));
-	//------
-	mObjMesh3.pAttr.setManipulator(new AttrManipPush(mManipPush));
-	//------
-	mObjMesh4.pAttr.setManipulator(new AttrManipPush(mManipPush));
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipComdAxis).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipPush).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh3);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(_)).Times(0);
-	processMesh(&writer, mObjMesh4);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(3, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmdAxis(mManipComdAxis));
+    //------
+    mObjMesh3.pAttr.setManipulator(new AttrManipPush(mManipPush));
+    //------
+    mObjMesh4.pAttr.setManipulator(new AttrManipPush(mManipPush));
+    //---------------------------
+    // check printing
+    TestWriter w1(false);
+    const auto result1 = mManipCmd.printObj(w1);
+    ASSERT_EQ(1, result1);
+    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    TestWriter w2(false);
+    const auto result2 = mManipComdAxis.printObj(w2);
+    ASSERT_EQ(1, result2);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w2.mResult))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check printing
+    TestWriter w3(false);
+    const auto result3 = mManipPush.printObj(w3);
+    ASSERT_EQ(1, result3);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
+    processMesh(&writer, mObjMesh3);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(_)).Times(0);
+    processMesh(&writer, mObjMesh4);
+    //---------------------------
+    // check counter
+    ASSERT_EQ(3, mObjWriteManip.count());
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -1150,38 +1239,41 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_2) {
  * 
 \* ================================================ */
 TEST_F(ManipsStates, manip_cockpit_relation_complex_case_3) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr1);
-	//------
-	mObjMesh3.pAttr.setCockpit(cpAttr1);
-	//------
-	mObjMesh4.pAttr.setCockpit(cpAttr1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(_)).Times(0);
-	processMesh(&writer, mObjMesh3);
-	processMesh(&writer, mObjMesh4);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(1, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    //------
+    mObjMesh3.pAttr.setCockpit(cpAttr1);
+    //------
+    mObjMesh4.pAttr.setCockpit(cpAttr1);
+    //---------------------------
+    // check printing
+    TestWriter w(false);
+    const auto result = mManipCmd.printObj(w);
+    ASSERT_EQ(1, result);
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(_)).Times(0);
+    processMesh(&writer, mObjMesh3);
+    processMesh(&writer, mObjMesh4);
+    //---------------------------
+    // check counter
+    ASSERT_EQ(1 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -1203,41 +1295,44 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_3) {
  * 
 \* ================================================ */
 TEST_F(ManipsStates, manip_cockpit_relation_complex_case_4) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr1);
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//------
-	mObjMesh3.pAttr.setCockpit(cpAttr1);
-	//------
-	// mObjMesh4
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMesh(&writer, mObjMesh3);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
-	processMesh(&writer, mObjMesh4);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(1, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //------
+    mObjMesh3.pAttr.setCockpit(cpAttr1);
+    //------
+    // mObjMesh4
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    TestWriter w(false);
+    const auto result = mManipCmd.printObj(w);
+    ASSERT_EQ(1, result);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMesh(&writer, mObjMesh3);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    processMesh(&writer, mObjMesh4);
+    //---------------------------
+    // check counter
+    ASSERT_EQ(1 + 1 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
+    //---------------------------
 }
 
 /* ================================================ *\
@@ -1259,42 +1354,45 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_4) {
  * 
 \* ================================================ */
 TEST_F(ManipsStates, manip_cockpit_relation_complex_case_5) {
-	// make data
-	MockWriter writer;
-	InSequence dummy;
-	AttrCockpit cpAttr1(AttrCockpit::cockpit);
-	//---------------------------
-	// set data
-	mObjMesh1.pAttr.setCockpit(cpAttr1);
-	//------
-	mObjMesh2.pAttr.setCockpit(cpAttr1);
-	mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//------
-	mObjMesh3.pAttr.setCockpit(cpAttr1);
-	mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-	//------
-	// mObjMesh4
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-	processMesh(&writer, mObjMesh1);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(toObjString(mManipCmd).c_str()))).Times(1);
-	processMesh(&writer, mObjMesh2);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(_)).Times(0);
-	processMesh(&writer, mObjMesh3);
-	//---------------------------
-	// check printing
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
-	processMesh(&writer, mObjMesh4);
-	//---------------------------
-	// check counter
-	ASSERT_EQ(1, mObjWriteManip.count());
-	//---------------------------
+    // make data
+    MockWriter writer;
+    InSequence dummy;
+    const AttrCockpit cpAttr1(AttrCockpit::cockpit);
+    //---------------------------
+    // set data
+    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    //------
+    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //------
+    mObjMesh3.pAttr.setCockpit(cpAttr1);
+    mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    //------
+    // mObjMesh4
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(toObjString(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    processMesh(&writer, mObjMesh1);
+    //---------------------------
+    // check printing
+    TestWriter w(false);
+    const auto result = mManipCmd.printObj(w);
+    ASSERT_EQ(1, result);
+    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    processMesh(&writer, mObjMesh2);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(_)).Times(0);
+    processMesh(&writer, mObjMesh3);
+    //---------------------------
+    // check printing
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    processMesh(&writer, mObjMesh4);
+    //---------------------------
+    // check counter
+    ASSERT_EQ(1 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
+    //---------------------------
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/

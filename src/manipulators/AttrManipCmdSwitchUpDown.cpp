@@ -27,65 +27,82 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "sts/utilities/Compare.h"
+#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown.h"
-#include "xpln/enums//EManipulator.h"
-#include "sts/string/StringConverters.h"
-#include <sts/utilities/Compare.h>
+#include "xpln/enums/EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipCmdSwitchUpDown::AttrManipCmdSwitchUpDown()
-		: AttrManipBase(EManipulator(EManipulator::command_switch_ud)) { }
+AttrManipCmdSwitchUpDown::AttrManipCmdSwitchUpDown()
+    : AttrManipBase(EManipulator(EManipulator::command_switch_ud)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	const std::string & AttrManipCmdSwitchUpDown::cmdPositive() const {
-		return mPosCommand;
-	}
+const std::string & AttrManipCmdSwitchUpDown::cmdPositive() const {
+    return mPosCommand;
+}
 
-	void AttrManipCmdSwitchUpDown::setCmdPositive(const std::string & val) {
-		mPosCommand = val;
-	}
+void AttrManipCmdSwitchUpDown::setCmdPositive(const std::string & val) {
+    mPosCommand = val;
+}
 
-	const std::string & AttrManipCmdSwitchUpDown::cmdNegative() const {
-		return mNegCommand;
-	}
+const std::string & AttrManipCmdSwitchUpDown::cmdNegative() const {
+    return mNegCommand;
+}
 
-	void AttrManipCmdSwitchUpDown::setCmdNegative(const std::string & val) {
-		mNegCommand = val;
-	}
+void AttrManipCmdSwitchUpDown::setCmdNegative(const std::string & val) {
+    mNegCommand = val;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipCmdSwitchUpDown::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipCmdSwitchUpDown::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipCmdSwitchUpDown * right = dynamic_cast<const AttrManipCmdSwitchUpDown*>(manip);
-		if (!right)
-			return false;
+    const auto * right = dynamic_cast<const AttrManipCmdSwitchUpDown*>(manip);
+    if (!right)
+        return false;
 
-		return (sts::isEqual(mPosCommand, right->mPosCommand) &&
-				sts::isEqual(mNegCommand, right->mNegCommand));
-	}
+    return (sts::isEqual(mPosCommand, right->mPosCommand) &&
+            sts::isEqual(mNegCommand, right->mNegCommand));
+}
 
-	AttrManipBase * AttrManipCmdSwitchUpDown::clone() const {
-		return new AttrManipCmdSwitchUpDown(*this);
-	}
+AttrManipBase * AttrManipCmdSwitchUpDown::clone() const {
+    return new AttrManipCmdSwitchUpDown(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipCmdSwitchUpDown::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_SWITCH_UP_DOWN;
+    outStr << " " << cursor().toString();
+    outStr << " " << cmdPositive();
+    outStr << " " << cmdNegative();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1;
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

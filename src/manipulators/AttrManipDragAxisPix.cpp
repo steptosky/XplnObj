@@ -27,105 +27,123 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/manipulators/AttrManipDragAxisPix.h"
-#include "xpln/enums//EManipulator.h"
-#include "sts/string/StringConverters.h"
 #include "sts/utilities/Compare.h"
+#include "converters/StringStream.h"
+#include "xpln/obj/manipulators/AttrManipDragAxisPix.h"
+#include "xpln/enums/EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipDragAxisPix::AttrManipDragAxisPix()
-		: AttrManipBase(EManipulator(EManipulator::drag_axis_pix)) { }
+AttrManipDragAxisPix::AttrManipDragAxisPix()
+    : AttrManipBase(EManipulator(EManipulator::drag_axis_pix)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipDragAxisPix::setDxPix(int val) {
-		mDxPix = val;
-	}
+void AttrManipDragAxisPix::setDxPix(const int val) {
+    mDxPix = val;
+}
 
-	void AttrManipDragAxisPix::setStep(int val) {
-		mStep = val;
-	}
+void AttrManipDragAxisPix::setStep(const int val) {
+    mStep = val;
+}
 
-	void AttrManipDragAxisPix::setExp(float val) {
-		mExp = val;
-	}
+void AttrManipDragAxisPix::setExp(const float val) {
+    mExp = val;
+}
 
-	int AttrManipDragAxisPix::dxPix() const {
-		return mDxPix;
-	}
+int AttrManipDragAxisPix::dxPix() const {
+    return mDxPix;
+}
 
-	int AttrManipDragAxisPix::step() const {
-		return mStep;
-	}
+int AttrManipDragAxisPix::step() const {
+    return mStep;
+}
 
-	float AttrManipDragAxisPix::exp() const {
-		return mExp;
-	}
+float AttrManipDragAxisPix::exp() const {
+    return mExp;
+}
 
-	void AttrManipDragAxisPix::setVal1(float val) {
-		mVal1 = val;
-	}
+void AttrManipDragAxisPix::setVal1(const float val) {
+    mVal1 = val;
+}
 
-	void AttrManipDragAxisPix::setVal2(float val) {
-		mVal2 = val;
-	}
+void AttrManipDragAxisPix::setVal2(const float val) {
+    mVal2 = val;
+}
 
-	float AttrManipDragAxisPix::val1() const {
-		return mVal1;
-	}
+float AttrManipDragAxisPix::val1() const {
+    return mVal1;
+}
 
-	float AttrManipDragAxisPix::val2() const {
-		return mVal2;
-	}
+float AttrManipDragAxisPix::val2() const {
+    return mVal2;
+}
 
-	const std::string & AttrManipDragAxisPix::dataref() const {
-		return mDataref;
-	}
+const std::string & AttrManipDragAxisPix::dataref() const {
+    return mDataref;
+}
 
-	void AttrManipDragAxisPix::setDataref(const std::string & val) {
-		mDataref = val;
-	}
+void AttrManipDragAxisPix::setDataref(const std::string & val) {
+    mDataref = val;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipDragAxisPix::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipDragAxisPix::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipDragAxisPix * right = dynamic_cast<const AttrManipDragAxisPix*>(manip);
-		if (!right)
-			return false;
+    const auto * right = dynamic_cast<const AttrManipDragAxisPix*>(manip);
+    if (!right)
+        return false;
 
-		const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-		if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
-			return false;
+    return (sts::isEqual(mDxPix, right->mDxPix) &&
+            sts::isEqual(mStep, right->mStep) &&
+            sts::isEqual(mExp, right->mExp) &&
+            sts::isEqual(mVal1, right->mVal1) &&
+            sts::isEqual(mVal2, right->mVal2) &&
+            sts::isEqual(mWheel, right->mWheel) &&
+            sts::isEqual(mDataref, right->mDataref));
+}
 
-		return (sts::isEqual(mDxPix, right->mDxPix) &&
-				sts::isEqual(mStep, right->mStep) &&
-				sts::isEqual(mExp, right->mExp) &&
-				sts::isEqual(mVal1, right->mVal1) &&
-				sts::isEqual(mVal2, right->mVal2) &&
-				sts::isEqual(mDataref, right->mDataref));
-	}
+AttrManipBase * AttrManipDragAxisPix::clone() const {
+    return new AttrManipDragAxisPix(*this);
+}
 
-	AttrManipBase * AttrManipDragAxisPix::clone() const {
-		return new AttrManipDragAxisPix(*this);
-	}
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+std::size_t AttrManipDragAxisPix::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_DRAG_AXIS_PIX;
+    outStr << " " << cursor().toString();
+    outStr << " " << dxPix();
+    outStr << " " << step();
+    outStr << " " << exp();
+    outStr << " " << val1();
+    outStr << " " << val2();
+    outStr << " " << dataref();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1 + wheel().printObj(writer);
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

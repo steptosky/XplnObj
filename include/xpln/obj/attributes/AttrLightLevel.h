@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,82 +29,80 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <string>
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details ATTR_light_level
-	 * \ingroup Attributes
-	 */
-	class AttrLightLevel {
-	public:
+/*!
+ * \details ATTR_light_level
+ * \ingroup Attributes
+ */
+class AttrLightLevel {
+public:
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Constructor default.
-		 * \note Makes the disabled attribute.
-		 */
-		XpObjLib AttrLightLevel();
+    /*!
+     * \details Constructor default.
+     * \note Makes the disabled attribute.
+     */
+    XpObjLib AttrLightLevel();
 
-		/*!
-		 * \note Makes the enabled attribute.
-		 */
-		XpObjLib AttrLightLevel(float val1, float val2, const std::string & dataRef);
+    /*!
+     * \note Makes the enabled attribute.
+     */
+    XpObjLib AttrLightLevel(float val1, float val2, const std::string & dataRef);
 
-		~AttrLightLevel() = default;
+    ~AttrLightLevel() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Check whether the attribute is enabled.
-		 * \note Any class's setter will enable this attribute.
-		 */
-		XpObjLib operator bool() const;
+    /*!
+     * \details Check whether the attribute is enabled.
+     * \note Any class's setter will enable this attribute.
+     */
+    XpObjLib operator bool() const;
 
-		/*!
-		 * \details Sets the attribute enabled/disabled.
-		 * \note Any class's setter will enable this attribute.
-		 * \param [in] state
-		 */
-		XpObjLib void setEnabled(bool state);
+    /*!
+     * \details Sets the attribute enabled/disabled.
+     * \note Any class's setter will enable this attribute.
+     * \param [in] state
+     */
+    XpObjLib void setEnabled(bool state);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrLightLevel & other) const;
-		XpObjLib bool operator!=(const AttrLightLevel & other) const;
+    XpObjLib bool operator==(const AttrLightLevel & other) const;
+    XpObjLib bool operator!=(const AttrLightLevel & other) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setVal1(float val1);
-		XpObjLib void setVal2(float val2);
-		XpObjLib void setDataref(const std::string & dataRef);
+    XpObjLib void setVal1(float val1);
+    XpObjLib void setVal2(float val2);
+    XpObjLib void setDataref(const std::string & dataRef);
 
-		XpObjLib float val1() const;
-		XpObjLib float val2() const;
-		XpObjLib const std::string & dataref() const;
+    XpObjLib float val1() const;
+    XpObjLib float val2() const;
+    XpObjLib const std::string & dataref() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		float mVal1;
-		float mVal2;
-		std::string mDataref;
-		bool mIsEnabled : 1;
+    float mVal1;
+    float mVal2;
+    std::string mDataref;
+    bool mIsEnabled : 1;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

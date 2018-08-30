@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,62 +29,103 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "AttrManipBase.h"
-#include "AttrManipWheel.h"
+#include "embeddable/AttrManipWheel.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
-	/*!
-	 * \details ATTR_manip_axis_knob
-	 * \ingroup Manipulators
-	 */
-	class AttrManipAxisKnob : public AttrManipBase, public AttrManipWheel {
-	public:
+/*!
+ * \details ATTR_manip_axis_knob
+ * \ingroup Manipulators
+ */
+class AttrManipAxisKnob : public AttrManipBase {
+public:
 
-		XpObjLib AttrManipAxisKnob();
-		virtual ~AttrManipAxisKnob() = default;
+    XpObjLib AttrManipAxisKnob();
+    virtual ~AttrManipAxisKnob() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setClickDelta(float val);
-		XpObjLib void setHoldDelta(float val);
-		XpObjLib void setMinimum(float val);
-		XpObjLib void setMaximum(float val);
-		XpObjLib float clickDelta() const;
-		XpObjLib float holdDelta() const;
-		XpObjLib float minimum() const;
-		XpObjLib float maximum() const;
+    XpObjLib void setClickDelta(float val);
+    XpObjLib void setHoldDelta(float val);
+    XpObjLib void setMinimum(float val);
+    XpObjLib void setMaximum(float val);
+    XpObjLib float clickDelta() const;
+    XpObjLib float holdDelta() const;
+    XpObjLib float minimum() const;
+    XpObjLib float maximum() const;
 
-		XpObjLib const std::string & dataref() const;
-		XpObjLib void setDataref(const std::string & val);
+    XpObjLib const std::string & dataref() const;
+    XpObjLib void setDataref(const std::string & val);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*! \copydoc AttrManipBase::equals */
-		XpObjLib bool equals(const AttrManipBase * manip) const override;
+    /*!
+     * \see AttrManipWheel
+     */
+    void setWheel(const AttrManipWheel & ranges) {
+        mWheel = ranges;
+    }
 
-		/*! \copydoc AttrManipBase::clone */
-		XpObjLib AttrManipBase * clone() const override;
+    /*!
+     * \see AttrManipWheel
+     */
+    AttrManipWheel & wheel() {
+        return mWheel;
+    }
 
-		//-------------------------------------------------------------------------
+    /*!
+     * \see AttrManipWheel
+     */
+    const AttrManipWheel & wheel() const {
+        return mWheel;
+    }
+        
+    //------------------------------------------
 
-	private:
+    [[deprecated("use wheel().serEnabled()")]]
+    void setWheelEnabled(const bool state) { wheel().setEnabled(state); }
 
-		float mClickDelta = 0.0f;
-		float mHoldDelta = 0.0f;
-		float mMin = 0.0f;
-		float mMax = 0.0f;
-		std::string mDataref = "none";
+    [[deprecated("use wheel().setDelta()")]]
+    void setWheelDelta(const float delta) { wheel().setDelta(delta); }
 
-	};
+    [[deprecated("use wheel().isEnabled()")]]
+    bool isWheelEnabled() const { return wheel().isEnabled(); }
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+    [[deprecated("use wheel().delta()")]]
+    float wheelDelta() const { return wheel().delta(); }
+
+    //-------------------------------------------------------------------------
+
+    /*! \copydoc AttrManipBase::equals */
+    XpObjLib bool equals(const AttrManipBase * manip) const override;
+
+    /*! \copydoc AttrManipBase::clone */
+    XpObjLib AttrManipBase * clone() const override;
+
+    //-------------------------------------------------------------------------
+
+    /*! \copydoc AttrManipBase::printObj */
+    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
+
+    //-------------------------------------------------------------------------
+
+private:
+
+    float mClickDelta = 0.0f;
+    float mHoldDelta = 0.0f;
+    float mMin = 0.0f;
+    float mMax = 0.0f;
+    std::string mDataref = "none";
+    AttrManipWheel mWheel;
+
+};
+
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 }

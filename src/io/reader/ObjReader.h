@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,62 +29,60 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "ObjReaderListener.h"
 
 namespace xobj {
-	class IOStatistic;
+class IOStatistic;
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class ObjReadParser;
+class ObjReadParser;
 
-	class ObjReader {
+class ObjReader {
 
-		ObjReader() = default;
-		~ObjReader() = default;
+    ObjReader() = default;
+    ~ObjReader() = default;
 
-	public:
+public:
 
-		static bool readFile(const std::string & filePath, ObjReaderListener & listener);
+    static bool readFile(const std::string & filePath, ObjReaderListener & listener);
 
-	private:
+private:
 
-		bool readFile(const std::string & inFilePath) const;
+    bool readFile(const std::string & filePath) const;
 
-		static bool readCounts(ObjReadParser & parser,
-								size_t & outVertices,
-								size_t & outLines,
-								size_t & outLites,
-								size_t & outFaces);
-		static bool readHeader(ObjReadParser & parser);
-		static bool readVertex(ObjReadParser & parser, ObjMesh::VertexList & outVert, ObjReaderListener::FaceIndex & inOutIndex);
-		static bool readIndexes(ObjReadParser & parser, ObjReaderListener::FaceIndexArray & outIndexes, ObjReaderListener::FaceIndex & inOUtIndex);
-		bool readLod(ObjReadParser & parser) const;
-		bool readGlobalAttribute(ObjReadParser & parser) const;
-		bool readAttribute(ObjReadParser & parser) const;
-		bool readManipulators(ObjReadParser & parser) const;
-		bool readTris(ObjReadParser & parser) const;
-		bool readAnimBegin(ObjReadParser & parser) const;
-		bool readAnimEnd(ObjReadParser & parser) const;
-		bool readTranslateAnim(ObjReadParser & parser) const;
-		bool readHideAnim(ObjReadParser & parser) const;
-		bool readShowAnim(ObjReadParser & parser) const;
-		bool readRotateAnim(ObjReadParser & parser) const;
-		bool readTranslateKeysAnim(ObjReadParser & parser) const;
-		bool readRotateKeysAnim(ObjReadParser & parser) const;
+    static bool readCounts(ObjReadParser & parser,
+                           size_t & outVertices,
+                           size_t & outLines,
+                           size_t & outLites,
+                           size_t & outFaces);
+    static bool readHeader(ObjReadParser & parser);
+    static bool readVertex(ObjReadParser & parser, ObjMesh::VertexList & outVert, ObjReaderListener::FaceIndex & inOutIndex);
+    static bool readIndexes(ObjReadParser & parser, ObjReaderListener::FaceIndexArray & outIndexes, ObjReaderListener::FaceIndex & inOUtIndex);
+    bool readLod(ObjReadParser & parser) const;
+    bool readGlobalAttribute(ObjReadParser & parser) const;
+    bool readAttribute(ObjReadParser & parser) const;
+    bool readManipulators(ObjReadParser & parser) const;
+    bool readTris(ObjReadParser & parser) const;
+    bool readAnimBegin(ObjReadParser & parser) const;
+    bool readAnimEnd(ObjReadParser & parser) const;
+    bool readTranslateAnim(ObjReadParser & parser) const;
+    bool readHideAnim(ObjReadParser & parser) const;
+    bool readShowAnim(ObjReadParser & parser) const;
+    bool readRotateAnim(ObjReadParser & parser) const;
+    bool readTranslateKeysAnim(ObjReadParser & parser) const;
+    bool readRotateKeysAnim(ObjReadParser & parser) const;
 
-		static bool readAnimLoop(ObjReadParser & parser, float & outVal);
+    static bool readAnimLoop(ObjReadParser & parser, float & outVal);
 
-		ObjReaderListener * mObjParserListener = nullptr;
+    ObjReaderListener * mObjParserListener = nullptr;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

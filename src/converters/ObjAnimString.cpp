@@ -27,102 +27,102 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "converters/StringStream.h"
+#include "common/Logger.h"
 #include "ObjAnimString.h"
 #include "common/AttributeNames.h"
 #include "xpln/obj/animation/AnimVisibilityKey.h"
 #include "xpln/obj/animation/AnimTrans.h"
 #include "xpln/obj/animation/AnimRotate.h"
-#include "common/Logger.h"
-#include "StringStream.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	std::string toObjString(const AnimVisibilityKey & key) {
-		StringStream outStr;
-		switch (key.pType) {
-			case AnimVisibilityKey::SHOW:
-				outStr << ATTR_ANIM_SHOW;
-				break;
-			case AnimVisibilityKey::HIDE:
-				outStr << ATTR_ANIM_HIDE;
-				break;
-			case AnimVisibilityKey::UNDEFINED:
-			default:
-				LError << TOTEXT(AnimVisibilityKey) << " has undefined type";
-				return "";
-		}
-		outStr << " " << key.pValue1 << " " << key.pValue2 << "   " << key.pDrf << std::flush;
-		return outStr.str();
-	}
+std::string toObjString(const AnimVisibilityKey & key) {
+    StringStream outStr;
+    switch (key.pType) {
+        case AnimVisibilityKey::SHOW:
+            outStr << ATTR_ANIM_SHOW;
+            break;
+        case AnimVisibilityKey::HIDE:
+            outStr << ATTR_ANIM_HIDE;
+            break;
+        case AnimVisibilityKey::UNDEFINED:
+        default:
+            LError << TOTEXT(AnimVisibilityKey) << " has undefined type";
+            return "";
+    }
+    outStr << " " << key.pValue1 << " " << key.pValue2 << "   " << key.pDrf << std::flush;
+    return outStr.str();
+}
 
-	bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser) {
-		AnimVisibilityKey::eType type = AnimVisibilityKey::UNDEFINED;
-		if (parser.isMatch(ATTR_ANIM_HIDE)) {
-			type = AnimVisibilityKey::HIDE;
-		}
-		else if (parser.isMatch(ATTR_ANIM_SHOW)) {
-			type = AnimVisibilityKey::SHOW;
-		}
-		if (type == AnimVisibilityKey::UNDEFINED) {
-			return false;
-		}
-		parser.skipSpace();
-		outVal.pValue1 = parser.extractFloat();
-		parser.skipSpace();
-		outVal.pValue2 = parser.extractFloat();
-		parser.skipSpace();
-		outVal.pDrf = parser.extractWord();
-		return true;
-	}
+bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser) {
+    AnimVisibilityKey::eType type = AnimVisibilityKey::UNDEFINED;
+    if (parser.isMatch(ATTR_ANIM_HIDE)) {
+        type = AnimVisibilityKey::HIDE;
+    }
+    else if (parser.isMatch(ATTR_ANIM_SHOW)) {
+        type = AnimVisibilityKey::SHOW;
+    }
+    if (type == AnimVisibilityKey::UNDEFINED) {
+        return false;
+    }
+    parser.skipSpace();
+    outVal.pValue1 = parser.extractFloat();
+    parser.skipSpace();
+    outVal.pValue2 = parser.extractFloat();
+    parser.skipSpace();
+    outVal.pDrf = parser.extractWord();
+    return true;
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	std::string toObjString(const AnimTransKey & key) {
-		StringStream outStr;
-		outStr << ATTR_TRANS_KEY << " " << key.pDrfValue << " " << key.pPosition.toString(PRECISION) << std::flush;
-		return outStr.str();
-	}
+std::string toObjString(const AnimTransKey & key) {
+    StringStream outStr;
+    outStr << ATTR_TRANS_KEY << " " << key.pDrfValue << " " << key.pPosition.toString(PRECISION) << std::flush;
+    return outStr.str();
+}
 
-	bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser) {
-		if (!parser.isMatch(ATTR_TRANS_KEY)) {
-			return false;
-		}
-		parser.skipSpace();
-		outVal.pDrfValue = parser.extractFloat();
-		parser.skipSpace();
-		outVal.pPosition.x = parser.extractFloat();
-		parser.skipSpace();
-		outVal.pPosition.y = parser.extractFloat();
-		parser.skipSpace();
-		outVal.pPosition.z = parser.extractFloat();
-		return true;
-	}
+bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser) {
+    if (!parser.isMatch(ATTR_TRANS_KEY)) {
+        return false;
+    }
+    parser.skipSpace();
+    outVal.pDrfValue = parser.extractFloat();
+    parser.skipSpace();
+    outVal.pPosition.x = parser.extractFloat();
+    parser.skipSpace();
+    outVal.pPosition.y = parser.extractFloat();
+    parser.skipSpace();
+    outVal.pPosition.z = parser.extractFloat();
+    return true;
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	std::string toObjString(const AnimRotateKey & key) {
-		StringStream outStr;
-		outStr << ATTR_ROTATE_KEY << " " << key.pDrfValue << " " << key.pAngleDegrees << std::flush;
-		return outStr.str();
-	}
+std::string toObjString(const AnimRotateKey & key) {
+    StringStream outStr;
+    outStr << ATTR_ROTATE_KEY << " " << key.pDrfValue << " " << key.pAngleDegrees << std::flush;
+    return outStr.str();
+}
 
-	bool fromObjString(AnimRotateKey & outVal, ObjReadParser & parser) {
-		if (!parser.isMatch(ATTR_ROTATE_KEY)) {
-			return false;
-		}
-		parser.skipSpace();
-		outVal.pDrfValue = parser.extractFloat();
-		parser.skipSpace();
-		outVal.pAngleDegrees = parser.extractFloat();
-		return true;
-	}
+bool fromObjString(AnimRotateKey & outVal, ObjReadParser & parser) {
+    if (!parser.isMatch(ATTR_ROTATE_KEY)) {
+        return false;
+    }
+    parser.skipSpace();
+    outVal.pDrfValue = parser.extractFloat();
+    parser.skipSpace();
+    outVal.pAngleDegrees = parser.extractFloat();
+    return true;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

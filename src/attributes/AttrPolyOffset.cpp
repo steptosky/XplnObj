@@ -27,58 +27,58 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/attributes/AttrPolyOffset.h"
 #include "sts/utilities/Compare.h"
+#include "xpln/obj/attributes/AttrPolyOffset.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrPolyOffset::AttrPolyOffset(float offset)
-		: mOffset(offset),
-		mIsEnabled(true) { }
+AttrPolyOffset::AttrPolyOffset(const float offset)
+    : mOffset(offset),
+      mIsEnabled(true) { }
 
-	AttrPolyOffset::AttrPolyOffset()
-		: mOffset(0.0f),
-		mIsEnabled(false) { }
+AttrPolyOffset::AttrPolyOffset()
+    : mOffset(0.0f),
+      mIsEnabled(false) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrPolyOffset::operator bool() const {
-		return mIsEnabled;
-	}
+AttrPolyOffset::operator bool() const {
+    return mIsEnabled;
+}
 
-	void AttrPolyOffset::setEnabled(bool state) {
-		mIsEnabled = state;
-	}
+void AttrPolyOffset::setEnabled(const bool state) {
+    mIsEnabled = state;
+}
 
-	bool AttrPolyOffset::operator==(const AttrPolyOffset & other) const {
-		return (mIsEnabled == other.mIsEnabled && sts::isEqual(mOffset, other.mOffset, 0.01f));
-	}
+bool AttrPolyOffset::operator==(const AttrPolyOffset & other) const {
+    return (mIsEnabled == other.mIsEnabled && sts::isEqual(mOffset, other.mOffset, 0.01f));
+}
 
-	bool AttrPolyOffset::operator!=(const AttrPolyOffset & other) const {
-		return !operator==(other);
-	}
+bool AttrPolyOffset::operator!=(const AttrPolyOffset & other) const {
+    return !operator==(other);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrPolyOffset::setOffset(float offset) {
-		mIsEnabled = true;
-		mOffset = offset;
-	}
+void AttrPolyOffset::setOffset(const float offset) {
+    mIsEnabled = true;
+    mOffset = offset;
+}
 
-	float AttrPolyOffset::offset() const {
-		return mOffset;
-	}
+float AttrPolyOffset::offset() const {
+    return mOffset;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

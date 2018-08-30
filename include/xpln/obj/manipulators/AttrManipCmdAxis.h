@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,62 +29,91 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "AttrManipBase.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
-	/*!
-	 * \details ATTR_manip_command_axis
-	 * \ingroup Manipulators
-	 */
-	class AttrManipCmdAxis : public AttrManipBase {
-	public:
+/*!
+ * \details ATTR_manip_command_axis
+ * \ingroup Manipulators
+ */
+class AttrManipCmdAxis : public AttrManipBase {
+public:
 
-		XpObjLib AttrManipCmdAxis();
-		virtual ~AttrManipCmdAxis() = default;
+    XpObjLib AttrManipCmdAxis();
+    virtual ~AttrManipCmdAxis() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setX(float val);
-		XpObjLib void setY(float val);
-		XpObjLib void setZ(float val);
-		XpObjLib float x() const;
-		XpObjLib float y() const;
-		XpObjLib float z() const;
+    [[deprecated("use setDirectionX")]]
+    void setX(const float val) { setDirectionX(val); }
 
-		XpObjLib void setCmdNegative(const std::string & val);
-		XpObjLib void setCmdPositive(const std::string & val);
-		XpObjLib const std::string & cmdNegative() const;
-		XpObjLib const std::string & cmdPositive() const;
+    [[deprecated("use setDirectionY")]]
+    void setY(const float val) { setDirectionY(val); }
 
-		//-------------------------------------------------------------------------
+    [[deprecated("use setDirectionZ")]]
+    void setZ(const float val) { setDirectionZ(val); }
 
-		/*! \copydoc AttrManipBase::equals */
-		XpObjLib bool equals(const AttrManipBase * manip) const override;
+    [[deprecated("use directionX")]]
+    float x() const { return directionX(); }
 
-		/*! \copydoc AttrManipBase::clone */
-		XpObjLib AttrManipBase * clone() const override;
+    [[deprecated("use directionY")]]
+    float y() const { return directionY(); }
 
-		//-------------------------------------------------------------------------
+    [[deprecated("use directionZ")]]
+    float z() const { return directionZ(); }
 
-	private:
+    //-------------------------------------------------------------------------
 
-		float mX = 0.0f;
-		float mY = 0.0f;
-		float mZ = 0.0f;
-		std::string mPosCommand = "none";
-		std::string mNegCommand = "none";
+    void setDirection(const float x, const float y, const float z) {
+        setDirectionX(x);
+        setDirectionY(y);
+        setDirectionZ(z);
+    }
 
-	};
+    XpObjLib void setDirectionX(float val);
+    XpObjLib void setDirectionY(float val);
+    XpObjLib void setDirectionZ(float val);
+    XpObjLib float directionX() const;
+    XpObjLib float directionY() const;
+    XpObjLib float directionZ() const;
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+    XpObjLib void setCmdNegative(const std::string & val);
+    XpObjLib void setCmdPositive(const std::string & val);
+    XpObjLib const std::string & cmdNegative() const;
+    XpObjLib const std::string & cmdPositive() const;
+
+    //-------------------------------------------------------------------------
+
+    /*! \copydoc AttrManipBase::equals */
+    XpObjLib bool equals(const AttrManipBase * manip) const override;
+
+    /*! \copydoc AttrManipBase::clone */
+    XpObjLib AttrManipBase * clone() const override;
+
+    //-------------------------------------------------------------------------
+
+    /*! \copydoc AttrManipBase::printObj */
+    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
+
+    //-------------------------------------------------------------------------
+
+private:
+
+    float mX = 0.0f;
+    float mY = 0.0f;
+    float mZ = 0.0f;
+    std::string mPosCommand = "none";
+    std::string mNegCommand = "none";
+
+};
+
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
 }

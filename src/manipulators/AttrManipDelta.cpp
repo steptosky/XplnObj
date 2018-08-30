@@ -27,96 +27,113 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "sts/utilities/Compare.h"
+#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipDelta.h"
 #include "xpln/enums/EManipulator.h"
-#include "sts/string/StringConverters.h"
-#include "sts/utilities/Compare.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipDelta::AttrManipDelta()
-		: AttrManipBase(EManipulator(EManipulator::delta)) { }
+AttrManipDelta::AttrManipDelta()
+    : AttrManipBase(EManipulator(EManipulator::delta)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipDelta::setDown(float val) {
-		mDown = val;
-	}
+void AttrManipDelta::setDown(const float val) {
+    mDown = val;
+}
 
-	void AttrManipDelta::setHold(float val) {
-		mHold = val;
-	}
+void AttrManipDelta::setHold(const float val) {
+    mHold = val;
+}
 
-	void AttrManipDelta::setMinimum(float val) {
-		mMin = val;
-	}
+void AttrManipDelta::setMinimum(const float val) {
+    mMin = val;
+}
 
-	void AttrManipDelta::setMaximum(float val) {
-		mMax = val;
-	}
+void AttrManipDelta::setMaximum(const float val) {
+    mMax = val;
+}
 
-	float AttrManipDelta::down() const {
-		return mDown;
-	}
+float AttrManipDelta::down() const {
+    return mDown;
+}
 
-	float AttrManipDelta::hold() const {
-		return mHold;
-	}
+float AttrManipDelta::hold() const {
+    return mHold;
+}
 
-	float AttrManipDelta::minimum() const {
-		return mMin;
-	}
+float AttrManipDelta::minimum() const {
+    return mMin;
+}
 
-	float AttrManipDelta::maximum() const {
-		return mMax;
-	}
+float AttrManipDelta::maximum() const {
+    return mMax;
+}
 
-	void AttrManipDelta::setDataref(const std::string & val) {
-		mDataref = val;
-	}
+void AttrManipDelta::setDataref(const std::string & val) {
+    mDataref = val;
+}
 
-	const std::string & AttrManipDelta::dataref() const {
-		return mDataref;
-	}
+const std::string & AttrManipDelta::dataref() const {
+    return mDataref;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipDelta::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipDelta::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipDelta * right = dynamic_cast<const AttrManipDelta*>(manip);
-		if (!right)
-			return false;
+    const auto * right = dynamic_cast<const AttrManipDelta*>(manip);
+    if (!right)
+        return false;
 
-		const AttrManipWheel * rightWheel = static_cast<const AttrManipWheel*>(right);
-		if (*static_cast<const AttrManipWheel*>(this) != *rightWheel)
-			return false;
+    return (sts::isEqual(mDown, right->mDown) &&
+            sts::isEqual(mHold, right->mHold) &&
+            sts::isEqual(mMin, right->mMin) &&
+            sts::isEqual(mMax, right->mMax) &&
+            sts::isEqual(mWheel, right->mWheel) &&
+            sts::isEqual(mDataref, right->mDataref));
+}
 
-		return (sts::isEqual(mDown, right->mDown) &&
-				sts::isEqual(mHold, right->mHold) &&
-				sts::isEqual(mMin, right->mMin) &&
-				sts::isEqual(mMax, right->mMax) &&
-				sts::isEqual(mDataref, right->mDataref));
-	}
+AttrManipBase * AttrManipDelta::clone() const {
+    return new AttrManipDelta(*this);
+}
 
-	AttrManipBase * AttrManipDelta::clone() const {
-		return new AttrManipDelta(*this);
-	}
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+std::size_t AttrManipDelta::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_DELTA;
+    outStr << " " << cursor().toString();
+    outStr << " " << down();
+    outStr << " " << hold();
+    outStr << " " << minimum();
+    outStr << " " << maximum();
+    outStr << " " << dataref();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1 + wheel().printObj(writer);
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

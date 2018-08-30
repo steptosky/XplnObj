@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,8 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "ObjReaderListener.h"
 #include "xpln/obj/IOStatistic.h"
 #include "xpln/obj/ObjLodGroup.h"
@@ -37,118 +37,121 @@
 
 namespace xobj {
 
-	class ObjMain;
+class ObjMain;
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class ObjReaderInterpreter : public ObjReaderListener {
-	public:
+class ObjReaderInterpreter : public ObjReaderListener {
+public:
 
-		ObjReaderInterpreter(ObjMain * objMain, const TMatrix & rootMatrix, IOStatistic * ioStatistic);
-		~ObjReaderInterpreter();
+    ObjReaderInterpreter(ObjMain * objMain, const TMatrix & rootMatrix, IOStatistic * ioStatistic);
+    ~ObjReaderInterpreter();
 
-	protected:
+protected:
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		void gotGlobAttrTexture(const std::string & val) override;
-		void gotGlobAttrTextureLit(const std::string & val) override;
-		void gotGlobAttrTextureNormal(const std::string & val) override;
+    void gotGlobAttrTexture(const std::string & val) override;
+    void gotGlobAttrTextureLit(const std::string & val) override;
+    void gotGlobAttrTextureNormal(const std::string & val) override;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		void gotGlobAttrTint(const AttrTint & globAttr) override;
-		void gotGlobAttrWetDry(const AttrWetDry & globAttr) override;
-		void gotGlobAttrBlend(const AttrBlend & globAttr) override;
-		void gotGlobAttrSpecular(const AttrSpecular & globAttr) override;
-		void gotGlobAttrLodDraped(const AttrLodDrap & globAttr) override;
-		void gotGlobAttrLayerGroup(const AttrLayerGroup & globAttr) override;
-		void gotGlobAttrSlopeLimit(const AttrSlopeLimit & globAttr) override;
-		void gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & globAttr) override;
-		void gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGroup & globAttr) override;
-		void gotGlobAttrCockpitRegion(const AttrCockpitRegion & globAttr) override;
-		void gotGlobAttrDebug() override;
-		void gotGlobAttrTilted() override;
-		void gotGlobAttrNoShadow() override;
-		void gotGlobAttrCockpitLit() override;
-		void gotGlobAttrNormalMetalness() override;
-		void gotGlobAttrBlendGlass() override;
+    void gotGlobAttrTint(const AttrTint & globAttr) override;
+    void gotGlobAttrWetDry(const AttrWetDry & globAttr) override;
+    void gotGlobAttrBlend(const AttrBlend & globAttr) override;
+    void gotGlobAttrSpecular(const AttrSpecular & globAttr) override;
+    void gotGlobAttrLodDraped(const AttrLodDrap & globAttr) override;
+    void gotGlobAttrLayerGroup(const AttrLayerGroup & globAttr) override;
+    void gotGlobAttrSlopeLimit(const AttrSlopeLimit & globAttr) override;
+    void gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & globAttr) override;
+    void gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGroup & globAttr) override;
+    void gotGlobAttrCockpitRegion(const AttrCockpitRegion & globAttr) override;
+    void gotGlobAttrDebug() override;
+    void gotGlobAttrTilted() override;
+    void gotGlobAttrNoShadow() override;
+    void gotGlobAttrCockpitLit() override;
+    void gotGlobAttrNormalMetalness() override;
+    void gotGlobAttrBlendGlass() override;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		void gotLod(float near, float far, const std::string & endLineComment) override;
+    void gotLod(float near, float far, const std::string & endLineComment) override;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		void gotMeshVertices(const ObjMesh::VertexList & vertices) override;
-		void gotMeshFaces(const FaceIndexArray & indices) override;
+    void gotMeshVertices(const ObjMesh::VertexList & vertices) override;
+    void gotMeshFaces(const FaceIndexArray & indices) override;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		void gotTrisAttrHard(const AttrHard & attr) override;
-		void gotTrisAttrShiny(const AttrShiny & attr) override;
-		void gotTrisAttrBlend(const AttrBlend & attr) override;
-		void gotTrisAttrPolyOffset(const AttrPolyOffset & attr) override;
-		void gotTrisAttrLightLevel(const AttrLightLevel & attr) override;
-		void gotTrisAttrCockpit(const AttrCockpit & attr) override;
-		void gotTrisAttrShadow(bool state) override;
-		void gotTrisAttrDraped(bool state) override;
-		void gotTrisAttrDrawEnable(bool state) override;
-		void gotTrisAttrSolidCamera(bool state) override;
-		void gotTrisAttrReset() override;
+    void gotTrisAttrHard(const AttrHard & attr) override;
+    void gotTrisAttrShiny(const AttrShiny & attr) override;
+    void gotTrisAttrBlend(const AttrBlend & attr) override;
+    void gotTrisAttrPolyOffset(const AttrPolyOffset & attr) override;
+    void gotTrisAttrLightLevel(const AttrLightLevel & attr) override;
+    void gotTrisAttrCockpit(const AttrCockpit & attr) override;
+    void gotTrisAttrShadow(bool state) override;
+    void gotTrisAttrDraped(bool state) override;
+    void gotTrisAttrDrawEnable(bool state) override;
+    void gotTrisAttrSolidCamera(bool state) override;
+    void gotTrisAttrReset() override;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		void gotTrisAttrManipNo() override;
-		void gotTrisAttrManipWheel(const AttrManipWheel & manip) override;
-		void gotTrisAttrManip(const AttrManipBase & manip) override;
+    void gotTrisAttrManipNo() override;
+    void gotTrisAttrManipAxisDetented(const AttrAxisDetented & manip) override;
+    void gotTrisAttrManipAxisDetentRange(const AttrAxisDetentRange & manip) override;
+    void gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & manip) override;
+    void gotTrisAttrManipWheel(const AttrManipWheel & manip) override;
+    void gotTrisAttrManip(const AttrManipBase & manip) override;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		void gotTris(Index offset, Index count, const std::string & endLineComment) override /* exception */;
+    void gotTris(Index offset, Index count, const std::string & endLineComment) override /* exception */;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		void gotAnimBegin() override;
-		void gotAnimEnd() override;
-		void gotAnimHide(const AnimVisibility::Key & key) override;
-		void gotAnimShow(const AnimVisibility::Key & key) override;
-		void gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
-							bool hasLoop, float loopVal) override;
-		void gotRotateAnim(AnimRotate::KeyList & key, float ( & inVector)[3], std::string & dataref,
-							bool hasLoop, float loopVal) override;
+    void gotAnimBegin() override;
+    void gotAnimEnd() override;
+    void gotAnimHide(const AnimVisibility::Key & key) override;
+    void gotAnimShow(const AnimVisibility::Key & key) override;
+    void gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
+                          bool hasLoop, float loopVal) override;
+    void gotRotateAnim(AnimRotate::KeyList & key, float ( & inVector)[3], std::string & dataref,
+                       bool hasLoop, float loopVal) override;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		void gotFinished() override;
+    void gotFinished() override;
 
-		//-----------------------------------------------------
+    //-----------------------------------------------------
 
-		void reset() override;
+    void reset() override;
 
-	private:
+private:
 
-		void checkForCreateLod();
-		static std::string extractComment(const std::string & str, const char * dataref);
+    void checkForCreateLod();
+    static std::string extractComment(const std::string & str, const char * dataref);
 
-		ObjMain * mObjMain;
-		IOStatistic * mIOStatistic;
+    ObjMain * mObjMain;
+    IOStatistic * mIOStatistic;
 
-		AttrSet mCurrentAttrSet;
-		ObjLodGroup * mCurrentLod;
-		Transform * mCurrentTransform;
+    AttrSet mCurrentAttrSet;
+    ObjLodGroup * mCurrentLod;
+    Transform * mCurrentTransform;
 
-		ObjMesh::VertexList mVertices;
-		FaceIndexArray mIndices;
+    ObjMesh::VertexList mVertices;
+    FaceIndexArray mIndices;
 
-		TMatrix mRootMtx;
+    TMatrix mRootMtx;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

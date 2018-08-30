@@ -36,104 +36,104 @@
 
 namespace sts_t {
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
-	/*!
-	 * \details Tree Item.
-	 * \pre
-	 * - You can use one of the two predefined containers \link sts_t::TreeItemContainerVector \endlink and \link sts_t::TreeItemContainerList \endlink.
-	 * - You can specify you own container type, look at \link sts_t::TreeItemContainerVector \endlink and \link sts_t::TreeItemContainerList \endlink for example.
-	 * - You must not use this class directly.
-	 * - The tree item is owner of its children.
-	 * When the tree item will be destroyed then it will destroy all its children, also if the item is having a parent then will be deleted from it.
-	 * - If you need to use copy constructor and operator then you must implement \link TreeItem::clone() \endlink method.
-	 * \warning You should be careful for working with the copy operator and constructor!
-	 * If you don't need use it, define it in an inherited class by private level. \n
-	 * <b> It is necessarily! </b>\n Example:
-	 * \code
-	 * private:
-	 * YourType &operator=(const YourType &) = delete;
-	 * YourType (const YourType &) = delete;
-	 * \endcode
-	 */
-	template<typename TYPE, typename CONTAINER = TreeItemContainerVector<TYPE>>
-	class TreeItem {
-	protected:
+/*!
+ * \details Tree Item.
+ * \pre
+ * - You can use one of the two predefined containers \link sts_t::TreeItemContainerVector \endlink and \link sts_t::TreeItemContainerList \endlink.
+ * - You can specify you own container type, look at \link sts_t::TreeItemContainerVector \endlink and \link sts_t::TreeItemContainerList \endlink for example.
+ * - You must not use this class directly.
+ * - The tree item is owner of its children.
+ * When the tree item will be destroyed then it will destroy all its children, also if the item is having a parent then will be deleted from it.
+ * - If you need to use copy constructor and operator then you must implement \link TreeItem::clone() \endlink method.
+ * \warning You should be careful for working with the copy operator and constructor!
+ * If you don't need use it, define it in an inherited class by private level. \n
+ * <b> It is necessarily! </b>\n Example:
+ * \code
+ * private:
+ * YourType &operator=(const YourType &) = delete;
+ * YourType (const YourType &) = delete;
+ * \endcode
+ */
+template<typename TYPE, typename CONTAINER = TreeItemContainerVector<TYPE>>
+class TreeItem {
+protected:
 
-		TreeItem(const TreeItem<TYPE, CONTAINER> & tr);
-		TreeItem<TYPE, CONTAINER> & operator =(const TreeItem<TYPE, CONTAINER> & tr);
+    TreeItem(const TreeItem<TYPE, CONTAINER> & tr);
+    TreeItem<TYPE, CONTAINER> & operator =(const TreeItem<TYPE, CONTAINER> & tr);
 
-	public:
+public:
 
-		typedef size_t Index; /*!< \details Tree item index. */
-		const Index npos = Index(-1); /*!< \details Means no position. */
-		typedef CONTAINER Children;
+    typedef size_t Index;         /*!< \details Tree item index. */
+    const Index npos = Index(-1); /*!< \details Means no position. */
+    typedef CONTAINER Children;
 
-		//--------------------------------------------------
+    //--------------------------------------------------
 
-		TreeItem();
-		explicit TreeItem(TreeItem<TYPE, CONTAINER> * inParent);
-		virtual ~TreeItem();
+    TreeItem();
+    explicit TreeItem(TreeItem<TYPE, CONTAINER> * inParent);
+    virtual ~TreeItem();
 
-		//--------------------------------------------------
+    //--------------------------------------------------
 
-		virtual bool isRoot() const;
-		virtual TYPE * root();
-		virtual const TYPE * root() const;
+    virtual bool isRoot() const;
+    virtual TYPE * root();
+    virtual const TYPE * root() const;
 
-		virtual void setParent(TYPE * inParent);
-		virtual TYPE * parent();
-		virtual const TYPE * parent() const;
+    virtual void setParent(TYPE * inParent);
+    virtual TYPE * parent();
+    virtual const TYPE * parent() const;
 
-		virtual Index childrenCount() const;
-		virtual TYPE * childAt(Index inIndex);
-		virtual const TYPE * childAt(Index inIndex) const;
-		virtual TYPE * takeChildAt(Index inIndex);
-		virtual const Children & children() const;
+    virtual Index childrenCount() const;
+    virtual TYPE * childAt(Index inIndex);
+    virtual const TYPE * childAt(Index inIndex) const;
+    virtual TYPE * takeChildAt(Index inIndex);
+    virtual const Children & children() const;
 
-		virtual TYPE * prependChild(TYPE * inTreeItem);
-		virtual TYPE * insertChild(Index inWhere, TYPE * inTreeItem);
-		virtual TYPE * appendChild(TYPE * inTreeItem);
+    virtual TYPE * prependChild(TYPE * inTreeItem);
+    virtual TYPE * insertChild(Index inWhere, TYPE * inTreeItem);
+    virtual TYPE * appendChild(TYPE * inTreeItem);
 
-		virtual void deleteChild(Index inIndex);
-		virtual bool deleteChild(TYPE * inPtr);
-		virtual void deleteChildren();
+    virtual void deleteChild(Index inIndex);
+    virtual bool deleteChild(TYPE * inPtr);
+    virtual void deleteChildren();
 
-		virtual bool hasChildren() const;
-		virtual Index indexOf(const TYPE * inTreeItem) const;
+    virtual bool hasChildren() const;
+    virtual Index indexOf(const TYPE * inTreeItem) const;
 
-		virtual bool isLeaf() const;
-		virtual bool isBranch() const;
-		virtual bool isChildOf(const TYPE * inParent) const;
+    virtual bool isLeaf() const;
+    virtual bool isBranch() const;
+    virtual bool isChildOf(const TYPE * inParent) const;
 
-		virtual TYPE * clone() const;
+    virtual TYPE * clone() const;
 
-		//--------------------------------------------------
+    //--------------------------------------------------
 
-	protected:
+protected:
 
-		Children & children();
+    Children & children();
 
-	private:
+private:
 
-		TYPE * mParent;
-		Children mChildren;
-		bool mRemoveFromParent;
+    TYPE * mParent;
+    Children mChildren;
+    bool mRemoveFromParent;
 
-		void _remove(Children * inList, TreeItem * inPtr);
-		void _clone(const Children * inList);
-		void _removeParent();
+    void _remove(Children * inList, TreeItem * inPtr);
+    void _clone(const Children * inList);
+    void _removeParent();
 
-		static const TreeItem * _getRootC(const TreeItem * inCurrentItem);
-		static TreeItem * _getRootNc(TreeItem * inCurrentItem);
+    static const TreeItem * _getRootC(const TreeItem * inCurrentItem);
+    static TreeItem * _getRootNc(TreeItem * inCurrentItem);
 
-	};
+};
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
 #include "TreeItem.inl"
 

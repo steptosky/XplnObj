@@ -27,30 +27,18 @@
 **  Contacts: www.steptosky.com
 */
 
-#ifdef _MSC_VER
-#include "windows.h"
-#endif
-
-#include "gtest/gtest.h"
+#include <gmock/gmock.h>
 #include <xpln/common/ExternalLog.h>
-//#include "gmock/gmock.h"
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
 GTEST_API_ int main(int argc, char ** argv) {
-	testing::InitGoogleTest(&argc, argv);
-	//testing::InitGoogleMock(&argc, argv);
-
-	std::cout << xobj::ExternalLog::about() << std::endl;
-	int res = RUN_ALL_TESTS();
-
-#ifdef _MSC_VER
-	system("pause");
-#endif
-
-	return res;
+    testing::InitGoogleMock(&argc, argv);
+    std::cout << xobj::ExternalLog::about() << std::endl;
+    const int res = RUN_ALL_TESTS();
+    return res;
 }
 
 /**************************************************************************************************/

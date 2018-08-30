@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,44 +29,42 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class XpObjLib Quaternion {
-	public:
+class XpObjLib Quaternion {
+public:
 
-		Quaternion();
-		Quaternion(const Quaternion & copy);
-		Quaternion(float x, float y, float z, float w);
-		virtual ~Quaternion();
+    Quaternion();
+    Quaternion(const Quaternion & copy);
+    Quaternion(float x, float y, float z, float w);
+    virtual ~Quaternion();
 
-		Quaternion & operator =(const Quaternion & copy);
+    Quaternion & operator =(const Quaternion & copy);
 
-		void setX(float x);
-		void setY(float y);
-		void setZ(float z);
-		void setW(float w);
-		void setValues(float x, float y, float z, float w);
+    void setX(float x);
+    void setY(float y);
+    void setZ(float z);
+    void setW(float w);
+    void setValues(float x, float y, float z, float w);
 
-		float x() const;
-		float y() const;
-		float z() const;
-		float w() const;
+    float x() const;
+    float y() const;
+    float z() const;
+    float w() const;
 
-	private:
+private:
 
-		void * mData;
+    void * mData;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

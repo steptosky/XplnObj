@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,95 +29,94 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
-#include "xpln/XplnObjExport.h"
 #include <cstdint>
+#include "xpln/Export.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details COCKPIT_REGION
-	 * \ingroup Attributes
-	 */
-	class AttrCockpitRegion {
-	public:
+/*!
+ * \details COCKPIT_REGION
+ * \ingroup Attributes
+ */
+class AttrCockpitRegion {
+public:
 
-		enum eNum {
-			r1,
-			r2,
-			r3,
-			r4
-		};
+    enum eNum {
+        r1,
+        r2,
+        r3,
+        r4
+    };
 
-		/*!
-		 * \details Constructor default.
-		 * \note Makes the disabled attribute.
-		 */
-		XpObjLib AttrCockpitRegion();
+    /*!
+     * \details Constructor default.
+     * \note Makes the disabled attribute.
+     */
+    XpObjLib AttrCockpitRegion();
 
-		/*!
-		 * \details Constructor init.
-		 * \note Makes the enabled attribute.
-		 * \param [in] left 
-		 * \param [in] bottom 
-		 * \param [in] right 
-		 * \param [in] top 
-		 */
-		XpObjLib AttrCockpitRegion(int32_t left, int32_t bottom, int32_t right, int32_t top);
+    /*!
+     * \details Constructor init.
+     * \note Makes the enabled attribute.
+     * \param [in] left 
+     * \param [in] bottom 
+     * \param [in] right 
+     * \param [in] top 
+     */
+    XpObjLib AttrCockpitRegion(std::int32_t left, std::int32_t bottom,
+                               std::int32_t right, std::int32_t top);
 
-		~AttrCockpitRegion() = default;
+    ~AttrCockpitRegion() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*!
-		 * \details Check whether the attribute is enabled. 
-		 * \note All class's setters will enable this attribute.
-		 */
-		XpObjLib operator bool() const;
+    /*!
+     * \details Check whether the attribute is enabled. 
+     * \note All class's setters will enable this attribute.
+     */
+    XpObjLib operator bool() const;
 
-		/*!
-		 * \details Sets the attribute enabled/disabled.
-		 * \note All class's setters will enable this attribute.
-		 * \param [in] state 
-		 */
-		XpObjLib void setEnabled(bool state);
+    /*!
+     * \details Sets the attribute enabled/disabled.
+     * \note All class's setters will enable this attribute.
+     * \param [in] state 
+     */
+    XpObjLib void setEnabled(bool state);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib bool operator==(const AttrCockpitRegion & other) const;
-		XpObjLib bool operator!=(const AttrCockpitRegion & other) const;
+    XpObjLib bool operator==(const AttrCockpitRegion & other) const;
+    XpObjLib bool operator!=(const AttrCockpitRegion & other) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setLeft(int32_t left);
-		XpObjLib void setBottom(int32_t bottom);
-		XpObjLib void setRight(int32_t right);
-		XpObjLib void setTop(int32_t top);
+    XpObjLib void setLeft(int32_t left);
+    XpObjLib void setBottom(int32_t bottom);
+    XpObjLib void setRight(int32_t right);
+    XpObjLib void setTop(int32_t top);
 
-		XpObjLib int32_t left() const;
-		XpObjLib int32_t bottom() const;
-		XpObjLib int32_t right() const;
-		XpObjLib int32_t top() const;
+    XpObjLib int32_t left() const;
+    XpObjLib int32_t bottom() const;
+    XpObjLib int32_t right() const;
+    XpObjLib int32_t top() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+private:
 
-		int32_t mLeft;
-		int32_t mBottom;
-		int32_t mRight;
-		int32_t mTop;
-		bool mIsEnabled : 1;
+    std::int32_t mLeft;
+    std::int32_t mBottom;
+    std::int32_t mRight;
+    std::int32_t mTop;
+    bool mIsEnabled : 1;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

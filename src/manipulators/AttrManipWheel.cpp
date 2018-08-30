@@ -27,52 +27,72 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/manipulators/AttrManipWheel.h"
-#include <sts/utilities/Compare.h>
+#include "sts/utilities/Compare.h"
+#include "converters/StringStream.h"
+#include "xpln/obj/manipulators/embeddable/AttrManipWheel.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipWheel::AttrManipWheel()
-		: mWheel(false) { }
+AttrManipWheel::AttrManipWheel(const float delta)
+    : mWheel(true),
+      mWheelDelta(delta) {}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipWheel::operator==(const AttrManipWheel & other) const {
-		return mWheel == other.mWheel && sts::isEqual(mWheelDelta, other.mWheelDelta);
-	}
+bool AttrManipWheel::operator==(const AttrManipWheel & other) const {
+    return mWheel == other.mWheel && sts::isEqual(mWheelDelta, other.mWheelDelta);
+}
 
-	bool AttrManipWheel::operator!=(const AttrManipWheel & other) const {
-		return !this->operator==(other);
-	}
+bool AttrManipWheel::operator!=(const AttrManipWheel & other) const {
+    return !this->operator==(other);
+}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipWheel::setWheelEnabled(bool state) {
-		mWheel = state;
-	}
+void AttrManipWheel::setEnabled(const bool state) {
+    mWheel = state;
+}
 
-	void AttrManipWheel::setWheelDelta(float delta) {
-		mWheelDelta = delta;
-	}
+void AttrManipWheel::setDelta(const float delta) {
+    mWheelDelta = delta;
+    setEnabled(true);
+}
 
-	bool AttrManipWheel::isWheelEnabled() const {
-		return mWheel;
-	}
+bool AttrManipWheel::isEnabled() const {
+    return mWheel;
+}
 
-	float AttrManipWheel::wheelDelta() const {
-		return mWheelDelta;
-	}
+float AttrManipWheel::delta() const {
+    return mWheelDelta;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipWheel::printObj(AbstractWriter & writer) const {
+    if (isEnabled()) {
+        StringStream outStr;
+        outStr << ATTR_MANIP_WHEEL;
+        outStr << " " << delta();
+        writer.printLine(outStr.str());
+        return 1;
+    }
+    return 0;
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

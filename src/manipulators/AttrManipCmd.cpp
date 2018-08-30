@@ -27,54 +27,71 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipCmd.h"
 #include "xpln/enums//EManipulator.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipCmd::AttrManipCmd()
-		: AttrManipBase(EManipulator(EManipulator::command)) { }
+AttrManipCmd::AttrManipCmd()
+    : AttrManipBase(EManipulator(EManipulator::command)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipCmd::setCommand(const std::string & cmd) {
-		mCommand = cmd.empty() ? "none" : cmd;
-	}
+void AttrManipCmd::setCmd(const std::string & cmd) {
+    mCommand = cmd.empty() ? "none" : cmd;
+}
 
-	const std::string & AttrManipCmd::command() const {
-		return mCommand;
-	}
+const std::string & AttrManipCmd::cmd() const {
+    return mCommand;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipCmd::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipCmd::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipCmd * right = dynamic_cast<const AttrManipCmd*>(manip);
-		if (!right)
-			return false;
+    const auto * right = dynamic_cast<const AttrManipCmd*>(manip);
+    if (!right)
+        return false;
 
-		return mCommand == right->mCommand;
-	}
+    return mCommand == right->mCommand;
+}
 
-	AttrManipBase * AttrManipCmd::clone() const {
-		return new AttrManipCmd(*this);
-	}
+AttrManipBase * AttrManipCmd::clone() const {
+    return new AttrManipCmd(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipCmd::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND;
+    outStr << " " << cursor().toString();
+    outStr << " " << cmd();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1;
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

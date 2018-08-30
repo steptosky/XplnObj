@@ -27,12 +27,12 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
+
 #include <xpln/obj/ObjMain.h>
 #include <xpln/obj/ObjMesh.h>
 #include "../TestUtilsObjMesh.h"
 #include "../totext.h"
-#include <memory>
 #include "../TestUtils.h"
 
 using namespace xobj;
@@ -45,51 +45,51 @@ using namespace xobj;
  * Tests animation availability 
  */
 TEST(TestTransformCommon, anim_enabled) {
-	ObjMain main;
-	ObjLodGroup & lod = main.addLod();
+    ObjMain main;
+    ObjLodGroup & lod = main.addLod();
 
-	ASSERT_FALSE(lod.transform().hasAnimTrans());
-	ASSERT_FALSE(lod.transform().hasAnim());
-	ASSERT_FALSE(lod.transform().hasAnimRotate());
-	ASSERT_FALSE(lod.transform().hasAnimVis());
+    ASSERT_FALSE(lod.transform().hasAnimTrans());
+    ASSERT_FALSE(lod.transform().hasAnim());
+    ASSERT_FALSE(lod.transform().hasAnimRotate());
+    ASSERT_FALSE(lod.transform().hasAnimVis());
 
-	//--------------------
-	// translate
+    //--------------------
+    // translate
 
-	lod.transform().pAnimTrans.emplace_back();
-	AnimTrans & animTrans = lod.transform().pAnimTrans.back();
-	animTrans.pKeys.emplace_back(AnimTrans::Key(Point3(1.0f, 2.0f, 3.0f), 1.0f));
-	animTrans.pKeys.emplace_back(AnimTrans::Key(Point3(10.0f, 20.0f, 30.0f), 5.0f));
+    lod.transform().pAnimTrans.emplace_back();
+    AnimTrans & animTrans = lod.transform().pAnimTrans.back();
+    animTrans.pKeys.emplace_back(AnimTrans::Key(Point3(1.0f, 2.0f, 3.0f), 1.0f));
+    animTrans.pKeys.emplace_back(AnimTrans::Key(Point3(10.0f, 20.0f, 30.0f), 5.0f));
 
-	ASSERT_TRUE(lod.transform().hasAnimTrans());
-	ASSERT_TRUE(lod.transform().hasAnim());
-	ASSERT_FALSE(lod.transform().hasAnimRotate());
-	ASSERT_FALSE(lod.transform().hasAnimVis());
+    ASSERT_TRUE(lod.transform().hasAnimTrans());
+    ASSERT_TRUE(lod.transform().hasAnim());
+    ASSERT_FALSE(lod.transform().hasAnimRotate());
+    ASSERT_FALSE(lod.transform().hasAnimVis());
 
-	//--------------------
-	// rotation
+    //--------------------
+    // rotation
 
-	lod.transform().pAnimRotate.emplace_back();
-	AnimRotate & animRotate = lod.transform().pAnimRotate.back();
-	animRotate.pKeys.emplace_back(AnimRotate::Key(20.0f, 1.0f));
-	animRotate.pKeys.emplace_back(AnimRotate::Key(30.0f, 5.0f));
+    lod.transform().pAnimRotate.emplace_back();
+    AnimRotate & animRotate = lod.transform().pAnimRotate.back();
+    animRotate.pKeys.emplace_back(AnimRotate::Key(20.0f, 1.0f));
+    animRotate.pKeys.emplace_back(AnimRotate::Key(30.0f, 5.0f));
 
-	ASSERT_TRUE(lod.transform().hasAnimTrans());
-	ASSERT_TRUE(lod.transform().hasAnim());
-	ASSERT_TRUE(lod.transform().hasAnimRotate());
-	ASSERT_FALSE(lod.transform().hasAnimVis());
+    ASSERT_TRUE(lod.transform().hasAnimTrans());
+    ASSERT_TRUE(lod.transform().hasAnim());
+    ASSERT_TRUE(lod.transform().hasAnimRotate());
+    ASSERT_FALSE(lod.transform().hasAnimVis());
 
-	//--------------------
-	// visibility
+    //--------------------
+    // visibility
 
-	AnimVisibility & animVis = lod.transform().pAnimVis;
-	animVis.pKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 1.0f, 2.0f, "drf"));
-	animVis.pKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 3.0f, 4.0f, "drf"));
+    AnimVisibility & animVis = lod.transform().pAnimVis;
+    animVis.pKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 1.0f, 2.0f, "data-ref"));
+    animVis.pKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 3.0f, 4.0f, "data-ref"));
 
-	ASSERT_TRUE(lod.transform().hasAnimTrans());
-	ASSERT_TRUE(lod.transform().hasAnim());
-	ASSERT_TRUE(lod.transform().hasAnimRotate());
-	ASSERT_TRUE(lod.transform().hasAnimVis());
+    ASSERT_TRUE(lod.transform().hasAnimTrans());
+    ASSERT_TRUE(lod.transform().hasAnim());
+    ASSERT_TRUE(lod.transform().hasAnimRotate());
+    ASSERT_TRUE(lod.transform().hasAnimVis());
 }
 
 /**************************************************************************************************/
@@ -101,38 +101,38 @@ TEST(TestTransformCommon, anim_enabled) {
  * Actually it tests applying root transform for static mesh object.
  */
 TEST(TestTransformCommon, apliing_root_transformation) {
-	//-------------------
-	// make out data and save to file
+    //-------------------
+    // make out data and save to file
 
-	ObjMain mainOut;
-	TestUtils::setTestExportOptions(mainOut);
-	ObjLodGroup & lodOut = mainOut.addLod();
-	ObjMesh * meshOut1 = TestUtilsObjMesh::createPyramidTestMesh("mesh");
-	Transform & transformOut1 = lodOut.transform().createChild();
-	transformOut1.addObject(meshOut1);
-	transformOut1.pMatrix.setPosition(Point3(10.0f));
-	transformOut1.pMatrix.setRotate(Quaternion(0.5f, 0.5f, 0.5f, 0.5f));
+    ObjMain mainOut;
+    TestUtils::setTestExportOptions(mainOut);
+    ObjLodGroup & lodOut = mainOut.addLod();
+    ObjMesh * meshOut1 = TestUtilsObjMesh::createPyramidTestMesh("mesh");
+    Transform & transformOut1 = lodOut.transform().createChild();
+    transformOut1.addObject(meshOut1);
+    transformOut1.pMatrix.setPosition(Point3(10.0f));
+    transformOut1.pMatrix.setRotate(Quaternion(0.5f, 0.5f, 0.5f, 0.5f));
 
-	ASSERT_TRUE(mainOut.exportToFile(std::string(TOTEXT(apliing_root_transformation)).append(".obj").c_str()));
+    ASSERT_TRUE(mainOut.exportToFile(std::string(TOTEXT(apliing_root_transformation)).append(".obj")));
 
-	//-------------------
-	// load data from file
+    //-------------------
+    // load data from file
 
-	ObjMain mainIn;
-	ASSERT_TRUE(mainIn.importFromFile(std::string(TOTEXT(apliing_root_transformation)).append(".obj").c_str()));
+    ObjMain mainIn;
+    ASSERT_TRUE(mainIn.importFromFile(std::string(TOTEXT(apliing_root_transformation)).append(".obj")));
 
-	ObjLodGroup * lodIn = nullptr;
-	ObjMesh * meshIn1 = nullptr;
-	// One transform was optimized during export, it became lod's transform
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
-	ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
+    ObjLodGroup * lodIn = nullptr;
+    ObjMesh * meshIn1 = nullptr;
+    // One transform was optimized during export, it became LOD's transform
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractMesh(lodIn->transform(), 0, meshIn1));
 
-	//-------------------
-	// check results
+    //-------------------
+    // check results
 
-	std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh"));
-	meshTarget1->applyTransform(transformOut1.pMatrix, false);
-	ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
+    std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh"));
+    meshTarget1->applyTransform(transformOut1.pMatrix, false);
+    ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
 }
 
 /**************************************************************************************************/

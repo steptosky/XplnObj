@@ -27,59 +27,59 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/animation/AnimVisibilityKey.h"
 #include "sts/utilities/Compare.h"
+#include "xpln/obj/animation/AnimVisibilityKey.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AnimVisibilityKey::AnimVisibilityKey()
-		: pType(UNDEFINED),
-		pValue1(0.0f),
-		pValue2(1.0f),
-		pDrf("none"),
-		pLoopValue(0.0f),
-		pHasLoop(false) {}
+AnimVisibilityKey::AnimVisibilityKey()
+    : pType(UNDEFINED),
+      pValue1(0.0f),
+      pValue2(1.0f),
+      pDrf("none"),
+      pLoopValue(0.0f),
+      pHasLoop(false) {}
 
-	AnimVisibilityKey::AnimVisibilityKey(eType type, float val1, float val2, const std::string & dataRef)
-		: pType(type),
-		pValue1(val1),
-		pValue2(val2),
-		pDrf(dataRef),
-		pLoopValue(0.0f),
-		pHasLoop(false) {}
+AnimVisibilityKey::AnimVisibilityKey(const eType type, const float val1, const float val2, const std::string & dataRef)
+    : pType(type),
+      pValue1(val1),
+      pValue2(val2),
+      pDrf(dataRef),
+      pLoopValue(0.0f),
+      pHasLoop(false) {}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AnimVisibilityKey::operator==(const AnimVisibilityKey & other) const {
-		return pType == other.pType &&
-				sts::isEqual(pValue1, other.pValue1) &&
-				sts::isEqual(pValue2, other.pValue2) &&
-				sts::isEqual(pLoopValue, other.pLoopValue) &&
-				pHasLoop == other.pHasLoop &&
-				pDrf == other.pDrf;
-	}
+bool AnimVisibilityKey::operator==(const AnimVisibilityKey & other) const {
+    return pType == other.pType &&
+           sts::isEqual(pValue1, other.pValue1) &&
+           sts::isEqual(pValue2, other.pValue2) &&
+           sts::isEqual(pLoopValue, other.pLoopValue) &&
+           pHasLoop == other.pHasLoop &&
+           pDrf == other.pDrf;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AnimVisibilityKey::reset() {
-		pType = UNDEFINED;
-		pValue1 = 0.0f;
-		pValue2 = 1.0f;
-		pDrf = "none";
-		pLoopValue = 0.0f;
-		pHasLoop = false;
-	}
+void AnimVisibilityKey::reset() {
+    pType = UNDEFINED;
+    pValue1 = 0.0f;
+    pValue2 = 1.0f;
+    pDrf = "none";
+    pLoopValue = 0.0f;
+    pHasLoop = false;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

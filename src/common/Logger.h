@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,9 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
-#include <fstream>
 #include "sts/utilities/Logger.h"
 #include "xpln/common/ExternalLog.h"
 #include "BaseLogger.h"
@@ -38,7 +37,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-// Nessage with a category for user showing (UL = user log)
+// Message with a category for user showing (UL = user log)
 #define ULMessage    CategoryMessage(LOG_CATEGORY_FOR_USER)
 #define ULDebug      CategoryDebug(LOG_CATEGORY_FOR_USER)
 #define ULFatal      CategoryFatal(LOG_CATEGORY_FOR_USER)

@@ -27,9 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "gtest/gtest.h"
-#include "gmock/gmock.h"
-#include "totext.h"
+#include <gtest/gtest.h>
 
 #include "MockIWriter.h"
 #include "xpln/obj/ObjMain.h"
@@ -46,60 +44,60 @@ using ::testing::InSequence;
 /**************************************************************************************************/
 
 TEST(TestGlobAttributesWrite, textures) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
-	main.pAttr.setTexture("test");
-	main.pAttr.setTextureLit("test_lit");
-	main.pAttr.setTextureNormal("test_normal");
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
+    main.pAttr.setTexture("test");
+    main.pAttr.setTextureLit("test_lit");
+    main.pAttr.setTextureNormal("test_normal");
 
-	InSequence dummy;
-	EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE).append(" ").append(main.pAttr.texture()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_LIT).append(" ").append(main.pAttr.textureLit()).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_NORMAL).append(" ").append(main.pAttr.textureNormal()).c_str()))).Times(1);
+    InSequence dummy;
+    EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE).append(" ").append(main.pAttr.texture())))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_LIT).append(" ").append(main.pAttr.textureLit())))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_NORMAL).append(" ").append(main.pAttr.textureNormal())))).Times(1);
 
-	attrWriter.write(&writer, &main);
-	ASSERT_EQ(3, attrWriter.count());
-	ASSERT_STREQ("test", main.pAttr.texture().c_str());
-	ASSERT_STREQ("test_lit", main.pAttr.textureLit().c_str());
-	ASSERT_STREQ("test_normal", main.pAttr.textureNormal().c_str());
+    attrWriter.write(&writer, &main);
+    ASSERT_EQ(3, attrWriter.count());
+    ASSERT_STREQ("test", main.pAttr.texture().c_str());
+    ASSERT_STREQ("test_lit", main.pAttr.textureLit().c_str());
+    ASSERT_STREQ("test_normal", main.pAttr.textureNormal().c_str());
 }
 
 TEST(TestGlobAttributesWrite, boolean) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
 
-	ASSERT_FALSE(main.pAttr.isBlendGlass());
-	ASSERT_FALSE(main.pAttr.isNormalMetalness());
-	ASSERT_FALSE(main.pAttr.isTilted());
-	ASSERT_FALSE(main.pAttr.isNoShadow());
-	ASSERT_FALSE(main.pAttr.isCockpitLit());
-	ASSERT_FALSE(main.pAttr.isDebug());
+    ASSERT_FALSE(main.pAttr.isBlendGlass());
+    ASSERT_FALSE(main.pAttr.isNormalMetalness());
+    ASSERT_FALSE(main.pAttr.isTilted());
+    ASSERT_FALSE(main.pAttr.isNoShadow());
+    ASSERT_FALSE(main.pAttr.isCockpitLit());
+    ASSERT_FALSE(main.pAttr.isDebug());
 
-	main.pAttr.setBlendGlass(true);
-	main.pAttr.setNormalMetalness(true);
-	main.pAttr.setTilted(true);
-	main.pAttr.setNoShadow(true);
-	main.pAttr.setCockpitLit(true);
-	main.pAttr.setDebug(true);
+    main.pAttr.setBlendGlass(true);
+    main.pAttr.setNormalMetalness(true);
+    main.pAttr.setTilted(true);
+    main.pAttr.setNoShadow(true);
+    main.pAttr.setCockpitLit(true);
+    main.pAttr.setDebug(true);
 
-	InSequence dummy;
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_GLOBAL_BLEND_GLASS))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_GLOBAL_NORMAL_METALNESS))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_GLOBAL_TILTED))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_GLOBAL_NO_SHADOW))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_GLOBAL_COCKPIT_LIT))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(ATTR_GLOBAL_DEBUG))).Times(0);
+    InSequence dummy;
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_GLOBAL_BLEND_GLASS))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_GLOBAL_NORMAL_METALNESS))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_GLOBAL_TILTED))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_GLOBAL_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_GLOBAL_COCKPIT_LIT))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(ATTR_GLOBAL_DEBUG))).Times(0);
 
-	attrWriter.write(&writer, &main);
-	ASSERT_EQ(5, attrWriter.count());
-	ASSERT_TRUE(main.pAttr.isBlendGlass());
-	ASSERT_TRUE(main.pAttr.isNormalMetalness());
-	ASSERT_TRUE(main.pAttr.isTilted());
-	ASSERT_TRUE(main.pAttr.isNoShadow());
-	ASSERT_TRUE(main.pAttr.isCockpitLit());
-	ASSERT_TRUE(main.pAttr.isDebug());
+    attrWriter.write(&writer, &main);
+    ASSERT_EQ(5, attrWriter.count());
+    ASSERT_TRUE(main.pAttr.isBlendGlass());
+    ASSERT_TRUE(main.pAttr.isNormalMetalness());
+    ASSERT_TRUE(main.pAttr.isTilted());
+    ASSERT_TRUE(main.pAttr.isNoShadow());
+    ASSERT_TRUE(main.pAttr.isCockpitLit());
+    ASSERT_TRUE(main.pAttr.isDebug());
 }
 
 /**************************************************************************************************/
@@ -107,167 +105,167 @@ TEST(TestGlobAttributesWrite, boolean) {
 /**************************************************************************************************/
 
 TEST(TestGlobAttributesWrite, AttrWetDry_wet) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
 
-	AttrWetDry attr(AttrWetDry::eState::wet);
-	main.pAttr.setWetDry(attr);
+    const AttrWetDry attr(AttrWetDry::eState::wet);
+    main.pAttr.setWetDry(attr);
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr).c_str()))).Times(1);
-	attrWriter.write(&writer, &main);
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr)))).Times(1);
+    attrWriter.write(&writer, &main);
 }
 
 TEST(TestGlobAttributesWrite, AttrWetDry_Dry) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
 
-	AttrWetDry attr(AttrWetDry::eState::dry);
-	main.pAttr.setWetDry(attr);
+    const AttrWetDry attr(AttrWetDry::eState::dry);
+    main.pAttr.setWetDry(attr);
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr).c_str()))).Times(1);
-	attrWriter.write(&writer, &main);
-	ASSERT_EQ(1, attrWriter.count());
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr)))).Times(1);
+    attrWriter.write(&writer, &main);
+    ASSERT_EQ(1, attrWriter.count());
 }
 
 TEST(TestGlobAttributesWrite, AttrGlobBlend_no_blend) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
 
-	AttrBlend attr(AttrBlend::eType::no_blend, 0.5);
-	main.pAttr.setBlend(attr);
+    const AttrBlend attr(AttrBlend::eType::no_blend, 0.5);
+    main.pAttr.setBlend(attr);
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr).c_str()))).Times(1);
-	attrWriter.write(&writer, &main);
-	ASSERT_EQ(1, attrWriter.count());
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr)))).Times(1);
+    attrWriter.write(&writer, &main);
+    ASSERT_EQ(1, attrWriter.count());
 }
 
 TEST(TestGlobAttributesWrite, AttrGlobBlend_shadow_blend) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
 
-	AttrBlend attr(AttrBlend::eType::shadow_blend, 0.5);
-	main.pAttr.setBlend(attr);
+    const AttrBlend attr(AttrBlend::eType::shadow_blend, 0.5);
+    main.pAttr.setBlend(attr);
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr).c_str()))).Times(1);
-	attrWriter.write(&writer, &main);
-	ASSERT_EQ(1, attrWriter.count());
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr)))).Times(1);
+    attrWriter.write(&writer, &main);
+    ASSERT_EQ(1, attrWriter.count());
 }
 
 TEST(TestGlobAttributesWrite, AttrLayerGroup) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
 
-	AttrLayerGroup attr(ELayer(ELayer::eId::cars), 5);
-	main.pAttr.setLayerGroup(attr);
+    const AttrLayerGroup attr(ELayer(ELayer::eId::cars), 5);
+    main.pAttr.setLayerGroup(attr);
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr).c_str()))).Times(1);
-	attrWriter.write(&writer, &main);
-	ASSERT_EQ(1, attrWriter.count());
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr)))).Times(1);
+    attrWriter.write(&writer, &main);
+    ASSERT_EQ(1, attrWriter.count());
 }
 
 TEST(TestGlobAttributesWrite, AttrDrapedLayerGroup) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
 
-	AttrDrapedLayerGroup attr(ELayer(ELayer::eId::cars), 5);
-	main.pAttr.setLayerGroupDraped(attr);
+    const AttrDrapedLayerGroup attr(ELayer(ELayer::eId::cars), 5);
+    main.pAttr.setLayerGroupDraped(attr);
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr).c_str()))).Times(1);
-	attrWriter.write(&writer, &main);
-	ASSERT_EQ(1, attrWriter.count());
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr)))).Times(1);
+    attrWriter.write(&writer, &main);
+    ASSERT_EQ(1, attrWriter.count());
 }
 
 TEST(TestGlobAttributesWrite, AttrLodDrap) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
 
-	AttrLodDrap attr(10.0f);
-	main.pAttr.setLodDrap(attr);
+    const AttrLodDrap attr(10.0f);
+    main.pAttr.setLodDrap(attr);
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr).c_str()))).Times(1);
-	attrWriter.write(&writer, &main);
-	ASSERT_EQ(1, attrWriter.count());
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr)))).Times(1);
+    attrWriter.write(&writer, &main);
+    ASSERT_EQ(1, attrWriter.count());
 }
 
 TEST(TestGlobAttributesWrite, AttrSlungLoadWeight) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
 
-	AttrSlungLoadWeight attr(10.0f);
-	main.pAttr.setSlungLoadWeight(attr);
+    const AttrSlungLoadWeight attr(10.0f);
+    main.pAttr.setSlungLoadWeight(attr);
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr).c_str()))).Times(1);
-	attrWriter.write(&writer, &main);
-	ASSERT_EQ(1, attrWriter.count());
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr)))).Times(1);
+    attrWriter.write(&writer, &main);
+    ASSERT_EQ(1, attrWriter.count());
 }
 
 TEST(TestGlobAttributesWrite, AttrSpecular) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
 
-	AttrSpecular attr(0.5f);
-	main.pAttr.setSpecular(attr);
+    const AttrSpecular attr(0.5f);
+    main.pAttr.setSpecular(attr);
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr).c_str()))).Times(1);
-	attrWriter.write(&writer, &main);
-	ASSERT_EQ(1, attrWriter.count());
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr)))).Times(1);
+    attrWriter.write(&writer, &main);
+    ASSERT_EQ(1, attrWriter.count());
 }
 
 TEST(TestGlobAttributesWrite, AttrTint) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
 
-	AttrTint attr(0.5f, 0.8f);
-	main.pAttr.setTint(attr);
+    const AttrTint attr(0.5f, 0.8f);
+    main.pAttr.setTint(attr);
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr).c_str()))).Times(1);
-	attrWriter.write(&writer, &main);
-	ASSERT_EQ(1, attrWriter.count());
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr)))).Times(1);
+    attrWriter.write(&writer, &main);
+    ASSERT_EQ(1, attrWriter.count());
 }
 
 TEST(TestGlobAttributesWrite, AttrSlopeLimit) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
 
-	AttrSlopeLimit attr(0.5f, 0.8f, 5.0f, 10.0f);
-	main.pAttr.setSlopeLimit(attr);
+    const AttrSlopeLimit attr(0.5f, 0.8f, 5.0f, 10.0f);
+    main.pAttr.setSlopeLimit(attr);
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr).c_str()))).Times(1);
-	attrWriter.write(&writer, &main);
-	ASSERT_EQ(1, attrWriter.count());
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr)))).Times(1);
+    attrWriter.write(&writer, &main);
+    ASSERT_EQ(1, attrWriter.count());
 }
 
 TEST(TestGlobAttributesWrite, AttrCockpitRegion) {
-	MockWriter writer;
-	ObjWriteGlobAttr attrWriter;
-	ObjMain main;
+    MockWriter writer;
+    ObjWriteGlobAttr attrWriter;
+    ObjMain main;
 
-	AttrCockpitRegion attr0(1, 2, 3, 4);
-	AttrCockpitRegion attr1(5, 6, 7, 8);
-	AttrCockpitRegion attr2(9, 10, 11, 12);
-	AttrCockpitRegion attr3(13, 14, 15, 16);
-	main.pAttr.setCockpitRegion(attr0, AttrCockpitRegion::r1);
-	main.pAttr.setCockpitRegion(attr1, AttrCockpitRegion::r2);
-	main.pAttr.setCockpitRegion(attr2, AttrCockpitRegion::r3);
-	main.pAttr.setCockpitRegion(attr3, AttrCockpitRegion::r4);
+    const AttrCockpitRegion attr0(1, 2, 3, 4);
+    const AttrCockpitRegion attr1(5, 6, 7, 8);
+    const AttrCockpitRegion attr2(9, 10, 11, 12);
+    const AttrCockpitRegion attr3(13, 14, 15, 16);
+    main.pAttr.setCockpitRegion(attr0, AttrCockpitRegion::r1);
+    main.pAttr.setCockpitRegion(attr1, AttrCockpitRegion::r2);
+    main.pAttr.setCockpitRegion(attr2, AttrCockpitRegion::r3);
+    main.pAttr.setCockpitRegion(attr3, AttrCockpitRegion::r4);
 
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr0).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr1).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr2).c_str()))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr3).c_str()))).Times(1);
-	attrWriter.write(&writer, &main);
-	ASSERT_EQ(4, attrWriter.count());
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr0)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr2)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr3)))).Times(1);
+    attrWriter.write(&writer, &main);
+    ASSERT_EQ(4, attrWriter.count());
 }
 
 /**************************************************************************************************/

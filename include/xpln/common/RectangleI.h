@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,135 +29,133 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "Point2.h"
 
 namespace xobj {
 
-	/***********************************************************************************************/
-	/////////////////////////////////////////////////////////////////////////////////////////////////
-	/***********************************************************************************************/
+/***********************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************/
 
-	/*!
-	 * \details Rectangle for texture coordinates, dimension by 2 points.
-	 * \remark s1,t1,s2,t2 - the texture coordinates (fractions from 0 to 1).
-	 *         S refers to horizontal coordinates, and T for vertical coordinates.
-	 */
-	class RectangleI {
-	public:
+/*!
+ * \details Rectangle for texture coordinates, dimension by 2 points.
+ * \remark s1,t1,s2,t2 - the texture coordinates (fractions from 0 to 1).
+ *         S refers to horizontal coordinates, and T for vertical coordinates.
+ */
+class RectangleI {
+public:
 
-		/*! 
-		 * \details Sets rectangle
-		 * \param [in] p1 x = s1, y = t1
-		 * \param [in] p2 x = s2, y = t2
-		 */
-		void setRect(const Point2 & p1, const Point2 & p2);
+    /*! 
+     * \details Sets rectangle
+     * \param [in] p1 x = s1, y = t1
+     * \param [in] p2 x = s2, y = t2
+     */
+    void setRect(const Point2 & p1, const Point2 & p2);
 
-		/*!
-		 * \details Sets point 1
-		 * \param [in] p1 x = s1, y = t1
-		 */
-		void setPoint1(const Point2 & p1);
+    /*!
+     * \details Sets point 1
+     * \param [in] p1 x = s1, y = t1
+     */
+    void setPoint1(const Point2 & p1);
 
-		/*! 
-		 * \details Sets point 2
-		 * \param [in] p2 x = s2, y = t2
-		 */
-		void setPoint2(const Point2 & p2);
+    /*! 
+     * \details Sets point 2
+     * \param [in] p2 x = s2, y = t2
+     */
+    void setPoint2(const Point2 & p2);
 
-		/*! 
-		 * \details Gets rectangle
-		 * \param [out] p1 x = s1, y = t1
-		 * \param [out] p2 x = s2, y = t2
-		 */
-		void rect(Point2 & p1, Point2 & p2) const;
+    /*! 
+     * \details Gets rectangle
+     * \param [out] p1 x = s1, y = t1
+     * \param [out] p2 x = s2, y = t2
+     */
+    void rect(Point2 & p1, Point2 & p2) const;
 
-		/*! 
-		 * \details Sets point 1
-		 * \return Point1 x = s1, y = t1
-		 */
-		const Point2 & point1() const;
+    /*! 
+     * \details Sets point 1
+     * \return Point1 x = s1, y = t1
+     */
+    const Point2 & point1() const;
 
-		/*! 
-		 * \details Sets point 2
-		 * \return Point2 x = s2, y = t2
-		 */
-		const Point2 & point2() const;
+    /*! 
+     * \details Sets point 2
+     * \return Point2 x = s2, y = t2
+     */
+    const Point2 & point2() const;
 
-		/*! Operator = */
-		RectangleI & operator=(const RectangleI & other);
+    /*! Operator = */
+    RectangleI & operator=(const RectangleI & other);
 
-		/*! Constructor default */
-		RectangleI();
+    /*! Constructor default */
+    RectangleI();
 
-		/*! 
-		 * \details Constructor init
-		 * \param [in] p1 x = s1, y = t1
-		 * \param [in] p2 x = s2, y = t2
-		 */
-		RectangleI(const Point2 & p1, const Point2 & p2);
+    /*! 
+     * \details Constructor init
+     * \param [in] p1 x = s1, y = t1
+     * \param [in] p2 x = s2, y = t2
+     */
+    RectangleI(const Point2 & p1, const Point2 & p2);
 
-		/*! Constructor copy  */
-		RectangleI(const RectangleI & other);
+    /*! Constructor copy  */
+    RectangleI(const RectangleI & other);
 
-		virtual ~RectangleI() { }
+    virtual ~RectangleI() = default;
 
-	private:
+private:
 
-		Point2 mPoint1;
-		Point2 mPoint2;
+    Point2 mPoint1;
+    Point2 mPoint2;
 
-	};
+};
 
-	/***********************************************************************************************/
-	/////////////////////////////////////////////////////////////////////////////////////////////////
-	/***********************************************************************************************/
+/***********************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************/
 
-	inline void RectangleI::setRect(const Point2 & p1, const Point2 & p2) {
-		mPoint1 = p1;
-		mPoint2 = p2;
-	}
+inline void RectangleI::setRect(const Point2 & p1, const Point2 & p2) {
+    mPoint1 = p1;
+    mPoint2 = p2;
+}
 
-	inline void RectangleI::setPoint1(const Point2 & p1) {
-		mPoint1 = p1;
-	}
+inline void RectangleI::setPoint1(const Point2 & p1) {
+    mPoint1 = p1;
+}
 
-	inline void RectangleI::setPoint2(const Point2 & p2) {
-		mPoint2 = p2;
-	}
+inline void RectangleI::setPoint2(const Point2 & p2) {
+    mPoint2 = p2;
+}
 
-	inline void RectangleI::rect(Point2 & p1, Point2 & p2) const {
-		p1 = mPoint1;
-		p2 = mPoint2;
-	}
+inline void RectangleI::rect(Point2 & p1, Point2 & p2) const {
+    p1 = mPoint1;
+    p2 = mPoint2;
+}
 
-	inline const Point2 & RectangleI::point1() const {
-		return mPoint1;
-	}
+inline const Point2 & RectangleI::point1() const {
+    return mPoint1;
+}
 
-	inline const Point2 & RectangleI::point2() const {
-		return mPoint2;
-	}
+inline const Point2 & RectangleI::point2() const {
+    return mPoint2;
+}
 
-	inline RectangleI & RectangleI::operator=(const RectangleI & other) {
-		mPoint1 = other.mPoint1;
-		mPoint2 = other.mPoint2;
-		return *this;
-	}
+inline RectangleI & RectangleI::operator=(const RectangleI & other) {
+    mPoint1 = other.mPoint1;
+    mPoint2 = other.mPoint2;
+    return *this;
+}
 
-	inline RectangleI::RectangleI() { }
+inline RectangleI::RectangleI() = default;
 
-	inline RectangleI::RectangleI(const Point2 & inLeftBottom, const Point2 & inRightTop)
-		: mPoint1(inLeftBottom),
-		mPoint2(inRightTop) { }
+inline RectangleI::RectangleI(const Point2 & p1, const Point2 & p2)
+    : mPoint1(p1),
+      mPoint2(p2) { }
 
-	inline RectangleI::RectangleI(const RectangleI & inOther)
-		: mPoint1(inOther.mPoint1),
-		mPoint2(inOther.mPoint2) { }
+inline RectangleI::RectangleI(const RectangleI & other)
+    : mPoint1(other.mPoint1),
+      mPoint2(other.mPoint2) { }
 
-	/***********************************************************************************************/
-	/////////////////////////////////////////////////////////////////////////////////////////////////
-	/***********************************************************************************************/
+/***********************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/***********************************************************************************************/
 
 }

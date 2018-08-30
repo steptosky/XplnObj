@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,8 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <sstream>
 #include "Defines.h"
 
@@ -42,15 +42,15 @@
 class StringStream : public std::stringstream {
 public:
 
-	StringStream()
-		: StringStream(PRECISION) {}
+    StringStream()
+        : StringStream(PRECISION) {}
 
-	StringStream(uint8_t precision) {
-		this->precision(precision);
-		*this << std::fixed;
-	}
+    explicit StringStream(const uint8_t precision) {
+        this->precision(precision);
+        *this << std::fixed;
+    }
 
-	virtual ~StringStream() = default;
+    virtual ~StringStream() = default;
 
 };
 

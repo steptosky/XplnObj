@@ -27,117 +27,117 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/ObjLightSpillCust.h"
-#include "sts/string/StringConverters.h"
-#include "common/Logger.h"
 #include <cmath>
+
+#include "xpln/obj/ObjLightSpillCust.h"
+#include "xpln/obj/Transform.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
+/********************************************************************************************************/
 
-	ObjLightSpillCust::ObjLightSpillCust(const ObjLightSpillCust & copy)
-		: ObjAbstractLight(copy),
-		mSize(copy.mSize),
-		mSemi(copy.mSemi),
-		mColor(copy.mColor),
-		mDirection(copy.mDirection),
-		mDataRef(copy.mDataRef) {}
+ObjLightSpillCust::ObjLightSpillCust(const ObjLightSpillCust & copy)
+    : ObjAbstractLight(copy),
+      mSize(copy.mSize),
+      mSemi(copy.mSemi),
+      mColor(copy.mColor),
+      mDirection(copy.mDirection),
+      mDataRef(copy.mDataRef) {}
 
-	ObjLightSpillCust::ObjLightSpillCust()
-		: mSize(10.0f),
-		mSemi(0.0f) {
+ObjLightSpillCust::ObjLightSpillCust()
+    : mSize(10.0f),
+      mSemi(0.0f) {
 
-		setObjectName("Light Spill Custom");
-	}
+    setObjectName("Light Spill Custom");
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjLightSpillCust::setSemiAngle(float inRadians) {
-		mSemi = std::cos(inRadians / 2.0f);
-	}
+void ObjLightSpillCust::setSemiAngle(const float radians) {
+    mSemi = std::cos(radians / 2.0f);
+}
 
-	float ObjLightSpillCust::semiAngle() const {
-		return std::acos(mSemi) * 2.0f;
-	}
+float ObjLightSpillCust::semiAngle() const {
+    return std::acos(mSemi) * 2.0f;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjLightSpillCust::applyTransform(const TMatrix & tm, const bool) {
-		Point3 pos = mPosition;
-		tm.transformPoint(pos);
-		mPosition = pos;
+void ObjLightSpillCust::applyTransform(const TMatrix & tm, const bool) {
+    Point3 pos = mPosition;
+    tm.transformPoint(pos);
+    mPosition = pos;
 
-		Point3 dir = direction();
-		tm.transformVector(dir);
-		setDirection(dir);
-	}
+    Point3 dir = direction();
+    tm.transformVector(dir);
+    setDirection(dir);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	eObjectType ObjLightSpillCust::objType() const {
-		return OBJ_LIGHT_SPILL_CUSTOM;
-	}
+eObjectType ObjLightSpillCust::objType() const {
+    return OBJ_LIGHT_SPILL_CUSTOM;
+}
 
-	Point3 ObjLightSpillCust::direction() const {
-		return mDirection;
-	}
+Point3 ObjLightSpillCust::direction() const {
+    return mDirection;
+}
 
-	void ObjLightSpillCust::setDirection(Point3 direction) {
-		mDirection = direction;
-		mDirection.normalize();
-	}
+void ObjLightSpillCust::setDirection(const Point3 & direction) {
+    mDirection = direction;
+    mDirection.normalize();
+}
 
-	void ObjLightSpillCust::setColor(const Color & color) {
-		mColor = color;
-	}
+void ObjLightSpillCust::setColor(const Color & color) {
+    mColor = color;
+}
 
-	Color ObjLightSpillCust::color() const {
-		return mColor;
-	}
+Color ObjLightSpillCust::color() const {
+    return mColor;
+}
 
-	float ObjLightSpillCust::semiRaw() const {
-		return mSemi;
-	}
+float ObjLightSpillCust::semiRaw() const {
+    return mSemi;
+}
 
-	void ObjLightSpillCust::setSemiRaw(float semi) {
-		mSemi = semi;
-	}
+void ObjLightSpillCust::setSemiRaw(const float semi) {
+    mSemi = semi;
+}
 
-	float ObjLightSpillCust::size() const {
-		return mSize;
-	}
+float ObjLightSpillCust::size() const {
+    return mSize;
+}
 
-	void ObjLightSpillCust::setSize(float size) {
-		mSize = size;
-	}
+void ObjLightSpillCust::setSize(const float size) {
+    mSize = size;
+}
 
-	const std::string & ObjLightSpillCust::dataRef() const {
-		return mDataRef;
-	}
+const std::string & ObjLightSpillCust::dataRef() const {
+    return mDataRef;
+}
 
-	void ObjLightSpillCust::setDataRef(const std::string & dataRef) {
-		mDataRef = dataRef;
-	}
+void ObjLightSpillCust::setDataRef(const std::string & dataRef) {
+    mDataRef = dataRef;
+}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	ObjAbstract * ObjLightSpillCust::clone() const {
-		return new ObjLightSpillCust(*this);
-	}
+ObjAbstract * ObjLightSpillCust::clone() const {
+    return new ObjLightSpillCust(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

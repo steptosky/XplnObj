@@ -2,7 +2,7 @@
 # //////////////////////////////////////////////////////////////////////////////////#
 # ----------------------------------------------------------------------------------#
 #
-#  Copyright (C) 2017, StepToSky
+#  Copyright (C) 2018, StepToSky
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -34,67 +34,69 @@
 # //////////////////////////////////////////////////////////////////////////////////#
 # ----------------------------------------------------------------------------------#
 
-from conans import ConanFile, CMake
-from conanfile_vcs import ConanVcs
-
-vcs_data = ConanVcs()
-vcs_data.load_vcs_data()
+import os
+from conans import ConanFile, CMake, tools
+from vcs_info import VcsInfo
 
 
 class LibConan(ConanFile):
-    version = "0.5.0"
+    version = "0.6.0"
     name = 'XplnObj'
     url = 'https://github.com/steptosky/XplnObj'
     license = 'BSD 3-Clause'
-    description = "This library is for working with the X-Plane's obj format. It uses C++ 14."
+    description = "This library is for working with the X-Plane's obj format. It requires C++ 14."
     author = 'StepToSky <info@steptosky.com>'
+
     settings = "os", "compiler", "build_type", "arch"
-    options = {'shared': [True, False],
-               'include_pdbs': [True, False],
-               "fpic": [True, False]}
-    default_options = 'shared=False', 'include_pdbs=False', 'gtest:shared=False', 'fpic=False'
-    exports = 'vcs_data', 'conanfile_vcs.py'
+
+    options = {'shared': [True, False], "fPIC": [True, False]}
+    default_options = 'shared=False', "fPIC=False", 'gtest:shared=False', 'gtest:build_gmock=True'
+
+    exports = 'vcs_data', 'vcs_info.py'
     exports_sources = 'CMakeLists.txt', 'src/*', 'src-test/*', 'include/*', 'cmake/*', 'license*'
+
     generators = 'cmake'
     build_policy = 'missing'
+        
+    build_test_var = "CONAN_BUILD_TESTING"
+    test_dir_var = "CONAN_TESTING_REPORT_DIR"
+    
+    vcs_data = VcsInfo()
 
     def configure(self):
         if self.settings.compiler == "Visual Studio" and float(str(self.settings.compiler.version)) < 14:
-            raise Exception("Visual Studio >= 14 is required")
+            raise Exception("Visual Studio 14 (2015) or higher is required")
 
     def config_options(self):
-        if self.settings.compiler != "Visual Studio":
-            try:  # It might have already been removed if required by more than 1 package
-                del self.options.include_pdbs
-            except Exception:
-                pass
+        if self.settings.os == "Windows":
+            del self.options.fPIC
 
     def requirements(self):
-        if self.scope.dev or self.scope.testing:
-            self.requires('gtest/1.8.0@lasote/stable', private=True)
+        if os.getenv(self.build_test_var, "0") == "1":
+            self.requires('gtest/1.8.0@bincrafters/stable', private=True)
 
     def build(self):
+        build_testing = os.getenv(self.build_test_var, "0")
+        test_dir = os.getenv(self.test_dir_var, "")
         cmake = CMake(self)
-        vcs_data.setup_cmake(cmake)
-        cmake.definitions["BUILD_TESTS"] = 'ON' if self.scope.testing else 'OFF'
-        if self.scope.test_report_dir:
-            cmake.definitions["TEST_REPORT_DIR"] = self.scope.test_report_dir
-        if self.options.fpic:
-            cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = "ON"
+        self.vcs_data.setup_cmake(cmake)
+        cmake.definitions["BUILD_TESTING"] = 'ON' if build_testing == "1" else 'OFF'
+        if test_dir:
+            cmake.definitions["TESTING_REPORT_DIR"] = test_dir
         cmake.configure()
         cmake.build()
         cmake.install()
-        if self.scope.testing:
+        if build_testing == "1":
             cmake.test()
 
     def package(self):
         self.copy("license*", src=".", dst="licenses", ignore_case=True, keep_path=False)
-        if self.settings.compiler == "Visual Studio" and self.options.include_pdbs:
-            self.copy(pattern="*/%s.pdb" % self.name, dst='%s' % self.settings.build_type, src=".", keep_path=False)
+        self.copy(pattern="*/%s.pdb" % self.name, dst='%s' % self.settings.build_type, src=".", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libdirs = ['%s' % self.settings.build_type]
-        self.cpp_info.libs = [self.name]
+        lib_dir = '%s' % self.settings.build_type
+        self.cpp_info.libdirs = [lib_dir]
+        self.cpp_info.libs = tools.collect_libs(self, lib_dir)
 
 # ----------------------------------------------------------------------------------#
 # //////////////////////////////////////////////////////////////////////////////////#

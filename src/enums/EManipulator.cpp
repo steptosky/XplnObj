@@ -1,5 +1,5 @@
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -27,158 +27,174 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <cstring>
+
 #include "xpln/enums/EManipulator.h"
-#include "common/Logger.h"
 #include "common/ArrayLength.h"
 #include "common/AttributeNames.h"
+#include "common/Logger.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	EManipulator::List EManipulator::mList;
+EManipulator::List EManipulator::mList;
 
-	/**************************************************************************************************/
-	/////////////////////////////////////////* Static area *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	namespace EManipulatorData {
+namespace EManipulatorData {
 
-		struct Data {
-			const char * mUi;
-			const char * mAttr;
-			EManipulator::eId mId;
+    struct Data {
+        const char * mUi;
+        const char * mAttr;
+        EManipulator::eId mId;
 
-			Data(const char * attr, const char * ui, EManipulator::eId id)
-				: mUi(ui),
-				mAttr(attr),
-				mId(id) {}
-		};
+        Data(const char * attr, const char * ui, const EManipulator::eId id)
+            : mUi(ui),
+              mAttr(attr),
+              mId(id) {}
+    };
 
-		typedef std::pair<std::string, EManipulator::eId> Association;
+    typedef std::pair<std::string, EManipulator::eId> Association;
 
-		const Data gList[] = {
-			/* 00 */ Data(ATTR_MANIP_NONE, "None", EManipulator::none),
-			/* 01 */ Data(ATTR_MANIP_AXIS_KNOB, "Axis knob", EManipulator::axis_knob),
-			/* 02 */ Data(ATTR_MANIP_AXIS_SWITCH_LEFT_RIGHT, "Axis switch left-right", EManipulator::axis_switch_lr),
-			/* 03 */ Data(ATTR_MANIP_AXIS_SWITCH_UP_DOWN, "Axis switch up-down", EManipulator::axis_switch_ud),
-			/* 04 */ Data(ATTR_MANIP_COMMAND, "Command", EManipulator::command),
-			/* 02 */ Data(ATTR_MANIP_COMMAND_AXIS, "Command axis", EManipulator::command_axis),
-			/* 06 */ Data(ATTR_MANIP_COMMAND_KNOB, "Command knob", EManipulator::command_knob),
-			/* 07 */ Data(ATTR_MANIP_SWITCH_LEFT_RIGHT, "Command switch left-right", EManipulator::command_switch_lr),
-			/* 08 */ Data(ATTR_MANIP_SWITCH_UP_DOWN, "Command switch up-down", EManipulator::command_switch_ud),
-			/* 09 */ Data(ATTR_MANIP_DELTA, "Delta", EManipulator::delta),
-			/* 10 */ Data(ATTR_MANIP_DRAG_AXIS, "Drag axis", EManipulator::drag_axis),
-			/* 11 */ Data(ATTR_MANIP_DRAG_AXIS_PIX, "Drag axis pix", EManipulator::drag_axis_pix),
-			/* 12 */ Data(ATTR_MANIP_DRAG_XY, "Drag xy", EManipulator::drag_xy),
-			/* 13 */ Data(ATTR_MANIP_NOOP, "Noop", EManipulator::noop),
-			/* 14 */ Data("manip_panel_click", "Panel-Click", EManipulator::panel),
-			/* 15 */ Data(ATTR_MANIP_PUSH, "Push", EManipulator::push),
-			/* 16 */ Data(ATTR_MANIP_RADIO, "Radio", EManipulator::radio),
-			/* 17 */ Data(ATTR_MANIP_TOGGLE, "Toggle", EManipulator::toggle),
-			/* 18 */ Data(ATTR_MANIP_WRAP, "Wrap", EManipulator::wrap),
-		};
-	}
+    const Data gList[] = {
+        /* 00 */ Data(ATTR_MANIP_NONE, "None", EManipulator::none),
+        /* 01 */ Data(ATTR_MANIP_AXIS_KNOB, "Axis knob", EManipulator::axis_knob),
+        /* 02 */ Data(ATTR_MANIP_AXIS_SWITCH_LEFT_RIGHT, "Axis switch left-right", EManipulator::axis_switch_lr),
+        /* 03 */ Data(ATTR_MANIP_AXIS_SWITCH_UP_DOWN, "Axis switch up-down", EManipulator::axis_switch_ud),
+        /* 04 */ Data(ATTR_MANIP_COMMAND, "Command", EManipulator::command),
+        /* 02 */ Data(ATTR_MANIP_COMMAND_AXIS, "Command axis", EManipulator::command_axis),
+        /* 06 */ Data(ATTR_MANIP_COMMAND_KNOB, "Command knob", EManipulator::command_knob2),
+        /* 07 */ Data(ATTR_MANIP_COMMAND_KNOB2, "Command knob VR compatible", EManipulator::command_knob),
+        /* 08 */ Data(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT, "Command switch left-right", EManipulator::command_switch_lr),
+        /* 09 */ Data(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN, "Command switch up-down", EManipulator::command_switch_ud),
+        /* 10 */ Data(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2, "Command switch left-right VR compatible", EManipulator::command_switch_lr2),
+        /* 11 */ Data(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2, "Command switch up-down VR compatible", EManipulator::command_switch_ud2),
+        /* 12 */ Data(ATTR_MANIP_DELTA, "Delta", EManipulator::delta),
+        /* 13 */ Data(ATTR_MANIP_DRAG_AXIS, "Drag axis", EManipulator::drag_axis),
+        /* 13 */ Data(ATTR_MANIP_DRAG_ROTATE, "Drag rotate", EManipulator::drag_rotate),
+        /* 14 */ Data(ATTR_MANIP_DRAG_AXIS_PIX, "Drag axis pix", EManipulator::drag_axis_pix),
+        /* 15 */ Data(ATTR_MANIP_DRAG_XY, "Drag xy", EManipulator::drag_xy),
+        /* 16 */ Data(ATTR_MANIP_NOOP, "Noop", EManipulator::noop),
+        /* 17 */ Data("manip_panel_click", "Panel-Click", EManipulator::panel),
+        /* 18 */ Data(ATTR_MANIP_PUSH, "Push", EManipulator::push),
+        /* 19 */ Data(ATTR_MANIP_RADIO, "Radio", EManipulator::radio),
+        /* 20 */ Data(ATTR_MANIP_TOGGLE, "Toggle", EManipulator::toggle),
+        /* 21 */ Data(ATTR_MANIP_WRAP, "Wrap", EManipulator::wrap),
+    };
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	EManipulator::EManipulator()
-		: EManipulator(none) { }
+EManipulator::EManipulator()
+    : EManipulator(none) { }
 
-	EManipulator::EManipulator(eId id)
-		: mId(id) { }
+EManipulator::EManipulator(const eId id)
+    : mId(id) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool EManipulator::operator==(const EManipulator & other) const {
-		return mId == other.mId;
-	}
+bool EManipulator::operator==(const EManipulator & other) const {
+    return mId == other.mId;
+}
 
-	bool EManipulator::operator==(eId id) const {
-		return mId == id;
-	}
+bool EManipulator::operator==(const eId id) const {
+    return mId == id;
+}
 
-	bool EManipulator::operator!=(const EManipulator & other) const {
-		return mId != other.mId;
-	}
+bool EManipulator::operator!=(const EManipulator & other) const {
+    return mId != other.mId;
+}
 
-	bool EManipulator::operator!=(eId id) const {
-		return mId != id;
-	}
+bool EManipulator::operator!=(const eId id) const {
+    return mId != id;
+}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	EManipulator EManipulator::fromUiString(const char * name) {
-		if (name) {
-			for (size_t i = 0; i < ARRAY_LENGTH(EManipulatorData::gList); ++i) {
-				if (strcmp(name, EManipulatorData::gList[i].mUi) == 0) {
-					return EManipulator(EManipulatorData::gList[i].mId);
-				}
-			}
-			LError << TOTEXT(EManipulator) << " Does not contain ui name: \"" << name << "\"";
-		}
-		return EManipulator();
-	}
+EManipulator EManipulator::fromUiString(const char * name) {
+    if (name) {
+        for (size_t i = 0; i < ARRAY_LENGTH(EManipulatorData::gList); ++i) {
+            if (strcmp(name, EManipulatorData::gList[i].mUi) == 0) {
+                return EManipulator(EManipulatorData::gList[i].mId);
+            }
+        }
+        LError << TOTEXT(EManipulator) << " Does not contain ui name: \"" << name << "\"";
+    }
+    return EManipulator();
+}
 
-	EManipulator EManipulator::fromString(const char * attrName) {
-		if (attrName) {
-			for (size_t i = 0; i < ARRAY_LENGTH(EManipulatorData::gList); ++i) {
-				if (strcmp(attrName, EManipulatorData::gList[i].mAttr) == 0) {
-					return EManipulator(EManipulatorData::gList[i].mId);
-				}
-			}
-			LError << TOTEXT(EManipulator) << " Does not contain attribute name: \"" << attrName << "\"";
-		}
-		return EManipulator();
-	}
+EManipulator EManipulator::fromString(const char * attrName) {
+    if (attrName) {
+        //-----------------------------------------------------
+        // backward compatibility fixes for attribute name fix.
+        // Read the tests for more information.
+        if(strcmp(attrName,"ATTR_manip_switch_up_down") == 0) {
+            attrName = ATTR_MANIP_COMMAND_SWITCH_UP_DOWN;
+        }
+        else if (strcmp(attrName, "ATTR_manip_switch_left_right") == 0) {
+            attrName = ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT;
+        }
+        //-----------------------------------------------------
+        for (size_t i = 0; i < ARRAY_LENGTH(EManipulatorData::gList); ++i) {
+            if (strcmp(attrName, EManipulatorData::gList[i].mAttr) == 0) {
+                return EManipulator(EManipulatorData::gList[i].mId);
+            }
+        }
+        LError << TOTEXT(EManipulator) << " Does not contain attribute name: \"" << attrName << "\"";
+    }
+    return EManipulator();
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void EManipulator::makeList(List & outList) {
-		if (outList.empty()) {
-			for (size_t i = 0; i < ARRAY_LENGTH(EManipulatorData::gList); ++i) {
-				outList.emplace_back(EManipulator(EManipulatorData::gList[i].mId));
-			}
-		}
-	}
+void EManipulator::makeList(List & outList) {
+    if (outList.empty()) {
+        for (size_t i = 0; i < ARRAY_LENGTH(EManipulatorData::gList); ++i) {
+            outList.emplace_back(EManipulator(EManipulatorData::gList[i].mId));
+        }
+    }
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool EManipulator::isValid() const {
-		return mId != none;
-	}
+bool EManipulator::isValid() const {
+    return mId != none;
+}
 
-	EManipulator::eId EManipulator::id() const {
-		return mId;
-	}
+EManipulator::eId EManipulator::id() const {
+    return mId;
+}
 
-	const char * EManipulator::toString() const {
-		return EManipulatorData::gList[static_cast<size_t>(mId)].mAttr;
-	}
+const char * EManipulator::toString() const {
+    return EManipulatorData::gList[static_cast<size_t>(mId)].mAttr;
+}
 
-	const char * EManipulator::toUiString() const {
-		return EManipulatorData::gList[static_cast<size_t>(mId)].mUi;
-	}
+const char * EManipulator::toUiString() const {
+    return EManipulatorData::gList[static_cast<size_t>(mId)].mUi;
+}
 
-	const EManipulator::List & EManipulator::list() {
-		makeList(mList);
-		return mList;
-	}
+const EManipulator::List & EManipulator::list() {
+    makeList(mList);
+    return mList;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,10 +29,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <string>
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 
 /*
 * Why this functions are not the methods of the corresponding classes?
@@ -39,50 +39,50 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class AttrBlend;
-	class AttrHard;
-	class AttrDrapedLayerGroup;
-	class AttrLayerGroup;
-	class AttrLightLevel;
-	class AttrLodDrap;
-	class AttrPolyOffset;
-	class AttrShiny;
-	class AttrSlungLoadWeight;
-	class AttrSpecular;
-	class AttrTint;
-	class AttrWetDry;
-	class AttrSlopeLimit;
-	class AttrCockpitRegion;
-	class AttrCockpit;
+class AttrBlend;
+class AttrHard;
+class AttrDrapedLayerGroup;
+class AttrLayerGroup;
+class AttrLightLevel;
+class AttrLodDrap;
+class AttrPolyOffset;
+class AttrShiny;
+class AttrSlungLoadWeight;
+class AttrSpecular;
+class AttrTint;
+class AttrWetDry;
+class AttrSlopeLimit;
+class AttrCockpitRegion;
+class AttrCockpit;
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	XpObjLib std::string toObjGlobString(const AttrBlend & globAttr);
-	XpObjLib std::string toObjGlobString(const AttrLayerGroup & globAttr);
-	XpObjLib std::string toObjGlobString(const AttrDrapedLayerGroup & globAttr);
-	XpObjLib std::string toObjGlobString(const AttrLodDrap & globAttr);
-	XpObjLib std::string toObjGlobString(const AttrSlungLoadWeight & globAttr);
-	XpObjLib std::string toObjGlobString(const AttrSpecular & globAttr);
-	XpObjLib std::string toObjGlobString(const AttrTint & globAttr);
-	XpObjLib std::string toObjGlobString(const AttrWetDry & globAttr);
-	XpObjLib std::string toObjGlobString(const AttrSlopeLimit & globAttr);
-	XpObjLib std::string toObjGlobString(const AttrCockpitRegion & globAttr);
+XpObjLib std::string toObjGlobString(const AttrBlend & globAttr);
+XpObjLib std::string toObjGlobString(const AttrLayerGroup & globAttr);
+XpObjLib std::string toObjGlobString(const AttrDrapedLayerGroup & globAttr);
+XpObjLib std::string toObjGlobString(const AttrLodDrap & globAttr);
+XpObjLib std::string toObjGlobString(const AttrSlungLoadWeight & globAttr);
+XpObjLib std::string toObjGlobString(const AttrSpecular & globAttr);
+XpObjLib std::string toObjGlobString(const AttrTint & globAttr);
+XpObjLib std::string toObjGlobString(const AttrWetDry & globAttr);
+XpObjLib std::string toObjGlobString(const AttrSlopeLimit & globAttr);
+XpObjLib std::string toObjGlobString(const AttrCockpitRegion & globAttr);
 
-	XpObjLib std::string toObjString(const AttrBlend & attr);
-	XpObjLib std::string toObjString(const AttrHard & attr);
-	XpObjLib std::string toObjString(const AttrLightLevel & attr);
-	XpObjLib std::string toObjString(const AttrPolyOffset & attr);
-	XpObjLib std::string toObjString(const AttrShiny & attr);
-	XpObjLib std::string toObjString(const AttrCockpit & attr);
+XpObjLib std::string toObjString(const AttrBlend & attr);
+XpObjLib std::string toObjString(const AttrHard & attr);
+XpObjLib std::string toObjString(const AttrLightLevel & attr);
+XpObjLib std::string toObjString(const AttrPolyOffset & attr);
+XpObjLib std::string toObjString(const AttrShiny & attr);
+XpObjLib std::string toObjString(const AttrCockpit & attr);
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

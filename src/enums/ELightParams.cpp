@@ -27,177 +27,178 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <cstring>
+
 #include "xpln/enums/ELightParams.h"
-#include <utility>
-#include "common/Logger.h"
 #include "common/ArrayLength.h"
+#include "common/Logger.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	ELightParams::List ELightParams::mList;
+ELightParams::List ELightParams::mList;
 
-	namespace EObjLightParamsData {
+namespace EObjLightParamsData {
 
-		struct Data {
-			const char * mUi;
-			const char * mAttr;
-			ELightParams::eId mId;
+    struct Data {
+        const char * mUi;
+        const char * mAttr;
+        ELightParams::eId mId;
 
-			Data(const char * attr, const char * ui, ELightParams::eId id)
-				: mUi(ui),
-				mAttr(attr),
-				mId(id) {}
-		};
+        Data(const char * attr, const char * ui, const ELightParams::eId id)
+            : mUi(ui),
+              mAttr(attr),
+              mId(id) {}
+    };
 
-		const Data gList[] = {
-			/* 00 */ Data(TOTEXT(none), "none", ELightParams::none),
-			/* 01 */ Data(TOTEXT(light_params_custom), "Custom", ELightParams::light_params_custom),
+    const Data gList[] = {
+        /* 00 */ Data(TOTEXT(none), "none", ELightParams::none),
+        /* 01 */ Data(TOTEXT(light_params_custom), "Custom", ELightParams::light_params_custom),
 
-			/* 02 */ Data(TOTEXT(full_custom_halo), "Full custom halo", ELightParams::full_custom_halo),
-			/* 03 */ Data(TOTEXT(full_custom_halo_night), "Full custom halo-night", ELightParams::full_custom_halo_night),
+        /* 02 */ Data(TOTEXT(full_custom_halo), "Full custom halo", ELightParams::full_custom_halo),
+        /* 03 */ Data(TOTEXT(full_custom_halo_night), "Full custom halo-night", ELightParams::full_custom_halo_night),
 
-			/* 04 */ Data(TOTEXT(airplane_landing_core), "Airplane landing core", ELightParams::airplane_landing_core),
-			/* 05 */ Data(TOTEXT(airplane_landing_glow), "Airplane landing glow", ELightParams::airplane_landing_glow),
-			/* 06 */ Data(TOTEXT(airplane_landing_flare), "Airplane landing flare", ELightParams::airplane_landing_flare),
-			/* 07 */ Data(TOTEXT(airplane_landing_sp), "Airplane landing sp", ELightParams::airplane_landing_sp),
+        /* 04 */ Data(TOTEXT(airplane_landing_core), "Airplane landing core", ELightParams::airplane_landing_core),
+        /* 05 */ Data(TOTEXT(airplane_landing_glow), "Airplane landing glow", ELightParams::airplane_landing_glow),
+        /* 06 */ Data(TOTEXT(airplane_landing_flare), "Airplane landing flare", ELightParams::airplane_landing_flare),
+        /* 07 */ Data(TOTEXT(airplane_landing_sp), "Airplane landing sp", ELightParams::airplane_landing_sp),
 
-			/* 08 */ Data(TOTEXT(airplane_taxi_core), "Airplane taxi core", ELightParams::airplane_taxi_core),
-			/* 09 */ Data(TOTEXT(airplane_taxi_glow), "Airplane taxi glow", ELightParams::airplane_taxi_glow),
-			/* 10 */ Data(TOTEXT(airplane_taxi_flare), "Airplane taxi flare", ELightParams::airplane_taxi_flare),
-			/* 11 */ Data(TOTEXT(airplane_taxi_sp), "Airplane taxi sp", ELightParams::airplane_taxi_sp),
+        /* 08 */ Data(TOTEXT(airplane_taxi_core), "Airplane taxi core", ELightParams::airplane_taxi_core),
+        /* 09 */ Data(TOTEXT(airplane_taxi_glow), "Airplane taxi glow", ELightParams::airplane_taxi_glow),
+        /* 10 */ Data(TOTEXT(airplane_taxi_flare), "Airplane taxi flare", ELightParams::airplane_taxi_flare),
+        /* 11 */ Data(TOTEXT(airplane_taxi_sp), "Airplane taxi sp", ELightParams::airplane_taxi_sp),
 
-			/* 12 */ Data(TOTEXT(airplane_spot_core), "Airplane spot core", ELightParams::airplane_spot_core),
-			/* 13 */ Data(TOTEXT(airplane_spot_glow), "Airplane spot glow", ELightParams::airplane_spot_glow),
-			/* 14 */ Data(TOTEXT(airplane_spot_flare), "Airplane spot flare", ELightParams::airplane_spot_flare),
-			/* 15 */ Data(TOTEXT(airplane_spot_sp), "Airplane spot sp", ELightParams::airplane_spot_sp),
+        /* 12 */ Data(TOTEXT(airplane_spot_core), "Airplane spot core", ELightParams::airplane_spot_core),
+        /* 13 */ Data(TOTEXT(airplane_spot_glow), "Airplane spot glow", ELightParams::airplane_spot_glow),
+        /* 14 */ Data(TOTEXT(airplane_spot_flare), "Airplane spot flare", ELightParams::airplane_spot_flare),
+        /* 15 */ Data(TOTEXT(airplane_spot_sp), "Airplane spot sp", ELightParams::airplane_spot_sp),
 
-			/* 16 */ Data(TOTEXT(airplane_generic_core), "Airplane generic_core", ELightParams::airplane_generic_core),
-			/* 17 */ Data(TOTEXT(airplane_generic_glow), "Airplane generic_glow", ELightParams::airplane_generic_glow),
-			/* 18 */ Data(TOTEXT(airplane_generic_flare), "Airplane generic flare", ELightParams::airplane_generic_flare),
-			/* 19 */ Data(TOTEXT(airplane_generic_sp), "Airplane generic sp", ELightParams::airplane_generic_sp),
+        /* 16 */ Data(TOTEXT(airplane_generic_core), "Airplane generic_core", ELightParams::airplane_generic_core),
+        /* 17 */ Data(TOTEXT(airplane_generic_glow), "Airplane generic_glow", ELightParams::airplane_generic_glow),
+        /* 18 */ Data(TOTEXT(airplane_generic_flare), "Airplane generic flare", ELightParams::airplane_generic_flare),
+        /* 19 */ Data(TOTEXT(airplane_generic_sp), "Airplane generic sp", ELightParams::airplane_generic_sp),
 
-			/* 20 */ Data(TOTEXT(airplane_beacon_rotate), "Airplane beacon rotate", ELightParams::airplane_beacon_rotate),
-			/* 21 */
-			Data(TOTEXT(airplane_beacon_rotate_sp), "Airplane beacon rotate sp", ELightParams::airplane_beacon_rotate_sp),
+        /* 20 */ Data(TOTEXT(airplane_beacon_rotate), "Airplane beacon rotate", ELightParams::airplane_beacon_rotate),
+        /* 21 */
+        Data(TOTEXT(airplane_beacon_rotate_sp), "Airplane beacon rotate sp", ELightParams::airplane_beacon_rotate_sp),
 
-			/* 22 */ Data(TOTEXT(airplane_beacon_strobe), "Airplane beacon strobe", ELightParams::airplane_beacon_strobe),
-			/* 23 */
-			Data(TOTEXT(airplane_beacon_strobe_sp), "Airplane beacon strobe sp", ELightParams::airplane_beacon_strobe_sp),
+        /* 22 */ Data(TOTEXT(airplane_beacon_strobe), "Airplane beacon strobe", ELightParams::airplane_beacon_strobe),
+        /* 23 */
+        Data(TOTEXT(airplane_beacon_strobe_sp), "Airplane beacon strobe sp", ELightParams::airplane_beacon_strobe_sp),
 
-			/* 24 */ Data(TOTEXT(airplane_strobe_omni), "Airplane strobe omni", ELightParams::airplane_strobe_omni),
-			/* 25 */ Data(TOTEXT(airplane_strobe_dir), "Airplane strobe dir", ELightParams::airplane_strobe_dir),
-			/* 26 */ Data(TOTEXT(airplane_strobe_sp), "Airplane strobe sp", ELightParams::airplane_strobe_sp),
+        /* 24 */ Data(TOTEXT(airplane_strobe_omni), "Airplane strobe omni", ELightParams::airplane_strobe_omni),
+        /* 25 */ Data(TOTEXT(airplane_strobe_dir), "Airplane strobe dir", ELightParams::airplane_strobe_dir),
+        /* 26 */ Data(TOTEXT(airplane_strobe_sp), "Airplane strobe sp", ELightParams::airplane_strobe_sp),
 
-			/* 27 */ Data(TOTEXT(airplane_nav_tail_size), "Airplane nav tail size", ELightParams::airplane_nav_tail_size),
-			/* 28 */ Data(TOTEXT(airplane_nav_left_size), "Airplane nav left size", ELightParams::airplane_nav_left_size),
-			/* 29 */ Data(TOTEXT(airplane_nav_right_size), "Airplane nav right size", ELightParams::airplane_nav_right_size),
-			/* 30 */ Data(TOTEXT(airplane_nav_sp), "Airplane nav sp", ELightParams::airplane_nav_sp),
+        /* 27 */ Data(TOTEXT(airplane_nav_tail_size), "Airplane nav tail size", ELightParams::airplane_nav_tail_size),
+        /* 28 */ Data(TOTEXT(airplane_nav_left_size), "Airplane nav left size", ELightParams::airplane_nav_left_size),
+        /* 29 */ Data(TOTEXT(airplane_nav_right_size), "Airplane nav right size", ELightParams::airplane_nav_right_size),
+        /* 30 */ Data(TOTEXT(airplane_nav_sp), "Airplane nav sp", ELightParams::airplane_nav_sp),
 
-			/* 31 */ Data(TOTEXT(airplane_panel_sp), "Airplane panel sp", ELightParams::airplane_panel_sp),
-			/* 32 */ Data(TOTEXT(airplane_inst_sp), "Airplane inst sp", ELightParams::airplane_inst_sp),
-		};
-	}
+        /* 31 */ Data(TOTEXT(airplane_panel_sp), "Airplane panel sp", ELightParams::airplane_panel_sp),
+        /* 32 */ Data(TOTEXT(airplane_inst_sp), "Airplane inst sp", ELightParams::airplane_inst_sp),
+    };
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	ELightParams::ELightParams()
-		: mId(none) {}
+ELightParams::ELightParams()
+    : mId(none) {}
 
-	ELightParams::ELightParams(eId id)
-		: mId(id) { }
+ELightParams::ELightParams(const eId id)
+    : mId(id) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool ELightParams::operator==(const ELightParams & other) const {
-		return mId == other.mId;
-	}
+bool ELightParams::operator==(const ELightParams & other) const {
+    return mId == other.mId;
+}
 
-	bool ELightParams::operator==(eId id) const {
-		return mId == id;
-	}
+bool ELightParams::operator==(const eId id) const {
+    return mId == id;
+}
 
-	bool ELightParams::operator!=(const ELightParams & other) const {
-		return mId != other.mId;
-	}
+bool ELightParams::operator!=(const ELightParams & other) const {
+    return mId != other.mId;
+}
 
-	bool ELightParams::operator!=(eId id) const {
-		return mId != id;
-	}
+bool ELightParams::operator!=(const eId id) const {
+    return mId != id;
+}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	ELightParams ELightParams::fromUiString(const char * name) {
-		if (name) {
-			for (size_t i = 0; i < ARRAY_LENGTH(EObjLightParamsData::gList); ++i) {
-				if (strcmp(name, EObjLightParamsData::gList[i].mUi) == 0) {
-					return ELightParams(EObjLightParamsData::gList[i].mId);
-				}
-			}
-			LError << TOTEXT(ELightParams) << " Does not contain ui name: \"" << name << "\"";
-		}
-		return ELightParams();
-	}
+ELightParams ELightParams::fromUiString(const char * name) {
+    if (name) {
+        for (size_t i = 0; i < ARRAY_LENGTH(EObjLightParamsData::gList); ++i) {
+            if (strcmp(name, EObjLightParamsData::gList[i].mUi) == 0) {
+                return ELightParams(EObjLightParamsData::gList[i].mId);
+            }
+        }
+        LError << TOTEXT(ELightParams) << " Does not contain ui name: \"" << name << "\"";
+    }
+    return ELightParams();
+}
 
-	ELightParams ELightParams::fromString(const char * attrName) {
-		if (attrName) {
-			for (size_t i = 0; i < ARRAY_LENGTH(EObjLightParamsData::gList); ++i) {
-				if (strcmp(attrName, EObjLightParamsData::gList[i].mAttr) == 0) {
-					return ELightParams(EObjLightParamsData::gList[i].mId);
-				}
-			}
-			LError << TOTEXT(ELightParams) << " Does not contain attribute name: \"" << attrName << "\"";
-		}
-		return ELightParams();
-	}
+ELightParams ELightParams::fromString(const char * attrName) {
+    if (attrName) {
+        for (size_t i = 0; i < ARRAY_LENGTH(EObjLightParamsData::gList); ++i) {
+            if (strcmp(attrName, EObjLightParamsData::gList[i].mAttr) == 0) {
+                return ELightParams(EObjLightParamsData::gList[i].mId);
+            }
+        }
+        LError << TOTEXT(ELightParams) << " Does not contain attribute name: \"" << attrName << "\"";
+    }
+    return ELightParams();
+}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ELightParams::makeList(List & ouList) {
-		if (!ouList.empty())
-			return;
-		for (size_t i = 0; i < ARRAY_LENGTH(EObjLightParamsData::gList); ++i) {
-			ouList.emplace_back(ELightParams(EObjLightParamsData::gList[i].mId));
-		}
-	}
+void ELightParams::makeList(List & ouList) {
+    if (!ouList.empty())
+        return;
+    for (size_t i = 0; i < ARRAY_LENGTH(EObjLightParamsData::gList); ++i) {
+        ouList.emplace_back(ELightParams(EObjLightParamsData::gList[i].mId));
+    }
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool ELightParams::isValid() const {
-		return mId != none;
-	}
+bool ELightParams::isValid() const {
+    return mId != none;
+}
 
-	ELightParams::eId ELightParams::id() const {
-		return mId;
-	}
+ELightParams::eId ELightParams::id() const {
+    return mId;
+}
 
-	const char * ELightParams::toUiString() const {
-		return EObjLightParamsData::gList[static_cast<size_t>(mId)].mUi;
-	}
+const char * ELightParams::toUiString() const {
+    return EObjLightParamsData::gList[static_cast<size_t>(mId)].mUi;
+}
 
-	const char * ELightParams::toString() const {
-		return EObjLightParamsData::gList[static_cast<size_t>(mId)].mAttr;
-	}
+const char * ELightParams::toString() const {
+    return EObjLightParamsData::gList[static_cast<size_t>(mId)].mAttr;
+}
 
-	const ELightParams::List & ELightParams::list() {
-		makeList(mList);
-		return mList;
-	}
+const ELightParams::List & ELightParams::list() {
+    makeList(mList);
+    return mList;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

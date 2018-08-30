@@ -27,143 +27,144 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <cstring>
+
 #include "xpln/enums/ESurface.h"
-#include <utility>
-#include "common/Logger.h"
 #include "common/ArrayLength.h"
+#include "common/Logger.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	ESurface::List ESurface::mList;
+ESurface::List ESurface::mList;
 
-	namespace ESurfacesData {
+namespace ESurfacesData {
 
-		struct Data {
-			const char * mUi;
-			const char * mAttr;
-			ESurface::eId mId;
+    struct Data {
+        const char * mUi;
+        const char * mAttr;
+        ESurface::eId mId;
 
-			Data(const char * attr, const char * ui, ESurface::eId id)
-				: mUi(ui),
-				mAttr(attr),
-				mId(id) {}
-		};
+        Data(const char * attr, const char * ui, const ESurface::eId id)
+            : mUi(ui),
+              mAttr(attr),
+              mId(id) {}
+    };
 
-		const Data gList[] = {
-			/* 00 */ Data(TOTEXT(none), "none", ESurface::none),
-			/* 01 */ Data(TOTEXT(water), "Water", ESurface::water),
-			/* 02 */ Data(TOTEXT(concrete), "Concrete", ESurface::concrete),
-			/* 03 */ Data(TOTEXT(asphalt), "Asphalt", ESurface::asphalt),
-			/* 04 */ Data(TOTEXT(grass), "Grass", ESurface::grass),
-			/* 05 */ Data(TOTEXT(dirt), "Dirt", ESurface::dirt),
-			/* 06 */ Data(TOTEXT(gravel), "Gravel", ESurface::gravel),
-			/* 07 */ Data(TOTEXT(lakebad), "Lakebad", ESurface::lakebad),
-			/* 08 */ Data(TOTEXT(snow), "Snow", ESurface::snow),
-			/* 09 */ Data(TOTEXT(shoulder), "Shoulder", ESurface::shoulder),
-			/* 10 */ Data(TOTEXT(blastpad), "Blastpad", ESurface::blastpad)
-		};
-	}
+    const Data gList[] = {
+        /* 00 */ Data(TOTEXT(none), "none", ESurface::none),
+        /* 01 */ Data(TOTEXT(water), "Water", ESurface::water),
+        /* 02 */ Data(TOTEXT(concrete), "Concrete", ESurface::concrete),
+        /* 03 */ Data(TOTEXT(asphalt), "Asphalt", ESurface::asphalt),
+        /* 04 */ Data(TOTEXT(grass), "Grass", ESurface::grass),
+        /* 05 */ Data(TOTEXT(dirt), "Dirt", ESurface::dirt),
+        /* 06 */ Data(TOTEXT(gravel), "Gravel", ESurface::gravel),
+        /* 07 */ Data(TOTEXT(lakebad), "Lakebad", ESurface::lakebad),
+        /* 08 */ Data(TOTEXT(snow), "Snow", ESurface::snow),
+        /* 09 */ Data(TOTEXT(shoulder), "Shoulder", ESurface::shoulder),
+        /* 10 */ Data(TOTEXT(blastpad), "Blastpad", ESurface::blastpad)
+    };
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	ESurface::ESurface()
-		: mId(none) { }
+ESurface::ESurface()
+    : mId(none) { }
 
-	ESurface::ESurface(eId id)
-		: mId(id) { }
+ESurface::ESurface(const eId id)
+    : mId(id) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool ESurface::operator==(const ESurface & other) const {
-		return mId == other.mId;
-	}
+bool ESurface::operator==(const ESurface & other) const {
+    return mId == other.mId;
+}
 
-	bool ESurface::operator==(eId id) const {
-		return mId == id;
-	}
+bool ESurface::operator==(const eId id) const {
+    return mId == id;
+}
 
-	bool ESurface::operator!=(const ESurface & other) const {
-		return mId != other.mId;
-	}
+bool ESurface::operator!=(const ESurface & other) const {
+    return mId != other.mId;
+}
 
-	bool ESurface::operator!=(eId id) const {
-		return mId != id;
-	}
+bool ESurface::operator!=(const eId id) const {
+    return mId != id;
+}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	ESurface ESurface::fromUiString(const char * name) {
-		if (name) {
-			for (size_t i = 0; i < ARRAY_LENGTH(ESurfacesData::gList); ++i) {
-				if (strcmp(name, ESurfacesData::gList[i].mUi) == 0) {
-					return ESurface(ESurfacesData::gList[i].mId);
-				}
-			}
-			LError << TOTEXT(ESurface) << " Does not contain ui name: \"" << name << "\"";
-		}
-		return ESurface();
-	}
+ESurface ESurface::fromUiString(const char * name) {
+    if (name) {
+        for (size_t i = 0; i < ARRAY_LENGTH(ESurfacesData::gList); ++i) {
+            if (strcmp(name, ESurfacesData::gList[i].mUi) == 0) {
+                return ESurface(ESurfacesData::gList[i].mId);
+            }
+        }
+        LError << TOTEXT(ESurface) << " Does not contain ui name: \"" << name << "\"";
+    }
+    return ESurface();
+}
 
-	ESurface ESurface::fromString(const char * attrName) {
-		if (attrName) {
-			for (size_t i = 0; i < ARRAY_LENGTH(ESurfacesData::gList); ++i) {
-				if (strcmp(attrName, ESurfacesData::gList[i].mAttr) == 0) {
-					return ESurface(ESurfacesData::gList[i].mId);
-				}
-			}
-			LError << TOTEXT(ESurface) << " Does not contain attribute name: \"" << attrName << "\"";
-		}
-		return ESurface();
-	}
+ESurface ESurface::fromString(const char * attrName) {
+    if (attrName) {
+        for (size_t i = 0; i < ARRAY_LENGTH(ESurfacesData::gList); ++i) {
+            if (strcmp(attrName, ESurfacesData::gList[i].mAttr) == 0) {
+                return ESurface(ESurfacesData::gList[i].mId);
+            }
+        }
+        LError << TOTEXT(ESurface) << " Does not contain attribute name: \"" << attrName << "\"";
+    }
+    return ESurface();
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ESurface::makeList(List & outList) {
-		if (!outList.empty())
-			return;
-		for (size_t i = 0; i < ARRAY_LENGTH(ESurfacesData::gList); ++i) {
-			outList.emplace_back(ESurface(ESurfacesData::gList[i].mId));
-		}
-	}
+void ESurface::makeList(List & outList) {
+    if (!outList.empty())
+        return;
+    for (size_t i = 0; i < ARRAY_LENGTH(ESurfacesData::gList); ++i) {
+        outList.emplace_back(ESurface(ESurfacesData::gList[i].mId));
+    }
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool ESurface::isValid() const {
-		return mId != none;
-	}
+bool ESurface::isValid() const {
+    return mId != none;
+}
 
-	ESurface::eId ESurface::id() const {
-		return mId;
-	}
+ESurface::eId ESurface::id() const {
+    return mId;
+}
 
-	const char * ESurface::toString() const {
-		return ESurfacesData::gList[static_cast<size_t>(mId)].mAttr;
-	}
+const char * ESurface::toString() const {
+    return ESurfacesData::gList[static_cast<size_t>(mId)].mAttr;
+}
 
-	const char * ESurface::toUiString() const {
-		return ESurfacesData::gList[static_cast<size_t>(mId)].mUi;
-	}
+const char * ESurface::toUiString() const {
+    return ESurfacesData::gList[static_cast<size_t>(mId)].mUi;
+}
 
-	const ESurface::List & ESurface::list() {
-		makeList(mList);
-		return mList;
-	}
+const ESurface::List & ESurface::list() {
+    makeList(mList);
+    return mList;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

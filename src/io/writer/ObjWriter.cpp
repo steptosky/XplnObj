@@ -28,8 +28,6 @@
 */
 
 #include "ObjWriter.h"
-#include <sstream>
-
 #include "xpln/obj/ObjMain.h"
 #include "io/ObjValidators.h"
 
@@ -37,292 +35,307 @@
 #include "Writer.h"
 #include "xpln/obj/ObjLine.h"
 #include "sts/utilities/Compare.h"
-#include "sts/string/StringUtils.h"
 #include "converters/ObjString.h"
 #include "ObjWriteOptimize.h"
 #include "io/ObjTransformation.h"
 #include "ObjWriteInstancing.h"
 #include "common/Logger.h"
+#include "sts/string/StringUtils.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	ObjWriter::ObjWriter()
-		: mAnimationWritter(&mExportOptions, &mStatistic),
-		mObjWriteGeometry(&mExportOptions, &mStatistic),
-		mWriteAttr(&mObjWriteManip) {
+ObjWriter::ObjWriter()
+    : mAnimationWritter(&mExportOptions, &mStatistic),
+      mObjWriteGeometry(&mExportOptions, &mStatistic),
+      mWriteAttr(&mObjWriteManip) {
 
-		reset();
-	}
+    reset();
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	ObjWriter::~ObjWriter() {
-		reset();
-	}
+ObjWriter::~ObjWriter() {
+    reset();
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjWriter::reset() {
-		mStatistic.reset();
-		mWriteGlobAttr.reset();
-		mWriteAttr.reset();
-		mObjWriteGeometry.reset();
-		mObjWriteManip.reset();
-	}
+void ObjWriter::reset() {
+    mStatistic.reset();
+    mWriteGlobAttr.reset();
+    mWriteAttr.reset();
+    mObjWriteGeometry.reset();
+    mObjWriteManip.reset();
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::string & signature,
-							IOStatistic & outStat, const TMatrix & tm) {
-		try {
-			reset(); // reset all data that needs to be recalculated
+bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::string & signature,
+                          IOStatistic & outStat, const TMatrix & tm) {
+    try {
+        reset(); // reset all data that needs to be recalculated
 
-			if (root == nullptr || !checkParameters(*root, root->objectName()))
-				return false;
+        if (root == nullptr || !checkParameters(*root, root->objectName()))
+            return false;
 
-			if (root->pExportOptions.isEnabled(XOBJ_EXP_DEBUG)) {
-				ULMessage << "File: " << path;
-			}
+        if (root->pExportOptions.isEnabled(XOBJ_EXP_DEBUG)) {
+            ULMessage << "File: " << path;
+        }
 
-			mMain = root;
-			mExportOptions = root->pExportOptions;
+        mMain = root;
+        mExportOptions = root->pExportOptions;
 
-			Writer writer;
-			if (!writer.openFile(path))
-				return false;
+        Writer writer;
+        if (!writer.openFile(path))
+            return false;
 
-			writer.spaceEnable(mExportOptions.isEnabled(XOBJ_EXP_MARK_TREE_HIERARCHY));
-			//-------------------------------------------------------------------------
+        writer.spaceEnable(mExportOptions.isEnabled(XOBJ_EXP_MARK_TREE_HIERARCHY));
+        //-------------------------------------------------------------------------
 
-			if (mExportOptions.isEnabled(XOBJ_EXP_CHECK_INSTANCE)) {
-				ObjWriteInstancing::check(*mMain);
-			}
+        if (mExportOptions.isEnabled(XOBJ_EXP_CHECK_INSTANCE)) {
+            ObjWriteInstancing::check(*mMain);
+        }
 
-			if (!ObjWritePreparer::prepare(*mMain)) {
-				return false;
-			}
-			ObjWriteOptimize::optimize(*mMain);
-			ObjTransformation::correctExportTransform(*mMain, tm, mExportOptions.isEnabled(XOBJ_EXP_APPLY_LOD_TM));
+        if (!ObjWritePreparer::prepare(*mMain)) {
+            return false;
+        }
+        ObjWriteOptimize::optimize(*mMain);
+        ObjTransformation::correctExportTransform(*mMain, tm, mExportOptions.isEnabled(XOBJ_EXP_APPLY_LOD_TM));
 
-			//-------------------------------------------------------------------------
-			// calculate count
-			size_t lodCount = mMain->lodCount();
-			for (size_t i = 0; i < lodCount; ++i) {
-				calculateVerticiesAndFaces(mMain->lod(i).transform());
-			}
+        //-------------------------------------------------------------------------
+        // calculate count
+        const size_t lodCount = mMain->lodCount();
+        for (size_t i = 0; i < lodCount; ++i) {
+            calculateVerticiesAndFaces(mMain->lod(i).transform());
+        }
 
-			// print global
-			printGlobalInformation(writer, *mMain);
+        // print global
+        printGlobalInformation(writer, *mMain);
 
-			// print mesh vertex 
-			if (mStatistic.pMeshVerticesCount) {
-				for (size_t i = 0; i < lodCount; ++i)
-					mObjWriteGeometry.printMeshVerticiesRecursive(writer, mMain->lod(i).transform());
-			}
+        // print mesh vertex 
+        if (mStatistic.pMeshVerticesCount) {
+            for (size_t i = 0; i < lodCount; ++i)
+                mObjWriteGeometry.printMeshVerticiesRecursive(writer, mMain->lod(i).transform());
+        }
 
-			// print line vertex 
-			if (mStatistic.pLineVerticesCount) {
-				for (size_t i = 0; i < lodCount; ++i)
-					mObjWriteGeometry.printLineVerticiesRecursive(writer, mMain->lod(i).transform());
-			}
+        // print line vertex 
+        if (mStatistic.pLineVerticesCount) {
+            for (size_t i = 0; i < lodCount; ++i)
+                mObjWriteGeometry.printLineVerticiesRecursive(writer, mMain->lod(i).transform());
+        }
 
-			// print VLIGHT vertex 
-			if (mStatistic.pLightObjPointCount) {
-				for (size_t i = 0; i < lodCount; ++i)
-					mObjWriteGeometry.printLightPointVerticiesRecursive(writer, mMain->lod(i).transform());
-			}
+        // print VLIGHT vertex 
+        if (mStatistic.pLightObjPointCount) {
+            for (size_t i = 0; i < lodCount; ++i)
+                mObjWriteGeometry.printLightPointVerticiesRecursive(writer, mMain->lod(i).transform());
+        }
 
-			writer.printEol();
+        writer.printEol();
 
-			// print mesh faces 
-			if (mStatistic.pMeshVerticesCount) {
-				mObjWriteGeometry.printMeshFaceRecursive(writer, *mMain);
-			}
+        // print mesh faces 
+        if (mStatistic.pMeshVerticesCount) {
+            mObjWriteGeometry.printMeshFaceRecursive(writer, *mMain);
+        }
 
-			writer.printEol();
-			writer.printEol();
+        writer.printEol();
+        writer.printEol();
 
-			// print animation and objects
-			for (size_t i = 0; i < lodCount; ++i) {
-				const ObjLodGroup & currLod = mMain->lod(i);
+        // print animation and objects
+        for (size_t i = 0; i < lodCount; ++i) {
+            const ObjLodGroup & currLod = mMain->lod(i);
 
-				if (currLod.transform().hasAnim()) {
-					ULError << currLod.objectName() << " - Lod can't be animated.";
-				}
+            if (currLod.transform().hasAnim()) {
+                ULError << currLod.objectName() << " - Lod can't be animated.";
+            }
 
-				//-------------------------------------------------------------------------
+            //-------------------------------------------------------------------------
 
-				printLOD(writer, currLod, lodCount);
-				printObjects(writer, currLod.transform());
-				writer.printEol();
-			}
+            printLOD(writer, currLod, lodCount);
+            printObjects(writer, currLod.transform());
+            writer.printEol();
+        }
 
-			mStatistic.pTrisManipCount += mObjWriteManip.count();
-			mStatistic.pTrisAttrCount += mWriteAttr.count();
+        mStatistic.pTrisManipCount += mObjWriteManip.count();
+        mStatistic.pTrisAttrCount += mWriteAttr.count();
 
-			if (mMain->pAttr.isDebug()) {
-				++mStatistic.pGlobAttrCount;
-				writer.printLine("DEBUG");
-				writer.printEol();
-			}
+        if (mMain->pAttr.isDebug()) {
+            ++mStatistic.pGlobAttrCount;
+            writer.printLine("DEBUG");
+            writer.printEol();
+        }
 
-			printSignature(writer, signature);
-			writer.closeFile();
-			outStat = mStatistic;
-			return true;
-		}
-		catch (std::exception & e) {
-			ULFatal << e.what();
-			return false;
-		}
-	}
+        printSignature(writer, signature);
+        writer.closeFile();
+        outStat = mStatistic;
+        return true;
+    }
+    catch (std::exception & e) {
+        ULFatal << e.what();
+        return false;
+    }
+}
 
-	void ObjWriter::printLOD(AbstractWriter & writer, const ObjLodGroup & lod, size_t count) const {
-		if (count < 2 && sts::isEqual(lod.nearVal(), lod.farVal(), 0.1f)) {
-			return;
-		}
-		writer.printLine(toObjString(lod, true));
-	}
+void ObjWriter::printLOD(AbstractWriter & writer, const ObjLodGroup & lod, const size_t count) const {
+    if (count < 2 && sts::isEqual(lod.nearVal(), lod.farVal(), 0.1f)) {
+        return;
+    }
+    writer.printLine(toObjString(lod, true));
+}
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
+/********************************************************************************************************/
 
-	inline std::string currentDateTime() {
-		time_t now = time(nullptr);
-		char buf[80];
-		struct tm tstruct = *localtime(&now);
-		strftime(buf, sizeof(buf), "%Y-%m-%d", &tstruct);
-		return buf;
-	}
+inline std::string currentDateTime() {
+    time_t now = time(nullptr);
+    char buf[80];
+    struct tm tstruct = *localtime(&now);
+    strftime(buf, sizeof(buf), "%Y-%m-%d", &tstruct);
+    return buf;
+}
 
-	void ObjWriter::printSignature(AbstractWriter & writer, const std::string & signature) {
-		if (signature.size()) {
-			writer.printEol();
-			std::string s("## ");
-			s.append(signature);
-			sts::MbStrUtils::replace(s, "\r\n", "\n## ");
-			writer.printLine(s);
-		}
-		std::string msg("## ");
-		msg.append(XOBJ_ORGANIZATION_NAME).append(" ").append(XOBJ_PROJECT_SHORT_NAME);
-		msg.append(": ").append(XOBJ_VERSION_STRING).append("-").append(XOBJ_RELEASE_TYPE);
-		msg.append("+[").append(XOBJ_COMPILE_DATE).append("]");
-		writer.printLine(msg);
-		writer.printLine(std::string("## Object created: ").append(currentDateTime()));
-	}
+void ObjWriter::printSignature(AbstractWriter & writer, const std::string & signature) {
+    if (!signature.empty()) {
+        writer.printEol();
+        std::string s("## ");
+        s.append(signature);
+        s = sts::MbStrUtils::replaceCopy(s, "\r\n", "\n## ");
+        writer.printLine(s);
+    }
+    std::string msg("## ");
+    msg.append(XOBJ_ORGANIZATION_NAME).append(" ").append(XOBJ_PROJECT_SHORT_NAME);
+    msg.append(": ").append(XOBJ_VERSION_STRING).append("-").append(XOBJ_RELEASE_TYPE);
+    msg.append("+[").append(XOBJ_COMPILE_DATE).append("]");
+    writer.printLine(msg);
+    writer.printLine(std::string("## Object created: ").append(currentDateTime()));
+}
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
+/********************************************************************************************************/
 
-	void ObjWriter::calculateVerticiesAndFaces(const Transform & parent) {
-		static const ObjMesh * mobj = nullptr;
-		static const ObjLine * lobj = nullptr;
-		for (auto obj : parent.objList()) {
-			if (obj->objType() == OBJ_MESH) {
-				mobj = static_cast<const ObjMesh*>(obj);
-				mStatistic.pMeshVerticesCount += mobj->pVertices.size();
-				mStatistic.pMeshFacesCount += mobj->pFaces.size();
-			}
-			else if (obj->objType() == OBJ_LINE) {
-				lobj = static_cast<const ObjLine*>(obj);
-				mStatistic.pLineVerticesCount += lobj->verticesList().size();
-			}
-			else if (obj->objType() == OBJ_LIGHT_POINT) {
-				++mStatistic.pLightObjPointCount;
-			}
-		}
+void ObjWriter::calculateVerticiesAndFaces(const Transform & parent) {
+    static const ObjMesh * mobj = nullptr;
+    static const ObjLine * lobj = nullptr;
+    for (auto obj : parent.objList()) {
+        if (obj->objType() == OBJ_MESH) {
+            mobj = static_cast<const ObjMesh*>(obj);
+            mStatistic.pMeshVerticesCount += mobj->pVertices.size();
+            mStatistic.pMeshFacesCount += mobj->pFaces.size();
+        }
+        else if (obj->objType() == OBJ_LINE) {
+            lobj = static_cast<const ObjLine*>(obj);
+            mStatistic.pLineVerticesCount += lobj->verticesList().size();
+        }
+        else if (obj->objType() == OBJ_LIGHT_POINT) {
+            ++mStatistic.pLightObjPointCount;
+        }
+    }
 
-		for (Transform::TransformIndex i = 0; i < parent.childrenCount(); ++i) {
-			calculateVerticiesAndFaces(*dynamic_cast<const Transform*>(parent.childAt(i)));
-		}
-	}
+    for (Transform::TransformIndex i = 0; i < parent.childrenCount(); ++i) {
+        calculateVerticiesAndFaces(*dynamic_cast<const Transform*>(parent.childAt(i)));
+    }
+}
 
-	//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-	void ObjWriter::printGlobalInformation(AbstractWriter & writer, const ObjMain & ROOT) {
-		// write header
-		writer.printLine("I\n800\nOBJ\n");
-		mWriteGlobAttr.write(&writer, &ROOT);
-		mStatistic.pGlobAttrCount += mWriteGlobAttr.count();
+void ObjWriter::printGlobalInformation(AbstractWriter & writer, const ObjMain & objRoot) {
+    // write header
+    writer.printLine("I\n800\nOBJ\n");
+    mWriteGlobAttr.write(&writer, &objRoot);
+    mStatistic.pGlobAttrCount += mWriteGlobAttr.count();
 
-		writer.printEol();
-		std::stringstream stream;
-		stream << "POINT_COUNTS " << static_cast<uint32_t>(mStatistic.pMeshVerticesCount) << " "
-				<< mStatistic.pLineVerticesCount << " "
-				<< mStatistic.pLightObjPointCount << " "
-				<< (mStatistic.pMeshFacesCount * 3);
-		writer.printLine(stream.str());
-	}
+    writer.printEol();
+    std::stringstream stream;
+    stream << "POINT_COUNTS " << static_cast<uint32_t>(mStatistic.pMeshVerticesCount) << " "
+            << mStatistic.pLineVerticesCount << " "
+            << mStatistic.pLightObjPointCount << " "
+            << (mStatistic.pMeshFacesCount * 3);
+    writer.printLine(stream.str());
+}
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////* Functions *///////////////////////////////////////////////
+/********************************************************************************************************/
 
-	void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) {
+void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) {
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		mAnimationWritter.printAnimationStart(writer, parent);
+    mAnimationWritter.printAnimationStart(writer, parent);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		for (auto objBase : parent.objList()) {
-			// order attr and manip is important.
-			mWriteAttr.write(&writer, objBase);
-			mObjWriteManip.write(&writer, objBase);
+    for (auto objBase : parent.objList()) {
+        // order attr and manip is important.
+        mWriteAttr.write(&writer, objBase);
+        mObjWriteManip.write(&writer, objBase);
 
-			//--------------
+        //--------------
 
-			if (mObjWriteGeometry.printMeshObject(writer, *objBase)) {
-				continue;
-			}
+        mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataBefore());
 
-			if (mObjWriteGeometry.printLightObject(writer, *objBase, parent)) {
-				continue;
-			}
+        if (mObjWriteGeometry.printMeshObject(writer, *objBase)) {
+            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+            continue;
+        }
 
-			if (mObjWriteGeometry.printSmokeObject(writer, *objBase)) {
-				continue;
-			}
+        if (mObjWriteGeometry.printLightObject(writer, *objBase, parent)) {
+            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+            continue;
+        }
 
-			if (mObjWriteGeometry.printDummyObject(writer, *objBase)) {
-				continue;
-			}
+        if (mObjWriteGeometry.printSmokeObject(writer, *objBase)) {
+            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+            continue;
+        }
 
-			if (mObjWriteGeometry.printLineObject(writer, *objBase)) {
-				continue;
-			}
+        if (mObjWriteGeometry.printDummyObject(writer, *objBase)) {
+            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+            continue;
+        }
 
-			mObjWriteGeometry.printLightPointObject(writer, *objBase);
+        if (mObjWriteGeometry.printLineObject(writer, *objBase)) {
+            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+            continue;
+        }
 
-			//--------------
-		}
+        mObjWriteGeometry.printLightPointObject(writer, *objBase);
+        mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
 
-		//-------------------------------------------------------------------------
+        //--------------
+    }
 
-		// print child
-		for (Transform::TransformIndex i = 0; i < parent.childrenCount(); ++i)
-			printObjects(writer, *dynamic_cast<const Transform*>(parent.childAt(i)));
+    //-------------------------------------------------------------------------
 
-		//-------------------------------------------------------------------------
+    // print child
+    for (Transform::TransformIndex i = 0; i < parent.childrenCount(); ++i)
+        printObjects(writer, *dynamic_cast<const Transform*>(parent.childAt(i)));
 
-		mAnimationWritter.printAnimationEnd(writer, parent);
+    //-------------------------------------------------------------------------
 
-		//-------------------------------------------------------------------------
-	}
+    mAnimationWritter.printAnimationEnd(writer, parent);
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+    //-------------------------------------------------------------------------
+}
+
+size_t ObjWriter::printObjCustomData(AbstractWriter & writer, const std::vector<std::string> & strings) {
+    for (auto & str : strings) {
+        writer.printLine(str);
+    }
+    return strings.size();
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

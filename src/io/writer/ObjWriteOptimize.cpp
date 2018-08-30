@@ -33,38 +33,38 @@
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjWriteOptimize::optimize(ObjMain & mainObj) {
-		if (mainObj.pExportOptions.isEnabled(XOBJ_EXP_OPTIMIZATION)) {
-			const size_t lodCount = mainObj.lodCount();
-			for (size_t i = 0; i < lodCount; ++i) {
-				ObjLodGroup & lod = mainObj.lod(i);
-				Transform & rootTransform = lod.transform();
-				proccess(rootTransform);
-			}
-		}
-	}
+void ObjWriteOptimize::optimize(ObjMain & mainObj) {
+    if (mainObj.pExportOptions.isEnabled(XOBJ_EXP_OPTIMIZATION)) {
+        const size_t lodCount = mainObj.lodCount();
+        for (size_t i = 0; i < lodCount; ++i) {
+            ObjLodGroup & lod = mainObj.lod(i);
+            Transform & rootTransform = lod.transform();
+            proccess(rootTransform);
+        }
+    }
+}
 
-	void ObjWriteOptimize::proccess(Transform & transform) {
-		//-------------------------------------------------------------------------
+void ObjWriteOptimize::proccess(Transform & transform) {
+    //-------------------------------------------------------------------------
 
-		// TODO Optimize
+    // TODO Optimize
 
-		//-------------------------------------------------------------------------
-		// children
+    //-------------------------------------------------------------------------
+    // children
 
-		Transform::TransformIndex chCount = transform.childrenCount();
-		for (Transform::TransformIndex i = 0; i < chCount; ++i) {
-			proccess(*static_cast<Transform*>(transform.childAt(i)));
-		}
+    const auto chCount = transform.childrenCount();
+    for (Transform::TransformIndex i = 0; i < chCount; ++i) {
+        proccess(*static_cast<Transform*>(transform.childAt(i)));
+    }
 
-		//-------------------------------------------------------------------------
-	}
+    //-------------------------------------------------------------------------
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

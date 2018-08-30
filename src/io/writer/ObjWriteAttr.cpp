@@ -27,160 +27,160 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <cassert>
+#include <functional>
+
 #include "ObjWriteAttr.h"
 #include "ObjWriteManip.h"
 
-#include <cassert>
 #include "AbstractWriter.h"
 #include "common/AttributeNames.h"
 #include "converters/ObjAttrString.h"
 #include "xpln/obj/ObjMesh.h"
-#include <functional>
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	class Flags {
-	public:
+class Flags {
+public:
 
-		enum eAttrTypes : uint32_t {
-			no_draw = 1 << 1,
-			draped = 1 << 2,
-			no_shadow = 1 << 3,
-			solid_camera = 1 << 4,
-		};
+    enum eAttrTypes : uint32_t {
+        no_draw = 1 << 1,
+        draped = 1 << 2,
+        no_shadow = 1 << 3,
+        solid_camera = 1 << 4,
+    };
 
-		static void removeFlag(uint32_t & inOutFlags, const uint32_t inFlag) {
-			inOutFlags -= (inOutFlags & inFlag);
-		}
+    static void removeFlag(uint32_t & inOutFlags, const uint32_t inFlag) {
+        inOutFlags -= (inOutFlags & inFlag);
+    }
 
-		static void addFlag(uint32_t & inOutFlags, const uint32_t inFlag) {
-			inOutFlags |= inFlag;
-		}
+    static void addFlag(uint32_t & inOutFlags, const uint32_t inFlag) {
+        inOutFlags |= inFlag;
+    }
 
-		static bool hasFlag(const uint32_t inFlags, const uint32_t inFlag) {
-			return (inFlags & inFlag) != 0;
-		}
-	};
+    static bool hasFlag(const uint32_t inFlags, const uint32_t inFlag) {
+        return (inFlags & inFlag) != 0;
+    }
+};
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjWriteAttr::reset() {
-		mFlags = 0;
-		mCounter = 0;
-	}
+void ObjWriteAttr::reset() {
+    mFlags = 0;
+    mCounter = 0;
+}
 
-	size_t ObjWriteAttr::count() const {
-		return mCounter;
-	}
+std::size_t ObjWriteAttr::count() const {
+    return mCounter;
+}
 
-	void ObjWriteAttr::write(AbstractWriter * writer, const ObjAbstract * obj) {
-		assert(obj);
-		mWriter = writer;
-		if (obj->objType() != OBJ_MESH) {
-			return;
-		}
-		writeAttributes(static_cast<const ObjMesh*>(obj)->pAttr);
-	}
+void ObjWriteAttr::write(AbstractWriter * writer, const ObjAbstract * obj) {
+    assert(obj);
+    mWriter = writer;
+    if (obj->objType() != OBJ_MESH) {
+        return;
+    }
+    writeAttributes(static_cast<const ObjMesh*>(obj)->pAttr);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class AttrWriter {
-	public:
-		template<typename T>
-		static void writeAttr(AbstractWriter * writer, const T & attr, T & inOutActiveAttr, const char * offStr, size_t & outCounter,
-							std::function<void(const T &)> attrEnable = nullptr, std::function<void()> attrDisable = nullptr) {
-			if (!attr) {
-				if (inOutActiveAttr) {
-					writer->printLine(offStr);
-					if (attrDisable) {
-						attrDisable();
-					}
-					++outCounter;
-					inOutActiveAttr = T();
-				}
-			}
-			else {
-				if (!inOutActiveAttr) {
-					writer->printLine(toObjString(attr));
-					if (attrEnable) {
-						attrEnable(attr);
-					}
-					++outCounter;
-					inOutActiveAttr = attr;
-					return;
-				}
+class AttrWriter {
+public:
+    template<typename T>
+    static void writeAttr(AbstractWriter * writer, const T & attr, T & inOutActiveAttr, const char * offStr, size_t & outCounter,
+                          std::function<void(const T &)> attrEnable = nullptr, const std::function<void()> & attrDisable = nullptr) {
+        if (!attr) {
+            if (inOutActiveAttr) {
+                writer->printLine(offStr);
+                if (attrDisable) {
+                    attrDisable();
+                }
+                ++outCounter;
+                inOutActiveAttr = T();
+            }
+        }
+        else {
+            if (!inOutActiveAttr) {
+                writer->printLine(toObjString(attr));
+                if (attrEnable) {
+                    attrEnable(attr);
+                }
+                ++outCounter;
+                inOutActiveAttr = attr;
+                return;
+            }
 
-				if (inOutActiveAttr != attr) {
-					writer->printLine(toObjString(attr));
-					if (attrEnable) {
-						attrEnable(attr);
-					}
-					++outCounter;
-					inOutActiveAttr = attr;
-					return;
-				}
+            if (inOutActiveAttr != attr) {
+                writer->printLine(toObjString(attr));
+                if (attrEnable) {
+                    attrEnable(attr);
+                }
+                ++outCounter;
+                inOutActiveAttr = attr;
+                return;
+            }
 
-				inOutActiveAttr = attr;
-			}
-		}
-	};
+            inOutActiveAttr = attr;
+        }
+    }
+};
 
-	void ObjWriteAttr::writeBool(bool currVal, uint32_t flag, const char * attrOn, const char * attrOff) {
-		if (!currVal) {
-			if (Flags::hasFlag(mFlags, flag)) {
-				mWriter->printLine(attrOff);
-				Flags::removeFlag(mFlags, flag);
-				++mCounter;
-			}
-		}
-		else {
-			if (!Flags::hasFlag(mFlags, flag)) {
-				mWriter->printLine(attrOn);
-				Flags::addFlag(mFlags, flag);
-				++mCounter;
-			}
-		}
-	}
+void ObjWriteAttr::writeBool(const bool currVal, const std::uint32_t flag, const char * attrOn, const char * attrOff) {
+    if (!currVal) {
+        if (Flags::hasFlag(mFlags, flag)) {
+            mWriter->printLine(attrOff);
+            Flags::removeFlag(mFlags, flag);
+            ++mCounter;
+        }
+    }
+    else {
+        if (!Flags::hasFlag(mFlags, flag)) {
+            mWriter->printLine(attrOn);
+            Flags::addFlag(mFlags, flag);
+            ++mCounter;
+        }
+    }
+}
 
-	void ObjWriteAttr::writeAttributes(const AttrSet & obj) {
+void ObjWriteAttr::writeAttributes(const AttrSet & obj) {
 
-		std::function<void(const AttrCockpit &)> manipPanelEnabled = [&](const AttrCockpit & cockpit) {
-			if (mManipWriter) {
-				mManipWriter->setPanelEnabled(cockpit);
-			}
-		};
-		std::function<void()> manipPanelDisabled = [&]() {
-			if (mManipWriter) {
-				mManipWriter->setPanelDisabled();
-			}
-		};
+    const auto manipPanelEnabled = [&](const AttrCockpit & cockpit) {
+        if (mManipWriter) {
+            mManipWriter->setPanelEnabled(cockpit);
+        }
+    };
+    const auto manipPanelDisabled = [&]() {
+        if (mManipWriter) {
+            mManipWriter->setPanelDisabled();
+        }
+    };
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		writeBool(obj.isDraped(), Flags::draped, ATTR_DRAPED, ATTR_NO_DRAPED);
-		writeBool(obj.isSolidForCamera(), Flags::solid_camera, ATTR_SOLID_CAMERA, ATTR_NO_SOLID_CAMERA);
-		writeBool(!obj.isDraw(), Flags::no_draw, ATTR_DRAW_DISABLE, ATTR_DRAW_ENABLE);
-		writeBool(!obj.isCastShadow(), Flags::no_shadow, ATTR_NO_SHADOW, ATTR_SHADOW);
+    writeBool(obj.isDraped(), Flags::draped, ATTR_DRAPED, ATTR_NO_DRAPED);
+    writeBool(obj.isSolidForCamera(), Flags::solid_camera, ATTR_SOLID_CAMERA, ATTR_NO_SOLID_CAMERA);
+    writeBool(!obj.isDraw(), Flags::no_draw, ATTR_DRAW_DISABLE, ATTR_DRAW_ENABLE);
+    writeBool(!obj.isCastShadow(), Flags::no_shadow, ATTR_NO_SHADOW, ATTR_SHADOW);
 
-		AttrWriter::writeAttr<AttrHard>(mWriter, obj.hard(), mActiveAttrHard, ATTR_NO_HARD, mCounter);
-		AttrWriter::writeAttr<AttrShiny>(mWriter, obj.shiny(), mActiveAttrShiny, toObjString(AttrShiny()).c_str(), mCounter);
-		AttrWriter::writeAttr<AttrBlend>(mWriter, obj.blend(), mActiveAttrBlend, toObjString(AttrBlend()).c_str(), mCounter);
-		AttrWriter::writeAttr<AttrPolyOffset>(mWriter, obj.polyOffset(), mActiveAttrPolyOffset, toObjString(AttrPolyOffset(0.0f)).c_str(), mCounter);
-		AttrWriter::writeAttr<AttrLightLevel>(mWriter, obj.lightLevel(), mActiveAttrLightLevel, ATTR_LIGHT_LEVEL_RESET, mCounter);
-		AttrWriter::writeAttr<AttrCockpit>(mWriter, obj.cockpit(), mActiveAttrCockpit, ATTR_NO_COCKPIT, mCounter,
-											manipPanelEnabled, manipPanelDisabled);
-	}
+    AttrWriter::writeAttr<AttrHard>(mWriter, obj.hard(), mActiveAttrHard, ATTR_NO_HARD, mCounter);
+    AttrWriter::writeAttr<AttrShiny>(mWriter, obj.shiny(), mActiveAttrShiny, toObjString(AttrShiny()).c_str(), mCounter);
+    AttrWriter::writeAttr<AttrBlend>(mWriter, obj.blend(), mActiveAttrBlend, toObjString(AttrBlend()).c_str(), mCounter);
+    AttrWriter::writeAttr<AttrPolyOffset>(mWriter, obj.polyOffset(), mActiveAttrPolyOffset, toObjString(AttrPolyOffset(0.0f)).c_str(), mCounter);
+    AttrWriter::writeAttr<AttrLightLevel>(mWriter, obj.lightLevel(), mActiveAttrLightLevel, ATTR_LIGHT_LEVEL_RESET, mCounter);
+    AttrWriter::writeAttr<AttrCockpit>(mWriter, obj.cockpit(), mActiveAttrCockpit, ATTR_NO_COCKPIT, mCounter, manipPanelEnabled, manipPanelDisabled);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

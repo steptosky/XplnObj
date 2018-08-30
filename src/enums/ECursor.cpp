@@ -27,152 +27,153 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <cstring>
+
 #include "xpln/enums/ECursor.h"
-#include <utility>
-#include "common/Logger.h"
 #include "common/ArrayLength.h"
+#include "common/Logger.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Static area *///////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Static area *///////////////////////////////////////////
+/**************************************************************************************************/
 
-	ECursor::List ECursor::mList;
+ECursor::List ECursor::mList;
 
-	namespace EObjCursorsData {
+namespace EObjCursorsData {
 
-		struct Data {
-			const char * mUi;
-			const char * mAttr;
-			ECursor::eId mId;
+    struct Data {
+        const char * mUi;
+        const char * mAttr;
+        ECursor::eId mId;
 
-			Data(const char * attr, const char * ui, ECursor::eId id)
-				: mUi(ui),
-				mAttr(attr),
-				mId(id) {}
-		};
+        Data(const char * attr, const char * ui, const ECursor::eId id)
+            : mUi(ui),
+              mAttr(attr),
+              mId(id) {}
+    };
 
-		const Data gList[] = {
-			/* 00 */ Data(TOTEXT(none), "none", ECursor::none),
-			/* 01 */ Data(TOTEXT(four_arrows), "Four arrows", ECursor::four_arrows),
-			/* 02 */ Data(TOTEXT(hand), "Hand", ECursor::hand),
-			/* 03 */ Data(TOTEXT(button), "Button", ECursor::button),
-			/* 04 */ Data(TOTEXT(rotate_small), "Rotate small", ECursor::rotate_small),
-			/* 05 */ Data(TOTEXT(rotate_small_left), "Rotate small left", ECursor::rotate_small_left),
-			/* 06 */ Data(TOTEXT(rotate_small_right), "Rotate small right", ECursor::rotate_small_right),
-			/* 07 */ Data(TOTEXT(rotate_medium), "Rotate medium", ECursor::rotate_medium),
-			/* 08 */ Data(TOTEXT(rotate_medium_left), "Rotate medium left", ECursor::rotate_medium_left),
-			/* 09 */ Data(TOTEXT(rotate_medium_right), "Rotate medium right", ECursor::rotate_medium_right),
-			/* 10 */ Data(TOTEXT(rotate_large), "Rotate large", ECursor::rotate_large),
-			/* 11 */ Data(TOTEXT(rotate_large_left), "Rotate large left", ECursor::rotate_large_left),
-			/* 12 */ Data(TOTEXT(rotate_large_right), "Rotate large right", ECursor::rotate_large_right),
-			/* 13 */ Data(TOTEXT(up_down), "Up-Down", ECursor::up_down),
-			/* 14 */ Data(TOTEXT(down), "Down", ECursor::down),
-			/* 15 */ Data(TOTEXT(up), "Up", ECursor::up),
-			/* 16 */ Data(TOTEXT(left_right), "Left-Right", ECursor::left_right),
-			/* 17 */ Data(TOTEXT(right), "Right", ECursor::right),
-			/* 18 */ Data(TOTEXT(left), "Left", ECursor::left),
-			/* 19 */ Data(TOTEXT(arrow), "Arrow", ECursor::arrow),
-		};
-	}
+    const Data gList[] = {
+        /* 00 */ Data(TOTEXT(none), "none", ECursor::none),
+        /* 01 */ Data(TOTEXT(four_arrows), "Four arrows", ECursor::four_arrows),
+        /* 02 */ Data(TOTEXT(hand), "Hand", ECursor::hand),
+        /* 03 */ Data(TOTEXT(button), "Button", ECursor::button),
+        /* 04 */ Data(TOTEXT(rotate_small), "Rotate small", ECursor::rotate_small),
+        /* 05 */ Data(TOTEXT(rotate_small_left), "Rotate small left", ECursor::rotate_small_left),
+        /* 06 */ Data(TOTEXT(rotate_small_right), "Rotate small right", ECursor::rotate_small_right),
+        /* 07 */ Data(TOTEXT(rotate_medium), "Rotate medium", ECursor::rotate_medium),
+        /* 08 */ Data(TOTEXT(rotate_medium_left), "Rotate medium left", ECursor::rotate_medium_left),
+        /* 09 */ Data(TOTEXT(rotate_medium_right), "Rotate medium right", ECursor::rotate_medium_right),
+        /* 10 */ Data(TOTEXT(rotate_large), "Rotate large", ECursor::rotate_large),
+        /* 11 */ Data(TOTEXT(rotate_large_left), "Rotate large left", ECursor::rotate_large_left),
+        /* 12 */ Data(TOTEXT(rotate_large_right), "Rotate large right", ECursor::rotate_large_right),
+        /* 13 */ Data(TOTEXT(up_down), "Up-Down", ECursor::up_down),
+        /* 14 */ Data(TOTEXT(down), "Down", ECursor::down),
+        /* 15 */ Data(TOTEXT(up), "Up", ECursor::up),
+        /* 16 */ Data(TOTEXT(left_right), "Left-Right", ECursor::left_right),
+        /* 17 */ Data(TOTEXT(right), "Right", ECursor::right),
+        /* 18 */ Data(TOTEXT(left), "Left", ECursor::left),
+        /* 19 */ Data(TOTEXT(arrow), "Arrow", ECursor::arrow),
+    };
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	ECursor::ECursor()
-		: mId(none) { }
+ECursor::ECursor()
+    : mId(none) { }
 
-	ECursor::ECursor(eId id)
-		: mId(id) { }
+ECursor::ECursor(const eId id)
+    : mId(id) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool ECursor::operator==(const ECursor & other) const {
-		return mId == other.mId;
-	}
+bool ECursor::operator==(const ECursor & other) const {
+    return mId == other.mId;
+}
 
-	bool ECursor::operator==(eId id) const {
-		return mId == id;
-	}
+bool ECursor::operator==(const eId id) const {
+    return mId == id;
+}
 
-	bool ECursor::operator!=(const ECursor & other) const {
-		return mId != other.mId;
-	}
+bool ECursor::operator!=(const ECursor & other) const {
+    return mId != other.mId;
+}
 
-	bool ECursor::operator!=(eId id) const {
-		return mId != id;
-	}
+bool ECursor::operator!=(const eId id) const {
+    return mId != id;
+}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	ECursor ECursor::fromUiString(const char * name) {
-		if (name) {
-			for (size_t i = 0; i < ARRAY_LENGTH(EObjCursorsData::gList); ++i) {
-				if (strcmp(name, EObjCursorsData::gList[i].mUi) == 0) {
-					return ECursor(EObjCursorsData::gList[i].mId);
-				}
-			}
-			LError << TOTEXT(ECursor) << " Does not contain ui name: \"" << name << "\"";
-		}
-		return ECursor();
-	}
+ECursor ECursor::fromUiString(const char * name) {
+    if (name) {
+        for (size_t i = 0; i < ARRAY_LENGTH(EObjCursorsData::gList); ++i) {
+            if (strcmp(name, EObjCursorsData::gList[i].mUi) == 0) {
+                return ECursor(EObjCursorsData::gList[i].mId);
+            }
+        }
+        LError << TOTEXT(ECursor) << " Does not contain ui name: \"" << name << "\"";
+    }
+    return ECursor();
+}
 
-	ECursor ECursor::fromString(const char * attrName) {
-		if (attrName) {
-			for (size_t i = 0; i < ARRAY_LENGTH(EObjCursorsData::gList); ++i) {
-				if (strcmp(attrName, EObjCursorsData::gList[i].mAttr) == 0) {
-					return ECursor(EObjCursorsData::gList[i].mId);
-				}
-			}
-			LError << TOTEXT(ECursor) << " Does not contain attribute name: \"" << attrName << "\"";
-		}
-		return ECursor();
-	}
+ECursor ECursor::fromString(const char * attrName) {
+    if (attrName) {
+        for (size_t i = 0; i < ARRAY_LENGTH(EObjCursorsData::gList); ++i) {
+            if (strcmp(attrName, EObjCursorsData::gList[i].mAttr) == 0) {
+                return ECursor(EObjCursorsData::gList[i].mId);
+            }
+        }
+        LError << TOTEXT(ECursor) << " Does not contain attribute name: \"" << attrName << "\"";
+    }
+    return ECursor();
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ECursor::makeList(List & outList) {
-		if (!outList.empty())
-			return;
-		for (size_t i = 0; i < ARRAY_LENGTH(EObjCursorsData::gList); ++i) {
-			outList.emplace_back(ECursor(EObjCursorsData::gList[i].mId));
-		}
-	}
+void ECursor::makeList(List & outList) {
+    if (!outList.empty())
+        return;
+    for (size_t i = 0; i < ARRAY_LENGTH(EObjCursorsData::gList); ++i) {
+        outList.emplace_back(ECursor(EObjCursorsData::gList[i].mId));
+    }
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool ECursor::isValid() const {
-		return mId != none;
-	}
+bool ECursor::isValid() const {
+    return mId != none;
+}
 
-	ECursor::eId ECursor::id() const {
-		return mId;
-	}
+ECursor::eId ECursor::id() const {
+    return mId;
+}
 
-	const char * ECursor::toString() const {
-		return EObjCursorsData::gList[static_cast<size_t>(mId)].mAttr;
-	}
+const char * ECursor::toString() const {
+    return EObjCursorsData::gList[static_cast<size_t>(mId)].mAttr;
+}
 
-	const char * ECursor::toUiString() const {
-		return EObjCursorsData::gList[static_cast<size_t>(mId)].mUi;
-	}
+const char * ECursor::toUiString() const {
+    return EObjCursorsData::gList[static_cast<size_t>(mId)].mUi;
+}
 
-	const ECursor::List & ECursor::list() {
-		makeList(mList);
-		return mList;
-	}
+const ECursor::List & ECursor::list() {
+    makeList(mList);
+    return mList;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

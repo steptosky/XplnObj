@@ -27,8 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "gtest/gtest.h"
-#include "gmock/gmock.h"
+#include <gtest/gtest.h>
 
 #include "xpln/obj/ObjMesh.h"
 
@@ -43,19 +42,16 @@
 #include "TestUtilsObjMesh.h"
 
 using namespace xobj;
-using ::testing::_;
-using ::testing::StrEq;
-using ::testing::InSequence;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
 /* 
- * This tests are for checking mnipulators logic of the chain 'mesh objects->file | file->mesh objects'.
- * So they test writter and reader for mnipulators of mesh objects.
- * The manipulators have some logic for writing and reading you can see it in other tests like TestManipWrite.
- * Acttualy this tests are like as TestManipWrite except they test full chain (not only writing).
+ * This tests are for checking manipulators logic of the chain 'mesh objects->file | file->mesh objects'.
+ * They test writer and reader for manipulators of one mesh object.
+ * The manipulators have some logic for writing and reading you can see it in other tests like ManipsStates.
+ * Actually this tests are like as ManipsStates except they test full chain (not only writing).
  */
 
 /**************************************************************************************************/
@@ -63,41 +59,38 @@ using ::testing::InSequence;
 /**************************************************************************************************/
 
 class TestManipIOLogic : public ::testing::Test {
-
-	TestManipIOLogic(const TestManipIOLogic &) = delete;
-	TestManipIOLogic & operator =(const TestManipIOLogic &) = delete;
-
 public:
 
-	TestManipIOLogic() = default;
-	virtual ~TestManipIOLogic() = default;
+    TestManipIOLogic(const TestManipIOLogic &) = delete;
+    TestManipIOLogic & operator =(const TestManipIOLogic &) = delete;
 
-public:
+    TestManipIOLogic() = default;
+    virtual ~TestManipIOLogic() = default;
 
-	static void extractMesh(const ObjMain & inMain, size_t inLodNumber, size_t inMeshNumber, ObjMesh *& outMesh) {
-		ASSERT_TRUE(inLodNumber < inMain.lodCount());
-		const ObjLodGroup & inLGroup = inMain.lod(inLodNumber);
-		ASSERT_TRUE(inMeshNumber < inLGroup.transform().objList().size());
-		auto iterator = inLGroup.transform().objList().begin();
-		for (size_t i = 0; i < inMeshNumber; ++i) {
-			++iterator;
-		}
-		ObjAbstract * obj = *(iterator);
-		ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
-		outMesh = static_cast<ObjMesh *>(obj);
-	}
+    static void extractMesh(const ObjMain & inMain, const size_t inLodNumber, const size_t inMeshNumber, ObjMesh *& outMesh) {
+        ASSERT_TRUE(inLodNumber < inMain.lodCount());
+        const ObjLodGroup & inLGroup = inMain.lod(inLodNumber);
+        ASSERT_TRUE(inMeshNumber < inLGroup.transform().objList().size());
+        auto iterator = inLGroup.transform().objList().begin();
+        for (size_t i = 0; i < inMeshNumber; ++i) {
+            ++iterator;
+        }
+        ObjAbstract * obj = *(iterator);
+        ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
+        outMesh = static_cast<ObjMesh *>(obj);
+    }
 
-	template<typename MANIP>
-	static void extractManip(const ObjMain & inMain, size_t inLodNumber, size_t inMeshNumber, const MANIP *& outAttr) {
-		ObjMesh * inM = nullptr;
-		extractMesh(inMain, inLodNumber, inMeshNumber, inM);
-		outAttr = inM->pAttr.manipulator() == nullptr ? nullptr : static_cast<const MANIP *>(inM->pAttr.manipulator());
-	}
+    template<typename MANIP>
+    static void extractManip(const ObjMain & inMain, const size_t inLodNumber, const size_t inMeshNumber, const MANIP *& outAttr) {
+        ObjMesh * inM = nullptr;
+        extractMesh(inMain, inLodNumber, inMeshNumber, inM);
+        outAttr = inM->pAttr.manipulator() == nullptr ? nullptr : static_cast<const MANIP *>(inM->pAttr.manipulator());
+    }
 
-	AttrManipCmd mManipComd;
-	AttrManipCmdAxis mManipComdAxis;
-	AttrManipNoop mManipNoop;
-	AttrManipPush mManipPush;
+    AttrManipCmd mManipComd;
+    AttrManipCmdAxis mManipComdAxis;
+    AttrManipNoop mManipNoop;
+    AttrManipPush mManipPush;
 };
 
 /**************************************************************************************************/
@@ -106,297 +99,297 @@ public:
 
 // Manipulators are not set
 TEST_F(TestManipIOLogic, case_1_no_manips) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m0", 0.0));
-	outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m1", 1.0));
-	outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m2", 2.0));
-	outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m3", 3.0));
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m0", 0.0));
+    outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m1", 1.0));
+    outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m2", 2.0));
+    outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m3", 3.0));
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(0, stat.pTrisManipCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(0, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(0, stat.pTrisManipCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(0, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	const AttrManipBase * inManip = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    const AttrManipBase * inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
+    ASSERT_EQ(nullptr, inManip);
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
+    ASSERT_EQ(nullptr, inManip);
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
+    ASSERT_EQ(nullptr, inManip);
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
+    ASSERT_EQ(nullptr, inManip);
 
-	//-----------------------------
+    //-----------------------------
 }
 
 TEST_F(TestManipIOLogic, case_2) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	mManipComd.setCommand("test");
-	// Manip
-	outM1->pAttr.setManipulator(mManipComd.clone());
-	// No Manip
-	// mObjMesh2
-	// mObjMesh3
-	// mObjMesh4
+    mManipComd.setCmd("test");
+    // Manip
+    outM1->pAttr.setManipulator(mManipComd.clone());
+    // No Manip
+    // mObjMesh2
+    // mObjMesh3
+    // mObjMesh4
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(1, stat.pTrisManipCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(1, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	const AttrManipBase * inManip = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    const AttrManipBase * inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
+    ASSERT_EQ(nullptr, inManip);
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
+    ASSERT_EQ(nullptr, inManip);
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
+    ASSERT_EQ(nullptr, inManip);
 }
 
 TEST_F(TestManipIOLogic, case_3) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	mManipComd.setCommand("test");
-	// Manip
-	outM1->pAttr.setManipulator(mManipComd.clone());
-	outM2->pAttr.setManipulator(mManipComd.clone());
-	// No Manip
-	// mObjMesh3
-	// mObjMesh4
+    mManipComd.setCmd("test");
+    // Manip
+    outM1->pAttr.setManipulator(mManipComd.clone());
+    outM2->pAttr.setManipulator(mManipComd.clone());
+    // No Manip
+    // mObjMesh3
+    // mObjMesh4
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(1, stat.pTrisManipCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(1, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	const AttrManipBase * inManip = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    const AttrManipBase * inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
+    ASSERT_EQ(nullptr, inManip);
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
+    ASSERT_EQ(nullptr, inManip);
 }
 
 TEST_F(TestManipIOLogic, case_4) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	mManipComd.setCommand("test");
-	// Manip
-	outM1->pAttr.setManipulator(mManipComd.clone());
-	outM2->pAttr.setManipulator(mManipComd.clone());
-	outM3->pAttr.setManipulator(mManipComd.clone());
-	// No Manip
-	// mObjMesh4
+    mManipComd.setCmd("test");
+    // Manip
+    outM1->pAttr.setManipulator(mManipComd.clone());
+    outM2->pAttr.setManipulator(mManipComd.clone());
+    outM3->pAttr.setManipulator(mManipComd.clone());
+    // No Manip
+    // mObjMesh4
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(1, stat.pTrisManipCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(1, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	const AttrManipBase * inManip = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    const AttrManipBase * inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
+    ASSERT_EQ(nullptr, inManip);
 }
 
 TEST_F(TestManipIOLogic, case_5) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	mManipComd.setCommand("test");
-	// Manip
-	outM1->pAttr.setManipulator(mManipComd.clone());
-	outM2->pAttr.setManipulator(mManipComd.clone());
-	outM3->pAttr.setManipulator(mManipComd.clone());
-	outM4->pAttr.setManipulator(mManipComd.clone());
+    mManipComd.setCmd("test");
+    // Manip
+    outM1->pAttr.setManipulator(mManipComd.clone());
+    outM2->pAttr.setManipulator(mManipComd.clone());
+    outM3->pAttr.setManipulator(mManipComd.clone());
+    outM4->pAttr.setManipulator(mManipComd.clone());
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(1, stat.pTrisManipCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(1, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(1, stat.pTrisManipCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(1, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	const AttrManipBase * inManip = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    const AttrManipBase * inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 }
 
 TEST_F(TestManipIOLogic, case_6) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	// Manip
-	mManipComd.setCommand("test1");
-	outM1->pAttr.setManipulator(mManipComd.clone());
-	// Manip
-	mManipComd.setCommand("test2");
-	outM2->pAttr.setManipulator(mManipComd.clone());
-	// Manip
-	mManipComd.setCommand("test3");
-	outM3->pAttr.setManipulator(mManipComd.clone());
-	// Manip
-	mManipComd.setCommand("test4");
-	outM4->pAttr.setManipulator(mManipComd.clone());
+    // Manip
+    mManipComd.setCmd("test1");
+    outM1->pAttr.setManipulator(mManipComd.clone());
+    // Manip
+    mManipComd.setCmd("test2");
+    outM2->pAttr.setManipulator(mManipComd.clone());
+    // Manip
+    mManipComd.setCmd("test3");
+    outM3->pAttr.setManipulator(mManipComd.clone());
+    // Manip
+    mManipComd.setCmd("test4");
+    outM4->pAttr.setManipulator(mManipComd.clone());
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(4, stat.pTrisManipCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(4, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(4, stat.pTrisManipCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(4, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	const AttrManipBase * inManip = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
-	ASSERT_NE(nullptr, inManip);
-	mManipComd.setCommand("test1");
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    const AttrManipBase * inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
+    ASSERT_NE(nullptr, inManip);
+    mManipComd.setCmd("test1");
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
-	ASSERT_NE(nullptr, inManip);
-	mManipComd.setCommand("test2");
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
+    ASSERT_NE(nullptr, inManip);
+    mManipComd.setCmd("test2");
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
-	ASSERT_NE(nullptr, inManip);
-	mManipComd.setCommand("test3");
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
+    ASSERT_NE(nullptr, inManip);
+    mManipComd.setCmd("test3");
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
-	ASSERT_NE(nullptr, inManip);
-	mManipComd.setCommand("test4");
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
+    ASSERT_NE(nullptr, inManip);
+    mManipComd.setCmd("test4");
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 }
 
 /**************************************************************************************************/
@@ -404,258 +397,258 @@ TEST_F(TestManipIOLogic, case_6) {
 /**************************************************************************************************/
 
 TEST_F(TestManipIOLogic, case_7) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	// Manip
-	outM1->pAttr.setManipulator(mManipComd.clone());
-	// Manip
-	outM2->pAttr.setManipulator(mManipComdAxis.clone());
-	// Manip
-	outM3->pAttr.setManipulator(mManipNoop.clone());
-	// Manip
-	outM4->pAttr.setManipulator(mManipPush.clone());
+    // Manip
+    outM1->pAttr.setManipulator(mManipComd.clone());
+    // Manip
+    outM2->pAttr.setManipulator(mManipComdAxis.clone());
+    // Manip
+    outM3->pAttr.setManipulator(mManipNoop.clone());
+    // Manip
+    outM4->pAttr.setManipulator(mManipPush.clone());
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(4, stat.pTrisManipCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(4, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(4, stat.pTrisManipCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(4, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	const AttrManipBase * inManip = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    const AttrManipBase * inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComdAxis));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComdAxis));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipNoop));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipNoop));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipPush));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipPush));
 }
 
 TEST_F(TestManipIOLogic, case_8) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	// Manip
-	outM1->pAttr.setManipulator(mManipComd.clone());
-	// Manip
-	outM2->pAttr.setManipulator(mManipComdAxis.clone());
-	// Manip
-	outM3->pAttr.setManipulator(mManipNoop.clone());
-	// No Manip
-	// mObjMesh4
+    // Manip
+    outM1->pAttr.setManipulator(mManipComd.clone());
+    // Manip
+    outM2->pAttr.setManipulator(mManipComdAxis.clone());
+    // Manip
+    outM3->pAttr.setManipulator(mManipNoop.clone());
+    // No Manip
+    // mObjMesh4
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(3, stat.pTrisManipCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(4, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(3, stat.pTrisManipCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(3, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	const AttrManipBase * inManip = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    const AttrManipBase * inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComdAxis));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComdAxis));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipNoop));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipNoop));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
+    ASSERT_EQ(nullptr, inManip);
 }
 
 TEST_F(TestManipIOLogic, case_9) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	// Manip
-	outM1->pAttr.setManipulator(mManipComd.clone());
-	outM2->pAttr.setManipulator(mManipComd.clone());
-	// Manip
-	outM3->pAttr.setManipulator(mManipNoop.clone());
-	// Manip
-	outM4->pAttr.setManipulator(mManipPush.clone());
+    // Manip
+    outM1->pAttr.setManipulator(mManipComd.clone());
+    outM2->pAttr.setManipulator(mManipComd.clone());
+    // Manip
+    outM3->pAttr.setManipulator(mManipNoop.clone());
+    // Manip
+    outM4->pAttr.setManipulator(mManipPush.clone());
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(3, stat.pTrisManipCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(3, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(3, stat.pTrisManipCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(3, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	const AttrManipBase * inManip = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    const AttrManipBase * inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipNoop));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipNoop));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipPush));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipPush));
 }
 
 TEST_F(TestManipIOLogic, case_10) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	// Manip
-	outM1->pAttr.setManipulator(mManipComd.clone());
-	// No Manip
-	// mObjMesh2
-	// Manip
-	outM3->pAttr.setManipulator(mManipNoop.clone());
-	// Manip
-	outM4->pAttr.setManipulator(mManipPush.clone());
+    // Manip
+    outM1->pAttr.setManipulator(mManipComd.clone());
+    // No Manip
+    // mObjMesh2
+    // Manip
+    outM3->pAttr.setManipulator(mManipNoop.clone());
+    // Manip
+    outM4->pAttr.setManipulator(mManipPush.clone());
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(3, stat.pTrisManipCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(4, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(3, stat.pTrisManipCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(3, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	const AttrManipBase * inManip = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    const AttrManipBase * inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
+    ASSERT_EQ(nullptr, inManip);
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipNoop));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipNoop));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipPush));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipPush));
 }
 
 TEST_F(TestManipIOLogic, case_11) {
-	ObjMain outObj;
-	IOStatistic stat;
-	ObjLodGroup & outLGroup = outObj.addLod();
-	ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
-	ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
-	ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
-	ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-	outLGroup.transform().addObject(outM1);
-	outLGroup.transform().addObject(outM2);
-	outLGroup.transform().addObject(outM3);
-	outLGroup.transform().addObject(outM4);
+    ObjMain outObj;
+    IOStatistic stat;
+    ObjLodGroup & outLGroup = outObj.addLod();
+    ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
+    ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
+    ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
+    ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
+    outLGroup.transform().addObject(outM1);
+    outLGroup.transform().addObject(outM2);
+    outLGroup.transform().addObject(outM3);
+    outLGroup.transform().addObject(outM4);
 
-	// Manip
-	outM1->pAttr.setManipulator(mManipComd.clone());
-	// No Manip
-	// mObjMesh2
-	// Manip
-	outM3->pAttr.setManipulator(mManipNoop.clone());
-	// No Manip
-	// mObjMesh4
+    // Manip
+    outM1->pAttr.setManipulator(mManipComd.clone());
+    // No Manip
+    // mObjMesh2
+    // Manip
+    outM3->pAttr.setManipulator(mManipNoop.clone());
+    // No Manip
+    // mObjMesh4
 
-	ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(2, stat.pTrisManipCount);
+    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(4, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	ObjMain inObj;
-	stat.reset();
-	ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-	ASSERT_EQ(2, stat.pTrisManipCount);
+    ObjMain inObj;
+    stat.reset();
+    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
+    ASSERT_EQ(2, stat.pTrisManipCount);
 
-	//-----------------------------
+    //-----------------------------
 
-	const AttrManipBase * inManip = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipComd));
+    const AttrManipBase * inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 0, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipComd));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 1, inManip));
+    ASSERT_EQ(nullptr, inManip);
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
-	ASSERT_NE(nullptr, inManip);
-	ASSERT_TRUE(inManip->equals(&mManipNoop));
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 2, inManip));
+    ASSERT_NE(nullptr, inManip);
+    ASSERT_TRUE(inManip->equals(&mManipNoop));
 
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
-	ASSERT_EQ(nullptr, inManip);
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipBase>(inObj, 0, 3, inManip));
+    ASSERT_EQ(nullptr, inManip);
 }
 
 /**************************************************************************************************/

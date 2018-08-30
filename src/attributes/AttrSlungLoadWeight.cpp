@@ -27,58 +27,58 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/attributes/AttrSlungLoadWeight.h"
 #include "sts/utilities/Compare.h"
+#include "xpln/obj/attributes/AttrSlungLoadWeight.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrSlungLoadWeight::AttrSlungLoadWeight(float weight)
-		: mWeight(weight),
-		mIsEnabled(true) { }
+AttrSlungLoadWeight::AttrSlungLoadWeight(const float weight)
+    : mWeight(weight),
+      mIsEnabled(true) { }
 
-	AttrSlungLoadWeight::AttrSlungLoadWeight()
-		: mWeight(1.0f),
-		mIsEnabled(false) {}
+AttrSlungLoadWeight::AttrSlungLoadWeight()
+    : mWeight(1.0f),
+      mIsEnabled(false) {}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrSlungLoadWeight::operator bool() const {
-		return mIsEnabled;
-	}
+AttrSlungLoadWeight::operator bool() const {
+    return mIsEnabled;
+}
 
-	void AttrSlungLoadWeight::setEnabled(bool state) {
-		mIsEnabled = state;
-	}
+void AttrSlungLoadWeight::setEnabled(const bool state) {
+    mIsEnabled = state;
+}
 
-	bool AttrSlungLoadWeight::operator==(const AttrSlungLoadWeight & other) const {
-		return (mIsEnabled == other.mIsEnabled && sts::isEqual(mWeight, other.mWeight, 0.01f));
-	}
+bool AttrSlungLoadWeight::operator==(const AttrSlungLoadWeight & other) const {
+    return (mIsEnabled == other.mIsEnabled && sts::isEqual(mWeight, other.mWeight, 0.01f));
+}
 
-	bool AttrSlungLoadWeight::operator!=(const AttrSlungLoadWeight & other) const {
-		return !operator==(other);
-	}
+bool AttrSlungLoadWeight::operator!=(const AttrSlungLoadWeight & other) const {
+    return !operator==(other);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrSlungLoadWeight::setWeight(float weight) {
-		mIsEnabled = true;
-		mWeight = weight;
-	}
+void AttrSlungLoadWeight::setWeight(const float weight) {
+    mIsEnabled = true;
+    mWeight = weight;
+}
 
-	float AttrSlungLoadWeight::weight() const {
-		return mWeight;
-	}
+float AttrSlungLoadWeight::weight() const {
+    return mWeight;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

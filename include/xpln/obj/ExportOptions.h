@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,79 +29,77 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <string>
 #include <cstdint>
-#include "xpln/XplnObjExport.h"
+#include "xpln/Export.h"
 #include "xpln/enums/eExportOptions.h"
 
 namespace xobj {
 
-	class ObjWriter;
+class ObjWriter;
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation class of the 'obj' exporter options.
-	 */
-	class ExportOptions {
-	public:
+/*!
+ * \details Representation class of the 'obj' exporter options.
+ */
+class ExportOptions {
+public:
 
-		XpObjLib ExportOptions();
-		virtual ~ExportOptions() = default;
+    XpObjLib ExportOptions();
+    virtual ~ExportOptions() = default;
 
-		//------------------------------------------------------------
+    //------------------------------------------------------------
 
-		XpObjLib bool isEnabled(eExportOptions option) const;
-		XpObjLib void enable(eExportOptions option);
-		XpObjLib void disable(eExportOptions option);
-		XpObjLib virtual void reset();
+    XpObjLib bool isEnabled(eExportOptions option) const;
+    XpObjLib void enable(eExportOptions option);
+    XpObjLib void disable(eExportOptions option);
+    XpObjLib virtual void reset();
 
-		//------------------------------------------------------------
+    //------------------------------------------------------------
 
-		/*!
-		 * \details Gets option flags.
-		 * \remark It can be useful for serialization/deserialization.
-		 * \return flags.
-		 */
-		XpObjLib uint64_t optionFlags() const;
+    /*!
+     * \details Gets option flags.
+     * \remark It can be useful for serialization/deserialization.
+     * \return flags.
+     */
+    XpObjLib uint64_t optionFlags() const;
 
-		/*!
-		 * \details Sets option flags.
-		 * \remark It can be useful for serialization/deserialization.
-		 * \param [in] flags
-		 */
-		XpObjLib void setOptionFlags(uint64_t flags);
+    /*!
+     * \details Sets option flags.
+     * \remark It can be useful for serialization/deserialization.
+     * \param [in] flags
+     */
+    XpObjLib void setOptionFlags(std::uint64_t flags);
 
-		//------------------------------------------------------------
+    //------------------------------------------------------------
 
-		/*!
-		 * \details Sets 'obj' file signature.
-		 * The signature will be written at the end of obj file.
-		 * \param [in] signature text.
-		 */
-		XpObjLib void setSignature(const std::string & signature);
+    /*!
+     * \details Sets 'obj' file signature.
+     * The signature will be written at the end of obj file.
+     * \param [in] signature text.
+     */
+    XpObjLib void setSignature(const std::string & signature);
 
-		/*!
-		 * \details Gets obj file signature.
-		 * \return signature text.
-		 */
-		XpObjLib const std::string & signature() const;
+    /*!
+     * \details Gets obj file signature.
+     * \return signature text.
+     */
+    XpObjLib const std::string & signature() const;
 
-		//------------------------------------------------------------
+    //------------------------------------------------------------
 
-	private:
+private:
 
-		uint64_t mOptionFlags;
-		std::string mSignature;
+    std::uint64_t mOptionFlags;
+    std::string mSignature;
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

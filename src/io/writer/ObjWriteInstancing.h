@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,38 +29,36 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "xpln/obj/ObjMesh.h"
 #include "xpln/obj/ObjMain.h"
 
 namespace xobj {
 
-	/**********************************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
 
-	// TODO Needs the unit tests
-	class ObjWriteInstancing {
+// TODO Needs the unit tests
+class ObjWriteInstancing {
 
-		ObjWriteInstancing() = default;
-		~ObjWriteInstancing() = default;
+    ObjWriteInstancing() = default;
+    ~ObjWriteInstancing() = default;
 
-	public:
+public:
 
-		static bool check(ObjMain & inObjMain);
+    static bool check(ObjMain & inObjMain);
 
-	private:
+private:
 
-		static void printBreakInstancing(const char * objName, const char * reason);
+    static void printBreakInstancing(const char * objName, const char * reason);
 
-		static void proccessTransform(Transform & transform, bool & result);
-		static void proccessObjects(Transform & transform, bool & result);
-		static void proccessAttributes(ObjMesh & mesh, bool & result);
+    static void proccessTransform(Transform & transform, bool & outResult);
+    static void proccessObjects(Transform & transform, bool & outResult);
+    static void proccessAttributes(ObjMesh & mesh, bool & outResult);
 
-	};
+};
 
-	/**********************************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
 }

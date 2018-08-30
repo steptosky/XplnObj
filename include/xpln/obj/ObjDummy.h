@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,50 +29,46 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "ObjAbstract.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details Representation of the Dummy object
-	 * \ingroup Objects
-	 */
-	class ObjDummy : public ObjAbstract {
+/*!
+ * \details Representation of the Dummy object
+ * \ingroup Objects
+ */
+class ObjDummy : public ObjAbstract {
+protected:
 
-		ObjDummy & operator =(const ObjDummy &) = delete;
+    XpObjLib ObjDummy(const ObjDummy & copy);
 
-	protected:
+public:
 
-		XpObjLib ObjDummy(const ObjDummy & copy);
+    XpObjLib ObjDummy();
+    ObjDummy & operator =(const ObjDummy &) = delete;
+    XpObjLib virtual ~ObjDummy();
 
-	public:
+    //-----------------------------------------------------
 
-		XpObjLib ObjDummy();
-		XpObjLib virtual ~ObjDummy();
+    /*! \copydoc ObjAbstract::objType */
+    XpObjLib eObjectType objType() const final;
 
-		//-----------------------------------------------------
+    /*! \copydoc ObjAbstract::applyTransform */
+    XpObjLib void applyTransform(const TMatrix & tm, bool useParity = false) override final;
 
-		/*! \copydoc ObjAbstract::objType */
-		XpObjLib eObjectType objType() const final;
+    /* \copydoc ObjAbstract::clone */
+    XpObjLib ObjAbstract * clone() const override;
 
-		/*! \copydoc ObjAbstract::applyTransform */
-		XpObjLib void applyTransform(const TMatrix & tm, const bool useParity = false) final;
+    //--------------------------------------------------------
 
-		/* \copydoc ObjAbstract::clone */
-		XpObjLib ObjAbstract * clone() const override;
+};
 
-		//--------------------------------------------------------
-
-	};
-
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

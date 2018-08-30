@@ -28,61 +28,61 @@
 */
 
 #include "xpln/obj/ObjAbstract.h"
-#include "common/Logger.h"
 #include "xpln/obj/Transform.h"
+#include "common/Logger.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	ObjAbstract::ObjAbstract()
-		: mName("undefined") { }
+ObjAbstract::ObjAbstract()
+    : mName("undefined") { }
 
-	ObjAbstract::ObjAbstract(const ObjAbstract & copy)
-		: mName(copy.mName) { }
+ObjAbstract::ObjAbstract(const ObjAbstract & copy)
+    : mName(copy.mName) { }
 
-	ObjAbstract::~ObjAbstract() {
-		if (mObjTransform) {
-			if (!mObjTransform->removeObject(this)) {
-				LError << " Internal logic error."
-						<< " type: " << ObjAbstract::objType()
-						<< " objectName: " << objectName();
-			}
-		}
-	}
+ObjAbstract::~ObjAbstract() {
+    if (mObjTransform) {
+        if (!mObjTransform->removeObject(this)) {
+            LError << " Internal logic error."
+                    << " type: " << ObjAbstract::objType()
+                    << " objectName: " << objectName();
+        }
+    }
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	eObjectType ObjAbstract::objType() const {
-		return OBJ_NO;
-	}
+eObjectType ObjAbstract::objType() const {
+    return OBJ_NO;
+}
 
-	const Transform * ObjAbstract::transform() const {
-		return mObjTransform;
-	}
+const Transform * ObjAbstract::transform() const {
+    return mObjTransform;
+}
 
-	Transform * ObjAbstract::transform() {
-		return mObjTransform;
-	}
+Transform * ObjAbstract::transform() {
+    return mObjTransform;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjAbstract::setObjectName(const std::string & name) {
-		mName = name;
-	}
+void ObjAbstract::setObjectName(const std::string & name) {
+    mName = name;
+}
 
-	const std::string & ObjAbstract::objectName() const {
-		return mName;
-	}
+const std::string & ObjAbstract::objectName() const {
+    return mName;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

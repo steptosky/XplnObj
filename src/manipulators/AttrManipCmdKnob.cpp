@@ -27,65 +27,82 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "sts/utilities/Compare.h"
+#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipCmdKnob.h"
 #include "xpln/enums//EManipulator.h"
-#include "sts/string/StringConverters.h"
-#include "sts/utilities/Compare.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipCmdKnob::AttrManipCmdKnob()
-		: AttrManipBase(EManipulator(EManipulator::command_knob)) { }
+AttrManipCmdKnob::AttrManipCmdKnob()
+    : AttrManipBase(EManipulator(EManipulator::command_knob)) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	const std::string & AttrManipCmdKnob::cmdPositive() const {
-		return mPosCommand;
-	}
+const std::string & AttrManipCmdKnob::cmdPositive() const {
+    return mPosCommand;
+}
 
-	void AttrManipCmdKnob::setCmdPositive(const std::string & val) {
-		mPosCommand = val;
-	}
+void AttrManipCmdKnob::setCmdPositive(const std::string & val) {
+    mPosCommand = val;
+}
 
-	const std::string & AttrManipCmdKnob::cmdNegative() const {
-		return mNegCommand;
-	}
+const std::string & AttrManipCmdKnob::cmdNegative() const {
+    return mNegCommand;
+}
 
-	void AttrManipCmdKnob::setCmdNegative(const std::string & val) {
-		mNegCommand = val;
-	}
+void AttrManipCmdKnob::setCmdNegative(const std::string & val) {
+    mNegCommand = val;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipCmdKnob::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipCmdKnob::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		const AttrManipCmdKnob * right = dynamic_cast<const AttrManipCmdKnob*>(manip);
-		if (!right)
-			return false;
+    const auto * right = dynamic_cast<const AttrManipCmdKnob*>(manip);
+    if (!right)
+        return false;
 
-		return (sts::isEqual(mPosCommand, right->mPosCommand) &&
-				sts::isEqual(mNegCommand, right->mNegCommand));
-	}
+    return (sts::isEqual(mPosCommand, right->mPosCommand) &&
+            sts::isEqual(mNegCommand, right->mNegCommand));
+}
 
-	AttrManipBase * AttrManipCmdKnob::clone() const {
-		return new AttrManipCmdKnob(*this);
-	}
+AttrManipBase * AttrManipCmdKnob::clone() const {
+    return new AttrManipCmdKnob(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipCmdKnob::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_MANIP_COMMAND_KNOB;
+    outStr << " " << cursor().toString();
+    outStr << " " << cmdPositive();
+    outStr << " " << cmdNegative();
+    outStr << " " << toolTip();
+    writer.printLine(outStr.str());
+    return 1;
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

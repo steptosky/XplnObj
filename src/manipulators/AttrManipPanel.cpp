@@ -27,49 +27,66 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
+#include "converters/ObjAttrString.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrManipPanel::AttrManipPanel()
-		: AttrManipBase(EManipulator(EManipulator::panel)) {}
+AttrManipPanel::AttrManipPanel()
+    : AttrManipBase(EManipulator(EManipulator::panel)) {}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrManipPanel::setCockpit(const AttrCockpit & cockpit) {
-		mAttrCockpit = cockpit;
-	}
+void AttrManipPanel::setCockpit(const AttrCockpit & cockpit) {
+    mAttrCockpit = cockpit;
+}
 
-	const AttrCockpit & AttrManipPanel::cockpit() const {
-		return mAttrCockpit;
-	}
+const AttrCockpit & AttrManipPanel::cockpit() const {
+    return mAttrCockpit;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool AttrManipPanel::equals(const AttrManipBase * manip) const {
-		if (!manip)
-			return false;
+bool AttrManipPanel::equals(const AttrManipBase * manip) const {
+    if (!manip)
+        return false;
 
-		if (!AttrManipBase::equals(manip))
-			return false;
+    if (!AttrManipBase::equals(manip))
+        return false;
 
-		return dynamic_cast<const AttrManipPanel*>(manip) != nullptr;
-	}
+    return dynamic_cast<const AttrManipPanel*>(manip) != nullptr;
+}
 
-	AttrManipBase * AttrManipPanel::clone() const {
-		return new AttrManipPanel(*this);
-	}
+AttrManipBase * AttrManipPanel::clone() const {
+    return new AttrManipPanel(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::size_t AttrManipPanel::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << toObjString(cockpit());
+#ifndef NDEBUG
+    outStr << " ## panel manip";
+#endif
+    writer.printLine(outStr.str());
+    return 1;
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

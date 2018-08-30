@@ -28,86 +28,87 @@
 */
 
 #include "xpln/obj/ObjLightCustom.h"
+#include "xpln/obj/Transform.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	ObjLightCustom::ObjLightCustom(const ObjLightCustom & copy)
-		: ObjAbstractLight(copy),
-		mColor(copy.mColor),
-		mSize(copy.mSize),
-		mTexture(copy.mTexture),
-		mDataRef(copy.mDataRef) {}
+ObjLightCustom::ObjLightCustom(const ObjLightCustom & copy)
+    : ObjAbstractLight(copy),
+      mColor(copy.mColor),
+      mSize(copy.mSize),
+      mTexture(copy.mTexture),
+      mDataRef(copy.mDataRef) {}
 
-	ObjLightCustom::ObjLightCustom()
-		: mSize(10.0f),
-		mTexture(Point2(0.0f, 0.0f), Point2(1.0f, 1.0f)) {
-		setObjectName("Light Custom");
-	}
+ObjLightCustom::ObjLightCustom()
+    : mSize(10.0f),
+      mTexture(Point2(0.0f, 0.0f), Point2(1.0f, 1.0f)) {
+    setObjectName("Light Custom");
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void ObjLightCustom::applyTransform(const TMatrix & tm, const bool) {
-		Point3 pos = mPosition;
-		tm.transformPoint(pos);
-		mPosition = pos;
-	}
+void ObjLightCustom::applyTransform(const TMatrix & tm, const bool) {
+    Point3 pos = mPosition;
+    tm.transformPoint(pos);
+    mPosition = pos;
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	eObjectType ObjLightCustom::objType() const {
-		return OBJ_LIGHT_CUSTOM;
-	}
+eObjectType ObjLightCustom::objType() const {
+    return OBJ_LIGHT_CUSTOM;
+}
 
-	RectangleI ObjLightCustom::textureRect() const {
-		return mTexture;
-	}
+RectangleI ObjLightCustom::textureRect() const {
+    return mTexture;
+}
 
-	float ObjLightCustom::size() const {
-		return mSize;
-	}
+float ObjLightCustom::size() const {
+    return mSize;
+}
 
-	void ObjLightCustom::setSize(float size) {
-		mSize = size;
-	}
+void ObjLightCustom::setSize(float size) {
+    mSize = size;
+}
 
-	Color ObjLightCustom::color() const {
-		return mColor;
-	}
+Color ObjLightCustom::color() const {
+    return mColor;
+}
 
-	void ObjLightCustom::setColor(const Color & color) {
-		mColor = color;
-	}
+void ObjLightCustom::setColor(const Color & color) {
+    mColor = color;
+}
 
-	const std::string & ObjLightCustom::dataRef() const {
-		return mDataRef;
-	}
+const std::string & ObjLightCustom::dataRef() const {
+    return mDataRef;
+}
 
-	void ObjLightCustom::setDataRef(const std::string & dataRef) {
-		mDataRef = dataRef;
-	}
+void ObjLightCustom::setDataRef(const std::string & dataRef) {
+    mDataRef = dataRef;
+}
 
-	void ObjLightCustom::setTextureRect(const RectangleI & textureRect) {
-		mTexture = textureRect;
-	}
+void ObjLightCustom::setTextureRect(const RectangleI & textureRect) {
+    mTexture = textureRect;
+}
 
-	/**************************************************************************************************/
-	//////////////////////////////////////////* Functions */////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-	ObjAbstract * ObjLightCustom::clone() const {
-		return new ObjLightCustom(*this);
-	}
+ObjAbstract * ObjLightCustom::clone() const {
+    return new ObjLightCustom(*this);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

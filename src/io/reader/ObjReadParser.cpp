@@ -28,78 +28,77 @@
 */
 
 #include "ObjReadParser.h"
-#include <iostream>
 #include "common/Logger.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	ObjReadParser::ObjReadParser(const std::string & filePath)
-		: mMemCurr(nullptr),
-		mMemStart(nullptr),
-		mMemEnd(nullptr) {
+ObjReadParser::ObjReadParser(const std::string & filePath)
+    : mMemCurr(nullptr),
+      mMemStart(nullptr),
+      mMemEnd(nullptr) {
 
-		if (!filePath.empty()) {
-			readFile(filePath);
-		}
-	}
+    if (!filePath.empty()) {
+        readFile(filePath);
+    }
+}
 
-	ObjReadParser::~ObjReadParser() {
-		close();
-	}
+ObjReadParser::~ObjReadParser() {
+    close();
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	bool ObjReadParser::readFile(const std::string & filePath) {
-		close();
-		FILE * file = fopen(filePath.data(), "rb");
-		if (!file) {
-			ULError << "File <" << filePath.data() << "> could not be read!";
-			return false;
-		}
+bool ObjReadParser::readFile(const std::string & filePath) {
+    close();
+    FILE * file = fopen(filePath.data(), "rb");
+    if (!file) {
+        ULError << "File <" << filePath.data() << "> could not be read!";
+        return false;
+    }
 
-		const unsigned filesize = fileSize(file);
+    const unsigned filesize = fileSize(file);
 
-		mMemStart = static_cast<uint8_t *>(malloc(filesize));
-		if (mMemStart == nullptr) {
-			LError << "Memory could not be allocated!";
-			fclose(file);
-			return false;
-		}
-		if (fread(mMemStart, 1, filesize, file) != filesize) {
-			close();
-			fclose(file);
-			LError << "Size of the allocated memory is incorrect!";
-			return false;
-		}
-		mMemCurr = mMemStart;
-		mMemEnd = mMemStart + filesize;
-		fclose(file);
-		return true;
-	}
+    mMemStart = static_cast<uint8_t *>(malloc(filesize));
+    if (mMemStart == nullptr) {
+        LError << "Memory could not be allocated!";
+        fclose(file);
+        return false;
+    }
+    if (fread(mMemStart, 1, filesize, file) != filesize) {
+        close();
+        fclose(file);
+        LError << "Size of the allocated memory is incorrect!";
+        return false;
+    }
+    mMemCurr = mMemStart;
+    mMemEnd = mMemStart + filesize;
+    fclose(file);
+    return true;
+}
 
-	void ObjReadParser::close() {
-		if (mMemStart) {
-			free(mMemStart);
-			mMemStart = nullptr;
-			mMemCurr = nullptr;
-			mMemEnd = nullptr;
-		}
-	}
+void ObjReadParser::close() {
+    if (mMemStart) {
+        free(mMemStart);
+        mMemStart = nullptr;
+        mMemCurr = nullptr;
+        mMemEnd = nullptr;
+    }
+}
 
-	unsigned ObjReadParser::fileSize(FILE * file) {
-		fseek(file, 0L, SEEK_END);
-		unsigned filesize = static_cast<unsigned>(ftell(file));
-		fseek(file, 0L, SEEK_SET);
-		return unsigned(filesize);
-	}
+unsigned ObjReadParser::fileSize(FILE * file) {
+    fseek(file, 0L, SEEK_END);
+    const auto filesize = static_cast<unsigned>(ftell(file));
+    fseek(file, 0L, SEEK_SET);
+    return unsigned(filesize);
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

@@ -27,76 +27,76 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/attributes/AttrTint.h"
 #include "sts/utilities/Compare.h"
+#include "xpln/obj/attributes/AttrTint.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrTint::AttrTint(float albedoRatio, float emissiveRatio)
-		: mAlbedo(albedoRatio),
-		mEmissive(emissiveRatio),
-		mIsEnabled(true) { }
+AttrTint::AttrTint(const float albedoRatio, const float emissiveRatio)
+    : mAlbedo(albedoRatio),
+      mEmissive(emissiveRatio),
+      mIsEnabled(true) { }
 
-	AttrTint::AttrTint()
-		: mAlbedo(0.0f),
-		mEmissive(0.0f),
-		mIsEnabled(false) { }
+AttrTint::AttrTint()
+    : mAlbedo(0.0f),
+      mEmissive(0.0f),
+      mIsEnabled(false) { }
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Operators *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	AttrTint::operator bool() const {
-		return mIsEnabled;
-	}
+AttrTint::operator bool() const {
+    return mIsEnabled;
+}
 
-	void AttrTint::setEnabled(bool state) {
-		mIsEnabled = state;
-	}
+void AttrTint::setEnabled(const bool state) {
+    mIsEnabled = state;
+}
 
-	bool AttrTint::operator==(const AttrTint & other) const {
-		return (mIsEnabled == other.mIsEnabled &&
-				sts::isEqual(mAlbedo, other.mAlbedo, 0.01f) &&
-				sts::isEqual(mEmissive, other.mEmissive, 0.01f));
-	}
+bool AttrTint::operator==(const AttrTint & other) const {
+    return (mIsEnabled == other.mIsEnabled &&
+            sts::isEqual(mAlbedo, other.mAlbedo, 0.01f) &&
+            sts::isEqual(mEmissive, other.mEmissive, 0.01f));
+}
 
-	bool AttrTint::operator!=(const AttrTint & other) const {
-		return !operator==(other);
-	}
+bool AttrTint::operator!=(const AttrTint & other) const {
+    return !operator==(other);
+}
 
-	/**************************************************************************************************/
-	///////////////////////////////////////////* Functions *////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-	void AttrTint::setAlbedo(float albedoRatio) {
-		mAlbedo = albedoRatio;
-		mIsEnabled = true;
-	}
+void AttrTint::setAlbedo(const float albedoRatio) {
+    mAlbedo = albedoRatio;
+    mIsEnabled = true;
+}
 
-	void AttrTint::setEmissive(float emissiveRatio) {
-		mEmissive = emissiveRatio;
-		mIsEnabled = true;
-	}
+void AttrTint::setEmissive(const float emissiveRatio) {
+    mEmissive = emissiveRatio;
+    mIsEnabled = true;
+}
 
-	float AttrTint::albedo() const {
-		return mAlbedo;
-	}
+float AttrTint::albedo() const {
+    return mAlbedo;
+}
 
-	float AttrTint::emissive() const {
-		return mEmissive;
-	}
+float AttrTint::emissive() const {
+    return mEmissive;
+}
 
-	void AttrTint::set(float albedoRatio, float emissiveRatio) {
-		mAlbedo = albedoRatio;
-		mEmissive = emissiveRatio;
-	}
+void AttrTint::set(const float albedoRatio, const float emissiveRatio) {
+    mAlbedo = albedoRatio;
+    mEmissive = emissiveRatio;
+}
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

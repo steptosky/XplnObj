@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,56 +29,97 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "AttrManipBase.h"
-#include "AttrManipWheel.h"
+#include "embeddable/AttrManipWheel.h"
 
 namespace xobj {
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
-	/*!
-	 * \details ATTR_manip_push
-	 * \ingroup Manipulators
-	 */
-	class AttrManipPush : public AttrManipBase, public AttrManipWheel {
-	public:
+/*!
+ * \details ATTR_manip_push
+ * \ingroup Manipulators
+ */
+class AttrManipPush : public AttrManipBase {
+public:
 
-		XpObjLib AttrManipPush();
-		virtual ~AttrManipPush() = default;
+    XpObjLib AttrManipPush();
+    virtual ~AttrManipPush() = default;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		XpObjLib void setDown(float val);
-		XpObjLib void setUp(float val);
-		XpObjLib float down() const;
-		XpObjLib float up() const;
+    XpObjLib void setDown(float val);
+    XpObjLib void setUp(float val);
+    XpObjLib float down() const;
+    XpObjLib float up() const;
 
-		XpObjLib void setDataref(const std::string & val);
-		XpObjLib const std::string & dataref() const;
+    XpObjLib void setDataref(const std::string & val);
+    XpObjLib const std::string & dataref() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		/*! \copydoc AttrManipBase::equals */
-		XpObjLib bool equals(const AttrManipBase * manip) const override;
+    /*! \copydoc AttrManipBase::equals */
+    XpObjLib bool equals(const AttrManipBase * manip) const override;
 
-		/*! \copydoc AttrManipBase::clone */
-		XpObjLib AttrManipBase * clone() const override;
+    /*! \copydoc AttrManipBase::clone */
+    XpObjLib AttrManipBase * clone() const override;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+    /*!
+     * \see AttrManipWheel
+     */
+    void setWheel(const AttrManipWheel & ranges) {
+        mWheel = ranges;
+    }
 
-		float mDown = 0.0f;
-		float mUp = 0.0f;
-		std::string mDataref = "none";
+    /*!
+     * \see AttrManipWheel
+     */
+    AttrManipWheel & wheel() {
+        return mWheel;
+    }
 
-	};
+    /*!
+     * \see AttrManipWheel
+     */
+    const AttrManipWheel & wheel() const {
+        return mWheel;
+    }
+        
+    //------------------------------------------
 
-	/********************************************************************************************************/
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/********************************************************************************************************/
+    [[deprecated("use wheel().serEnabled()")]]
+    void setWheelEnabled(const bool state) { wheel().setEnabled(state); }
+
+    [[deprecated("use wheel().setDelta()")]]
+    void setWheelDelta(const float delta) { wheel().setDelta(delta); }
+
+    [[deprecated("use wheel().isEnabled()")]]
+    bool isWheelEnabled() const { return wheel().isEnabled(); }
+
+    [[deprecated("use wheel().delta()")]]
+    float wheelDelta() const { return wheel().delta(); }
+
+    //-------------------------------------------------------------------------
+
+    /*! \copydoc AttrManipBase::printObj */
+    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
+
+    //-------------------------------------------------------------------------
+
+private:
+
+    float mDown = 0.0f;
+    float mUp = 0.0f;
+    std::string mDataref = "none";
+    AttrManipWheel mWheel;
+
+};
+
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 }

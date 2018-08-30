@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,66 +29,76 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <string>
+#include <cstddef>
+#include "xpln/Export.h"
 #include "xpln/enums/ECursor.h"
 #include "xpln/enums/EManipulator.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+class AbstractWriter;
 
-	/*!
-	 * \details Base class for all manipulators.
-	 * \ingroup Manipulators
-	 */
-	class AttrManipBase {
-	protected:
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-		XpObjLib explicit AttrManipBase(EManipulator type);
+/*!
+ * \details Base class for all manipulators.
+ * \ingroup Manipulators
+ */
+class AttrManipBase {
+protected:
 
-	public:
+    XpObjLib explicit AttrManipBase(EManipulator type);
 
-		//-------------------------------------------------------------------------
+public:
 
-		virtual ~AttrManipBase() = default;
+    //-------------------------------------------------------------------------
 
-		//-------------------------------------------------------------------------
+    virtual ~AttrManipBase() = default;
 
-		EManipulator type() const { return mEManipulator; }
+    //-------------------------------------------------------------------------
 
-		//-------------------------------------------------------------------------
+    EManipulator type() const { return mEManipulator; }
 
-		XpObjLib virtual void setToolTip(const std::string & toolTip);
-		XpObjLib virtual void setCursor(ECursor cursor);
+    //-------------------------------------------------------------------------
 
-		XpObjLib virtual const std::string & toolTip() const;
-		XpObjLib virtual ECursor cursor() const;
+    XpObjLib virtual void setToolTip(const std::string & toolTip);
+    XpObjLib virtual void setCursor(ECursor cursor);
 
-		//-------------------------------------------------------------------------
+    XpObjLib virtual const std::string & toolTip() const;
+    XpObjLib virtual ECursor cursor() const;
 
-		/*!
-		 * \param [in] manip
-		 * \return true if two manipulators are equaled otherwise false.
-		 */
-		XpObjLib virtual bool equals(const AttrManipBase * manip) const;
+    //-------------------------------------------------------------------------
 
-		XpObjLib virtual AttrManipBase * clone() const = 0;
+    /*!
+     * \param [in] manip
+     * \return true if two manipulators are equaled otherwise false.
+     */
+    XpObjLib virtual bool equals(const AttrManipBase * manip) const;
 
-		//-------------------------------------------------------------------------
+    XpObjLib virtual AttrManipBase * clone() const = 0;
 
-	private:
+    //-------------------------------------------------------------------------
 
-		ECursor mCursor;
-		EManipulator mEManipulator;
-		std::string mToolType;
+    /*!
+     * \param [in] writer 
+     * \return Number of manipulators attributes that were printed.
+     */
+    XpObjLib virtual std::size_t printObj(AbstractWriter & writer) const =0;
 
-	};
+    //-------------------------------------------------------------------------
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+private:
+
+    ECursor mCursor;
+    EManipulator mEManipulator;
+    std::string mToolType;
+
+};
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

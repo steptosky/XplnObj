@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,8 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include "AbstractWriter.h"
 #include "xpln/obj/Transform.h"
 #include "xpln/obj/ExportOptions.h"
@@ -36,51 +36,53 @@
 
 namespace xobj {
 
-	/**********************************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**********************************************************************************************************************/
-	/*!
-	 * details Class helper that write animation for ObjWritter
-	 */
-	class ObjWriteAnim {
-		ObjWriteAnim(const ObjWriteAnim &) = delete;
-		ObjWriteAnim & operator =(const ObjWriteAnim &) = delete;
-	public:
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
+/*!
+ * details Class helper that write animation for ObjWritter
+ */
+class ObjWriteAnim {
+public:
 
-		ObjWriteAnim(const ExportOptions * option, IOStatistic * outStat);
-		~ObjWriteAnim();
+    ObjWriteAnim(const ExportOptions * option, IOStatistic * outStat);
 
-		//-------------------------------------------------------------------------
+    ObjWriteAnim(const ObjWriteAnim &) = delete;
+    ObjWriteAnim & operator =(const ObjWriteAnim &) = delete;
 
-		static const Transform * animTransParent(const Transform * transform);
-		static const Transform * animRotateParent(const Transform * transform);
+    ~ObjWriteAnim();
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		bool printAnimationStart(AbstractWriter & writer, const Transform & transform);
-		bool printAnimationEnd(AbstractWriter & writer, const Transform & transform);
+    static const Transform * animTransParent(const Transform * transform);
+    static const Transform * animRotateParent(const Transform * transform);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	private:
+    bool printAnimationStart(AbstractWriter & writer, const Transform & transform);
+    bool printAnimationEnd(AbstractWriter & writer, const Transform & transform);
 
-		void printTrans(const AnimTransList & animTrans, const Transform & transform) const;
-		void printRotate(const AnimRotateList & animRot, const Transform & transform) const;
-		void printVisible(const AnimVisibility & inAnim, const Transform & transform) const;
+    //-------------------------------------------------------------------------
 
-		void printLoop(float val) const;
+private:
 
-		//-------------------------------------------------------------------------
+    void printTrans(const AnimTransList & animTrans, const Transform & transform) const;
+    void printRotate(const AnimRotateList & animRot, const Transform & transform) const;
+    void printVisible(const AnimVisibility & inAnim, const Transform & transform) const;
 
-		AbstractWriter * mWriter;
-		IOStatistic * mStat;
-		const ExportOptions * mOptions;
+    void printLoop(float val) const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	};
+    AbstractWriter * mWriter;
+    IOStatistic * mStat;
+    const ExportOptions * mOptions;
 
-	/**********************************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**********************************************************************************************************************/
+    //-------------------------------------------------------------------------
+
+};
+
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
 }

@@ -39,82 +39,82 @@
 
 namespace sts_t {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	/*!
-	 * \details This class provides a representation for orientation in three space using an angle and axis.
-	 * This class is similar to a quaternion, except that a normalized quaternion only represents -PI to +PI rotation.
-	 * This class will have the number of revolutions stored.
-	 */
-	template<class T>
-	class AxisAngle {
-		static_assert(std::numeric_limits<T>::is_iec559,
-			"The class can use only floating types");
+/*!
+ * \details This class provides a representation for orientation in three space using an angle and axis.
+ * This class is similar to a quaternion, except that a normalized quaternion only represents -PI to +PI rotation.
+ * This class will have the number of revolutions stored.
+ */
+template<class T>
+class AxisAngle {
+    static_assert(std::numeric_limits<T>::is_iec559,
+        "The class can use only floating types");
 
-		typedef Vector3<T> Vec3;
-		T mData[4];
+    typedef Vector3<T> Vec3;
+    T mData[4];
 
-	public:
+public:
 
-		typedef T Type;
-		typedef Type value_type;
+    typedef T Type;
+    typedef Type value_type;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		AxisAngle();
-		AxisAngle(Type inX, Type inY, Type inZ, Type inAngleRad);
-		AxisAngle(const Vec3 & inVec, Type inAngleRad);
-		~AxisAngle();
+    AxisAngle();
+    AxisAngle(Type inX, Type inY, Type inZ, Type inAngleRad);
+    AxisAngle(const Vec3 & inVec, Type inAngleRad);
+    ~AxisAngle();
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		bool operator !=(const AxisAngle & inRight) const;
-		bool operator ==(const AxisAngle & inRight) const;
+    bool operator !=(const AxisAngle & inRight) const;
+    bool operator ==(const AxisAngle & inRight) const;
 
-		const Type & operator[](size_t i) const;
-		Type & operator[](size_t i);
+    const Type & operator[](size_t i) const;
+    Type & operator[](size_t i);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		void setX(const Type inX);
-		void setY(const Type inY);
-		void setZ(const Type inZ);
-		void setW(const Type inW);
+    void setX(const Type inX);
+    void setY(const Type inY);
+    void setZ(const Type inZ);
+    void setW(const Type inW);
 
-		Type x() const;
-		Type y() const;
-		Type z() const;
-		Type w() const;
+    Type x() const;
+    Type y() const;
+    Type z() const;
+    Type w() const;
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		void set(Type inX, Type inY, Type inZ, Type inAngleRad);
-		void set(const Vec3 & inVec, Type inAngleRad);
-		void setVector(const Vec3 & inVec);
-		void setAngle(Type inAngleRad);
-		double angle() const;
-		const Vec3 & vector() const;
-		Vec3 & vector();
-		void clear();
+    void set(Type inX, Type inY, Type inZ, Type inAngleRad);
+    void set(const Vec3 & inVec, Type inAngleRad);
+    void setVector(const Vec3 & inVec);
+    void setAngle(Type inAngleRad);
+    double angle() const;
+    const Vec3 & vector() const;
+    Vec3 & vector();
+    void clear();
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		int numRevs() const;
-		void addRevs(int inNum);
+    int numRevs() const;
+    void addRevs(int inNum);
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-		std::string toString(const std::string & inFormat = "%x %y %z %ad", uint8_t precision = 6); // d- degrees r- radians
+    std::string toString(const std::string & inFormat = "%x %y %z %ad", uint8_t precision = 6); // d- degrees r- radians
 
-		//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
-	};
+};
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 #include "AxisAngle.inl"
 

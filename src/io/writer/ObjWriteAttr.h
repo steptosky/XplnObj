@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,65 +29,62 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <cstdint>
 #include "xpln/obj/ObjMesh.h"
 #include "xpln/obj/attributes/AttrSet.h"
 
 namespace xobj {
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class AbstractWriter;
-	class ObjMesh;
-	class ObjAbstract;
+class AbstractWriter;
+class ObjMesh;
+class ObjAbstract;
 
-	class ObjWriteManip;
+class ObjWriteManip;
 
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-	class ObjWriteAttr {
+class ObjWriteAttr {
+public:
 
-		ObjWriteAttr(const ObjWriteAttr &) = delete;
-		ObjWriteAttr & operator =(const ObjWriteAttr &) = delete;
+    explicit ObjWriteAttr(ObjWriteManip * manipWriter)
+        : mManipWriter(manipWriter) {}
 
-	public:
+    ObjWriteAttr(const ObjWriteAttr &) = delete;
+    ObjWriteAttr & operator =(const ObjWriteAttr &) = delete;
 
-		explicit ObjWriteAttr(ObjWriteManip * manipWriter)
-			: mManipWriter(manipWriter) {}
+    ~ObjWriteAttr() = default;
 
-		~ObjWriteAttr() = default;
+    XpObjLib void write(AbstractWriter * writer, const ObjAbstract * obj);
+    XpObjLib void reset();
+    XpObjLib std::size_t count() const;
 
-		XpObjLib void write(AbstractWriter * writer, const ObjAbstract * obj);
-		XpObjLib void reset();
-		XpObjLib size_t count() const;
+private:
 
-	private:
+    void writeAttributes(const AttrSet & obj);
+    void writeBool(bool currVal, std::uint32_t flag, const char * attrOn, const char * attrOff);
 
-		void writeAttributes(const AttrSet & obj);
-		void writeBool(bool currVal, uint32_t flag, const char * attrOn, const char * attrOff);
+    ObjWriteManip * mManipWriter = nullptr;
+    AbstractWriter * mWriter = nullptr;
+    std::size_t mCounter = 0;
+    std::uint32_t mFlags = 0;
 
-		ObjWriteManip * mManipWriter = nullptr;
-		AbstractWriter * mWriter = nullptr;
-		size_t mCounter = 0;
-		uint32_t mFlags = 0;
+    AttrLightLevel mActiveAttrLightLevel;
+    AttrPolyOffset mActiveAttrPolyOffset;
+    AttrBlend mActiveAttrBlend;
+    AttrShiny mActiveAttrShiny;
+    AttrHard mActiveAttrHard;
+    AttrCockpit mActiveAttrCockpit;
 
-		AttrLightLevel mActiveAttrLightLevel;
-		AttrPolyOffset mActiveAttrPolyOffset;
-		AttrBlend mActiveAttrBlend;
-		AttrShiny mActiveAttrShiny;
-		AttrHard mActiveAttrHard;
-		AttrCockpit mActiveAttrCockpit;
+};
 
-	};
-
-	/**************************************************************************************************/
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**************************************************************************************************/
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 }

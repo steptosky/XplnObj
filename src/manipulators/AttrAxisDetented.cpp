@@ -63,17 +63,14 @@ bool AttrAxisDetented::operator!=(const AttrAxisDetented & other) const {
 
 void AttrAxisDetented::setDirectionX(const float val) {
     mDirX = val;
-    setEnabled();
 }
 
 void AttrAxisDetented::setDirectionY(const float val) {
     mDirY = val;
-    setEnabled();
 }
 
 void AttrAxisDetented::setDirectionZ(const float val) {
     mDirZ = val;
-    setEnabled();
 }
 
 float AttrAxisDetented::directionX() const {
@@ -92,12 +89,10 @@ float AttrAxisDetented::directionZ() const {
 
 void AttrAxisDetented::setVMin(const float val) {
     mVMin = val;
-    setEnabled();
 }
 
 void AttrAxisDetented::setVMax(const float val) {
     mVMax = val;
-    setEnabled();
 }
 
 float AttrAxisDetented::vMin() const {
@@ -112,7 +107,6 @@ float AttrAxisDetented::vMax() const {
 
 void AttrAxisDetented::setDataref(const std::string & val) {
     mDataref = val;
-    setEnabled();
 }
 
 const std::string & AttrAxisDetented::dataref() const {

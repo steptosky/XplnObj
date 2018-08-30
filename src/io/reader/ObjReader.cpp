@@ -952,8 +952,8 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
     }
     if (parser.isMatch(ATTR_MANIP_WHEEL)) {
         AttrManipWheel m;
-        parser.skipSpace();
         m.setEnabled(true);
+        parser.skipSpace();
         m.setDelta(parser.extractFloat());
         mObjParserListener->gotTrisAttrManipWheel(m);
         return true;
@@ -969,6 +969,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
     }
     if (parser.isMatch(ATTR_MANIP_AXIS_DETENTED)) {
         AttrAxisDetented m;
+        m.setEnabled(true);
         parser.skipSpace();
         m.setDirectionX(parser.extractFloat());
         parser.skipSpace();

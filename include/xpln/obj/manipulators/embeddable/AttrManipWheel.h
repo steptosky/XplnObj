@@ -48,7 +48,6 @@ class AttrManipWheel {
 public:
 
     AttrManipWheel() = default;
-    XpObjLib explicit AttrManipWheel(float delta);
     virtual ~AttrManipWheel() = default;
 
     //-------------------------------------------------------------------------
@@ -86,7 +85,7 @@ public:
 
 private:
 
-    bool mWheel = false;
+    bool mIsEnabled = false;
     float mWheelDelta = 0.0f;
 
 };

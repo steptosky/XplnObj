@@ -1,7 +1,12 @@
 
 StepToSky: X-Plane Obj Library
 ---------------------------------------------------------------------------
-#### next
+#### 0.6.1-beta (30.08.2018)
+
+- **Changed** Enabling policy for `AttrAxisDetented` and `AttrManipWheel` manipulators.  
+
+---------------------------------------------------------------------------
+#### 0.6.0-beta (30.08.2018)
 
 - **Added:** Ability to specifying strings that are printed before and after object.  
              This allows you to use new attributes manually until

@@ -40,7 +40,7 @@ from vcs_info import VcsInfo
 
 
 class LibConan(ConanFile):
-    version = "0.6.0"
+    version = "0.6.1"
     name = 'XplnObj'
     url = 'https://github.com/steptosky/XplnObj'
     license = 'BSD 3-Clause'

@@ -66,6 +66,7 @@ public:
     //-------------------------------------------------------------------------
 
     bool isEnabled() const { return mIsEnabled; }
+    void setEnabled(const bool state) { mIsEnabled = state; }
 
     //-------------------------------------------------------------------------
 
@@ -103,10 +104,6 @@ public:
     //-------------------------------------------------------------------------
 
 private:
-
-    void setEnabled(const bool state = true) {
-        mIsEnabled = state;
-    }
 
     float mDirX = 0.0f;
     float mDirY = 0.0f;

@@ -637,6 +637,7 @@ TEST(TestManipIO, AttrManipDragAxis) {
     outManip->wheel().setDelta(15.0f);
 
     AttrAxisDetented detentedManip;
+    detentedManip.setEnabled(true);
     detentedManip.setDirection(60.0f, 61.0f, 62.0f);
     detentedManip.setValue(70.0f, 71.0);
     detentedManip.setDataref("I'm/a/dataref-2");

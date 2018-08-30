@@ -171,7 +171,7 @@ conan create . steptosky/develop \
     - when project-consumer includes this library the necessary packaged will be auto-built.
     - as the result you have the library in your local conan cache in the channel you have specified.
 
-Usually it may be used instead of previous item when you don't want pre-build and test the library.
+Usually it may be used instead of previous issue when you don't want pre-build and test the library.
 
 **Examples:**  
 ``` batch
@@ -232,7 +232,7 @@ python build.py
 - [release-checklist](release-checklist.md) see this file when you are making the release.
 - [change log](changelog.md) this file has to be filled during the release process and contains information about changes.
 - [lasote docker hub](https://hub.docker.com/u/lasote/) - docker containers for some conan use cases, for example for [travis](.travis.yml) settings.
-- To upload to steptosky bintray:
+- Uploading to steptosky bintray:
   ``` batch
     conan export . steptosky/stable
     conan user steptosky -r sts-bintray -p api-key

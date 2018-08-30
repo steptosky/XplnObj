@@ -3,7 +3,7 @@ StepToSky: X-Plane Obj Library
 ---------------------------------------------------------------------------
 #### next
 
-- **Added:** Ability to specifying strings that are printed before and after object.
+- **Added:** Ability to specifying strings that are printed before and after object.  
              This allows you to use new attributes manually until
              it is supported by the library or writing notes.
              This can be applied to any object types.
@@ -16,9 +16,9 @@ StepToSky: X-Plane Obj Library
              `ATTR_axis_detent_range`,  
              `ATTR_manip_keyframe`
 - **Changes break backward compatibility:** The wheel manipulator is composed now.  
-- **Updated:** Some methods of manipulators were renamed/corrected according to .the obj specification.  
-- **Updated:** Build scripts and their documentation.
-- **Fixed:** Incorrect attribute name inside `.obj` for the
+- **Updated:** Some methods of manipulators were renamed/corrected according to .the obj specification. The old ones got the deprecated attribute.
+- **Updated:** Building scripts and their documentation.
+- **Fixed:** Printing incorrect attribute name for the
              `ATTR_manip_command_switch_up_down` and `ATTR_manip_command_switch_left_right`.
 
 ---------------------------------------------------------------------------

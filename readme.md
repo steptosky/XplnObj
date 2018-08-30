@@ -45,15 +45,10 @@ The ```doxygen``` has to be accessible through your ```PATH``` environment varia
 **Note:** sometimes you will need to delete the file ```cmake/conan.cmake``` then the newer version of this file will be downloaded from the Internet while running ```cmake``` command.  
 This file is responsible for cmake and conan interaction.
 
-## Memo for the library developers
-- [release-checklist](release-checklist.md) see this file when you are making the release.
-- [change log](changelog.md) this file has to be filled during the release process and contains information about changes.
-- [lasote docker hub](https://hub.docker.com/u/lasote/) - docker containers for some conan use cases, for example for [travis](.travis.yml) settings.
-
 
 ## Building
 
-You may use 3 ways to build this library.
+You may use some ways to build this library.
 1. **Using cmake as usually.**   
     _These scripts are just examples probably you will need to adjust them for your purposes._  
     This approach will do:  
@@ -169,7 +164,22 @@ conan create . steptosky/develop \
 ```
 ---
 
-3. **Using [conan package tools](https://github.com/conan-io/conan-package-tools).**   
+
+3. **You may also use just [conan export](https://docs.conan.io/en/latest/reference/commands/creator/export.html).**   
+    This approach will do:  
+    - export conan recipe to your local cache.
+    - when project-consumer includes this library the necessary packaged will be auto-built.
+    - as the result you have the library in your local conan cache in the channel you have specified.
+
+Usually it may be used instead of previous item when you don't want pre-build and test the library.
+
+**Examples:**  
+``` batch
+conan . export steptosky/develop
+```
+---
+
+4. **Using [conan package tools](https://github.com/conan-io/conan-package-tools).**   
     _These scripts are just examples probably you will need to adjust them for your purposes._   
     This approach will do:  
     - create matrix with various configurations.
@@ -216,8 +226,18 @@ python build.py
 # uncomment next line if you want to remove all packages from all versions from specified channel
 # conan remove XplnObj/*@steptosky/testing -f
 ```
-
 ---
+
+## Memo for the library developers
+- [release-checklist](release-checklist.md) see this file when you are making the release.
+- [change log](changelog.md) this file has to be filled during the release process and contains information about changes.
+- [lasote docker hub](https://hub.docker.com/u/lasote/) - docker containers for some conan use cases, for example for [travis](.travis.yml) settings.
+- To upload to steptosky bintray:
+  ``` batch
+    conan export . steptosky/stable
+    conan user steptosky -r sts-bintray -p api-key
+    conan upload XplnObj/[set-current-version]@steptosky/stable -r sts-bintray -c --retry 2 --retry-wait 5
+  ```
 
 
 ## Copyright

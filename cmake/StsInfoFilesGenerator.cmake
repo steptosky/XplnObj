@@ -34,6 +34,9 @@
 #
 # This module uses the StsProjectDesc module for generate ".h" file with information
 #
+# Version 1.3.0 (30.08.2018)
+#   - Reading GIT_COMMIT and GIT_BRANCH environment variables
+#     if data isn't retrieved from the git directly.
 # Version 1.2.2 (01.06.2017)
 #   - Generates hidden from doxygen file 
 # Version 1.2.1 (16.05.2017)
@@ -74,7 +77,7 @@ function(genInfoFile descriptionFile destinationFile)
     message(STATUS "Info generated ${descriptionFile} -> ${destinationFile}")
     include("${descriptionFile}")
 
-    set(__prfix__ ${ProjectDefPrefix})
+    set(__prfix__ ${ProjectDefinePrefix})
     set(__DECOR__ "//===========================================================================//")
 
     #-------------------------------------------------------------------#
@@ -93,7 +96,7 @@ function(genInfoFile descriptionFile destinationFile)
     set(CONTENT "${CONTENT}/* Organization Info */\n")
     if(IdentificationName)
         set(CONTENT "${CONTENT}#define ${__prfix__}IDENTIFICATION_NAME \"${IdentificationName}\"\n")
-        message(WARNING "IdentificationName is depricated use ArtifactId instead")
+        message(WARNING "IdentificationName is depricated use ProjectId instead")
     endif()
     set(CONTENT "${CONTENT}#define ${__prfix__}ORGANIZATION_NAME \"${ProjectOrganizationName}\"\n")
     set(CONTENT "${CONTENT}#define ${__prfix__}ORGANIZATION_WEBLINK \"${ProjectOrganizationWebLink}\"\n\n")
@@ -108,10 +111,6 @@ function(genInfoFile descriptionFile destinationFile)
     set(CONTENT "${CONTENT}#define ${__prfix__}PROJECT_WEBLINK \"${ProjectWebLink}\"\n")
     set(CONTENT "${CONTENT}#define ${__prfix__}PROJECT_SOURCES_WEBLINK \"${ProjectSourcesWebLink}\"\n\n")
 
-    #-------------------------------------------------------------------#
-    # Dependency's system
-
-    set(CONTENT "${CONTENT}/* Dependency's system */\n")
     set(CONTENT "${CONTENT}#define ${__prfix__}PROJECT_GROUP_ID \"${ProjectGroupId}\"\n")
     set(CONTENT "${CONTENT}#define ${__prfix__}PROJECT_ID \"${ProjectId}\"\n\n")
 
@@ -272,10 +271,20 @@ function(genInfoFile descriptionFile destinationFile)
 
     #-------------------------------#
     if(NOT vcs_revision)
-        set(vcs_revision "undefined")
+        if (NOT $ENV{GIT_COMMIT} STREQUAL "")
+            set(vcs_revision $ENV{GIT_COMMIT})
+            message(STATUS "Got GIT commit/revision '$ENV{GIT_COMMIT}' from 'GIT_COMMIT' environment variable")
+        else()
+            set(vcs_revision "undefined")
+        endif()
     endif()
-    if(NOT vcs_branch)
-        set(vcs_branch "undefined")
+    if(NOT vcs_branch OR "${vcs_branch}" STREQUAL "HEAD")
+        if (NOT $ENV{GIT_BRANCH} STREQUAL "")
+                set(vcs_branch $ENV{GIT_BRANCH})
+                message(STATUS "Got GIT branch name '$ENV{GIT_BRANCH}' from 'GIT_BRANCH' environment variable")
+        else()
+            set(vcs_branch "undefined")
+        endif()
     endif()
 
     message(STATUS "VCS Revision = ${vcs_revision}")

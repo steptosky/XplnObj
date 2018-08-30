@@ -2,7 +2,7 @@
 #//////////////////////////////////////////////////////////////////////////////////#
 #----------------------------------------------------------------------------------#
 #
-#  Copyright (C) 2018, StepToSky
+#  Copyright (C) 2017, StepToSky
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -54,8 +54,6 @@
 #       include(StsInfoFilesGenerator)
 #
 #       # generate file
-#       # generate file
-#       genInfoFile(StsProjectDesk "${CMAKE_SOURCE_DIR}/include/Info.h")
 #       genInfoFile(StsProjectDesk "${CMAKE_SOURCE_DIR}/include/Info.h")
 #
 #----------------------------------------------------------------------------------#
@@ -74,23 +72,31 @@ set(ProjectOrganizationWebLink "www.steptosky.com")
 #----------------------------------------------------------------------------------#
 # Project info
 
-set(ProjectName "X-Plane Obj Library")
-set(ProjectShortName "XplnObj")
+set(ProjectName "XplnObj")
+set(ProjectFullName "X-Plane Obj Library")
 set(ProjectDescription "This library is for working with the X-Plane's obj format.")
 set(ProjectWebLink "www.steptosky.com")
-set(ProjectSourcesWebLink "https://github.com/steptosky/XplnObj")
+set(ProjectSourcesWebLink "https://github.com/steptosky/3DsMax-XplnObj")
+
+set(ProjectGroupId "steptosky")
+set(ProjectId ${ProjectName})
 
 #----------------------------------------------------------------------------------#
 # Version / Dependency's system
 
+# Set it to ON if you are in unstable branch otherwise set it to OFF
+set(ProjectVersionSnapshot OFF)
 set(ProjectVersionMajor 0)
 set(ProjectVersionMinor 5)
 set(ProjectVersionPatch 0)
 set(ProjectVersion "${ProjectVersionMajor}.${ProjectVersionMinor}.${ProjectVersionPatch}")
-set(ProjectReleaseType "beta") # You can use any string you wish
 
-set(ProjectGroupId "steptosky")
-set(ProjectId ${ProjectShortName})
+# You can use any string you wish, 
+# but i will be changed to snapshot if it is enabled. 
+set(ProjectReleaseType "beta")
+if (ProjectVersionSnapshot)
+    set(ProjectReleaseType "snapshot")
+endif()
 
 #----------------------------------------------------------------------------------#
 # License
@@ -121,7 +127,7 @@ set(ProjectLibraries "")
 set(ProjectVcsType "git") 
 
 # Prefix for the defines.
-set(ProjectDefPrefix "XOBJ_") 
+set(ProjectDefinePrefix "XOBJ_") 
 
 #----------------------------------------------------------------------------------#
 # Checking

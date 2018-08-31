@@ -30,6 +30,7 @@
 #include <gtest/gtest.h>
 #include <xpln/obj/ObjLightSpillCust.h>
 #include <io/ObjTransformation.h>
+#include "../TestUtils.h"
 
 using namespace xobj;
 

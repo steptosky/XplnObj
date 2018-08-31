@@ -1,6 +1,14 @@
 
 StepToSky: X-Plane Obj Library
 ---------------------------------------------------------------------------
+
+#### 0.6.2-beta (31.08.2018)
+
+- **Updated** Some manipulators UI text to be shorter.
+- **Fixed** The library signature printing.
+- **Fixed** Some items converting to string in `EManipulator`.
+
+---------------------------------------------------------------------------
 #### 0.6.1-beta (30.08.2018)
 
 - **Changed** Enabling policy for `AttrAxisDetented` and `AttrManipWheel` manipulators.  

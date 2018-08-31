@@ -54,6 +54,7 @@ namespace EObjLightNamedData {
               mId(id) {}
     };
 
+    // WARNING !!! Indexes are coordinated with the enum values !!!
     const Data gList[] = {
         /* 00 */ Data(TOTEXT(none), "none", ELightNamed::none),
         /* 01 */ Data(TOTEXT(airplane_nav_left), "Airplane nav left", ELightNamed::airplane_nav_left),

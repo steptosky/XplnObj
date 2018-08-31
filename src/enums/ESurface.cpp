@@ -54,6 +54,7 @@ namespace ESurfacesData {
               mId(id) {}
     };
 
+    // WARNING !!! Indexes are coordinated with the enum values !!!
     const Data gList[] = {
         /* 00 */ Data(TOTEXT(none), "none", ESurface::none),
         /* 01 */ Data(TOTEXT(water), "Water", ESurface::water),

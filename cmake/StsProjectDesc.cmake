@@ -88,7 +88,7 @@ set(ProjectId ${ProjectName})
 set(ProjectVersionSnapshot OFF)
 set(ProjectVersionMajor 0)
 set(ProjectVersionMinor 6)
-set(ProjectVersionPatch 1)
+set(ProjectVersionPatch 2)
 set(ProjectVersion "${ProjectVersionMajor}.${ProjectVersionMinor}.${ProjectVersionPatch}")
 
 # You can use any string you wish, 

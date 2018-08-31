@@ -211,8 +211,11 @@ void ObjWriter::printSignature(AbstractWriter & writer, const std::string & sign
         writer.printLine(s);
     }
     std::string msg("## ");
-    msg.append(XOBJ_ORGANIZATION_NAME).append(" ").append(XOBJ_PROJECT_SHORT_NAME);
-    msg.append(": ").append(XOBJ_VERSION_STRING).append("-").append(XOBJ_RELEASE_TYPE);
+    msg.append(XOBJ_ORGANIZATION_NAME).append(" ").append(XOBJ_PROJECT_NAME);
+    msg.append(": ").append(XOBJ_VERSION_STRING);
+    if(!std::string(XOBJ_RELEASE_TYPE).empty()) {
+        msg.append("-").append(XOBJ_RELEASE_TYPE);
+    }
     msg.append("+[").append(XOBJ_COMPILE_DATE).append("]");
     writer.printLine(msg);
     writer.printLine(std::string("## Object created: ").append(currentDateTime()));

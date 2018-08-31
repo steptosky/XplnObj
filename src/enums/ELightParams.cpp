@@ -54,6 +54,7 @@ namespace EObjLightParamsData {
               mId(id) {}
     };
 
+    // WARNING !!! Indexes are coordinated with the enum values !!!
     const Data gList[] = {
         /* 00 */ Data(TOTEXT(none), "none", ELightParams::none),
         /* 01 */ Data(TOTEXT(light_params_custom), "Custom", ELightParams::light_params_custom),
@@ -82,12 +83,10 @@ namespace EObjLightParamsData {
         /* 19 */ Data(TOTEXT(airplane_generic_sp), "Airplane generic sp", ELightParams::airplane_generic_sp),
 
         /* 20 */ Data(TOTEXT(airplane_beacon_rotate), "Airplane beacon rotate", ELightParams::airplane_beacon_rotate),
-        /* 21 */
-        Data(TOTEXT(airplane_beacon_rotate_sp), "Airplane beacon rotate sp", ELightParams::airplane_beacon_rotate_sp),
+        /* 21 */ Data(TOTEXT(airplane_beacon_rotate_sp), "Airplane beacon rotate sp", ELightParams::airplane_beacon_rotate_sp),
 
         /* 22 */ Data(TOTEXT(airplane_beacon_strobe), "Airplane beacon strobe", ELightParams::airplane_beacon_strobe),
-        /* 23 */
-        Data(TOTEXT(airplane_beacon_strobe_sp), "Airplane beacon strobe sp", ELightParams::airplane_beacon_strobe_sp),
+        /* 23 */ Data(TOTEXT(airplane_beacon_strobe_sp), "Airplane beacon strobe sp", ELightParams::airplane_beacon_strobe_sp),
 
         /* 24 */ Data(TOTEXT(airplane_strobe_omni), "Airplane strobe omni", ELightParams::airplane_strobe_omni),
         /* 25 */ Data(TOTEXT(airplane_strobe_dir), "Airplane strobe dir", ELightParams::airplane_strobe_dir),

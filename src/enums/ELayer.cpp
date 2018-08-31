@@ -54,17 +54,18 @@ namespace ELayersData {
               mId(id) {}
     };
 
+    // WARNING !!! Indexes are coordinated with the enum values !!!
     const Data gList[] = {
-        /*  0 */ Data(TOTEXT(none), "none", ELayer::none),
-        /*  1 */ Data(TOTEXT(terrain), "Terrain", ELayer::terrain),
-        /*  2 */ Data(TOTEXT(beaches), "Beaches", ELayer::beaches),
-        /*  3 */ Data(TOTEXT(shoulders), "Shoulders", ELayer::shoulders),
-        /*  4 */ Data(TOTEXT(taxiways), "Taxiways", ELayer::taxiways),
-        /*  5 */ Data(TOTEXT(runways), "Runways", ELayer::ranways),
-        /*  6 */ Data(TOTEXT(markings), "Markings", ELayer::markings),
-        /*  7 */ Data(TOTEXT(airports), "Airports", ELayer::airports),
-        /*  8 */ Data(TOTEXT(roads), "Roads", ELayer::roads),
-        /*  9 */ Data(TOTEXT(objects), "Objects", ELayer::objects),
+        /* 00 */ Data(TOTEXT(none), "none", ELayer::none),
+        /* 01 */ Data(TOTEXT(terrain), "Terrain", ELayer::terrain),
+        /* 02 */ Data(TOTEXT(beaches), "Beaches", ELayer::beaches),
+        /* 03 */ Data(TOTEXT(shoulders), "Shoulders", ELayer::shoulders),
+        /* 04 */ Data(TOTEXT(taxiways), "Taxiways", ELayer::taxiways),
+        /* 05 */ Data(TOTEXT(runways), "Runways", ELayer::ranways),
+        /* 06 */ Data(TOTEXT(markings), "Markings", ELayer::markings),
+        /* 07 */ Data(TOTEXT(airports), "Airports", ELayer::airports),
+        /* 08 */ Data(TOTEXT(roads), "Roads", ELayer::roads),
+        /* 09 */ Data(TOTEXT(objects), "Objects", ELayer::objects),
         /* 10 */ Data(TOTEXT(light_objects), "Light objects", ELayer::light_objects),
         /* 11 */ Data(TOTEXT(cars), "Cars", ELayer::cars)
     };

@@ -61,30 +61,31 @@ namespace EManipulatorData {
 
     typedef std::pair<std::string, EManipulator::eId> Association;
 
+    // WARNING !!! Indexes are coordinated with the enum values !!!
     const Data gList[] = {
         /* 00 */ Data(ATTR_MANIP_NONE, "None", EManipulator::none),
         /* 01 */ Data(ATTR_MANIP_AXIS_KNOB, "Axis knob", EManipulator::axis_knob),
         /* 02 */ Data(ATTR_MANIP_AXIS_SWITCH_LEFT_RIGHT, "Axis switch left-right", EManipulator::axis_switch_lr),
         /* 03 */ Data(ATTR_MANIP_AXIS_SWITCH_UP_DOWN, "Axis switch up-down", EManipulator::axis_switch_ud),
         /* 04 */ Data(ATTR_MANIP_COMMAND, "Cmd", EManipulator::command),
-        /* 02 */ Data(ATTR_MANIP_COMMAND_AXIS, "Cmd axis", EManipulator::command_axis),
-        /* 06 */ Data(ATTR_MANIP_COMMAND_KNOB, "Cmd knob", EManipulator::command_knob2),
-        /* 07 */ Data(ATTR_MANIP_COMMAND_KNOB2, "Cmd knob2", EManipulator::command_knob),
+        /* 05 */ Data(ATTR_MANIP_COMMAND_AXIS, "Cmd axis", EManipulator::command_axis),
+        /* 06 */ Data(ATTR_MANIP_COMMAND_KNOB, "Cmd knob", EManipulator::command_knob),
+        /* 07 */ Data(ATTR_MANIP_COMMAND_KNOB2, "Cmd knob2", EManipulator::command_knob2),
         /* 08 */ Data(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT, "Cmd switch left-right", EManipulator::command_switch_lr),
-        /* 09 */ Data(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN, "Cmd switch up-down", EManipulator::command_switch_ud),
-        /* 10 */ Data(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2, "Cmd switch left-right2", EManipulator::command_switch_lr2),
+        /* 09 */ Data(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2, "Cmd switch left-right2", EManipulator::command_switch_lr2),
+        /* 10 */ Data(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN, "Cmd switch up-down", EManipulator::command_switch_ud),
         /* 11 */ Data(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2, "Cmd switch up-down2", EManipulator::command_switch_ud2),
         /* 12 */ Data(ATTR_MANIP_DELTA, "Delta", EManipulator::delta),
         /* 13 */ Data(ATTR_MANIP_DRAG_AXIS, "Drag axis", EManipulator::drag_axis),
-        /* 13 */ Data(ATTR_MANIP_DRAG_ROTATE, "Drag rotate", EManipulator::drag_rotate),
-        /* 14 */ Data(ATTR_MANIP_DRAG_AXIS_PIX, "Drag axis pix", EManipulator::drag_axis_pix),
-        /* 15 */ Data(ATTR_MANIP_DRAG_XY, "Drag xy", EManipulator::drag_xy),
-        /* 16 */ Data(ATTR_MANIP_NOOP, "Noop", EManipulator::noop),
-        /* 17 */ Data("manip_panel_click", "Panel-Click", EManipulator::panel),
-        /* 18 */ Data(ATTR_MANIP_PUSH, "Push", EManipulator::push),
-        /* 19 */ Data(ATTR_MANIP_RADIO, "Radio", EManipulator::radio),
-        /* 20 */ Data(ATTR_MANIP_TOGGLE, "Toggle", EManipulator::toggle),
-        /* 21 */ Data(ATTR_MANIP_WRAP, "Wrap", EManipulator::wrap),
+        /* 14 */ Data(ATTR_MANIP_DRAG_ROTATE, "Drag rotate", EManipulator::drag_rotate),
+        /* 15 */ Data(ATTR_MANIP_DRAG_AXIS_PIX, "Drag axis pix", EManipulator::drag_axis_pix),
+        /* 16 */ Data(ATTR_MANIP_DRAG_XY, "Drag xy", EManipulator::drag_xy),
+        /* 17 */ Data(ATTR_MANIP_NOOP, "Noop", EManipulator::noop),
+        /* 18 */ Data("manip_panel_click", "Panel-Click", EManipulator::panel),
+        /* 19 */ Data(ATTR_MANIP_PUSH, "Push", EManipulator::push),
+        /* 20 */ Data(ATTR_MANIP_RADIO, "Radio", EManipulator::radio),
+        /* 21 */ Data(ATTR_MANIP_TOGGLE, "Toggle", EManipulator::toggle),
+        /* 22 */ Data(ATTR_MANIP_WRAP, "Wrap", EManipulator::wrap),
     };
 }
 

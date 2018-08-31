@@ -44,8 +44,8 @@ class ObjTransformation {
 
 public:
 
-    static void correctExportTransform(ObjMain & mainObj, const TMatrix & tm, bool useLodTm);
-    static void correctImportTransform(ObjMain & mainObj, const TMatrix & tm);
+    XpObjLib static void correctExportTransform(ObjMain & mainObj, const TMatrix & tm, bool useLodTm);
+    XpObjLib static void correctImportTransform(ObjMain & mainObj, const TMatrix & tm);
 
 private:
 

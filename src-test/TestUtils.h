@@ -55,8 +55,8 @@ public:
     //-----------------------------------------------------
 
     static void extractLod(ObjMain & main, const size_t lodNum, ObjLodGroup *& outLod) {
-        ASSERT_TRUE(main.lodCount() > lodNum) << " value is " << lodNum;
-        outLod = &main.lod(lodNum);
+        ASSERT_TRUE(main.lods().size() > lodNum) << " value is " << lodNum;
+        outLod = &*main.lods().at(lodNum);
     }
 
     static void extractTransform(Transform & transform, const size_t numTransform, Transform *& outTrans) {

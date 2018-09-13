@@ -50,10 +50,8 @@ bool ObjWriteInstancing::check(ObjMain & inObjMain) {
             << " If the word \"complex\" is not present and the word \"additive\" is (or your object does not contain multiple LODs) then your object can be instanced.";
     // TODO checking: LOD must be additive, not selective, or only one LOD 
     bool outResult = true;
-    const size_t lodCount = inObjMain.lodCount();
-    for (size_t i = 0; i < lodCount; ++i) {
-        ObjLodGroup & lod = inObjMain.lod(i);
-        Transform & rootTransform = lod.transform();
+    for (const auto & lod : inObjMain.lods()) {
+        Transform & rootTransform = lod->transform();
         proccessTransform(rootTransform, outResult);
     }
     return outResult;

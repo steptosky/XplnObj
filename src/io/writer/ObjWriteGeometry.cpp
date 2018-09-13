@@ -116,9 +116,8 @@ void ObjWriteGeometry::printMeshFaceRecursive(AbstractWriter & writer, const Obj
 
     std::size_t idx = 0;
     std::size_t offset = 0;
-    const std::size_t lodCount = main.lodCount();
-    for (std::size_t i = 0; i < lodCount; ++i) {
-        writeMeshFaceRecursive(stream, main.lod(i).transform(), idx, offset);
+    for (const auto & lod : main.lods()) {
+        writeMeshFaceRecursive(stream, lod->transform(), idx, offset);
     }
     writer.printLine(stream.str());
 }

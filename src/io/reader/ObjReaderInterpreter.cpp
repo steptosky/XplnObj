@@ -212,9 +212,7 @@ void ObjReaderInterpreter::gotGlobAttrDebug() {
 /**************************************************************************************************/
 
 void ObjReaderInterpreter::gotLod(const float near, const float far, const std::string & endLineComment) {
-    ObjLodGroup & l = mObjMain->addLod();
-    l.setNearVal(near);
-    l.setFarVal(far);
+    ObjLodGroup & l = mObjMain->addLod(new ObjLodGroup(near, far));
     l.setObjectName(extractComment(endLineComment, l.objectName().c_str()));
     mCurrentLod = &l;
     mCurrentTransform = &l.transform();

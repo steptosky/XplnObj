@@ -39,10 +39,8 @@ namespace xobj {
 
 void ObjWriteOptimize::optimize(ObjMain & mainObj) {
     if (mainObj.pExportOptions.isEnabled(XOBJ_EXP_OPTIMIZATION)) {
-        const size_t lodCount = mainObj.lodCount();
-        for (size_t i = 0; i < lodCount; ++i) {
-            ObjLodGroup & lod = mainObj.lod(i);
-            Transform & rootTransform = lod.transform();
+        for (const auto & lod : mainObj.lods()) {
+            Transform & rootTransform = lod->transform();
             proccess(rootTransform);
         }
     }

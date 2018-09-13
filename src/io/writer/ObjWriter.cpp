@@ -112,9 +112,8 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
 
         //-------------------------------------------------------------------------
         // calculate count
-        const size_t lodCount = mMain->lodCount();
-        for (size_t i = 0; i < lodCount; ++i) {
-            calculateVerticiesAndFaces(mMain->lod(i).transform());
+        for (const auto & lod : mMain->lods()) {
+            calculateVerticiesAndFaces(lod->transform());
         }
 
         // print global
@@ -122,20 +121,23 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
 
         // print mesh vertex 
         if (mStatistic.pMeshVerticesCount) {
-            for (size_t i = 0; i < lodCount; ++i)
-                mObjWriteGeometry.printMeshVerticiesRecursive(writer, mMain->lod(i).transform());
+            for (const auto & lod : mMain->lods()) {
+                mObjWriteGeometry.printMeshVerticiesRecursive(writer, lod->transform());
+            }
         }
 
         // print line vertex 
         if (mStatistic.pLineVerticesCount) {
-            for (size_t i = 0; i < lodCount; ++i)
-                mObjWriteGeometry.printLineVerticiesRecursive(writer, mMain->lod(i).transform());
+            for (const auto & lod : mMain->lods()) {
+                mObjWriteGeometry.printLineVerticiesRecursive(writer, lod->transform());
+            }
         }
 
         // print VLIGHT vertex 
         if (mStatistic.pLightObjPointCount) {
-            for (size_t i = 0; i < lodCount; ++i)
-                mObjWriteGeometry.printLightPointVerticiesRecursive(writer, mMain->lod(i).transform());
+            for (const auto & lod : mMain->lods()) {
+                mObjWriteGeometry.printLightPointVerticiesRecursive(writer, lod->transform());
+            }
         }
 
         writer.printEol();
@@ -149,17 +151,15 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
         writer.printEol();
 
         // print animation and objects
-        for (size_t i = 0; i < lodCount; ++i) {
-            const ObjLodGroup & currLod = mMain->lod(i);
-
-            if (currLod.transform().hasAnim()) {
-                ULError << currLod.objectName() << " - Lod can't be animated.";
+        for (const auto & currLod : mMain->lods()) {
+            if (currLod->transform().hasAnim()) {
+                ULError << currLod->objectName() << " - Lod can't be animated.";
             }
 
             //-------------------------------------------------------------------------
 
-            printLOD(writer, currLod, lodCount);
-            printObjects(writer, currLod.transform());
+            printLOD(writer, *currLod, mMain->lods().size());
+            printObjects(writer, currLod->transform());
             writer.printEol();
         }
 
@@ -213,7 +213,7 @@ void ObjWriter::printSignature(AbstractWriter & writer, const std::string & sign
     std::string msg("## ");
     msg.append(XOBJ_ORGANIZATION_NAME).append(" ").append(XOBJ_PROJECT_NAME);
     msg.append(": ").append(XOBJ_VERSION_STRING);
-    if(!std::string(XOBJ_RELEASE_TYPE).empty()) {
+    if (!std::string(XOBJ_RELEASE_TYPE).empty()) {
         msg.append("-").append(XOBJ_RELEASE_TYPE);
     }
     msg.append("+[").append(XOBJ_COMPILE_DATE).append("]");

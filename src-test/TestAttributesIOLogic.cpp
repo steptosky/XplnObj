@@ -63,8 +63,8 @@ public:
     virtual ~TestAttributesIOLogic() = default;
 
     static void extractMesh(const ObjMain & inMain, size_t inLodNumber, size_t inMeshNumber, ObjMesh *& outMesh) {
-        ASSERT_TRUE(inLodNumber < inMain.lodCount());
-        const ObjLodGroup & inLGroup = inMain.lod(inLodNumber);
+        ASSERT_TRUE(inLodNumber < inMain.lods().size());
+        const ObjLodGroup & inLGroup = *inMain.lods().at(inLodNumber);
         ASSERT_TRUE(inMeshNumber < inLGroup.transform().objList().size());
         auto iterator = inLGroup.transform().objList().begin();
         for (size_t i = 0; i < inMeshNumber; ++i) {

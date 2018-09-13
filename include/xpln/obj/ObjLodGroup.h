@@ -43,11 +43,23 @@ namespace xobj {
  * \ingroup Objects
  */
 class ObjLodGroup {
-protected:
-
-    XpObjLib ObjLodGroup();
-
 public:
+
+    ObjLodGroup()
+        : ObjLodGroup(0.0f, 0.0f) {}
+
+    ObjLodGroup(const float near, const float far)
+        : ObjLodGroup(TOTEXT(ObjLodGroup), near, far) {}
+
+    ObjLodGroup(const std::string & name, const float near, const float far)
+        : mName(name),
+          mNear(near),
+          mFar(far) {
+
+        mObjTransform.setName(name);
+        setObjectName("Obj Lod Group");
+        mObjTransform.setName(TOTEXT(ObjLodGroup));
+    }
 
     ObjLodGroup(const ObjLodGroup &) = delete;
     ObjLodGroup & operator =(const ObjLodGroup &) = delete;
@@ -56,24 +68,44 @@ public:
 
     //--------------------------------------------------------
 
-    XpObjLib void setNearVal(float val);
-    XpObjLib void setFarVal(float val);
+    void setNearVal(const float val) {
+        mNear = val;
+    }
 
-    XpObjLib float nearVal() const;
-    XpObjLib float farVal() const;
+    void setFarVal(const float val) {
+        mFar = val;
+    }
+
+    float nearVal() const {
+        return mNear;
+    }
+
+    float farVal() const {
+        return mFar;
+    }
 
     //--------------------------------------------------------
 
-    XpObjLib void setObjectName(const std::string & mame);
-    XpObjLib const std::string & objectName() const;
+    void setObjectName(const std::string & name) {
+        mName = name;
+        mObjTransform.setName(name);
+    }
+
+    const std::string & objectName() const {
+        return mName;
+    }
 
     //--------------------------------------------------------
 
     /*! \copydoc ObjAbstract::transform */
-    XpObjLib Transform & transform();
+    XpObjLib Transform & transform() {
+        return mObjTransform;
+    }
 
     /*! \copydoc ObjAbstract::transform */
-    XpObjLib const Transform & transform() const;
+    XpObjLib const Transform & transform() const {
+        return mObjTransform;
+    }
 
     //--------------------------------------------------------
 

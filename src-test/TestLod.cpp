@@ -77,26 +77,26 @@ TEST_F(TestLod, lods_grouping) {
     ObjMain mainOut;
     mainOut.pExportOptions.enable(eExportOptions::XOBJ_EXP_MARK_MESH);
     mainOut.pExportOptions.enable(eExportOptions::XOBJ_EXP_DEBUG);
-    ObjLodGroup & lgroup1 = mainOut.addLod();
-    ObjLodGroup & lgroup2 = mainOut.addLod();
-    ObjLodGroup & lgroup3 = mainOut.addLod();
+    ObjLodGroup & lGroup1 = mainOut.addLod();
+    ObjLodGroup & lGroup2 = mainOut.addLod();
+    ObjLodGroup & lGroup3 = mainOut.addLod();
 
-    lgroup1.setObjectName(TOTEXT(lgroup1));
-    lgroup1.setNearVal(1000.0);
-    lgroup1.setFarVal(1500.0);
+    lGroup1.setObjectName(TOTEXT(lGroup1));
+    lGroup1.setNearVal(1000.0);
+    lGroup1.setFarVal(1500.0);
 
-    lgroup2.setObjectName(TOTEXT(lgroup2));
-    lgroup2.setNearVal(500.0);
-    lgroup2.setFarVal(1000.0);
+    lGroup2.setObjectName(TOTEXT(lGroup2));
+    lGroup2.setNearVal(500.0);
+    lGroup2.setFarVal(1000.0);
 
-    lgroup3.setObjectName(TOTEXT(lgroup3));
-    lgroup3.setNearVal(0.0);
-    lgroup3.setFarVal(500.0);
+    lGroup3.setObjectName(TOTEXT(lGroup3));
+    lGroup3.setNearVal(0.0);
+    lGroup3.setFarVal(500.0);
 
-    lgroup1.transform().addObject(m1);
-    lgroup2.transform().addObject(m2);
-    lgroup3.transform().addObject(m3);
-    lgroup3.transform().addObject(m4);
+    lGroup1.transform().addObject(m1);
+    lGroup2.transform().addObject(m2);
+    lGroup3.transform().addObject(m3);
+    lGroup3.transform().addObject(m4);
 
     //-------------------------------------------------------------------------
     // LODs are owners for its children, 
@@ -123,12 +123,12 @@ TEST_F(TestLod, lods_grouping) {
     //-------------------------------------------------------------------------
     // WARNING: After export the LODs are sorted so they have reversed order!
 
-    ASSERT_EQ(3, mainIn.lodCount());
+    ASSERT_EQ(3, mainIn.lods().size());
 
     //-------------------------
 
-    ObjLodGroup & lod1 = mainIn.lod(2);
-    ASSERT_STREQ(lgroup1.objectName().c_str(), lod1.objectName().c_str());
+    ObjLodGroup & lod1 = *mainIn.lods().at(2);
+    ASSERT_STREQ(lGroup1.objectName().c_str(), lod1.objectName().c_str());
     ASSERT_EQ(1000.0, lod1.nearVal());
     ASSERT_EQ(1500.0, lod1.farVal());
     const Transform::ObjList & objList1 = lod1.transform().objList();
@@ -138,10 +138,10 @@ TEST_F(TestLod, lods_grouping) {
 
     //-------------------------
 
-    ObjLodGroup & lod2 = mainIn.lod(1);
+    ObjLodGroup & lod2 = *mainIn.lods().at(1);
     ASSERT_EQ(500.0, lod2.nearVal());
     ASSERT_EQ(1000.0, lod2.farVal());
-    ASSERT_STREQ(lgroup2.objectName().c_str(), lod2.objectName().c_str());
+    ASSERT_STREQ(lGroup2.objectName().c_str(), lod2.objectName().c_str());
 
     const Transform::ObjList & objList2 = lod2.transform().objList();
     ASSERT_EQ(1, objList2.size());
@@ -150,10 +150,10 @@ TEST_F(TestLod, lods_grouping) {
 
     //-------------------------
 
-    ObjLodGroup & lod3 = mainIn.lod(0);
+    ObjLodGroup & lod3 = *mainIn.lods().at(0);
     ASSERT_EQ(0.0, lod3.nearVal());
     ASSERT_EQ(500.0, lod3.farVal());
-    ASSERT_STREQ(lgroup3.objectName().c_str(), lod3.objectName().c_str());
+    ASSERT_STREQ(lGroup3.objectName().c_str(), lod3.objectName().c_str());
 
     const Transform::ObjList & objList3 = lod3.transform().objList();
     ASSERT_EQ(2, objList3.size());
@@ -172,30 +172,30 @@ TEST_F(TestLod, lods_grouping) {
 */
 TEST_F(TestLod, lods_sorting) {
     ObjMain main;
-    ObjLodGroup & lgroup1 = main.addLod();
-    ObjLodGroup & lgroup2 = main.addLod();
-    ObjLodGroup & lgroup3 = main.addLod();
+    ObjLodGroup & lGroup1 = main.addLod();
+    ObjLodGroup & lGroup2 = main.addLod();
+    ObjLodGroup & lGroup3 = main.addLod();
 
-    lgroup1.transform().addObject(new ObjMesh());
-    lgroup2.transform().addObject(new ObjMesh());
-    lgroup3.transform().addObject(new ObjMesh());
+    lGroup1.transform().addObject(new ObjMesh());
+    lGroup2.transform().addObject(new ObjMesh());
+    lGroup3.transform().addObject(new ObjMesh());
 
-    lgroup1.setObjectName(TOTEXT(lgroup1));
-    lgroup1.setNearVal(1000.0);
-    lgroup1.setFarVal(1500.0);
+    lGroup1.setObjectName(TOTEXT(lGroup1));
+    lGroup1.setNearVal(1000.0);
+    lGroup1.setFarVal(1500.0);
 
-    lgroup2.setObjectName(TOTEXT(lgroup2));
-    lgroup2.setNearVal(500.0);
-    lgroup2.setFarVal(1000.0);
+    lGroup2.setObjectName(TOTEXT(lGroup2));
+    lGroup2.setNearVal(500.0);
+    lGroup2.setFarVal(1000.0);
 
-    lgroup3.setObjectName(TOTEXT(lgroup3));
-    lgroup3.setNearVal(0.0);
-    lgroup3.setFarVal(500.0);
+    lGroup3.setObjectName(TOTEXT(lGroup3));
+    lGroup3.setNearVal(0.0);
+    lGroup3.setFarVal(500.0);
 
     ASSERT_TRUE(main.exportToFile(std::string(TOTEXT(TestLod)).append("Sorting")));
-    ASSERT_TRUE(&lgroup3 == &main.lod(0));
-    ASSERT_TRUE(&lgroup2 == &main.lod(1));
-    ASSERT_TRUE(&lgroup1 == &main.lod(2));
+    ASSERT_TRUE(&lGroup3 == &*main.lods().at(0));
+    ASSERT_TRUE(&lGroup2 == &*main.lods().at(1));
+    ASSERT_TRUE(&lGroup1 == &*main.lods().at(2));
 }
 
 /*
@@ -203,16 +203,16 @@ TEST_F(TestLod, lods_sorting) {
 */
 TEST(TestLodAccess, property_access) {
     ObjMain main;
-    ObjLodGroup & lgroup1 = main.addLod();
+    ObjLodGroup & lGroup1 = main.addLod();
 
-    lgroup1.setNearVal(10.0);
-    lgroup1.setFarVal(20.0);
-    lgroup1.setObjectName("Test");
+    lGroup1.setNearVal(10.0);
+    lGroup1.setFarVal(20.0);
+    lGroup1.setObjectName("Test");
 
-    ASSERT_EQ(10.0, lgroup1.nearVal());
-    ASSERT_EQ(20.0, lgroup1.farVal());
-    ASSERT_STREQ("Test", lgroup1.objectName().c_str());
-    ASSERT_STREQ("Test", lgroup1.transform().name().c_str());
+    ASSERT_EQ(10.0, lGroup1.nearVal());
+    ASSERT_EQ(20.0, lGroup1.farVal());
+    ASSERT_STREQ("Test", lGroup1.objectName().c_str());
+    ASSERT_STREQ("Test", lGroup1.transform().name().c_str());
 }
 
 /*
@@ -223,20 +223,20 @@ TEST_F(TestLod, validator) {
     ObjMain main;
 
     // no linked objects
-    ObjLodGroup & lgroup1 = main.addLod();
-    ASSERT_FALSE(checkParameters(lgroup1, lgroup1.objectName()));
-    lgroup1.transform().addObject(m1);
+    ObjLodGroup & lGroup1 = main.addLod();
+    ASSERT_FALSE(checkParameters(lGroup1, lGroup1.objectName()));
+    lGroup1.transform().addObject(m1);
     m1 = nullptr;
 
     // incorrect values
-    lgroup1.setNearVal(20.0);
-    lgroup1.setFarVal(10.0);
-    ASSERT_FALSE(checkParameters(lgroup1, lgroup1.objectName()));
+    lGroup1.setNearVal(20.0);
+    lGroup1.setFarVal(10.0);
+    ASSERT_FALSE(checkParameters(lGroup1, lGroup1.objectName()));
 
     // all ok
-    lgroup1.setNearVal(10.0);
-    lgroup1.setFarVal(20.0);
-    ASSERT_TRUE(checkParameters(lgroup1, lgroup1.objectName()));
+    lGroup1.setNearVal(10.0);
+    lGroup1.setFarVal(20.0);
+    ASSERT_TRUE(checkParameters(lGroup1, lGroup1.objectName()));
 }
 
 /**************************************************************************************************/

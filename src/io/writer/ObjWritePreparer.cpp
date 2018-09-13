@@ -40,9 +40,9 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool ObjWritePreparer::prepare(ObjMain & mainObj) {
-    const size_t lodCount = mainObj.lodCount();
+    const size_t lodCount = mainObj.lods().size();
     for (size_t i = 0; i < lodCount; ++i) {
-        ObjLodGroup & lod = mainObj.lod(i);
+        ObjLodGroup & lod = *mainObj.lods().at(i);
         Transform & rootTransform = lod.transform();
         if (!checkParameters(lod, lod.objectName())) {
             return false;

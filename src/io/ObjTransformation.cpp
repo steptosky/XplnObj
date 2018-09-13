@@ -54,10 +54,8 @@ void ObjTransformation::correctImportTransform(ObjMain & mainObj, const TMatrix 
 /**************************************************************************************************/
 
 void ObjTransformation::correctTransform(ObjMain & mainObj, const TMatrix & tm, bool exp, bool useLodTm) {
-    const size_t lodCount = mainObj.lodCount();
-    for (size_t i = 0; i < lodCount; ++i) {
-        ObjLodGroup & lod = mainObj.lod(i);
-        Transform & transform = lod.transform();
+    for (const auto & lod : mainObj.lods()) {
+        Transform & transform = lod->transform();
         TMatrix tmCopy = tm;
         if (useLodTm) {
             tmCopy = transform.pMatrix * tmCopy;

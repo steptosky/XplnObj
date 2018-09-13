@@ -30,6 +30,7 @@
 */
 
 #include <vector>
+#include <memory>
 #include "ObjLodGroup.h"
 #include "ExportOptions.h"
 #include "IOStatistic.h"
@@ -50,12 +51,18 @@ class ObjLodGroup;
 class ObjMain {
 public:
 
-    XpObjLib ObjMain();
+    //-------------------------------------------------------------------------
+
+    typedef std::vector<std::unique_ptr<ObjLodGroup>> Lods;
+
+    //-------------------------------------------------------------------------
+
+    ObjMain() = default;
 
     ObjMain(const ObjMain &) = delete;
     ObjMain & operator =(const ObjMain &) = delete;
 
-    XpObjLib virtual ~ObjMain();
+    virtual ~ObjMain() = default;
 
     //-------------------------------------------------------------------------
 
@@ -78,33 +85,36 @@ public:
     //-------------------------------------------------------------------------
 
     /*!
-     * \details Gets LOD by index.
-     * \param [in] index
+     * \details Adds new lods to the list.
+     * \details It takes ownership of the Lod's pointer.
+     * \param [in] lod if nullptr then new lod will be auto-created.
+     * \return Reference to just added/created lod.
      */
-    XpObjLib ObjLodGroup & lod(std::size_t index);
+    XpObjLib ObjLodGroup & addLod(ObjLodGroup * lod = nullptr);
 
     /*!
-     * \details Gets LOD by index.
-     * \param [in] index
+     * \return Lods list.
      */
-    XpObjLib const ObjLodGroup & lod(std::size_t index) const;
+    Lods & lods() {
+        return mLods;
+    }
 
     /*!
-     * \details Adds lods.
-     * \return created LOD which was added to the lods list.
+     * \return Lods list.
      */
-    XpObjLib ObjLodGroup & addLod();
+    const Lods & lods() const {
+        return mLods;
+    }
 
-    /*!
-     * \details Removes LOD by index.
-     * \param [in] index
-     */
-    XpObjLib void removeLod(std::size_t index);
+    //-------------------------------------------------------------------------
 
-    /*!
-     * \details Gets count of the lods.
-     */
-    XpObjLib std::size_t lodCount() const;
+    void setObjectName(const std::string & name) {
+        mName = name;
+    }
+
+    const std::string & objectName() const {
+        return mName;
+    }
 
     //-------------------------------------------------------------------------
 
@@ -140,17 +150,12 @@ public:
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setObjectName(const std::string & name);
-    XpObjLib const std::string & objectName() const;
-
-    //-------------------------------------------------------------------------
-
 private:
 
     void sortLod();
 
     std::string mName;
-    std::vector<ObjLodGroup*> mLods;
+    std::vector<std::unique_ptr<ObjLodGroup>> mLods;
 
 };
 

@@ -868,7 +868,7 @@ TEST(TestManip, AttrManipNoop) {
     manip.setCursor(cursor);
     manip.setToolTip("ToolTip");
 
-    const auto result = std::string("ATTR_manip_noop\n");
+    const auto result = std::string("ATTR_manip_noop ToolTip\n");
     const auto manipCount = manip.printObj(w);
     ASSERT_STREQ(result.c_str(), w.mResult.c_str());
     ASSERT_EQ(1, manipCount);

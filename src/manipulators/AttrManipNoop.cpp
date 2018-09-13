@@ -63,7 +63,15 @@ AttrManipBase * AttrManipNoop::clone() const {
 /**************************************************************************************************/
 
 std::size_t AttrManipNoop::printObj(AbstractWriter & writer) const {
-    writer.printLine(ATTR_MANIP_NOOP);
+    const auto & tooltip = this->toolTip();
+    if (!tooltip.empty()) {
+        StringStream outStr;
+        outStr << ATTR_MANIP_NOOP" " << toolTip();
+        writer.printLine(outStr.str());
+    }
+    else {
+        writer.printLine(ATTR_MANIP_NOOP);
+    }
     return 1;
 }
 

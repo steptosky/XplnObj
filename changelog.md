@@ -1,7 +1,10 @@
-
 StepToSky: X-Plane Obj Library
 ---------------------------------------------------------------------------
+#### Next
 
+- **Added** Ability to use tool-tip in ATTR_manip_noop.
+
+---------------------------------------------------------------------------
 #### 0.6.2-beta (31.08.2018)
 
 - **Updated** Some manipulators UI text to be shorter.

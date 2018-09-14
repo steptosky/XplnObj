@@ -31,7 +31,7 @@
 
 #include "xpln/obj/ObjMain.h"
 #include "common/Result.h"
-#include "common/IInterrupt.h"
+#include "xpln/common/IInterrupt.h"
 
 namespace xobj {
 

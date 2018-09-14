@@ -42,7 +42,6 @@
 #include "common/Logger.h"
 #include "sts/string/StringUtils.h"
 #include "algorithms/LodsAlg.h"
-#include "common/IInterrupt.h"
 
 namespace xobj {
 

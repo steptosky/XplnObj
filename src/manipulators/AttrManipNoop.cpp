@@ -28,6 +28,7 @@
 */
 
 #include "xpln/obj/manipulators/AttrManipNoop.h"
+#include "converters/StringStream.h"
 #include "common/AttributeNames.h"
 #include "io/writer/AbstractWriter.h"
 

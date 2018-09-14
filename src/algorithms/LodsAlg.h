@@ -29,6 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <tuple>
 #include "xpln/obj/ObjMain.h"
 #include "common/Result.h"
 #include "xpln/common/IInterrupt.h"
@@ -53,14 +54,27 @@ public:
     static void mergeIdenticalLods(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
 
     /*!
-     * \todo not implemented
      * \details Sorts the LOD according to obj specification.
      * \param [in, out] inOutLods 
      * \param [in] interrupt 
      * \return false if there is an error with LODs' values 
-     *          and they can't be sorted correctly otherwise true.
+     *          and they can't be sorted correctly or 
+     *          the algorithm was interrupted
+     *          otherwise true.
      */
     static Result sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
+
+private:
+
+    typedef std::tuple<ObjMain::Lods, ObjMain::Lods> SeparatedLods;
+
+    /*!
+     * \details Separated LODs to additive and selective.
+     * \param [in, out] inOutLods Although this list won't be cleared, the pointers will be moved to returned lists.
+     * \param [in] interrupt 
+     * \return [additive, selective]
+     */
+    static SeparatedLods separateLods(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
 
 };
 

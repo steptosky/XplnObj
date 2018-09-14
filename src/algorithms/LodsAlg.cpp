@@ -41,7 +41,7 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool LodsAlg::validate(const ObjMain::Lods & lods, const std::string & objectName) {
-    if (lods.size() == 1) {
+    if (lods.size() == 1 && lods[0]) {
         if (lods[0]->nearVal() != 0.0f) {
             ULError << objectName << " - LOD <" << lods[0]->objectName()
                     << R"(> expected "near" value equals 0.0 but it equals: )" << lods[0]->nearVal();
@@ -50,6 +50,9 @@ bool LodsAlg::validate(const ObjMain::Lods & lods, const std::string & objectNam
     }
 
     for (const auto & lod : lods) {
+        if (!lod) {
+            continue;
+        }
         if (lod->transform().hasAnim()) {
             ULError << objectName << " - LOD <" << lod->objectName() << "> isn't allowed to have animation.";
             return false;
@@ -69,6 +72,18 @@ bool LodsAlg::validate(const ObjMain::Lods & lods, const std::string & objectNam
                     << R"(> contains "far:)" << lod->farVal() << R"(" value that is less then "near:)" << lod->nearVal() << R"(")";
             return false;
         }
+        //---------------------------
+        auto iter = std::find_if(lods.begin(), lods.end(), [&](const auto & val) {
+            return val && lod != val &&
+                   lod->nearVal() == val->nearVal() &&
+                   lod->farVal() == val->farVal();
+        });
+
+        if (iter != lods.end()) {
+            ULError << objectName << " - LOD <" << lod->objectName() << "> and LOD <" << (*iter)->objectName()
+                    << "> have identical distance values. Merge them into one LOD.";
+            return false;
+        }
     }
     return true;
 }
@@ -77,7 +92,7 @@ bool LodsAlg::validate(const ObjMain::Lods & lods, const std::string & objectNam
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void LodsAlg::mergeIdenticalLods(ObjMain::Lods & /*inOutLods*/, const IInterrupt & /*interrupt*/) { }
+void LodsAlg::mergeIdenticalLods(ObjMain::Lods & /*inOutLods*/, const IInterrupt & /*interrupt*/) {}
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
@@ -88,23 +103,24 @@ Result LodsAlg::sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt) {
     // orderings
     ObjMain::Lods orderedList;
     for (auto & lod : inOutLods) {
-        if (lod) {
-            if (lod->nearVal() == 0.0f) {
-                float nearVal = lod->farVal();
-                orderedList.emplace_back(std::move(lod));
+        if (!lod) {
+            continue;
+        }
+        if (lod->nearVal() == 0.0f) {
+            float nearVal = lod->farVal();
+            orderedList.emplace_back(std::move(lod));
 
-                while (true) {
-                    // search next distance part
-                    auto iter = std::find_if(inOutLods.begin(), inOutLods.end(), [&](const auto & val) {
-                        return val && nearVal == val->nearVal();
-                    });
+            while (true) {
+                // search next distance part
+                auto iter = std::find_if(inOutLods.begin(), inOutLods.end(), [&](const auto & val) {
+                    return val && nearVal == val->nearVal();
+                });
 
-                    if (iter == inOutLods.end()) {
-                        break;
-                    }
-                    nearVal = (*iter)->farVal();
-                    orderedList.emplace_back(std::move(*iter));
+                if (iter == inOutLods.end()) {
+                    break;
                 }
+                nearVal = (*iter)->farVal();
+                orderedList.emplace_back(std::move(*iter));
             }
         }
     }

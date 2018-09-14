@@ -41,6 +41,8 @@
 #include "ObjWriteInstancing.h"
 #include "common/Logger.h"
 #include "sts/string/StringUtils.h"
+#include "algorithms/LodsAlg.h"
+#include "common/IInterrupt.h"
 
 namespace xobj {
 
@@ -82,6 +84,13 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
                           IOStatistic & outStat, const TMatrix & tm) {
     try {
         reset(); // reset all data that needs to be recalculated
+
+        LodsAlg::mergeIdenticalLods(root->lods(), NoInterrupt());
+        const auto result = LodsAlg::sort(root->lods(), NoInterrupt());
+        if (!result) {
+            ULError << root->objectName() << " : " << result.mErr;
+            return false;
+        }
 
         if (root == nullptr || !checkParameters(*root, root->objectName()))
             return false;

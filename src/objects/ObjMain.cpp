@@ -31,7 +31,6 @@
 #include "io/writer/ObjWriter.h"
 #include "io/reader/ObjReader.h"
 #include "io/reader/ObjReaderInterpreter.h"
-#include "algorithms/LodsAlg.h"
 
 namespace xobj {
 
@@ -45,11 +44,6 @@ bool ObjMain::exportToFile(const std::string & path) {
 }
 
 bool ObjMain::exportToFile(const std::string & path, IOStatistic & outStat) {
-    LodsAlg::mergeIdenticalLods(mLods, NoInterrupt());
-    const auto result = LodsAlg::sort(mLods, NoInterrupt());
-    if (!result) {
-        ULError << objectName() << " : " << result.mErr;
-    }
     outStat.reset();
     return ObjWriter().writeFile(this, path, pExportOptions.signature(), outStat, pMatrix);
 }

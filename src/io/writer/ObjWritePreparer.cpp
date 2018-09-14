@@ -32,6 +32,7 @@
 #include "xpln/obj/ObjMesh.h"
 #include "ObjWriteAnim.h"
 #include "io/ObjValidators.h"
+#include "algorithms/LodsAlg.h"
 
 namespace xobj {
 
@@ -40,13 +41,21 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool ObjWritePreparer::prepare(ObjMain & mainObj) {
+    if (!LodsAlg::validate(mainObj.lods(), mainObj.objectName())) {
+        return false;
+    }
+
+    LodsAlg::mergeIdenticalLods(mainObj.lods(), NoInterrupt());
+    const auto result = LodsAlg::sort(mainObj.lods(), NoInterrupt());
+    if (!result) {
+        ULError << mainObj.objectName() << " : " << result.mErr;
+        return false;
+    }
+
     const size_t lodCount = mainObj.lods().size();
     for (size_t i = 0; i < lodCount; ++i) {
         ObjLodGroup & lod = *mainObj.lods().at(i);
         Transform & rootTransform = lod.transform();
-        if (!checkParameters(lod, lod.objectName())) {
-            return false;
-        }
         if (!proccessTransform(rootTransform, i, lod)) {
             return false;
         }

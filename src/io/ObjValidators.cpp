@@ -124,23 +124,6 @@ bool checkParameters(const ObjLine & /*obj*/, const std::string & /*prefix*/) {
     return true;
 }
 
-bool checkParameters(const ObjLodGroup & lodObj, const std::string & prefix) {
-    using namespace std::string_literals;
-    if (lodObj.farVal() < lodObj.nearVal()) {
-        ULError << prefix << R"( - The "far" value can't be less than "near" value.)";
-        return false;
-    }
-    if (!lodObj.transform().hasObjects() && lodObj.transform().childrenCount() == 0) {
-        ULError << prefix << " - The lod does not contain any objects.";
-        return false;
-    }
-    if (lodObj.transform().hasAnim()) {
-        ULError << prefix << " - The lod isn't allowed to have animation.";
-        return false;
-    }
-    return true;
-}
-
 bool checkParameters(const ObjMain & mainObj, const std::string & prefix) {
     bool result = true;
     if (mainObj.pAttr.isDebug()) {

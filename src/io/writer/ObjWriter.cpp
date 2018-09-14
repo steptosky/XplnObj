@@ -84,15 +84,9 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
     try {
         reset(); // reset all data that needs to be recalculated
 
-        LodsAlg::mergeIdenticalLods(root->lods(), NoInterrupt());
-        const auto result = LodsAlg::sort(root->lods(), NoInterrupt());
-        if (!result) {
-            ULError << root->objectName() << " : " << result.mErr;
+        if (root == nullptr || !checkParameters(*root, root->objectName())) {
             return false;
         }
-
-        if (root == nullptr || !checkParameters(*root, root->objectName()))
-            return false;
 
         if (root->pExportOptions.isEnabled(XOBJ_EXP_DEBUG)) {
             ULMessage << "File: " << path;

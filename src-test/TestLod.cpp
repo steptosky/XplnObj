@@ -31,11 +31,11 @@
 
 #include "totext.h"
 
-#include "io/ObjValidators.h"
 #include "xpln/obj/ObjLodGroup.h"
 #include "xpln/obj/ObjMesh.h"
 #include "xpln/obj/ObjMain.h"
 #include "TestUtilsObjMesh.h"
+#include <algorithms/LodsAlg.h>
 
 using namespace xobj;
 
@@ -71,8 +71,8 @@ public:
 /**************************************************************************************************/
 
 /*
-* Saving meshes in separated LODs to the file then read, parse and compare wrote data.
-*/
+ * Saving meshes in separated LODs to the file then read, parse and compare wrote data.
+ */
 TEST_F(TestLod, lods_grouping) {
     ObjMain mainOut;
     mainOut.pExportOptions.enable(eExportOptions::XOBJ_EXP_MARK_MESH);
@@ -168,8 +168,8 @@ TEST_F(TestLod, lods_grouping) {
 /**************************************************************************************************/
 
 /*
-* LODs shall have particular order from nearVal to farVal.
-*/
+ * LODs shall have particular order from nearVal to farVal.
+ */
 TEST_F(TestLod, lods_sorting) {
     ObjMain main;
     ObjLodGroup & lGroup1 = main.addLod();
@@ -192,15 +192,15 @@ TEST_F(TestLod, lods_sorting) {
     lGroup3.setNearVal(0.0);
     lGroup3.setFarVal(500.0);
 
-    ASSERT_TRUE(main.exportToFile(std::string(TOTEXT(TestLod)).append("Sorting")));
+    ASSERT_TRUE(main.exportToFile(std::string(TOTEXT(TestLod)).append("-sorting")));
     ASSERT_TRUE(&lGroup3 == &*main.lods().at(0));
     ASSERT_TRUE(&lGroup2 == &*main.lods().at(1));
     ASSERT_TRUE(&lGroup1 == &*main.lods().at(2));
 }
 
 /*
-* Setters and getters.
-*/
+ * Setters and getters.
+ */
 TEST(TestLodAccess, property_access) {
     ObjMain main;
     ObjLodGroup & lGroup1 = main.addLod();
@@ -216,27 +216,32 @@ TEST(TestLodAccess, property_access) {
 }
 
 /*
-* Validator.
-* The LODs can be adjustment incorrect so the validator checks this situation.
-*/
+ * Validator.
+ * The LODs can be adjustment incorrect so the validator checks this situation.
+ */
 TEST_F(TestLod, validator) {
     ObjMain main;
 
     // no linked objects
     ObjLodGroup & lGroup1 = main.addLod();
-    ASSERT_FALSE(checkParameters(lGroup1, lGroup1.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
     lGroup1.transform().addObject(m1);
     m1 = nullptr;
 
-    // incorrect values
+    // incorrect values 
     lGroup1.setNearVal(20.0);
     lGroup1.setFarVal(10.0);
-    ASSERT_FALSE(checkParameters(lGroup1, lGroup1.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
 
-    // all ok
+    // incorrect values 
     lGroup1.setNearVal(10.0);
     lGroup1.setFarVal(20.0);
-    ASSERT_TRUE(checkParameters(lGroup1, lGroup1.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+
+    // all ok
+    lGroup1.setNearVal(0.0);
+    lGroup1.setFarVal(20.0);
+    ASSERT_TRUE(LodsAlg::validate(main.lods(), main.objectName()));
 }
 
 /**************************************************************************************************/

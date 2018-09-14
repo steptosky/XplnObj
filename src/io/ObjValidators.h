@@ -64,7 +64,6 @@ XpObjLib bool checkParameters(const AttrGlobSet & attrSet, const std::string & p
 XpObjLib bool checkParameters(const ObjAbstract & baseObj, const std::string & prefix);
 XpObjLib bool checkParameters(const ObjDummy & obj, const std::string & prefix);
 XpObjLib bool checkParameters(const ObjLine & obj, const std::string & prefix);
-XpObjLib bool checkParameters(const ObjLodGroup & lodObj, const std::string & prefix);
 XpObjLib bool checkParameters(const ObjMain & mainObj, const std::string & prefix);
 XpObjLib bool checkParameters(const ObjMesh & obj, const std::string & prefix);
 XpObjLib bool checkParameters(const ObjSmoke & obj, const std::string & prefix);

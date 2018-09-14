@@ -51,7 +51,7 @@ public:
         : ObjLodGroup(0.0f, 0.0f) {}
 
     ObjLodGroup(const float nearVal, const float farVal)
-        : ObjLodGroup("unspecified LOD name", nearVal, farVal) {}
+        : ObjLodGroup("no name LOD", nearVal, farVal) {}
 
     ObjLodGroup(const std::string & name, const float nearVal, const float farVal)
         : mName(name),

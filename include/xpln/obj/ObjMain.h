@@ -57,7 +57,8 @@ public:
 
     //-------------------------------------------------------------------------
 
-    ObjMain() = default;
+    ObjMain()
+        : mName("no name Main") {}
 
     ObjMain(const ObjMain &) = delete;
     ObjMain & operator =(const ObjMain &) = delete;

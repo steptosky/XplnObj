@@ -45,6 +45,8 @@ class LodsAlg {
     ~LodsAlg() = default;
 public:
 
+    XpObjLib static bool validate(const ObjMain::Lods & lods, const std::string & objectName);
+
     /*!
      * \todo not implemented
      * \details It merges objects of identical LODs into one LOD.

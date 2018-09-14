@@ -29,9 +29,49 @@
 
 #include <algorithm>
 #include "LodsAlg.h"
+#include "common/Logger.h"
 #include "sts/utilities/Compare.h"
 
+using namespace std::string_literals;
+
 namespace xobj {
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+bool LodsAlg::validate(const ObjMain::Lods & lods, const std::string & objectName) {
+    if (lods.size() == 1) {
+        if (lods[0]->nearVal() != 0.0f) {
+            ULError << objectName << " - LOD <" << lods[0]->objectName()
+                    << R"(> expected "near" value equals 0.0 but it equals: )" << lods[0]->nearVal();
+            return false;
+        }
+    }
+
+    for (const auto & lod : lods) {
+        if (lod->transform().hasAnim()) {
+            ULError << objectName << " - LOD <" << lod->objectName() << "> isn't allowed to have animation.";
+            return false;
+        }
+        if (!lod->transform().hasObjects() && lod->transform().childrenCount() == 0) {
+            ULError << objectName << " - LOD <" << lod->objectName() << "> doesn't contain any objects.";
+            return false;
+        }
+
+        if (lods.size() != 1 && sts::isEqual(lod->nearVal(), lod->farVal())) {
+            ULError << objectName << " - LOD <" << lod->objectName()
+                    << R"(> contains identical "near:)" << lod->nearVal() << R"(" and "far:)" << lod->farVal() << R"(" values)";
+            return false;
+        }
+        if (lod->farVal() < lod->nearVal()) {
+            ULError << objectName << " - LOD <" << lod->objectName()
+                    << R"(> contains "far:)" << lod->farVal() << R"(" value that is less then "near:)" << lod->nearVal() << R"(")";
+            return false;
+        }
+    }
+    return true;
+}
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
@@ -44,34 +84,6 @@ void LodsAlg::mergeIdenticalLods(ObjMain::Lods & /*inOutLods*/, const IInterrupt
 /**************************************************************************************************/
 
 Result LodsAlg::sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt) {
-    using namespace std::string_literals;
-
-    //-------------------------------------------
-    // checking for incorrect LOD's "near" value
-    if (inOutLods.size() == 1) {
-        if (sts::isNotEqual(inOutLods[0]->nearVal(), 0.0f)) {
-            return Result(false, "LOD <"s.append(inOutLods[0]->objectName())
-                                         .append(R"(> contains incorrect "near" value)"));
-        }
-        inOutLods[0]->setNearVal(0.0f); // fix for float values like 0.0...01
-        return Result(true);
-    }
-    INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, Result(false, "interrupted"));
-
-    //-------------------------------------------
-    // checking for incorrect LODs
-    for (const auto & v : inOutLods) {
-        if (sts::isEqual(v->nearVal(), v->farVal())) {
-            return Result(false, "LOD <"s.append(v->objectName())
-                                         .append(R"(> contains identical "near" and "far" values)"));
-        }
-        if (v->farVal() < v->nearVal()) {
-            return Result(false, "LOD <"s.append(v->objectName())
-                                         .append(R"(> contains "far" value that is less then "near")"));
-        }
-    }
-    INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, Result(false, "interrupted"));
-
     //-------------------------------------------
     // orderings
     ObjMain::Lods orderedList;

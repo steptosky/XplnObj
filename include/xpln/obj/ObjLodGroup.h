@@ -51,7 +51,7 @@ public:
         : ObjLodGroup(0.0f, 0.0f) {}
 
     ObjLodGroup(const float near, const float far)
-        : ObjLodGroup(TOTEXT(ObjLodGroup), near, far) {}
+        : ObjLodGroup("unspecified LOD name", near, far) {}
 
     ObjLodGroup(const std::string & name, const float near, const float far)
         : mName(name),
@@ -59,8 +59,6 @@ public:
           mFar(far) {
 
         mObjTransform.setName(name);
-        setObjectName("Obj Lod Group");
-        mObjTransform.setName(TOTEXT(ObjLodGroup));
     }
 
     ObjLodGroup(const ObjLodGroup &) = delete;

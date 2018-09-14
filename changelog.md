@@ -3,6 +3,7 @@ StepToSky: X-Plane Obj Library
 #### Next
 
 - **Added** Ability to use tool-tip in ATTR_manip_noop.
+- **Fixed** Sorting algorithm for LODs.
 
 ---------------------------------------------------------------------------
 #### 0.6.2-beta (31.08.2018)

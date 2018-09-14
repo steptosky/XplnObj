@@ -1,5 +1,3 @@
-#pragma once
-
 /*
 **  Copyright(C) 2018, StepToSky
 **
@@ -29,40 +27,24 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "LodsAlg.h"
+
+namespace xobj {
+
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-#ifdef _MSC_VER
-#   define ENABLE_PRECOMPILED_HEADERS
-#endif
+void LodsAlg::mergeIdenticalLods(ObjMain::Lods & /*inOutLods*/, const IInterrupt & /*interrupt*/) { }
 
-#ifdef ENABLE_PRECOMPILED_HEADERS
-
-#include <cassert>
-#include <string>
-#include <cstddef>
-#include <cstdint>
-#include <algorithm>
-#include <memory>
-#include <vector>
-#include <functional>
-#include <algorithm>
-#include <cstring>
-#include <atomic>
-
-#include <iostream>
-#include <sstream>
-#include <fstream>
-
-#include "xpln/Export.h"
-#include "sts/utilities/Compare.h"
-#include "sts/string/StringUtils.h"
-#include "converters/StringStream.h"
-#include "common/Logger.h"
-
-#endif
+Result LodsAlg::sort(ObjMain::Lods & inOutLods, const IInterrupt & /*interrupt*/) {
+    std::sort(inOutLods.begin(), inOutLods.end(), [](const auto & i, const auto & j) {
+        return i->nearVal() < j->nearVal();
+    });
+    return Result(true);
+}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
+}

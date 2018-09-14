@@ -29,40 +29,42 @@
 **  Contacts: www.steptosky.com
 */
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
+#include "xpln/obj/ObjMain.h"
+#include "common/Result.h"
+#include "common/IInterrupt.h"
 
-#ifdef _MSC_VER
-#   define ENABLE_PRECOMPILED_HEADERS
-#endif
-
-#ifdef ENABLE_PRECOMPILED_HEADERS
-
-#include <cassert>
-#include <string>
-#include <cstddef>
-#include <cstdint>
-#include <algorithm>
-#include <memory>
-#include <vector>
-#include <functional>
-#include <algorithm>
-#include <cstring>
-#include <atomic>
-
-#include <iostream>
-#include <sstream>
-#include <fstream>
-
-#include "xpln/Export.h"
-#include "sts/utilities/Compare.h"
-#include "sts/string/StringUtils.h"
-#include "converters/StringStream.h"
-#include "common/Logger.h"
-
-#endif
+namespace xobj {
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
+
+class LodsAlg {
+    LodsAlg() = default;
+    ~LodsAlg() = default;
+public:
+
+    /*!
+     * \todo not implemented
+     * \details It merges objects of identical LODs into one LOD.
+     * \param [in, out] inOutLods
+     * \param [in] interrupt
+     */
+    static void mergeIdenticalLods(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
+
+    /*!
+     * \todo not implemented
+     * \details Sorts the LOD according to obj specification.
+     * \param [in, out] inOutLods 
+     * \param [in] interrupt 
+     * \return false if there is an error with LODs' values 
+     *          and they can't be sorted correctly otherwise true.
+     */
+    static Result sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
+
+};
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+}

@@ -45,6 +45,8 @@ namespace xobj {
 class ObjLodGroup {
 public:
 
+    //--------------------------------------------------------
+
     ObjLodGroup()
         : ObjLodGroup(0.0f, 0.0f) {}
 

@@ -27,12 +27,11 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <algorithm>
-
 #include "xpln/obj/ObjMain.h"
 #include "io/writer/ObjWriter.h"
 #include "io/reader/ObjReader.h"
 #include "io/reader/ObjReaderInterpreter.h"
+#include "algorithms/LodsAlg.h"
 
 namespace xobj {
 
@@ -46,7 +45,11 @@ bool ObjMain::exportToFile(const std::string & path) {
 }
 
 bool ObjMain::exportToFile(const std::string & path, IOStatistic & outStat) {
-    sortLod();
+    LodsAlg::mergeIdenticalLods(mLods, NoInterrupt());
+    const auto result = LodsAlg::sort(mLods, NoInterrupt());
+    if (!result) {
+        ULError << objectName() << " : " << result.mErr;
+    }
     outStat.reset();
     return ObjWriter().writeFile(this, path, pExportOptions.signature(), outStat, pMatrix);
 }
@@ -67,12 +70,6 @@ bool ObjMain::importFromFile(const std::string & path, IOStatistic & outStat) {
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
-
-void ObjMain::sortLod() {
-    std::sort(mLods.begin(), mLods.end(), [](const auto & i, const auto & j) {
-        return i->nearVal() < j->nearVal();
-    });
-}
 
 ObjLodGroup & ObjMain::addLod(ObjLodGroup * lod) {
     if (lod) {

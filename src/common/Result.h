@@ -29,40 +29,46 @@
 **  Contacts: www.steptosky.com
 */
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-#ifdef _MSC_VER
-#   define ENABLE_PRECOMPILED_HEADERS
-#endif
-
-#ifdef ENABLE_PRECOMPILED_HEADERS
-
-#include <cassert>
 #include <string>
-#include <cstddef>
-#include <cstdint>
-#include <algorithm>
-#include <memory>
-#include <vector>
-#include <functional>
-#include <algorithm>
-#include <cstring>
-#include <atomic>
 
-#include <iostream>
-#include <sstream>
-#include <fstream>
-
-#include "xpln/Export.h"
-#include "sts/utilities/Compare.h"
-#include "sts/string/StringUtils.h"
-#include "converters/StringStream.h"
-#include "common/Logger.h"
-
-#endif
+namespace xobj {
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
+
+class Result {
+public:
+
+    //-------------------------------------------------------------------------
+
+    explicit Result(const bool result, const std::string & err = std::string("unspecified error"))
+        : mErr(err) {
+        if (!result) {
+            mErr.clear();
+        }
+    }
+
+    ~Result() = default;
+
+    Result(const Result &) = default;
+    Result(Result &&) = default;
+
+    Result & operator=(const Result &) = default;
+    Result & operator=(Result &&) = default;
+
+    //-------------------------------------------------------------------------
+
+    operator bool() const { return !mErr.empty(); }
+
+    //-------------------------------------------------------------------------
+
+    std::string mErr;
+
+};
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+}

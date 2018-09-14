@@ -152,8 +152,6 @@ public:
 
 private:
 
-    void sortLod();
-
     std::string mName;
     std::vector<std::unique_ptr<ObjLodGroup>> mLods;
 

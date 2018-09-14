@@ -50,13 +50,13 @@ public:
     ObjLodGroup()
         : ObjLodGroup(0.0f, 0.0f) {}
 
-    ObjLodGroup(const float near, const float far)
-        : ObjLodGroup("unspecified LOD name", near, far) {}
+    ObjLodGroup(const float nearVal, const float farVal)
+        : ObjLodGroup("unspecified LOD name", nearVal, farVal) {}
 
-    ObjLodGroup(const std::string & name, const float near, const float far)
+    ObjLodGroup(const std::string & name, const float nearVal, const float farVal)
         : mName(name),
-          mNear(near),
-          mFar(far) {
+          mNear(nearVal),
+          mFar(farVal) {
 
         mObjTransform.setName(name);
     }

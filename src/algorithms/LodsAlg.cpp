@@ -29,6 +29,7 @@
 
 #include <algorithm>
 #include "LodsAlg.h"
+#include "sts/utilities/Compare.h"
 
 namespace xobj {
 
@@ -72,52 +73,34 @@ Result LodsAlg::sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt) {
     INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, Result(false, "interrupted"));
 
     //-------------------------------------------
-    // separating LODs
-    SeparatedLods separated = separateLods(inOutLods, interrupt);
-    // all pointers should be nullptr after previous algorithm.
-    inOutLods.clear();
-    ObjMain::Lods & additiveLods = std::get<0>(separated);
-    ObjMain::Lods & selectiveLods = std::get<1>(separated);
-    INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, Result(false, "interrupted"));
-
-    // From obj specification:
-    // "LOD distances must all start from zero and be ordered from closest to farthest."
-    std::sort(additiveLods.begin(), additiveLods.end(), [](const auto & i, const auto & j) {
-        return i->farVal() < j->farVal();
-    });
-
-    // LODs with near value 0.0 will be before others.
-    std::sort(selectiveLods.begin(), selectiveLods.end(), [](const auto & i, const auto & j) {
-        return i->nearVal() < j->nearVal();
-    });
-    INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, Result(false, "interrupted"));
-
-    //-------------------------------------------
     // orderings
-    for (auto & lod : selectiveLods) {
+    ObjMain::Lods orderedList;
+    for (auto & lod : inOutLods) {
         if (lod) {
             if (lod->nearVal() == 0.0f) {
                 float nearVal = lod->farVal();
-                inOutLods.emplace_back(std::move(lod));
+                orderedList.emplace_back(std::move(lod));
 
                 while (true) {
-                    // search next distance
-                    auto iter = std::find_if(selectiveLods.begin(), selectiveLods.end(), [&](const auto & val) {
+                    // search next distance part
+                    auto iter = std::find_if(inOutLods.begin(), inOutLods.end(), [&](const auto & val) {
                         return val && nearVal == val->nearVal();
                     });
 
-                    if (iter == selectiveLods.end()) {
+                    if (iter == inOutLods.end()) {
                         break;
                     }
                     nearVal = (*iter)->farVal();
-                    inOutLods.emplace_back(std::move(*iter));
+                    orderedList.emplace_back(std::move(*iter));
                 }
             }
         }
     }
     INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, Result(false, "interrupted"));
 
-    for (const auto & lod : selectiveLods) {
+    //-------------------------------------------
+    // checking remaining
+    for (const auto & lod : inOutLods) {
         if (lod) {
             return Result(false, "LOD <"s.append(lod->objectName())
                                          .append(R"(> "near" value can't be associated with "far" value of any other LOD.)")
@@ -126,43 +109,9 @@ Result LodsAlg::sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt) {
     }
 
     //-------------------------------------------
-    // adding additive LODs at the end.
-    for (auto & v : additiveLods) {
-        if (v) {
-            inOutLods.emplace_back(std::move(v));
-        }
-    }
-
+    inOutLods = std::move(orderedList);
     //-------------------------------------------
     return Result(true);
-}
-
-LodsAlg::SeparatedLods LodsAlg::separateLods(ObjMain::Lods & inOutLods, const IInterrupt & interrupt) {
-    auto out = std::make_tuple(ObjMain::Lods(), ObjMain::Lods());
-    ObjMain::Lods & additiveLods = std::get<0>(out);
-    ObjMain::Lods & selectiveLods = std::get<1>(out);
-
-    for (auto & lod : inOutLods) {
-        if (lod->nearVal() == 0.0f) {
-            const auto found = std::any_of(inOutLods.begin(), inOutLods.end(), [&](const auto & val) {
-                if (!val) {
-                    return false;
-                }
-                return lod->farVal() == val->nearVal();
-            });
-            if (!found) {
-                additiveLods.emplace_back(std::move(lod));
-            }
-        }
-    }
-    INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, out);
-
-    for (auto & lod : inOutLods) {
-        if (lod) {
-            selectiveLods.emplace_back(std::move(lod));
-        }
-    }
-    return out;
 }
 
 /**************************************************************************************************/

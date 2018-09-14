@@ -29,7 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <tuple>
+#include "xpln/Export.h"
 #include "xpln/obj/ObjMain.h"
 #include "common/Result.h"
 #include "xpln/common/IInterrupt.h"
@@ -51,7 +51,7 @@ public:
      * \param [in, out] inOutLods
      * \param [in] interrupt
      */
-    static void mergeIdenticalLods(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
+    XpObjLib static void mergeIdenticalLods(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
 
     /*!
      * \details Sorts the LOD according to obj specification.
@@ -62,19 +62,7 @@ public:
      *          the algorithm was interrupted
      *          otherwise true.
      */
-    static Result sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
-
-private:
-
-    typedef std::tuple<ObjMain::Lods, ObjMain::Lods> SeparatedLods;
-
-    /*!
-     * \details Separated LODs to additive and selective.
-     * \param [in, out] inOutLods Although this list won't be cleared, the pointers will be moved to returned lists.
-     * \param [in] interrupt 
-     * \return [additive, selective]
-     */
-    static SeparatedLods separateLods(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
+    XpObjLib static Result sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
 
 };
 

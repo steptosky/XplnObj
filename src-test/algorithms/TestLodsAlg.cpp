@@ -56,27 +56,27 @@ inline void printLods(const ObjMain::Lods & lods) {
 
 TEST(LodsAlg, sorting_normal_case1) {
     ObjMain::Lods lods;
-    lods.emplace_back(std::make_unique<ObjLodGroup>("0", 0.0f, 50.f));     // [7] additive 1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("1", 0.0f, 25.f));     // [6] additive 2
-    lods.emplace_back(std::make_unique<ObjLodGroup>("2", 0.0f, 100.f));    // [0] selective 1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("3", 200.0f, 300.0f)); // [2] selective 1:1:1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("4", 100.0f, 200.0f)); // [1] selective 1:1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("5", 0.0f, 200.f));    // [4] selective 2
-    lods.emplace_back(std::make_unique<ObjLodGroup>("6", 300.0f, 400.0f)); // [3] selective 2:2:2
-    lods.emplace_back(std::make_unique<ObjLodGroup>("7", 200.0f, 300.0f)); // [5] selective 2:2
+    lods.emplace_back(std::make_unique<ObjLodGroup>("0", 0.0f, 50.f));     // additive 1
+    lods.emplace_back(std::make_unique<ObjLodGroup>("1", 0.0f, 100.f));    // selective 1
+    lods.emplace_back(std::make_unique<ObjLodGroup>("2", 0.0f, 25.f));     // additive 2
+    lods.emplace_back(std::make_unique<ObjLodGroup>("3", 200.0f, 300.0f)); // selective 1:1:1
+    lods.emplace_back(std::make_unique<ObjLodGroup>("4", 100.0f, 200.0f)); // selective 1:1
+    lods.emplace_back(std::make_unique<ObjLodGroup>("5", 0.0f, 200.f));    // selective 2
+    lods.emplace_back(std::make_unique<ObjLodGroup>("6", 300.0f, 400.0f)); // selective 2:2:2
+    lods.emplace_back(std::make_unique<ObjLodGroup>("7", 200.0f, 300.0f)); // selective 2:2
 
     const auto result = LodsAlg::sort(lods, NoInterrupt());
     ASSERT_TRUE(result) << result.mErr;
     printLods(lods);
 
-    EXPECT_STREQ("2", lods.at(0)->objectName().c_str());
-    EXPECT_STREQ("4", lods.at(1)->objectName().c_str());
-    EXPECT_STREQ("3", lods.at(2)->objectName().c_str());
-    EXPECT_STREQ("6", lods.at(3)->objectName().c_str());
-    EXPECT_STREQ("5", lods.at(4)->objectName().c_str());
-    EXPECT_STREQ("7", lods.at(5)->objectName().c_str());
-    EXPECT_STREQ("1", lods.at(6)->objectName().c_str());
-    EXPECT_STREQ("0", lods.at(7)->objectName().c_str());
+    EXPECT_STREQ("0", lods.at(0)->objectName().c_str());
+    EXPECT_STREQ("1", lods.at(1)->objectName().c_str());
+    EXPECT_STREQ("4", lods.at(2)->objectName().c_str());
+    EXPECT_STREQ("3", lods.at(3)->objectName().c_str());
+    EXPECT_STREQ("6", lods.at(4)->objectName().c_str());
+    EXPECT_STREQ("2", lods.at(5)->objectName().c_str());
+    EXPECT_STREQ("5", lods.at(6)->objectName().c_str());
+    EXPECT_STREQ("7", lods.at(7)->objectName().c_str());
 }
 
 /**************************************************************************************************/

@@ -43,6 +43,7 @@
 #include <string>
 #include <cstddef>
 #include <cstdint>
+#include <stdexcept>
 #include <algorithm>
 #include <memory>
 #include <vector>
@@ -56,6 +57,7 @@
 #include <fstream>
 
 #include "xpln/Export.h"
+#include "exceptions/defines.h"
 #include "sts/utilities/Compare.h"
 #include "sts/string/StringUtils.h"
 #include "converters/StringStream.h"

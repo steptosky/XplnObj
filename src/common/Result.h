@@ -44,7 +44,7 @@ public:
 
     explicit Result(const bool result, const std::string & err = std::string("unspecified error"))
         : mErr(err) {
-        if (!result) {
+        if (result) {
             mErr.clear();
         }
     }
@@ -59,7 +59,7 @@ public:
 
     //-------------------------------------------------------------------------
 
-    operator bool() const { return !mErr.empty(); }
+    operator bool() const { return mErr.empty(); }
 
     //-------------------------------------------------------------------------
 

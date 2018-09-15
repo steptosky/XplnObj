@@ -102,6 +102,7 @@ Result LodsAlg::sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt) {
     //-------------------------------------------
     // orderings
     ObjMain::Lods orderedList;
+    orderedList.reserve(inOutLods.size());
     for (auto & lod : inOutLods) {
         if (!lod) {
             continue;

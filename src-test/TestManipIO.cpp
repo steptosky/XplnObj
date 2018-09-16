@@ -76,7 +76,7 @@ void extractManip(const ObjMain & inMain, EManipulator::eId inManipType, const M
     ASSERT_EQ(1, inMain.lods().size());
     const ObjLodGroup & inLGroup = *inMain.lods().at(0);
     ASSERT_EQ(1, inLGroup.transform().objList().size());
-    ObjAbstract * obj = *(inLGroup.transform().objList().begin());
+    ObjAbstract * obj = inLGroup.transform().objList().begin()->get();
     ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
     auto * inM = static_cast<ObjMesh *>(obj);
     ASSERT_TRUE(inM->pAttr.manipulator() != nullptr);

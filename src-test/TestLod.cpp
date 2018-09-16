@@ -133,7 +133,7 @@ TEST_F(TestLod, lods_grouping) {
     ASSERT_EQ(1500.0, lod1.farVal());
     const Transform::ObjList & objList1 = lod1.transform().objList();
     ASSERT_EQ(1, objList1.size());
-    const auto * obj1 = dynamic_cast<const ObjMesh*>(*objList1.begin());
+    const auto * obj1 = dynamic_cast<const ObjMesh*>(objList1.begin()->get());
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMesh(mesh1, obj1));
 
     //-------------------------
@@ -145,7 +145,7 @@ TEST_F(TestLod, lods_grouping) {
 
     const Transform::ObjList & objList2 = lod2.transform().objList();
     ASSERT_EQ(1, objList2.size());
-    const auto * obj2 = dynamic_cast<const ObjMesh*>(*objList2.begin());
+    const auto * obj2 = dynamic_cast<const ObjMesh*>(objList2.begin()->get());
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMesh(mesh2, obj2));
 
     //-------------------------
@@ -157,8 +157,8 @@ TEST_F(TestLod, lods_grouping) {
 
     const Transform::ObjList & objList3 = lod3.transform().objList();
     ASSERT_EQ(2, objList3.size());
-    const auto * objMesh3 = dynamic_cast<const ObjMesh*>(*objList3.begin());
-    const auto * objMesh4 = dynamic_cast<const ObjMesh*>(*(++objList3.begin()));
+    const auto * objMesh3 = dynamic_cast<const ObjMesh*>(objList3.begin()->get());
+    const auto * objMesh4 = dynamic_cast<const ObjMesh*>((++objList3.begin())->get());
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMesh(mesh3, objMesh3));
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMesh(mesh4, objMesh4));
 }
@@ -215,10 +215,10 @@ TEST(TestLodAccess, property_access) {
     ASSERT_STREQ("Test", lGroup1.transform().name().c_str());
 }
 
-/*
- * Validator.
- * The LODs can be adjustment incorrect so the validator checks this situation.
- */
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
 TEST_F(TestLod, validator) {
     ObjMain main;
 

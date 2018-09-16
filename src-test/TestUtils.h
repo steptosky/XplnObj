@@ -69,7 +69,7 @@ public:
         auto it = transform.objList().begin();
         for (size_t i = 0; i < meshNum; ++i, ++it) {}
         ASSERT_EQ(eObjectType::OBJ_MESH, (*it)->objType());
-        outMesh = static_cast<ObjMesh *>(*it);
+        outMesh = static_cast<ObjMesh *>(it->get());
     }
 
     //-----------------------------------------------------

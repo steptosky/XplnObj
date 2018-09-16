@@ -99,7 +99,7 @@ void ObjWriteInstancing::proccessObjects(Transform & transform, bool & outResult
             outResult = false;
         }
         if (curr->objType() == OBJ_MESH) {
-            auto * mesh = reinterpret_cast<ObjMesh*>(curr);
+            auto * mesh = reinterpret_cast<ObjMesh*>(curr.get());
             proccessAttributes(*mesh, outResult);
         }
         // TODO What about the lights?

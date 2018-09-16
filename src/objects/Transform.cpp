@@ -1,5 +1,5 @@
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -39,6 +39,8 @@ namespace xobj {
 /**************************************************************************************************/
 
 class TreeItem : public sts_t::TreeItem<TreeItem> {
+    // remove loop calling of the destructors
+    friend Transform;
 public:
 
     explicit TreeItem(Transform * inTransformTree)
@@ -67,9 +69,6 @@ public:
 
 private:
 
-    // remove loop calling of the destructors
-    friend Transform;
-
     bool mIsCallDestructor;
     Transform * mTransformTree;
 
@@ -85,9 +84,13 @@ Transform::Transform() {
 
 Transform::~Transform() {
     for (auto & curr : mObjList) {
+        // During destruction object will 
+        // try to delete itself from the transform.
+        // This prevents it as it doesn't make a sense in this case.
         curr->mObjTransform = nullptr;
-        delete curr;
     }
+    mObjList.clear();
+
     // remove loop calling of the destructors
     if (mTreePtr) {
         mTreePtr->mIsCallDestructor = false;
@@ -108,14 +111,16 @@ void Transform::setParent(Transform * parent) {
 }
 
 Transform * Transform::parent() {
-    if (isRoot())
+    if (isRoot()) {
         return nullptr;
+    }
     return mTreePtr->parent()->data();
 }
 
 const Transform * Transform::parent() const {
-    if (isRoot())
+    if (isRoot()) {
         return nullptr;
+    }
     return mTreePtr->parent()->data();
 }
 
@@ -131,12 +136,21 @@ const Transform * Transform::childAt(const TransformIndex index) const {
     return mTreePtr->childAt(index)->data();
 }
 
-bool Transform::isChildOf(const Transform * parent) const {
-    return mTreePtr->isChildOf(parent->mTreePtr);
+bool Transform::isChildOf(const Transform * transform) const {
+    return mTreePtr->isChildOf(transform->mTreePtr);
 }
 
 Transform * Transform::takeChildAt(const TransformIndex index) {
     return mTreePtr->takeChildAt(index)->data();
+}
+
+Transform & Transform::createChild(const char * name) {
+    auto * tr = new Transform;
+    tr->setParent(this);
+    if (name) {
+        tr->setName(name);
+    }
+    return *tr;
 }
 
 /**************************************************************************************************/
@@ -152,27 +166,77 @@ const Transform * Transform::root() const {
 }
 
 /**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+template<typename O, typename F>
+bool callForChildren(O * transform, const F & function) {
+    const Transform::TransformIndex count = transform->childrenCount();
+    for (Transform::TransformIndex i = 0; i < count; ++i) {
+        if (!function(*transform->childAt(i))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+template<typename O, typename F>
+bool callForAllChildren(O * transform, const F & function) {
+    const Transform::TransformIndex numChildren = transform->childrenCount();
+    for (Transform::TransformIndex idx = 0; idx < numChildren; ++idx) {
+        auto currNode = transform->childAt(idx);
+        if (!function(*currNode)) {
+            return false;
+        }
+        if (!callForAllChildren(currNode, function)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+//-------------------------------------------------------------------------
+
+bool Transform::visitChildren(const std::function<bool(Transform &)> & function) {
+    return callForChildren(this, function);
+}
+
+bool Transform::visitChildren(const std::function<bool(const Transform &)> & function) const {
+    return callForChildren(this, function);
+}
+
+//-------------------------------------------------------------------------
+
+bool Transform::visitAllChildren(const std::function<bool(Transform &)> & function) {
+    return callForAllChildren(this, function);
+}
+
+bool Transform::visitAllChildren(const std::function<bool(const Transform &)> & function) const {
+    return callForAllChildren(this, function);
+}
+
+/**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void Transform::addObject(ObjAbstract * baseObj) {
-    if (baseObj) {
-        for (auto curr : mObjList) {
-            if (curr == baseObj) {
-                LWarning << " You try to add an object which is already exist.";
+void Transform::addObject(ObjAbstract * object) {
+    if (object) {
+        for (const auto & curr : mObjList) {
+            if (curr.get() == object) {
+                LWarning << "You try to add an object which already exists.";
                 return;
             }
         }
 
-        baseObj->mObjTransform = this;
-        mObjList.push_back(baseObj);
+        object->mObjTransform = this;
+        mObjList.emplace_back(object);
     }
 }
 
-bool Transform::removeObject(ObjAbstract * baseObj) {
-    if (baseObj) {
+bool Transform::removeObject(const ObjAbstract * object) {
+    if (object) {
         for (auto it = mObjList.begin(); it != mObjList.end(); ++it) {
-            if (*it == baseObj) {
+            if (it->get() == object) {
                 (*it)->mObjTransform = nullptr;
                 mObjList.erase(it);
                 return true;
@@ -187,31 +251,52 @@ const Transform::ObjList & Transform::objList() const {
 }
 
 /**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool Transform::hierarchicalParity(const Transform & parent, bool state) {
-    if (parent.pMatrix.parity()) {
-        state = !state;
+template<typename O, typename F>
+bool callForObjects(O & objects, const F & function) {
+    for (auto & o : objects) {
+        assert(o);
+        if (!function(*o)) {
+            return false;
+        }
     }
-    if (parent.isRoot()) {
-        return state;
-    }
-    return hierarchicalParity(*parent.parent(), state);
-}
-
-bool Transform::hierarchicalParity() const {
-    return hierarchicalParity(*this, false);
+    return true;
 }
 
 //-------------------------------------------------------------------------
 
-const std::string & Transform::name() const {
-    return mName;
+bool Transform::visitObjects(const std::function<bool(ObjAbstract &)> & function) {
+    return callForObjects(mObjList, function);
 }
 
-void Transform::setName(const std::string & val) {
-    mName = val;
+bool Transform::visitObjects(const std::function<bool(const ObjAbstract &)> & function) const {
+    return callForObjects(mObjList, function);
+}
+
+//-------------------------------------------------------------------------
+
+bool Transform::visitAllObjects(const std::function<bool(Transform &, ObjAbstract &)> & function) {
+    if (!visitObjects([&](ObjAbstract & obj) { return function(*this, obj); })) {
+        return false;
+    }
+    return visitAllChildren([&](Transform & tr) {
+        return tr.visitObjects([&](ObjAbstract & obj) {
+            return function(tr, obj);
+        });
+    });
+}
+
+bool Transform::visitAllObjects(const std::function<bool(const Transform &, const ObjAbstract &)> & function) const {
+    if (!visitObjects([&](const ObjAbstract & obj) { return function(*this, obj); })) {
+        return false;
+    }
+    return visitAllChildren([&](const Transform & tr) {
+        return tr.visitObjects([&](const ObjAbstract & obj) {
+            return function(tr, obj);
+        });
+    });
 }
 
 /**************************************************************************************************/
@@ -245,81 +330,26 @@ bool Transform::hasAnimVis() const {
 }
 
 /**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool Transform::visitObjects(const std::function<bool(ObjAbstract &)> & function) {
-    for (auto o : mObjList) {
-        assert(o);
-        if (!function(*o)) {
-            return false;
-        }
+bool Transform::hierarchicalParity(const Transform & parent, bool state) {
+    if (parent.pMatrix.parity()) {
+        state = !state;
     }
-    return true;
+    if (parent.isRoot()) {
+        return state;
+    }
+    return hierarchicalParity(*parent.parent(), state);
 }
 
-bool Transform::visitObjects(const std::function<bool(const ObjAbstract &)> & function) const {
-    for (const auto o : mObjList) {
-        assert(o);
-        if (!function(*o)) {
-            return false;
-        }
-    }
-    return true;
+bool Transform::hierarchicalParity() const {
+    return hierarchicalParity(*this, false);
 }
 
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-bool Transform::visitAllOf(Transform * parent, const std::function<bool(Transform &)> & function) {
-    const TransformIndex numChildren = parent->childrenCount();
-    for (TransformIndex idx = 0; idx < numChildren; ++idx) {
-        Transform * currNode = parent->childAt(idx);
-        if (!function(*currNode)) {
-            return false;
-        }
-        if (!visitAllOf(currNode, function)) {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool Transform::visitAllOf(const Transform * parent, const std::function<bool(const Transform &)> & function) {
-    const TransformIndex numChildren = parent->childrenCount();
-    for (TransformIndex idx = 0; idx < numChildren; ++idx) {
-        const Transform * currNode = parent->childAt(idx);
-        if (!function(*currNode)) {
-            return false;
-        }
-        if (!visitAllOf(currNode, function)) {
-            return false;
-        }
-    }
-    return true;
-}
-
-//-------------------------------------------------------------------------
-
-bool Transform::visitChildren(Transform * parent, const std::function<bool(Transform &)> & function) {
-    const TransformIndex count = parent->childrenCount();
-    for (TransformIndex i = 0; i < count; ++i) {
-        if (!function(*parent->childAt(i))) {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool Transform::visitChildren(const Transform * parent, const std::function<bool(const Transform &)> & function) {
-    const TransformIndex count = parent->childrenCount();
-    for (TransformIndex i = 0; i < count; ++i) {
-        if (!function(*parent->childAt(i))) {
-            return false;
-        }
-    }
-    return true;
+TMatrix Transform::parentMatrix() const {
+    const auto p = parent();
+    return p ? p->pMatrix : TMatrix();
 }
 
 /**************************************************************************************************/

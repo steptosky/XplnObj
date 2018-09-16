@@ -230,14 +230,14 @@ void ObjWriter::printSignature(AbstractWriter & writer, const std::string & sign
 void ObjWriter::calculateVerticiesAndFaces(const Transform & parent) {
     static const ObjMesh * mobj = nullptr;
     static const ObjLine * lobj = nullptr;
-    for (auto obj : parent.objList()) {
+    for (auto & obj : parent.objList()) {
         if (obj->objType() == OBJ_MESH) {
-            mobj = static_cast<const ObjMesh*>(obj);
+            mobj = static_cast<const ObjMesh*>(obj.get());
             mStatistic.pMeshVerticesCount += mobj->pVertices.size();
             mStatistic.pMeshFacesCount += mobj->pFaces.size();
         }
         else if (obj->objType() == OBJ_LINE) {
-            lobj = static_cast<const ObjLine*>(obj);
+            lobj = static_cast<const ObjLine*>(obj.get());
             mStatistic.pLineVerticesCount += lobj->verticesList().size();
         }
         else if (obj->objType() == OBJ_LIGHT_POINT) {
@@ -279,10 +279,10 @@ void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) 
 
     //-------------------------------------------------------------------------
 
-    for (auto objBase : parent.objList()) {
+    for (auto & objBase : parent.objList()) {
         // order attr and manip is important.
-        mWriteAttr.write(&writer, objBase);
-        mObjWriteManip.write(&writer, objBase);
+        mWriteAttr.write(&writer, objBase.get());
+        mObjWriteManip.write(&writer, objBase.get());
 
         //--------------
 

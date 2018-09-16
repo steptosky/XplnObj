@@ -82,9 +82,9 @@ void ObjWriteGeometry::reset() {
 /**************************************************************************************************/
 
 void ObjWriteGeometry::printMeshVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
-    for (auto objBase : transform.objList()) {
+    for (auto & objBase : transform.objList()) {
         if (objBase->objType() == OBJ_MESH) {
-            const auto * mobj = static_cast<const ObjMesh*>(objBase);
+            const auto * mobj = static_cast<const ObjMesh*>(objBase.get());
 
             if (mOptions->isEnabled(XOBJ_EXP_DEBUG)) {
                 writer.printLine(std::string("# ").append(mobj->objectName()));
@@ -124,12 +124,12 @@ void ObjWriteGeometry::printMeshFaceRecursive(AbstractWriter & writer, const Obj
 
 void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Transform & inNode, std::size_t & idx,
                                               std::size_t & offset) const {
-    for (const ObjAbstract * objBase : inNode.objList()) {
+    for (const auto & objBase : inNode.objList()) {
         if (objBase->objType() != OBJ_MESH) {
             continue;
         }
 
-        const auto * mobj = static_cast<const ObjMesh*>(objBase);
+        const auto * mobj = static_cast<const ObjMesh*>(objBase.get());
         const ObjMesh::FaceList & faces = mobj->pFaces;
 
         const std::size_t idxNum = faces.size() * 3U;
@@ -175,9 +175,9 @@ void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Trans
 /**************************************************************************************************/
 
 void ObjWriteGeometry::printLineVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
-    for (auto objBase : transform.objList()) {
+    for (auto & objBase : transform.objList()) {
         if (objBase->objType() == OBJ_LINE) {
-            const auto * lobj = static_cast<const ObjLine*>(objBase);
+            const auto lobj = static_cast<const ObjLine*>(objBase.get());
 
             if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_DEBUG)) {
                 writer.printLine(std::string("# ").append(lobj->objectName()));
@@ -201,9 +201,9 @@ void ObjWriteGeometry::printLineVerticiesRecursive(AbstractWriter & writer, cons
 //-------------------------------------------------------------------------
 
 void ObjWriteGeometry::printLightPointVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
-    for (auto objBase : transform.objList()) {
+    for (auto & objBase : transform.objList()) {
         if (objBase->objType() == OBJ_LIGHT_POINT) {
-            const auto * lobj = static_cast<const ObjLightPoint*>(objBase);
+            const auto lobj = static_cast<const ObjLightPoint*>(objBase.get());
             writer.printLine(toObjString(*lobj, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LIGHT)));
         }
     }

@@ -70,7 +70,7 @@ public:
         for (size_t i = 0; i < inMeshNumber; ++i) {
             ++iterator;
         }
-        ObjAbstract * obj = *(iterator);
+        ObjAbstract * obj = iterator->get();
         ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
         outMesh = static_cast<ObjMesh *>(obj);
     }

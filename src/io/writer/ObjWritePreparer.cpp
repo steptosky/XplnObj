@@ -89,13 +89,10 @@ bool ObjWritePreparer::proccessTransform(Transform & transform, const size_t lod
     return true;
 }
 
-bool ObjWritePreparer::proccessObjects(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod) {
+bool ObjWritePreparer::proccessObjects(Transform & transform, const size_t /*lodNumber*/, const ObjLodGroup & /*lod*/) {
     std::vector<ObjAbstract*> objToDelete;
     for (const auto & curr : transform.objList()) {
         if (!checkParameters(*curr, curr->objectName())) {
-            objToDelete.emplace_back(curr.get());
-        }
-        else if (lodNumber > 0 && findHardPolygons(*curr, lod.objectName())) {
             objToDelete.emplace_back(curr.get());
         }
         else {

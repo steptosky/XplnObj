@@ -81,21 +81,6 @@ bool checkParameters(const AttrGlobSet & attrSet, const std::string & prefix) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool findHardPolygons(const ObjAbstract & baseObj, const std::string & lodName) {
-    if (baseObj.objType() != eObjectType::OBJ_MESH) {
-        return false;
-    }
-    const auto * mesh = static_cast<const ObjMesh*>(&baseObj);
-    if (!mesh->pAttr.hard()) {
-        return false;
-    }
-    ULError << lodName << " LOD contains hard polygons in object <" << baseObj.objectName()
-            << ">. Only the first LOD allowed to contain hard polygons";
-    return true;
-}
-
-/***************************************************************************************/
-
 bool checkParameters(const ObjAbstract & baseObj, const std::string & prefix) {
     switch (baseObj.objType()) {
         case OBJ_NO: return true;

@@ -219,29 +219,100 @@ TEST(TestLodAccess, property_access) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-TEST_F(TestLod, validator) {
+TEST_F(TestLod, validator_near_far_values_case1) {
     ObjMain main;
 
-    // no linked objects
     ObjLodGroup & lGroup1 = main.addLod();
+    ObjLodGroup & lGroup2 = main.addLod();
+    lGroup1.transform().addObject(m1);
+    lGroup2.transform().addObject(m2);
+    m1 = nullptr;
+    m2 = nullptr;
+    lGroup2.setNearVal(0.0f);
+    lGroup2.setFarVal(100.0f);
+
+    // far greater than near
+    lGroup1.setNearVal(20.0f);
+    lGroup1.setFarVal(10.0f);
     ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+
+    // far equals near
+    lGroup1.setNearVal(20.0f);
+    lGroup1.setFarVal(20.0f);
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+
+    // all okay
+    lGroup1.setNearVal(0.0f);
+    lGroup1.setFarVal(20.0f);
+    ASSERT_TRUE(LodsAlg::validate(main.lods(), main.objectName()));
+}
+
+TEST_F(TestLod, validator_near_far_values_case2) {
+    ObjMain main;
+
+    ObjLodGroup & lGroup1 = main.addLod();
     lGroup1.transform().addObject(m1);
     m1 = nullptr;
 
-    // incorrect values 
-    lGroup1.setNearVal(20.0);
-    lGroup1.setFarVal(10.0);
-    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
-
-    // incorrect values 
+    // one lod but starts not from 0.0 
     lGroup1.setNearVal(10.0);
     lGroup1.setFarVal(20.0);
     ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
 
-    // all ok
+    // all okay
     lGroup1.setNearVal(0.0);
     lGroup1.setFarVal(20.0);
     ASSERT_TRUE(LodsAlg::validate(main.lods(), main.objectName()));
+}
+
+TEST_F(TestLod, validator_no_objects) {
+    ObjMain main;
+
+    ObjLodGroup & lGroup1 = main.addLod();
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+    lGroup1.transform().addObject(m1);
+    m1 = nullptr;
+}
+
+TEST_F(TestLod, validator_animation) {
+    ObjMain main;
+
+    ObjLodGroup & lGroup1 = main.addLod();
+    lGroup1.transform().addObject(m1);
+    lGroup1.transform().pAnimTrans.emplace_back(AnimTrans());
+    lGroup1.transform().pAnimTrans.back().pKeys.emplace_back(AnimTransKey(1.0f, 1.0f, 1.0f, 1.0f));
+    lGroup1.transform().pAnimTrans.back().pKeys.emplace_back(AnimTransKey(2.0f, 2.0f, 2.0f, 2.0f));
+    m1 = nullptr;
+
+    lGroup1.setNearVal(0.0);
+    lGroup1.setFarVal(20.0);
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+}
+
+TEST_F(TestLod, validator_identical_lods) {
+    ObjMain main;
+
+    ObjLodGroup & lGroup1 = main.addLod(new ObjLodGroup(TOTEXT(lGroup1), 0.0f, 100.0f));
+    ObjLodGroup & lGroup2 = main.addLod(new ObjLodGroup(TOTEXT(lGroup1), 0.0f, 100.0f));
+    lGroup1.transform().addObject(m1);
+    lGroup2.transform().addObject(m2);
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+    m1 = nullptr;
+    m2 = nullptr;
+}
+
+TEST_F(TestLod, validator_attr_hard) {
+    ObjMain main;
+
+    // no linked objects
+    ObjLodGroup & lGroup1 = main.addLod(new ObjLodGroup(TOTEXT(lGroup1), 0.0f, 100.0f));
+    ObjLodGroup & lGroup2 = main.addLod(new ObjLodGroup(TOTEXT(lGroup2), 100.0f, 200.0f));
+    lGroup1.transform().addObject(m1);
+    lGroup2.transform().addObject(m2);
+    m2->pAttr.setHard(AttrHard(ESurface(ESurface::grass), false));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+    m1 = nullptr;
+    m2 = nullptr;
 }
 
 /**************************************************************************************************/

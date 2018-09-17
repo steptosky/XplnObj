@@ -45,7 +45,14 @@ class LodsAlg {
     ~LodsAlg() = default;
 public:
 
-    XpObjLib static bool validate(const ObjMain::Lods & lods, const std::string & objectName);
+    /*!
+     * \details Validates and prepares LOD objects.
+     * \param [in, out] inOutLods 
+     * \param [in] objectName 
+     * \return False if something is wrong with LODs otherwise true.
+     *          Information about problems is printed to the log.
+     */
+    XpObjLib static bool validate(ObjMain::Lods & inOutLods, const std::string & objectName);
 
     /*!
      * \todo not implemented

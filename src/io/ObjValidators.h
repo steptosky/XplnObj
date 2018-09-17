@@ -48,18 +48,6 @@ class ObjSmoke;
 
 class AttrGlobSet;
 
-/*!
- * \details Hard polygons can only be used in the first LOD.
- *          So algorithms have to use this function to 
- *          check whether the object contains a hard polygons attribute.
- *          This function also prints information to the log
- *          if specified object contains a hard polygons attribute.
- * \param baseObj 
- * \param lodName 
- * \return True if specified object contains a hard polygons attribute, otherwise false.
- */
-XpObjLib bool findHardPolygons(const ObjAbstract & baseObj, const std::string & lodName);
-
 XpObjLib bool checkParameters(const AttrGlobSet & attrSet, const std::string & prefix);
 XpObjLib bool checkParameters(const ObjAbstract & baseObj, const std::string & prefix);
 XpObjLib bool checkParameters(const ObjDummy & obj, const std::string & prefix);

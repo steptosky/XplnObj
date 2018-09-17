@@ -38,7 +38,7 @@
 #include "converters/ObjString.h"
 #include "ObjWriteOptimize.h"
 #include "io/ObjTransformation.h"
-#include "ObjWriteInstancing.h"
+#include "algorithms/InstancingAlg.h"
 #include "common/Logger.h"
 #include "sts/string/StringUtils.h"
 #include "algorithms/LodsAlg.h"
@@ -103,7 +103,7 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
         //-------------------------------------------------------------------------
 
         if (mExportOptions.isEnabled(XOBJ_EXP_CHECK_INSTANCE)) {
-            ObjWriteInstancing::check(*mMain);
+            InstancingAlg::validateAndPrepare(*mMain);
         }
 
         if (!ObjWritePreparer::prepare(*mMain)) {

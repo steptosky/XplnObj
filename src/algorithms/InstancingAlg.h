@@ -29,32 +29,45 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/ObjMesh.h"
-#include "xpln/obj/ObjMain.h"
+#include "xpln/common/IInterrupt.h"
 
 namespace xobj {
+
+class ObjMain;
+class ObjMesh;
+class Transform;
 
 /**********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**********************************************************************************************************************/
 
-// TODO Needs the unit tests
-class ObjWriteInstancing {
-
-    ObjWriteInstancing() = default;
-    ~ObjWriteInstancing() = default;
-
+class InstancingAlg {
+    InstancingAlg() = default;
+    ~InstancingAlg() = default;
 public:
 
-    static bool check(ObjMain & inObjMain);
+    //-------------------------------------------------------------------------
+    /// \name Validator
+    /// @{
 
-private:
+    static bool validateAndPrepare(ObjMain & inObjMain,
+                                   const IInterrupt & interrupt = NoInterrupt());
 
-    static void printBreakInstancing(const char * objName, const char * reason);
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name For testing only
+    /// @{
 
     static void proccessTransform(Transform & transform, bool & outResult);
     static void proccessObjects(Transform & transform, bool & outResult);
     static void proccessAttributes(ObjMesh & mesh, bool & outResult);
+
+    /// @}
+    //-------------------------------------------------------------------------
+
+private:
+
+    static void printBreakInstancing(const char * objName, const char * reason);
 
 };
 

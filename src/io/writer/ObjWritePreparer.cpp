@@ -41,7 +41,7 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool ObjWritePreparer::prepare(ObjMain & mainObj) {
-    if (!LodsAlg::validateAndPrepare(mainObj.lods(), mainObj.objectName())) {
+    if (!LodsAlg::validateAndPrepare(mainObj.lods(), mainObj.objectName(), NoInterrupt())) {
         return false;
     }
 

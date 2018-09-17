@@ -8,7 +8,6 @@
 */
 
 #include <atomic>
-#include "exceptions/defines.h"
 
 namespace xobj {
 
@@ -57,15 +56,12 @@ private:
 /**************************************************************************************************/
 
 #include <stdexcept>
+#include "exceptions/defines.h"
 
+#define INTERRUPT_CHECK_WITH_RETURN(interrupt) if (interrupt.isInterrupted()) {return;}
+#define INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, retVal) if (interrupt.isInterrupted()) {return retVal;}
 #define INTERRUPT_CHECK_WITH_EXCEPTION(interrupt) if (interrupt.isInterrupted()) \
     {throw std::runtime_error(ExcTxt("interrupted"));}
-
-#define INTERRUPT_CHECK_WITH_RETURN(interrupt) if (interrupt.isInterrupted()) \
-    {return;}
-
-#define INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, val) if (interrupt.isInterrupted()) \
-    {return val;}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

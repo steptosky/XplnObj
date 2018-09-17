@@ -56,10 +56,13 @@ public:
      *               
      * \param [in, out] inOutLods 
      * \param [in] objectName 
+     * \param [in] interrupt 
      * \return False if something is wrong with LODs otherwise true.
      *          Information about problems is printed to the log.
      */
-    XpObjLib static bool validateAndPrepare(ObjMain::Lods & inOutLods, const std::string & objectName);
+    XpObjLib static bool validateAndPrepare(ObjMain::Lods & inOutLods,
+                                            const std::string & objectName,
+                                            const IInterrupt & interrupt = NoInterrupt());
 
     /// @}
     //-------------------------------------------------------------------------

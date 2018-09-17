@@ -41,7 +41,10 @@ namespace xobj {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool LodsAlg::validateAndPrepare(ObjMain::Lods & inOutLods, const std::string & objectName) {
+bool LodsAlg::validateAndPrepare(ObjMain::Lods & inOutLods,
+                                 const std::string & objectName,
+                                 const IInterrupt & interrupt) {
+
     if (inOutLods.size() == 1 && inOutLods[0]) {
         //---------------------------
         // Checking if the LOD has incorrect "near" value.
@@ -64,6 +67,7 @@ bool LodsAlg::validateAndPrepare(ObjMain::Lods & inOutLods, const std::string & 
         }
         //---------------------------
         // Checking if the LOD doesn't have objects.
+        INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
         const auto hasObjects = !lod->transform().visitAllObjects([](const auto &, const auto &) { return false; });
         if (!hasObjects) {
             ULError << objectName << " - LOD <" << lod->objectName() << "> doesn't contain any objects.";
@@ -83,6 +87,7 @@ bool LodsAlg::validateAndPrepare(ObjMain::Lods & inOutLods, const std::string & 
         }
         //---------------------------
         // Checking for identical LODs.
+        INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
         auto iter = std::find_if(inOutLods.begin(), inOutLods.end(), [&](const auto & val) {
             return val && lod != val &&
                    lod->nearVal() == val->nearVal() &&
@@ -96,6 +101,7 @@ bool LodsAlg::validateAndPrepare(ObjMain::Lods & inOutLods, const std::string & 
         }
         //---------------------------
         // Checking hard polygons.
+        INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
         const auto hasHardPoly = !lod->transform().visitAllObjects([&](const Transform &, const ObjAbstract & obj) {
             if (obj.objType() != OBJ_MESH) {
                 return true;
@@ -110,8 +116,9 @@ bool LodsAlg::validateAndPrepare(ObjMain::Lods & inOutLods, const std::string & 
         //---------------------------
     }
     //-----------------------------------------------
-    mergeIdenticalLods(inOutLods, NoInterrupt());
-    const auto result = sort(inOutLods, NoInterrupt());
+    INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
+    mergeIdenticalLods(inOutLods, interrupt);
+    const auto result = sort(inOutLods, interrupt);
     if (!result) {
         ULError << objectName << " - " << result.mErr;
         return false;

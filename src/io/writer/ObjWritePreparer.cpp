@@ -41,14 +41,7 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool ObjWritePreparer::prepare(ObjMain & mainObj) {
-    if (!LodsAlg::validate(mainObj.lods(), mainObj.objectName())) {
-        return false;
-    }
-
-    LodsAlg::mergeIdenticalLods(mainObj.lods(), NoInterrupt());
-    const auto result = LodsAlg::sort(mainObj.lods(), NoInterrupt());
-    if (!result) {
-        ULError << mainObj.objectName() << " : " << result.mErr;
+    if (!LodsAlg::validateAndPrepare(mainObj.lods(), mainObj.objectName())) {
         return false;
     }
 

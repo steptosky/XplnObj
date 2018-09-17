@@ -41,7 +41,7 @@ namespace xobj {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool LodsAlg::validate(ObjMain::Lods & inOutLods, const std::string & objectName) {
+bool LodsAlg::validateAndPrepare(ObjMain::Lods & inOutLods, const std::string & objectName) {
     if (inOutLods.size() == 1 && inOutLods[0]) {
         //---------------------------
         // Checking if the LOD has incorrect "near" value.
@@ -109,6 +109,14 @@ bool LodsAlg::validate(ObjMain::Lods & inOutLods, const std::string & objectName
         }
         //---------------------------
     }
+    //-----------------------------------------------
+    mergeIdenticalLods(inOutLods, NoInterrupt());
+    const auto result = sort(inOutLods, NoInterrupt());
+    if (!result) {
+        ULError << objectName << " - " << result.mErr;
+        return false;
+    }
+    //-----------------------------------------------
     return true;
 }
 

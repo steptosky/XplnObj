@@ -45,18 +45,31 @@ class LodsAlg {
     ~LodsAlg() = default;
 public:
 
+    //-------------------------------------------------------------------------
+    /// \name Validator
+    /// @{
+
     /*!
      * \details Validates and prepares LOD objects.
+     * \note It runs \link LodsAlg::mergeIdenticalLods \endlink and 
+     *               \link LodsAlg::sort \endlink 
+     *               
      * \param [in, out] inOutLods 
      * \param [in] objectName 
      * \return False if something is wrong with LODs otherwise true.
      *          Information about problems is printed to the log.
      */
-    XpObjLib static bool validate(ObjMain::Lods & inOutLods, const std::string & objectName);
+    XpObjLib static bool validateAndPrepare(ObjMain::Lods & inOutLods, const std::string & objectName);
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name For testing only
+    /// @{
 
     /*!
      * \todo not implemented
      * \details It merges objects of identical LODs into one LOD.
+     * \note It is not private because of testing.
      * \param [in, out] inOutLods
      * \param [in] interrupt
      */
@@ -64,6 +77,7 @@ public:
 
     /*!
      * \details Sorts the LOD according to obj specification.
+     * \note It is not private because of testing.
      * \param [in, out] inOutLods 
      * \param [in] interrupt 
      * \return false if there is an error with LODs' values 
@@ -72,6 +86,9 @@ public:
      *          otherwise true.
      */
     XpObjLib static Result sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

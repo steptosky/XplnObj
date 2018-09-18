@@ -46,23 +46,46 @@ namespace xobj {
 class ObjLightPoint : public ObjAbstract {
 protected:
 
-    XpObjLib ObjLightPoint(const ObjLightPoint & copy);
+    ObjLightPoint(const ObjLightPoint &) = default;
+    ObjLightPoint(ObjLightPoint &&) = default;
 
 public:
 
+    //-------------------------------------------------------------------------
+    /// \name Construction/Destruction
+    /// @{
+
     XpObjLib ObjLightPoint();
-    ObjLightPoint & operator =(const ObjLightPoint &) = delete;
     virtual ~ObjLightPoint() = default;
 
-    //--------------------------------------------------------
+    ObjLightPoint & operator=(const ObjLightPoint &) = delete;
+    ObjLightPoint & operator=(ObjLightPoint &&) = delete;
 
-    XpObjLib void setColor(const Color & color);
-    XpObjLib void setPosition(const Point3 & pos);
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name Parameters
+    /// @{
 
-    XpObjLib const Color & color() const;
-    XpObjLib const Point3 & position() const;
+    void setColor(const Color & color) {
+        mColor = color;
+    }
 
-    //--------------------------------------------------------
+    void setPosition(const Point3 & pos) {
+        mPosition = pos;
+    }
+
+    const Color & color() const {
+        return mColor;
+    }
+
+    const Point3 & position() const {
+        return mPosition;
+    }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name
+    /// @{
 
     /*! \copydoc ObjAbstract::objType */
     XpObjLib eObjectType objType() const final;
@@ -73,7 +96,8 @@ public:
     /*! \copydoc ObjAbstract::clone */
     XpObjLib ObjAbstract * clone() const override;
 
-    //--------------------------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
 
 private:
 

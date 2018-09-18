@@ -319,19 +319,13 @@ bool checkParameters(const ObjLightNamed & inVal, const std::string & inPrefix) 
 
 bool checkParameters(const ObjLightParam & inVal, const std::string & inPrefix) {
     bool result = true;
-    if (!inVal.lightId().isValid()) {
+    if (inVal.name().empty()) {
         result = false;
         ULError << inPrefix << " - Light name isn't specified.";
     }
-    if (inVal.lightId() == ELightParams(ELightParams::light_params_custom)) {
-        if (inVal.lightName().empty()) {
-            result = false;
-            ULError << inPrefix << " - Custom light name isn't specified.";
-        }
-    }
-    if (inVal.additionalParams().empty()) {
+    if (inVal.params().empty()) {
         result = false;
-        ULError << inPrefix << " - Parameters isn't specified.";
+        ULError << inPrefix << " - Parameters aren't specified.";
     }
     return result;
 }

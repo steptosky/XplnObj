@@ -36,15 +36,8 @@ namespace xobj {
 ///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
 /********************************************************************************************************/
 
-ObjLightParam::ObjLightParam(const ObjLightParam & copy)
-    : ObjAbstractLight(copy),
-      mId(copy.mId),
-      mLightName(copy.mLightName),
-      mAdditional(copy.mAdditional) {}
-
-ObjLightParam::ObjLightParam()
-    : mId(ELightParams::none) {
-    setObjectName("Light Param");
+ObjLightParam::ObjLightParam() {
+    setObjectName("Param light");
 }
 
 /**************************************************************************************************/
@@ -52,9 +45,7 @@ ObjLightParam::ObjLightParam()
 /**************************************************************************************************/
 
 void ObjLightParam::applyTransform(const TMatrix & tm, const bool) {
-    Point3 pos = mPosition;
-    tm.transformPoint(pos);
-    mPosition = pos;
+    tm.transformPoint(mPosition);
 }
 
 /**************************************************************************************************/
@@ -63,34 +54,6 @@ void ObjLightParam::applyTransform(const TMatrix & tm, const bool) {
 
 eObjectType ObjLightParam::objType() const {
     return OBJ_LIGHT_PARAM;
-}
-
-void ObjLightParam::setAdditionalParams(const std::string & params) {
-    mAdditional = params;
-}
-
-const std::string & ObjLightParam::additionalParams() const {
-    return mAdditional;
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void ObjLightParam::setLightId(const ELightParams id) {
-    mId = id;
-}
-
-void ObjLightParam::setLightName(const std::string & name) {
-    mLightName = name;
-}
-
-const std::string & ObjLightParam::lightName() const {
-    return mLightName;
-}
-
-ELightParams ObjLightParam::lightId() const {
-    return mId;
 }
 
 /**************************************************************************************************/

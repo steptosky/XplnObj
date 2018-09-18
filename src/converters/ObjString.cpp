@@ -151,13 +151,10 @@ std::string toObjString(const ObjLightParam & obj, bool printName) {
     if (printName) {
         out << "## " << obj.objectName() << std::endl;
     }
-    if (obj.lightId() == ELightParams(ELightParams::light_params_custom)) {
-        out << LIGHT_PARAM << " " << obj.lightName();
-    }
-    else {
-        out << LIGHT_PARAM << " " << obj.lightId().toString();
-    }
-    out << " " << obj.position().toString(PRECISION) << " " << obj.additionalParams();
+    out << LIGHT_PARAM
+            << " " << obj.name()
+            << " " << obj.position().toString(PRECISION)
+            << " " << obj.params();
     return out.str();
 }
 

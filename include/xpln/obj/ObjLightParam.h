@@ -29,8 +29,8 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <string>
 #include "ObjAbstractLight.h"
-#include "xpln/enums/ELightParams.h"
 
 namespace xobj {
 
@@ -45,25 +45,46 @@ namespace xobj {
 class ObjLightParam : public ObjAbstractLight {
 protected:
 
-    XpObjLib ObjLightParam(const ObjLightParam & copy);
+    XpObjLib ObjLightParam(const ObjLightParam &) = default;
+    XpObjLib ObjLightParam(ObjLightParam &&) = default;
 
 public:
 
+    //-------------------------------------------------------------------------
+    /// \name Construction/Destruction
+    /// @{
+
     XpObjLib ObjLightParam();
-    ObjLightParam & operator =(const ObjLightParam &) = delete;
     virtual ~ObjLightParam() = default;
 
-    //-----------------------------------------------------
+    ObjLightParam & operator=(const ObjLightParam &) = delete;
+    ObjLightParam & operator=(ObjLightParam &&) = delete;
 
-    XpObjLib void setLightId(ELightParams id);
-    XpObjLib void setLightName(const std::string & name);
-    XpObjLib void setAdditionalParams(const std::string & params);
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name Parameters
+    /// @{
 
-    XpObjLib ELightParams lightId() const;
-    XpObjLib const std::string & lightName() const;
-    XpObjLib const std::string & additionalParams() const;
+    void setName(const std::string & name) {
+        mLightName = name;
+    }
 
-    //-----------------------------------------------------
+    void setParams(const std::string & params) {
+        mAdditional = params;
+    }
+
+    const std::string & name() const {
+        return mLightName;
+    }
+
+    const std::string & params() const {
+        return mAdditional;
+    }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name
+    /// @{
 
     /*! \copydoc ObjAbstract::objType */
     XpObjLib eObjectType objType() const final;
@@ -74,11 +95,11 @@ public:
     /* \copydoc ObjAbstract::clone */
     XpObjLib ObjAbstract * clone() const override;
 
-    //--------------------------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
 
 private:
 
-    ELightParams mId;
     std::string mLightName;
     std::string mAdditional;
 

@@ -93,7 +93,7 @@ public:
     /*! \copydoc ObjAbstract::applyTransform */
     XpObjLib void applyTransform(const TMatrix & tm, bool useParity = false) override final;
 
-    /* \copydoc ObjAbstract::clone */
+    /*! \copydoc ObjAbstract::clone */
     XpObjLib ObjAbstract * clone() const override;
 
     /// @}

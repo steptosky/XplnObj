@@ -83,7 +83,7 @@ public:
 
     //-----------------------------------------------------
 
-    /* \copydoc ObjAbstract::clone */
+    /*! \copydoc ObjAbstract::clone */
     XpObjLib ObjAbstract * clone() const override;
 
     //-----------------------------------------------------

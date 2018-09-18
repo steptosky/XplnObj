@@ -139,7 +139,7 @@ std::string toObjString(const ObjLightNamed & obj, bool printName) {
         out << "## " << obj.objectName() << std::endl;
     }
     out << LIGHT_NAMED
-            << " " << obj.lightId().toString()
+            << " " << obj.lightId()
             << " " << obj.position().toString(PRECISION);
     return out.str();
 }

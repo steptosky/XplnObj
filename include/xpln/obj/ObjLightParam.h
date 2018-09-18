@@ -45,8 +45,8 @@ namespace xobj {
 class ObjLightParam : public ObjAbstractLight {
 protected:
 
-    XpObjLib ObjLightParam(const ObjLightParam &) = default;
-    XpObjLib ObjLightParam(ObjLightParam &&) = default;
+    ObjLightParam(const ObjLightParam &) = default;
+    ObjLightParam(ObjLightParam &&) = default;
 
 public:
 

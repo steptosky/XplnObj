@@ -36,27 +36,10 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-ObjLightCustom::ObjLightCustom(const ObjLightCustom & copy)
-    : ObjAbstractLight(copy),
-      mColor(copy.mColor),
-      mSize(copy.mSize),
-      mTexture(copy.mTexture),
-      mDataRef(copy.mDataRef) {}
-
 ObjLightCustom::ObjLightCustom()
     : mSize(10.0f),
       mTexture(Point2(0.0f, 0.0f), Point2(1.0f, 1.0f)) {
-    setObjectName("Light Custom");
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void ObjLightCustom::applyTransform(const TMatrix & tm, const bool) {
-    Point3 pos = mPosition;
-    tm.transformPoint(pos);
-    mPosition = pos;
+    setObjectName("Custom light");
 }
 
 /**************************************************************************************************/
@@ -67,41 +50,9 @@ eObjectType ObjLightCustom::objType() const {
     return OBJ_LIGHT_CUSTOM;
 }
 
-RectangleI ObjLightCustom::textureRect() const {
-    return mTexture;
+void ObjLightCustom::applyTransform(const TMatrix & tm, const bool) {
+    tm.transformPoint(mPosition);
 }
-
-float ObjLightCustom::size() const {
-    return mSize;
-}
-
-void ObjLightCustom::setSize(float size) {
-    mSize = size;
-}
-
-Color ObjLightCustom::color() const {
-    return mColor;
-}
-
-void ObjLightCustom::setColor(const Color & color) {
-    mColor = color;
-}
-
-const std::string & ObjLightCustom::dataRef() const {
-    return mDataRef;
-}
-
-void ObjLightCustom::setDataRef(const std::string & dataRef) {
-    mDataRef = dataRef;
-}
-
-void ObjLightCustom::setTextureRect(const RectangleI & textureRect) {
-    mTexture = textureRect;
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
 
 ObjAbstract * ObjLightCustom::clone() const {
     return new ObjLightCustom(*this);

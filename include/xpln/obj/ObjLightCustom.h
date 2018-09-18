@@ -46,27 +46,62 @@ namespace xobj {
 class ObjLightCustom : public ObjAbstractLight {
 protected:
 
-    XpObjLib ObjLightCustom(const ObjLightCustom & copy);
+    ObjLightCustom(const ObjLightCustom &) = default;
+    ObjLightCustom(ObjLightCustom &&) = default;
 
 public:
 
+    //-------------------------------------------------------------------------
+    /// \name Construction/Destruction
+    /// @{
+
     XpObjLib ObjLightCustom();
-    ObjLightCustom & operator =(const ObjLightCustom &) = delete;
     virtual ~ObjLightCustom() = default;
 
-    //--------------------------------------------------------
+    ObjLightCustom & operator=(const ObjLightCustom &) = delete;
+    ObjLightCustom & operator=(ObjLightCustom &&) = delete;
 
-    XpObjLib void setSize(float size);
-    XpObjLib void setColor(const Color & color);
-    XpObjLib void setTextureRect(const RectangleI & textureRect);
-    XpObjLib void setDataRef(const std::string & dataRef);
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name Parameters
+    /// @{
 
-    XpObjLib float size() const;
-    XpObjLib Color color() const;
-    XpObjLib RectangleI textureRect() const;
-    XpObjLib const std::string & dataRef() const;
+    void setSize(const float size) {
+        mSize = size;
+    }
 
-    //--------------------------------------------------------
+    void setColor(const Color & color) {
+        mColor = color;
+    }
+
+    void setTextureRect(const RectangleI & textureRect) {
+        mTexture = textureRect;
+    }
+
+    void setDataRef(const std::string & dataRef) {
+        mDataRef = dataRef;
+    }
+
+    float size() const {
+        return mSize;
+    }
+
+    Color color() const {
+        return mColor;
+    }
+
+    RectangleI textureRect() const {
+        return mTexture;
+    }
+
+    const std::string & dataRef() const {
+        return mDataRef;
+    }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name
+    /// @{
 
     /*! \copydoc ObjAbstract::objType */
     XpObjLib eObjectType objType() const final;
@@ -77,7 +112,8 @@ public:
     /*! \copydoc ObjAbstract::clone */
     XpObjLib ObjAbstract * clone() const override;
 
-    //--------------------------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
 
 private:
 

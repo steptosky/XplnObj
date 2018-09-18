@@ -321,7 +321,7 @@ bool checkParameters(const ObjLightParam & inVal, const std::string & inPrefix) 
     bool result = true;
     if (!inVal.lightId().isValid()) {
         result = false;
-        ULError << inPrefix << " - Light objectName isn't specified.";
+        ULError << inPrefix << " - Light name isn't specified.";
     }
     if (inVal.lightId() == ELightParams(ELightParams::light_params_custom)) {
         if (inVal.lightName().empty()) {

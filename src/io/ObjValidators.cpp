@@ -308,7 +308,7 @@ bool checkParameters(const ObjLightCustom & inVal, const std::string & inPrefix)
 
 bool checkParameters(const ObjLightNamed & inVal, const std::string & inPrefix) {
     bool result = true;
-    if (inVal.lightId().empty()) {
+    if (inVal.name().empty()) {
         result = false;
         ULError << inPrefix << " - Light name isn't specified.";
     }

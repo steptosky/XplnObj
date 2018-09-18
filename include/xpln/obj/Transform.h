@@ -298,7 +298,7 @@ private:
     static bool hierarchicalParity(const Transform & parent, bool state = false);
 
     TreeItem * mTreePtr;
-    std::string mName = "no name Transform";
+    std::string mName = "Transform";
     ObjList mObjList;
 
 };

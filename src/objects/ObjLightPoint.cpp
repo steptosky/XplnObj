@@ -46,13 +46,13 @@ ObjLightPoint::ObjLightPoint()
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
+eObjectType ObjLightPoint::objType() const {
+    return OBJ_LIGHT_POINT;
+}
+
 void ObjLightPoint::applyTransform(const TMatrix & tm, const bool) {
     tm.transformPoint(mPosition);
 }
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
 
 ObjAbstract * ObjLightPoint::clone() const {
     return new ObjLightPoint(*this);

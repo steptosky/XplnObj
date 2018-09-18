@@ -5,6 +5,11 @@ StepToSky: X-Plane Obj Library
 - **Added** Ability to use tool-tip in ATTR_manip_noop.
 - **Fixed** Sorting algorithm for LODs.
 
+##### Breaking backward compatibility
+- **Changes:** Methods for accessing to the LODs.
+- **Changes:** Changed named light's methods.
+- **Removed:** ELightNamed. For getting light names use `X-Plane Root/Resources/bitmaps/world/lites/lights.txt`
+ 
 ---------------------------------------------------------------------------
 #### 0.6.2-beta (31.08.2018)
 
@@ -32,11 +37,12 @@ StepToSky: X-Plane Obj Library
              `ATTR_axis_detented`,  
              `ATTR_axis_detent_range`,  
              `ATTR_manip_keyframe`
-- **Changes break backward compatibility:** The wheel manipulator is composed now.  
 - **Updated:** Some methods of manipulators were renamed/corrected according to .the obj specification. The old ones got the deprecated attribute.
 - **Updated:** Building scripts and their documentation.
 - **Fixed:** Printing incorrect attribute name for the
              `ATTR_manip_command_switch_up_down` and `ATTR_manip_command_switch_left_right`.
+##### Breaking backward compatibility
+- **Changes:** The wheel manipulator is composed now.  
 
 ---------------------------------------------------------------------------
 #### 0.5.0-beta (05.10.2017)

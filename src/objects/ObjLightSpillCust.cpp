@@ -38,19 +38,11 @@ namespace xobj {
 ///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
 /********************************************************************************************************/
 
-ObjLightSpillCust::ObjLightSpillCust(const ObjLightSpillCust & copy)
-    : ObjAbstractLight(copy),
-      mSize(copy.mSize),
-      mSemi(copy.mSemi),
-      mColor(copy.mColor),
-      mDirection(copy.mDirection),
-      mDataRef(copy.mDataRef) {}
-
 ObjLightSpillCust::ObjLightSpillCust()
     : mSize(10.0f),
       mSemi(0.0f) {
 
-    setObjectName("Light Spill Custom");
+    setObjectName("Spill custom light");
 }
 
 /**************************************************************************************************/
@@ -65,72 +57,24 @@ float ObjLightSpillCust::semiAngle() const {
     return std::acos(mSemi) * 2.0f;
 }
 
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void ObjLightSpillCust::applyTransform(const TMatrix & tm, const bool) {
-    Point3 pos = mPosition;
-    tm.transformPoint(pos);
-    mPosition = pos;
-
-    Point3 dir = direction();
-    tm.transformVector(dir);
-    setDirection(dir);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-eObjectType ObjLightSpillCust::objType() const {
-    return OBJ_LIGHT_SPILL_CUSTOM;
-}
-
-Point3 ObjLightSpillCust::direction() const {
-    return mDirection;
-}
-
 void ObjLightSpillCust::setDirection(const Point3 & direction) {
     mDirection = direction;
     mDirection.normalize();
 }
 
-void ObjLightSpillCust::setColor(const Color & color) {
-    mColor = color;
-}
-
-Color ObjLightSpillCust::color() const {
-    return mColor;
-}
-
-float ObjLightSpillCust::semiRaw() const {
-    return mSemi;
-}
-
-void ObjLightSpillCust::setSemiRaw(const float semi) {
-    mSemi = semi;
-}
-
-float ObjLightSpillCust::size() const {
-    return mSize;
-}
-
-void ObjLightSpillCust::setSize(const float size) {
-    mSize = size;
-}
-
-const std::string & ObjLightSpillCust::dataRef() const {
-    return mDataRef;
-}
-
-void ObjLightSpillCust::setDataRef(const std::string & dataRef) {
-    mDataRef = dataRef;
-}
-
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
+
+void ObjLightSpillCust::applyTransform(const TMatrix & tm, const bool) {
+    tm.transformPoint(mPosition);
+    tm.transformVector(mDirection);
+    mDirection.normalize();
+}
+
+eObjectType ObjLightSpillCust::objType() const {
+    return OBJ_LIGHT_SPILL_CUSTOM;
+}
 
 ObjAbstract * ObjLightSpillCust::clone() const {
     return new ObjLightSpillCust(*this);

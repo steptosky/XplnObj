@@ -45,31 +45,71 @@ namespace xobj {
 class ObjLightSpillCust : public ObjAbstractLight {
 protected:
 
-    XpObjLib ObjLightSpillCust(const ObjLightSpillCust & copy);
+    ObjLightSpillCust(const ObjLightSpillCust &) = default;
+    ObjLightSpillCust(ObjLightSpillCust &&) = default;
 
 public:
 
+    //-------------------------------------------------------------------------
+    /// \name Construction/Destruction
+    /// @{
+
     XpObjLib ObjLightSpillCust();
-    ObjLightSpillCust & operator =(const ObjLightSpillCust &) = delete;
     virtual ~ObjLightSpillCust() = default;
 
-    //--------------------------------------------------------
+    ObjLightSpillCust & operator=(const ObjLightSpillCust &) = delete;
+    ObjLightSpillCust & operator=(ObjLightSpillCust &&) = delete;
 
-    XpObjLib void setColor(const Color & color);
-    XpObjLib void setSize(float size);
-    XpObjLib void setSemiRaw(float semi);
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name Parameters
+    /// @{
+
+    void setColor(const Color & color) {
+        mColor = color;
+    }
+
+    void setSize(const float size) {
+        mSize = size;
+    }
+
+    void setSemiRaw(const float semi) {
+        mSemi = semi;
+    }
+
     XpObjLib void setSemiAngle(float radians);
     XpObjLib void setDirection(const Point3 & direction);
-    XpObjLib void setDataRef(const std::string & dataRef);
 
-    XpObjLib Color color() const;
-    XpObjLib float size() const;
-    XpObjLib float semiRaw() const;
+    void setDataRef(const std::string & dataRef) {
+        mDataRef = dataRef;
+    }
+
+    Color color() const {
+        return mColor;
+    }
+
+    float size() const {
+        return mSize;
+    }
+
+    float semiRaw() const {
+        return mSemi;
+    }
+
     XpObjLib float semiAngle() const;
-    XpObjLib Point3 direction() const;
-    XpObjLib const std::string & dataRef() const;
 
-    //--------------------------------------------------------
+    Point3 direction() const {
+        return mDirection;
+    }
+
+    const std::string & dataRef() const {
+        return mDataRef;
+    }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name
+    /// @{
 
     /*! \copydoc ObjAbstract::objType */
     XpObjLib eObjectType objType() const final;
@@ -80,7 +120,8 @@ public:
     /* \copydoc ObjAbstract::clone */
     XpObjLib ObjAbstract * clone() const override;
 
-    //--------------------------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
 
 private:
 

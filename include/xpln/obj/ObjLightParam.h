@@ -101,8 +101,8 @@ public:
      * \note Example:
      * \code
      *  setParams("$direction_sp 0 $myParam", {
-     *      {"$direction", [&]() { return "0 -1 0"; }},
-     *      {"$myParam", [&]() { return "20.0"; }},
+     *      {"direction", [&]() { return "0 -1 0"; }},
+     *      {"myParam", [&]() { return "20.0"; }},
      *  });
      * \endcode
      * 

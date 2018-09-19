@@ -77,13 +77,6 @@ public:
     }
 
     /*!
-     * \details Sets row parameters.
-     */
-    void setParams(const std::string & params) {
-        mParams = params;
-    }
-
-    /*!
      * \details Sets and expands parameters.
      * \pre Use \link LightUtils \endlink to calculate some parameters.
      * 

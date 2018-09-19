@@ -29,6 +29,9 @@
 
 #include "xpln/obj/ObjLightParam.h"
 #include "xpln/obj/Transform.h"
+#include "sts/string/StringUtils.h"
+#include "exceptions/defines.h"
+#include "converters/Defines.h"
 
 namespace xobj {
 
@@ -44,8 +47,48 @@ ObjLightParam::ObjLightParam() {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjLightParam::applyTransform(const TMatrix & tm, const bool) {
-    tm.transformPoint(mPosition);
+void ObjLightParam::setParams(const std::string & params, const LightUtils::ParamExpanderMap & expander) {
+    using namespace std::string_literals;
+
+    mIsSpill = false;
+    mIsDirection = false;
+    mDirection.clear();
+    mBillboardScale = 1.0f;
+
+    auto expanderCopy = expander;
+    for (auto & pair : expanderCopy) {
+        if (pair.first == "direction_sp" || pair.first == "direction") {
+            mIsDirection = true;
+            const auto expandedStrVar = pair.second();
+            const auto strVars = sts::MbStrUtils::splitToVector(pair.second(), " ");
+            if (pair.first == "direction_sp") {
+                if (strVars.size() != 3) {
+                    throw std::runtime_error(ExcTxt("$direction_sp expander returned incorrect [X Y Z] value: "s.append(expandedStrVar)));
+                }
+                mIsSpill = true;
+                mDirection.set(std::stof(strVars[0]), std::stof(strVars[1]), std::stof(strVars[2]));
+                pair.second = []() { return "$direction_sp"; };
+            }
+            else {
+                if (strVars.size() != 4) {
+                    throw std::runtime_error(ExcTxt("$direction expander returned incorrect [X Y Z S] value: "s.append(expandedStrVar)));
+                }
+                mDirection.set(std::stof(strVars[0]), std::stof(strVars[1]), std::stof(strVars[2]));
+                mBillboardScale = std::stof(strVars[3]);
+                pair.second = []() { return "$direction"; };
+            }
+        }
+    }
+    mParams = LightUtils::replaceVariables(params, expanderCopy);
+}
+
+std::string ObjLightParam::params() const {
+    if (!mIsDirection) {
+        return mParams;
+    }
+    return LightUtils::replaceVariables(mParams, {
+            {mIsSpill ? "direction_sp" : "direction", [&]() { return (mDirection * mBillboardScale).toString(PRECISION); }},
+    });
 }
 
 /**************************************************************************************************/
@@ -56,9 +99,12 @@ eObjectType ObjLightParam::objType() const {
     return OBJ_LIGHT_PARAM;
 }
 
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
+void ObjLightParam::applyTransform(const TMatrix & tm, const bool) {
+    tm.transformPoint(mPosition);
+    if (mIsDirection) {
+        tm.transformVector(mDirection);
+    }
+}
 
 ObjAbstract * ObjLightParam::clone() const {
     return new ObjLightParam(*this);

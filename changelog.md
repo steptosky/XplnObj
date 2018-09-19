@@ -3,13 +3,15 @@ StepToSky: X-Plane Obj Library
 #### Next
 
 - **Added** Ability to use tool-tip in ATTR_manip_noop.
+- **Added** Ability to use text variables in the param light's parameters string.
 - **Fixed** Sorting algorithm for LODs.
 
 ##### Breaking backward compatibility
 - **Changes:** Methods for accessing to the LODs.
 - **Changes:** Changed named light's methods.
 - **Changes:** Changed param light's methods.
-- **Removed:** ELightNamed and ELightParams. For getting light names use `X-Plane Root/Resources/bitmaps/world/lites/lights.txt`
+- **Removed:** ELightNamed and ELightParams. 
+               For getting light names use `X-Plane Root/Resources/bitmaps/world/lites/lights.txt`
  
 ---------------------------------------------------------------------------
 #### 0.6.2-beta (31.08.2018)

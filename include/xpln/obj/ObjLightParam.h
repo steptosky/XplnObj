@@ -30,7 +30,10 @@
 */
 
 #include <string>
+#include <map>
 #include "ObjAbstractLight.h"
+#include "xpln/common/Color.h"
+#include "xpln/utils/LightUtils.h"
 
 namespace xobj {
 
@@ -69,17 +72,61 @@ public:
         mLightName = name;
     }
 
-    void setParams(const std::string & params) {
-        mAdditional = params;
-    }
-
     const std::string & name() const {
         return mLightName;
     }
 
-    const std::string & params() const {
-        return mAdditional;
+    /*!
+     * \details Sets row parameters.
+     */
+    void setParams(const std::string & params) {
+        mParams = params;
     }
+
+    /*!
+     * \details Sets and expands parameters.
+     * \pre Use \link LightUtils \endlink to calculate some parameters.
+     * 
+     * \warning There are some predefined variables.
+     *          Those variables will be processed during export and can't be calculated before it.<br>
+     *          Although they are processed while exporting they are retrieved with this method
+     *          and after this method done the "expander" may be deleted.
+     *          \li $direction_sp - X Y Z. Spill light direction.
+     *          \li $direction - X Y Z S. Billboard direction. It uses addition scale parameter.<br>
+     *                           The scale must be set with the \link LightUtils::billboardDirectionScaleFromAngle \endlink.<br>
+     *                           For more information about billboard scaling see
+     *                           https://developer.x-plane.com/?article=airplane-parameterized-light-guide#Cone_Width_for_Billboard_Lights <br>
+     *                           It doesn't make a sense to scale direction before set it
+     *                           because the direction vector will be changed by 
+     *                           \link ObjLightParam::applyTransform \endlink and normalized.
+     *                           
+     *          
+     * \warning You can use some methods from \link LightUtils \endlink
+     *          but you must not use \link LightUtils::replaceVariables \endlink
+     *          directly instead of this method.
+     *          
+     * \note Example:
+     * \code
+     *  setParams("$direction_sp 0 $myParam", {
+     *      {"$direction", [&]() { return "0 -1 0"; }},
+     *      {"$myParam", [&]() { return "20.0"; }},
+     *  });
+     * \endcode
+     * 
+     * \param [in] params string that may contain values and variables.
+     *                    The string musts not contain light name and position.
+     *                    They should be set with the corresponding class methods.
+     * \param [in] expander variables expander. The key is the variable name without $ the value is functional.
+     * 
+     * \exception std::runtime_error if getter for variable isn't specified 
+     *                               or variable syntax incorrect
+     *                               or returned by expander value is incorrect.
+     * \exception std::invalid_argument if some expanded values could not be converted.
+     * \exception std::out_of_range if some expanded values could not be converted.
+     */
+    XpObjLib void setParams(const std::string & params, const LightUtils::ParamExpanderMap & expander);
+
+    XpObjLib std::string params() const;
 
     /// @}
     //-------------------------------------------------------------------------
@@ -100,8 +147,12 @@ public:
 
 private:
 
+    float mBillboardScale = 1.0f;
+    bool mIsSpill = false;
+    bool mIsDirection = false;
+    Point3 mDirection;
     std::string mLightName;
-    std::string mAdditional;
+    std::string mParams;
 
 };
 

@@ -30,6 +30,7 @@
 */
 
 #include "ObjAbstractLight.h"
+#include "xpln/utils/LightUtils.h"
 #include "xpln/common/Color.h"
 
 namespace xobj {
@@ -77,8 +78,14 @@ public:
         mSemi = semi;
     }
 
-    XpObjLib void setSemiAngle(float radians);
-    XpObjLib void setDirection(const Point3 & direction);
+    void setSemiAngle(const float radians) {
+        mSemi = LightUtils::spillConeWidthFromAngle(radians);
+    }
+
+    void setDirection(const Point3 & direction) {
+        mDirection = direction;
+        mDirection.normalize();
+    }
 
     void setDataRef(const std::string & dataRef) {
         mDataRef = dataRef;
@@ -96,7 +103,9 @@ public:
         return mSemi;
     }
 
-    XpObjLib float semiAngle() const;
+    float semiAngle() const {
+        return LightUtils::spillConeWidthToAngle(mSemi);
+    }
 
     Point3 direction() const {
         return mDirection;

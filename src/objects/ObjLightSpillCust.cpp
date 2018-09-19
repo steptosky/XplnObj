@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <cmath>
-
 #include "xpln/obj/ObjLightSpillCust.h"
 #include "xpln/obj/Transform.h"
 
@@ -43,23 +41,6 @@ ObjLightSpillCust::ObjLightSpillCust()
       mSemi(0.0f) {
 
     setObjectName("Spill custom light");
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void ObjLightSpillCust::setSemiAngle(const float radians) {
-    mSemi = std::cos(radians / 2.0f);
-}
-
-float ObjLightSpillCust::semiAngle() const {
-    return std::acos(mSemi) * 2.0f;
-}
-
-void ObjLightSpillCust::setDirection(const Point3 & direction) {
-    mDirection = direction;
-    mDirection.normalize();
 }
 
 /**************************************************************************************************/

@@ -179,14 +179,14 @@ public:
     /*!
      * \details Calls specified function only for children of this transform.
      * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function.
+     * \return False if iterating was stopped by function otherwise true.
      */
     XpObjLib bool visitChildren(const std::function<bool(Transform &)> & function);
 
     /*!
      * \details Calls specified function only for children of this transform.
      * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function.
+     * \return False if iterating was stopped by function otherwise true.
      */
     XpObjLib bool visitChildren(const std::function<bool(const Transform &)> & function) const;
 
@@ -194,7 +194,7 @@ public:
      * \details Calls specified function for all children in hierarchy 
      *          i.e. iterating full tree where this transform is root.
      * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function.
+     * \return False if iterating was stopped by function otherwise true.
      */
     XpObjLib bool visitAllChildren(const std::function<bool(Transform &)> & function);
 
@@ -202,9 +202,54 @@ public:
      * \details Calls specified function for all children in hierarchy
      *          i.e. iterating full tree where this transform is root.
      * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function.
+     * \return False if iterating was stopped by function otherwise true.
      */
     XpObjLib bool visitAllChildren(const std::function<bool(const Transform &)> & function) const;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name Iteration
+    /// @{
+
+    /*!
+     * \details Calls specified function for this transform and 
+     *          all its children in hierarchy.
+     *          i.e. iterating full tree where this transform is root.
+     * \details Unlike \link Transform::visitAllChildren \endlink
+     *          it also calls function for this transform.
+     * \param function Return false if you want to stop iterating.
+     * \return False if iterating was stopped by function otherwise true.
+     */
+    XpObjLib bool iterateDown(const std::function<bool(Transform &)> & function);
+
+    /*!
+     * \details Calls specified function for this transform and
+     *          all its children in hierarchy.
+     *          i.e. iterating full tree where this transform is root.
+     * \details Unlike \link Transform::visitAllChildren \endlink
+     *          it also calls function for this transform.
+     * \param function Return false if you want to stop iterating.
+     * \return False if iterating was stopped by function otherwise true.
+     */
+    XpObjLib bool iterateDown(const std::function<bool(const Transform &)> & function) const;
+
+    /*!
+     * \details Calls specified function for
+     *          this transform and all its parents
+     *          according to the hierarchy.
+     * \param function Return false if you want to stop iterating.
+     * \return False if iterating was stopped by function otherwise true.
+     */
+    XpObjLib bool iterateUp(const std::function<bool(const Transform &)> & function) const;
+
+    /*!
+     * \details Calls specified function for
+     *          this transform and all its parents
+     *          according to the hierarchy.
+     * \param function Return false if you want to stop iterating.
+     * \return False if iterating was stopped by function otherwise true.
+     */
+    XpObjLib bool iterateUp(const std::function<bool(Transform &)> & function);
 
     /// @}
     //-------------------------------------------------------------------------
@@ -238,14 +283,14 @@ public:
     /*!
      * \details Calls specified function for each object of this transform.
      * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function.
+     * \return False if iterating was stopped by function otherwise true.
      */
     XpObjLib bool visitObjects(const std::function<bool(ObjAbstract &)> & function);
 
     /*!
      * \details Calls specified function for each object of this transform.
      * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function.
+     * \return False if iterating was stopped by function otherwise true.
      */
     XpObjLib bool visitObjects(const std::function<bool(const ObjAbstract &)> & function) const;
 
@@ -253,7 +298,7 @@ public:
      * \details Calls specified functions for each object in 
      *          the hierarchy including this one.
      * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function.
+     * \return False if iterating was stopped by function otherwise true.
      */
     XpObjLib bool visitAllObjects(const std::function<bool(Transform &, ObjAbstract &)> & function);
 
@@ -261,9 +306,10 @@ public:
      * \details Calls specified functions for each object in 
      *          the hierarchy including this one.
      * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function.
+     * \return False if iterating was stopped by function otherwise true.
      */
     XpObjLib bool visitAllObjects(const std::function<bool(const Transform &, const ObjAbstract &)> & function) const;
+
     /// @}
     //-------------------------------------------------------------------------
     /// \name Animation
@@ -284,18 +330,10 @@ public:
      */
     XpObjLib TMatrix parentMatrix() const;
 
-    /*!
-     * \details It comes up to the root and calculates parity value.
-     * \see \link TMatrix::parity \endlink
-     */
-    XpObjLib bool hierarchicalParity() const;
-
     /// @}
     //-------------------------------------------------------------------------
 
 private:
-
-    static bool hierarchicalParity(const Transform & parent, bool state = false);
 
     TreeItem * mTreePtr;
     std::string mName = "Transform";

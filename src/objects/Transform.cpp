@@ -195,6 +195,18 @@ bool callForAllChildren(O * transform, const F & function) {
     return true;
 }
 
+template<typename O, typename F>
+bool iterateUpByHierarchy(O * transform, const F & function) {
+    assert(transform);
+    if (!function(*transform)) {
+        return false;
+    }
+    if (transform->isRoot()) {
+        return true;
+    }
+    return iterateUpByHierarchy(transform->parent(), function);
+}
+
 //-------------------------------------------------------------------------
 
 bool Transform::visitChildren(const std::function<bool(Transform &)> & function) {
@@ -213,6 +225,30 @@ bool Transform::visitAllChildren(const std::function<bool(Transform &)> & functi
 
 bool Transform::visitAllChildren(const std::function<bool(const Transform &)> & function) const {
     return callForAllChildren(this, function);
+}
+
+//-------------------------------------------------------------------------
+
+bool Transform::iterateDown(const std::function<bool(Transform &)> & function) {
+    if (!function(*this)) {
+        return false;
+    }
+    return callForAllChildren(this, function);
+}
+
+bool Transform::iterateDown(const std::function<bool(const Transform &)> & function) const {
+    if (!function(*this)) {
+        return false;
+    }
+    return callForAllChildren(this, function);
+}
+
+bool Transform::iterateUp(const std::function<bool(const Transform &)> & function) const {
+    return iterateUpByHierarchy(this, function);
+}
+
+bool Transform::iterateUp(const std::function<bool(Transform &)> & function) {
+    return iterateUpByHierarchy(this, function);
 }
 
 /**************************************************************************************************/
@@ -278,10 +314,7 @@ bool Transform::visitObjects(const std::function<bool(const ObjAbstract &)> & fu
 //-------------------------------------------------------------------------
 
 bool Transform::visitAllObjects(const std::function<bool(Transform &, ObjAbstract &)> & function) {
-    if (!visitObjects([&](ObjAbstract & obj) { return function(*this, obj); })) {
-        return false;
-    }
-    return visitAllChildren([&](Transform & tr) {
+    return iterateDown([&](Transform & tr) {
         return tr.visitObjects([&](ObjAbstract & obj) {
             return function(tr, obj);
         });
@@ -289,10 +322,7 @@ bool Transform::visitAllObjects(const std::function<bool(Transform &, ObjAbstrac
 }
 
 bool Transform::visitAllObjects(const std::function<bool(const Transform &, const ObjAbstract &)> & function) const {
-    if (!visitObjects([&](const ObjAbstract & obj) { return function(*this, obj); })) {
-        return false;
-    }
-    return visitAllChildren([&](const Transform & tr) {
+    return iterateDown([&](const Transform & tr) {
         return tr.visitObjects([&](const ObjAbstract & obj) {
             return function(tr, obj);
         });
@@ -332,20 +362,6 @@ bool Transform::hasAnimVis() const {
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
-
-bool Transform::hierarchicalParity(const Transform & parent, bool state) {
-    if (parent.pMatrix.parity()) {
-        state = !state;
-    }
-    if (parent.isRoot()) {
-        return state;
-    }
-    return hierarchicalParity(*parent.parent(), state);
-}
-
-bool Transform::hierarchicalParity() const {
-    return hierarchicalParity(*this, false);
-}
 
 TMatrix Transform::parentMatrix() const {
     const auto p = parent();

@@ -113,9 +113,9 @@ TEST(TestTransform_case2, case1) {
     ObjLodGroup & lodOut = mainOut.addLod();
 
     Transform & transformOut0 = lodOut.transform();
-    Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
-    Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
-    Transform & transformOut3 = transformOut2.createChild(TOTEXT(transformOut3));
+    Transform & transformOut1 = transformOut0.newChild(TOTEXT(transformOut1));
+    Transform & transformOut2 = transformOut1.newChild(TOTEXT(transformOut2));
+    Transform & transformOut3 = transformOut2.newChild(TOTEXT(transformOut3));
 
     transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
@@ -250,9 +250,9 @@ TEST(TestTransform_case2, case2) {
     ObjLodGroup & lodOut = mainOut.addLod();
 
     Transform & transformOut0 = lodOut.transform();
-    Transform & transformOut1 = transformOut0.createChild(TOTEXT(transformOut1));
-    Transform & transformOut2 = transformOut1.createChild(TOTEXT(transformOut2));
-    Transform & transformOut3 = transformOut2.createChild(TOTEXT(transformOut3));
+    Transform & transformOut1 = transformOut0.newChild(TOTEXT(transformOut1));
+    Transform & transformOut2 = transformOut1.newChild(TOTEXT(transformOut2));
+    Transform & transformOut3 = transformOut2.newChild(TOTEXT(transformOut3));
 
     transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));

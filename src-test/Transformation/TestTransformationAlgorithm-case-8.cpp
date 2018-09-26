@@ -61,8 +61,8 @@ TEST(TestTransformationAlgorithm_case8, case1) {
     ObjLodGroup & lodOut = mainOut.addLod();
 
     Transform & trOut0 = lodOut.transform();
-    Transform & trOut1 = trOut0.createChild(TOTEXT(trOut1));
-    Transform & trOut2 = trOut1.createChild(TOTEXT(trOut2));
+    Transform & trOut1 = trOut0.newChild(TOTEXT(trOut1));
+    Transform & trOut2 = trOut1.newChild(TOTEXT(trOut2));
 
     trOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     trOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
@@ -142,8 +142,8 @@ TEST(TestTransformationAlgorithm_case8, case2) {
     ObjLodGroup & lodOut = mainOut.addLod();
 
     Transform & trOut0 = lodOut.transform();
-    Transform & trOut1 = trOut0.createChild(TOTEXT(trOut1));
-    Transform & trOut2 = trOut1.createChild(TOTEXT(trOut2));
+    Transform & trOut1 = trOut0.newChild(TOTEXT(trOut1));
+    Transform & trOut2 = trOut1.newChild(TOTEXT(trOut2));
 
     trOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     trOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));

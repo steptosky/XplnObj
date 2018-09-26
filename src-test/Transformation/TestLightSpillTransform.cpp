@@ -117,7 +117,7 @@ TEST(ObjLightSpillCust, real_usecase_case1) {
 
     ObjLodGroup & lod = mainOut.addLod();
     Transform & lodTransform = lod.transform();
-    Transform & lightTransform = lodTransform.createChild("light transform");
+    Transform & lightTransform = lodTransform.newChild("light transform");
     // scale
     lodTransform.pMatrix.set(0.1f, 0.0f, 0.0f,
                              0.0f, 0.1f, 0.0f,

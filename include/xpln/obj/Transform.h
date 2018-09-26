@@ -133,7 +133,7 @@ public:
     /*!
      * \return children number
      */
-    XpObjLib TransformIndex childrenCount() const;
+    XpObjLib TransformIndex childrenNum() const;
 
     /*!
      * \details Takes children by number
@@ -169,7 +169,7 @@ public:
      * \param [in] name of children
      * \return Reference to new created children.
      */
-    XpObjLib Transform & createChild(const char * name = nullptr);
+    XpObjLib Transform & newChild(const char * name = nullptr);
 
     /// @}
     //-------------------------------------------------------------------------

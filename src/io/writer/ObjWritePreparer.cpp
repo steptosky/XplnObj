@@ -71,7 +71,7 @@ bool ObjWritePreparer::proccessTransform(Transform & transform, const size_t lod
     //-------------------------------------------------------------------------
     // children
 
-    const Transform::TransformIndex chCount = transform.childrenCount();
+    const Transform::TransformIndex chCount = transform.childrenNum();
     for (Transform::TransformIndex i = 0; i < chCount; ++i) {
         if (!proccessTransform(*static_cast<Transform*>(transform.childAt(i)), lodNumber, lod)) {
             return false;

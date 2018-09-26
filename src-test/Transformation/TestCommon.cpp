@@ -108,7 +108,7 @@ TEST(TestTransformCommon, apliing_root_transformation) {
     TestUtils::setTestExportOptions(mainOut);
     ObjLodGroup & lodOut = mainOut.addLod();
     ObjMesh * meshOut1 = TestUtilsObjMesh::createPyramidTestMesh("mesh");
-    Transform & transformOut1 = lodOut.transform().createChild();
+    Transform & transformOut1 = lodOut.transform().newChild();
     transformOut1.addObject(meshOut1);
     transformOut1.pMatrix.setPosition(Point3(10.0f));
     transformOut1.pMatrix.setRotate(Quaternion(0.5f, 0.5f, 0.5f, 0.5f));

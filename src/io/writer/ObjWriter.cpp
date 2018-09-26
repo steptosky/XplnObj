@@ -245,7 +245,7 @@ void ObjWriter::calculateVerticiesAndFaces(const Transform & parent) {
         }
     }
 
-    for (Transform::TransformIndex i = 0; i < parent.childrenCount(); ++i) {
+    for (Transform::TransformIndex i = 0; i < parent.childrenNum(); ++i) {
         calculateVerticiesAndFaces(*dynamic_cast<const Transform*>(parent.childAt(i)));
     }
 }
@@ -322,7 +322,7 @@ void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) 
     //-------------------------------------------------------------------------
 
     // print child
-    for (Transform::TransformIndex i = 0; i < parent.childrenCount(); ++i)
+    for (Transform::TransformIndex i = 0; i < parent.childrenNum(); ++i)
         printObjects(writer, *dynamic_cast<const Transform*>(parent.childAt(i)));
 
     //-------------------------------------------------------------------------

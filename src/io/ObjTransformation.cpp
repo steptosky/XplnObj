@@ -93,7 +93,7 @@ void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatr
     //-------------------------------------------------------------------------
     // children
 
-    const Transform::TransformIndex chCount = transform.childrenCount();
+    const Transform::TransformIndex chCount = transform.childrenNum();
     for (Transform::TransformIndex i = 0; i < chCount; ++i) {
         proccess(*static_cast<Transform*>(transform.childAt(i)), rootMatrix, exp);
     }

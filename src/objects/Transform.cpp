@@ -124,7 +124,7 @@ const Transform * Transform::parent() const {
     return mTreePtr->parent()->data();
 }
 
-Transform::TransformIndex Transform::childrenCount() const {
+Transform::TransformIndex Transform::childrenNum() const {
     return static_cast<TransformIndex>(mTreePtr->childrenCount());
 }
 
@@ -144,7 +144,7 @@ Transform * Transform::takeChildAt(const TransformIndex index) {
     return mTreePtr->takeChildAt(index)->data();
 }
 
-Transform & Transform::createChild(const char * name) {
+Transform & Transform::newChild(const char * name) {
     auto * tr = new Transform;
     tr->setParent(this);
     if (name) {
@@ -171,7 +171,7 @@ const Transform * Transform::root() const {
 
 template<typename O, typename F>
 bool callForChildren(O * transform, const F & function) {
-    const Transform::TransformIndex count = transform->childrenCount();
+    const Transform::TransformIndex count = transform->childrenNum();
     for (Transform::TransformIndex i = 0; i < count; ++i) {
         if (!function(*transform->childAt(i))) {
             return false;
@@ -182,7 +182,7 @@ bool callForChildren(O * transform, const F & function) {
 
 template<typename O, typename F>
 bool callForAllChildren(O * transform, const F & function) {
-    const Transform::TransformIndex numChildren = transform->childrenCount();
+    const Transform::TransformIndex numChildren = transform->childrenNum();
     for (Transform::TransformIndex idx = 0; idx < numChildren; ++idx) {
         auto currNode = transform->childAt(idx);
         if (!function(*currNode)) {

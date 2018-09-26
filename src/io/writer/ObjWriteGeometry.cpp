@@ -96,7 +96,7 @@ void ObjWriteGeometry::printMeshVerticiesRecursive(AbstractWriter & writer, cons
         }
     }
 
-    for (Transform::TransformIndex i = 0; i < transform.childrenCount(); ++i) {
+    for (Transform::TransformIndex i = 0; i < transform.childrenNum(); ++i) {
         const auto * ch = dynamic_cast<const Transform*>(transform.childAt(i));
         assert(ch);
         if (ch) {
@@ -161,7 +161,7 @@ void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Trans
         offset += mobj->pVertices.size();
     }
 
-    for (Transform::TransformIndex i = 0; i < inNode.childrenCount(); ++i) {
+    for (Transform::TransformIndex i = 0; i < inNode.childrenNum(); ++i) {
         const auto * ch = dynamic_cast<const Transform*>(inNode.childAt(i));
         assert(ch);
         if (ch) {
@@ -189,7 +189,7 @@ void ObjWriteGeometry::printLineVerticiesRecursive(AbstractWriter & writer, cons
         }
     }
 
-    for (Transform::TransformIndex i = 0; i < transform.childrenCount(); ++i) {
+    for (Transform::TransformIndex i = 0; i < transform.childrenNum(); ++i) {
         const auto * ch = dynamic_cast<const Transform*>(transform.childAt(i));
         assert(ch);
         if (ch) {
@@ -208,7 +208,7 @@ void ObjWriteGeometry::printLightPointVerticiesRecursive(AbstractWriter & writer
         }
     }
 
-    for (Transform::TransformIndex i = 0; i < transform.childrenCount(); ++i) {
+    for (Transform::TransformIndex i = 0; i < transform.childrenNum(); ++i) {
         const auto * ch = dynamic_cast<const Transform*>(transform.childAt(i));
         assert(ch);
         if (ch) {

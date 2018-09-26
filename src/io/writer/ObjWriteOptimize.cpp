@@ -54,7 +54,7 @@ void ObjWriteOptimize::proccess(Transform & transform) {
     //-------------------------------------------------------------------------
     // children
 
-    const auto chCount = transform.childrenCount();
+    const auto chCount = transform.childrenNum();
     for (Transform::TransformIndex i = 0; i < chCount; ++i) {
         proccess(*static_cast<Transform*>(transform.childAt(i)));
     }

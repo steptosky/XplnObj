@@ -554,7 +554,7 @@ void ObjReaderInterpreter::gotAnimBegin() {
         LError << "Internal error, current transform is nullptr";
         return;
     }
-    mCurrentTransform = &mCurrentTransform->createChild();
+    mCurrentTransform = &mCurrentTransform->newChild();
 }
 
 void ObjReaderInterpreter::gotAnimEnd() {

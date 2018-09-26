@@ -38,7 +38,7 @@ namespace xobj {
 //////////////////////////////////////////* Static area *///////////////////////////////////////////
 /**************************************************************************************************/
 
-class TreeItem : public sts_t::TreeItem<TreeItem> {
+class TreeItem : public sts::tree::TreeItem<TreeItem> {
     // remove loop calling of the destructors
     friend Transform;
 public:
@@ -59,7 +59,7 @@ public:
         return nullptr;
     }
 
-    ~TreeItem() {
+    virtual ~TreeItem() {
         // remove loop calling of the destructors
         if (mIsCallDestructor) {
             mTransformTree->mTreePtr = nullptr;

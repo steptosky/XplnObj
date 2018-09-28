@@ -39,7 +39,6 @@ namespace xobj {
 
 /*!
  * \details Representation of the LOD object
- * \note This class should not be created outside the library, use \link ObjMain::addLod \endlink.
  * \ingroup Objects
  */
 class ObjLodGroup {

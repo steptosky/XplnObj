@@ -54,8 +54,6 @@ TEST(TestGlobAttributesIO, defaults) {
     ASSERT_FALSE(mainOut.pAttr.wetDry());
     ASSERT_FALSE(mainOut.pAttr.blend());
     ASSERT_FALSE(mainOut.pAttr.layerGroup());
-    ASSERT_FALSE(mainOut.pAttr.layerGroupDraped());
-    ASSERT_FALSE(mainOut.pAttr.lodDrap());
     ASSERT_FALSE(mainOut.pAttr.slungLoadWeight());
     ASSERT_FALSE(mainOut.pAttr.specular());
     ASSERT_FALSE(mainOut.pAttr.tint());
@@ -65,6 +63,9 @@ TEST(TestGlobAttributesIO, defaults) {
     ASSERT_FALSE(mainOut.pAttr.cockpitRegion(AttrCockpitRegion::r2));
     ASSERT_FALSE(mainOut.pAttr.cockpitRegion(AttrCockpitRegion::r3));
     ASSERT_FALSE(mainOut.pAttr.cockpitRegion(AttrCockpitRegion::r4));
+
+    ASSERT_FALSE(mainOut.pDrapedAttr.layerGroup());
+    ASSERT_FALSE(mainOut.pDrapedAttr.lod());
 }
 
 TEST(TestGlobAttributesIO, textures) {
@@ -100,15 +101,16 @@ TEST(TestGlobAttributesIO, attributes) {
     mainOut.pAttr.setTilted(true);
     mainOut.pAttr.setSpecular(AttrSpecular(0.9f));
     mainOut.pAttr.setNoShadow(true);
-    mainOut.pAttr.setLodDrap(AttrLodDrap(1000));
     mainOut.pAttr.setCockpitLit(true);
     mainOut.pAttr.setDebug(true);
     mainOut.pAttr.setLayerGroup(AttrLayerGroup(ELayer(ELayer::taxiways), 5));
     mainOut.pAttr.setSlopeLimit(AttrSlopeLimit(0.3f, 0.5f, 0.7f, 0.9f));
     mainOut.pAttr.setSlungLoadWeight(AttrSlungLoadWeight(500));
-    mainOut.pAttr.setLayerGroupDraped(AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
     mainOut.pAttr.setCockpitRegion(AttrCockpitRegion(100, 200, 300, 400), AttrCockpitRegion::r1);
     mainOut.pAttr.setCockpitRegion(AttrCockpitRegion(500, 600, 700, 800), AttrCockpitRegion::r2);
+
+    mainOut.pDrapedAttr.setLod(AttrLodDrap(1000));
+    mainOut.pDrapedAttr.setLayerGroup(AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
 
     //-------------------------------------------------------------------------
 
@@ -130,17 +132,18 @@ TEST(TestGlobAttributesIO, attributes) {
     ASSERT_EQ(mainIn.pAttr.isTilted(), true);
     ASSERT_EQ(mainIn.pAttr.specular(), AttrSpecular(0.9f));
     ASSERT_EQ(mainIn.pAttr.isNoShadow(), true);
-    ASSERT_EQ(mainIn.pAttr.lodDrap(), AttrLodDrap(1000));
     ASSERT_EQ(mainIn.pAttr.isCockpitLit(),true);
     ASSERT_EQ(mainIn.pAttr.isDebug(), true);
     ASSERT_EQ(mainIn.pAttr.layerGroup(), AttrLayerGroup(ELayer(ELayer::taxiways), 5));
     ASSERT_EQ(mainIn.pAttr.slopeLimit(), AttrSlopeLimit(0.3f, 0.5f, 0.7f, 0.9f));
     ASSERT_EQ(mainIn.pAttr.slungLoadWeight(), AttrSlungLoadWeight(500));
-    ASSERT_EQ(mainIn.pAttr.layerGroupDraped(), AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
     ASSERT_EQ(mainIn.pAttr.cockpitRegion(AttrCockpitRegion::r1), AttrCockpitRegion(100, 200, 300, 400));
     ASSERT_EQ(mainIn.pAttr.cockpitRegion(AttrCockpitRegion::r2), AttrCockpitRegion(500, 600, 700, 800));
     ASSERT_EQ(mainIn.pAttr.cockpitRegion(AttrCockpitRegion::r3), AttrCockpitRegion());
     ASSERT_EQ(mainIn.pAttr.cockpitRegion(AttrCockpitRegion::r4), AttrCockpitRegion());
+
+    ASSERT_EQ(mainIn.pDrapedAttr.lod(), AttrLodDrap(1000));
+    ASSERT_EQ(mainIn.pDrapedAttr.layerGroup(), AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
 }
 
 /**************************************************************************************************/

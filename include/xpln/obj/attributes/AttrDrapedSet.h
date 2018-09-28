@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,9 +29,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
-#include <cstddef>
-#include "xpln/Export.h"
+#include "xpln/obj/attributes/AttrDrapedLayerGroup.h"
+#include "xpln/obj/attributes/AttrLodDrap.h"
 
 namespace xobj {
 
@@ -39,37 +38,73 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-class AbstractWriter;
-class ObjMain;
+/*!
+ * \details Representation of the draped geometry attributes set.
+ * \ingroup Attributes
+ */
+class AttrDrapedSet {
+public:
+
+    //-------------------------------------------------------------------------
+    /// @{
+
+    AttrDrapedSet() = default;
+    virtual ~AttrDrapedSet() = default;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    void setLayerGroup(const AttrDrapedLayerGroup & attr);
+    void setLod(const AttrLodDrap & attr);
+
+    const AttrDrapedLayerGroup & layerGroup() const;
+    const AttrLodDrap & lod() const;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    void reset();
+
+    /// @}
+    //-------------------------------------------------------------------------
+
+private:
+
+    AttrDrapedLayerGroup mLayerGroup;
+    AttrLodDrap mLod;
+
+};
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-class ObjWriteGlobAttr {
-public:
+inline void AttrDrapedSet::reset() {
+    mLayerGroup = AttrDrapedLayerGroup();
+    mLod = AttrLodDrap();
+}
 
-    ObjWriteGlobAttr() = default;
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-    ObjWriteGlobAttr(const ObjWriteGlobAttr &) = delete;
-    ObjWriteGlobAttr & operator =(const ObjWriteGlobAttr &) = delete;
+inline void AttrDrapedSet::setLayerGroup(const AttrDrapedLayerGroup & attr) {
+    mLayerGroup = attr;
+}
 
-    ~ObjWriteGlobAttr() = default;
+inline const AttrDrapedLayerGroup & AttrDrapedSet::layerGroup() const {
+    return mLayerGroup;
+}
 
-    XpObjLib void write(AbstractWriter * writer, const ObjMain * obj);
+inline void AttrDrapedSet::setLod(const AttrLodDrap & attr) {
+    mLod = attr;
+}
 
-    void reset() { mCounter = 0; }
-    std::size_t count() const { return mCounter; }
-
-private:
-
-    void writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString);
-    void writeBool(AbstractWriter * inWriter, const char * inAttr, bool inState);
-    void writeString(AbstractWriter * inWriter, const std::string & inStr);
-
-    std::size_t mCounter = 0;
-
-};
+inline const AttrLodDrap & AttrDrapedSet::lod() const {
+    return mLod;
+}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

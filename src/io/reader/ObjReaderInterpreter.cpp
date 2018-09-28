@@ -140,7 +140,7 @@ void ObjReaderInterpreter::gotGlobAttrNoShadow() {
 }
 
 void ObjReaderInterpreter::gotGlobAttrLodDraped(const AttrLodDrap & globAttr) {
-    mObjMain->pAttr.setLodDrap(globAttr);
+    mObjMain->pDrapedAttr.setLod(globAttr);
     ++mIOStatistic->pGlobAttrCount;
 }
 
@@ -197,7 +197,7 @@ void ObjReaderInterpreter::gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight 
 }
 
 void ObjReaderInterpreter::gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGroup & globAttr) {
-    mObjMain->pAttr.setLayerGroupDraped(globAttr);
+    mObjMain->pDrapedAttr.setLayerGroup(globAttr);
     ++mIOStatistic->pGlobAttrCount;
 }
 

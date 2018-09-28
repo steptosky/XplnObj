@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,47 +27,13 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
-#include <cstddef>
-#include "xpln/Export.h"
+#include "ObjDrapedGroup.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
-
-class AbstractWriter;
-class ObjMain;
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-class ObjWriteGlobAttr {
-public:
-
-    ObjWriteGlobAttr() = default;
-
-    ObjWriteGlobAttr(const ObjWriteGlobAttr &) = delete;
-    ObjWriteGlobAttr & operator =(const ObjWriteGlobAttr &) = delete;
-
-    ~ObjWriteGlobAttr() = default;
-
-    XpObjLib void write(AbstractWriter * writer, const ObjMain * obj);
-
-    void reset() { mCounter = 0; }
-    std::size_t count() const { return mCounter; }
-
-private:
-
-    void writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString);
-    void writeBool(AbstractWriter * inWriter, const char * inAttr, bool inState);
-    void writeString(AbstractWriter * inWriter, const std::string & inStr);
-
-    std::size_t mCounter = 0;
-
-};
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -35,6 +35,7 @@
 #include "ExportOptions.h"
 #include "IOStatistic.h"
 #include "attributes/AttrGlobSet.h"
+#include "attributes/AttrDrapedSet.h"
 
 namespace xobj {
 
@@ -71,6 +72,11 @@ public:
      * \details Set of the attributes.
      */
     AttrGlobSet pAttr;
+
+    /*!
+     * \details Set of the attributes.
+     */
+    AttrDrapedSet pDrapedAttr;
 
     /*!
      * \details Export options.

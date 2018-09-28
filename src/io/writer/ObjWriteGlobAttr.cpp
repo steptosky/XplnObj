@@ -61,8 +61,6 @@ void ObjWriteGlobAttr::write(AbstractWriter * writer, const ObjMain * obj) {
     writeString(writer, toObjGlobString(obj->pAttr.wetDry()));
     writeString(writer, toObjGlobString(obj->pAttr.blend()));
     writeString(writer, toObjGlobString(obj->pAttr.layerGroup()));
-    writeString(writer, toObjGlobString(obj->pAttr.layerGroupDraped()));
-    writeString(writer, toObjGlobString(obj->pAttr.lodDrap()));
     writeString(writer, toObjGlobString(obj->pAttr.slungLoadWeight()));
     writeString(writer, toObjGlobString(obj->pAttr.specular()));
     writeString(writer, toObjGlobString(obj->pAttr.tint()));
@@ -71,14 +69,9 @@ void ObjWriteGlobAttr::write(AbstractWriter * writer, const ObjMain * obj) {
     writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r2)));
     writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r3)));
     writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r4)));
-}
 
-void ObjWriteGlobAttr::reset() {
-    mCounter = 0;
-}
-
-size_t ObjWriteGlobAttr::count() const {
-    return mCounter;
+    writeString(writer, toObjGlobString(obj->pDrapedAttr.layerGroup()));
+    writeString(writer, toObjGlobString(obj->pDrapedAttr.lod()));
 }
 
 void ObjWriteGlobAttr::writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString) {

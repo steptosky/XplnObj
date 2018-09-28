@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,9 +29,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
-#include <cstddef>
-#include "xpln/Export.h"
+#include "xpln/obj/Transform.h"
+#include "xpln/obj/attributes/AttrDrapedSet.h"
 
 namespace xobj {
 
@@ -39,40 +38,67 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-class AbstractWriter;
-class ObjMain;
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-class ObjWriteGlobAttr {
+/*!
+ * \details Representation of the draped object
+ * \ingroup Objects
+ */
+class ObjDrapedGroup {
 public:
 
-    ObjWriteGlobAttr() = default;
+    //-------------------------------------------------------------------------
+    /// @{
 
-    ObjWriteGlobAttr(const ObjWriteGlobAttr &) = delete;
-    ObjWriteGlobAttr & operator =(const ObjWriteGlobAttr &) = delete;
+    ObjDrapedGroup()
+        : ObjDrapedGroup("Draped") {}
 
-    ~ObjWriteGlobAttr() = default;
+    explicit ObjDrapedGroup(const std::string & name)
+        : mName(name) {
+        mObjTransform.setName(name);
+    }
 
-    XpObjLib void write(AbstractWriter * writer, const ObjMain * obj);
+    ObjDrapedGroup(const ObjDrapedGroup &) = delete;
+    ObjDrapedGroup & operator =(const ObjDrapedGroup &) = delete;
 
-    void reset() { mCounter = 0; }
-    std::size_t count() const { return mCounter; }
+    virtual ~ObjDrapedGroup() = default;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    void setObjectName(const std::string & name) {
+        mName = name;
+        mObjTransform.setName(name);
+    }
+
+    const std::string & objectName() const {
+        return mName;
+    }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    /*! \copydoc ObjAbstract::transform */
+    Transform & transform() {
+        return mObjTransform;
+    }
+
+    /*! \copydoc ObjAbstract::transform */
+    const Transform & transform() const {
+        return mObjTransform;
+    }
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 private:
 
-    void writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString);
-    void writeBool(AbstractWriter * inWriter, const char * inAttr, bool inState);
-    void writeString(AbstractWriter * inWriter, const std::string & inStr);
-
-    std::size_t mCounter = 0;
+    Transform mObjTransform;
+    std::string mName;
 
 };
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
-
 }

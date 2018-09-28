@@ -102,6 +102,8 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
         writer.spaceEnable(mExportOptions.isEnabled(XOBJ_EXP_MARK_TREE_HIERARCHY));
         //-------------------------------------------------------------------------
 
+        mMain->pDraped.setDrapedAttr();
+
         if (mExportOptions.isEnabled(XOBJ_EXP_CHECK_INSTANCE)) {
             InstancingAlg::validateAndPrepare(*mMain);
         }
@@ -118,6 +120,9 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
             calculateVerticiesAndFaces(lod->transform());
         }
 
+        calculateVerticiesAndFaces(mMain->pDraped.transform());
+
+        //-------------------------------------------------------------------------
         // print global
         printGlobalInformation(writer, *mMain);
 
@@ -142,8 +147,12 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
             }
         }
 
+        // print draped
+        mObjWriteGeometry.printMeshVerticiesRecursive(writer, mMain->pDraped.transform());
+
         writer.printEol();
 
+        //-------------------------------------------------------------------------
         // print mesh faces 
         if (mStatistic.pMeshVerticesCount) {
             mObjWriteGeometry.printMeshFaceRecursive(writer, *mMain);
@@ -158,12 +167,13 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
                 ULError << currLod->objectName() << " - Lod can't be animated.";
             }
 
-            //-------------------------------------------------------------------------
-
             printLOD(writer, *currLod, mMain->lods().size());
             printObjects(writer, currLod->transform());
             writer.printEol();
         }
+
+        printObjects(writer, mMain->pDraped.transform());
+        writer.printEol();
 
         mStatistic.pTrisManipCount += mObjWriteManip.count();
         mStatistic.pTrisAttrCount += mWriteAttr.count();

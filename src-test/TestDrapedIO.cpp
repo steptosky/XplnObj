@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2018, StepToSky
+**  Copyright(C) 2017, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,90 +27,56 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/Transform.h"
-#include "xpln/obj/attributes/AttrDrapedSet.h"
+#include <gtest/gtest.h>
+#include "xpln/obj/ObjDrapedGroup.h"
+#include "TestUtils.h"
 
-namespace xobj {
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-/*!
- * \details Representation of the draped object
- * \ingroup Objects
- */
-class ObjDrapedGroup {
-public:
-
-    //-------------------------------------------------------------------------
-    /// @{
-
-    ObjDrapedGroup()
-        : ObjDrapedGroup("Draped") {}
-
-    explicit ObjDrapedGroup(const std::string & name)
-        : mName(name) {
-        mObjTransform.setName(name);
-    }
-
-    ObjDrapedGroup(const ObjDrapedGroup &) = delete;
-    ObjDrapedGroup & operator =(const ObjDrapedGroup &) = delete;
-
-    virtual ~ObjDrapedGroup() = default;
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    void setObjectName(const std::string & name) {
-        mName = name;
-        mObjTransform.setName(name);
-    }
-
-    const std::string & objectName() const {
-        return mName;
-    }
-
-    /*!
-     * \details Sets draped attribute to all geometry in the transform;
-     */
-    XpObjLib void setDrapedAttr();
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    /*! \copydoc ObjAbstract::transform */
-    Transform & transform() {
-        return mObjTransform;
-    }
-
-    /*! \copydoc ObjAbstract::transform */
-    const Transform & transform() const {
-        return mObjTransform;
-    }
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    /*!
-     * \details Set of the attributes.
-     */
-    AttrDrapedSet pAttr;
-
-    /// @}
-    //-------------------------------------------------------------------------
-
-private:
-
-    Transform mObjTransform;
-    std::string mName;
-
-};
+using namespace xobj;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
+
+TEST(Draped, io) {
+    const auto fileName = "draped-io-test.obj";
+    //-------------------
+    // make out data and save to file
+    ObjMain mainOut;
+    TestUtils::setTestExportOptions(mainOut);
+    ObjLodGroup & lod1 = mainOut.addLod(new ObjLodGroup("l1", 0.0f, 100.0f));
+    ObjLodGroup & lod2 = mainOut.addLod(new ObjLodGroup("l2", 100.0f, 200.0f));
+
+    lod1.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l1-m1"));
+    lod1.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l1-m2"));
+
+    lod2.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l2-m1"));
+    lod2.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l2-m2"));
+
+    mainOut.pDraped.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("d1"));
+    mainOut.pDraped.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("d2"));
+
+    ASSERT_TRUE(mainOut.exportToFile(fileName));
+
+    //-------------------
+    // load data from file
+
+    ObjMain mainIn;
+    ASSERT_TRUE(mainIn.importFromFile(fileName));
+
+    ObjLodGroup * lodIn1 = nullptr;
+    ObjLodGroup * lodIn2 = nullptr;
+    // One transform was optimized during export, it became LOD's transform
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 1, lodIn2));
+
+    //-------------------
+    // check results
+
+    EXPECT_EQ(2, lodIn1->transform().objList().size());
+    EXPECT_EQ(2, lodIn2->transform().objList().size());
+    EXPECT_EQ(2, mainIn.pDraped.transform().objList().size());
 }
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/

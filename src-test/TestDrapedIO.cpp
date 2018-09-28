@@ -30,6 +30,7 @@
 #include <gtest/gtest.h>
 #include "xpln/obj/ObjDrapedGroup.h"
 #include "TestUtils.h"
+#include "TestUtilsObjMesh.h"
 
 using namespace xobj;
 

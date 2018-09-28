@@ -48,8 +48,8 @@ class Draped {
     ~Draped() = default;
 public:
 
-    static void ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrupt & interrupt);
-    static void extract(ObjDrapedGroup & inOutDraped, Transform & inOutTransform, const IInterrupt & interrupt);
+    XpObjLib static void ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrupt & interrupt);
+    XpObjLib static void extract(ObjDrapedGroup & inOutDraped, Transform & inOutTransform, const IInterrupt & interrupt);
 
 private:
 

@@ -540,6 +540,18 @@ TEST(TestAttributes, AttrCockpit) {
     ASSERT_FALSE(AttrCockpit(AttrCockpit::region_2) == AttrCockpit(AttrCockpit::cockpit));
 }
 
+TEST(TestAttributes, AttrCockpitDevice) {
+    AttrCockpit attr;
+
+    attr.setType(AttrCockpit::cockpit_device);
+    attr.setName("GNS430_1");
+    attr.setBus(3);
+    attr.setLightingChannel(2);
+    attr.setAutoAdjust(true);
+    ASSERT_STREQ("ATTR_cockpit_device GNS430_1 3 2 1", toObjString(attr).c_str());
+    ASSERT_EQ(AttrCockpit::cockpit_device, attr.type());
+}
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/

@@ -99,6 +99,7 @@
 #define ATTR_SHADOW_BLEND "ATTR_shadow_blend"
 #define ATTR_SOLID_CAMERA "ATTR_solid_camera"
 #define ATTR_COCKPIT_REGION "ATTR_cockpit_region"
+#define ATTR_COCKPIT_DEVICE "ATTR_cockpit_device"
 #define ATTR_NO_SOLID_CAMERA "ATTR_no_solid_camera"
 #define ATTR_LIGHT_LEVEL_RESET "ATTR_light_level_reset"
 #define ATTR_RESET "ATTR_reset"

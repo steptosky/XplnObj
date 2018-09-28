@@ -29,8 +29,11 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <string>
 #include <cstdint>
+#include <cstddef>
 #include "xpln/Export.h"
+#include "xpln/enums/ECockpitDevice.h"
 
 namespace xobj {
 
@@ -39,63 +42,146 @@ namespace xobj {
 /**************************************************************************************************/
 
 /*!
- * \details ATTR_cockpi, ATTR_cockpit_region, ATTR_no_cockpit
+ * \details ATTR_cockpit, ATTR_cockpit_region, ATTR_no_cockpit, ATTR_cockpit_device 
  * \ingroup Attributes
  */
 class AttrCockpit {
 public:
+
+    //-------------------------------------------------------------------------
+    /// @{
 
     enum eType : std::uint8_t {
         cockpit,
         region_1,
         region_2,
         region_3,
-        region_4
+        region_4,
+        cockpit_device,
     };
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
     /*!
      * \details Constructor default
      * \note Makes the disabled attribute.
      */
-    XpObjLib AttrCockpit();
+    AttrCockpit()
+        : mType(cockpit),
+          mIsEnabled(false) {}
 
     /*!
      * \details Constructor init.
      * \note Makes the enabled attribute.
      * \param [in] type
      */
-    XpObjLib AttrCockpit(eType type);
+    explicit AttrCockpit(const eType type)
+        : mType(type),
+          mIsEnabled(true) {}
 
     ~AttrCockpit() = default;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*!
      * \details Check whether the attribute is enabled. 
      * \note All class's setters will enable this attribute.
      */
-    XpObjLib operator bool() const;
+    operator bool() const {
+        return mIsEnabled;
+    }
 
     /*!
      * \details Sets the attribute enabled/disabled.
      * \note All class's setters will enable this attribute.
      * \param [in] state 
      */
-    XpObjLib void setEnabled(bool state);
+    void setEnabled(const bool state) {
+        mIsEnabled = state;
+    }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrCockpit & other) const;
-    XpObjLib bool operator!=(const AttrCockpit & other) const;
 
+    bool operator!=(const AttrCockpit & other) const {
+        return !operator==(other);
+    }
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setType(eType type);
-    XpObjLib eType type() const;
+    void setType(const eType type) {
+        mType = type;
+        mIsEnabled = true;
+    }
 
+    eType type() const {
+        return mType;
+    }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name ATTR_cockpit_device
+    /// @{
+
+    void setId(ECockpitDevice id) {
+        mIsEnabled = true;
+        mDevName = id.toString();
+    }
+
+    void setName(const std::string & name) {
+        mIsEnabled = true;
+        mDevName = name;
+    }
+
+    void setBus(const std::size_t index) {
+        mIsEnabled = true;
+        mDevBus = index;
+    }
+
+    void setLightingChannel(const std::size_t index) {
+        mIsEnabled = true;
+        mDevLighting = index;
+    }
+
+    void setAutoAdjust(const bool state) {
+        mIsEnabled = true;
+        mDevAutoAdjust = state;
+    }
+
+    const std::string & name() const {
+        return mDevName;
+    }
+
+    std::size_t bus() const {
+        return mDevBus;
+    }
+
+    std::size_t lightingChannel() const {
+        return mDevLighting;
+    }
+
+    bool autoAdjust() const {
+        return mDevAutoAdjust;
+    }
+
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
+
+    std::string mDevName;
+    std::size_t mDevBus = 0;
+    std::size_t mDevLighting = 0;
+    bool mDevAutoAdjust = false;
 
     eType mType;
     bool mIsEnabled : 1;

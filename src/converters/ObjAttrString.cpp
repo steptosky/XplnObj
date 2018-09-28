@@ -228,20 +228,25 @@ std::string toObjString(const AttrCockpit & attr) {
         return ATTR_COCKPIT;
     }
     StringStream outStr;
-    outStr << ATTR_COCKPIT_REGION << " ";
     if (attr.type() == AttrCockpit::eType::region_1) {
-        outStr << "0";
+        outStr << ATTR_COCKPIT_REGION << " " << "0";
     }
-    if (attr.type() == AttrCockpit::eType::region_2) {
-        outStr << "1";
+    else if (attr.type() == AttrCockpit::eType::region_2) {
+        outStr << ATTR_COCKPIT_REGION << " " << "1";
     }
-    if (attr.type() == AttrCockpit::eType::region_3) {
-        outStr << "2";
+    else if (attr.type() == AttrCockpit::eType::region_3) {
+        outStr << ATTR_COCKPIT_REGION << " " << "2";
     }
-    if (attr.type() == AttrCockpit::eType::region_4) {
-        outStr << "3";
+    else if (attr.type() == AttrCockpit::eType::region_4) {
+        outStr << ATTR_COCKPIT_REGION << " " << "3";
     }
-    outStr.flush();
+    else if (attr.type() == AttrCockpit::eType::cockpit_device) {
+        outStr << ATTR_COCKPIT_DEVICE
+                << " " << attr.name()
+                << " " << attr.bus()
+                << " " << attr.lightingChannel()
+                << " " << attr.autoAdjust();
+    }
     return outStr.str();
 }
 

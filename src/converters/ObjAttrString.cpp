@@ -36,7 +36,7 @@
 #include "xpln/obj/attributes/AttrSlungLoadWeight.h"
 #include "xpln/obj/attributes/AttrShiny.h"
 #include "xpln/obj/attributes/AttrPolyOffset.h"
-#include "xpln/obj/attributes/AttrLodDrap.h"
+#include "xpln/obj/attributes/AttrDrapedLod.h"
 #include "xpln/obj/attributes/AttrLightLevel.h"
 #include "xpln/obj/attributes/AttrDrapedLayerGroup.h"
 #include "xpln/obj/attributes/AttrLayerGroup.h"
@@ -89,7 +89,7 @@ std::string toObjGlobString(const AttrDrapedLayerGroup & globAttr) {
     return outStr.str();
 }
 
-std::string toObjGlobString(const AttrLodDrap & globAttr) {
+std::string toObjGlobString(const AttrDrapedLod & globAttr) {
     if (!globAttr)
         return "";
     StringStream outStr;

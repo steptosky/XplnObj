@@ -30,7 +30,7 @@
 */
 
 #include "xpln/obj/attributes/AttrDrapedLayerGroup.h"
-#include "xpln/obj/attributes/AttrLodDrap.h"
+#include "xpln/obj/attributes/AttrDrapedLod.h"
 
 namespace xobj {
 
@@ -56,10 +56,10 @@ public:
     /// @{
 
     void setLayerGroup(const AttrDrapedLayerGroup & attr);
-    void setLod(const AttrLodDrap & attr);
+    void setLod(const AttrDrapedLod & attr);
 
     const AttrDrapedLayerGroup & layerGroup() const;
-    const AttrLodDrap & lod() const;
+    const AttrDrapedLod & lod() const;
 
     /// @}
     //-------------------------------------------------------------------------
@@ -73,7 +73,7 @@ public:
 private:
 
     AttrDrapedLayerGroup mLayerGroup;
-    AttrLodDrap mLod;
+    AttrDrapedLod mLod;
 
 };
 
@@ -83,7 +83,7 @@ private:
 
 inline void AttrDrapedSet::reset() {
     mLayerGroup = AttrDrapedLayerGroup();
-    mLod = AttrLodDrap();
+    mLod = AttrDrapedLod();
 }
 
 /**************************************************************************************************/
@@ -98,11 +98,11 @@ inline const AttrDrapedLayerGroup & AttrDrapedSet::layerGroup() const {
     return mLayerGroup;
 }
 
-inline void AttrDrapedSet::setLod(const AttrLodDrap & attr) {
+inline void AttrDrapedSet::setLod(const AttrDrapedLod & attr) {
     mLod = attr;
 }
 
-inline const AttrLodDrap & AttrDrapedSet::lod() const {
+inline const AttrDrapedLod & AttrDrapedSet::lod() const {
     return mLod;
 }
 

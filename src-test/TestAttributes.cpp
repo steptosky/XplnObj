@@ -36,7 +36,7 @@
 #include "xpln/obj/attributes/AttrSlungLoadWeight.h"
 #include "xpln/obj/attributes/AttrShiny.h"
 #include "xpln/obj/attributes/AttrPolyOffset.h"
-#include "xpln/obj/attributes/AttrLodDrap.h"
+#include "xpln/obj/attributes/AttrDrapedLod.h"
 #include "xpln/obj/attributes/AttrLightLevel.h"
 #include "xpln/obj/attributes/AttrDrapedLayerGroup.h"
 #include "xpln/obj/attributes/AttrLayerGroup.h"
@@ -257,7 +257,7 @@ TEST(TestAttributes, AttrLightLevel) {
 //-------------------------------------------------------------------------
 
 TEST(TestAttributes, AttrLodDrap) {
-    AttrLodDrap attr;
+    AttrDrapedLod attr;
     ASSERT_FALSE(attr);
 
     attr.setDistance(10.0f);
@@ -268,15 +268,15 @@ TEST(TestAttributes, AttrLodDrap) {
     ASSERT_TRUE(attr);
     ASSERT_EQ(10.0f, attr.distance());
 
-    ASSERT_TRUE(AttrLodDrap() == AttrLodDrap());
-    ASSERT_TRUE(AttrLodDrap(0.3f) == AttrLodDrap(0.3f));
-    ASSERT_TRUE(AttrLodDrap() != AttrLodDrap(0.3f));
-    ASSERT_TRUE(AttrLodDrap(0.3f) != AttrLodDrap(0.5f));
+    ASSERT_TRUE(AttrDrapedLod() == AttrDrapedLod());
+    ASSERT_TRUE(AttrDrapedLod(0.3f) == AttrDrapedLod(0.3f));
+    ASSERT_TRUE(AttrDrapedLod() != AttrDrapedLod(0.3f));
+    ASSERT_TRUE(AttrDrapedLod(0.3f) != AttrDrapedLod(0.5f));
 
-    ASSERT_FALSE(AttrLodDrap() != AttrLodDrap());
-    ASSERT_FALSE(AttrLodDrap(0.3f) != AttrLodDrap(0.3f));
-    ASSERT_FALSE(AttrLodDrap() == AttrLodDrap(0.3f));
-    ASSERT_FALSE(AttrLodDrap(0.3f) == AttrLodDrap(0.5f));
+    ASSERT_FALSE(AttrDrapedLod() != AttrDrapedLod());
+    ASSERT_FALSE(AttrDrapedLod(0.3f) != AttrDrapedLod(0.3f));
+    ASSERT_FALSE(AttrDrapedLod() == AttrDrapedLod(0.3f));
+    ASSERT_FALSE(AttrDrapedLod(0.3f) == AttrDrapedLod(0.5f));
 }
 
 //-------------------------------------------------------------------------

@@ -62,7 +62,7 @@ class AttrManipWheel;
 class AttrWetDry;
 class AttrTint;
 class AttrSpecular;
-class AttrLodDrap;
+class AttrDrapedLod;
 class AttrLayerGroup;
 class AttrSlopeLimit;
 class AttrBlend;
@@ -102,7 +102,7 @@ public:
     virtual void gotGlobAttrWetDry(const AttrWetDry & globAttr) = 0;
     virtual void gotGlobAttrBlend(const AttrBlend & globAttr) = 0;
     virtual void gotGlobAttrSpecular(const AttrSpecular & globAttr) = 0;
-    virtual void gotGlobAttrLodDraped(const AttrLodDrap & globAttr) = 0;
+    virtual void gotGlobAttrDrapedLod(const AttrDrapedLod & globAttr) = 0;
     virtual void gotGlobAttrLayerGroup(const AttrLayerGroup & globAttr) = 0;
     virtual void gotGlobAttrSlopeLimit(const AttrSlopeLimit & globAttr) = 0;
     virtual void gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & globAttr) = 0;

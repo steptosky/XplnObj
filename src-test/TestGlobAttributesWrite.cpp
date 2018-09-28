@@ -186,7 +186,7 @@ TEST(TestGlobAttributesWrite, AttrLodDrap) {
     ObjWriteGlobAttr attrWriter;
     ObjMain main;
 
-    const AttrLodDrap attr(10.0f);
+    const AttrDrapedLod attr(10.0f);
     main.pDrapedAttr.setLod(attr);
 
     EXPECT_CALL(writer, printLine(StrEq(toObjGlobString(attr)))).Times(1);

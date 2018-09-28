@@ -139,7 +139,7 @@ void ObjReaderInterpreter::gotGlobAttrNoShadow() {
     ++mIOStatistic->pGlobAttrCount;
 }
 
-void ObjReaderInterpreter::gotGlobAttrLodDraped(const AttrLodDrap & globAttr) {
+void ObjReaderInterpreter::gotGlobAttrDrapedLod(const AttrDrapedLod & globAttr) {
     mObjMain->pDrapedAttr.setLod(globAttr);
     ++mIOStatistic->pGlobAttrCount;
 }

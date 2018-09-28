@@ -1,5 +1,3 @@
-#pragma once
-
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -29,71 +27,58 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/Export.h"
+#include "sts/utilities/Compare.h"
+#include "xpln/obj/attributes/AttrDrapedLod.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-/*!
- * \details ATTR_LOD_draped
- * \ingroup Attributes
- */
-class AttrLodDrap {
-public:
+AttrDrapedLod::AttrDrapedLod(const float distance)
+    : mDistance(distance),
+      mIsEnabled(true) { }
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrLodDrap();
+AttrDrapedLod::AttrDrapedLod()
+    : mDistance(1000.0f),
+      mIsEnabled(false) { }
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] distance 
-     */
-    XpObjLib AttrLodDrap(float distance);
+/**************************************************************************************************/
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
+/**************************************************************************************************/
 
-    ~AttrLodDrap() = default;
+AttrDrapedLod::operator bool() const {
+    return mIsEnabled;
+}
 
-    //-------------------------------------------------------------------------
+void AttrDrapedLod::setEnabled(const bool state) {
+    mIsEnabled = state;
+}
 
-    /*!
-     * \details Check whether the attribute is enabled. 
-     * \note All class's setters will enable this attribute.
-     */
-    XpObjLib operator bool() const;
+bool AttrDrapedLod::operator==(const AttrDrapedLod & other) const {
+    return (mIsEnabled == other.mIsEnabled && sts::isEqual(mDistance, other.mDistance, 0.01f));
+}
 
-    /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note All class's setters will enable this attribute.
-     * \param [in] state 
-     */
-    XpObjLib void setEnabled(bool state);
+bool AttrDrapedLod::operator!=(const AttrDrapedLod & other) const {
+    return !operator==(other);
+}
 
-    //-------------------------------------------------------------------------
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
 
-    XpObjLib bool operator==(const AttrLodDrap & other) const;
-    XpObjLib bool operator!=(const AttrLodDrap & other) const;
+void AttrDrapedLod::setDistance(const float distance) {
+    mDistance = distance;
+    mIsEnabled = true;
+}
 
-    //-------------------------------------------------------------------------
-
-    XpObjLib void setDistance(float distance);
-    XpObjLib float distance() const;
-
-    //-------------------------------------------------------------------------
-
-private:
-
-    float mDistance;
-    bool mIsEnabled : 1;
-
-};
+float AttrDrapedLod::distance() const {
+    return mDistance;
+}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
+
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,58 +29,71 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "sts/utilities/Compare.h"
-#include "xpln/obj/attributes/AttrLodDrap.h"
+#include "xpln/Export.h"
 
 namespace xobj {
-
-/**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrLodDrap::AttrLodDrap(const float distance)
-    : mDistance(distance),
-      mIsEnabled(true) { }
-
-AttrLodDrap::AttrLodDrap()
-    : mDistance(1000.0f),
-      mIsEnabled(false) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Operators *////////////////////////////////////////////
-/**************************************************************************************************/
-
-AttrLodDrap::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrLodDrap::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
-bool AttrLodDrap::operator==(const AttrLodDrap & other) const {
-    return (mIsEnabled == other.mIsEnabled && sts::isEqual(mDistance, other.mDistance, 0.01f));
-}
-
-bool AttrLodDrap::operator!=(const AttrLodDrap & other) const {
-    return !operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrLodDrap::setDistance(const float distance) {
-    mDistance = distance;
-    mIsEnabled = true;
-}
-
-float AttrLodDrap::distance() const {
-    return mDistance;
-}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
+/*!
+ * \details ATTR_LOD_draped
+ * \ingroup Attributes
+ */
+class AttrDrapedLod {
+public:
+
+    /*!
+     * \details Constructor default.
+     * \note Makes the disabled attribute.
+     */
+    XpObjLib AttrDrapedLod();
+
+    /*!
+     * \details Constructor init.
+     * \note Makes the enabled attribute.
+     * \param [in] distance 
+     */
+    XpObjLib AttrDrapedLod(float distance);
+
+    ~AttrDrapedLod() = default;
+
+    //-------------------------------------------------------------------------
+
+    /*!
+     * \details Check whether the attribute is enabled. 
+     * \note All class's setters will enable this attribute.
+     */
+    XpObjLib operator bool() const;
+
+    /*!
+     * \details Sets the attribute enabled/disabled.
+     * \note All class's setters will enable this attribute.
+     * \param [in] state 
+     */
+    XpObjLib void setEnabled(bool state);
+
+    //-------------------------------------------------------------------------
+
+    XpObjLib bool operator==(const AttrDrapedLod & other) const;
+    XpObjLib bool operator!=(const AttrDrapedLod & other) const;
+
+    //-------------------------------------------------------------------------
+
+    XpObjLib void setDistance(float distance);
+    XpObjLib float distance() const;
+
+    //-------------------------------------------------------------------------
+
+private:
+
+    float mDistance;
+    bool mIsEnabled : 1;
+
+};
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

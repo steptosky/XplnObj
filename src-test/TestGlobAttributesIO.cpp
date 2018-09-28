@@ -64,8 +64,8 @@ TEST(TestGlobAttributesIO, defaults) {
     ASSERT_FALSE(mainOut.pAttr.cockpitRegion(AttrCockpitRegion::r3));
     ASSERT_FALSE(mainOut.pAttr.cockpitRegion(AttrCockpitRegion::r4));
 
-    ASSERT_FALSE(mainOut.pDrapedAttr.layerGroup());
-    ASSERT_FALSE(mainOut.pDrapedAttr.lod());
+    ASSERT_FALSE(mainOut.pDraped.pAttr.layerGroup());
+    ASSERT_FALSE(mainOut.pDraped.pAttr.lod());
 }
 
 TEST(TestGlobAttributesIO, textures) {
@@ -109,8 +109,8 @@ TEST(TestGlobAttributesIO, attributes) {
     mainOut.pAttr.setCockpitRegion(AttrCockpitRegion(100, 200, 300, 400), AttrCockpitRegion::r1);
     mainOut.pAttr.setCockpitRegion(AttrCockpitRegion(500, 600, 700, 800), AttrCockpitRegion::r2);
 
-    mainOut.pDrapedAttr.setLod(AttrDrapedLod(1000));
-    mainOut.pDrapedAttr.setLayerGroup(AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
+    mainOut.pDraped.pAttr.setLod(AttrDrapedLod(1000));
+    mainOut.pDraped.pAttr.setLayerGroup(AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
 
     //-------------------------------------------------------------------------
 
@@ -142,8 +142,8 @@ TEST(TestGlobAttributesIO, attributes) {
     ASSERT_EQ(mainIn.pAttr.cockpitRegion(AttrCockpitRegion::r3), AttrCockpitRegion());
     ASSERT_EQ(mainIn.pAttr.cockpitRegion(AttrCockpitRegion::r4), AttrCockpitRegion());
 
-    ASSERT_EQ(mainIn.pDrapedAttr.lod(), AttrDrapedLod(1000));
-    ASSERT_EQ(mainIn.pDrapedAttr.layerGroup(), AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
+    ASSERT_EQ(mainIn.pDraped.pAttr.lod(), AttrDrapedLod(1000));
+    ASSERT_EQ(mainIn.pDraped.pAttr.layerGroup(), AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
 }
 
 /**************************************************************************************************/

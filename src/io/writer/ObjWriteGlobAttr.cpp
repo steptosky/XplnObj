@@ -70,8 +70,8 @@ void ObjWriteGlobAttr::write(AbstractWriter * writer, const ObjMain * obj) {
     writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r3)));
     writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r4)));
 
-    writeString(writer, toObjGlobString(obj->pDrapedAttr.layerGroup()));
-    writeString(writer, toObjGlobString(obj->pDrapedAttr.lod()));
+    writeString(writer, toObjGlobString(obj->pDraped.pAttr.layerGroup()));
+    writeString(writer, toObjGlobString(obj->pDraped.pAttr.lod()));
 }
 
 void ObjWriteGlobAttr::writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString) {

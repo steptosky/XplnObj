@@ -27,7 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "ObjDrapedGroup.h"
+#include "xpln/obj/ObjDrapedGroup.h"
 
 namespace xobj {
 

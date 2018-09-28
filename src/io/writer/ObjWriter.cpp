@@ -36,7 +36,7 @@
 #include "xpln/obj/ObjLine.h"
 #include "sts/utilities/Compare.h"
 #include "converters/ObjString.h"
-#include "ObjWriteOptimize.h"
+#include "algorithms/Draped.h"
 #include "io/ObjTransformation.h"
 #include "algorithms/InstancingAlg.h"
 #include "common/Logger.h"
@@ -82,6 +82,7 @@ void ObjWriter::reset() {
 bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::string & signature,
                           IOStatistic & outStat, const TMatrix & tm) {
     try {
+        const NoInterrupt interrupt;
         reset(); // reset all data that needs to be recalculated
 
         if (root == nullptr || !checkParameters(*root, root->objectName())) {
@@ -102,7 +103,14 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
         writer.spaceEnable(mExportOptions.isEnabled(XOBJ_EXP_MARK_TREE_HIERARCHY));
         //-------------------------------------------------------------------------
 
-        mMain->pDraped.setDrapedAttr();
+        if (mMain->pDraped.objectName().empty()) {
+            mMain->pDraped.setObjectName(mMain->objectName());
+        }
+        Draped::ensureDrapedAttrIsSet(mMain->pDraped, interrupt);
+        for (const auto & lod : mMain->lods()) {
+            Draped::extract(mMain->pDraped, lod->transform(), interrupt);
+        }
+        //-------------------------------------------------------------------------
 
         if (mExportOptions.isEnabled(XOBJ_EXP_CHECK_INSTANCE)) {
             InstancingAlg::validateAndPrepare(*mMain);
@@ -111,7 +119,7 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
         if (!ObjWritePreparer::prepare(*mMain)) {
             return false;
         }
-        ObjWriteOptimize::optimize(*mMain);
+
         ObjTransformation::correctExportTransform(*mMain, tm, mExportOptions.isEnabled(XOBJ_EXP_APPLY_LOD_TM));
 
         //-------------------------------------------------------------------------

@@ -39,7 +39,7 @@ using namespace xobj;
 /**************************************************************************************************/
 
 TEST(Draped, io) {
-    const auto fileName = "draped-io-test.obj";
+    const auto fileName = "Draped-io.obj";
     //-------------------
     // make out data and save to file
     ObjMain mainOut;

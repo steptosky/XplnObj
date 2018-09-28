@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,42 +29,35 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "ObjWriteOptimize.h"
-#include "xpln/obj/ObjLodGroup.h"
-#include "ObjWriteAnim.h"
+#include "xpln/obj/Transform.h"
+#include "xpln/common/IInterrupt.h"
 
 namespace xobj {
 
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
+class ObjMesh;
+class ObjMain;
+class ObjDrapedGroup;
+class Transform;
 
-void ObjWriteOptimize::optimize(ObjMain & mainObj) {
-    if (mainObj.pExportOptions.isEnabled(XOBJ_EXP_OPTIMIZATION)) {
-        for (const auto & lod : mainObj.lods()) {
-            Transform & rootTransform = lod->transform();
-            proccess(rootTransform);
-        }
-    }
-}
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
 
-void ObjWriteOptimize::proccess(Transform & transform) {
-    //-------------------------------------------------------------------------
+class Draped {
+    Draped() = default;
+    ~Draped() = default;
+public:
 
-    // TODO Optimize
+    static void ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrupt & interrupt);
+    static void extract(ObjDrapedGroup & inOutDraped, Transform & inOutTransform, const IInterrupt & interrupt);
 
-    //-------------------------------------------------------------------------
-    // children
+private:
 
-    const auto chCount = transform.childrenNum();
-    for (Transform::TransformIndex i = 0; i < chCount; ++i) {
-        proccess(*static_cast<Transform*>(transform.childAt(i)));
-    }
+    static Transform::ObjList processObjects(Transform & transform);
 
-    //-------------------------------------------------------------------------
-}
+};
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
+/**********************************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************************************************************************************************************/
 }

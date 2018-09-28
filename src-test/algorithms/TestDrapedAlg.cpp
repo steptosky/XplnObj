@@ -1,5 +1,3 @@
-#pragma once
-
 /*
 **  Copyright(C) 2018, StepToSky
 **
@@ -29,85 +27,47 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/Transform.h"
-#include "xpln/obj/attributes/AttrDrapedSet.h"
+#include <gtest/gtest.h>
+#include "algorithms/Draped.h"
+#include "xpln/obj/ObjDrapedGroup.h"
+#include "TestUtils.h"
+#include "TestUtilsObjMesh.h"
 
-namespace xobj {
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-/*!
- * \details Representation of the draped object
- * \ingroup Objects
- */
-class ObjDrapedGroup {
-public:
-
-    //-------------------------------------------------------------------------
-    /// @{
-
-    ObjDrapedGroup()
-        : ObjDrapedGroup("Draped") {}
-
-    explicit ObjDrapedGroup(const std::string & name)
-        : mName(name) {
-        mObjTransform.setName(name);
-    }
-
-    ObjDrapedGroup(const ObjDrapedGroup &) = delete;
-    ObjDrapedGroup & operator =(const ObjDrapedGroup &) = delete;
-
-    virtual ~ObjDrapedGroup() = default;
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    void setObjectName(const std::string & name) {
-        mName = name;
-        mObjTransform.setName(name);
-    }
-
-    const std::string & objectName() const {
-        return mName;
-    }
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    /*! \copydoc ObjAbstract::transform */
-    Transform & transform() {
-        return mObjTransform;
-    }
-
-    /*! \copydoc ObjAbstract::transform */
-    const Transform & transform() const {
-        return mObjTransform;
-    }
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    /*!
-     * \details Set of the attributes.
-     */
-    AttrDrapedSet pAttr;
-
-    /// @}
-    //-------------------------------------------------------------------------
-
-private:
-
-    Transform mObjTransform;
-    std::string mName;
-
-};
+using namespace xobj;
 
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
+
+TEST(DrapedAlg, extract) {
+    Transform transformRoot;
+    auto & transform = transformRoot.newChild("l1");
+    ObjDrapedGroup draped;
+
+    const auto l1M1 = TestUtilsObjMesh::createPyramidTestMesh("l1-m1");
+    const auto l2M1 = TestUtilsObjMesh::createPyramidTestMesh("l2-m2");
+    auto l1M2 = TestUtilsObjMesh::createPyramidTestMesh("l1-m1");
+    auto l2M2 = TestUtilsObjMesh::createPyramidTestMesh("l2-m2");
+
+    l1M2->pAttr.setDraped(true);
+    l2M2->pAttr.setDraped(true);
+
+    transformRoot.addObject(l1M1);
+    transformRoot.addObject(l1M2);
+
+    transform.addObject(l2M1);
+    transform.addObject(l2M2);
+
+    Draped::extract(draped, transformRoot, NoInterrupt());
+
+    EXPECT_EQ(1, transformRoot.objList().size());
+    EXPECT_EQ(1, transformRoot.childAt(0)->objList().size());
+
+    ASSERT_EQ(2, draped.transform().objList().size());
+    EXPECT_STREQ("l1-m1", draped.transform().objList()[0]->objectName().c_str());
+    EXPECT_STREQ("l2-m2", draped.transform().objList()[1]->objectName().c_str());
 }
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/

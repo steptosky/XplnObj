@@ -269,6 +269,8 @@ public:
      */
     XpObjLib bool removeObject(const ObjAbstract * object);
 
+    XpObjLib ObjAbstract * takeObject(const ObjAbstract * object);
+
     XpObjLib const ObjList & objList() const;
 
     bool hasObjects() const {

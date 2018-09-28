@@ -4,14 +4,17 @@ StepToSky: X-Plane Obj Library
 
 - **Added** Ability to use tool-tip in ATTR_manip_noop.
 - **Added** Ability to use text variables in the param light's parameters string.
+- **Added** Optimization for exporting draped geometry.
+- **Changed:** Draped geometry got its own class and attribute set. 
+               In normal way developers should use that new class for all draped geometry.
+               But for backward compatibility draped meshes will be auto-extracted from the LODs while exporting.
 - **Fixed** Sorting algorithm for LODs.
 
 ##### Breaking backward compatibility
-- **Changes:** Methods for accessing to the LODs.
-- **Changes:** Changed named light's methods.
-- **Changes:** Changed param light's methods.
-- **Changes:** Changed Transform's methods.
-- **Changes:** Draped geometry got its own class and attribute set.
+- **Changed:** Methods for accessing to the LODs.
+- **Changed:** Changed named light's methods.
+- **Changed:** Changed param light's methods.
+- **Changed:** Changed Transform's methods.
 - **Removed:** ELightNamed and ELightParams. 
                For getting light names use `X-Plane Root/Resources/bitmaps/world/lites/lights.txt`
  

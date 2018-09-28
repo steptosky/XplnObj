@@ -11,6 +11,7 @@ StepToSky: X-Plane Obj Library
 - **Changes:** Changed named light's methods.
 - **Changes:** Changed param light's methods.
 - **Changes:** Changed Transform's methods.
+- **Changes:** Draped geometry got its own class and attribute set.
 - **Removed:** ELightNamed and ELightParams. 
                For getting light names use `X-Plane Root/Resources/bitmaps/world/lites/lights.txt`
  

@@ -1,5 +1,3 @@
-#pragma once
-
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -29,57 +27,55 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
-#include "xpln/Export.h"
-
-/*
-* Why this functions are not the methods of the corresponding classes?
-* For simplify the library interface.
-*/
+#include "sts/utilities/Compare.h"
+#include "xpln/obj/attributes/AttrDrapedLod.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-class AttrBlend;
-class AttrHard;
-class AttrDrapedLayerGroup;
-class AttrLayerGroup;
-class AttrLightLevel;
-class AttrDrapedLod;
-class AttrPolyOffset;
-class AttrShiny;
-class AttrSlungLoadWeight;
-class AttrSpecular;
-class AttrTint;
-class AttrWetDry;
-class AttrSlopeLimit;
-class AttrCockpitRegion;
-class AttrCockpit;
+AttrDrapedLod::AttrDrapedLod(const float distance)
+    : mDistance(distance),
+      mIsEnabled(true) { }
+
+AttrDrapedLod::AttrDrapedLod()
+    : mDistance(1000.0f),
+      mIsEnabled(false) { }
 
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-XpObjLib std::string toObjGlobString(const AttrBlend & globAttr);
-XpObjLib std::string toObjGlobString(const AttrLayerGroup & globAttr);
-XpObjLib std::string toObjGlobString(const AttrDrapedLayerGroup & globAttr);
-XpObjLib std::string toObjGlobString(const AttrDrapedLod & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSlungLoadWeight & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSpecular & globAttr);
-XpObjLib std::string toObjGlobString(const AttrTint & globAttr);
-XpObjLib std::string toObjGlobString(const AttrWetDry & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSlopeLimit & globAttr);
-XpObjLib std::string toObjGlobString(const AttrCockpitRegion & globAttr);
+AttrDrapedLod::operator bool() const {
+    return mIsEnabled;
+}
 
-XpObjLib std::string toObjString(const AttrBlend & attr);
-XpObjLib std::string toObjString(const AttrHard & attr);
-XpObjLib std::string toObjString(const AttrLightLevel & attr);
-XpObjLib std::string toObjString(const AttrPolyOffset & attr);
-XpObjLib std::string toObjString(const AttrShiny & attr);
-XpObjLib std::string toObjString(const AttrCockpit & attr);
+void AttrDrapedLod::setEnabled(const bool state) {
+    mIsEnabled = state;
+}
+
+bool AttrDrapedLod::operator==(const AttrDrapedLod & other) const {
+    return (mIsEnabled == other.mIsEnabled && sts::isEqual(mDistance, other.mDistance, 0.01f));
+}
+
+bool AttrDrapedLod::operator!=(const AttrDrapedLod & other) const {
+    return !operator==(other);
+}
+
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
+
+void AttrDrapedLod::setDistance(const float distance) {
+    mDistance = distance;
+    mIsEnabled = true;
+}
+
+float AttrDrapedLod::distance() const {
+    return mDistance;
+}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

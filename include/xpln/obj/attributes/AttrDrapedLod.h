@@ -29,13 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
 #include "xpln/Export.h"
-
-/*
-* Why this functions are not the methods of the corresponding classes?
-* For simplify the library interface.
-*/
 
 namespace xobj {
 
@@ -43,46 +37,63 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-class AttrBlend;
-class AttrHard;
-class AttrDrapedLayerGroup;
-class AttrLayerGroup;
-class AttrLightLevel;
-class AttrDrapedLod;
-class AttrPolyOffset;
-class AttrShiny;
-class AttrSlungLoadWeight;
-class AttrSpecular;
-class AttrTint;
-class AttrWetDry;
-class AttrSlopeLimit;
-class AttrCockpitRegion;
-class AttrCockpit;
+/*!
+ * \details ATTR_LOD_draped
+ * \ingroup Attributes
+ */
+class AttrDrapedLod {
+public:
+
+    /*!
+     * \details Constructor default.
+     * \note Makes the disabled attribute.
+     */
+    XpObjLib AttrDrapedLod();
+
+    /*!
+     * \details Constructor init.
+     * \note Makes the enabled attribute.
+     * \param [in] distance 
+     */
+    XpObjLib AttrDrapedLod(float distance);
+
+    ~AttrDrapedLod() = default;
+
+    //-------------------------------------------------------------------------
+
+    /*!
+     * \details Check whether the attribute is enabled. 
+     * \note All class's setters will enable this attribute.
+     */
+    XpObjLib operator bool() const;
+
+    /*!
+     * \details Sets the attribute enabled/disabled.
+     * \note All class's setters will enable this attribute.
+     * \param [in] state 
+     */
+    XpObjLib void setEnabled(bool state);
+
+    //-------------------------------------------------------------------------
+
+    XpObjLib bool operator==(const AttrDrapedLod & other) const;
+    XpObjLib bool operator!=(const AttrDrapedLod & other) const;
+
+    //-------------------------------------------------------------------------
+
+    XpObjLib void setDistance(float distance);
+    XpObjLib float distance() const;
+
+    //-------------------------------------------------------------------------
+
+private:
+
+    float mDistance;
+    bool mIsEnabled : 1;
+
+};
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
-
-XpObjLib std::string toObjGlobString(const AttrBlend & globAttr);
-XpObjLib std::string toObjGlobString(const AttrLayerGroup & globAttr);
-XpObjLib std::string toObjGlobString(const AttrDrapedLayerGroup & globAttr);
-XpObjLib std::string toObjGlobString(const AttrDrapedLod & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSlungLoadWeight & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSpecular & globAttr);
-XpObjLib std::string toObjGlobString(const AttrTint & globAttr);
-XpObjLib std::string toObjGlobString(const AttrWetDry & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSlopeLimit & globAttr);
-XpObjLib std::string toObjGlobString(const AttrCockpitRegion & globAttr);
-
-XpObjLib std::string toObjString(const AttrBlend & attr);
-XpObjLib std::string toObjString(const AttrHard & attr);
-XpObjLib std::string toObjString(const AttrLightLevel & attr);
-XpObjLib std::string toObjString(const AttrPolyOffset & attr);
-XpObjLib std::string toObjString(const AttrShiny & attr);
-XpObjLib std::string toObjString(const AttrCockpit & attr);
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
 }

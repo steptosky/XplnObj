@@ -36,7 +36,7 @@
 #include "xpln/obj/ObjLine.h"
 #include "sts/utilities/Compare.h"
 #include "converters/ObjString.h"
-#include "ObjWriteOptimize.h"
+#include "algorithms/Draped.h"
 #include "io/ObjTransformation.h"
 #include "algorithms/InstancingAlg.h"
 #include "common/Logger.h"
@@ -82,6 +82,7 @@ void ObjWriter::reset() {
 bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::string & signature,
                           IOStatistic & outStat, const TMatrix & tm) {
     try {
+        const NoInterrupt interrupt;
         reset(); // reset all data that needs to be recalculated
 
         if (root == nullptr || !checkParameters(*root, root->objectName())) {
@@ -102,6 +103,15 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
         writer.spaceEnable(mExportOptions.isEnabled(XOBJ_EXP_MARK_TREE_HIERARCHY));
         //-------------------------------------------------------------------------
 
+        if (mMain->pDraped.objectName().empty()) {
+            mMain->pDraped.setObjectName(mMain->objectName());
+        }
+        Draped::ensureDrapedAttrIsSet(mMain->pDraped, interrupt);
+        for (const auto & lod : mMain->lods()) {
+            Draped::extract(mMain->pDraped, lod->transform(), interrupt);
+        }
+        //-------------------------------------------------------------------------
+
         if (mExportOptions.isEnabled(XOBJ_EXP_CHECK_INSTANCE)) {
             InstancingAlg::validateAndPrepare(*mMain);
         }
@@ -109,7 +119,7 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
         if (!ObjWritePreparer::prepare(*mMain)) {
             return false;
         }
-        ObjWriteOptimize::optimize(*mMain);
+
         ObjTransformation::correctExportTransform(*mMain, tm, mExportOptions.isEnabled(XOBJ_EXP_APPLY_LOD_TM));
 
         //-------------------------------------------------------------------------
@@ -118,6 +128,9 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
             calculateVerticiesAndFaces(lod->transform());
         }
 
+        calculateVerticiesAndFaces(mMain->pDraped.transform());
+
+        //-------------------------------------------------------------------------
         // print global
         printGlobalInformation(writer, *mMain);
 
@@ -142,8 +155,12 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
             }
         }
 
+        // print draped
+        mObjWriteGeometry.printMeshVerticiesRecursive(writer, mMain->pDraped.transform());
+
         writer.printEol();
 
+        //-------------------------------------------------------------------------
         // print mesh faces 
         if (mStatistic.pMeshVerticesCount) {
             mObjWriteGeometry.printMeshFaceRecursive(writer, *mMain);
@@ -158,12 +175,13 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
                 ULError << currLod->objectName() << " - Lod can't be animated.";
             }
 
-            //-------------------------------------------------------------------------
-
             printLOD(writer, *currLod, mMain->lods().size());
             printObjects(writer, currLod->transform());
             writer.printEol();
         }
+
+        printObjects(writer, mMain->pDraped.transform());
+        writer.printEol();
 
         mStatistic.pTrisManipCount += mObjWriteManip.count();
         mStatistic.pTrisAttrCount += mWriteAttr.count();

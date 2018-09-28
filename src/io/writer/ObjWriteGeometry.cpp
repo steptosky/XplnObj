@@ -119,6 +119,7 @@ void ObjWriteGeometry::printMeshFaceRecursive(AbstractWriter & writer, const Obj
     for (const auto & lod : main.lods()) {
         writeMeshFaceRecursive(stream, lod->transform(), idx, offset);
     }
+    writeMeshFaceRecursive(stream, main.pDraped.transform(), idx, offset);
     writer.printLine(stream.str());
 }
 

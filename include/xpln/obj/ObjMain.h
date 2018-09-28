@@ -34,7 +34,8 @@
 #include "ObjLodGroup.h"
 #include "ExportOptions.h"
 #include "IOStatistic.h"
-#include "attributes/AttrGlobSet.h"
+#include "xpln/obj/attributes/AttrGlobSet.h"
+#include "xpln/obj/ObjDrapedGroup.h"
 
 namespace xobj {
 
@@ -82,6 +83,13 @@ public:
      * \details With this matrix you can move, rotate, convert to another system coordinates all the objects.
      */
     TMatrix pMatrix;
+
+    //-------------------------------------------------------------------------
+
+    /*!
+     * \details Contains draped geometry and attributes.
+     */
+    ObjDrapedGroup pDraped;
 
     //-------------------------------------------------------------------------
 

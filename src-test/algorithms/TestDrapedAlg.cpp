@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,60 +27,47 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
-#include "xpln/Export.h"
+#include <gtest/gtest.h>
+#include "algorithms/Draped.h"
+#include "xpln/obj/ObjDrapedGroup.h"
+#include "TestUtils.h"
+#include "TestUtilsObjMesh.h"
 
-/*
-* Why this functions are not the methods of the corresponding classes?
-* For simplify the library interface.
-*/
-
-namespace xobj {
+using namespace xobj;
 
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-class AttrBlend;
-class AttrHard;
-class AttrDrapedLayerGroup;
-class AttrLayerGroup;
-class AttrLightLevel;
-class AttrDrapedLod;
-class AttrPolyOffset;
-class AttrShiny;
-class AttrSlungLoadWeight;
-class AttrSpecular;
-class AttrTint;
-class AttrWetDry;
-class AttrSlopeLimit;
-class AttrCockpitRegion;
-class AttrCockpit;
+TEST(DrapedAlg, extract) {
+    Transform transformRoot;
+    auto & transform = transformRoot.newChild("l1");
+    ObjDrapedGroup draped;
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
+    const auto l1M1 = TestUtilsObjMesh::createPyramidTestMesh("l1-m1");
+    const auto l2M1 = TestUtilsObjMesh::createPyramidTestMesh("l2-m2");
+    auto l1M2 = TestUtilsObjMesh::createPyramidTestMesh("l1-m1");
+    auto l2M2 = TestUtilsObjMesh::createPyramidTestMesh("l2-m2");
 
-XpObjLib std::string toObjGlobString(const AttrBlend & globAttr);
-XpObjLib std::string toObjGlobString(const AttrLayerGroup & globAttr);
-XpObjLib std::string toObjGlobString(const AttrDrapedLayerGroup & globAttr);
-XpObjLib std::string toObjGlobString(const AttrDrapedLod & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSlungLoadWeight & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSpecular & globAttr);
-XpObjLib std::string toObjGlobString(const AttrTint & globAttr);
-XpObjLib std::string toObjGlobString(const AttrWetDry & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSlopeLimit & globAttr);
-XpObjLib std::string toObjGlobString(const AttrCockpitRegion & globAttr);
+    l1M2->pAttr.setDraped(true);
+    l2M2->pAttr.setDraped(true);
 
-XpObjLib std::string toObjString(const AttrBlend & attr);
-XpObjLib std::string toObjString(const AttrHard & attr);
-XpObjLib std::string toObjString(const AttrLightLevel & attr);
-XpObjLib std::string toObjString(const AttrPolyOffset & attr);
-XpObjLib std::string toObjString(const AttrShiny & attr);
-XpObjLib std::string toObjString(const AttrCockpit & attr);
+    transformRoot.addObject(l1M1);
+    transformRoot.addObject(l1M2);
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
+    transform.addObject(l2M1);
+    transform.addObject(l2M2);
 
+    Draped::extract(draped, transformRoot, NoInterrupt());
+
+    EXPECT_EQ(1, transformRoot.objList().size());
+    EXPECT_EQ(1, transformRoot.childAt(0)->objList().size());
+
+    ASSERT_EQ(2, draped.transform().objList().size());
+    EXPECT_STREQ("l1-m1", draped.transform().objList()[0]->objectName().c_str());
+    EXPECT_STREQ("l2-m2", draped.transform().objList()[1]->objectName().c_str());
 }
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/

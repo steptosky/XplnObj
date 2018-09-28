@@ -269,6 +269,21 @@ void Transform::addObject(ObjAbstract * object) {
     }
 }
 
+ObjAbstract * Transform::takeObject(const ObjAbstract * object) {
+    ObjAbstract * out = nullptr;
+    if (object) {
+        for (auto it = mObjList.begin(); it != mObjList.end(); ++it) {
+            if (it->get() == object) {
+                (*it)->mObjTransform = nullptr;
+                out = it->release();
+                mObjList.erase(it);
+                return out;
+            }
+        }
+    }
+    return out;
+}
+
 bool Transform::removeObject(const ObjAbstract * object) {
     if (object) {
         for (auto it = mObjList.begin(); it != mObjList.end(); ++it) {

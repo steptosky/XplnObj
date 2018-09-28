@@ -1,5 +1,3 @@
-#pragma once
-
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -29,60 +27,57 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
-#include "xpln/Export.h"
+#include <gtest/gtest.h>
+#include "xpln/obj/ObjDrapedGroup.h"
+#include "TestUtils.h"
+#include "TestUtilsObjMesh.h"
 
-/*
-* Why this functions are not the methods of the corresponding classes?
-* For simplify the library interface.
-*/
-
-namespace xobj {
+using namespace xobj;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-class AttrBlend;
-class AttrHard;
-class AttrDrapedLayerGroup;
-class AttrLayerGroup;
-class AttrLightLevel;
-class AttrDrapedLod;
-class AttrPolyOffset;
-class AttrShiny;
-class AttrSlungLoadWeight;
-class AttrSpecular;
-class AttrTint;
-class AttrWetDry;
-class AttrSlopeLimit;
-class AttrCockpitRegion;
-class AttrCockpit;
+TEST(Draped, io) {
+    const auto fileName = "Draped-io.obj";
+    //-------------------
+    // make out data and save to file
+    ObjMain mainOut;
+    TestUtils::setTestExportOptions(mainOut);
+    ObjLodGroup & lod1 = mainOut.addLod(new ObjLodGroup("l1", 0.0f, 100.0f));
+    ObjLodGroup & lod2 = mainOut.addLod(new ObjLodGroup("l2", 100.0f, 200.0f));
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
+    lod1.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l1-m1"));
+    lod1.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l1-m2"));
 
-XpObjLib std::string toObjGlobString(const AttrBlend & globAttr);
-XpObjLib std::string toObjGlobString(const AttrLayerGroup & globAttr);
-XpObjLib std::string toObjGlobString(const AttrDrapedLayerGroup & globAttr);
-XpObjLib std::string toObjGlobString(const AttrDrapedLod & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSlungLoadWeight & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSpecular & globAttr);
-XpObjLib std::string toObjGlobString(const AttrTint & globAttr);
-XpObjLib std::string toObjGlobString(const AttrWetDry & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSlopeLimit & globAttr);
-XpObjLib std::string toObjGlobString(const AttrCockpitRegion & globAttr);
+    lod2.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l2-m1"));
+    lod2.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l2-m2"));
 
-XpObjLib std::string toObjString(const AttrBlend & attr);
-XpObjLib std::string toObjString(const AttrHard & attr);
-XpObjLib std::string toObjString(const AttrLightLevel & attr);
-XpObjLib std::string toObjString(const AttrPolyOffset & attr);
-XpObjLib std::string toObjString(const AttrShiny & attr);
-XpObjLib std::string toObjString(const AttrCockpit & attr);
+    mainOut.pDraped.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("d1"));
+    mainOut.pDraped.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("d2"));
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
+    ASSERT_TRUE(mainOut.exportToFile(fileName));
 
+    //-------------------
+    // load data from file
+
+    ObjMain mainIn;
+    ASSERT_TRUE(mainIn.importFromFile(fileName));
+
+    ObjLodGroup * lodIn1 = nullptr;
+    ObjLodGroup * lodIn2 = nullptr;
+    // One transform was optimized during export, it became LOD's transform
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 0, lodIn1));
+    ASSERT_NO_FATAL_FAILURE(TestUtils::extractLod(mainIn, 1, lodIn2));
+
+    //-------------------
+    // check results
+
+    EXPECT_EQ(2, lodIn1->transform().objList().size());
+    EXPECT_EQ(2, lodIn2->transform().objList().size());
+    EXPECT_EQ(2, mainIn.pDraped.transform().objList().size());
 }
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/

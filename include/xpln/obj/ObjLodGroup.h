@@ -98,12 +98,12 @@ public:
     //--------------------------------------------------------
 
     /*! \copydoc ObjAbstract::transform */
-    XpObjLib Transform & transform() {
+    Transform & transform() {
         return mObjTransform;
     }
 
     /*! \copydoc ObjAbstract::transform */
-    XpObjLib const Transform & transform() const {
+    const Transform & transform() const {
         return mObjTransform;
     }
 

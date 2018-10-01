@@ -41,9 +41,11 @@ namespace xobj {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool LodsAlg::validateAndPrepare(ObjMain::Lods & inOutLods,
+bool LodsAlg::validate(ObjMain::Lods & inOutLods,
                                  const std::string & objectName,
                                  const IInterrupt & interrupt) {
+
+    INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
 
     if (inOutLods.size() == 1 && inOutLods[0]) {
         //---------------------------
@@ -116,14 +118,6 @@ bool LodsAlg::validateAndPrepare(ObjMain::Lods & inOutLods,
         //---------------------------
     }
     //-----------------------------------------------
-    INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
-    mergeIdenticalLods(inOutLods, interrupt);
-    const auto result = sort(inOutLods, interrupt);
-    if (!result) {
-        ULError << objectName << " - " << result.mErr;
-        return false;
-    }
-    //-----------------------------------------------
     return true;
 }
 
@@ -131,13 +125,39 @@ bool LodsAlg::validateAndPrepare(ObjMain::Lods & inOutLods,
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void LodsAlg::mergeIdenticalLods(ObjMain::Lods & /*inOutLods*/, const IInterrupt & /*interrupt*/) {}
+void LodsAlg::removeWithoutObjects(ObjMain::Lods & inOutLods, const IInterrupt & interrupt) {
+    for (auto iter = inOutLods.begin(); iter != inOutLods.end();) {
+        INTERRUPT_CHECK_WITH_RETURN(interrupt);
+        const auto hasObjects = !(*iter)->transform().visitAllObjects([](const auto &, const auto &) {
+            return false;
+        });
+
+        if (!hasObjects) {
+#ifndef NDEBUG
+            LInfo << "LOD <" << (*iter)->objectName() << "> will be removed because it doesn't have any objects.";
+#endif
+            iter = inOutLods.erase(iter);
+        }
+        else {
+            ++iter;
+        }
+    }
+}
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-Result LodsAlg::sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt) {
+void LodsAlg::mergeIdenticalLods(ObjMain::Lods & /*inOutLods*/, const IInterrupt & interrupt) {
+    INTERRUPT_CHECK_WITH_RETURN(interrupt);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+bool LodsAlg::sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt) {
+    INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
     //-------------------------------------------
     // orderings
     ObjMain::Lods orderedList;
@@ -164,22 +184,23 @@ Result LodsAlg::sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt) {
             }
         }
     }
-    INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, Result(false, "interrupted"));
+    INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
 
     //-------------------------------------------
     // checking remaining
     for (const auto & lod : inOutLods) {
         if (lod) {
-            return Result(false, "LOD <"s.append(lod->objectName())
-                                         .append(R"(> "near" value can't be associated with "far" value of any other LOD.)")
-                                         .append(R"( The necessary "far" valued don't exist or have already been associated with other LODs)"));
+            LError << "LOD <" << lod->objectName()
+                    << R"(> "near" value can't be associated with "far" value of any other LOD.)"
+                    << R"( The necessary "far" values don't exist or have already been associated with other LODs)";;
+            return false;
         }
     }
 
     //-------------------------------------------
     inOutLods = std::move(orderedList);
     //-------------------------------------------
-    return Result(true);
+    return true;
 }
 
 /**************************************************************************************************/

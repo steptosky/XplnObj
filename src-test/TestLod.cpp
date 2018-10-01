@@ -234,17 +234,17 @@ TEST_F(TestLod, validator_near_far_values_case1) {
     // far greater than near
     lGroup1.setNearVal(20.0f);
     lGroup1.setFarVal(10.0f);
-    ASSERT_FALSE(LodsAlg::validateAndPrepare(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
 
     // far equals near
     lGroup1.setNearVal(20.0f);
     lGroup1.setFarVal(20.0f);
-    ASSERT_FALSE(LodsAlg::validateAndPrepare(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
 
     // all okay
     lGroup1.setNearVal(0.0f);
     lGroup1.setFarVal(20.0f);
-    ASSERT_TRUE(LodsAlg::validateAndPrepare(main.lods(), main.objectName()));
+    ASSERT_TRUE(LodsAlg::validate(main.lods(), main.objectName()));
 }
 
 TEST_F(TestLod, validator_near_far_values_case2) {
@@ -257,19 +257,19 @@ TEST_F(TestLod, validator_near_far_values_case2) {
     // one lod but starts not from 0.0 
     lGroup1.setNearVal(10.0);
     lGroup1.setFarVal(20.0);
-    ASSERT_FALSE(LodsAlg::validateAndPrepare(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
 
     // all okay
     lGroup1.setNearVal(0.0);
     lGroup1.setFarVal(20.0);
-    ASSERT_TRUE(LodsAlg::validateAndPrepare(main.lods(), main.objectName()));
+    ASSERT_TRUE(LodsAlg::validate(main.lods(), main.objectName()));
 }
 
 TEST_F(TestLod, validator_no_objects) {
     ObjMain main;
 
     ObjLodGroup & lGroup1 = main.addLod();
-    ASSERT_FALSE(LodsAlg::validateAndPrepare(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
     lGroup1.transform().addObject(m1);
     m1 = nullptr;
 }
@@ -286,7 +286,7 @@ TEST_F(TestLod, validator_animation) {
 
     lGroup1.setNearVal(0.0);
     lGroup1.setFarVal(20.0);
-    ASSERT_FALSE(LodsAlg::validateAndPrepare(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
 }
 
 TEST_F(TestLod, validator_identical_lods) {
@@ -296,7 +296,7 @@ TEST_F(TestLod, validator_identical_lods) {
     ObjLodGroup & lGroup2 = main.addLod(new ObjLodGroup(TOTEXT(lGroup1), 0.0f, 100.0f));
     lGroup1.transform().addObject(m1);
     lGroup2.transform().addObject(m2);
-    ASSERT_FALSE(LodsAlg::validateAndPrepare(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
     m1 = nullptr;
     m2 = nullptr;
 }
@@ -310,7 +310,7 @@ TEST_F(TestLod, validator_attr_hard) {
     lGroup1.transform().addObject(m1);
     lGroup2.transform().addObject(m2);
     m2->pAttr.setHard(AttrHard(ESurface(ESurface::grass), false));
-    ASSERT_FALSE(LodsAlg::validateAndPrepare(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
     m1 = nullptr;
     m2 = nullptr;
 }

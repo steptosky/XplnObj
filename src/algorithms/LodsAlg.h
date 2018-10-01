@@ -31,7 +31,6 @@
 
 #include "xpln/Export.h"
 #include "xpln/obj/ObjMain.h"
-#include "common/Result.h"
 #include "xpln/common/IInterrupt.h"
 
 namespace xobj {
@@ -46,7 +45,6 @@ class LodsAlg {
 public:
 
     //-------------------------------------------------------------------------
-    /// \name Validator
     /// @{
 
     /*!
@@ -60,19 +58,24 @@ public:
      * \return False if something is wrong with LODs otherwise true.
      *          Information about problems is printed to the log.
      */
-    XpObjLib static bool validateAndPrepare(ObjMain::Lods & inOutLods,
+    XpObjLib static bool validate(ObjMain::Lods & inOutLods,
                                             const std::string & objectName,
                                             const IInterrupt & interrupt = NoInterrupt());
 
     /// @}
     //-------------------------------------------------------------------------
-    /// \name For testing only
     /// @{
+
+    /*!
+     * \details Removes lods that don't contain any objects.
+     * \param [in, out] inOutLods
+     * \param [in] interrupt
+     */
+    XpObjLib static void removeWithoutObjects(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
 
     /*!
      * \todo not implemented
      * \details It merges objects of identical LODs into one LOD.
-     * \note It is not private because of testing.
      * \param [in, out] inOutLods
      * \param [in] interrupt
      */
@@ -80,7 +83,6 @@ public:
 
     /*!
      * \details Sorts the LOD according to obj specification.
-     * \note It is not private because of testing.
      * \param [in, out] inOutLods 
      * \param [in] interrupt 
      * \return false if there is an error with LODs' values 
@@ -88,7 +90,7 @@ public:
      *          the algorithm was interrupted
      *          otherwise true.
      */
-    XpObjLib static Result sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
+    XpObjLib static bool sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
 
     /// @}
     //-------------------------------------------------------------------------

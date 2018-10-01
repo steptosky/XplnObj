@@ -106,10 +106,23 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
         if (mMain->pDraped.objectName().empty()) {
             mMain->pDraped.setObjectName(mMain->objectName());
         }
+
+        if (!LodsAlg::validate(mMain->lods(), mMain->objectName(), interrupt)) {
+            return false;
+        }
+
         Draped::ensureDrapedAttrIsSet(mMain->pDraped, interrupt);
         for (const auto & lod : mMain->lods()) {
+            INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
             Draped::extract(mMain->pDraped, lod->transform(), interrupt);
         }
+
+        LodsAlg::removeWithoutObjects(mMain->lods(), interrupt);
+        LodsAlg::mergeIdenticalLods(mMain->lods(), interrupt);
+        if (!LodsAlg::sort(mMain->lods(), interrupt)) {
+            return false;
+        }
+        INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
         //-------------------------------------------------------------------------
 
         if (mExportOptions.isEnabled(XOBJ_EXP_CHECK_INSTANCE)) {

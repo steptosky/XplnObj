@@ -41,10 +41,6 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool ObjWritePreparer::prepare(ObjMain & mainObj) {
-    if (!LodsAlg::validateAndPrepare(mainObj.lods(), mainObj.objectName(), NoInterrupt())) {
-        return false;
-    }
-
     const size_t lodCount = mainObj.lods().size();
     for (size_t i = 0; i < lodCount; ++i) {
         ObjLodGroup & lod = *mainObj.lods().at(i);

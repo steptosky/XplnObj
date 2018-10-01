@@ -54,11 +54,6 @@ public:
 
     //-------------------------------------------------------------------------
 
-    static const Transform * animTransParent(const Transform * transform);
-    static const Transform * animRotateParent(const Transform * transform);
-
-    //-------------------------------------------------------------------------
-
     bool printAnimationStart(AbstractWriter & writer, const Transform & transform);
     bool printAnimationEnd(AbstractWriter & writer, const Transform & transform);
 

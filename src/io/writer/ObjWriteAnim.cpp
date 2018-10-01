@@ -36,38 +36,6 @@
 namespace xobj {
 
 /********************************************************************************************************/
-/////////////////////////////////////////////* Static area *//////////////////////////////////////////////
-/********************************************************************************************************/
-
-const Transform * ObjWriteAnim::animRotateParent(const Transform * transform) {
-    if (transform == nullptr) {
-        return nullptr;
-    }
-    if (transform->isRoot())
-        return nullptr;
-
-    if (transform->hasAnimRotate()) {
-        return transform;
-    }
-
-    return animRotateParent(dynamic_cast<const Transform*>(transform->parent()));
-}
-
-const Transform * ObjWriteAnim::animTransParent(const Transform * transform) {
-    if (transform == nullptr) {
-        return nullptr;
-    }
-    if (transform->isRoot())
-        return nullptr;
-
-    if (transform->hasAnimTrans()) {
-        return transform;
-    }
-
-    return animTransParent(dynamic_cast<const Transform*>(transform->parent()));
-}
-
-/********************************************************************************************************/
 ///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
 /********************************************************************************************************/
 

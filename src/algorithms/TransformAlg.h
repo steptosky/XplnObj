@@ -85,7 +85,7 @@ public:
     /// @{
 
     /*!
-     * \details It iterates up by hierarchy starting from the specified transform 
+     * \details It iterates up by hierarchy starting from the specified transform's parent 
      *          and return first found transform with translate animation 
      *          or nullptr if no one is found.
      * \param [in] transform
@@ -93,7 +93,7 @@ public:
     XpObjLib static const Transform * animatedTranslateParent(const Transform * transform);
 
     /*!
-     * \details It iterates up by hierarchy starting from the specified transform
+     * \details It iterates up by hierarchy starting from the specified transform's parent 
      *          and return first found transform with rotate animation
      *          or nullptr if no one is found.
      * \param [in] transform

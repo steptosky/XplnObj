@@ -87,31 +87,31 @@ void TransformAlg::applyMatrixToAnimRotate(AnimRotateList & inOutAnim, const TMa
 /**************************************************************************************************/
 
 const Transform * TransformAlg::animatedTranslateParent(const Transform * transform) {
-    if (transform == nullptr) {
-        return nullptr;
-    }
-    if (transform->isRoot())
-        return nullptr;
-
-    if (transform->hasAnimTrans()) {
-        return transform;
-    }
-
-    return animatedTranslateParent(dynamic_cast<const Transform*>(transform->parent()));
+    assert(transform);
+    auto parent = transform->parent();
+    do {
+        if (parent == nullptr) {
+            return nullptr;
+        }
+        if (parent->hasAnimTrans()) {
+            return parent;
+        }
+        parent = parent->parent();
+    } while (true);
 }
 
 const Transform * TransformAlg::animatedRotateParent(const Transform * transform) {
-    if (transform == nullptr) {
-        return nullptr;
-    }
-    if (transform->isRoot())
-        return nullptr;
-
-    if (transform->hasAnimRotate()) {
-        return transform;
-    }
-
-    return animatedRotateParent(dynamic_cast<const Transform*>(transform->parent()));
+    assert(transform);
+    auto parent = transform->parent();
+    do {
+        if (parent == nullptr) {
+            return nullptr;
+        }
+        if (parent->hasAnimRotate()) {
+            return parent;
+        }
+        parent = parent->parent();
+    } while (true);
 }
 
 /**************************************************************************************************/

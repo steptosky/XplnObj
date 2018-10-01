@@ -284,7 +284,7 @@ mapsImpCoordinates(ObjAbstract * /*obj*/, Transform & objTransform, const TMatri
     const Transform * rotateParent = ObjWriteAnim::animRotateParent(static_cast<Transform*>(objTransform.parent()));
 
     //------------------------------------------------------------------------------------------
-    AnimKeysToTransform(objTransform);
+    animKeysToTransform(objTransform);
     //------------------------------------------------------------------------------------------
     // Actually the following code can be optimized but I prefer keep it such a way,
     // it is easier to understanding for me.
@@ -372,27 +372,27 @@ mapsImpCoordinates(ObjAbstract * /*obj*/, Transform & objTransform, const TMatri
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjTransformation::AnimKeysToTransform(Transform & inOutTrans) {
-    for (auto animTr = inOutTrans.pAnimTrans.begin(); animTr != inOutTrans.pAnimTrans.end(); ++animTr) {
+void ObjTransformation::animKeysToTransform(Transform & inOutTrans) {
+    for (auto animTr = inOutTrans.pAnimTrans.begin(); animTr != inOutTrans.pAnimTrans.end();) {
         if (animTr->pKeys.size() == 1) {
             const Point3 currPos = inOutTrans.pMatrix.position();
             inOutTrans.pMatrix.setPosition(currPos + animTr->pKeys[0].pPosition);
             animTr = inOutTrans.pAnimTrans.erase(animTr);
-            if (animTr == inOutTrans.pAnimTrans.end()) {
-                break;
-            }
+        }
+        else {
+            ++animTr;
         }
     }
 
-    for (auto animRot = inOutTrans.pAnimRotate.begin(); animRot != inOutTrans.pAnimRotate.end(); ++animRot) {
+    for (auto animRot = inOutTrans.pAnimRotate.begin(); animRot != inOutTrans.pAnimRotate.end();) {
         if (animRot->pKeys.size() == 1) {
             TMatrix mtx;
             mtx.setRotate(animRot->pVector, animRot->pKeys[0].pAngleDegrees);
             inOutTrans.pMatrix *= mtx;
             animRot = inOutTrans.pAnimRotate.erase(animRot);
-            if (animRot == inOutTrans.pAnimRotate.end()) {
-                break;
-            }
+        }
+        else {
+            ++animRot;
         }
     }
 }

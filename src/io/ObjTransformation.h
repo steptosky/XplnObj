@@ -60,7 +60,7 @@ private:
     //-------------------------------------------------------------------------
 
     static void mapsImpCoordinates(ObjAbstract * obj, Transform & inOutTrans, const TMatrix & rootTm);
-    static void AnimKeysToTransform(Transform & inOutTrans);
+    static void animKeysToTransform(Transform & inOutTrans);
 
     //-------------------------------------------------------------------------
 

@@ -27,6 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <cassert>
 #include "TransformAlg.h"
 
 using namespace std::string_literals;

@@ -76,8 +76,12 @@ public:
         return mLightName;
     }
 
-    void setParams(const std::string & params) {
+    void setRawParams(const std::string & params) {
         mParams = params;
+    }
+
+    const std::string & rawParams() const {
+        return mParams;
     }
 
     /*!
@@ -123,6 +127,10 @@ public:
      */
     XpObjLib void setParams(const std::string & params, const LightUtils::ParamExpanderMap & expander);
 
+    /*!
+     * \return Params with applied variables like the direction.
+     * \exception the same as \link ObjLightParam::setParams(const std::string &,const LightUtils::ParamExpanderMap &) \endlink
+     */
     XpObjLib std::string params() const;
 
     /// @}

@@ -64,6 +64,7 @@ void ObjTransformation::correctTransform(ObjMain & mainObj, const TMatrix & tm, 
         }
         proccess(transform, tmCopy, exp);
     }
+    proccess(mainObj.pDraped.transform(), tm, exp);
 }
 
 void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatrix, bool exp) {

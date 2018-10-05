@@ -46,6 +46,45 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
+#ifndef NDEBUG
+#   define STSFF_LOGGER_USE_FULL_SOURCES_PATH
+#endif
+
+namespace stsff {
+namespace logging {
+    namespace internal {
+
+#ifdef STSFF_LOGGER_USE_FULL_SOURCES_PATH
+        constexpr const char * fileName(const char * str) {
+            return str;
+        }
+#else
+        constexpr const char * strEnd(const char * str) {
+            return *str ? strEnd(str + 1) : str;
+        }
+
+        constexpr bool strSlant(const char * str, const char sep) {
+            return *str == sep ? true : (*str ? strSlant(str + 1, sep) : false);
+        }
+
+        constexpr const char * rSlant(const char * str, const char sep) {
+            return *str == sep ? (str + 1) : rSlant(str - 1, sep);
+        }
+
+        constexpr const char * fileName(const char * str) {
+            const char * res1 = strSlant(str, '\\') ? rSlant(strEnd(str), '\\') : str;
+            const char * res2 = strSlant(res1, '/') ? rSlant(strEnd(res1), '/') : res1;
+            return res2;
+        }
+#endif
+    }
+}
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
 namespace sts {
 
 /*! 
@@ -289,22 +328,22 @@ private:
 /**************************************************************************************************/
 
 // Log messages
-#define LMessage    sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__).message()
-#define LInfo       sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__).info()
-#define LDebug      sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__).debug()
-#define LFatal      sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__).fatal()
-#define LCritical   sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__).critical()
-#define LError      sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__).error()
-#define LWarning    sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__).warning()
+#define LMessage    sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__).message()
+#define LInfo       sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__).info()
+#define LDebug      sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__).debug()
+#define LFatal      sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__).fatal()
+#define LCritical   sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__).critical()
+#define LError      sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__).error()
+#define LWarning    sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__).warning()
 
 // Category messages
-#define CategoryMessage(X)    sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__, X).message()
-#define CategoryInfo(X)       sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__, X).info()
-#define CategoryDebug(X)      sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__, X).debug()
-#define CategoryFatal(X)      sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__, X).fatal()
-#define CategoryCritical(X)   sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__, X).critical()
-#define CategoryError(X)      sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__, X).error()
-#define CategoryWarning(X)    sts::LogMessage(__FILE__, __LINE__, __STS_FUNC_NAME__, X).warning()
+#define CategoryMessage(X)    sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__, X).message()
+#define CategoryInfo(X)       sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__, X).info()
+#define CategoryDebug(X)      sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__, X).debug()
+#define CategoryFatal(X)      sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__, X).fatal()
+#define CategoryCritical(X)   sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__, X).critical()
+#define CategoryError(X)      sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__, X).error()
+#define CategoryWarning(X)    sts::LogMessage(stsff::logging::internal::fileName(__FILE__), __LINE__, __STS_FUNC_NAME__, X).warning()
 
 // Force push
 #define LPush sts::LogMessage::CmdPush()

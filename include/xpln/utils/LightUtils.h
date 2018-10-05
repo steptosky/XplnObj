@@ -33,6 +33,7 @@
 #include <string>
 #include <map>
 #include <functional>
+#include <tuple>
 
 namespace xobj {
 
@@ -126,6 +127,41 @@ public:
     static float billboardDirectionScaleFromAngle(const float coneInRadians) {
         return 1.0f - billboardConeWidthFromAngle(coneInRadians);
     }
+
+    /*!
+     * \details Billboard light can have cone angle up to 360 degrees but
+     *          3d program usually has light with maximum 180 cone angle.
+     *          
+     *          This method takes "$direction" variable that can have additional parameter
+     *          for billboard and then extracts and applies that parameter to the current cone angle.
+     *          - "$direction:a+10" - adds 10 degrees to current angle.
+     *          - "$direction:a-10" - subtract 10 degrees to current angle.
+     *          - "$direction:a10" - set 10 degrees as current angle.
+     *          - "$direction" - doesn't change current angle.
+     *          
+     * \details Use case for this methods is to give user ability 
+     *          to set light cone angle for billboard directly or relative of 
+     *          3D program's light value.<br>
+     *          Assume we want spill light with cone angle 90 and we want 
+     *          billboard glow light with cone angle 120 the param light may look like:<br>
+     *          - create light in you 3D program with cone angle 90
+     *          - apply a spill param light like 'name_of_light_sp $rgb index size $direction $width'
+     *          - apply a billboard param light like 'name_of_light_glow $direction:a+30 index size'
+     *          - or a billboard param light like 'name_of_light_glow $direction:a120 index size'
+     *          
+     *          This just example and real param light script may look different
+     *          it depends on implementation param light in your 3D program.
+     *          
+     * \note https://developer.x-plane.com/?article=airplane-parameterized-light-guide#List_of_Named_Lights
+     *          
+     * \param [in] directionVar 
+     * \param [in] currentAngle 
+     * \return [Variable without additional parameter, Corrected cone angle].
+     * \exception std::runtime_error if variable isn't "$direction" or additional parameters is incorrect.
+     * \exception std::invalid_argument if some expanded values could not be converted.
+     * \exception std::out_of_range if some expanded values could not be converted.
+     */
+    XpObjLib static std::tuple<std::string, float> billboardCorrectConeAngle(const std::string & directionVar, float currentAngle);
 
     /// @}
     //-------------------------------------------------------------------------

@@ -30,8 +30,10 @@
 #include "xpln/utils/LightUtils.h"
 #include <stdexcept>
 #include <cmath>
+#include <cctype>
 #include "sts/string/StringUtils.h"
 #include "exceptions/defines.h"
+#include <locale>
 
 namespace xobj {
 
@@ -58,6 +60,49 @@ float LightUtils::billboardConeWidthFromAngle(const float coneInRadians) {
 
 float LightUtils::billboardConeWidthToAngle(const float simValue) {
     return std::acos(simValue / (simValue - 1)) * 2.0f;
+}
+
+std::tuple<std::string, float> LightUtils::billboardCorrectConeAngle(const std::string & directionVar, const float currentAngle) {
+    if (directionVar.find(':') == std::string::npos) {
+        return std::make_tuple(directionVar, currentAngle);
+    }
+    //---------------------------------
+    auto vars = sts::MbStrUtils::splitToVector(directionVar, ":");
+    assert(vars.size() == 2);
+    if (vars[0] != "$direction") {
+        throw std::runtime_error(ExcTxt(directionVar + " - doesn't have $direction directionVar"));
+    }
+    auto & additional = vars[1];
+    if (additional.size() < 2) {
+        throw std::runtime_error(ExcTxt(directionVar + " - has incorrect additional parameter"));
+    }
+    if (additional.front() != 'a') {
+        throw std::runtime_error(ExcTxt(directionVar + " - has incorrect additional parameter name should be 'a'"));
+    }
+    //---------------------------------
+    const auto isNotDigitFn = [](const auto ch) {
+        return !std::isdigit(ch) && ch != '.' && ch != ',';
+    };
+
+    if (additional[1] == '+') {
+        const std::string valStr(additional.begin() + 2, additional.end());
+        if (std::any_of(valStr.begin(), valStr.end(), isNotDigitFn)) {
+            throw std::invalid_argument(ExcTxt(directionVar + " - has incorrect additional parameter value should be digit"));
+        }
+        return std::make_tuple(vars[0], currentAngle + std::stof(valStr));
+    }
+    if (additional[1] == '-') {
+        const std::string valStr(additional.begin() + 2, additional.end());
+        if (std::any_of(valStr.begin(), valStr.end(), isNotDigitFn)) {
+            throw std::invalid_argument(ExcTxt(directionVar + " - has incorrect additional parameter value should be digit"));
+        }
+        return std::make_tuple(vars[0], currentAngle - std::stof(valStr));
+    }
+    const std::string valStr(additional.begin() + 1, additional.end());
+    if (std::any_of(valStr.begin(), valStr.end(), isNotDigitFn)) {
+        throw std::invalid_argument(ExcTxt(directionVar + " - has incorrect additional parameter value should be digit"));
+    }
+    return std::make_tuple(vars[0], std::stof(valStr));
 }
 
 /**************************************************************************************************/

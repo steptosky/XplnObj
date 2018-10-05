@@ -87,3 +87,36 @@ TEST(LightUtils, replaceVariables_no_getter) {
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
+
+TEST(LightUtils, billboardCorrectConeAngle_normal) {
+    //------------------------------
+    auto result = LightUtils::billboardCorrectConeAngle("$direction", 10.0f);
+    EXPECT_STREQ("$direction", std::get<0>(result).c_str());
+    EXPECT_FLOAT_EQ(10.0f, std::get<1>(result));
+    //------------------------------
+    result = LightUtils::billboardCorrectConeAngle("$direction:a5.5", 10.0f);
+    EXPECT_STREQ("$direction", std::get<0>(result).c_str());
+    EXPECT_FLOAT_EQ(5.5f, std::get<1>(result));
+    //------------------------------
+    result = LightUtils::billboardCorrectConeAngle("$direction:a+5.5", 10.0f);
+    EXPECT_STREQ("$direction", std::get<0>(result).c_str());
+    EXPECT_FLOAT_EQ(15.5f, std::get<1>(result));
+    //------------------------------
+    result = LightUtils::billboardCorrectConeAngle("$direction:a-5.5", 10.0f);
+    EXPECT_STREQ("$direction", std::get<0>(result).c_str());
+    EXPECT_FLOAT_EQ(4.5f, std::get<1>(result));
+    //------------------------------
+}
+
+TEST(LightUtils, billboardCorrectConeAngle_not_normal) {
+    EXPECT_THROW(LightUtils::billboardCorrectConeAngle("$direction:b", 10.0f), std::runtime_error);
+    EXPECT_THROW(LightUtils::billboardCorrectConeAngle("$direction:ab", 10.0f), std::invalid_argument);
+    EXPECT_THROW(LightUtils::billboardCorrectConeAngle("$direction:a5c", 10.0f), std::invalid_argument);
+
+    EXPECT_THROW(LightUtils::billboardCorrectConeAngle("$direction:a+b", 10.0f), std::invalid_argument);
+    EXPECT_THROW(LightUtils::billboardCorrectConeAngle("$direction:a-1.c", 10.0f), std::invalid_argument);
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/

@@ -56,29 +56,55 @@ void ObjLightParam::setParams(const std::string & params, const LightUtils::Para
     mBillboardScale = 1.0f;
 
     auto expanderCopy = expander;
-    for (auto & pair : expanderCopy) {
-        if (pair.first == "direction_sp" || pair.first == "direction") {
-            mIsDirection = true;
-            const auto expandedStrVar = pair.second();
-            const auto strVars = sts::MbStrUtils::splitToVector(pair.second(), " ");
-            if (pair.first == "direction_sp") {
-                if (strVars.size() != 3) {
-                    throw std::runtime_error(ExcTxt("$direction_sp expander returned incorrect [X Y Z] value: "s.append(expandedStrVar)));
-                }
-                mIsSpill = true;
-                mDirection.set(std::stof(strVars[0]), std::stof(strVars[1]), std::stof(strVars[2]));
-                pair.second = []() { return "$direction_sp"; };
-            }
-            else {
-                if (strVars.size() != 4) {
-                    throw std::runtime_error(ExcTxt("$direction expander returned incorrect [X Y Z S] value: "s.append(expandedStrVar)));
-                }
-                mDirection.set(std::stof(strVars[0]), std::stof(strVars[1]), std::stof(strVars[2]));
-                mBillboardScale = std::stof(strVars[3]);
-                pair.second = []() { return "$direction"; };
-            }
-        }
+    //------------------------------
+    auto paramsVector = sts::MbStrUtils::splitToVector(params, " ");
+
+    const bool hasSpillDirection = std::any_of(paramsVector.begin(), paramsVector.end(), [](const auto & val) {
+        return val == "$direction_sp";
+    });
+    const bool hasBillboardDirection = std::any_of(paramsVector.begin(), paramsVector.end(), [](const auto & val) {
+        return val == "$direction";
+    });
+    //------------------------------
+    if (hasBillboardDirection && hasSpillDirection) {
+        throw std::runtime_error(ExcTxt("variables <$direction> and <$direction_sp> can't be presented at the same time"));
     }
+    //------------------------------
+    if (hasSpillDirection) {
+        mIsDirection = true;
+        mIsSpill = true;
+        auto directionIter = std::find_if(expanderCopy.begin(), expanderCopy.end(), [](const auto & val) {
+            return val.first == "direction_sp";
+        });
+        if (directionIter == expanderCopy.end()) {
+            throw std::runtime_error(ExcTxt("Can't find getter for variable <direction_sp>"));
+        }
+        const auto directionSpVal = directionIter->second();
+        const auto strVars = sts::MbStrUtils::splitToVector(directionSpVal, " ");
+        if (strVars.size() != 3) {
+            throw std::runtime_error(ExcTxt("$direction_sp getter returned incorrect [X Y Z] value: "s.append(directionSpVal)));
+        }
+        mDirection.set(std::stof(strVars[0]), std::stof(strVars[1]), std::stof(strVars[2]));
+        directionIter->second = []() { return "$direction_sp"; };
+    }
+    else if (hasBillboardDirection) {
+        mIsDirection = true;
+        auto directionIter = std::find_if(expanderCopy.begin(), expanderCopy.end(), [](const auto & val) {
+            return val.first == "direction";
+        });
+        if (directionIter == expanderCopy.end()) {
+            throw std::runtime_error(ExcTxt("Can't find getter for variable <direction>"));
+        }
+        const auto directionVal = directionIter->second();
+        const auto strVars = sts::MbStrUtils::splitToVector(directionVal, " ");
+        if (strVars.size() != 4) {
+            throw std::runtime_error(ExcTxt("$direction getter returned incorrect [X Y Z S] value: "s.append(directionVal)));
+        }
+        mDirection.set(std::stof(strVars[0]), std::stof(strVars[1]), std::stof(strVars[2]));
+        mBillboardScale = std::stof(strVars[3]);
+        directionIter->second = []() { return "$direction"; };
+    }
+    //------------------------------
     mParams = LightUtils::replaceVariables(params, expanderCopy);
 }
 
@@ -87,7 +113,7 @@ std::string ObjLightParam::params() const {
         return mParams;
     }
     return LightUtils::replaceVariables(mParams, {
-            {mIsSpill ? "direction_sp" : "direction", [&]() { return (mDirection * mBillboardScale).toString(PRECISION); }},
+            {mIsSpill ? "direction_sp" : "direction", [&]() { return (mDirection.normalized() * mBillboardScale).toString(PRECISION); }},
     });
 }
 

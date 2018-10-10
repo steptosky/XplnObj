@@ -5,10 +5,6 @@ StepToSky: X-Plane Obj Library
 - **Added** Ability to use tool-tip in ATTR_manip_noop.
 - **Added** Ability to use text variables in the param light's parameters string.
 - **Added** ATTR_cockpit_device attribute.
-- **Added** Optimization for exporting draped geometry.
-- **Changed:** Draped geometry got its own class and attribute set. 
-               In normal way developers should use that new class for all draped geometry.
-               But for backward compatibility draped meshes will be auto-extracted from the LODs while exporting.
 - **Fixed** Sorting algorithm for LODs.
 
 ##### Breaking backward compatibility

@@ -111,11 +111,11 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
             return false;
         }
 
-        Draped::ensureDrapedAttrIsSet(mMain->pDraped, interrupt);
-        for (const auto & lod : mMain->lods()) {
-            INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
-            Draped::extract(mMain->pDraped, lod->transform(), interrupt);
-        }
+        // Draped::ensureDrapedAttrIsSet(mMain->pDraped, interrupt);
+        // for (const auto & lod : mMain->lods()) {
+        //     INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
+        //     Draped::extract(mMain->pDraped, lod->transform(), interrupt);
+        // }
 
         LodsAlg::removeWithoutObjects(mMain->lods(), interrupt);
         LodsAlg::mergeIdenticalLods(mMain->lods(), interrupt);

@@ -1,13 +1,13 @@
 StepToSky: X-Plane Obj Library
 ---------------------------------------------------------------------------
-#### Next
+#### 0.7.0-beta (10.10.2018)
 
 - **Added** Ability to use tool-tip in ATTR_manip_noop.
 - **Added** Ability to use text variables in the param light's parameters string.
 - **Added** ATTR_cockpit_device attribute.
 - **Fixed** Sorting algorithm for LODs.
 
-##### Breaking backward compatibility
+##### Breaking backward compatibility:
 - **Changed:** Methods for accessing to the LODs.
 - **Changed:** Changed named light's methods.
 - **Changed:** Changed param light's methods.

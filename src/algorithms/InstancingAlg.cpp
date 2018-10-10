@@ -29,12 +29,10 @@
 
 #include <cassert>
 
-#include "ObjWriteInstancing.h"
+#include "InstancingAlg.h"
+#include "xpln/obj/ObjMain.h"
 #include "xpln/obj/ObjLodGroup.h"
 #include "xpln/obj/ObjMesh.h"
-#include "ObjWriteAnim.h"
-#include "io/ObjValidators.h"
-#include "exceptions/defines.h"
 #include "common/AttributeNames.h"
 
 namespace xobj {
@@ -43,23 +41,21 @@ namespace xobj {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool ObjWriteInstancing::check(ObjMain & inObjMain) {
-    ULWarning << "The instance checking is in the test mode, so it may works incorrectly.";
+bool InstancingAlg::validateAndPrepare(ObjMain & inObjMain, const IInterrupt & /*interrupt*/) {
+    ULWarning << "The instance checking is in the test mode, so it may work incorrectly.";
     ULInfo << " To check whether your object is instanced, put the word DEBUG in the end of the OBJ file and run X-Plane."
             << " The log file will contain a printout about your object."
-            << " If the word \"complex\" is not present and the word \"additive\" is (or your object does not contain multiple LODs) then your object can be instanced.";
+            << R"( If the word "complex" is not present and the word "additive" is (or your object does not contain multiple LODs) then your object can be instanced.)";
     // TODO checking: LOD must be additive, not selective, or only one LOD 
     bool outResult = true;
-    const size_t lodCount = inObjMain.lodCount();
-    for (size_t i = 0; i < lodCount; ++i) {
-        ObjLodGroup & lod = inObjMain.lod(i);
-        Transform & rootTransform = lod.transform();
+    for (const auto & lod : inObjMain.lods()) {
+        Transform & rootTransform = lod->transform();
         proccessTransform(rootTransform, outResult);
     }
     return outResult;
 }
 
-void ObjWriteInstancing::printBreakInstancing(const char * objName, const char * reason) {
+void InstancingAlg::printBreakInstancing(const char * objName, const char * reason) {
     assert(objName);
     assert(reason);
     ULError << "Instancing is broken on \"" << objName << "\". The reason: " << reason;
@@ -69,7 +65,7 @@ void ObjWriteInstancing::printBreakInstancing(const char * objName, const char *
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjWriteInstancing::proccessTransform(Transform & transform, bool & outResult) {
+void InstancingAlg::proccessTransform(Transform & transform, bool & outResult) {
     if (transform.hasAnim()) {
         printBreakInstancing(transform.name().c_str(),
                              "node has animation. Animation is not allowed for instancing.");
@@ -81,14 +77,14 @@ void ObjWriteInstancing::proccessTransform(Transform & transform, bool & outResu
     //-------------------------------------------------------------------------
     // children
 
-    const auto chCount = transform.childrenCount();
+    const auto chCount = transform.childrenNum();
     for (Transform::TransformIndex i = 0; i < chCount; ++i) {
         proccessTransform(*static_cast<Transform*>(transform.childAt(i)), outResult);
     }
     //-------------------------------------------------------------------------
 }
 
-void ObjWriteInstancing::proccessObjects(Transform & transform, bool & outResult) {
+void InstancingAlg::proccessObjects(Transform & transform, bool & outResult) {
     for (auto & curr : transform.objList()) {
         if (curr->objType() == OBJ_LINE) {
             printBreakInstancing(curr->objectName().c_str(),
@@ -101,14 +97,14 @@ void ObjWriteInstancing::proccessObjects(Transform & transform, bool & outResult
             outResult = false;
         }
         if (curr->objType() == OBJ_MESH) {
-            auto * mesh = reinterpret_cast<ObjMesh*>(curr);
+            auto * mesh = reinterpret_cast<ObjMesh*>(curr.get());
             proccessAttributes(*mesh, outResult);
         }
         // TODO What about the lights?
     }
 }
 
-void ObjWriteInstancing::proccessAttributes(ObjMesh & mesh, bool & outResult) {
+void InstancingAlg::proccessAttributes(ObjMesh & mesh, bool & outResult) {
     if (mesh.pAttr.manipulator()) {
         printBreakInstancing(mesh.objectName().c_str(),
                              std::string("the object has the manipulator attribute which is not allowed for instancing").c_str());

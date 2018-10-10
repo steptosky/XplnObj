@@ -30,6 +30,7 @@
 */
 
 #include <string>
+#include <cstddef>
 #include "xpln/Export.h"
 
 namespace xobj {
@@ -56,8 +57,9 @@ public:
     ~ObjWriteGlobAttr() = default;
 
     XpObjLib void write(AbstractWriter * writer, const ObjMain * obj);
-    XpObjLib void reset();
-    XpObjLib size_t count() const;
+
+    void reset() { mCounter = 0; }
+    std::size_t count() const { return mCounter; }
 
 private:
 
@@ -65,8 +67,7 @@ private:
     void writeBool(AbstractWriter * inWriter, const char * inAttr, bool inState);
     void writeString(AbstractWriter * inWriter, const std::string & inStr);
 
-    const ObjMain * mObj;
-    size_t mCounter = 0;
+    std::size_t mCounter = 0;
 
 };
 

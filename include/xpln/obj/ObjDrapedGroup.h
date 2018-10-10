@@ -1,5 +1,7 @@
+#pragma once
+
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -27,58 +29,85 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "sts/utilities/Compare.h"
-#include "xpln/obj/attributes/AttrLodDrap.h"
+#include "xpln/obj/Transform.h"
+#include "xpln/obj/attributes/AttrDrapedSet.h"
 
 namespace xobj {
-
-/**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrLodDrap::AttrLodDrap(const float distance)
-    : mDistance(distance),
-      mIsEnabled(true) { }
-
-AttrLodDrap::AttrLodDrap()
-    : mDistance(1000.0f),
-      mIsEnabled(false) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Operators *////////////////////////////////////////////
-/**************************************************************************************************/
-
-AttrLodDrap::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrLodDrap::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
-bool AttrLodDrap::operator==(const AttrLodDrap & other) const {
-    return (mIsEnabled == other.mIsEnabled && sts::isEqual(mDistance, other.mDistance, 0.01f));
-}
-
-bool AttrLodDrap::operator!=(const AttrLodDrap & other) const {
-    return !operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrLodDrap::setDistance(const float distance) {
-    mDistance = distance;
-    mIsEnabled = true;
-}
-
-float AttrLodDrap::distance() const {
-    return mDistance;
-}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
+/*!
+ * \details Representation of the draped object
+ * \ingroup Objects
+ */
+class ObjDrapedGroup {
+public:
+
+    //-------------------------------------------------------------------------
+    /// @{
+
+    ObjDrapedGroup()
+        : ObjDrapedGroup("Draped") {}
+
+    explicit ObjDrapedGroup(const std::string & name)
+        : mName(name) {
+        mObjTransform.setName(name);
+    }
+
+    ObjDrapedGroup(const ObjDrapedGroup &) = delete;
+    ObjDrapedGroup & operator =(const ObjDrapedGroup &) = delete;
+
+    virtual ~ObjDrapedGroup() = default;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    void setObjectName(const std::string & name) {
+        mName = name;
+        mObjTransform.setName(name);
+    }
+
+    const std::string & objectName() const {
+        return mName;
+    }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    /*! \copydoc ObjAbstract::transform */
+    Transform & transform() {
+        return mObjTransform;
+    }
+
+    /*! \copydoc ObjAbstract::transform */
+    const Transform & transform() const {
+        return mObjTransform;
+    }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    /*!
+     * \details Set of the attributes.
+     */
+    AttrDrapedSet pAttr;
+
+    /// @}
+    //-------------------------------------------------------------------------
+
+private:
+
+    Transform mObjTransform;
+    std::string mName;
+
+};
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 }

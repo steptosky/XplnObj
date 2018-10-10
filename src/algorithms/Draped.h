@@ -29,26 +29,31 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/ObjMain.h"
+#include "xpln/obj/Transform.h"
+#include "xpln/common/IInterrupt.h"
 
 namespace xobj {
+
+class ObjMesh;
+class ObjMain;
+class ObjDrapedGroup;
+class Transform;
 
 /**********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**********************************************************************************************************************/
 
-class ObjWriteOptimize {
-
-    ObjWriteOptimize() = default;
-    ~ObjWriteOptimize() = default;
-
+class Draped {
+    Draped() = default;
+    ~Draped() = default;
 public:
 
-    static void optimize(ObjMain & mainObj);
+    XpObjLib static void ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrupt & interrupt);
+    XpObjLib static void extract(ObjDrapedGroup & inOutDraped, Transform & inOutTransform, const IInterrupt & interrupt);
 
 private:
 
-    static void proccess(Transform & transform);
+    static Transform::ObjList processObjects(Transform & transform);
 
 };
 

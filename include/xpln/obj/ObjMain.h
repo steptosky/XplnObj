@@ -30,10 +30,12 @@
 */
 
 #include <vector>
+#include <memory>
 #include "ObjLodGroup.h"
 #include "ExportOptions.h"
 #include "IOStatistic.h"
-#include "attributes/AttrGlobSet.h"
+#include "xpln/obj/attributes/AttrGlobSet.h"
+#include "xpln/obj/ObjDrapedGroup.h"
 
 namespace xobj {
 
@@ -50,12 +52,19 @@ class ObjLodGroup;
 class ObjMain {
 public:
 
-    XpObjLib ObjMain();
+    //-------------------------------------------------------------------------
+
+    typedef std::vector<std::unique_ptr<ObjLodGroup>> Lods;
+
+    //-------------------------------------------------------------------------
+
+    ObjMain()
+        : mName("no name Main") {}
 
     ObjMain(const ObjMain &) = delete;
     ObjMain & operator =(const ObjMain &) = delete;
 
-    XpObjLib virtual ~ObjMain();
+    virtual ~ObjMain() = default;
 
     //-------------------------------------------------------------------------
 
@@ -78,33 +87,43 @@ public:
     //-------------------------------------------------------------------------
 
     /*!
-     * \details Gets LOD by index.
-     * \param [in] index
+     * \details Contains draped geometry and attributes.
      */
-    XpObjLib ObjLodGroup & lod(std::size_t index);
+    ObjDrapedGroup pDraped;
+
+    //-------------------------------------------------------------------------
 
     /*!
-     * \details Gets LOD by index.
-     * \param [in] index
+     * \details Adds new lods to the list.
+     * \details It takes ownership of the Lod's pointer.
+     * \param [in] lod if nullptr then new lod will be auto-created.
+     * \return Reference to just added/created lod.
      */
-    XpObjLib const ObjLodGroup & lod(std::size_t index) const;
+    XpObjLib ObjLodGroup & addLod(ObjLodGroup * lod = nullptr);
 
     /*!
-     * \details Adds lods.
-     * \return created LOD which was added to the lods list.
+     * \return Lods list.
      */
-    XpObjLib ObjLodGroup & addLod();
+    Lods & lods() {
+        return mLods;
+    }
 
     /*!
-     * \details Removes LOD by index.
-     * \param [in] index
+     * \return Lods list.
      */
-    XpObjLib void removeLod(std::size_t index);
+    const Lods & lods() const {
+        return mLods;
+    }
 
-    /*!
-     * \details Gets count of the lods.
-     */
-    XpObjLib std::size_t lodCount() const;
+    //-------------------------------------------------------------------------
+
+    void setObjectName(const std::string & name) {
+        mName = name;
+    }
+
+    const std::string & objectName() const {
+        return mName;
+    }
 
     //-------------------------------------------------------------------------
 
@@ -140,17 +159,10 @@ public:
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setObjectName(const std::string & name);
-    XpObjLib const std::string & objectName() const;
-
-    //-------------------------------------------------------------------------
-
 private:
 
-    void sortLod();
-
     std::string mName;
-    std::vector<ObjLodGroup*> mLods;
+    std::vector<std::unique_ptr<ObjLodGroup>> mLods;
 
 };
 

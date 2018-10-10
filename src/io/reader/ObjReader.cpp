@@ -38,7 +38,7 @@
 #include "xpln/obj/attributes/AttrHard.h"
 #include "xpln/obj/attributes/AttrLayerGroup.h"
 #include "xpln/obj/attributes/AttrLightLevel.h"
-#include "xpln/obj/attributes/AttrLodDrap.h"
+#include "xpln/obj/attributes/AttrDrapedLod.h"
 #include "xpln/obj/attributes/AttrPolyOffset.h"
 #include "xpln/obj/attributes/AttrShiny.h"
 #include "xpln/obj/attributes/AttrSlopeLimit.h"
@@ -373,7 +373,7 @@ bool ObjReader::readGlobalAttribute(ObjReadParser & parser) const {
     }
     if (parser.isMatch(ATTR_GLOBAL_LOD_DRAPED)) {
         parser.skipSpace();
-        mObjParserListener->gotGlobAttrLodDraped(AttrLodDrap(parser.extractFloat()));
+        mObjParserListener->gotGlobAttrDrapedLod(AttrDrapedLod(parser.extractFloat()));
         return true;
     }
     if (parser.isMatch(ATTR_GLOBAL_COCKPIT_LIT)) {

@@ -36,7 +36,7 @@
 #include "xpln/obj/attributes/AttrSlungLoadWeight.h"
 #include "xpln/obj/attributes/AttrShiny.h"
 #include "xpln/obj/attributes/AttrPolyOffset.h"
-#include "xpln/obj/attributes/AttrLodDrap.h"
+#include "xpln/obj/attributes/AttrDrapedLod.h"
 #include "xpln/obj/attributes/AttrLightLevel.h"
 #include "xpln/obj/attributes/AttrDrapedLayerGroup.h"
 #include "xpln/obj/attributes/AttrLayerGroup.h"
@@ -89,7 +89,7 @@ std::string toObjGlobString(const AttrDrapedLayerGroup & globAttr) {
     return outStr.str();
 }
 
-std::string toObjGlobString(const AttrLodDrap & globAttr) {
+std::string toObjGlobString(const AttrDrapedLod & globAttr) {
     if (!globAttr)
         return "";
     StringStream outStr;
@@ -228,20 +228,25 @@ std::string toObjString(const AttrCockpit & attr) {
         return ATTR_COCKPIT;
     }
     StringStream outStr;
-    outStr << ATTR_COCKPIT_REGION << " ";
     if (attr.type() == AttrCockpit::eType::region_1) {
-        outStr << "0";
+        outStr << ATTR_COCKPIT_REGION << " " << "0";
     }
-    if (attr.type() == AttrCockpit::eType::region_2) {
-        outStr << "1";
+    else if (attr.type() == AttrCockpit::eType::region_2) {
+        outStr << ATTR_COCKPIT_REGION << " " << "1";
     }
-    if (attr.type() == AttrCockpit::eType::region_3) {
-        outStr << "2";
+    else if (attr.type() == AttrCockpit::eType::region_3) {
+        outStr << ATTR_COCKPIT_REGION << " " << "2";
     }
-    if (attr.type() == AttrCockpit::eType::region_4) {
-        outStr << "3";
+    else if (attr.type() == AttrCockpit::eType::region_4) {
+        outStr << ATTR_COCKPIT_REGION << " " << "3";
     }
-    outStr.flush();
+    else if (attr.type() == AttrCockpit::eType::cockpit_device) {
+        outStr << ATTR_COCKPIT_DEVICE
+                << " " << attr.name()
+                << " " << attr.bus()
+                << " " << attr.lightingChannel()
+                << " " << attr.autoAdjust();
+    }
     return outStr.str();
 }
 

@@ -36,25 +36,10 @@ namespace xobj {
 ///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
 /********************************************************************************************************/
 
-ObjLightPoint::ObjLightPoint(const ObjLightPoint & copy)
-    : ObjAbstract(copy),
-      mColor(copy.mColor),
-      mPosition(copy.mPosition) {}
-
 ObjLightPoint::ObjLightPoint()
     : mColor(0.7f, 0.7f, 0.7f, 1.0f) {
 
-    setObjectName("Light Point");
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void ObjLightPoint::applyTransform(const TMatrix & tm, const bool) {
-    Point3 pos = mPosition;
-    tm.transformPoint(pos);
-    mPosition = pos;
+    setObjectName("Point light");
 }
 
 /**************************************************************************************************/
@@ -65,25 +50,9 @@ eObjectType ObjLightPoint::objType() const {
     return OBJ_LIGHT_POINT;
 }
 
-const Point3 & ObjLightPoint::position() const {
-    return mPosition;
+void ObjLightPoint::applyTransform(const TMatrix & tm, const bool) {
+    tm.transformPoint(mPosition);
 }
-
-void ObjLightPoint::setPosition(const Point3 & pos) {
-    mPosition = pos;
-}
-
-const Color & ObjLightPoint::color() const {
-    return mColor;
-}
-
-void ObjLightPoint::setColor(const Color & color) {
-    mColor = color;
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
 
 ObjAbstract * ObjLightPoint::clone() const {
     return new ObjLightPoint(*this);

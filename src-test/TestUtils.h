@@ -55,12 +55,12 @@ public:
     //-----------------------------------------------------
 
     static void extractLod(ObjMain & main, const size_t lodNum, ObjLodGroup *& outLod) {
-        ASSERT_TRUE(main.lodCount() > lodNum) << " value is " << lodNum;
-        outLod = &main.lod(lodNum);
+        ASSERT_TRUE(main.lods().size() > lodNum) << " value is " << lodNum;
+        outLod = &*main.lods().at(lodNum);
     }
 
     static void extractTransform(Transform & transform, const size_t numTransform, Transform *& outTrans) {
-        ASSERT_TRUE(transform.childrenCount() > numTransform) << " value is " << numTransform;
+        ASSERT_TRUE(transform.childrenNum() > numTransform) << " value is " << numTransform;
         outTrans = static_cast<Transform*>(transform.childAt(numTransform));
     }
 
@@ -69,7 +69,7 @@ public:
         auto it = transform.objList().begin();
         for (size_t i = 0; i < meshNum; ++i, ++it) {}
         ASSERT_EQ(eObjectType::OBJ_MESH, (*it)->objType());
-        outMesh = static_cast<ObjMesh *>(*it);
+        outMesh = static_cast<ObjMesh *>(it->get());
     }
 
     //-----------------------------------------------------

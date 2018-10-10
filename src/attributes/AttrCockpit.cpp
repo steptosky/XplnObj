@@ -35,50 +35,20 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-AttrCockpit::AttrCockpit(const eType type)
-    : mType(type),
-      mIsEnabled(true) { }
-
-AttrCockpit::AttrCockpit()
-    : mType(cockpit),
-      mIsEnabled(false) { }
-
 /**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrCockpit::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrCockpit::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrCockpit::operator==(const AttrCockpit & other) const {
     return mIsEnabled == other.mIsEnabled &&
-           mType == other.mType;
-}
-
-bool AttrCockpit::operator!=(const AttrCockpit & other) const {
-    return !operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrCockpit::setType(const eType type) {
-    mType = type;
-    mIsEnabled = true;
-}
-
-AttrCockpit::eType AttrCockpit::type() const {
-    return mType;
+           mType == other.mType &&
+           mDevName == other.mDevName &&
+           mDevBus == other.mDevBus &&
+           mDevLighting == other.mDevLighting &&
+           mDevAutoAdjust == other.mDevAutoAdjust;
 }
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
-
 }

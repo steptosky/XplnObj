@@ -32,6 +32,7 @@
 #include "xpln/obj/ObjMesh.h"
 #include "ObjWriteAnim.h"
 #include "io/ObjValidators.h"
+#include "algorithms/LodsAlg.h"
 
 namespace xobj {
 
@@ -40,13 +41,10 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool ObjWritePreparer::prepare(ObjMain & mainObj) {
-    const size_t lodCount = mainObj.lodCount();
+    const size_t lodCount = mainObj.lods().size();
     for (size_t i = 0; i < lodCount; ++i) {
-        ObjLodGroup & lod = mainObj.lod(i);
+        ObjLodGroup & lod = *mainObj.lods().at(i);
         Transform & rootTransform = lod.transform();
-        if (!checkParameters(lod, lod.objectName())) {
-            return false;
-        }
         if (!proccessTransform(rootTransform, i, lod)) {
             return false;
         }
@@ -69,7 +67,7 @@ bool ObjWritePreparer::proccessTransform(Transform & transform, const size_t lod
     //-------------------------------------------------------------------------
     // children
 
-    const Transform::TransformIndex chCount = transform.childrenCount();
+    const Transform::TransformIndex chCount = transform.childrenNum();
     for (Transform::TransformIndex i = 0; i < chCount; ++i) {
         if (!proccessTransform(*static_cast<Transform*>(transform.childAt(i)), lodNumber, lod)) {
             return false;
@@ -80,14 +78,11 @@ bool ObjWritePreparer::proccessTransform(Transform & transform, const size_t lod
     return true;
 }
 
-bool ObjWritePreparer::proccessObjects(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod) {
-    Transform::ObjList objToDelete;
-    for (auto & curr : transform.objList()) {
+bool ObjWritePreparer::proccessObjects(Transform & transform, const size_t /*lodNumber*/, const ObjLodGroup & /*lod*/) {
+    std::vector<ObjAbstract*> objToDelete;
+    for (const auto & curr : transform.objList()) {
         if (!checkParameters(*curr, curr->objectName())) {
-            objToDelete.emplace_back(curr);
-        }
-        else if (lodNumber > 0 && findHardPolygons(*curr, lod.objectName())) {
-            objToDelete.emplace_back(curr);
+            objToDelete.emplace_back(curr.get());
         }
         else {
             checkForTwoSided(*curr);

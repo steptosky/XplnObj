@@ -51,10 +51,10 @@ using namespace xobj;
 /**************************************************************************************************/
 
 void extractMesh(ObjMain & inMain, ObjMesh *& outAttr) {
-    ASSERT_EQ(1, inMain.lodCount());
-    const ObjLodGroup & inLGroup = inMain.lod(0);
+    ASSERT_EQ(1, inMain.lods().size());
+    const ObjLodGroup & inLGroup = *inMain.lods().at(0);
     ASSERT_EQ(1, inLGroup.transform().objList().size());
-    ObjAbstract * obj = *(inLGroup.transform().objList().begin());
+    ObjAbstract * obj = inLGroup.transform().objList().begin()->get();
     ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
     outAttr = static_cast<ObjMesh *>(obj);
 }
@@ -95,14 +95,14 @@ TEST(TestAttributesIO, not_default_vals_case_1) {
     ObjLodGroup & outLGroup = outObj.addLod();
     outLGroup.transform().addObject(outM);
     ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIO), stat));
-    ASSERT_EQ(10, stat.pTrisAttrCount);
+    ASSERT_EQ(9, stat.pTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
     stat.reset();
     ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIO), stat));
-    ASSERT_EQ(10, stat.pTrisAttrCount);
+    ASSERT_EQ(9, stat.pTrisAttrCount);
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
 
@@ -119,14 +119,14 @@ TEST(TestAttributesIO, not_default_vals_case_2) {
     ObjLodGroup & outLGroup = outObj.addLod();
     outLGroup.transform().addObject(outM);
     ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIO), stat));
-    ASSERT_EQ(10, stat.pTrisAttrCount);
+    ASSERT_EQ(9, stat.pTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
     stat.reset();
     ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIO), stat));
-    ASSERT_EQ(10, stat.pTrisAttrCount);
+    ASSERT_EQ(9, stat.pTrisAttrCount);
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
 

@@ -36,13 +36,8 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-ObjLightNamed::ObjLightNamed(const ObjLightNamed & copy)
-    : ObjAbstractLight(copy),
-      mId(copy.mId) {}
-
-ObjLightNamed::ObjLightNamed()
-    : mId(ELightNamed::none) {
-    setObjectName("Light Named");
+ObjLightNamed::ObjLightNamed() {
+    setObjectName("Named light");
 }
 
 /**************************************************************************************************/
@@ -50,9 +45,7 @@ ObjLightNamed::ObjLightNamed()
 /**************************************************************************************************/
 
 void ObjLightNamed::applyTransform(const TMatrix & tm, const bool) {
-    Point3 pos = mPosition;
-    tm.transformPoint(pos);
-    mPosition = pos;
+    tm.transformPoint(mPosition);
 }
 
 /**************************************************************************************************/
@@ -61,14 +54,6 @@ void ObjLightNamed::applyTransform(const TMatrix & tm, const bool) {
 
 eObjectType ObjLightNamed::objType() const {
     return OBJ_LIGHT_NAMED;
-}
-
-void ObjLightNamed::setLightId(const ELightNamed id) {
-    mId = id;
-}
-
-ELightNamed ObjLightNamed::lightId() const {
-    return mId;
 }
 
 /**************************************************************************************************/

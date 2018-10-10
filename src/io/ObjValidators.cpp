@@ -81,21 +81,6 @@ bool checkParameters(const AttrGlobSet & attrSet, const std::string & prefix) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool findHardPolygons(const ObjAbstract & baseObj, const std::string & lodName) {
-    if (baseObj.objType() != eObjectType::OBJ_MESH) {
-        return false;
-    }
-    const auto * mesh = static_cast<const ObjMesh*>(&baseObj);
-    if (!mesh->pAttr.hard()) {
-        return false;
-    }
-    ULError << lodName << " LOD contains hard polygons in object <" << baseObj.objectName()
-            << ">. Only the first LOD allowed to contain hard polygons";
-    return true;
-}
-
-/***************************************************************************************/
-
 bool checkParameters(const ObjAbstract & baseObj, const std::string & prefix) {
     switch (baseObj.objType()) {
         case OBJ_NO: return true;
@@ -121,22 +106,6 @@ bool checkParameters(const ObjDummy & /*obj*/, const std::string & /*prefix*/) {
 
 bool checkParameters(const ObjLine & /*obj*/, const std::string & /*prefix*/) {
     // TODO #Implementation
-    return true;
-}
-
-bool checkParameters(const ObjLodGroup & lodObj, const std::string & prefix) {
-    if (lodObj.farVal() < lodObj.nearVal()) {
-        ULError << prefix << " - The \"far value\" value can't be less \"near value\" value.";
-        return false;
-    }
-    if (!lodObj.transform().hasObjects() && lodObj.transform().childrenCount() == 0) {
-        ULError << prefix << " - The lod does not contain any objects.";
-        return false;
-    }
-    if (lodObj.transform().hasAnim()) {
-        ULError << prefix << " - The lod must not have any animation.";
-        return false;
-    }
     return true;
 }
 
@@ -339,9 +308,9 @@ bool checkParameters(const ObjLightCustom & inVal, const std::string & inPrefix)
 
 bool checkParameters(const ObjLightNamed & inVal, const std::string & inPrefix) {
     bool result = true;
-    if (!inVal.lightId().isValid()) {
+    if (inVal.name().empty()) {
         result = false;
-        ULError << inPrefix << " - Light objectName isn't specified.";
+        ULError << inPrefix << " - Light name isn't specified.";
     }
     return result;
 }
@@ -350,19 +319,13 @@ bool checkParameters(const ObjLightNamed & inVal, const std::string & inPrefix) 
 
 bool checkParameters(const ObjLightParam & inVal, const std::string & inPrefix) {
     bool result = true;
-    if (!inVal.lightId().isValid()) {
+    if (inVal.name().empty()) {
         result = false;
-        ULError << inPrefix << " - Light objectName isn't specified.";
+        ULError << inPrefix << " - Light name isn't specified.";
     }
-    if (inVal.lightId() == ELightParams(ELightParams::light_params_custom)) {
-        if (inVal.lightName().empty()) {
-            result = false;
-            ULError << inPrefix << " - Custom light name isn't specified.";
-        }
-    }
-    if (inVal.additionalParams().empty()) {
+    if (inVal.params().empty()) {
         result = false;
-        ULError << inPrefix << " - Parameters isn't specified.";
+        ULError << inPrefix << " - Parameters aren't specified.";
     }
     return result;
 }

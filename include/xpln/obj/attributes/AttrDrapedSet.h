@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,7 +29,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/Export.h"
+#include "xpln/obj/attributes/AttrDrapedLayerGroup.h"
+#include "xpln/obj/attributes/AttrDrapedLod.h"
 
 namespace xobj {
 
@@ -38,62 +39,75 @@ namespace xobj {
 /**************************************************************************************************/
 
 /*!
- * \details ATTR_LOD_draped
+ * \details Representation of the draped geometry attributes set.
  * \ingroup Attributes
  */
-class AttrLodDrap {
+class AttrDrapedSet {
 public:
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrLodDrap();
-
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] distance 
-     */
-    XpObjLib AttrLodDrap(float distance);
-
-    ~AttrLodDrap() = default;
-
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Check whether the attribute is enabled. 
-     * \note All class's setters will enable this attribute.
-     */
-    XpObjLib operator bool() const;
+    AttrDrapedSet() = default;
+    virtual ~AttrDrapedSet() = default;
 
-    /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note All class's setters will enable this attribute.
-     * \param [in] state 
-     */
-    XpObjLib void setEnabled(bool state);
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib bool operator==(const AttrLodDrap & other) const;
-    XpObjLib bool operator!=(const AttrLodDrap & other) const;
+    void setLayerGroup(const AttrDrapedLayerGroup & attr);
+    void setLod(const AttrDrapedLod & attr);
 
+    const AttrDrapedLayerGroup & layerGroup() const;
+    const AttrDrapedLod & lod() const;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setDistance(float distance);
-    XpObjLib float distance() const;
+    void reset();
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    float mDistance;
-    bool mIsEnabled : 1;
+    AttrDrapedLayerGroup mLayerGroup;
+    AttrDrapedLod mLod;
 
 };
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
+
+inline void AttrDrapedSet::reset() {
+    mLayerGroup = AttrDrapedLayerGroup();
+    mLod = AttrDrapedLod();
+}
+
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
+
+inline void AttrDrapedSet::setLayerGroup(const AttrDrapedLayerGroup & attr) {
+    mLayerGroup = attr;
+}
+
+inline const AttrDrapedLayerGroup & AttrDrapedSet::layerGroup() const {
+    return mLayerGroup;
+}
+
+inline void AttrDrapedSet::setLod(const AttrDrapedLod & attr) {
+    mLod = attr;
+}
+
+inline const AttrDrapedLod & AttrDrapedSet::lod() const {
+    return mLod;
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
 }

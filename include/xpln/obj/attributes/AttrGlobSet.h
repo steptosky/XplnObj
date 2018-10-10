@@ -30,9 +30,7 @@
 */
 
 #include "xpln/obj/attributes/AttrBlend.h"
-#include "xpln/obj/attributes/AttrDrapedLayerGroup.h"
 #include "xpln/obj/attributes/AttrLayerGroup.h"
-#include "xpln/obj/attributes/AttrLodDrap.h"
 #include "xpln/obj/attributes/AttrSlungLoadWeight.h"
 #include "xpln/obj/attributes/AttrSpecular.h"
 #include "xpln/obj/attributes/AttrTint.h"
@@ -72,8 +70,6 @@ public:
     void setWetDry(const AttrWetDry & attr);
     void setBlend(const AttrBlend & attr);
     void setLayerGroup(const AttrLayerGroup & attr);
-    void setLayerGroupDraped(const AttrDrapedLayerGroup & attr);
-    void setLodDrap(const AttrLodDrap & attr);
     void setSlungLoadWeight(const AttrSlungLoadWeight & attr);
     void setSpecular(const AttrSpecular & attr);
     void setTint(const AttrTint & attr);
@@ -94,8 +90,6 @@ public:
     const AttrWetDry & wetDry() const;
     const AttrBlend & blend() const;
     const AttrLayerGroup & layerGroup() const;
-    const AttrDrapedLayerGroup & layerGroupDraped() const;
-    const AttrLodDrap & lodDrap() const;
     const AttrSlungLoadWeight & slungLoadWeight() const;
     const AttrSpecular & specular() const;
     const AttrTint & tint() const;
@@ -114,8 +108,6 @@ private:
 
     AttrBlend mBlend;
     AttrLayerGroup mLayerGroup;
-    AttrDrapedLayerGroup mLayerGroupDraped;
-    AttrLodDrap mLodDrap;
     AttrSlungLoadWeight mSlungLoadWeight;
     AttrSpecular mSpecular;
     AttrTint mTint;
@@ -164,8 +156,6 @@ inline void AttrGlobSet::reset() {
 
     mBlend = AttrBlend();
     mLayerGroup = AttrLayerGroup();
-    mLayerGroupDraped = AttrDrapedLayerGroup();
-    mLodDrap = AttrLodDrap();
     mSlungLoadWeight = AttrSlungLoadWeight();
     mSpecular = AttrSpecular();
     mTint = AttrTint();
@@ -275,22 +265,6 @@ inline void AttrGlobSet::setLayerGroup(const AttrLayerGroup & attr) {
 
 inline const AttrLayerGroup & AttrGlobSet::layerGroup() const {
     return mLayerGroup;
-}
-
-inline void AttrGlobSet::setLayerGroupDraped(const AttrDrapedLayerGroup & attr) {
-    mLayerGroupDraped = attr;
-}
-
-inline const AttrDrapedLayerGroup & AttrGlobSet::layerGroupDraped() const {
-    return mLayerGroupDraped;
-}
-
-inline void AttrGlobSet::setLodDrap(const AttrLodDrap & attr) {
-    mLodDrap = attr;
-}
-
-inline const AttrLodDrap & AttrGlobSet::lodDrap() const {
-    return mLodDrap;
 }
 
 inline void AttrGlobSet::setSlungLoadWeight(const AttrSlungLoadWeight & attr) {

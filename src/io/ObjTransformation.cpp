@@ -34,6 +34,7 @@
 #include "exceptions/defines.h"
 #include "writer/ObjWriteAnim.h"
 #include "converters/StringStream.h"
+#include "algorithms/TransformAlg.h"
 
 namespace xobj {
 
@@ -54,10 +55,8 @@ void ObjTransformation::correctImportTransform(ObjMain & mainObj, const TMatrix 
 /**************************************************************************************************/
 
 void ObjTransformation::correctTransform(ObjMain & mainObj, const TMatrix & tm, bool exp, bool useLodTm) {
-    const size_t lodCount = mainObj.lodCount();
-    for (size_t i = 0; i < lodCount; ++i) {
-        ObjLodGroup & lod = mainObj.lod(i);
-        Transform & transform = lod.transform();
+    for (const auto & lod : mainObj.lods()) {
+        Transform & transform = lod->transform();
         TMatrix tmCopy = tm;
         if (useLodTm) {
             tmCopy = transform.pMatrix * tmCopy;
@@ -65,6 +64,7 @@ void ObjTransformation::correctTransform(ObjMain & mainObj, const TMatrix & tm, 
         }
         proccess(transform, tmCopy, exp);
     }
+    proccess(mainObj.pDraped.transform(), tm, exp);
 }
 
 void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatrix, bool exp) {
@@ -77,7 +77,7 @@ void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatr
         }
         else {
             for (auto & curr : transform.objList()) {
-                mapsExpCoordinates(curr, transform, rootMatrix);
+                mapsExpCoordinates(curr.get(), transform, rootMatrix);
             }
         }
     }
@@ -87,7 +87,7 @@ void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatr
         }
         else {
             for (auto & curr : transform.objList()) {
-                mapsImpCoordinates(curr, transform, rootMatrix);
+                mapsImpCoordinates(curr.get(), transform, rootMatrix);
             }
         }
     }
@@ -95,7 +95,7 @@ void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatr
     //-------------------------------------------------------------------------
     // children
 
-    const Transform::TransformIndex chCount = transform.childrenCount();
+    const Transform::TransformIndex chCount = transform.childrenNum();
     for (Transform::TransformIndex i = 0; i < chCount; ++i) {
         proccess(*static_cast<Transform*>(transform.childAt(i)), rootMatrix, exp);
     }
@@ -108,8 +108,8 @@ void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatr
 /**************************************************************************************************/
 
 void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transform, const TMatrix & rootTm) {
-    const Transform * transParent = ObjWriteAnim::animTransParent(static_cast<Transform*>(transform.parent()));
-    const Transform * rotateParent = ObjWriteAnim::animRotateParent(static_cast<Transform*>(transform.parent()));
+    const Transform * transParent = TransformAlg::animatedTranslateParent(&transform);
+    const Transform * rotateParent = TransformAlg::animatedRotateParent(&transform);
     //------------------------------------------------------------------------------------------
     // All animation is relative parent's axis, but transformation matrix of each Transform is in the world space.
     // For example: 
@@ -160,7 +160,7 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         TMatrix tmTrans = transform.parentMatrix().toRotation();
         tmTrans *= transform.pMatrix.toTranslation();
         tmTrans *= rootTm;
-        mapAnimTransKeys(transform.pAnimTrans, tmTrans);
+        TransformAlg::applyMatrixToAnimTranslate(transform.pAnimTrans, tmTrans);
 
         if (obj) {
             obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
@@ -175,7 +175,7 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         tmTrans *= transform.pMatrix.toTranslation();
         tmTrans *= transParent->pMatrix.toTranslation().inversed();
         tmTrans *= rootTm.toRotation();
-        mapAnimTransKeys(transform.pAnimTrans, tmTrans);
+        TransformAlg::applyMatrixToAnimTranslate(transform.pAnimTrans, tmTrans);
 
         if (obj) {
             obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
@@ -190,7 +190,7 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         tmTrans *= transform.pMatrix.toTranslation();
         tmTrans *= transParent->pMatrix.toTranslation().inversed();
         tmTrans *= rootTm.toRotation();
-        mapAnimTransKeys(transform.pAnimTrans, tmTrans);
+        TransformAlg::applyMatrixToAnimTranslate(transform.pAnimTrans, tmTrans);
 
         if (obj) {
             obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
@@ -204,10 +204,10 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         TMatrix tmTrans = transform.parentMatrix().toRotation();
         tmTrans *= transform.pMatrix.toTranslation();
         tmTrans *= rootTm;
-        mapAnimTransKeys(transform.pAnimTrans, tmTrans);
+        TransformAlg::applyMatrixToAnimTranslate(transform.pAnimTrans, tmTrans);
         // making rotate vector relative parent system coordinates. 
         const TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
-        mapAnimRotateKeys(transform.pAnimRotate, tmRot);
+        TransformAlg::applyMatrixToAnimRotate(transform.pAnimRotate, tmRot);
 
         if (obj) {
             obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
@@ -222,11 +222,11 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         tmTrans *= transform.pMatrix.toTranslation();
         tmTrans *= transParent->pMatrix.toTranslation().inversed();
         tmTrans *= rootTm.toRotation();
-        mapAnimTransKeys(transform.pAnimTrans, tmTrans);
+        TransformAlg::applyMatrixToAnimTranslate(transform.pAnimTrans, tmTrans);
         // making rotate vector relative parent system coordinates. 
         // TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case6
         const TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
-        mapAnimRotateKeys(transform.pAnimRotate, tmRot);
+        TransformAlg::applyMatrixToAnimRotate(transform.pAnimRotate, tmRot);
 
         if (obj) {
             obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
@@ -241,11 +241,11 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         tmTrans *= transform.pMatrix.toTranslation();
         tmTrans *= transParent->pMatrix.toTranslation().inversed();
         tmTrans *= rootTm.toRotation();
-        mapAnimTransKeys(transform.pAnimTrans, tmTrans);
+        TransformAlg::applyMatrixToAnimTranslate(transform.pAnimTrans, tmTrans);
         // making rotate vector relative parent system coordinates. 
         // TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case6
         const TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
-        mapAnimRotateKeys(transform.pAnimRotate, tmRot);
+        TransformAlg::applyMatrixToAnimRotate(transform.pAnimRotate, tmRot);
 
         if (obj) {
             obj->applyTransform((transform.pMatrix * rootTm).toRotation(), true);
@@ -282,11 +282,11 @@ void ObjTransformation::translationOfTransformToAnimTransKeys(Transform & inOutT
 
 void ObjTransformation::
 mapsImpCoordinates(ObjAbstract * /*obj*/, Transform & objTransform, const TMatrix & /*rootTm*/) {
-    const Transform * transParent = ObjWriteAnim::animTransParent(static_cast<Transform*>(objTransform.parent()));
-    const Transform * rotateParent = ObjWriteAnim::animRotateParent(static_cast<Transform*>(objTransform.parent()));
-
+    const Transform * transParent = TransformAlg::animatedTranslateParent(&objTransform);
+    const Transform * rotateParent = TransformAlg::animatedRotateParent(&objTransform);
     //------------------------------------------------------------------------------------------
-    AnimKeysToTransform(objTransform);
+    TransformAlg::applyTranslateKeysToTransform(objTransform, objTransform.pAnimTrans);
+    TransformAlg::applyRotateKeysToTransform(objTransform, objTransform.pAnimRotate);
     //------------------------------------------------------------------------------------------
     // Actually the following code can be optimized but I prefer keep it such a way,
     // it is easier to understanding for me.
@@ -367,53 +367,6 @@ mapsImpCoordinates(ObjAbstract * /*obj*/, Transform & objTransform, const TMatri
 
     else {
         throw std::logic_error(ExcTxt("Unknown transformation state"));
-    }
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void ObjTransformation::AnimKeysToTransform(Transform & inOutTrans) {
-    for (auto animTr = inOutTrans.pAnimTrans.begin(); animTr != inOutTrans.pAnimTrans.end(); ++animTr) {
-        if (animTr->pKeys.size() == 1) {
-            const Point3 currPos = inOutTrans.pMatrix.position();
-            inOutTrans.pMatrix.setPosition(currPos + animTr->pKeys[0].pPosition);
-            animTr = inOutTrans.pAnimTrans.erase(animTr);
-            if (animTr == inOutTrans.pAnimTrans.end()) {
-                break;
-            }
-        }
-    }
-
-    for (auto animRot = inOutTrans.pAnimRotate.begin(); animRot != inOutTrans.pAnimRotate.end(); ++animRot) {
-        if (animRot->pKeys.size() == 1) {
-            TMatrix mtx;
-            mtx.setRotate(animRot->pVector, animRot->pKeys[0].pAngleDegrees);
-            inOutTrans.pMatrix *= mtx;
-            animRot = inOutTrans.pAnimRotate.erase(animRot);
-            if (animRot == inOutTrans.pAnimRotate.end()) {
-                break;
-            }
-        }
-    }
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-void ObjTransformation::mapAnimTransKeys(AnimTransList & anims, const TMatrix & tm) {
-    for (auto & a : anims) {
-        for (auto & k : a.pKeys) {
-            tm.transformPoint(k.pPosition);
-        }
-    }
-}
-
-void ObjTransformation::mapAnimRotateKeys(AnimRotateList & anims, const TMatrix & tm) {
-    for (auto & a : anims) {
-        tm.transformPoint(a.pVector);
     }
 }
 

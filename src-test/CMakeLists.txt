@@ -81,7 +81,7 @@ set_source_files_properties(ph/stdafx.cpp
 target_compile_options(${TARGET}
     PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/Yuph/stdafx.h>   # pre-compile headers
     PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/FIph/stdafx.h>   # pre-compile headers
-    PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/MP4>             # multi-processor compilation
+    PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/MP>              # multi-processor compilation
     PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
     PRIVATE $<$<CXX_COMPILER_ID:MSVC>:-D_CRT_SECURE_NO_WARNINGS>
 

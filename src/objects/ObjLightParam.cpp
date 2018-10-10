@@ -29,6 +29,9 @@
 
 #include "xpln/obj/ObjLightParam.h"
 #include "xpln/obj/Transform.h"
+#include "sts/string/StringUtils.h"
+#include "exceptions/defines.h"
+#include "converters/Defines.h"
 
 namespace xobj {
 
@@ -36,25 +39,82 @@ namespace xobj {
 ///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
 /********************************************************************************************************/
 
-ObjLightParam::ObjLightParam(const ObjLightParam & copy)
-    : ObjAbstractLight(copy),
-      mId(copy.mId),
-      mLightName(copy.mLightName),
-      mAdditional(copy.mAdditional) {}
-
-ObjLightParam::ObjLightParam()
-    : mId(ELightParams::none) {
-    setObjectName("Light Param");
+ObjLightParam::ObjLightParam() {
+    setObjectName("Param light");
 }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjLightParam::applyTransform(const TMatrix & tm, const bool) {
-    Point3 pos = mPosition;
-    tm.transformPoint(pos);
-    mPosition = pos;
+void ObjLightParam::setParams(const std::string & params, const LightUtils::ParamExpanderMap & expander) {
+    using namespace std::string_literals;
+
+    mIsSpill = false;
+    mIsDirection = false;
+    mDirection.clear();
+    mBillboardScale = 1.0f;
+
+    auto expanderCopy = expander;
+    //------------------------------
+    auto paramsVector = sts::MbStrUtils::splitToVector(params, " ");
+
+    const bool hasSpillDirection = std::any_of(paramsVector.begin(), paramsVector.end(), [](const auto & val) {
+        return val == "$direction_sp";
+    });
+    const bool hasBillboardDirection = std::any_of(paramsVector.begin(), paramsVector.end(), [](const auto & val) {
+        return val == "$direction";
+    });
+    //------------------------------
+    if (hasBillboardDirection && hasSpillDirection) {
+        throw std::runtime_error(ExcTxt("variables <$direction> and <$direction_sp> can't be presented at the same time"));
+    }
+    //------------------------------
+    if (hasSpillDirection) {
+        mIsDirection = true;
+        mIsSpill = true;
+        auto directionIter = std::find_if(expanderCopy.begin(), expanderCopy.end(), [](const auto & val) {
+            return val.first == "direction_sp";
+        });
+        if (directionIter == expanderCopy.end()) {
+            throw std::runtime_error(ExcTxt("Can't find getter for variable <direction_sp>"));
+        }
+        const auto directionSpVal = directionIter->second();
+        const auto strVars = sts::MbStrUtils::splitToVector(directionSpVal, " ");
+        if (strVars.size() != 3) {
+            throw std::runtime_error(ExcTxt("$direction_sp getter returned incorrect [X Y Z] value: "s.append(directionSpVal)));
+        }
+        mDirection.set(std::stof(strVars[0]), std::stof(strVars[1]), std::stof(strVars[2]));
+        directionIter->second = []() { return "$direction_sp"; };
+    }
+    else if (hasBillboardDirection) {
+        mIsDirection = true;
+        auto directionIter = std::find_if(expanderCopy.begin(), expanderCopy.end(), [](const auto & val) {
+            return val.first == "direction";
+        });
+        if (directionIter == expanderCopy.end()) {
+            throw std::runtime_error(ExcTxt("Can't find getter for variable <direction>"));
+        }
+        const auto directionVal = directionIter->second();
+        const auto strVars = sts::MbStrUtils::splitToVector(directionVal, " ");
+        if (strVars.size() != 4) {
+            throw std::runtime_error(ExcTxt("$direction getter returned incorrect [X Y Z S] value: "s.append(directionVal)));
+        }
+        mDirection.set(std::stof(strVars[0]), std::stof(strVars[1]), std::stof(strVars[2]));
+        mBillboardScale = std::stof(strVars[3]);
+        directionIter->second = []() { return "$direction"; };
+    }
+    //------------------------------
+    mParams = LightUtils::replaceVariables(params, expanderCopy);
+}
+
+std::string ObjLightParam::params() const {
+    if (!mIsDirection) {
+        return mParams;
+    }
+    return LightUtils::replaceVariables(mParams, {
+            {mIsSpill ? "direction_sp" : "direction", [&]() { return (mDirection.normalized() * mBillboardScale).toString(PRECISION); }},
+    });
 }
 
 /**************************************************************************************************/
@@ -65,37 +125,12 @@ eObjectType ObjLightParam::objType() const {
     return OBJ_LIGHT_PARAM;
 }
 
-void ObjLightParam::setAdditionalParams(const std::string & params) {
-    mAdditional = params;
+void ObjLightParam::applyTransform(const TMatrix & tm, const bool) {
+    tm.transformPoint(mPosition);
+    if (mIsDirection) {
+        tm.transformVector(mDirection);
+    }
 }
-
-const std::string & ObjLightParam::additionalParams() const {
-    return mAdditional;
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void ObjLightParam::setLightId(const ELightParams id) {
-    mId = id;
-}
-
-void ObjLightParam::setLightName(const std::string & name) {
-    mLightName = name;
-}
-
-const std::string & ObjLightParam::lightName() const {
-    return mLightName;
-}
-
-ELightParams ObjLightParam::lightId() const {
-    return mId;
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
 
 ObjAbstract * ObjLightParam::clone() const {
     return new ObjLightParam(*this);

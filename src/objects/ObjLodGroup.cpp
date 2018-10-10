@@ -28,62 +28,12 @@
 */
 
 #include "xpln/obj/ObjLodGroup.h"
-#include "common/Logger.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
-
-ObjLodGroup::ObjLodGroup()
-    : mNear(0.0f),
-      mFar(0.0f) {
-
-    setObjectName("Obj Lod Group");
-    mObjTransform.setName(TOTEXT(ObjLodGroup));
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void ObjLodGroup::setObjectName(const std::string & mame) {
-    mName = mame;
-    mObjTransform.setName(mame);
-}
-
-const std::string & ObjLodGroup::objectName() const {
-    return mName;
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-const Transform & ObjLodGroup::transform() const {
-    return mObjTransform;
-}
-
-Transform & ObjLodGroup::transform() {
-    return mObjTransform;
-}
-
-void ObjLodGroup::setFarVal(const float val) {
-    mFar = val;
-}
-
-void ObjLodGroup::setNearVal(const float val) {
-    mNear = val;
-}
-
-float ObjLodGroup::farVal() const {
-    return mFar;
-}
-
-float ObjLodGroup::nearVal() const {
-    return mNear;
-}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

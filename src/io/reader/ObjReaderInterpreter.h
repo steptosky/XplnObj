@@ -63,7 +63,7 @@ protected:
     void gotGlobAttrWetDry(const AttrWetDry & globAttr) override;
     void gotGlobAttrBlend(const AttrBlend & globAttr) override;
     void gotGlobAttrSpecular(const AttrSpecular & globAttr) override;
-    void gotGlobAttrLodDraped(const AttrLodDrap & globAttr) override;
+    void gotGlobAttrDrapedLod(const AttrDrapedLod & globAttr) override;
     void gotGlobAttrLayerGroup(const AttrLayerGroup & globAttr) override;
     void gotGlobAttrSlopeLimit(const AttrSlopeLimit & globAttr) override;
     void gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & globAttr) override;

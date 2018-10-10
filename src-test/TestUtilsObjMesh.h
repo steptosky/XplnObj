@@ -173,7 +173,6 @@ private:
     static ObjMesh * createObjMesh2StatesNotDefaultAttributes(const char * inName, const float inValShift) {
         ObjMesh * outMesh = createObjMesh(inName, inValShift);
         outMesh->pAttr.setDraw(false);
-        outMesh->pAttr.setDraped(true);
         outMesh->pAttr.setCastShadow(false);
         outMesh->pAttr.setSolidForCamera(true);
 

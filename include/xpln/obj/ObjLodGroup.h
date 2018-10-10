@@ -39,15 +39,26 @@ namespace xobj {
 
 /*!
  * \details Representation of the LOD object
- * \note This class should not be created outside the library, use \link ObjMain::addLod \endlink.
  * \ingroup Objects
  */
 class ObjLodGroup {
-protected:
-
-    XpObjLib ObjLodGroup();
-
 public:
+
+    //--------------------------------------------------------
+
+    ObjLodGroup()
+        : ObjLodGroup(0.0f, 0.0f) {}
+
+    ObjLodGroup(const float nearVal, const float farVal)
+        : ObjLodGroup("LOD", nearVal, farVal) {}
+
+    ObjLodGroup(const std::string & name, const float nearVal, const float farVal)
+        : mName(name),
+          mNear(nearVal),
+          mFar(farVal) {
+
+        mObjTransform.setName(name);
+    }
 
     ObjLodGroup(const ObjLodGroup &) = delete;
     ObjLodGroup & operator =(const ObjLodGroup &) = delete;
@@ -56,24 +67,44 @@ public:
 
     //--------------------------------------------------------
 
-    XpObjLib void setNearVal(float val);
-    XpObjLib void setFarVal(float val);
+    void setNearVal(const float val) {
+        mNear = val;
+    }
 
-    XpObjLib float nearVal() const;
-    XpObjLib float farVal() const;
+    void setFarVal(const float val) {
+        mFar = val;
+    }
+
+    float nearVal() const {
+        return mNear;
+    }
+
+    float farVal() const {
+        return mFar;
+    }
 
     //--------------------------------------------------------
 
-    XpObjLib void setObjectName(const std::string & mame);
-    XpObjLib const std::string & objectName() const;
+    void setObjectName(const std::string & name) {
+        mName = name;
+        mObjTransform.setName(name);
+    }
+
+    const std::string & objectName() const {
+        return mName;
+    }
 
     //--------------------------------------------------------
 
     /*! \copydoc ObjAbstract::transform */
-    XpObjLib Transform & transform();
+    Transform & transform() {
+        return mObjTransform;
+    }
 
     /*! \copydoc ObjAbstract::transform */
-    XpObjLib const Transform & transform() const;
+    const Transform & transform() const {
+        return mObjTransform;
+    }
 
     //--------------------------------------------------------
 

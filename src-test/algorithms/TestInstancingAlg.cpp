@@ -1,5 +1,5 @@
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -27,44 +27,16 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "ObjWriteOptimize.h"
-#include "xpln/obj/ObjLodGroup.h"
-#include "ObjWriteAnim.h"
+// #include <gtest/gtest.h>
 
-namespace xobj {
+//using namespace xobj;
 
 /**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjWriteOptimize::optimize(ObjMain & mainObj) {
-    if (mainObj.pExportOptions.isEnabled(XOBJ_EXP_OPTIMIZATION)) {
-        const size_t lodCount = mainObj.lodCount();
-        for (size_t i = 0; i < lodCount; ++i) {
-            ObjLodGroup & lod = mainObj.lod(i);
-            Transform & rootTransform = lod.transform();
-            proccess(rootTransform);
-        }
-    }
-}
-
-void ObjWriteOptimize::proccess(Transform & transform) {
-    //-------------------------------------------------------------------------
-
-    // TODO Optimize
-
-    //-------------------------------------------------------------------------
-    // children
-
-    const auto chCount = transform.childrenCount();
-    for (Transform::TransformIndex i = 0; i < chCount; ++i) {
-        proccess(*static_cast<Transform*>(transform.childAt(i)));
-    }
-
-    //-------------------------------------------------------------------------
-}
+// todo implementation
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
-}

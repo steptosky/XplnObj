@@ -29,7 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/enums/ELightNamed.h"
+#include <string>
 #include "ObjAbstractLight.h"
 
 namespace xobj {
@@ -45,20 +45,47 @@ namespace xobj {
 class ObjLightNamed : public ObjAbstractLight {
 protected:
 
-    XpObjLib ObjLightNamed(const ObjLightNamed & copy);
+    ObjLightNamed(const ObjLightNamed &) = default;
+    ObjLightNamed(ObjLightNamed &&) = default;
 
 public:
 
+    //-------------------------------------------------------------------------
+    /// \name Construction/Destruction
+    /// @{
+
     XpObjLib ObjLightNamed();
-    ObjLightNamed & operator =(const ObjLightNamed &) = delete;
     virtual ~ObjLightNamed() = default;
 
-    //-----------------------------------------------------
+    ObjLightNamed & operator=(const ObjLightNamed &) = delete;
+    ObjLightNamed & operator=(ObjLightNamed &&) = delete;
 
-    XpObjLib void setLightId(ELightNamed id);
-    XpObjLib ELightNamed lightId() const;
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name Parameters
+    /// @{
 
-    //-----------------------------------------------------
+    /*!
+     * \details Light named name. 
+     *          It can be found:
+     *          X-Plane Root/Resources/bitmaps/world/lites/lights.txt
+     */
+    void setName(const std::string & id) {
+        mLightName = id;
+    }
+
+    /*!
+     * \see ObjLightNamed::setName
+     * \return Light named name.
+     */
+    std::string name() const {
+        return mLightName;
+    }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name
+    /// @{
 
     /*! \copydoc ObjAbstract::objType */
     XpObjLib eObjectType objType() const final;
@@ -66,14 +93,15 @@ public:
     /*! \copydoc ObjAbstract::applyTransform */
     XpObjLib void applyTransform(const TMatrix & tm, bool useParity = false) override final;
 
-    /* \copydoc ObjAbstract::clone */
+    /*! \copydoc ObjAbstract::clone */
     XpObjLib ObjAbstract * clone() const override;
 
-    //--------------------------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
 
 private:
 
-    ELightNamed mId;
+    std::string mLightName;
 
 };
 

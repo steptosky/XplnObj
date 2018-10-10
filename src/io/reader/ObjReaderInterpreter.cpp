@@ -139,8 +139,8 @@ void ObjReaderInterpreter::gotGlobAttrNoShadow() {
     ++mIOStatistic->pGlobAttrCount;
 }
 
-void ObjReaderInterpreter::gotGlobAttrLodDraped(const AttrLodDrap & globAttr) {
-    mObjMain->pAttr.setLodDrap(globAttr);
+void ObjReaderInterpreter::gotGlobAttrDrapedLod(const AttrDrapedLod & globAttr) {
+    mObjMain->pDraped.pAttr.setLod(globAttr);
     ++mIOStatistic->pGlobAttrCount;
 }
 
@@ -197,7 +197,7 @@ void ObjReaderInterpreter::gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight 
 }
 
 void ObjReaderInterpreter::gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGroup & globAttr) {
-    mObjMain->pAttr.setLayerGroupDraped(globAttr);
+    mObjMain->pDraped.pAttr.setLayerGroup(globAttr);
     ++mIOStatistic->pGlobAttrCount;
 }
 
@@ -212,9 +212,7 @@ void ObjReaderInterpreter::gotGlobAttrDebug() {
 /**************************************************************************************************/
 
 void ObjReaderInterpreter::gotLod(const float near, const float far, const std::string & endLineComment) {
-    ObjLodGroup & l = mObjMain->addLod();
-    l.setNearVal(near);
-    l.setFarVal(far);
+    ObjLodGroup & l = mObjMain->addLod(new ObjLodGroup(near, far));
     l.setObjectName(extractComment(endLineComment, l.objectName().c_str()));
     mCurrentLod = &l;
     mCurrentTransform = &l.transform();
@@ -511,7 +509,7 @@ void ObjReaderInterpreter::gotTris(const Index offset, const Index count, const 
 
     if (max > mVertices.size() - 1) {
         throw std::runtime_error(ExcTxt("IDX value <").append(std::to_string(max))
-                                                      .append("> is out of range of the vertex array."));
+                                 .append("> is out of range of the vertex array."));
     }
 
     //--------------------------
@@ -523,7 +521,7 @@ void ObjReaderInterpreter::gotTris(const Index offset, const Index count, const 
         face.pV0 -= min;
         face.pV1 -= min;
         face.pV2 -= min;
-        /* can be optimized, there are identical idx values, 
+        /* can be optimized, there are identical idx values,
          * so there are the situations when the same vertices are copied more than one time.
          * example:
          * IDX 2 1 0 2 3 1 2 0 3
@@ -543,7 +541,13 @@ void ObjReaderInterpreter::gotTris(const Index offset, const Index count, const 
 
     //--------------------------
 
-    mCurrentTransform->addObject(mesh);
+    if (!mesh->pAttr.isDraped()) {
+        mCurrentTransform->addObject(mesh);
+    }
+    else {
+        mesh->applyTransform(mCurrentTransform->pMatrix);
+        mObjMain->pDraped.transform().addObject(mesh);
+    }
 }
 
 /**************************************************************************************************/
@@ -556,7 +560,7 @@ void ObjReaderInterpreter::gotAnimBegin() {
         LError << "Internal error, current transform is nullptr";
         return;
     }
-    mCurrentTransform = &mCurrentTransform->createChild();
+    mCurrentTransform = &mCurrentTransform->newChild();
 }
 
 void ObjReaderInterpreter::gotAnimEnd() {

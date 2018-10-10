@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -27,122 +29,117 @@
 **  Contacts: www.steptosky.com
 */
 
-#pragma once
-
 #include <vector>
 #include <list>
 
-namespace sts_t {
+namespace sts {
+namespace tree {
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
+    /**************************************************************************************************/
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**************************************************************************************************/
 
-/*!
- * \details This class is using as a container for the TreeItem.
- */
-template<typename TYPE>
-class TreeItemContainerVector : public std::vector<TYPE *> {
+    /*!
+     * \details This class is using as a container for the TreeItem.
+     */
+    template<typename TYPE>
+    class TreeItemContainerVector : public std::vector<TYPE *> {
+        typedef std::vector<TYPE *> Container;
+    public:
 
-    typedef std::vector<TYPE *> Container;
+        //--------------------------------------------
 
-public:
+        TYPE * operator[](const std::size_t index) {
+            return Container::operator[](index);
+        }
 
-    //--------------------------------------------
+        const TYPE * operator[](const std::size_t index) const {
+            return Container::operator[](index);
+        }
 
-    TYPE * operator[](size_t inIdx) {
-        return Container::operator[](inIdx);
-    }
+        //--------------------------------------------
 
-    const TYPE * operator[](size_t inIdx) const {
-        return Container::operator[](inIdx);
-    }
+        using Container::erase;
 
-    //--------------------------------------------
+        TYPE * erase(const std::size_t index) {
+            auto it = Container::begin() + index;
+            TYPE * out = (*it);
+            Container::erase(it);
+            return out;
+        }
 
-    using Container::erase;
+        //--------------------------------------------
 
-    TYPE * erase(size_t inIndex) {
-        auto it = Container::begin() + inIndex;
-        TYPE * out = (*it);
-        Container::erase(it);
-        return out;
-    }
+        using Container::insert;
 
-    //--------------------------------------------
+        void insert(const std::size_t index, TYPE * val) {
+            Container::insert(Container::begin() + index, val);
+        }
 
-    using Container::insert;
+        //--------------------------------------------
 
-    void insert(size_t inIndex, TYPE * inVal) {
-        Container::insert(Container::begin() + inIndex, inVal);
-    }
+        void push_front(TYPE * val) {
+            Container::insert(Container::begin(), val);
+        }
 
-    //--------------------------------------------
+        //--------------------------------------------
 
-    void push_front(TYPE * inVal) {
-        Container::insert(Container::begin(), inVal);
-    }
+    };
 
-    //--------------------------------------------
+    /**************************************************************************************************/
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**************************************************************************************************/
 
-};
+    /*!
+     * \details This class is using as a container for the TreeItem.
+     */
+    template<typename TYPE>
+    class TreeItemContainerList : public std::list<TYPE *> {
+        typedef std::list<TYPE *> Container;
+    public:
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
+        //--------------------------------------------
 
-/*!
- * \details This class is using as a container for the TreeItem.
- */
-template<typename TYPE>
-class TreeItemContainerList : public std::list<TYPE *> {
+        TYPE * operator[](const std::size_t index) {
+            auto it = Container::begin();
+            for (std::size_t i = 0; i < index; ++i, ++it);
+            return (*it);
+        }
 
-    typedef std::list<TYPE *> Container;
+        const TYPE * operator[](const std::size_t index) const {
+            auto it = Container::begin();
+            for (std::size_t i = 0; i < index; ++i, ++it);
+            return (*it);
+        }
 
-public:
+        //--------------------------------------------
 
-    //--------------------------------------------
+        using Container::erase;
 
-    TYPE * operator[](size_t inIdx) {
-        auto it = Container::begin();
-        for (size_t i = 0; i < inIdx; ++i, ++it);
-        return (*it);
-    }
+        TYPE * erase(const std::size_t index) {
+            auto it = Container::begin();
+            for (std::size_t i = 0; i < index; ++i, ++it);
+            TYPE * out = (*it);
+            Container::erase(it);
+            return out;
+        }
 
-    const TYPE * operator[](size_t inIdx) const {
-        auto it = Container::begin();
-        for (size_t i = 0; i < inIdx; ++i, ++it);
-        return (*it);
-    }
+        //--------------------------------------------
 
-    //--------------------------------------------
+        using Container::insert;
 
-    using Container::erase;
+        void insert(const std::size_t index, TYPE * val) {
+            auto it = Container::begin();
+            for (std::size_t i = 0; i < index; ++i, ++it);
+            Container::insert(it, val);
+        }
 
-    TYPE * erase(size_t inIndex) {
-        auto it = Container::begin();
-        for (size_t i = 0; i < inIndex; ++i, ++it);
-        TYPE * out = (*it);
-        Container::erase(it);
-        return out;
-    }
+        //--------------------------------------------
 
-    //--------------------------------------------
+    };
 
-    using Container::insert;
-
-    void insert(size_t inIndex, TYPE * inVal) {
-        auto it = Container::begin();
-        for (size_t i = 0; i < inIndex; ++i, ++it);
-        Container::insert(it, inVal);
-    }
-
-    //--------------------------------------------
-
-};
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
+    /**************************************************************************************************/
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**************************************************************************************************/
+}
 }

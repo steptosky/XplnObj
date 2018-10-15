@@ -34,6 +34,7 @@
 #include <string>
 #include <iosfwd>
 #include <limits>
+#include <vector>
 
 namespace xobj {
 

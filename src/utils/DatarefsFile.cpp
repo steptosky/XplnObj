@@ -28,6 +28,8 @@
 */
 
 #include "xpln/utils/DatarefsFile.h"
+#include "exceptions/defines.h"
+#include <algorithm>
 #include <fstream>
 #include <iomanip>
 #include <cctype>

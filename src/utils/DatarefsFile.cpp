@@ -29,6 +29,7 @@
 
 #include "xpln/utils/DatarefsFile.h"
 #include "exceptions/defines.h"
+#include "sts/string/StringUtils.h"
 #include <algorithm>
 #include <fstream>
 #include <iomanip>

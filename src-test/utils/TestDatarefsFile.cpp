@@ -38,7 +38,7 @@ using namespace std::string_literals;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-void equals(const Dataref & drf1, const Dataref & drf2) {
+inline void equals(const Dataref & drf1, const Dataref & drf2) {
     ASSERT_TRUE(drf1.mId == drf2.mId);
     ASSERT_TRUE(drf1.mKey == drf2.mKey);
     ASSERT_TRUE(drf1.mWritable == drf2.mWritable);

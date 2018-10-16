@@ -70,6 +70,7 @@ void CommandsFile::loadFile(const std::string & filePath) {
 
 void CommandsFile::loadStream(std::istream & input) {
     mData.clear();
+    mData.reserve(1000);
     mLastId = 0;
     std::string line;
 

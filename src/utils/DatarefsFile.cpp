@@ -70,6 +70,7 @@ void DatarefsFile::loadFile(const std::string & filePath) {
 void DatarefsFile::loadStream(std::istream & input) {
     const char * sep = "\t";
     mData.clear();
+    mData.reserve(1000);
     mLastId = 0;
     std::string line;
     if (!std::getline(input, line)) {

@@ -33,7 +33,6 @@
 #include <cstdint>
 #include <string>
 #include <iosfwd>
-#include <limits>
 #include <vector>
 
 namespace xobj {
@@ -62,9 +61,16 @@ public:
 
     //-------------------------------------------------------------------------
 
-    std::uint64_t mId = std::numeric_limits<std::uint64_t>::max();
+    std::uint64_t mId = invalidId();
     std::string mKey;
     std::string mDescription;
+
+    //-------------------------------------------------------------------------
+
+    /*!
+     * \return Value that is used for invalid Id.
+     */
+    XpObjLib static std::uint64_t invalidId();
 
 };
 

@@ -98,7 +98,13 @@ public:
     /// @{
 
     CommandsFile() = default;
+    CommandsFile(const CommandsFile &) = default;
+    CommandsFile(CommandsFile &&) = default;
+
     ~CommandsFile() = default;
+
+    CommandsFile & operator=(const CommandsFile &) = default;
+    CommandsFile & operator=(CommandsFile &&) = default;
 
     /// @}
     //-------------------------------------------------------------------------

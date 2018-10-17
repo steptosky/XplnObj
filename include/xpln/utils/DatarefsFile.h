@@ -101,7 +101,13 @@ public:
     /// @{
 
     DatarefsFile() = default;
+    DatarefsFile(const DatarefsFile &) = default;
+    DatarefsFile(DatarefsFile &&) = default;
+
     ~DatarefsFile() = default;
+
+    DatarefsFile & operator=(const DatarefsFile &) = default;
+    DatarefsFile & operator=(DatarefsFile &&) = default;
 
     /// @}
     //-------------------------------------------------------------------------

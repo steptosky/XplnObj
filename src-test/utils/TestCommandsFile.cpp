@@ -30,6 +30,7 @@
 #include <gtest/gtest.h>
 #include <xpln/utils/CommandsFile.h>
 #include <sstream>
+#include <vector>
 
 using namespace xobj;
 using namespace std::string_literals;
@@ -37,6 +38,8 @@ using namespace std::string_literals;
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
+
+typedef std::vector<Command> Commands;
 
 inline void equals(const Command & cmd1, const Command & cmd2) {
     ASSERT_TRUE(cmd1.mId == cmd2.mId);
@@ -55,16 +58,19 @@ TEST(CommandsFile, read_normal_drf) {
     stream << R"(sim/operation/screenshot                           Take a screenshot.)" << std::endl;
     stream << R"(sim/operation/show_menu                            Show the in-sim menu.)" << std::endl;
     //-----------------------
-    CommandsFile cmd;
-    ASSERT_NO_THROW(cmd.loadStream(stream));
-    ASSERT_EQ(3, cmd.mData.size());
+    Commands commands;
+    ASSERT_NO_THROW(CommandsFile::loadStream(stream, [&](const Command &c) ->bool {
+            commands.emplace_back(c);
+            return true;
+        }));
+    ASSERT_EQ(3, commands.size());
 
     ASSERT_NO_FATAL_FAILURE(equals(Command{uint64Max, "sim/operation/quit", "Quit X-Plane."},
-        cmd.mData[0]));
+        commands[0]));
     ASSERT_NO_FATAL_FAILURE(equals(Command{uint64Max, "sim/operation/screenshot", "Take a screenshot."},
-        cmd.mData[1]));
+        commands[1]));
     ASSERT_NO_FATAL_FAILURE(equals(Command{uint64Max, "sim/operation/show_menu", "Show the in-sim menu."},
-        cmd.mData[2]));
+        commands[2]));
 }
 
 TEST(CommandsFile, read_normal_drf_custom) {
@@ -74,17 +80,19 @@ TEST(CommandsFile, read_normal_drf_custom) {
     stream << R"(sim/operation/screenshot                                  Take a screenshot.)" << std::endl;
     stream << R"(000005 sim/operation/show_menu                            Show the in-sim menu.)" << std::endl;
     //-----------------------
-    CommandsFile cmd;
-    ASSERT_NO_THROW(cmd.loadStream(stream));
-    ASSERT_EQ(3, cmd.mData.size());
-    ASSERT_EQ(6, cmd.generateId());
+    Commands commands;
+    ASSERT_NO_THROW(CommandsFile::loadStream(stream, [&](const Command &c) ->bool {
+            commands.emplace_back(c);
+            return true;
+        }));
+    ASSERT_EQ(3, commands.size());
 
     ASSERT_NO_FATAL_FAILURE(equals(Command{1, "sim/operation/quit", "Quit X-Plane." },
-        cmd.mData[0]));
+        commands[0]));
     ASSERT_NO_FATAL_FAILURE(equals(Command{uint64Max, "sim/operation/screenshot", "Take a screenshot." },
-        cmd.mData[1]));
+        commands[1]));
     ASSERT_NO_FATAL_FAILURE(equals(Command{5, "sim/operation/show_menu", "Show the in-sim menu." },
-        cmd.mData[2]));
+        commands[2]));
 }
 
 /**************************************************************************************************/
@@ -94,8 +102,7 @@ TEST(CommandsFile, read_normal_drf_custom) {
 TEST(CommandsFile, write_normal_drf_custom) {
     const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
     //-----------------------
-    CommandsFile cmd;
-    cmd.mData = {
+    Commands commands = {
         Command{uint64Max, "sim/operation/quit", "Quit X-Plane."},
         Command{3, "sim/operation/screenshot", "Take a screenshot."},
         Command{4, "sim/operation/show_menu", "Show the in - sim menu."},
@@ -107,7 +114,14 @@ TEST(CommandsFile, write_normal_drf_custom) {
     resultStream << R"(000004    sim/operation/show_menu    Show the in - sim menu.)" << std::endl;
     //-----------------------
     std::stringstream stream;
-    cmd.saveStream(stream);
+    std::size_t counter = 0;
+    CommandsFile::saveStream(stream, [&](Command & d) ->bool {
+        if (counter >= commands.size()) {
+            return false;
+        }
+        d = commands[counter++];
+        return true;
+    });
     ASSERT_STREQ(resultStream.str().c_str(), stream.str().c_str());
 }
 
@@ -115,56 +129,17 @@ TEST(CommandsFile, write_normal_drf_custom) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-TEST(CommandsFile, searchIdDuplicate_case1) {
-    CommandsFile cmd;
-    cmd.mData = {
+TEST(CommandsFile, duplicate) {
+    Commands commands = {
         Command{1, "sim/operation/quit", "Quit X-Plane."},
         Command{1, "sim/operation/screenshot", "Take a screenshot."},
         Command{2, "sim/operation/show_menu", "Show the in - sim menu."},
     };
     //-----------------------
-    ASSERT_THROW(cmd.searchIdDuplicate(), std::domain_error);
-}
-
-TEST(CommandsFile, searchIdDuplicate_case2) {
-    CommandsFile cmd;
-    cmd.mData = {
-        Command{1, "sim/operation/quit", "Quit X-Plane."},
-        Command{2, "sim/operation/screenshot", "Take a screenshot."},
-        Command{1, "sim/operation/show_menu", "Show the in - sim menu."},
-    };
-    //-----------------------
-    ASSERT_THROW(cmd.searchIdDuplicate(), std::domain_error);
-}
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-TEST(CommandsFile, searchKeyDuplicate_case1) {
-    const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
-    //-----------------------
-    CommandsFile cmd;
-    cmd.mData = {
-        Command{uint64Max, "sim/operation/quit_1", ""},
-        Command{uint64Max, "sim/operation/quit_1", ""},
-        Command{uint64Max, "sim/operation/quit_3", ""},
-    };
-    //-----------------------
-    ASSERT_THROW(cmd.searchKeyDuplicate(), std::domain_error);
-}
-
-TEST(CommandsFile, searchKeyDuplicate_case2) {
-    const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
-    //-----------------------
-    CommandsFile cmd;
-    cmd.mData = {
-        Command{uint64Max, "sim/operation/quit_1", ""},
-        Command{uint64Max, "sim/operation/quit_2", ""},
-        Command{uint64Max, "sim/operation/quit_1", ""},
-    };
-    //-----------------------
-    ASSERT_THROW(cmd.searchKeyDuplicate(), std::domain_error);
+    const auto iter = CommandsFile::duplicate(commands, [&](const Command & d1, const Command & d2) ->bool {
+        return d1.mId == d2.mId;
+    });
+    ASSERT_TRUE(iter != commands.end());
 }
 
 /**************************************************************************************************/

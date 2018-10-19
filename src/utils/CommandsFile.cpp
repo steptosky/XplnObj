@@ -30,7 +30,6 @@
 #include "xpln/utils/CommandsFile.h"
 #include "exceptions/defines.h"
 #include "sts/string/StringUtils.h"
-#include <algorithm>
 #include <fstream>
 #include <iomanip>
 #include <cctype>
@@ -52,15 +51,16 @@ std::uint64_t Command::invalidId() {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void CommandsFile::loadFile(const std::string & filePath) {
+bool CommandsFile::loadFile(const std::string & filePath, const std::function<bool(const Command &)> & callback) {
     using namespace std::string_literals;
     std::ifstream file(filePath, std::iostream::in);
     if (!file) {
         throw std::runtime_error(ExcTxt("can't open file <"s.append(filePath).append(">")));
     }
     try {
-        loadStream(file);
+        const auto res = loadStream(file, callback);
         file.close();
+        return res;
     }
     catch (...) {
         file.close();
@@ -68,10 +68,7 @@ void CommandsFile::loadFile(const std::string & filePath) {
     }
 }
 
-void CommandsFile::loadStream(std::istream & input) {
-    mData.clear();
-    mData.reserve(1000);
-    mLastId = 0;
+bool CommandsFile::loadStream(std::istream & input, const std::function<bool(const Command &)> & callback) {
     std::string line;
 
     // [val, rest string]
@@ -96,29 +93,31 @@ void CommandsFile::loadStream(std::istream & input) {
 
         if (std::isdigit(extractedVal.first.front())) {
             cmd.mId = std::stoul(extractedVal.first);
-            mLastId = std::max(mLastId, cmd.mId);
             extractedVal = extractValueFn(extractedVal.second);
         }
 
         cmd.mKey = extractedVal.first;
         cmd.mDescription = extractedVal.second;
 
-        mData.emplace_back(std::move(cmd));
+        if (!callback(cmd)) {
+            return false;
+        }
     }
+    return true;
 }
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void CommandsFile::saveFile(const std::string & filePath) {
+void CommandsFile::saveFile(const std::string & filePath, const std::function<bool(Command &)> & callback) {
     using namespace std::string_literals;
     std::ofstream file(filePath, std::iostream::out);
     if (!file) {
         throw std::runtime_error(ExcTxt("can't open file <"s.append(filePath).append(">")));
     }
     try {
-        saveStream(file);
+        saveStream(file, callback);
         file.close();
     }
     catch (...) {
@@ -127,58 +126,19 @@ void CommandsFile::saveFile(const std::string & filePath) {
     }
 }
 
-void CommandsFile::saveStream(std::ostream & output) {
+void CommandsFile::saveStream(std::ostream & output, const std::function<bool(Command &)> & callback) {
     const char * sep = "    ";
-    for (auto & drf : mData) {
-        if (drf.mId != std::numeric_limits<std::uint64_t>::max()) {
-            output << std::setfill('0') << std::setw(6) << drf.mId << sep;
+    Command cmd;
+    while (callback(cmd)) {
+        if (cmd.mId != std::numeric_limits<std::uint64_t>::max()) {
+            output << std::setfill('0') << std::setw(6) << cmd.mId << sep;
         }
-        output << drf.mKey;
-        if (!drf.mDescription.empty()) {
-            output << sep << drf.mDescription;
+        output << cmd.mKey;
+        if (!cmd.mDescription.empty()) {
+            output << sep << cmd.mDescription;
         }
         output << std::endl;
-    }
-}
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::uint64_t CommandsFile::generateId() {
-    mLastId += 1;
-    return mLastId;
-}
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-void CommandsFile::searchIdDuplicate() {
-    using namespace std::string_literals;
-    const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
-    for (auto iter = mData.begin(); iter != mData.end(); ++iter) {
-        auto findIter = std::find_if(iter, mData.end(), [&](const auto & val) {
-            if (iter->mId == uint64Max || val.mId == uint64Max) {
-                return false;
-            }
-            return iter->mId == val.mId;
-        });
-        if (findIter != mData.end()) {
-            throw std::domain_error(ExcTxt("found id duplicate <"s.append(std::to_string(iter->mId)).append(">")));
-        }
-    }
-}
-
-void CommandsFile::searchKeyDuplicate() {
-    using namespace std::string_literals;
-    for (auto iter = mData.begin(); iter != mData.end(); ++iter) {
-        auto findIter = std::find_if(iter, mData.end(), [&](const auto & val) {
-            return iter->mKey == val.mKey;
-        });
-        if (findIter != mData.end()) {
-            throw std::domain_error(ExcTxt("found key duplicate <"s.append(iter->mKey).append(">")));
-        }
+        cmd = Command();
     }
 }
 

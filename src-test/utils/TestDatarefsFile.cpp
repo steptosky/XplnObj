@@ -30,6 +30,7 @@
 #include <gtest/gtest.h>
 #include <xpln/utils/DatarefsFile.h>
 #include <sstream>
+#include <vector>
 
 using namespace xobj;
 using namespace std::string_literals;
@@ -37,6 +38,8 @@ using namespace std::string_literals;
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
+
+typedef std::vector<Dataref> Datarefs;
 
 inline void equals(const Dataref & drf1, const Dataref & drf2) {
     ASSERT_TRUE(drf1.mId == drf2.mId);
@@ -61,18 +64,21 @@ TEST(DatarefsFile, read_normal_drf) {
     stream << R"(sim/aircraft/view/acf_Vno	float	y)" << std::endl;
     stream << R"(only_key_test)" << std::endl;
     //-----------------------
-    DatarefsFile drf;
-    ASSERT_NO_THROW(drf.loadStream(stream));
-    ASSERT_EQ(4, drf.mData.size());
+    Datarefs datarefs;
+    ASSERT_NO_THROW(DatarefsFile::loadStream(stream, [&](const Dataref &d) ->bool {
+            datarefs.emplace_back(d);
+            return true;
+        }));
+    ASSERT_EQ(4, datarefs.size());
 
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{true, uint64Max, "sim/aircraft/autopilot/vvi_step_ft", "float", "Feet", "Step increment for autopilot VVI"},
-        drf.mData[0]));
+        datarefs[0]));
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{true, uint64Max, "sim/aircraft/engine/acf_max_OILP", "float", "???", "Max Oil."},
-        drf.mData[1]));
+        datarefs[1]));
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{true, uint64Max, "sim/aircraft/view/acf_Vno", "float", "", ""},
-        drf.mData[2]));
+        datarefs[2]));
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{false, uint64Max, "only_key_test", "", "", "" },
-        drf.mData[3]));
+        datarefs[3]));
 }
 
 TEST(DatarefsFile, read_normal_drf_custom) {
@@ -86,19 +92,21 @@ TEST(DatarefsFile, read_normal_drf_custom) {
     stream << R"(000002	only_key_test_1)" << std::endl;
     stream << R"(#000008	only_key_test_2)" << std::endl;
     //-----------------------
-    DatarefsFile drf;
-    ASSERT_NO_THROW(drf.loadStream(stream));
-    ASSERT_EQ(4, drf.mData.size());
-    ASSERT_EQ(6, drf.generateId());
+    Datarefs datarefs;
+    ASSERT_NO_THROW(DatarefsFile::loadStream(stream, [&](const Dataref &d) ->bool {
+            datarefs.emplace_back(d);
+            return true;
+        }));
+    ASSERT_EQ(4,datarefs.size());
 
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{true, 1, "sim/aircraft/autopilot/vvi_step_ft", "float", "Feet", "Step increment for autopilot VVI" },
-        drf.mData[0]));
+        datarefs[0]));
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{true, 5, "sim/aircraft/engine/acf_max_OILP", "float", "???", "Max Oil." },
-        drf.mData[1]));
+        datarefs[1]));
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{true, uint64Max, "sim/aircraft/view/acf_Vno", "float", "", "" },
-        drf.mData[2]));
+        datarefs[2]));
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{false, 2, "only_key_test_1", "", "", "" },
-        drf.mData[3]));
+        datarefs[3]));
 }
 
 /**************************************************************************************************/
@@ -108,8 +116,7 @@ TEST(DatarefsFile, read_normal_drf_custom) {
 TEST(DatarefsFile, write_normal_drf_custom) {
     const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
     //-----------------------
-    DatarefsFile drf;
-    drf.mData = {
+    Datarefs datarefs = {
         Dataref{true, uint64Max, "sim/aircraft/autopilot/vvi_step_ft", "float", "Feet", "Step increment for autopilot VVI"},
         Dataref{false, 3, "sim/aircraft/engine/acf_max_OILP", "float", "???", "Max Oil."},
         Dataref{true, 4, "sim/aircraft/view/acf_Vno", "float", "", ""},
@@ -124,7 +131,14 @@ TEST(DatarefsFile, write_normal_drf_custom) {
     resultStream << R"(only_key_test_1)" << std::endl;
     //-----------------------
     std::stringstream stream;
-    drf.saveStream(stream);
+    std::size_t counter = 0;
+    DatarefsFile::saveStream(stream, [&](Dataref & d) ->bool {
+        if (counter >= datarefs.size()) {
+            return false;
+        }
+        d = datarefs[counter++];
+        return true;
+    });
     ASSERT_STREQ(resultStream.str().c_str(), stream.str().c_str());
 }
 
@@ -132,64 +146,17 @@ TEST(DatarefsFile, write_normal_drf_custom) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-TEST(DatarefsFile, searchIdDuplicate_case1) {
-    const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
-    //-----------------------
-    DatarefsFile drf;
-    drf.mData = {
-        Dataref{false, uint64Max, "only_key_test_1", "", "", ""},
+TEST(DatarefsFile, duplicate) {
+    const Datarefs datarefs = {
         Dataref{false, 1, "only_key_test_2", "", "", ""},
         Dataref{false, 1, "only_key_test_3", "", "", ""},
         Dataref{false, 2, "only_key_test_3", "", "", ""},
     };
     //-----------------------
-    ASSERT_THROW(drf.searchIdDuplicate(), std::domain_error);
-}
-
-TEST(DatarefsFile, searchIdDuplicate_case2) {
-    const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
-    //-----------------------
-    DatarefsFile drf;
-    drf.mData = {
-        Dataref{false, 1, "only_key_test_1", "", "", ""},
-        Dataref{false, 3, "only_key_test_2", "", "", ""},
-        Dataref{false, 1, "only_key_test_3", "", "", ""},
-        Dataref{false, 2, "only_key_test_3", "", "", ""},
-    };
-    //-----------------------
-    ASSERT_THROW(drf.searchIdDuplicate(), std::domain_error);
-}
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-TEST(DatarefsFile, searchKeyDuplicate_case1) {
-    const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
-    //-----------------------
-    DatarefsFile drf;
-    drf.mData = {
-        Dataref{false, uint64Max, "only_key_test_1", "", "", ""},
-        Dataref{false, uint64Max, "only_key_test_2", "", "", ""},
-        Dataref{false, uint64Max, "only_key_test_2", "", "", ""},
-        Dataref{false, uint64Max, "only_key_test_3", "", "", ""},
-    };
-    //-----------------------
-    ASSERT_THROW(drf.searchKeyDuplicate(), std::domain_error);
-}
-
-TEST(DatarefsFile, searchKeyDuplicate_case2) {
-    const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
-    //-----------------------
-    DatarefsFile drf;
-    drf.mData = {
-        Dataref{false, uint64Max, "only_key_test_3", "", "", ""},
-        Dataref{false, uint64Max, "only_key_test_2", "", "", ""},
-        Dataref{false, uint64Max, "only_key_test_3", "", "", ""},
-        Dataref{false, uint64Max, "only_key_test_3", "", "", ""},
-    };
-    //-----------------------
-    ASSERT_THROW(drf.searchKeyDuplicate(), std::domain_error);
+    const auto iter = DatarefsFile::duplicate(datarefs, [&](const Dataref & d1, const Dataref & d2) ->bool {
+        return d1.mId == d2.mId;
+    });
+    ASSERT_TRUE(iter != datarefs.end());
 }
 
 /**************************************************************************************************/

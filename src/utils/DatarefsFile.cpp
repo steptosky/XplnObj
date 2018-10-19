@@ -30,7 +30,7 @@
 #include "xpln/utils/DatarefsFile.h"
 #include "exceptions/defines.h"
 #include "sts/string/StringUtils.h"
-#include <algorithm>
+#include <cassert>
 #include <fstream>
 #include <iomanip>
 #include <cctype>
@@ -51,15 +51,16 @@ std::uint64_t Dataref::invalidId() {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void DatarefsFile::loadFile(const std::string & filePath) {
+bool DatarefsFile::loadFile(const std::string & filePath, const std::function<bool(const Dataref &)> & callback) {
     using namespace std::string_literals;
     std::ifstream file(filePath, std::iostream::in);
     if (!file) {
         throw std::runtime_error(ExcTxt("can't open file <"s.append(filePath).append(">")));
     }
     try {
-        loadStream(file);
+        const auto res = loadStream(file, callback);
         file.close();
+        return res;
     }
     catch (...) {
         file.close();
@@ -67,14 +68,12 @@ void DatarefsFile::loadFile(const std::string & filePath) {
     }
 }
 
-void DatarefsFile::loadStream(std::istream & input) {
+bool DatarefsFile::loadStream(std::istream & input, const std::function<bool(const Dataref &)> & callback) {
+    assert(callback);
     const char * sep = "\t";
-    mData.clear();
-    mData.reserve(1000);
-    mLastId = 0;
     std::string line;
     if (!std::getline(input, line)) {
-        return;
+        return true;
     }
     while (std::getline(input, line)) {
         if (line.empty()) {
@@ -92,7 +91,6 @@ void DatarefsFile::loadStream(std::istream & input) {
         std::size_t position = 0;
         if (std::isdigit(values[position].front())) {
             drf.mId = std::stoul(values[position++]);
-            mLastId = std::max(mLastId, drf.mId);
         }
 
         if (position != values.size()) {
@@ -110,23 +108,25 @@ void DatarefsFile::loadStream(std::istream & input) {
         if (position != values.size()) {
             drf.mDescription = values[position];
         }
-
-        mData.emplace_back(std::move(drf));
+        if (!callback(drf)) {
+            return false;
+        }
     }
+    return true;
 }
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void DatarefsFile::saveFile(const std::string & filePath) {
+void DatarefsFile::saveFile(const std::string & filePath, const std::function<bool(Dataref &)> & callback) {
     using namespace std::string_literals;
     std::ofstream file(filePath, std::iostream::out);
     if (!file) {
         throw std::runtime_error(ExcTxt("can't open file <"s.append(filePath).append(">")));
     }
     try {
-        saveStream(file);
+        saveStream(file, callback);
         file.close();
     }
     catch (...) {
@@ -135,10 +135,12 @@ void DatarefsFile::saveFile(const std::string & filePath) {
     }
 }
 
-void DatarefsFile::saveStream(std::ostream & output) {
+void DatarefsFile::saveStream(std::ostream & output, const std::function<bool(Dataref &)> & callback) {
     const char * sep = "\t";
     output << std::endl;
-    for (auto & drf : mData) {
+
+    Dataref drf;
+    while (callback(drf)) {
         if (drf.mId != std::numeric_limits<std::uint64_t>::max()) {
             output << std::setfill('0') << std::setw(6) << drf.mId << sep;
         }
@@ -154,47 +156,7 @@ void DatarefsFile::saveStream(std::ostream & output) {
             }
         }
         output << std::endl;
-    }
-}
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::uint64_t DatarefsFile::generateId() {
-    mLastId += 1;
-    return mLastId;
-}
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-void DatarefsFile::searchIdDuplicate() {
-    using namespace std::string_literals;
-    const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
-    for (auto iter = mData.begin(); iter != mData.end(); ++iter) {
-        auto findIter = std::find_if(iter, mData.end(), [&](const auto & val) {
-            if (iter->mId == uint64Max || val.mId == uint64Max) {
-                return false;
-            }
-            return iter->mId == val.mId;
-        });
-        if (findIter != mData.end()) {
-            throw std::domain_error(ExcTxt("found id duplicate <"s.append(std::to_string(iter->mId)).append(">")));
-        }
-    }
-}
-
-void DatarefsFile::searchKeyDuplicate() {
-    using namespace std::string_literals;
-    for (auto iter = mData.begin(); iter != mData.end(); ++iter) {
-        auto findIter = std::find_if(iter, mData.end(), [&](const auto & val) {
-            return iter->mKey == val.mKey;
-        });
-        if (findIter != mData.end()) {
-            throw std::domain_error(ExcTxt("found key duplicate <"s.append(iter->mKey).append(">")));
-        }
+        drf = Dataref();
     }
 }
 

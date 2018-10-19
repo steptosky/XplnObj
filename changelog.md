@@ -1,5 +1,10 @@
 StepToSky: X-Plane Obj Library
 ---------------------------------------------------------------------------
+#### next
+
+- **Added** Classes for reading/writing datarefs and commands files.
+
+---------------------------------------------------------------------------
 #### 0.7.0-beta (10.10.2018)
 
 - **Added** Ability to use tool-tip in ATTR_manip_noop.

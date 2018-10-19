@@ -31,9 +31,10 @@
 
 #include "xpln/Export.h"
 #include <cstdint>
+#include <functional>
 #include <string>
 #include <iosfwd>
-#include <vector>
+#include <algorithm>
 
 namespace xobj {
 
@@ -68,6 +69,8 @@ public:
     std::string mValueUnits;
     std::string mDescription;
 
+    bool isIdValid() const { return mId != invalidId(); }
+
     //-------------------------------------------------------------------------
 
     /*!
@@ -89,14 +92,7 @@ public:
  * \ingroup Utils
  */
 class DatarefsFile {
-public:
 
-    //-------------------------------------------------------------------------
-    /// @{
-
-    typedef std::vector<Dataref> Container;
-
-    /// @}
     //-------------------------------------------------------------------------
     /// @{
 
@@ -111,58 +107,72 @@ public:
 
     /// @}
     //-------------------------------------------------------------------------
-    /// @{
 
-    Container mData;
+public:
 
-    /// @}
     //-------------------------------------------------------------------------
     /// \name IO
     /// @{
 
     /*!
+     * \details Opens file and call \link DatarefsFile::loadStream \endlink for it.
      * \exception std::exception
      */
-    XpObjLib void loadFile(const std::string & filePath);
+    XpObjLib static bool loadFile(const std::string & filePath, const std::function<bool(const Dataref &)> & callback);
 
     /*!
+     * \details Loads dataref from stream.
+     * \param [in, out] input 
+     * \param [in] callback this will be called for each parsed dataref. 
+     *                      If you want to stop the process return false from the callback.
+     * \return True if whole file is processed and callback did not return false otherwise false.
      * \exception std::exception
      */
-    XpObjLib void loadStream(std::istream & input);
+    XpObjLib static bool loadStream(std::istream & input, const std::function<bool(const Dataref &)> & callback);
+
+    //-------------------------------------------------------------------------
 
     /*!
+     * \details Opens file and call \link DatarefsFile::saveStream \endlink for it and then save one.
      * \exception std::exception
      */
-    XpObjLib void saveFile(const std::string & filePath);
+    XpObjLib static void saveFile(const std::string & filePath, const std::function<bool(Dataref &)> & callback);
 
     /*!
+     * \details Saves dataref to stream.
+     * \param [in, out] output
+     * \param [in] callback you have to fill data. If there are no any data anymore return false.
      * \exception std::exception
      */
-    XpObjLib void saveStream(std::ostream & output);
+    XpObjLib static void saveStream(std::ostream & output, const std::function<bool(Dataref &)> & callback);
 
     /// @}
     //-------------------------------------------------------------------------
-    /// \name For our company internal purposes 
+    /// \name Helpers
     /// @{
 
-    XpObjLib std::uint64_t generateId();
-
     /*!
-     * \exception std::exception
+     * \details Searches duplicates.
+     * \param [in] container
+     * \param [in] fn
+     * \return Iterator to found duplicate or Container::end()
      */
-    XpObjLib void searchIdDuplicate();
+    template<typename Container>
+    static typename Container::const_iterator duplicate(const Container & container,
+                                                        std::function<bool(const typename Container::value_type & v1,
+                                                                           const typename Container::value_type & v2)> fn) {
 
-    /*!
-     * \exception std::exception
-     */
-    XpObjLib void searchKeyDuplicate();
+        for (auto iter = container.begin(); iter != container.end(); ++iter) {
+            auto findIter = std::find_if(iter, container.end(), [&](const auto & val) { return fn(*iter, val); });
+            if (findIter != container.end()) {
+                return findIter;
+            }
+        }
+        return container.end();
+    }
 
     /// @}
     //-------------------------------------------------------------------------
-
-private:
-
-    std::uint64_t mLastId = 0;
 
 };
 

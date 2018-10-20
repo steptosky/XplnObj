@@ -33,6 +33,8 @@
 
 namespace xobj {
 
+class AbstractWriter;
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
@@ -85,6 +87,16 @@ public:
 
     XpObjLib void setRatio(float ratio);
     XpObjLib float ratio() const;
+
+    //-------------------------------------------------------------------------
+
+    /*!
+     * \note For internal use only.
+     * \return String with default values for simulator.
+     *         It is needed when attribute has been enabled before
+     *         and now should be disabled.
+     */
+    XpObjLib static std::string objDisableStr();
 
     //-------------------------------------------------------------------------
 

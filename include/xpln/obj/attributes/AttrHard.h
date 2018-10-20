@@ -33,6 +33,8 @@
 
 namespace xobj {
 
+class AbstractWriter;
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
@@ -87,6 +89,16 @@ public:
     XpObjLib void setESurface(const ESurface & surface, bool deck = false);
     XpObjLib const ESurface & surface() const;
     XpObjLib bool isDeck() const;
+
+    //-------------------------------------------------------------------------
+
+    /*!
+     * \note For internal use only.
+     * \return String with default values for simulator.
+     *         It is needed when attribute has been enabled before
+     *         and now should be disabled.
+     */
+    XpObjLib static std::string objDisableStr();
 
     //-------------------------------------------------------------------------
 

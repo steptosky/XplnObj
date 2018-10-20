@@ -29,6 +29,8 @@
 
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrLightLevel.h"
+#include "io/writer/AbstractWriter.h"
+#include "common/AttributeNames.h"
 
 namespace xobj {
 
@@ -100,6 +102,14 @@ float AttrLightLevel::val2() const {
 
 const std::string & AttrLightLevel::dataref() const {
     return mDataref;
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::string AttrLightLevel::objDisableStr() {
+    return ATTR_LIGHT_LEVEL_RESET;
 }
 
 /**************************************************************************************************/

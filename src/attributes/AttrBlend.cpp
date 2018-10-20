@@ -31,11 +31,13 @@
 
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrBlend.h"
+#include "io/writer/AbstractWriter.h"
+#include "common/AttributeNames.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-//////////////////////////////////////////* Static area *///////////////////////////////////////////
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
 AttrBlend::AttrBlend(const eType type, const float ratio)
@@ -87,6 +89,16 @@ void AttrBlend::setRatio(float ratio) {
 
 float AttrBlend::ratio() const {
     return mRatio;
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::string AttrBlend::objDisableStr() {
+    StringStream outStr;
+    outStr << ATTR_BLEND << " " << AttrBlend().ratio();
+    return outStr.str();
 }
 
 /**************************************************************************************************/

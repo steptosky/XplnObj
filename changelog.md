@@ -3,6 +3,10 @@ StepToSky: X-Plane Obj Library
 #### next
 
 - **Added** Classes for reading/writing datarefs and commands files.
+- **Fixed** Fixed bug for attribute printing: 
+            `AttrShiny`  
+            `AttrBlend`  
+            Default/disable values were not printed when those attributes were enabled and then disabled.
 
 ---------------------------------------------------------------------------
 #### 0.7.0-beta (10.10.2018)

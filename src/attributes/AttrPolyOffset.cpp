@@ -29,11 +29,13 @@
 
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrPolyOffset.h"
+#include "io/writer/AbstractWriter.h"
+#include "common/AttributeNames.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-//////////////////////////////////////////* Static area *///////////////////////////////////////////
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
 AttrPolyOffset::AttrPolyOffset(const float offset)
@@ -75,6 +77,16 @@ void AttrPolyOffset::setOffset(const float offset) {
 
 float AttrPolyOffset::offset() const {
     return mOffset;
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::string AttrPolyOffset::objDisableStr() {
+    StringStream outStr;
+    outStr << ATTR_POLY_OS << " " << AttrPolyOffset().offset();
+    return outStr.str();
 }
 
 /**************************************************************************************************/

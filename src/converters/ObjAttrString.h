@@ -43,6 +43,7 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
+class AbstractWriter;
 class AttrBlend;
 class AttrHard;
 class AttrDrapedLayerGroup;
@@ -63,23 +64,23 @@ class AttrCockpit;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-XpObjLib std::string toObjGlobString(const AttrBlend & globAttr);
-XpObjLib std::string toObjGlobString(const AttrLayerGroup & globAttr);
-XpObjLib std::string toObjGlobString(const AttrDrapedLayerGroup & globAttr);
-XpObjLib std::string toObjGlobString(const AttrDrapedLod & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSlungLoadWeight & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSpecular & globAttr);
-XpObjLib std::string toObjGlobString(const AttrTint & globAttr);
-XpObjLib std::string toObjGlobString(const AttrWetDry & globAttr);
-XpObjLib std::string toObjGlobString(const AttrSlopeLimit & globAttr);
-XpObjLib std::string toObjGlobString(const AttrCockpitRegion & globAttr);
+XpObjLib void printObjGlobAttr(const AttrBlend & globAttr, AbstractWriter & writer);
+XpObjLib void printObjGlobAttr(const AttrLayerGroup & globAttr, AbstractWriter & writer);
+XpObjLib void printObjGlobAttr(const AttrDrapedLayerGroup & globAttr, AbstractWriter & writer);
+XpObjLib void printObjGlobAttr(const AttrDrapedLod & globAttr, AbstractWriter & writer);
+XpObjLib void printObjGlobAttr(const AttrSlungLoadWeight & globAttr, AbstractWriter & writer);
+XpObjLib void printObjGlobAttr(const AttrSpecular & globAttr, AbstractWriter & writer);
+XpObjLib void printObjGlobAttr(const AttrTint & globAttr, AbstractWriter & writer);
+XpObjLib void printObjGlobAttr(const AttrWetDry & globAttr, AbstractWriter & writer);
+XpObjLib void printObjGlobAttr(const AttrSlopeLimit & globAttr, AbstractWriter & writer);
+XpObjLib void printObjGlobAttr(const AttrCockpitRegion & globAttr, AbstractWriter & writer);
 
-XpObjLib std::string toObjString(const AttrBlend & attr);
-XpObjLib std::string toObjString(const AttrHard & attr);
-XpObjLib std::string toObjString(const AttrLightLevel & attr);
-XpObjLib std::string toObjString(const AttrPolyOffset & attr);
-XpObjLib std::string toObjString(const AttrShiny & attr);
-XpObjLib std::string toObjString(const AttrCockpit & attr);
+XpObjLib void printObjAttr(const AttrBlend & attr, AbstractWriter & writer);
+XpObjLib void printObjAttr(const AttrHard & attr, AbstractWriter & writer);
+XpObjLib void printObjAttr(const AttrLightLevel & attr, AbstractWriter & writer);
+XpObjLib void printObjAttr(const AttrPolyOffset & attr, AbstractWriter & writer);
+XpObjLib void printObjAttr(const AttrShiny & attr, AbstractWriter & writer);
+XpObjLib void printObjAttr(const AttrCockpit & attr, AbstractWriter & writer);
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

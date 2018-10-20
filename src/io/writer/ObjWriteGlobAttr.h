@@ -65,7 +65,6 @@ private:
 
     void writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString);
     void writeBool(AbstractWriter * inWriter, const char * inAttr, bool inState);
-    void writeString(AbstractWriter * inWriter, const std::string & inStr);
 
     std::size_t mCounter = 0;
 

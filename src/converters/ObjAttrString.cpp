@@ -45,6 +45,7 @@
 #include "xpln/obj/attributes/AttrSlopeLimit.h"
 #include "xpln/obj/attributes/AttrCockpitRegion.h"
 #include "xpln/obj/attributes/AttrCockpit.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -52,10 +53,10 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-std::string toObjGlobString(const AttrBlend & globAttr) {
-    if (!globAttr)
-        return "";
-
+void printObjGlobAttr(const AttrBlend & globAttr, AbstractWriter & writer) {
+    if (!globAttr) {
+        return;
+    }
     StringStream outStr;
     if (globAttr.type() == AttrBlend::no_blend) {
         outStr << ATTR_GLOBAL_NO_BLEND;
@@ -63,107 +64,111 @@ std::string toObjGlobString(const AttrBlend & globAttr) {
     else if (globAttr.type() == AttrBlend::shadow_blend) {
         outStr << ATTR_GLOBAL_SHADOW_BLEND;
     }
-    outStr << " " << globAttr.ratio() << std::flush;
-    return outStr.str();
+    outStr << " " << globAttr.ratio();
+    writer.printLine(outStr.str());
 }
 
-std::string toObjGlobString(const AttrLayerGroup & globAttr) {
-    if (!globAttr)
-        return "";
+void printObjGlobAttr(const AttrLayerGroup & globAttr, AbstractWriter & writer) {
+    if (!globAttr) {
+        return;
+    }
     StringStream outStr;
     outStr << ATTR_GLOBAL_LAYER_GROUP;
     outStr << " " << globAttr.layer().toString();
     outStr << " " << globAttr.offset();
-    outStr.flush();
-    return outStr.str();
+    writer.printLine(outStr.str());
 }
 
-std::string toObjGlobString(const AttrDrapedLayerGroup & globAttr) {
-    if (!globAttr)
-        return "";
+void printObjGlobAttr(const AttrDrapedLayerGroup & globAttr, AbstractWriter & writer) {
+    if (!globAttr) {
+        return;
+    }
     StringStream outStr;
     outStr << ATTR_GLOBAL_LAYER_GROUP_DRAPED;
     outStr << " " << globAttr.layer().toString();
     outStr << " " << globAttr.offset();
-    outStr.flush();
-    return outStr.str();
+    writer.printLine(outStr.str());
 }
 
-std::string toObjGlobString(const AttrDrapedLod & globAttr) {
-    if (!globAttr)
-        return "";
+void printObjGlobAttr(const AttrDrapedLod & globAttr, AbstractWriter & writer) {
+    if (!globAttr) {
+        return;
+    }
     StringStream outStr;
-    outStr << ATTR_GLOBAL_LOD_DRAPED << " " << globAttr.distance() << std::flush;
-    return outStr.str();
+    outStr << ATTR_GLOBAL_LOD_DRAPED << " " << globAttr.distance();
+    writer.printLine(outStr.str());
 }
 
-std::string toObjGlobString(const AttrSlungLoadWeight & globAttr) {
-    if (!globAttr)
-        return "";
+void printObjGlobAttr(const AttrSlungLoadWeight & globAttr, AbstractWriter & writer) {
+    if (!globAttr) {
+        return;
+    }
     StringStream outStr;
-    outStr << ATTR_GLOBAL_SLUNG_LOAD_WEIGHT << " " << globAttr.weight() << std::flush;
-    return outStr.str();
+    outStr << ATTR_GLOBAL_SLUNG_LOAD_WEIGHT << " " << globAttr.weight();
+    writer.printLine(outStr.str());
 }
 
-std::string toObjGlobString(const AttrSpecular & globAttr) {
-    if (!globAttr)
-        return "";
+void printObjGlobAttr(const AttrSpecular & globAttr, AbstractWriter & writer) {
+    if (!globAttr) {
+        return;
+    }
     StringStream outStr;
-    outStr << ATTR_GLOBAL_SPECULAR << " " << globAttr.ratio() << std::flush;
-    return outStr.str();
+    outStr << ATTR_GLOBAL_SPECULAR << " " << globAttr.ratio();
+    writer.printLine(outStr.str());
 }
 
-std::string toObjGlobString(const AttrTint & globAttr) {
-    if (!globAttr)
-        return "";
+void printObjGlobAttr(const AttrTint & globAttr, AbstractWriter & writer) {
+    if (!globAttr) {
+        return;
+    }
     StringStream outStr;
     outStr << ATTR_GLOBAL_TINT;
     outStr << " " << globAttr.albedo();
     outStr << " " << globAttr.emissive();
-    outStr.flush();
-    return outStr.str();
+    writer.printLine(outStr.str());
 }
 
-std::string toObjGlobString(const AttrWetDry & globAttr) {
-    if (!globAttr)
-        return "";
-    return globAttr.state() == AttrWetDry::eState::wet ? ATTR_GLOBAL_WET : ATTR_GLOBAL_DRY;
+void printObjGlobAttr(const AttrWetDry & globAttr, AbstractWriter & writer) {
+    if (!globAttr) {
+        return;
+    }
+    writer.printLine(globAttr.state() == AttrWetDry::eState::wet ? ATTR_GLOBAL_WET : ATTR_GLOBAL_DRY);
 }
 
-std::string toObjGlobString(const AttrSlopeLimit & globAttr) {
-    if (!globAttr)
-        return "";
+void printObjGlobAttr(const AttrSlopeLimit & globAttr, AbstractWriter & writer) {
+    if (!globAttr) {
+        return;
+    }
     StringStream outStr;
     outStr << ATTR_GLOBAL_SLOPE_LIMIT;
     outStr << " " << globAttr.minPitch();
     outStr << " " << globAttr.maxPitch();
     outStr << " " << globAttr.minRoll();
     outStr << " " << globAttr.maxRoll();
-    outStr.flush();
-    return outStr.str();
+    writer.printLine(outStr.str());
 }
 
-std::string toObjGlobString(const AttrCockpitRegion & globAttr) {
-    if (!globAttr)
-        return "";
+void printObjGlobAttr(const AttrCockpitRegion & globAttr, AbstractWriter & writer) {
+    if (!globAttr) {
+        return;
+    }
     StringStream outStr;
     outStr << ATTR_GLOBAL_COCKPIT_REGION;
     outStr << " " << globAttr.left();
     outStr << " " << globAttr.bottom();
     outStr << " " << globAttr.right();
     outStr << " " << globAttr.top();
-    outStr.flush();
-    return outStr.str();
+    writer.printLine(outStr.str());
 }
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-std::string toObjString(const AttrBlend & attr) {
-    if (!attr)
-        return "";
-
+void printObjAttr(const AttrBlend & attr, AbstractWriter & writer) {
+    if (!attr) {
+        return;
+    }
     StringStream outStr;
     if (attr.type() == AttrBlend::no_blend) {
         outStr << ATTR_NO_BLEND;
@@ -174,58 +179,57 @@ std::string toObjString(const AttrBlend & attr) {
     else {
         outStr << ATTR_BLEND;
     }
-    outStr << " " << attr.ratio() << std::flush;
-    return outStr.str();
+    outStr << " " << attr.ratio();
+    writer.printLine(outStr.str());
 }
 
-std::string toObjString(const AttrHard & attr) {
-    if (!attr)
-        return "";
-    if (!attr.isDeck()) {
-        StringStream outStr;
-        outStr << ATTR_HARD;
-        outStr << " " << attr.surface().toString() << std::flush;
-        return outStr.str();
+void printObjAttr(const AttrHard & attr, AbstractWriter & writer) {
+    if (!attr) {
+        return;
     }
     StringStream outStr;
-    outStr << ATTR_HARD_DECK;
-    outStr << " " << attr.surface().toString() << std::flush;
-    return outStr.str();
+    outStr << (attr.isDeck() ? ATTR_HARD_DECK : ATTR_HARD)
+            << " " << attr.surface().toString();
+    writer.printLine(outStr.str());
 }
 
-std::string toObjString(const AttrLightLevel & attr) {
-    if (!attr)
-        return "";
+void printObjAttr(const AttrLightLevel & attr, AbstractWriter & writer) {
+    if (!attr) {
+        return;
+    }
     StringStream outStr;
     outStr << ATTR_LIGHT_LEVEL;
     outStr << " " << attr.val1();
     outStr << " " << attr.val2();
-    outStr << " " << attr.dataref();
-    outStr.flush();
-    return outStr.str();
+    outStr << " " << writer.actualDataref(attr.dataref());
+    writer.printLine(outStr.str());
 }
 
-std::string toObjString(const AttrPolyOffset & attr) {
-    if (!attr)
-        return "";
+void printObjAttr(const AttrPolyOffset & attr, AbstractWriter & writer) {
+    if (!attr) {
+        return;
+    }
     StringStream outStr;
-    outStr << ATTR_POLY_OS << " " << attr.offset() << std::flush;
-    return outStr.str();
+    outStr << ATTR_POLY_OS << " " << attr.offset();
+    writer.printLine(outStr.str());
 }
 
-std::string toObjString(const AttrShiny & attr) {
-    if (!attr)
-        return "";
+void printObjAttr(const AttrShiny & attr, AbstractWriter & writer) {
+    if (!attr) {
+        return;
+    }
     StringStream outStr;
-    outStr << ATTR_SHINY_RAT << " " << attr.ratio() << std::flush;
-    return outStr.str();
+    outStr << ATTR_SHINY_RAT << " " << attr.ratio();
+    writer.printLine(outStr.str());
 }
 
-std::string toObjString(const AttrCockpit & attr) {
-    if (!attr)
-        return "";
+void printObjAttr(const AttrCockpit & attr, AbstractWriter & writer) {
+    if (!attr) {
+        return;
+    }
     if (attr.type() == AttrCockpit::eType::cockpit) {
-        return ATTR_COCKPIT;
+        writer.printLine(ATTR_COCKPIT);
+        return;
     }
     StringStream outStr;
     if (attr.type() == AttrCockpit::eType::region_1) {
@@ -247,7 +251,7 @@ std::string toObjString(const AttrCockpit & attr) {
                 << " " << attr.lightingChannel()
                 << " " << attr.autoAdjust();
     }
-    return outStr.str();
+    writer.printLine(outStr.str());
 }
 
 /**************************************************************************************************/

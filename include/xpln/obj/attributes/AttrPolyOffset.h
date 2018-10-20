@@ -33,6 +33,8 @@
 
 namespace xobj {
 
+class AbstractWriter;
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
@@ -57,7 +59,7 @@ public:
      * \note Makes the enabled attribute.
      * \param [in] offset 
      */
-    XpObjLib AttrPolyOffset(float offset);
+    XpObjLib explicit AttrPolyOffset(float offset);
 
     ~AttrPolyOffset() = default;
 
@@ -85,6 +87,16 @@ public:
 
     XpObjLib void setOffset(float offset);
     XpObjLib float offset() const;
+
+    //-------------------------------------------------------------------------
+
+    /*!
+     * \note For internal use only.
+     * \return String with default values for simulator.
+     *         It is needed when attribute has been enabled before
+     *         and now should be disabled.
+     */
+    XpObjLib static std::string objDisableStr();
 
     //-------------------------------------------------------------------------
 

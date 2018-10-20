@@ -34,6 +34,7 @@
 #include "xpln/obj/animation/AnimVisibilityKey.h"
 #include "xpln/obj/animation/AnimTrans.h"
 #include "xpln/obj/animation/AnimRotate.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -41,7 +42,7 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-std::string toObjString(const AnimVisibilityKey & key) {
+void printObj(const AnimVisibilityKey & key, AbstractWriter & writer) {
     StringStream outStr;
     switch (key.pType) {
         case AnimVisibilityKey::SHOW:
@@ -53,10 +54,12 @@ std::string toObjString(const AnimVisibilityKey & key) {
         case AnimVisibilityKey::UNDEFINED:
         default:
             LError << TOTEXT(AnimVisibilityKey) << " has undefined type";
-            return "";
+            return;
     }
-    outStr << " " << key.pValue1 << " " << key.pValue2 << "   " << key.pDrf << std::flush;
-    return outStr.str();
+    outStr << " " << key.pValue1
+            << " " << key.pValue2
+            << " " << writer.actualDataref(key.pDrf);
+    writer.printLine(outStr.str());
 }
 
 bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser) {
@@ -81,10 +84,12 @@ bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser) {
 
 //-------------------------------------------------------------------------
 
-std::string toObjString(const AnimTransKey & key) {
+void printObj(const AnimTransKey & key, AbstractWriter & writer) {
     StringStream outStr;
-    outStr << ATTR_TRANS_KEY << " " << key.pDrfValue << " " << key.pPosition.toString(PRECISION) << std::flush;
-    return outStr.str();
+    outStr << ATTR_TRANS_KEY
+            << " " << key.pDrfValue
+            << " " << key.pPosition.toString(PRECISION);
+    writer.printLine(outStr.str());
 }
 
 bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser) {
@@ -104,10 +109,12 @@ bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser) {
 
 //-------------------------------------------------------------------------
 
-std::string toObjString(const AnimRotateKey & key) {
+void printObj(const AnimRotateKey & key, AbstractWriter & writer) {
     StringStream outStr;
-    outStr << ATTR_ROTATE_KEY << " " << key.pDrfValue << " " << key.pAngleDegrees << std::flush;
-    return outStr.str();
+    outStr << ATTR_ROTATE_KEY
+            << " " << key.pDrfValue
+            << " " << key.pAngleDegrees;
+    writer.printLine(outStr.str());
 }
 
 bool fromObjString(AnimRotateKey & outVal, ObjReadParser & parser) {

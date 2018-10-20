@@ -40,6 +40,7 @@
 
 namespace xobj {
 
+class AbstractWriter;
 class AnimVisibilityKey;
 class AnimTransKey;
 class AnimRotateKey;
@@ -48,9 +49,9 @@ class AnimRotateKey;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-XpObjLib std::string toObjString(const AnimVisibilityKey & key);
-XpObjLib std::string toObjString(const AnimTransKey & key);
-XpObjLib std::string toObjString(const AnimRotateKey & key);
+XpObjLib void printObj(const AnimVisibilityKey & key, AbstractWriter & writer);
+XpObjLib void printObj(const AnimTransKey & key, AbstractWriter & writer);
+XpObjLib void printObj(const AnimRotateKey & key, AbstractWriter & writer);
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

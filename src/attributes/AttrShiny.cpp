@@ -33,6 +33,7 @@
 #include "xpln/obj/attributes/AttrShiny.h"
 #include "io/writer/AbstractWriter.h"
 #include "common/AttributeNames.h"
+#include "converters/StringStream.h"
 
 namespace xobj {
 

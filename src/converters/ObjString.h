@@ -43,6 +43,7 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
+class AbstractWriter;
 class MeshVertex;
 class LineVertex;
 
@@ -50,8 +51,8 @@ class LineVertex;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-XpObjLib std::string toObjString(const MeshVertex & vertex, bool isTree);
-XpObjLib std::string toObjString(const LineVertex & vertex);
+XpObjLib void printObj(const MeshVertex & vertex, AbstractWriter & writer, bool isTree);
+XpObjLib void printObj(const LineVertex & vertex, AbstractWriter & writer);
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,9 +62,9 @@ class ObjLodGroup;
 class ObjSmoke;
 class ObjDummy;
 
-XpObjLib std::string toObjString(const ObjLodGroup & obj, bool printName);
-XpObjLib std::string toObjString(const ObjSmoke & obj, bool printName);
-XpObjLib std::string toObjString(const ObjDummy & obj, bool printName);
+XpObjLib void printObj(const ObjLodGroup & obj, AbstractWriter & writer, bool printName);
+XpObjLib void printObj(const ObjSmoke & obj, AbstractWriter & writer, bool printName);
+XpObjLib void printObj(const ObjDummy & obj, AbstractWriter & writer, bool printName);
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,11 +76,11 @@ class ObjLightPoint;
 class ObjLightParam;
 class ObjLightSpillCust;
 
-XpObjLib std::string toObjString(const ObjLightCustom & obj, bool printName);
-XpObjLib std::string toObjString(const ObjLightNamed & obj, bool printName);
-XpObjLib std::string toObjString(const ObjLightParam & obj, bool printName);
-XpObjLib std::string toObjString(const ObjLightPoint & obj, bool printName);
-XpObjLib std::string toObjString(const ObjLightSpillCust & obj, bool printName);
+XpObjLib void printObj(const ObjLightCustom & obj, AbstractWriter & writer, bool printName);
+XpObjLib void printObj(const ObjLightNamed & obj, AbstractWriter & writer, bool printName);
+XpObjLib void printObj(const ObjLightParam & obj, AbstractWriter & writer, bool printName);
+XpObjLib void printObj(const ObjLightPoint & obj, AbstractWriter & writer, bool printName);
+XpObjLib void printObj(const ObjLightSpillCust & obj, AbstractWriter & writer, bool printName);
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

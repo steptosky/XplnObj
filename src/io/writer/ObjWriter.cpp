@@ -220,7 +220,7 @@ void ObjWriter::printLOD(AbstractWriter & writer, const ObjLodGroup & lod, const
     if (count < 2 && sts::isEqual(lod.nearVal(), lod.farVal(), 0.1f)) {
         return;
     }
-    writer.printLine(toObjString(lod, true));
+    printObj(lod, writer, true);
 }
 
 /********************************************************************************************************/

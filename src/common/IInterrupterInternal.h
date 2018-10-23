@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,35 +29,19 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/Transform.h"
+#include <stdexcept>
 #include "xpln/common/IInterrupter.h"
+#include "exceptions/defines.h"
 
-namespace xobj {
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-class ObjMesh;
-class ObjMain;
-class ObjDrapedGroup;
-class Transform;
+#define INTERRUPT_CHECK_WITH_RETURN(interrupt) if (interrupt.isInterrupted()) {return;}
+#define INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, retVal) if (interrupt.isInterrupted()) {return retVal;}
+#define INTERRUPT_CHECK_WITH_EXCEPTION(interrupt) if (interrupt.isInterrupted()) \
+    {throw std::runtime_error(ExcTxt("interrupted"));}
 
-/**********************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**********************************************************************************************************************/
-
-class Draped {
-    Draped() = default;
-    ~Draped() = default;
-public:
-
-    XpObjLib static void ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrupter & interrupt);
-    XpObjLib static void extract(ObjDrapedGroup & inOutDraped, Transform & inOutTransform, const IInterrupter & interrupt);
-
-private:
-
-    static Transform::ObjList processObjects(Transform & transform);
-
-};
-
-/**********************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**********************************************************************************************************************/
-}
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/

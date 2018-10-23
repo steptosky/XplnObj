@@ -32,6 +32,7 @@
 #include "common/Logger.h"
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/ObjMesh.h"
+#include "common/IInterrupterInternal.h"
 
 using namespace std::string_literals;
 
@@ -43,7 +44,7 @@ namespace xobj {
 
 bool LodsAlg::validate(ObjMain::Lods & inOutLods,
                                  const std::string & objectName,
-                                 const IInterrupt & interrupt) {
+                                 const IInterrupter & interrupt) {
 
     INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
 
@@ -125,7 +126,7 @@ bool LodsAlg::validate(ObjMain::Lods & inOutLods,
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void LodsAlg::removeWithoutObjects(ObjMain::Lods & inOutLods, const IInterrupt & interrupt) {
+void LodsAlg::removeWithoutObjects(ObjMain::Lods & inOutLods, const IInterrupter & interrupt) {
     for (auto iter = inOutLods.begin(); iter != inOutLods.end();) {
         INTERRUPT_CHECK_WITH_RETURN(interrupt);
         const auto hasObjects = !(*iter)->transform().visitAllObjects([](const auto &, const auto &) {
@@ -148,7 +149,7 @@ void LodsAlg::removeWithoutObjects(ObjMain::Lods & inOutLods, const IInterrupt &
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void LodsAlg::mergeIdenticalLods(ObjMain::Lods & /*inOutLods*/, const IInterrupt & interrupt) {
+void LodsAlg::mergeIdenticalLods(ObjMain::Lods & /*inOutLods*/, const IInterrupter & interrupt) {
     INTERRUPT_CHECK_WITH_RETURN(interrupt);
 }
 
@@ -156,7 +157,7 @@ void LodsAlg::mergeIdenticalLods(ObjMain::Lods & /*inOutLods*/, const IInterrupt
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool LodsAlg::sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt) {
+bool LodsAlg::sort(ObjMain::Lods & inOutLods, const IInterrupter & interrupt) {
     INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
     //-------------------------------------------
     // orderings

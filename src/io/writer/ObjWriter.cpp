@@ -28,6 +28,7 @@
 */
 
 #include "ObjWriter.h"
+#include "common/IInterrupterInternal.h"
 #include "xpln/obj/ObjMain.h"
 #include "io/ObjValidators.h"
 
@@ -81,7 +82,7 @@ void ObjWriter::reset() {
 
 bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix & tm) {
     try {
-        const IInterrupt & interrupt = *context.interruptor();
+        const IInterrupter & interrupt = *context.interrupter();
         reset(); // reset all data that needs to be recalculated
 
         if (root == nullptr || !checkParameters(*root, root->objectName())) {

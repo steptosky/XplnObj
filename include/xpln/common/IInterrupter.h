@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 **  Copyright(C) 2018, StepToSky
 **
@@ -27,23 +29,45 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/ExportContext.h"
+#include <atomic>
 
+namespace xobj {
 /**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-void xobj::ExportContext::setInterrupter(IInterrupter * interruptor) {
-    mInterruptor.reset(interruptor);
-}
-
-xobj::IInterrupter * xobj::ExportContext::interrupter() {
-    if (!mInterruptor) {
-        mInterruptor = std::make_unique<NoInterrupter>();
-    }
-    return mInterruptor.get();
-}
+class IInterrupter {
+public:
+    virtual ~IInterrupter() = default;
+    virtual bool isInterrupted() const = 0;
+    virtual void interrupt(bool state) = 0;
+};
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
+
+class NoInterrupter : public IInterrupter {
+public:
+    virtual ~NoInterrupter() = default;
+    bool isInterrupted() const override { return false; }
+    void interrupt(bool) override {}
+};
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+class DefaultInterrupter : public IInterrupter {
+public:
+    virtual ~DefaultInterrupter() = default;
+    bool isInterrupted() const override { return mInterrupt.load(); }
+    void interrupt(const bool state = true) override { mInterrupt.store(state); }
+private:
+    std::atomic_bool mInterrupt;
+};
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+}

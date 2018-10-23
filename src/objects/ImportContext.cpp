@@ -33,13 +33,13 @@
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void xobj::ImportContext::setInterruptor(IInterrupt * interruptor) {
+void xobj::ImportContext::setInterrupter(IInterrupter * interruptor) {
     mInterruptor.reset(interruptor);
 }
 
-xobj::IInterrupt * xobj::ImportContext::interruptor() {
+xobj::IInterrupter * xobj::ImportContext::interrupter() {
     if (!mInterruptor) {
-        mInterruptor = std::make_unique<NoInterrupt>();
+        mInterruptor = std::make_unique<NoInterrupter>();
     }
     return mInterruptor.get();
 }

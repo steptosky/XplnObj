@@ -30,6 +30,7 @@
 #include "Draped.h"
 #include "xpln/obj/ObjDrapedGroup.h"
 #include "xpln/obj/ObjMesh.h"
+#include "common/IInterrupterInternal.h"
 
 namespace xobj {
 
@@ -37,7 +38,7 @@ namespace xobj {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void Draped::ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrupt & interrupt) {
+void Draped::ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrupter & interrupt) {
     inOutDraped.transform().visitAllObjects([&](const Transform &, ObjAbstract & obj) {
         if (obj.objType() == OBJ_MESH) {
             static_cast<ObjMesh*>(&obj)->pAttr.setDraped(true);
@@ -53,7 +54,7 @@ void Draped::ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrup
 
 void Draped::extract(ObjDrapedGroup & inOutDraped,
                      Transform & inOutTransform,
-                     const IInterrupt & interrupt) {
+                     const IInterrupter & interrupt) {
 
     auto drapedObjects = processObjects(inOutTransform);
     if (!drapedObjects.empty()) {

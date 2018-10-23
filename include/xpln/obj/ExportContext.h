@@ -32,7 +32,7 @@
 #include <memory>
 #include <string>
 #include "xpln/Export.h"
-#include "xpln/common/IInterrupt.h"
+#include "xpln/common/IInterrupter.h"
 #include "IOStatistic.h"
 
 // todo remove duplicate in ImportContext
@@ -97,12 +97,12 @@ public:
     /*!
      * \note Takes ownership.
      */
-    XpObjLib void setInterruptor(IInterrupt * interruptor);
+    XpObjLib void setInterrupter(IInterrupter * interruptor);
 
     /*!
-     * \return Always valid pointer to interruptor.
+     * \return Always valid pointer to interrupter.
      */
-    XpObjLib IInterrupt * interruptor();
+    XpObjLib IInterrupter * interrupter();
 
     void setStatistic(const IOStatistic & stats) { mStatistic = stats; }
     IOStatistic & statistic() { return mStatistic; }
@@ -157,7 +157,7 @@ private:
     Path mCommandsFile;
     std::string mSignature;
     IOStatistic mStatistic;
-    std::unique_ptr<IInterrupt> mInterruptor;
+    std::unique_ptr<IInterrupter> mInterruptor;
 
 };
 

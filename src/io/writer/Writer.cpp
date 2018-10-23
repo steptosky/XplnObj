@@ -29,6 +29,7 @@
 
 #include "Writer.h"
 #include "common/Logger.h"
+#include "exceptions/defines.h"
 #include "sts/string/StringUtils.h"
 
 using namespace std::string_literals;

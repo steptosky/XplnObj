@@ -117,13 +117,15 @@ bool Writer::loadCommands(const Path & filePath) {
     }
 
     const auto callback = [&](const Command & cmd) ->bool {
-        const auto iter = mCommands.find(cmd.mId);
-        if (iter != mCommands.end()) {
-            // todo sts::toMbString may work incorrectly with unicode.
-            ULError << "File <" << sts::toMbString(filePath) << "> contains data with duplicated id: " << cmd.mId;
-        }
-        else {
-            mCommands.emplace(cmd.mId, cmd);
+        if (cmd.mId != Dataref::invalidId()) {
+            const auto iter = mCommands.find(cmd.mId);
+            if (iter != mCommands.end()) {
+                // todo sts::toMbString may work incorrectly with unicode.
+                ULError << "File <" << sts::toMbString(filePath) << "> contains data with duplicated id: " << cmd.mId;
+            }
+            else {
+                mCommands.emplace(cmd.mId, cmd);
+            }
         }
         return true;
     };

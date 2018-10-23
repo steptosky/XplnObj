@@ -34,6 +34,7 @@
 #include "xpln/obj/ObjLodGroup.h"
 #include "xpln/obj/ObjMesh.h"
 #include "common/AttributeNames.h"
+#include "common/Logger.h"
 
 namespace xobj {
 

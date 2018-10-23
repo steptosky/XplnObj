@@ -100,6 +100,12 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
         if (!writer.openFile(context.objFile())) {
             return false;
         }
+        if (!context.datarefsFile().empty() && !writer.loadDatarefs(context.datarefsFile())) {
+            return false;
+        }
+        if (!context.commandsFile().empty() && !writer.loadCommands(context.commandsFile())) {
+            return false;
+        }
         writer.spaceEnable(mExportOptions.isEnabled(XOBJ_EXP_MARK_TREE_HIERARCHY));
         //-------------------------------------------------------------------------
 

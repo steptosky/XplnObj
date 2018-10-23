@@ -52,6 +52,10 @@ bool Command::isKeyId(const std::string & key) {
     return Dataref::isKeyId(key);
 }
 
+std::uint64_t Command::keyToId(const std::string & key) {
+    return Dataref::keyToId(key);
+}
+
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
@@ -97,7 +101,7 @@ bool CommandsFile::loadStream(std::istream & input, const std::function<bool(con
         auto extractedVal = extractValueFn(line);
 
         if (Command::isKeyId(extractedVal.first)) {
-            cmd.mId = std::stoul(extractedVal.first);
+            cmd.mId = Command::keyToId(extractedVal.first);
             extractedVal = extractValueFn(extractedVal.second);
         }
 

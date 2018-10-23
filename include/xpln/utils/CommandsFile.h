@@ -82,6 +82,15 @@ public:
      */
     XpObjLib static bool isKeyId(const std::string & key);
 
+    /*!
+     * \details Converts specified key to id.
+     * \return id.
+     * \exception std::stoul
+     *            - std::invalid_argument
+                  - std::out_of_range
+     */
+    XpObjLib static std::uint64_t keyToId(const std::string & key);
+
     //-------------------------------------------------------------------------
 };
 

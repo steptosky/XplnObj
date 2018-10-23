@@ -76,7 +76,7 @@ public:
     /// @{
 
     /*!
-     * \todo Needs implementation.
+     * \todo better description - needs link to this functional description 
      * \details Dataref can be just an id and must be resolved to actual one.
      *          So you have to use this method for printing any datarefs into obj.
      * \param [in] dataref current dataref value.
@@ -84,10 +84,10 @@ public:
      * \exception std::domain_error is thrown if dataref must be resolved but there is no data to do it.
      *                              For example file with data for resolving isn't specified or isn't loaded.
      */
-    std::string actualDataref(const std::string & dataref) { return dataref; }
+    virtual std::string actualDataref(const std::string & dataref) = 0;
 
     /*!
-     * \todo Needs implementation.
+     * \todo better description - needs link to this functional description 
      * \details Command can be just an id and must be resolved to actual one.
      *          So you have to use this method for printing any command into obj.
      * \param [in] command current command value.
@@ -95,7 +95,7 @@ public:
      * \exception std::domain_error is thrown if command must be resolved but there is no data to do it.
      *                              For example file with data for resolving isn't specified or isn't loaded.
      */
-    std::string actualCommand(const std::string & command) { return command; }
+    virtual std::string actualCommand(const std::string & command) = 0;
 
     /// @}
     //-------------------------------------------------------------------------

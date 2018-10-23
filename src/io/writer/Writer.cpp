@@ -30,6 +30,8 @@
 #include "Writer.h"
 #include "common/Logger.h"
 
+using namespace std::string_literals;
+
 namespace xobj {
 
 /**************************************************************************************************/
@@ -44,30 +46,16 @@ Writer::~Writer() {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool Writer::openFile(const std::string & filePath) {
-    mStream.open(filePath);
+bool Writer::openFile(const ExportContext::Path & filePath) {
+    mStream.open(filePath, std::ios_base::out);
     if (!mStream) {
-        ULError << " - File <" << filePath << "> couldn't be created or written!";
-        return false;
-    }
-    adjustStream();
-    return true;
-}
-
-bool Writer::openFile(const std::wstring & filePath) {
-    mStream.open(filePath);
-    if (!mStream) {
-        // todo sts::toMbString may work incorrectly.
+        // todo sts::toMbString may work incorrectly with unicode.
         ULError << " - File <" << sts::toMbString(filePath) << "> couldn't be created or written!";
         return false;
     }
-    adjustStream();
-    return true;
-}
-
-void Writer::adjustStream() {
     mStream.precision(6);
     mStream << std::fixed;
+    return true;
 }
 
 void Writer::closeFile() {
@@ -87,6 +75,98 @@ void Writer::printLine(const char * msg) {
     else {
         mStream << std::endl;
     }
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+bool Writer::loadDatarefs(const ExportContext::Path & filePath) {
+    std::ifstream file(filePath, std::ios_base::in);
+    if (!file) {
+        // todo sts::toMbString may work incorrectly with unicode.
+        ULError << " - File <" << sts::toMbString(filePath) << "> couldn't be read!";
+        return false;
+    }
+
+    const auto callback = [&](const Dataref & drf) ->bool {
+        if (drf.mId != Dataref::invalidId()) {
+            const auto iter = mDatarefs.find(drf.mId);
+            if (iter != mDatarefs.end()) {
+                // todo sts::toMbString may work incorrectly with unicode.
+                ULError << "File <" << sts::toMbString(filePath) << "> contains data with duplicated id: " << drf.mId;
+            }
+            else {
+                mDatarefs.emplace(drf.mId, drf);
+            }
+        }
+        return true;
+    };
+
+    return DatarefsFile::loadStream(file, callback);
+}
+
+bool Writer::loadCommands(const ExportContext::Path & filePath) {
+    std::ifstream file(filePath, std::ios_base::in);
+    if (!file) {
+        // todo sts::toMbString may work incorrectly with unicode.
+        ULError << " - File <" << sts::toMbString(filePath) << "> couldn't be read!";
+        return false;
+    }
+
+    const auto callback = [&](const Command & cmd) ->bool {
+        const auto iter = mCommands.find(cmd.mId);
+        if (iter != mCommands.end()) {
+            // todo sts::toMbString may work incorrectly with unicode.
+            ULError << "File <" << sts::toMbString(filePath) << "> contains data with duplicated id: " << cmd.mId;
+        }
+        else {
+            mCommands.emplace(cmd.mId, cmd);
+        }
+        return true;
+    };
+
+    return CommandsFile::loadStream(file, callback);
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::string Writer::actualDataref(const std::string & dataref) {
+    if (!Dataref::isKeyId(dataref)) {
+        return dataref;
+    }
+    if (dataref.empty()) {
+        throw std::domain_error(ExcTxt("Dataref <"s.append(dataref)
+                                    .append("> is considered as an id but datarefs file for extracting")
+                                    .append(" the correct values isn't specified or loaded.")));
+    }
+    const auto iter = mDatarefs.find(Dataref::keyToId(dataref));
+    if (iter == mDatarefs.end()) {
+        throw std::domain_error(ExcTxt("Dataref <"s.append(dataref)
+                                    .append("> is considered as an id but datarefs file for extracting")
+                                    .append(" the correct values doesn't contain necessary value.")));
+    }
+    return iter->second.mKey;
+}
+
+std::string Writer::actualCommand(const std::string & command) {
+    if (!Command::isKeyId(command)) {
+        return command;
+    }
+    if (command.empty()) {
+        throw std::domain_error(ExcTxt("Command <"s.append(command)
+                                    .append("> is considered as an id but commands file for extracting")
+                                    .append(" the correct values isn't specified or loaded.")));
+    }
+    const auto iter = mCommands.find(Command::keyToId(command));
+    if (iter == mCommands.end()) {
+        throw std::domain_error(ExcTxt("Command <"s.append(command)
+                                    .append("> is considered as an id but commands file for extracting")
+                                    .append(" the correct values doesn't contain necessary value.")));
+    }
+    return iter->second.mKey;
 }
 
 /**************************************************************************************************/

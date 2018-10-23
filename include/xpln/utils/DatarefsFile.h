@@ -78,6 +78,15 @@ public:
      */
     XpObjLib static std::uint64_t invalidId();
 
+    /*!
+     * \details The key that starts from digit can be considered as an id. 
+     *          So your dataref key must not be started with digits.
+     * \return True if the specified string key can be considered as id.
+     */
+    XpObjLib static bool isKeyId(const std::string & key);
+
+    //-------------------------------------------------------------------------
+
 };
 
 /**************************************************************************************************/

@@ -35,6 +35,7 @@
 #include <cctype>
 #include <utility>
 #include <limits>
+#include "xpln/utils/DatarefsFile.h"
 
 namespace xobj {
 
@@ -44,7 +45,11 @@ namespace xobj {
 
 std::uint64_t Command::invalidId() {
     // It hides 'max' because 3Ds Max uses win api and it conflicts with win min/max
-    return std::numeric_limits<std::uint64_t>::max();
+    return Dataref::invalidId();
+}
+
+bool Command::isKeyId(const std::string & key) {
+    return Dataref::isKeyId(key);
 }
 
 /**************************************************************************************************/
@@ -91,7 +96,7 @@ bool CommandsFile::loadStream(std::istream & input, const std::function<bool(con
         Command cmd;
         auto extractedVal = extractValueFn(line);
 
-        if (std::isdigit(extractedVal.first.front())) {
+        if (Command::isKeyId(extractedVal.first)) {
             cmd.mId = std::stoul(extractedVal.first);
             extractedVal = extractValueFn(extractedVal.second);
         }

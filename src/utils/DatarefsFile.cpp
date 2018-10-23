@@ -47,6 +47,13 @@ std::uint64_t Dataref::invalidId() {
     return std::numeric_limits<std::uint64_t>::max();
 }
 
+bool Dataref::isKeyId(const std::string & key) {
+    if (key.empty()) {
+        return false;
+    }
+    return std::isdigit(key[0]) != 0;
+}
+
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
@@ -89,7 +96,7 @@ bool DatarefsFile::loadStream(std::istream & input, const std::function<bool(con
         }
 
         std::size_t position = 0;
-        if (std::isdigit(values[position].front())) {
+        if (Dataref::isKeyId(values[position])) {
             drf.mId = std::stoul(values[position++]);
         }
 

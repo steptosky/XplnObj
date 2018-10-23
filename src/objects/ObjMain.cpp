@@ -39,9 +39,6 @@ namespace xobj {
 /********************************************************************************************************/
 
 bool ObjMain::exportObj(ExportContext & inOutContext) {
-    if (inOutContext.signature().empty()) {
-        inOutContext.setSignature(pExportOptions.signature());
-    }
     return ObjWriter().writeFile(this, inOutContext, pMatrix);
 }
 

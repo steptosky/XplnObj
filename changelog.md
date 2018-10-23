@@ -12,6 +12,7 @@ StepToSky: X-Plane Obj Library
 ##### Breaking backward compatibility:
 - **Changed:** Methods for export/import in ObjMain.
 - **Changed:** Under windows (MSVC) std::wstring is used as a path.
+- **Removed:** Signature methods from the ExportOptions. Those methods are in the ExportContext now.
 
 ---------------------------------------------------------------------------
 #### 0.7.0-beta (10.10.2018)

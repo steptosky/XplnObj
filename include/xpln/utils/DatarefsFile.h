@@ -35,6 +35,7 @@
 #include <string>
 #include <iosfwd>
 #include <algorithm>
+#include "xpln/utils/Path.h"
 
 namespace xobj {
 
@@ -136,7 +137,7 @@ public:
      * \details Opens file and call \link DatarefsFile::loadStream \endlink for it.
      * \exception std::exception
      */
-    XpObjLib static bool loadFile(const std::string & filePath, const std::function<bool(const Dataref &)> & callback);
+    XpObjLib static bool loadFile(const Path & filePath, const std::function<bool(const Dataref &)> & callback);
 
     /*!
      * \details Loads dataref from stream.
@@ -154,7 +155,7 @@ public:
      * \details Opens file and call \link DatarefsFile::saveStream \endlink for it and then save one.
      * \exception std::exception
      */
-    XpObjLib static void saveFile(const std::string & filePath, const std::function<bool(Dataref &)> & callback);
+    XpObjLib static void saveFile(const Path & filePath, const std::function<bool(Dataref &)> & callback);
 
     /*!
      * \details Saves dataref to stream.

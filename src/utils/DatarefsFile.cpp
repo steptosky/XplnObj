@@ -35,6 +35,8 @@
 #include <iomanip>
 #include <cctype>
 #include <limits>
+#include "xpln/utils/DatarefsFile.h"
+#include "sts/string/StringUtils.h"
 
 namespace xobj {
 
@@ -62,11 +64,12 @@ std::uint64_t Dataref::keyToId(const std::string & key) {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool DatarefsFile::loadFile(const std::string & filePath, const std::function<bool(const Dataref &)> & callback) {
+bool DatarefsFile::loadFile(const Path & filePath, const std::function<bool(const Dataref &)> & callback) {
     using namespace std::string_literals;
     std::ifstream file(filePath, std::iostream::in);
     if (!file) {
-        throw std::runtime_error(ExcTxt("can't open file <"s.append(filePath).append(">")));
+        // todo sts::toMbString(filePath) may work incorrectly with UNICODE
+        throw std::runtime_error(ExcTxt("can't open file <"s.append(sts::toMbString(filePath)).append(">")));
     }
     try {
         const auto res = loadStream(file, callback);
@@ -130,11 +133,12 @@ bool DatarefsFile::loadStream(std::istream & input, const std::function<bool(con
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void DatarefsFile::saveFile(const std::string & filePath, const std::function<bool(Dataref &)> & callback) {
+void DatarefsFile::saveFile(const Path & filePath, const std::function<bool(Dataref &)> & callback) {
     using namespace std::string_literals;
     std::ofstream file(filePath, std::iostream::out);
     if (!file) {
-        throw std::runtime_error(ExcTxt("can't open file <"s.append(filePath).append(">")));
+        // todo sts::toMbString(filePath) may work incorrectly with UNICODE
+        throw std::runtime_error(ExcTxt("can't open file <"s.append(sts::toMbString(filePath)).append(">")));
     }
     try {
         saveStream(file, callback);

@@ -76,8 +76,8 @@ using namespace xobj;
  *
  */
 TEST(TestTransform_case3, case1) {
-    const std::string path(std::string(TOTEXT(TestTransform_case3)).append(".").append(TOTEXT(case1)).append(".obj"));
-    //-------------------
+    const auto fileName = XOBJ_PATH("TestTransform_case3-case1.obj");
+    //-----------------------------
     // make out data and save to file
 
     ObjMain mainOut;
@@ -104,13 +104,15 @@ TEST(TestTransform_case3, case1) {
     TestUtils::createTestAnimRotate(transformOut1.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), "test1");
     TestUtils::createTestAnimRotate(transformOut2.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), "test2");
     TestUtils::createTestAnimRotate(transformOut3.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), "test3");
-    ASSERT_TRUE(mainOut.exportToFile(path));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 
     //-------------------
     // load data from file
 
     ObjMain mainIn;
-    ASSERT_TRUE(mainIn.importFromFile(path));
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
 
     // extract data
     ObjLodGroup * lodIn = nullptr;
@@ -175,8 +177,8 @@ TEST(TestTransform_case3, case1) {
  *
  */
 TEST(TestTransform_case3, case2) {
-    const std::string path(std::string(TOTEXT(TestTransform_case3)).append(".").append(TOTEXT(case2)).append(".obj"));
-    //-------------------
+    const auto fileName = XOBJ_PATH("TestTransform_case3-case2.obj");
+    //-----------------------------
     // make out data and save to file
 
     ObjMain mainOut;
@@ -205,13 +207,15 @@ TEST(TestTransform_case3, case2) {
     TestUtils::createTestAnimRotate(transformOut1.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), "test1");
     TestUtils::createTestAnimRotate(transformOut2.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), "test2");
     TestUtils::createTestAnimRotate(transformOut3.pAnimRotate, Point3(0.0f, 1.0f, 0.0f), "test3");
-    ASSERT_TRUE(mainOut.exportToFile(path));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 
     //-------------------
     // load data from file
 
     ObjMain mainIn;
-    ASSERT_TRUE(mainIn.importFromFile(path));
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
 
     // extract data
     ObjLodGroup * lodIn = nullptr;
@@ -262,8 +266,8 @@ TEST(TestTransform_case3, case2) {
  * Root <- (T)obj1 <- (T)obj2 <- (T)obj3
  */
 TEST(TestTransform_case3, case3) {
-    const std::string path(std::string(TOTEXT(TestTransform_case3)).append(".").append(TOTEXT(case3)).append(".obj"));
-    //-------------------
+    const auto fileName = XOBJ_PATH("TestTransform_case3-case3.obj");
+    //-----------------------------
     // make out data and save to file
 
     ObjMain mainOut;
@@ -298,13 +302,15 @@ TEST(TestTransform_case3, case3) {
     animTr3.pKeys.emplace_back(AnimTrans::Key());
     transformOut3.pAnimTrans.emplace_back(animTr3);
 
-    ASSERT_TRUE(mainOut.exportToFile(path));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 
     //-------------------
     // load data from file
 
     ObjMain mainIn;
-    ASSERT_TRUE(mainIn.importFromFile(path));
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
 
     // extract data
     ObjLodGroup * lodIn = nullptr;
@@ -368,8 +374,8 @@ TEST(TestTransform_case3, case3) {
  *
  */
 TEST(TestTransform_case3, case4) {
-    const std::string path(std::string(TOTEXT(TestTransform_case3)).append(".").append(TOTEXT(case4)).append(".obj"));
-    //-------------------
+    const auto fileName = XOBJ_PATH("TestTransform_case3-case4.obj");
+    //-----------------------------
     // make out data and save to file
 
     ObjMain mainOut;
@@ -393,13 +399,15 @@ TEST(TestTransform_case3, case4) {
     TestUtils::createTestAnimTranslate(transformOut1.pAnimTrans, TMatrix(), "test1");
     TestUtils::createTestAnimTranslate(transformOut2.pAnimTrans, TMatrix(), "test2");
     TestUtils::createTestAnimTranslate(transformOut3.pAnimTrans, TMatrix(), "test3");
-    ASSERT_TRUE(mainOut.exportToFile(path));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 
     //-------------------
     // load data from file
 
     ObjMain mainIn;
-    ASSERT_TRUE(mainIn.importFromFile(path));
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
 
     // extract data
     ObjLodGroup * lodIn = nullptr;

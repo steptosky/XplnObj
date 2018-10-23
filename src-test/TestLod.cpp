@@ -74,6 +74,8 @@ public:
  * Saving meshes in separated LODs to the file then read, parse and compare wrote data.
  */
 TEST_F(TestLod, lods_grouping) {
+    const auto fileName = XOBJ_PATH("TestLod-lods_grouping.obj");
+    //-----------------------------
     ObjMain mainOut;
     mainOut.pExportOptions.enable(eExportOptions::XOBJ_EXP_MARK_MESH);
     mainOut.pExportOptions.enable(eExportOptions::XOBJ_EXP_DEBUG);
@@ -113,12 +115,14 @@ TEST_F(TestLod, lods_grouping) {
 
     //-------------------------------------------------------------------------
 
-    ASSERT_TRUE(mainOut.exportToFile(TOTEXT(TestLod)));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 
     //-------------------------------------------------------------------------
 
     ObjMain mainIn;
-    mainIn.importFromFile(TOTEXT(TestLod));
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
 
     //-------------------------------------------------------------------------
     // WARNING: After export the LODs are sorted so they have reversed order!
@@ -171,6 +175,8 @@ TEST_F(TestLod, lods_grouping) {
  * LODs shall have particular order from nearVal to farVal.
  */
 TEST_F(TestLod, lods_sorting) {
+    const auto fileName = XOBJ_PATH("TestLod-lods_sorting.obj");
+    //-----------------------------
     ObjMain main;
     ObjLodGroup & lGroup1 = main.addLod();
     ObjLodGroup & lGroup2 = main.addLod();
@@ -192,7 +198,8 @@ TEST_F(TestLod, lods_sorting) {
     lGroup3.setNearVal(0.0);
     lGroup3.setFarVal(500.0);
 
-    ASSERT_TRUE(main.exportToFile(std::string(TOTEXT(TestLod)).append("-sorting")));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(main.exportObj(expContext));
     ASSERT_TRUE(&lGroup3 == &*main.lods().at(0));
     ASSERT_TRUE(&lGroup2 == &*main.lods().at(1));
     ASSERT_TRUE(&lGroup1 == &*main.lods().at(2));

@@ -79,12 +79,14 @@ namespace xobj {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool ObjReader::readFile(const std::string & filePath, ObjReaderListener & listener) {
+bool ObjReader::readFile(ImportContext & context, ObjReaderListener & listener) {
     ObjReader reader;
     listener.reset();
     reader.mObjParserListener = &listener;
     try {
-        return reader.readFile(filePath);
+        // todo this path converting will work incorrectly for UNICODE path.
+        // It is a temporary solution.
+        return reader.readFile(sts::toMbString(context.objFile()));
     }
     catch (std::exception & e) {
         ULFatal << e.what();

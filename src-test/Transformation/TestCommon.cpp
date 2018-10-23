@@ -101,7 +101,8 @@ TEST(TestTransformCommon, anim_enabled) {
  * Actually it tests applying root transform for static mesh object.
  */
 TEST(TestTransformCommon, apliing_root_transformation) {
-    //-------------------
+    const auto fileName = XOBJ_PATH("TestTransformCommon-apliing_root_transformation.obj");
+    //-----------------------------
     // make out data and save to file
 
     ObjMain mainOut;
@@ -113,13 +114,15 @@ TEST(TestTransformCommon, apliing_root_transformation) {
     transformOut1.pMatrix.setPosition(Point3(10.0f));
     transformOut1.pMatrix.setRotate(Quaternion(0.5f, 0.5f, 0.5f, 0.5f));
 
-    ASSERT_TRUE(mainOut.exportToFile(std::string(TOTEXT(apliing_root_transformation)).append(".obj")));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 
     //-------------------
     // load data from file
 
     ObjMain mainIn;
-    ASSERT_TRUE(mainIn.importFromFile(std::string(TOTEXT(apliing_root_transformation)).append(".obj")));
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
 
     ObjLodGroup * lodIn = nullptr;
     ObjMesh * meshIn1 = nullptr;

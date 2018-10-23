@@ -79,10 +79,9 @@ void ObjWriter::reset() {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::string & signature,
-                          IOStatistic & outStat, const TMatrix & tm) {
+bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix & tm) {
     try {
-        const NoInterrupt interrupt;
+        const IInterrupt & interrupt = *context.interruptor();
         reset(); // reset all data that needs to be recalculated
 
         if (root == nullptr || !checkParameters(*root, root->objectName())) {
@@ -90,16 +89,17 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
         }
 
         if (root->pExportOptions.isEnabled(XOBJ_EXP_DEBUG)) {
-            ULMessage << "File: " << path;
+            // todo sts::toMbString may work incorrectly.
+            ULMessage << "File: " << sts::toMbString(context.objFile());
         }
 
         mMain = root;
         mExportOptions = root->pExportOptions;
 
         Writer writer;
-        if (!writer.openFile(path))
+        if (!writer.openFile(context.objFile())) {
             return false;
-
+        }
         writer.spaceEnable(mExportOptions.isEnabled(XOBJ_EXP_MARK_TREE_HIERARCHY));
         //-------------------------------------------------------------------------
 
@@ -205,9 +205,9 @@ bool ObjWriter::writeFile(ObjMain * root, const std::string & path, const std::s
             writer.printEol();
         }
 
-        printSignature(writer, signature);
+        printSignature(writer, context.signature());
         writer.closeFile();
-        outStat = mStatistic;
+        context.setStatistic(mStatistic);
         return true;
     }
     catch (std::exception & e) {

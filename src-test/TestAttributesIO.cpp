@@ -64,21 +64,25 @@ void extractMesh(ObjMain & inMain, ObjMesh *& outAttr) {
 /**************************************************************************************************/
 
 TEST(TestAttributesIO, default_vals) {
+    const auto fileName = XOBJ_PATH("TestAttributesIO-default_vals.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
 
     ObjMesh * outM = TestUtilsObjMesh::createObjMesh("m1", 0.0);
     ObjLodGroup & outLGroup = outObj.addLod();
     outLGroup.transform().addObject(outM);
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIO), stat));
-    ASSERT_EQ(0, stat.pTrisAttrCount);
+
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(0, expContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIO), stat));
-    ASSERT_EQ(0, stat.pTrisAttrCount);
+
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(0, impContext.statistic().pTrisAttrCount);
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
 
@@ -88,21 +92,25 @@ TEST(TestAttributesIO, default_vals) {
 }
 
 TEST(TestAttributesIO, not_default_vals_case_1) {
+    const auto fileName = XOBJ_PATH("TestAttributesIO-not_default_vals_case_1.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
 
     ObjMesh * outM = TestUtilsObjMesh::createObjMeshNotDefaultAttributes1("m1", 0.0);
     ObjLodGroup & outLGroup = outObj.addLod();
     outLGroup.transform().addObject(outM);
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIO), stat));
-    ASSERT_EQ(9, stat.pTrisAttrCount);
+
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(9, expContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIO), stat));
-    ASSERT_EQ(9, stat.pTrisAttrCount);
+
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(9, impContext.statistic().pTrisAttrCount);
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
 
@@ -112,21 +120,25 @@ TEST(TestAttributesIO, not_default_vals_case_1) {
 }
 
 TEST(TestAttributesIO, not_default_vals_case_2) {
+    const auto fileName = XOBJ_PATH("TestAttributesIO-not_default_vals_case_1.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
 
     ObjMesh * outM = TestUtilsObjMesh::createObjMeshNotDefaultAttributes2("m1", 0.0);
     ObjLodGroup & outLGroup = outObj.addLod();
     outLGroup.transform().addObject(outM);
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIO), stat));
-    ASSERT_EQ(9, stat.pTrisAttrCount);
+
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(9, expContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIO), stat));
-    ASSERT_EQ(9, stat.pTrisAttrCount);
+
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(9, impContext.statistic().pTrisAttrCount);
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
 

@@ -45,14 +45,29 @@ Writer::~Writer() {
 /**************************************************************************************************/
 
 bool Writer::openFile(const std::string & filePath) {
-    mStream.open(filePath.c_str());
+    mStream.open(filePath);
     if (!mStream) {
         ULError << " - File <" << filePath << "> couldn't be created or written!";
         return false;
     }
+    adjustStream();
+    return true;
+}
+
+bool Writer::openFile(const std::wstring & filePath) {
+    mStream.open(filePath);
+    if (!mStream) {
+        // todo sts::toMbString may work incorrectly.
+        ULError << " - File <" << sts::toMbString(filePath) << "> couldn't be created or written!";
+        return false;
+    }
+    adjustStream();
+    return true;
+}
+
+void Writer::adjustStream() {
     mStream.precision(6);
     mStream << std::fixed;
-    return true;
 }
 
 void Writer::closeFile() {
@@ -60,6 +75,10 @@ void Writer::closeFile() {
         mStream.close();
     }
 }
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
 void Writer::printLine(const char * msg) {
     if (msg) {

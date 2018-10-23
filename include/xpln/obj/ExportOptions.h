@@ -77,8 +77,9 @@ public:
     //------------------------------------------------------------
 
     /*!
+     * \todo move it into context
      * \details Sets 'obj' file signature.
-     * The signature will be written at the end of obj file.
+     *          The signature will be written at the end of obj file.
      * \param [in] signature text.
      */
     XpObjLib void setSignature(const std::string & signature);

@@ -38,27 +38,18 @@ namespace xobj {
 //////////////////////////////////////////////* Functions *///////////////////////////////////////////////
 /********************************************************************************************************/
 
-bool ObjMain::exportToFile(const std::string & path) {
-    IOStatistic outStat;
-    return exportToFile(path, outStat);
-}
-
-bool ObjMain::exportToFile(const std::string & path, IOStatistic & outStat) {
-    outStat.reset();
-    return ObjWriter().writeFile(this, path, pExportOptions.signature(), outStat, pMatrix);
+bool ObjMain::exportObj(ExportContext & inOutContext) {
+    if (inOutContext.signature().empty()) {
+        inOutContext.setSignature(pExportOptions.signature());
+    }
+    return ObjWriter().writeFile(this, inOutContext, pMatrix);
 }
 
 //-------------------------------------------------------------------------
 
-bool ObjMain::importFromFile(const std::string & path) {
-    IOStatistic outStat;
-    return importFromFile(path, outStat);
-}
-
-bool ObjMain::importFromFile(const std::string & path, IOStatistic & outStat) {
-    outStat.reset();
-    ObjReaderInterpreter interpreter(this, pMatrix, &outStat);
-    return ObjReader::readFile(path, interpreter);
+bool ObjMain::importObj(ImportContext & inOutContext) {
+    ObjReaderInterpreter interpreter(this, pMatrix, &inOutContext.statistic());
+    return ObjReader::readFile(inOutContext, interpreter);
 }
 
 /**************************************************************************************************/

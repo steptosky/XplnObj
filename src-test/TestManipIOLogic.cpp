@@ -99,23 +99,25 @@ public:
 
 // Manipulators are not set
 TEST_F(TestManipIOLogic, case_1_no_manips) {
+    const auto fileName = XOBJ_PATH("TestManipIOLogic-case_1_no_manips.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m0", 0.0));
     outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m1", 1.0));
     outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m2", 2.0));
     outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m3", 3.0));
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(0, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(0, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(0, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(0, impContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
@@ -136,8 +138,9 @@ TEST_F(TestManipIOLogic, case_1_no_manips) {
 }
 
 TEST_F(TestManipIOLogic, case_2) {
+    const auto fileName = XOBJ_PATH("TestManipIOLogic-case_2.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -156,15 +159,16 @@ TEST_F(TestManipIOLogic, case_2) {
     // mObjMesh3
     // mObjMesh4
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(2, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
@@ -184,8 +188,9 @@ TEST_F(TestManipIOLogic, case_2) {
 }
 
 TEST_F(TestManipIOLogic, case_3) {
+    const auto fileName = XOBJ_PATH("TestManipIOLogic-case_3.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -204,15 +209,16 @@ TEST_F(TestManipIOLogic, case_3) {
     // mObjMesh3
     // mObjMesh4
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(2, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
@@ -233,8 +239,9 @@ TEST_F(TestManipIOLogic, case_3) {
 }
 
 TEST_F(TestManipIOLogic, case_4) {
+    const auto fileName = XOBJ_PATH("TestManipIOLogic-case_4.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -253,15 +260,16 @@ TEST_F(TestManipIOLogic, case_4) {
     // No Manip
     // mObjMesh4
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(2, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
@@ -283,8 +291,9 @@ TEST_F(TestManipIOLogic, case_4) {
 }
 
 TEST_F(TestManipIOLogic, case_5) {
+    const auto fileName = XOBJ_PATH("TestManipIOLogic-case_5.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -302,15 +311,16 @@ TEST_F(TestManipIOLogic, case_5) {
     outM3->pAttr.setManipulator(mManipComd.clone());
     outM4->pAttr.setManipulator(mManipComd.clone());
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
@@ -333,8 +343,9 @@ TEST_F(TestManipIOLogic, case_5) {
 }
 
 TEST_F(TestManipIOLogic, case_6) {
+    const auto fileName = XOBJ_PATH("TestManipIOLogic-case_6.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -358,15 +369,16 @@ TEST_F(TestManipIOLogic, case_6) {
     mManipComd.setCmd("test4");
     outM4->pAttr.setManipulator(mManipComd.clone());
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(4, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(4, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(4, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(4, impContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
@@ -397,8 +409,9 @@ TEST_F(TestManipIOLogic, case_6) {
 /**************************************************************************************************/
 
 TEST_F(TestManipIOLogic, case_7) {
+    const auto fileName = XOBJ_PATH("TestManipIOLogic-case_7.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -418,15 +431,16 @@ TEST_F(TestManipIOLogic, case_7) {
     // Manip
     outM4->pAttr.setManipulator(mManipPush.clone());
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(4, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(4, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(4, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(4, impContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
@@ -449,8 +463,9 @@ TEST_F(TestManipIOLogic, case_7) {
 }
 
 TEST_F(TestManipIOLogic, case_8) {
+    const auto fileName = XOBJ_PATH("TestManipIOLogic-case_8.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -470,15 +485,16 @@ TEST_F(TestManipIOLogic, case_8) {
     // No Manip
     // mObjMesh4
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(4, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(4, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(3, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(3, impContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
@@ -500,8 +516,9 @@ TEST_F(TestManipIOLogic, case_8) {
 }
 
 TEST_F(TestManipIOLogic, case_9) {
+    const auto fileName = XOBJ_PATH("TestManipIOLogic-case_9.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -520,15 +537,16 @@ TEST_F(TestManipIOLogic, case_9) {
     // Manip
     outM4->pAttr.setManipulator(mManipPush.clone());
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(3, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(3, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(3, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(3, impContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
@@ -551,8 +569,9 @@ TEST_F(TestManipIOLogic, case_9) {
 }
 
 TEST_F(TestManipIOLogic, case_10) {
+    const auto fileName = XOBJ_PATH("TestManipIOLogic-case_10.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -572,15 +591,16 @@ TEST_F(TestManipIOLogic, case_10) {
     // Manip
     outM4->pAttr.setManipulator(mManipPush.clone());
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(4, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(4, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(3, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(3, impContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
@@ -602,8 +622,9 @@ TEST_F(TestManipIOLogic, case_10) {
 }
 
 TEST_F(TestManipIOLogic, case_11) {
+    const auto fileName = XOBJ_PATH("TestManipIOLogic-case_11.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -623,15 +644,16 @@ TEST_F(TestManipIOLogic, case_11) {
     // No Manip
     // mObjMesh4
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(4, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(4, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIOLogic), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(2, impContext.statistic().pTrisManipCount);
 
     //-----------------------------
 

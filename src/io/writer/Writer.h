@@ -53,6 +53,7 @@ public:
     //-------------------------------------------------------------------------
 
     bool openFile(const std::string & filePath);
+    bool openFile(const std::wstring & filePath);
     void closeFile();
 
     //-------------------------------------------------------------------------
@@ -63,6 +64,8 @@ public:
     //-------------------------------------------------------------------------
 
 private:
+
+    void adjustStream();
 
     std::ofstream mStream;
 

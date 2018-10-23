@@ -69,6 +69,8 @@ TEST(TestGlobAttributesIO, defaults) {
 }
 
 TEST(TestGlobAttributesIO, textures) {
+    const auto fileName = XOBJ_PATH("TestGlobAttributesIO-textures.obj");
+    //-----------------------------
     ObjMain mainOut;
     mainOut.pAttr.setTexture("test");
     mainOut.pAttr.setTextureLit("test_lit");
@@ -76,15 +78,16 @@ TEST(TestGlobAttributesIO, textures) {
 
     //-------------------------------------------------------------------------
 
-    IOStatistic stat;
-    mainOut.exportToFile(TOTEXT(TestGlobAttributesIO), stat);
-    ASSERT_EQ(3,stat.pGlobAttrCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
+    ASSERT_EQ(3, expContext.statistic().pGlobAttrCount);
 
     //-------------------------------------------------------------------------
 
     ObjMain mainIn;
-    mainIn.importFromFile(TOTEXT(TestGlobAttributesIO), stat);
-    ASSERT_EQ(3, stat.pGlobAttrCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
+    ASSERT_EQ(3, impContext.statistic().pGlobAttrCount);
 
     //-------------------------------------------------------------------------
 
@@ -94,6 +97,8 @@ TEST(TestGlobAttributesIO, textures) {
 }
 
 TEST(TestGlobAttributesIO, attributes) {
+    const auto fileName = XOBJ_PATH("TestGlobAttributesIO-attributes.obj");
+    //-----------------------------
     ObjMain mainOut;
     mainOut.pAttr.setTint(AttrTint(0.3f, 0.7f));
     mainOut.pAttr.setBlendGlass(true);
@@ -114,15 +119,16 @@ TEST(TestGlobAttributesIO, attributes) {
 
     //-------------------------------------------------------------------------
 
-    IOStatistic stat;
-    mainOut.exportToFile(TOTEXT(TestGlobAttributesIO), stat);
-    ASSERT_EQ(15, stat.pGlobAttrCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
+    ASSERT_EQ(15, expContext.statistic().pGlobAttrCount);
 
     //-------------------------------------------------------------------------
 
     ObjMain mainIn;
-    mainIn.importFromFile(TOTEXT(TestGlobAttributesIO), stat);
-    ASSERT_EQ(15, stat.pGlobAttrCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
+    ASSERT_EQ(15, impContext.statistic().pGlobAttrCount);
 
     //-------------------------------------------------------------------------
 
@@ -151,21 +157,24 @@ TEST(TestGlobAttributesIO, attributes) {
 /**************************************************************************************************/
 
 TEST(TestGlobAttributesIO, statable_state1) {
+    const auto fileName = XOBJ_PATH("TestGlobAttributesIO-statable_state1.obj");
+    //-----------------------------
     ObjMain mainOut;
     mainOut.pAttr.setWetDry(AttrWetDry(AttrWetDry::wet));
     mainOut.pAttr.setBlend(AttrBlend(AttrBlend::no_blend, 0.8f));
 
     //-------------------------------------------------------------------------
 
-    IOStatistic stat;
-    mainOut.exportToFile(TOTEXT(TestGlobAttributesIO), stat);
-    ASSERT_EQ(2, stat.pGlobAttrCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
+    ASSERT_EQ(2, expContext.statistic().pGlobAttrCount);
 
     //-------------------------------------------------------------------------
 
     ObjMain mainIn;
-    mainIn.importFromFile(TOTEXT(TestGlobAttributesIO), stat);
-    ASSERT_EQ(2, stat.pGlobAttrCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
+    ASSERT_EQ(2, impContext.statistic().pGlobAttrCount);
 
     //-------------------------------------------------------------------------
 
@@ -174,21 +183,24 @@ TEST(TestGlobAttributesIO, statable_state1) {
 }
 
 TEST(TestGlobAttributesIO, statable_state2) {
+    const auto fileName = XOBJ_PATH("TestGlobAttributesIO-statable_state2.obj");
+    //-----------------------------
     ObjMain mainOut;
     mainOut.pAttr.setWetDry(AttrWetDry(AttrWetDry::dry));
     mainOut.pAttr.setBlend(AttrBlend(AttrBlend::shadow_blend, 0.8f));
 
     //-------------------------------------------------------------------------
 
-    IOStatistic stat;
-    mainOut.exportToFile(TOTEXT(TestGlobAttributesIO), stat);
-    ASSERT_EQ(2, stat.pGlobAttrCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
+    ASSERT_EQ(2, expContext.statistic().pGlobAttrCount);
 
     //-------------------------------------------------------------------------
 
     ObjMain mainIn;
-    mainIn.importFromFile(TOTEXT(TestGlobAttributesIO), stat);
-    ASSERT_EQ(2, stat.pGlobAttrCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
+    ASSERT_EQ(2, impContext.statistic().pGlobAttrCount);
 
     //-------------------------------------------------------------------------
 

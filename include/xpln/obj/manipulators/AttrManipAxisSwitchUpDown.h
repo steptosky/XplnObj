@@ -84,7 +84,7 @@ public:
     const AttrManipWheel & wheel() const {
         return mWheel;
     }
-        
+
     //------------------------------------------
 
     [[deprecated("use wheel().serEnabled()")]]

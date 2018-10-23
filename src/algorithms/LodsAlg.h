@@ -59,8 +59,8 @@ public:
      *          Information about problems is printed to the log.
      */
     XpObjLib static bool validate(ObjMain::Lods & inOutLods,
-                                            const std::string & objectName,
-                                            const IInterrupter & interrupt = NoInterrupter());
+                                  const std::string & objectName,
+                                  const IInterrupter & interrupt = NoInterrupter());
 
     /// @}
     //-------------------------------------------------------------------------

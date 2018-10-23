@@ -43,8 +43,8 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool LodsAlg::validate(ObjMain::Lods & inOutLods,
-                                 const std::string & objectName,
-                                 const IInterrupter & interrupt) {
+                       const std::string & objectName,
+                       const IInterrupter & interrupt) {
 
     INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
 

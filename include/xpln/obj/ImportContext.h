@@ -32,18 +32,9 @@
 #include <memory>
 #include <string>
 #include "xpln/Export.h"
+#include "xpln/utils/Path.h"
 #include "xpln/common/IInterrupter.h"
 #include "IOStatistic.h"
-
-// todo remove duplicate in ExportContext
-// it can be done if common things for contexts will be in the same abstract class.
-#ifndef XOBJ_PATH
-#   ifdef _MSC_VER
-#       define XOBJ_PATH(X) L##X;
-#   else
-#       define XOBJ_PATH(X) X;
-#   endif
-#endif
 
 namespace xobj {
 
@@ -54,26 +45,6 @@ namespace xobj {
 class ImportContext {
 public:
 
-    //-------------------------------------------------------------------------
-    /// @{
-
-#ifdef _MSC_VER
-    /*!
-     * \pre Windows uses UTF16 and wide string, Unix uses UTF8 and char.
-     * \note I decided to not use boost file system now
-     *       because it will increase build time on CI.
-     */
-    typedef std::wstring Path;
-#else
-    /*!
-     * \pre Windows uses UTF16 and wide string, Unix uses UTF8 and char.
-     * \note I decided to not use boost file system now
-     *       because it will increase build time on CI.
-     */
-        typedef std::string Path;
-#endif
-
-    /// @}
     //-------------------------------------------------------------------------
     /// @{
 

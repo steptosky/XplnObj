@@ -29,41 +29,42 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <string>
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+#ifndef XOBJ_PATH
+#   ifdef _MSC_VER
+#       define XOBJ_PATH(X) L##X;
+#   else
+#       define XOBJ_PATH(X) X;
+#   endif
+#endif
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
 #ifdef _MSC_VER
-#   define ENABLE_PRECOMPILED_HEADERS
-#endif
-
-#ifdef ENABLE_PRECOMPILED_HEADERS
-
-#include <cassert>
-#include <string>
-#include <cstddef>
-#include <cstdint>
-#include <stdexcept>
-#include <algorithm>
-#include <memory>
-#include <vector>
-#include <functional>
-#include <algorithm>
-#include <cstring>
-#include <atomic>
-
-#include <iostream>
-#include <sstream>
-#include <fstream>
-
-#include "xpln/Export.h"
-#include "exceptions/defines.h"
-#include "sts/utilities/Compare.h"
-#include "sts/string/StringUtils.h"
-#include "converters/StringStream.h"
-#include "common/Logger.h"
-#include "xpln/utils/Path.h"
-
+/*!
+ * \pre Windows uses UTF16 and wide string, Unix uses UTF8 and char.
+ * \note I decided to not use boost file system now
+ *       because it will increase build time on CI.
+ */
+namespace xobj {
+typedef std::wstring Path;
+}
+#else
+/*!
+ * \pre Windows uses UTF16 and wide string, Unix uses UTF8 and char.
+ * \note I decided to not use boost file system now
+ *       because it will increase build time on CI.
+ */
+namespace xobj {
+typedef std::string Path;
+}
 #endif
 
 /**************************************************************************************************/

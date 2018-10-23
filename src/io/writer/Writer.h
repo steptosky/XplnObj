@@ -31,6 +31,7 @@
 
 #include <fstream>
 #include <map>
+#include "xpln/utils/Path.h"
 #include "AbstractWriter.h"
 #include "xpln/utils/DatarefsFile.h"
 #include "xpln/utils/CommandsFile.h"
@@ -56,11 +57,11 @@ public:
 
     //-------------------------------------------------------------------------
 
-    bool openFile(const ExportContext::Path & filePath);
+    bool openFile(const Path & filePath);
     void closeFile();
 
-    bool loadDatarefs(const ExportContext::Path & filePath);
-    bool loadCommands(const ExportContext::Path & filePath);
+    bool loadDatarefs(const Path & filePath);
+    bool loadCommands(const Path & filePath);
 
     //-------------------------------------------------------------------------
 

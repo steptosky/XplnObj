@@ -47,7 +47,7 @@ Writer::~Writer() {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool Writer::openFile(const ExportContext::Path & filePath) {
+bool Writer::openFile(const Path & filePath) {
     mStream.open(filePath, std::ios_base::out);
     if (!mStream) {
         // todo sts::toMbString may work incorrectly with unicode.
@@ -82,7 +82,7 @@ void Writer::printLine(const char * msg) {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool Writer::loadDatarefs(const ExportContext::Path & filePath) {
+bool Writer::loadDatarefs(const Path & filePath) {
     std::ifstream file(filePath, std::ios_base::in);
     if (!file) {
         // todo sts::toMbString may work incorrectly with unicode.
@@ -107,7 +107,7 @@ bool Writer::loadDatarefs(const ExportContext::Path & filePath) {
     return DatarefsFile::loadStream(file, callback);
 }
 
-bool Writer::loadCommands(const ExportContext::Path & filePath) {
+bool Writer::loadCommands(const Path & filePath) {
     std::ifstream file(filePath, std::ios_base::in);
     if (!file) {
         // todo sts::toMbString may work incorrectly with unicode.

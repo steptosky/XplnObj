@@ -30,6 +30,7 @@
 */
 
 #include <cstdint>
+#include <string>
 #include "xpln/Export.h"
 
 namespace xobj {

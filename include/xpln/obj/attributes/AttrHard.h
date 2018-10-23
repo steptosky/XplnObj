@@ -29,6 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <string>
 #include "xpln/enums/ESurface.h"
 
 namespace xobj {

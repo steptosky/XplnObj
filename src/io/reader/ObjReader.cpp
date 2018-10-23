@@ -32,6 +32,7 @@
 #include "ObjReadParser.h"
 #include "common/AttributeNames.h"
 #include "common/Logger.h"
+#include "sts/string/StringUtils.h"
 
 #include "xpln/obj/attributes/AttrBlend.h"
 #include "xpln/obj/attributes/AttrDrapedLayerGroup.h"

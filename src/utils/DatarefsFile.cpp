@@ -35,8 +35,6 @@
 #include <iomanip>
 #include <cctype>
 #include <limits>
-#include "xpln/utils/DatarefsFile.h"
-#include "sts/string/StringUtils.h"
 
 namespace xobj {
 
@@ -172,6 +170,19 @@ void DatarefsFile::saveStream(std::ostream & output, const std::function<bool(Da
         }
         output << std::endl;
         drf = Dataref();
+    }
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+void Dataref::fillEmptyFields(const std::string & val) {
+    if (!mDescription.empty() && mValueUnits.empty()) {
+        mValueUnits = val;
+    }
+    if (!mValueUnits.empty() && mValueType.empty()) {
+        mValueType = val;
     }
 }
 

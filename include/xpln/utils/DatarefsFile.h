@@ -72,6 +72,17 @@ public:
 
     bool isIdValid() const { return mId != invalidId(); }
 
+    /*!
+     * \details Fills necessary empty fields with specified text.
+     * \details Assume you have set only key and description but
+     *          according to the dataref format for writing description 
+     *          you have to write values before it like type, units, 
+     *          so if those values has not been set then they will be
+     *          filled up with the specified text.
+     * \param [in] val 
+     */
+    XpObjLib void fillEmptyFields(const std::string & val = "???");
+
     //-------------------------------------------------------------------------
 
     /*!

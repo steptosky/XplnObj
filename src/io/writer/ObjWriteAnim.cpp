@@ -116,7 +116,7 @@ void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const Transform &
                         << sep << a.pKeys[1].pPosition.toString(PRECISION)
                         << sep << a.pKeys[0].pDrfValue
                         << " " << a.pKeys[1].pDrfValue
-                        << sep << (a.pDrf.empty() ? "none" : a.pDrf.c_str());
+                        << sep << (a.pDrf.empty() ? "none" : mWriter->actualDataref(a.pDrf).c_str());
                 mWriter->printLine(stream.str());
                 if (a.pHasLoop) {
                     printLoop(a.pLoopValue);
@@ -126,12 +126,12 @@ void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const Transform &
             }
             else {
                 StringStream stream;
-                stream << ATTR_TRANS_BEGIN << sep << (a.pDrf.empty() ? "none" : a.pDrf.c_str());
+                stream << ATTR_TRANS_BEGIN << sep << (a.pDrf.empty() ? "none" : mWriter->actualDataref(a.pDrf).c_str());
                 mWriter->printLine(stream.str());
                 mWriter->spaceMore();
 
                 for (auto & key : a.pKeys) {
-                    mWriter->printLine(toObjString(key));
+                    printObj(key, *mWriter);
                 }
 
                 if (a.pHasLoop) {
@@ -161,7 +161,7 @@ void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const Transform &
                         << " " << a.pKeys[1].pAngleDegrees
                         << sep << a.pKeys[0].pDrfValue
                         << " " << a.pKeys[1].pDrfValue
-                        << sep << (a.pDrf.empty() ? "none" : a.pDrf.c_str());
+                        << sep << (a.pDrf.empty() ? "none" : mWriter->actualDataref(a.pDrf).c_str());
                 mWriter->printLine(stream.str());
                 if (a.pHasLoop) {
                     printLoop(a.pLoopValue);
@@ -171,13 +171,14 @@ void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const Transform &
             }
             else {
                 StringStream stream;
-                stream << ATTR_ROTATE_BEGIN << sep << a.pVector.normalized().toString(PRECISION)
-                        << sep << (a.pDrf.empty() ? "none" : a.pDrf.c_str());
+                stream << ATTR_ROTATE_BEGIN
+                        << sep << a.pVector.normalized().toString(PRECISION)
+                        << sep << (a.pDrf.empty() ? "none" : mWriter->actualDataref(a.pDrf).c_str());
                 mWriter->printLine(stream.str());
                 mWriter->spaceMore();
 
                 for (auto & key : a.pKeys) {
-                    mWriter->printLine(toObjString(key));
+                    printObj(key, *mWriter);
                 }
 
                 if (a.pHasLoop) {
@@ -203,7 +204,7 @@ void ObjWriteAnim::printVisible(const AnimVisibility & inAnim, const Transform &
     for (auto & curr : inAnim.pKeys) {
         if (checkParameters(curr, std::string("Transform: ").append(transform.name()))) {
             ++mStat->pAnimAttrCount;
-            mWriter->printLine(toObjString(curr));
+            printObj(curr, *mWriter);
             if (curr.pHasLoop) {
                 printLoop(curr.pLoopValue);
             }

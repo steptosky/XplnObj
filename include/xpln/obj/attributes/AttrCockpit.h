@@ -37,6 +37,8 @@
 
 namespace xobj {
 
+class AbstractWriter;
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
@@ -172,6 +174,19 @@ public:
     bool autoAdjust() const {
         return mDevAutoAdjust;
     }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name For internal use only
+    /// @{
+
+    /*!
+     * \note For internal use only.
+     * \return String with default values for simulator.
+     *         It is needed when attribute has been enabled before
+     *         and now should be disabled.
+     */
+    XpObjLib static std::string objDisableStr();
 
     /// @}
     //-------------------------------------------------------------------------

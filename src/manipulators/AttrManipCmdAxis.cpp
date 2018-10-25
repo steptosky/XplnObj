@@ -124,8 +124,8 @@ std::size_t AttrManipCmdAxis::printObj(AbstractWriter & writer) const {
     outStr << " " << directionX();
     outStr << " " << directionY();
     outStr << " " << directionZ();
-    outStr << " " << cmdPositive();
-    outStr << " " << cmdNegative();
+    outStr << " " << writer.actualCommand(cmdPositive());
+    outStr << " " << writer.actualCommand(cmdNegative());
     outStr << " " << toolTip();
     writer.printLine(outStr.str());
     return 1;

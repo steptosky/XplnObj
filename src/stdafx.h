@@ -62,6 +62,7 @@
 #include "sts/string/StringUtils.h"
 #include "converters/StringStream.h"
 #include "common/Logger.h"
+#include "xpln/utils/Path.h"
 
 #endif
 

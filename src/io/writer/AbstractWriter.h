@@ -30,6 +30,7 @@
 */
 
 #include <string>
+#include <stdexcept>
 
 namespace xobj {
 
@@ -40,37 +41,71 @@ namespace xobj {
 class AbstractWriter {
 public:
 
+    //-------------------------------------------------------------------------
+    /// @{
+
     AbstractWriter(const AbstractWriter &) = delete;
     AbstractWriter & operator =(const AbstractWriter &) = delete;
 
     AbstractWriter() = default;
     virtual ~AbstractWriter() = default;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*!
-     * \details Print line with LEOL.
-     * \param [in] msg nullptr means only LEOL will be printed
+     * \details Print line with EOL.
+     * \param [in] msg nullptr means only EOL will be printed
      */
     virtual void printLine(const char * msg) = 0;
 
     /*!
-     * \details Print line with LEOL.
-     * \param [in] msg if it is empty then only LEOL will be printed
+     * \details Print line with EOL.
+     * \param [in] msg if it is empty then only EOL will be printed
      */
     void printLine(const std::string & msg);
 
     /*!
-     * \details Print only LEOL.
+     * \details Print only EOL.
      */
     void printEol();
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
+
+    /*!
+     * \todo better description - needs link to this functional description 
+     * \details Dataref can be just an id and must be resolved to actual one.
+     *          So you have to use this method for printing any datarefs into obj.
+     * \param [in] dataref current dataref value.
+     * \return actual dataref value.
+     * \exception std::domain_error is thrown if dataref must be resolved but there is no data to do it.
+     *                              For example file with data for resolving isn't specified or isn't loaded.
+     */
+    virtual std::string actualDataref(const std::string & dataref) = 0;
+
+    /*!
+     * \todo better description - needs link to this functional description 
+     * \details Command can be just an id and must be resolved to actual one.
+     *          So you have to use this method for printing any command into obj.
+     * \param [in] command current command value.
+     * \return actual command value.
+     * \exception std::domain_error is thrown if command must be resolved but there is no data to do it.
+     *                              For example file with data for resolving isn't specified or isn't loaded.
+     */
+    virtual std::string actualCommand(const std::string & command) = 0;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
     void spaceEnable(bool state);
     void spaceMore();
     void spaceLess();
 
+    /// @}
     //-------------------------------------------------------------------------
 
 protected:
@@ -85,7 +120,7 @@ private:
 
     bool isSpaceEnabled() const;
 
-    bool mIsSpaseEnabled = true;
+    bool mIsSpaceEnabled = true;
     std::string mResult;
 
 };
@@ -95,11 +130,11 @@ private:
 /**************************************************************************************************/
 
 inline void AbstractWriter::spaceEnable(const bool state) {
-    mIsSpaseEnabled = state;
+    mIsSpaceEnabled = state;
 }
 
 inline bool AbstractWriter::isSpaceEnabled() const {
-    return mIsSpaseEnabled;
+    return mIsSpaceEnabled;
 }
 
 //-------------------------------------------------------------------------

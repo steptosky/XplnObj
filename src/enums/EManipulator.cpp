@@ -140,7 +140,7 @@ EManipulator EManipulator::fromString(const char * attrName) {
         //-----------------------------------------------------
         // backward compatibility fixes for attribute name fix.
         // Read the tests for more information.
-        if(strcmp(attrName,"ATTR_manip_switch_up_down") == 0) {
+        if (strcmp(attrName, "ATTR_manip_switch_up_down") == 0) {
             attrName = ATTR_MANIP_COMMAND_SWITCH_UP_DOWN;
         }
         else if (strcmp(attrName, "ATTR_manip_switch_left_right") == 0) {

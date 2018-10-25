@@ -84,8 +84,9 @@ public:
 /**************************************************************************************************/
 
 TEST_F(TestAttributesIOLogic, case_1) {
+    const auto fileName = XOBJ_PATH("TestAttributesIOLogic-case_1.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -104,15 +105,16 @@ TEST_F(TestAttributesIOLogic, case_1) {
     // mObjMesh3
     // mObjMesh4
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(2, stat.pTrisAttrCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(2, expContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(2, stat.pTrisAttrCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(2, impContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
@@ -131,8 +133,9 @@ TEST_F(TestAttributesIOLogic, case_1) {
 }
 
 TEST_F(TestAttributesIOLogic, case_2) {
+    const auto fileName = XOBJ_PATH("TestAttributesIOLogic-case_2.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -151,15 +154,16 @@ TEST_F(TestAttributesIOLogic, case_2) {
     // mObjMesh3
     // mObjMesh4
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(2, stat.pTrisAttrCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(2, expContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(2, stat.pTrisAttrCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(2, impContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
@@ -178,8 +182,9 @@ TEST_F(TestAttributesIOLogic, case_2) {
 }
 
 TEST_F(TestAttributesIOLogic, case_3) {
+    const auto fileName = XOBJ_PATH("TestAttributesIOLogic-case_3.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -198,15 +203,16 @@ TEST_F(TestAttributesIOLogic, case_3) {
     // No Attr
     // mObjMesh4
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(2, stat.pTrisAttrCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(2, expContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(2, stat.pTrisAttrCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(2, impContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
@@ -225,8 +231,9 @@ TEST_F(TestAttributesIOLogic, case_3) {
 }
 
 TEST_F(TestAttributesIOLogic, case_4) {
+    const auto fileName = XOBJ_PATH("TestAttributesIOLogic-case_4.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -244,15 +251,16 @@ TEST_F(TestAttributesIOLogic, case_4) {
     outM3->pAttr.setPolyOffset(mAttrPolyOffset);
     outM4->pAttr.setPolyOffset(mAttrPolyOffset);
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(1, stat.pTrisAttrCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(1, stat.pTrisAttrCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
@@ -271,8 +279,9 @@ TEST_F(TestAttributesIOLogic, case_4) {
 }
 
 TEST_F(TestAttributesIOLogic, case_5) {
+    const auto fileName = XOBJ_PATH("TestAttributesIOLogic-case_5.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -296,15 +305,16 @@ TEST_F(TestAttributesIOLogic, case_5) {
     mAttrPolyOffset.setOffset(4.0f);
     outM4->pAttr.setPolyOffset(mAttrPolyOffset);
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(4, stat.pTrisAttrCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(4, expContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(4, stat.pTrisAttrCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(4, impContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
@@ -323,8 +333,9 @@ TEST_F(TestAttributesIOLogic, case_5) {
 }
 
 TEST_F(TestAttributesIOLogic, case_6) {
+    const auto fileName = XOBJ_PATH("TestAttributesIOLogic-case_6.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -346,15 +357,16 @@ TEST_F(TestAttributesIOLogic, case_6) {
     mAttrPolyOffset.setOffset(3.0f);
     outM4->pAttr.setPolyOffset(mAttrPolyOffset);
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(3, stat.pTrisAttrCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(3, expContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(3, stat.pTrisAttrCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(3, impContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
@@ -373,8 +385,9 @@ TEST_F(TestAttributesIOLogic, case_6) {
 }
 
 TEST_F(TestAttributesIOLogic, case_7) {
+    const auto fileName = XOBJ_PATH("TestAttributesIOLogic-case_7.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -397,15 +410,16 @@ TEST_F(TestAttributesIOLogic, case_7) {
     mAttrPolyOffset.setOffset(3.0f);
     outM4->pAttr.setPolyOffset(mAttrPolyOffset);
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(4, stat.pTrisAttrCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(4, expContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(4, stat.pTrisAttrCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(4, impContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
@@ -424,8 +438,9 @@ TEST_F(TestAttributesIOLogic, case_7) {
 }
 
 TEST_F(TestAttributesIOLogic, case_8) {
+    const auto fileName = XOBJ_PATH("TestAttributesIOLogic-case_8.obj");
+    //-----------------------------
     ObjMain outObj;
-    IOStatistic stat;
     ObjLodGroup & outLGroup = outObj.addLod();
     ObjMesh * outM1 = TestUtilsObjMesh::createObjMesh("m0", 0.0);
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
@@ -447,15 +462,16 @@ TEST_F(TestAttributesIOLogic, case_8) {
     // No Attr
     // mObjMesh4
 
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(4, stat.pTrisAttrCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(4, expContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestAttributesIOLogic), stat));
-    ASSERT_EQ(4, stat.pTrisAttrCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(4, impContext.statistic().pTrisAttrCount);
 
     //-----------------------------
 

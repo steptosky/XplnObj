@@ -94,8 +94,8 @@ std::size_t AttrManipCmdKnob::printObj(AbstractWriter & writer) const {
     StringStream outStr;
     outStr << ATTR_MANIP_COMMAND_KNOB;
     outStr << " " << cursor().toString();
-    outStr << " " << cmdPositive();
-    outStr << " " << cmdNegative();
+    outStr << " " << writer.actualCommand(cmdPositive());
+    outStr << " " << writer.actualCommand(cmdNegative());
     outStr << " " << toolTip();
     writer.printLine(outStr.str());
     return 1;

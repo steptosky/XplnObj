@@ -77,11 +77,12 @@ AttrManipBase * AttrManipPanel::clone() const {
 
 std::size_t AttrManipPanel::printObj(AbstractWriter & writer) const {
     StringStream outStr;
-    outStr << toObjString(cockpit());
-#ifndef NDEBUG
-    outStr << " ## panel manip";
-#endif
-    writer.printLine(outStr.str());
+    // todo 
+    // #ifndef NDEBUG
+    //     writer.printEol();
+    //     writer.printLine("## panel manip");
+    // #endif
+    printObjAttr(cockpit(), writer);
     return 1;
 }
 

@@ -34,6 +34,8 @@
 
 namespace xobj {
 
+class AbstractWriter;
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
@@ -89,6 +91,16 @@ public:
     XpObjLib float val1() const;
     XpObjLib float val2() const;
     XpObjLib const std::string & dataref() const;
+
+    //-------------------------------------------------------------------------
+
+    /*!
+     * \note For internal use only.
+     * \return String with default values for simulator.
+     *         It is needed when attribute has been enabled before
+     *         and now should be disabled.
+     */
+    XpObjLib static std::string objDisableStr();
 
     //-------------------------------------------------------------------------
 

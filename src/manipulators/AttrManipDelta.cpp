@@ -126,7 +126,7 @@ std::size_t AttrManipDelta::printObj(AbstractWriter & writer) const {
     outStr << " " << hold();
     outStr << " " << minimum();
     outStr << " " << maximum();
-    outStr << " " << dataref();
+    outStr << " " << writer.actualDataref(dataref());
     outStr << " " << toolTip();
     writer.printLine(outStr.str());
     return 1 + wheel().printObj(writer);

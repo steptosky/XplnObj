@@ -31,7 +31,7 @@
 
 #include "xpln/Export.h"
 #include "xpln/obj/ObjMain.h"
-#include "xpln/common/IInterrupt.h"
+#include "xpln/common/IInterrupter.h"
 
 namespace xobj {
 
@@ -59,8 +59,8 @@ public:
      *          Information about problems is printed to the log.
      */
     XpObjLib static bool validate(ObjMain::Lods & inOutLods,
-                                            const std::string & objectName,
-                                            const IInterrupt & interrupt = NoInterrupt());
+                                  const std::string & objectName,
+                                  const IInterrupter & interrupt = NoInterrupter());
 
     /// @}
     //-------------------------------------------------------------------------
@@ -71,7 +71,7 @@ public:
      * \param [in, out] inOutLods
      * \param [in] interrupt
      */
-    XpObjLib static void removeWithoutObjects(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
+    XpObjLib static void removeWithoutObjects(ObjMain::Lods & inOutLods, const IInterrupter & interrupt);
 
     /*!
      * \todo not implemented
@@ -79,7 +79,7 @@ public:
      * \param [in, out] inOutLods
      * \param [in] interrupt
      */
-    XpObjLib static void mergeIdenticalLods(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
+    XpObjLib static void mergeIdenticalLods(ObjMain::Lods & inOutLods, const IInterrupter & interrupt);
 
     /*!
      * \details Sorts the LOD according to obj specification.
@@ -90,7 +90,7 @@ public:
      *          the algorithm was interrupted
      *          otherwise true.
      */
-    XpObjLib static bool sort(ObjMain::Lods & inOutLods, const IInterrupt & interrupt);
+    XpObjLib static bool sort(ObjMain::Lods & inOutLods, const IInterrupter & interrupt);
 
     /// @}
     //-------------------------------------------------------------------------

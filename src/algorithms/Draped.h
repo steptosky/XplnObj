@@ -30,7 +30,7 @@
 */
 
 #include "xpln/obj/Transform.h"
-#include "xpln/common/IInterrupt.h"
+#include "xpln/common/IInterrupter.h"
 
 namespace xobj {
 
@@ -48,8 +48,8 @@ class Draped {
     ~Draped() = default;
 public:
 
-    XpObjLib static void ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrupt & interrupt);
-    XpObjLib static void extract(ObjDrapedGroup & inOutDraped, Transform & inOutTransform, const IInterrupt & interrupt);
+    XpObjLib static void ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrupter & interrupt);
+    XpObjLib static void extract(ObjDrapedGroup & inOutDraped, Transform & inOutTransform, const IInterrupter & interrupt);
 
 private:
 

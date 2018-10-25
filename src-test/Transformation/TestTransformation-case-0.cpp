@@ -76,8 +76,8 @@ using namespace xobj;
  *
  */
 TEST(TestTransform_case0, case1) {
-    const std::string path(std::string(TOTEXT(TestTransform_case0)).append(".").append(TOTEXT(case1)).append(".obj"));
-    //-------------------
+    const auto fileName = XOBJ_PATH("TestTransform_case0-case1.obj");
+    //-----------------------------
     // make out data and save to file
 
     ObjMain mainOut;
@@ -101,13 +101,15 @@ TEST(TestTransform_case0, case1) {
     transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, -50.0f));
     transformOut3.pMatrix.setPosition(Point3(50.0f, 0.0f, 0.0f));
 
-    ASSERT_TRUE(mainOut.exportToFile(path));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 
     //-------------------
     // load data from file
 
     ObjMain mainIn;
-    ASSERT_TRUE(mainIn.importFromFile(path));
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
 
     // extract data
     ObjLodGroup * lodIn = nullptr;
@@ -162,8 +164,8 @@ TEST(TestTransform_case0, case1) {
  *
  */
 TEST(TestTransform_case0, case2) {
-    const std::string path(std::string(TOTEXT(TestTransform_case0)).append(".").append(TOTEXT(case2)).append(".obj"));
-    //-------------------
+    const auto fileName = XOBJ_PATH("TestTransform_case0-case2.obj");
+    //-----------------------------
     // make out data and save to file
 
     ObjMain mainOut;
@@ -185,13 +187,15 @@ TEST(TestTransform_case0, case2) {
     transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
     transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, -50.0f));
 
-    ASSERT_TRUE(mainOut.exportToFile(path));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 
     //-------------------
     // load data from file
 
     ObjMain mainIn;
-    ASSERT_TRUE(mainIn.importFromFile(path));
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
 
     // extract data
     ObjLodGroup * lodIn = nullptr;

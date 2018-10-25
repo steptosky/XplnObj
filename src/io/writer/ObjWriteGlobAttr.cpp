@@ -28,6 +28,7 @@
 */
 
 #include <cassert>
+#include <cstdint>
 
 #include "ObjWriteGlobAttr.h"
 
@@ -40,7 +41,17 @@
 namespace xobj {
 
 /**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+template<typename T>
+std::size_t writeAttr(AbstractWriter * writer, const T & attr) {
+    printObjGlobAttr(attr, *writer);
+    return attr ? 1 : 0;
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
 void ObjWriteGlobAttr::write(AbstractWriter * writer, const ObjMain * obj) {
@@ -55,23 +66,23 @@ void ObjWriteGlobAttr::write(AbstractWriter * writer, const ObjMain * obj) {
     writeBool(writer, ATTR_GLOBAL_TILTED, obj->pAttr.isTilted());
     writeBool(writer, ATTR_GLOBAL_NO_SHADOW, obj->pAttr.isNoShadow());
     writeBool(writer, ATTR_GLOBAL_COCKPIT_LIT, obj->pAttr.isCockpitLit());
-    // Is printed in another place.
+    // It is printed in another place.
     //writeBool(inWriter, ATTR_GLOBAL_DEBUG, inObj->pAttr.isDebug());
 
-    writeString(writer, toObjGlobString(obj->pAttr.wetDry()));
-    writeString(writer, toObjGlobString(obj->pAttr.blend()));
-    writeString(writer, toObjGlobString(obj->pAttr.layerGroup()));
-    writeString(writer, toObjGlobString(obj->pAttr.slungLoadWeight()));
-    writeString(writer, toObjGlobString(obj->pAttr.specular()));
-    writeString(writer, toObjGlobString(obj->pAttr.tint()));
-    writeString(writer, toObjGlobString(obj->pAttr.slopeLimit()));
-    writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r1)));
-    writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r2)));
-    writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r3)));
-    writeString(writer, toObjGlobString(obj->pAttr.cockpitRegion(AttrCockpitRegion::r4)));
+    mCounter += writeAttr(writer, obj->pAttr.wetDry());
+    mCounter += writeAttr(writer, obj->pAttr.blend());
+    mCounter += writeAttr(writer, obj->pAttr.layerGroup());
+    mCounter += writeAttr(writer, obj->pAttr.slungLoadWeight());
+    mCounter += writeAttr(writer, obj->pAttr.specular());
+    mCounter += writeAttr(writer, obj->pAttr.tint());
+    mCounter += writeAttr(writer, obj->pAttr.slopeLimit());
+    mCounter += writeAttr(writer, obj->pAttr.cockpitRegion(AttrCockpitRegion::r1));
+    mCounter += writeAttr(writer, obj->pAttr.cockpitRegion(AttrCockpitRegion::r2));
+    mCounter += writeAttr(writer, obj->pAttr.cockpitRegion(AttrCockpitRegion::r3));
+    mCounter += writeAttr(writer, obj->pAttr.cockpitRegion(AttrCockpitRegion::r4));
 
-    writeString(writer, toObjGlobString(obj->pDraped.pAttr.layerGroup()));
-    writeString(writer, toObjGlobString(obj->pDraped.pAttr.lod()));
+    mCounter += writeAttr(writer, obj->pDraped.pAttr.layerGroup());
+    mCounter += writeAttr(writer, obj->pDraped.pAttr.lod());
 }
 
 void ObjWriteGlobAttr::writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString) {
@@ -86,13 +97,6 @@ void ObjWriteGlobAttr::writeTexture(AbstractWriter * inWriter, const char * inAt
 void ObjWriteGlobAttr::writeBool(AbstractWriter * inWriter, const char * inAttr, const bool inState) {
     if (inState) {
         inWriter->printLine(inAttr);
-        ++mCounter;
-    }
-}
-
-void ObjWriteGlobAttr::writeString(AbstractWriter * inWriter, const std::string & inStr) {
-    if (!inStr.empty()) {
-        inWriter->printLine(inStr);
         ++mCounter;
     }
 }

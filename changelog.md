@@ -1,5 +1,20 @@
 StepToSky: X-Plane Obj Library
 ---------------------------------------------------------------------------
+#### 0.8.0-beta (25.10.2018)
+
+- **Added** Classes for reading/writing datarefs and commands files.
+- **Added** Context for importing/exporting.
+- **Fixed** Fixed bug for attribute printing:  
+            `AttrShiny`  
+            `AttrBlend`  
+            Default/disabled values were not printed when those attributes were enabled and then disabled.
+
+##### Breaking backward compatibility:
+- **Changed:** Methods for export/import in ObjMain.
+- **Changed:** Under windows (MSVC) `std::wstring` is used as a path.
+- **Removed:** Signature methods from the `ExportOptions`. Those methods are in the `ExportContext` now.
+
+---------------------------------------------------------------------------
 #### 0.7.0-beta (10.10.2018)
 
 - **Added** Ability to use tool-tip in ATTR_manip_noop.

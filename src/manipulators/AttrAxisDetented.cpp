@@ -125,7 +125,7 @@ std::size_t AttrAxisDetented::printObj(AbstractWriter & writer) const {
     outStr << " " << directionZ();
     outStr << " " << vMin();
     outStr << " " << vMax();
-    outStr << " " << dataref();
+    outStr << " " << writer.actualDataref(dataref());
     writer.printLine(outStr.str());
     return 1;
 }

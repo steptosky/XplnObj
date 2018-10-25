@@ -33,9 +33,10 @@
 #include <memory>
 #include "ObjLodGroup.h"
 #include "ExportOptions.h"
-#include "IOStatistic.h"
 #include "xpln/obj/attributes/AttrGlobSet.h"
 #include "xpln/obj/ObjDrapedGroup.h"
+#include "ExportContext.h"
+#include "ImportContext.h"
 
 namespace xobj {
 
@@ -53,10 +54,13 @@ class ObjMain {
 public:
 
     //-------------------------------------------------------------------------
+    /// @{
 
     typedef std::vector<std::unique_ptr<ObjLodGroup>> Lods;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     ObjMain()
         : mName("no name Main") {}
@@ -66,7 +70,9 @@ public:
 
     virtual ~ObjMain() = default;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*!
      * \details Set of the attributes.
@@ -74,6 +80,7 @@ public:
     AttrGlobSet pAttr;
 
     /*!
+     * \todo move it into context
      * \details Export options.
      */
     ExportOptions pExportOptions;
@@ -84,14 +91,18 @@ public:
      */
     TMatrix pMatrix;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*!
      * \details Contains draped geometry and attributes.
      */
     ObjDrapedGroup pDraped;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*!
      * \details Adds new lods to the list.
@@ -104,59 +115,39 @@ public:
     /*!
      * \return Lods list.
      */
-    Lods & lods() {
-        return mLods;
-    }
+    Lods & lods() { return mLods; }
 
     /*!
      * \return Lods list.
      */
-    const Lods & lods() const {
-        return mLods;
-    }
+    const Lods & lods() const { return mLods; }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    void setObjectName(const std::string & name) {
-        mName = name;
-    }
+    void setObjectName(const std::string & name) { mName = name; }
+    const std::string & objectName() const { return mName; }
 
-    const std::string & objectName() const {
-        return mName;
-    }
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*!
      * \details Starts export to 'obj' file.
-     * \param [in] path full path with filename and extension.
+     * \param [in, out] inOutContext
      * \return True if successful otherwise false.
      */
-    XpObjLib bool exportToFile(const std::string & path);
-
-    /*!
-     * \details Starts export to 'obj' file.
-     * \param [in] path full path with filename and extension
-     * \param [out] outStat export statistic.
-     * \return True if successful otherwise false.
-     */
-    XpObjLib bool exportToFile(const std::string & path, IOStatistic & outStat);
+    XpObjLib bool exportObj(ExportContext & inOutContext);
 
     /*!
      * \details Starts import from 'obj' file.
-     * \param [in] path full path with filename and extension.
+     * \param [in, out] inOutContext
      * \return True if successful otherwise false.
      */
-    XpObjLib bool importFromFile(const std::string & path);
+    XpObjLib bool importObj(ImportContext & inOutContext);
 
-    /*!
-     * \details Start import from 'obj' file
-     * \param [in] path full path with filename and extension
-     * \param [out] outStat import statistic.
-     * \return True if successful otherwise false.
-     */
-    XpObjLib bool importFromFile(const std::string & path, IOStatistic & outStat);
-
+    /// @}
     //-------------------------------------------------------------------------
 
 private:

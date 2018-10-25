@@ -35,25 +35,12 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-ExportOptions::ExportOptions() {
-    ExportOptions::reset();
-}
+ExportOptions::ExportOptions()
+    : mOptionFlags(XOBJ_EXP_OPTIMIZATION) {}
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
-
-void ExportOptions::setSignature(const std::string & signature) {
-    mSignature = signature;
-}
-
-//-------------------------------------------------------------------------
-
-const std::string & ExportOptions::signature() const {
-    return mSignature;
-}
-
-//-------------------------------------------------------------------------
 
 void ExportOptions::reset() {
     mOptionFlags = XOBJ_EXP_OPTIMIZATION;

@@ -29,7 +29,6 @@
 
 #include <gtest/gtest.h>
 
-#include "common/Logger.h"
 #include "xpln/obj/ObjMain.h"
 #include "xpln/obj/ObjMesh.h"
 
@@ -96,6 +95,8 @@ void addManip(ObjMain & inOutMain, AttrManipBase * inManip) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipAxisKnob) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipAxisKnob.obj");
+    //-----------------------------
     auto * outManip = new AttrManipAxisKnob;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -106,17 +107,17 @@ TEST(TestManipIO, AttrManipAxisKnob) {
     outManip->setMaximum(50.0f);
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipAxisKnob * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisKnob>(inObj, EManipulator::axis_knob, inManip));
 
@@ -136,17 +137,17 @@ TEST(TestManipIO, AttrManipAxisKnob) {
     outManip->wheel().setDelta(15.0f);
 
     ObjMain outWheelObj;
-    stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
-    ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ExportContext expWheelContext(fileName);
+    ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
+    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
-    stat.reset();
-    ASSERT_TRUE(inWheelObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impWheelContext(fileName);
+    ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
+    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisKnob>(inWheelObj, EManipulator::axis_knob, inManip));
 
@@ -161,6 +162,8 @@ TEST(TestManipIO, AttrManipAxisKnob) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipAxisSwitchLeftRight) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipAxisSwitchLeftRight.obj");
+    //-----------------------------
     auto * outManip = new AttrManipAxisSwitchLeftRight;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -171,17 +174,17 @@ TEST(TestManipIO, AttrManipAxisSwitchLeftRight) {
     outManip->setMaximum(50.0f);
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipAxisSwitchLeftRight * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisSwitchLeftRight>(inObj, EManipulator::axis_switch_lr, inManip));
 
@@ -201,17 +204,17 @@ TEST(TestManipIO, AttrManipAxisSwitchLeftRight) {
     outManip->wheel().setDelta(15.0f);
 
     ObjMain outWheelObj;
-    stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
-    ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ExportContext expWheelContext(fileName);
+    ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
+    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
-    stat.reset();
-    ASSERT_TRUE(inWheelObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impWheelContext(fileName);
+    ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
+    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisSwitchLeftRight>(inWheelObj, EManipulator::axis_switch_lr, inManip));
 
@@ -226,6 +229,8 @@ TEST(TestManipIO, AttrManipAxisSwitchLeftRight) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipAxisSwitchUpDown) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipAxisSwitchUpDown.obj");
+    //-----------------------------
     auto * outManip = new AttrManipAxisSwitchUpDown;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -236,17 +241,17 @@ TEST(TestManipIO, AttrManipAxisSwitchUpDown) {
     outManip->setMaximum(50.0f);
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipAxisSwitchUpDown * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisSwitchUpDown>(inObj, EManipulator::axis_switch_ud, inManip));
 
@@ -266,17 +271,17 @@ TEST(TestManipIO, AttrManipAxisSwitchUpDown) {
     outManip->wheel().setDelta(15.0f);
 
     ObjMain outWheelObj;
-    stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
-    ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ExportContext expWheelContext(fileName);
+    ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
+    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
-    stat.reset();
-    ASSERT_TRUE(inWheelObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impWheelContext(fileName);
+    ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
+    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisSwitchUpDown>(inWheelObj, EManipulator::axis_switch_ud, inManip));
 
@@ -291,23 +296,25 @@ TEST(TestManipIO, AttrManipAxisSwitchUpDown) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipCmd) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipCmd.obj");
+    //-----------------------------
     auto * outManip = new AttrManipCmd;
     outManip->setCursor(ECursor(ECursor::left));
     outManip->setToolTip("ToolTip");
     outManip->setCmd("I'm/a/Command");
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipCmd * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, EManipulator::command, inManip));
 
@@ -323,6 +330,8 @@ TEST(TestManipIO, AttrManipCmd) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipCmdAxis) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipCmdAxis.obj");
+    //-----------------------------
     auto * outManip = new AttrManipCmdAxis;
     outManip->setCursor(ECursor(ECursor::left));
     outManip->setToolTip("ToolTip");
@@ -333,17 +342,17 @@ TEST(TestManipIO, AttrManipCmdAxis) {
     outManip->setDirectionZ(20.0f);
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipCmdAxis * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdAxis>(inObj, EManipulator::command_axis, inManip));
 
@@ -363,6 +372,8 @@ TEST(TestManipIO, AttrManipCmdAxis) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipCmdKnob) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipCmdKnob.obj");
+    //-----------------------------
     auto * outManip = new AttrManipCmdKnob;
     outManip->setCursor(ECursor(ECursor::left));
     outManip->setToolTip("ToolTip");
@@ -370,17 +381,17 @@ TEST(TestManipIO, AttrManipCmdKnob) {
     outManip->setCmdPositive("I'm/a/Positive/Command");
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipCmdKnob * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdKnob>(inObj, EManipulator::command_knob, inManip));
 
@@ -397,23 +408,25 @@ TEST(TestManipIO, AttrManipCmdKnob) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipCmdKnob2) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipCmdKnob2.obj");
+    //-----------------------------
     auto * outManip = new AttrManipCmdKnob2;
     outManip->setCursor(ECursor(ECursor::left));
     outManip->setToolTip("ToolTip");
     outManip->setCmd("I'm/a/Command");
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipCmdKnob2 * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdKnob2>(inObj, EManipulator::command_knob2, inManip));
 
@@ -429,6 +442,8 @@ TEST(TestManipIO, AttrManipCmdKnob2) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipCmdSwitchLeftRight) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipCmdSwitchLeftRight.obj");
+    //-----------------------------
     auto * outManip = new AttrManipCmdSwitchLeftRight;
     outManip->setCursor(ECursor(ECursor::left));
     outManip->setToolTip("ToolTip");
@@ -436,17 +451,17 @@ TEST(TestManipIO, AttrManipCmdSwitchLeftRight) {
     outManip->setCmdPositive("I'm/a/Positive/Command");
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipCmdSwitchLeftRight * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdSwitchLeftRight>(inObj, EManipulator::command_switch_lr, inManip));
 
@@ -463,23 +478,25 @@ TEST(TestManipIO, AttrManipCmdSwitchLeftRight) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipCmdSwitchLeftRight2) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipCmdSwitchLeftRight2.obj");
+    //-----------------------------
     auto * outManip = new AttrManipCmdSwitchLeftRight2;
     outManip->setCursor(ECursor(ECursor::left));
     outManip->setToolTip("ToolTip");
     outManip->setCmd("I'm/a/Command");
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipCmdSwitchLeftRight2 * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdSwitchLeftRight2>(inObj, EManipulator::command_switch_lr2, inManip));
 
@@ -495,6 +512,8 @@ TEST(TestManipIO, AttrManipCmdSwitchLeftRight2) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipCmdSwitchUpDown) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipCmdSwitchUpDown.obj");
+    //-----------------------------
     auto * outManip = new AttrManipCmdSwitchUpDown;
     outManip->setCursor(ECursor(ECursor::left));
     outManip->setToolTip("ToolTip");
@@ -502,17 +521,17 @@ TEST(TestManipIO, AttrManipCmdSwitchUpDown) {
     outManip->setCmdPositive("I'm/a/Positive/Command");
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipCmdSwitchUpDown * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdSwitchUpDown>(inObj, EManipulator::command_switch_ud, inManip));
 
@@ -529,23 +548,25 @@ TEST(TestManipIO, AttrManipCmdSwitchUpDown) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipCmdSwitchUpDown2) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipCmdSwitchUpDown2.obj");
+    //-----------------------------
     auto * outManip = new AttrManipCmdSwitchUpDown2;
     outManip->setCursor(ECursor(ECursor::left));
     outManip->setToolTip("ToolTip");
     outManip->setCmd("I'm/a/Command");
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipCmdSwitchUpDown2 * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdSwitchUpDown2>(inObj, EManipulator::command_switch_ud2, inManip));
 
@@ -561,6 +582,8 @@ TEST(TestManipIO, AttrManipCmdSwitchUpDown2) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipDelta) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipDelta.obj");
+    //-----------------------------
     auto * outManip = new AttrManipDelta;
     outManip->setCursor(ECursor(ECursor::left));
     outManip->setToolTip("ToolTip");
@@ -571,17 +594,17 @@ TEST(TestManipIO, AttrManipDelta) {
     outManip->setMaximum(30.0f);
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipDelta * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDelta>(inObj, EManipulator::delta, inManip));
 
@@ -601,17 +624,17 @@ TEST(TestManipIO, AttrManipDelta) {
     outManip->wheel().setDelta(15.0f);
 
     ObjMain outWheelObj;
-    stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
-    ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ExportContext expWheelContext(fileName);
+    ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
+    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
-    stat.reset();
-    ASSERT_TRUE(inWheelObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impWheelContext(fileName);
+    ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
+    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDelta>(inWheelObj, EManipulator::delta, inManip));
 
@@ -626,6 +649,8 @@ TEST(TestManipIO, AttrManipDelta) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipDragAxis) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipDragAxis.obj");
+    //-----------------------------
     auto * outManip = new AttrManipDragAxis;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -646,17 +671,17 @@ TEST(TestManipIO, AttrManipDragAxis) {
     outManip->setDetentRanges({AttrAxisDetentRange(19.0f, 20.0f, 21.0f), AttrAxisDetentRange(22.0f, 23.0f, 24.0f)});
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(5, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(5, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipDragAxis * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDragAxis>(inObj, EManipulator::drag_axis, inManip));
 
@@ -692,6 +717,8 @@ TEST(TestManipIO, AttrManipDragAxis) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipDragAxisPix) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipDragAxisPix.obj");
+    //-----------------------------
     auto * outManip = new AttrManipDragAxisPix;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -703,17 +730,17 @@ TEST(TestManipIO, AttrManipDragAxisPix) {
     outManip->setVal2(40.0f);
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipDragAxisPix * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDragAxisPix>(inObj, EManipulator::drag_axis_pix, inManip));
 
@@ -734,17 +761,17 @@ TEST(TestManipIO, AttrManipDragAxisPix) {
     outManip->wheel().setDelta(15.0f);
 
     ObjMain outWheelObj;
-    stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
-    ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ExportContext expWheelContext(fileName);
+    ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
+    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
-    stat.reset();
-    ASSERT_TRUE(inWheelObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impWheelContext(fileName);
+    ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
+    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDragAxisPix>(inWheelObj, EManipulator::drag_axis_pix, inManip));
 
@@ -759,6 +786,8 @@ TEST(TestManipIO, AttrManipDragAxisPix) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipDragRotate) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipDragRotate.obj");
+    //-----------------------------
     auto * outManip = new AttrManipDragRotate;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -774,17 +803,17 @@ TEST(TestManipIO, AttrManipDragRotate) {
     outManip->setDetentRanges({AttrAxisDetentRange(19.0f, 20.0f, 21.0f), AttrAxisDetentRange(22.0f, 23.0f, 24.0f)});
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(5, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(5, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipDragRotate * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDragRotate>(inObj, EManipulator::drag_rotate, inManip));
 
@@ -822,6 +851,8 @@ TEST(TestManipIO, AttrManipDragRotate) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipDragXy) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipDragXy.obj");
+    //-----------------------------
     auto * outManip = new AttrManipDragXy;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -835,17 +866,17 @@ TEST(TestManipIO, AttrManipDragXy) {
     outManip->setYMax(70.0f);
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipDragXy * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDragXy>(inObj, EManipulator::drag_xy, inManip));
 
@@ -868,20 +899,22 @@ TEST(TestManipIO, AttrManipDragXy) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipNoop) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipNoop.obj");
+    //-----------------------------
     auto * outManip = new AttrManipNoop;
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipNoop * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipNoop>(inObj, EManipulator::noop, inManip));
 
@@ -893,6 +926,8 @@ TEST(TestManipIO, AttrManipNoop) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipPush) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipPush.obj");
+    //-----------------------------
     auto * outManip = new AttrManipPush;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -901,17 +936,17 @@ TEST(TestManipIO, AttrManipPush) {
     outManip->setUp(30.0f);
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipPush * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipPush>(inObj, EManipulator::push, inManip));
 
@@ -929,17 +964,17 @@ TEST(TestManipIO, AttrManipPush) {
     outManip->wheel().setDelta(15.0f);
 
     ObjMain outWheelObj;
-    stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
-    ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ExportContext expWheelContext(fileName);
+    ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
+    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
-    stat.reset();
-    ASSERT_TRUE(inWheelObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impWheelContext(fileName);
+    ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
+    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipPush>(inWheelObj, EManipulator::push, inManip));
 
@@ -954,6 +989,8 @@ TEST(TestManipIO, AttrManipPush) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipRadio) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipRadio.obj");
+    //-----------------------------
     auto * outManip = new AttrManipRadio;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -961,17 +998,17 @@ TEST(TestManipIO, AttrManipRadio) {
     outManip->setDown(20.0f);
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipRadio * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipRadio>(inObj, EManipulator::radio, inManip));
 
@@ -988,17 +1025,17 @@ TEST(TestManipIO, AttrManipRadio) {
     outManip->wheel().setDelta(15.0f);
 
     ObjMain outWheelObj;
-    stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
-    ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ExportContext expWheelContext(fileName);
+    ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
+    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
-    stat.reset();
-    ASSERT_TRUE(inWheelObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impWheelContext(fileName);
+    ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
+    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipRadio>(inWheelObj, EManipulator::radio, inManip));
 
@@ -1013,6 +1050,8 @@ TEST(TestManipIO, AttrManipRadio) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipToggle) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipToggle.obj");
+    //-----------------------------
     auto * outManip = new AttrManipToggle;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -1021,17 +1060,17 @@ TEST(TestManipIO, AttrManipToggle) {
     outManip->setOff(30.0f);
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipToggle * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipToggle>(inObj, EManipulator::toggle, inManip));
 
@@ -1049,17 +1088,17 @@ TEST(TestManipIO, AttrManipToggle) {
     outManip->wheel().setDelta(15.0f);
 
     ObjMain outWheelObj;
-    stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
-    ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ExportContext expWheelContext(fileName);
+    ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
+    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
-    stat.reset();
-    ASSERT_TRUE(inWheelObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impWheelContext(fileName);
+    ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
+    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipToggle>(inWheelObj, EManipulator::toggle, inManip));
 
@@ -1074,6 +1113,8 @@ TEST(TestManipIO, AttrManipToggle) {
 /**************************************************************************************************/
 
 TEST(TestManipIO, AttrManipWrap) {
+    const auto fileName = XOBJ_PATH("TestManipIO-AttrManipWrap.obj");
+    //-----------------------------
     auto * outManip = new AttrManipWrap;
     outManip->setCursor(ECursor(ECursor::right));
     outManip->setToolTip("ToolTip");
@@ -1084,17 +1125,17 @@ TEST(TestManipIO, AttrManipWrap) {
     outManip->setMaximum(50.0f);
 
     ObjMain outObj;
-    IOStatistic stat;
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
-    ASSERT_TRUE(outObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(outObj.exportObj(expContext));
+    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
-    stat.reset();
-    ASSERT_TRUE(inObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(inObj.importObj(impContext));
+    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
     const AttrManipWrap * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipWrap>(inObj, EManipulator::wrap, inManip));
 
@@ -1114,17 +1155,17 @@ TEST(TestManipIO, AttrManipWrap) {
     outManip->wheel().setDelta(15.0f);
 
     ObjMain outWheelObj;
-    stat.reset();
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
-    ASSERT_TRUE(outWheelObj.exportToFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(2, stat.pTrisManipCount);
+    ExportContext expWheelContext(fileName);
+    ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
+    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
-    stat.reset();
-    ASSERT_TRUE(inWheelObj.importFromFile(TOTEXT(TestManipIO), stat));
-    ASSERT_EQ(1, stat.pTrisManipCount);
+    ImportContext impWheelContext(fileName);
+    ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
+    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipWrap>(inWheelObj, EManipulator::wrap, inManip));
 

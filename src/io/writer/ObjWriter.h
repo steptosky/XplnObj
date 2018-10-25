@@ -59,8 +59,8 @@ class Transform;
 class ObjWriter {
 public:
 
-    bool writeFile(ObjMain * root, const std::string & path, const std::string & signature,
-                   IOStatistic & outStat, const TMatrix & tm);
+    bool writeFile(ObjMain * root, ExportContext & context, const TMatrix & tm);
+
     void reset();
     ObjWriter();
     ~ObjWriter();

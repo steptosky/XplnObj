@@ -47,15 +47,27 @@ std::uint64_t Dataref::invalidId() {
     return std::numeric_limits<std::uint64_t>::max();
 }
 
+bool Dataref::isKeyId(const std::string & key) {
+    if (key.empty()) {
+        return false;
+    }
+    return std::isdigit(key[0]) != 0;
+}
+
+std::uint64_t Dataref::keyToId(const std::string & key) {
+    return std::stoul(key);
+}
+
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool DatarefsFile::loadFile(const std::string & filePath, const std::function<bool(const Dataref &)> & callback) {
+bool DatarefsFile::loadFile(const Path & filePath, const std::function<bool(const Dataref &)> & callback) {
     using namespace std::string_literals;
     std::ifstream file(filePath, std::iostream::in);
     if (!file) {
-        throw std::runtime_error(ExcTxt("can't open file <"s.append(filePath).append(">")));
+        // todo sts::toMbString(filePath) may work incorrectly with UNICODE
+        throw std::runtime_error(ExcTxt("can't open file <"s.append(sts::toMbString(filePath)).append(">")));
     }
     try {
         const auto res = loadStream(file, callback);
@@ -89,8 +101,8 @@ bool DatarefsFile::loadStream(std::istream & input, const std::function<bool(con
         }
 
         std::size_t position = 0;
-        if (std::isdigit(values[position].front())) {
-            drf.mId = std::stoul(values[position++]);
+        if (Dataref::isKeyId(values[position])) {
+            drf.mId = Dataref::keyToId(values[position++]);
         }
 
         if (position != values.size()) {
@@ -119,11 +131,12 @@ bool DatarefsFile::loadStream(std::istream & input, const std::function<bool(con
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void DatarefsFile::saveFile(const std::string & filePath, const std::function<bool(Dataref &)> & callback) {
+void DatarefsFile::saveFile(const Path & filePath, const std::function<bool(Dataref &)> & callback) {
     using namespace std::string_literals;
     std::ofstream file(filePath, std::iostream::out);
     if (!file) {
-        throw std::runtime_error(ExcTxt("can't open file <"s.append(filePath).append(">")));
+        // todo sts::toMbString(filePath) may work incorrectly with UNICODE
+        throw std::runtime_error(ExcTxt("can't open file <"s.append(sts::toMbString(filePath)).append(">")));
     }
     try {
         saveStream(file, callback);
@@ -157,6 +170,19 @@ void DatarefsFile::saveStream(std::ostream & output, const std::function<bool(Da
         }
         output << std::endl;
         drf = Dataref();
+    }
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+void Dataref::fillEmptyFields(const std::string & val) {
+    if (!mDescription.empty() && mValueUnits.empty()) {
+        mValueUnits = val;
+    }
+    if (!mValueUnits.empty() && mValueType.empty()) {
+        mValueType = val;
     }
 }
 

@@ -96,7 +96,7 @@ std::size_t AttrManipRadio::printObj(AbstractWriter & writer) const {
     outStr << ATTR_MANIP_RADIO;
     outStr << " " << cursor().toString();
     outStr << " " << down();
-    outStr << " " << dataref();
+    outStr << " " << writer.actualDataref(dataref());
     outStr << " " << toolTip();
     writer.printLine(outStr.str());
     return 1 + wheel().printObj(writer);

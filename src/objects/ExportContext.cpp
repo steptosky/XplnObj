@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,40 +27,23 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
-#include "xpln/Export.h"
-#include "io/reader/ObjReadParser.h"
-
-/*
- * Why this functions are not the methods of the corresponding classes?
- * For simplify the library interface.
- */
-
-namespace xobj {
-
-class AbstractWriter;
-class AnimVisibilityKey;
-class AnimTransKey;
-class AnimRotateKey;
+#include "xpln/obj/ExportContext.h"
 
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-XpObjLib void printObj(const AnimVisibilityKey & key, AbstractWriter & writer);
-XpObjLib void printObj(const AnimTransKey & key, AbstractWriter & writer);
-XpObjLib void printObj(const AnimRotateKey & key, AbstractWriter & writer);
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-XpObjLib bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser);
-XpObjLib bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser);
-XpObjLib bool fromObjString(AnimRotateKey & outVal, ObjReadParser & parser);
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
+void xobj::ExportContext::setInterrupter(IInterrupter * interruptor) {
+    mInterruptor.reset(interruptor);
 }
+
+xobj::IInterrupter * xobj::ExportContext::interrupter() {
+    if (!mInterruptor) {
+        mInterruptor = std::make_unique<NoInterrupter>();
+    }
+    return mInterruptor.get();
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/

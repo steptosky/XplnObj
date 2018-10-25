@@ -85,7 +85,7 @@ std::size_t AttrManipCmdSwitchUpDown2::printObj(AbstractWriter & writer) const {
     StringStream outStr;
     outStr << ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2;
     outStr << " " << cursor().toString();
-    outStr << " " << cmd();
+    outStr << " " << writer.actualCommand(cmd());
     outStr << " " << toolTip();
     writer.printLine(outStr.str());
     return 1;

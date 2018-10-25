@@ -45,6 +45,8 @@
 #include "xpln/obj/ObjSmoke.h"
 #include "xpln/obj/ObjDummy.h"
 
+#include "io/writer/AbstractWriter.h"
+
 #include "Defines.h"
 
 namespace xobj {
@@ -53,7 +55,7 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-std::string toObjString(const MeshVertex & vertex, bool isTree) {
+void printObj(const MeshVertex & vertex, AbstractWriter & writer, const bool isTree) {
     StringStream out;
     out << MESH_VT << " " << vertex.pPosition.toString(PRECISION) << "  ";
 
@@ -63,36 +65,36 @@ std::string toObjString(const MeshVertex & vertex, bool isTree) {
         out << vertex.pNormal.normalized().toString(PRECISION);
 
     out << "  " << vertex.pTexture.toString(PRECISION);
-    return out.str();
+    writer.printLine(out.str());
 }
 
-std::string toObjString(const LineVertex & vertex) {
+void printObj(const LineVertex & vertex, AbstractWriter & writer) {
     StringStream out;
     out << VLINE
             << " " << vertex.pPosition.toString(PRECISION)
             << " " << vertex.pColor.red()
             << " " << vertex.pColor.green()
             << " " << vertex.pColor.blue();
-    return out.str();
+    writer.printLine(out.str());
 }
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-std::string toObjString(const ObjLodGroup & obj, bool printName) {
+void printObj(const ObjLodGroup & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     out << ATTR_LOD << " " << obj.nearVal() << " " << obj.farVal();
     if (printName) {
         out << " ## " << obj.objectName();
     }
-    return out.str();
+    writer.printLine(out.str());
 }
 
-std::string toObjString(const ObjSmoke & obj, bool printName) {
+void printObj(const ObjSmoke & obj, AbstractWriter & writer, const bool printName) {
     if (obj.smokeType() == ObjSmoke::none) {
         // todo maybe warning about none?
-        return "";
+        return;
     }
     StringStream out;
     out << (obj.smokeType() == ObjSmoke::white ? SMOKE_WHITE : SMOKE_BLACK)
@@ -101,22 +103,22 @@ std::string toObjString(const ObjSmoke & obj, bool printName) {
     if (printName) {
         out << " ## " << obj.objectName();
     }
-    return out.str();
+    writer.printLine(out.str());
 }
 
-std::string toObjString(const ObjDummy & obj, bool printName) {
+void printObj(const ObjDummy & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
         out << "## Dummy: " << obj.objectName();
+        writer.printLine(out.str());
     }
-    return out.str();
 }
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-std::string toObjString(const ObjLightCustom & obj, bool printName) {
+void printObj(const ObjLightCustom & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
         out << "## " << obj.objectName() << std::endl;
@@ -127,13 +129,13 @@ std::string toObjString(const ObjLightCustom & obj, bool printName) {
             << " " << obj.size()
             << " " << obj.textureRect().point1().toString(PRECISION)
             << " " << obj.textureRect().point2().toString(PRECISION)
-            << " " << (obj.dataRef().empty() ? "none" : obj.dataRef().c_str());
-    return out.str();
+            << " " << (obj.dataRef().empty() ? "none" : writer.actualDataref(obj.dataRef()).c_str());
+    writer.printLine(out.str());
 }
 
 //-------------------------------------------------------------------------
 
-std::string toObjString(const ObjLightNamed & obj, bool printName) {
+void printObj(const ObjLightNamed & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
         out << "## " << obj.objectName() << std::endl;
@@ -141,12 +143,12 @@ std::string toObjString(const ObjLightNamed & obj, bool printName) {
     out << LIGHT_NAMED
             << " " << obj.name()
             << " " << obj.position().toString(PRECISION);
-    return out.str();
+    writer.printLine(out.str());
 }
 
 //-------------------------------------------------------------------------
 
-std::string toObjString(const ObjLightParam & obj, bool printName) {
+void printObj(const ObjLightParam & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
         out << "## " << obj.objectName() << std::endl;
@@ -155,12 +157,12 @@ std::string toObjString(const ObjLightParam & obj, bool printName) {
             << " " << obj.name()
             << " " << obj.position().toString(PRECISION)
             << " " << obj.params();
-    return out.str();
+    writer.printLine(out.str());
 }
 
 //-------------------------------------------------------------------------
 
-std::string toObjString(const ObjLightPoint & obj, bool printName) {
+void printObj(const ObjLightPoint & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
         out << "## " << obj.objectName() << std::endl;
@@ -168,12 +170,12 @@ std::string toObjString(const ObjLightPoint & obj, bool printName) {
     const Color & c = obj.color();
     out << VLIGHT << " " << obj.position().toString(PRECISION) << " "
             << c.red() << " " << c.green() << " " << c.blue();
-    return out.str();
+    writer.printLine(out.str());
 }
 
 //-------------------------------------------------------------------------
 
-std::string toObjString(const ObjLightSpillCust & obj, bool printName) {
+void printObj(const ObjLightSpillCust & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
         out << "## " << obj.objectName() << std::endl;
@@ -184,8 +186,8 @@ std::string toObjString(const ObjLightSpillCust & obj, bool printName) {
             << " " << obj.size()
             << " " << obj.direction().toString(PRECISION)
             << " " << obj.semiRaw()
-            << " " << (obj.dataRef().empty() ? "none" : obj.dataRef().c_str());
-    return out.str();
+            << " " << (obj.dataRef().empty() ? "none" : writer.actualDataref(obj.dataRef()).c_str());
+    writer.printLine(out.str());
 }
 
 /**************************************************************************************************/

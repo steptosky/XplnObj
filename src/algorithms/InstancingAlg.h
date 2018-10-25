@@ -29,7 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/common/IInterrupt.h"
+#include "xpln/common/IInterrupter.h"
 
 namespace xobj {
 
@@ -51,7 +51,7 @@ public:
     /// @{
 
     static bool validateAndPrepare(ObjMain & inObjMain,
-                                   const IInterrupt & interrupt = NoInterrupt());
+                                   const IInterrupter & interrupt = NoInterrupter());
 
     /// @}
     //-------------------------------------------------------------------------

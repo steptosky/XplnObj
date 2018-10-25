@@ -96,11 +96,11 @@ void ObjWriteAttr::write(AbstractWriter * writer, const ObjAbstract * obj) {
 class AttrWriter {
 public:
     template<typename T>
-    static void writeAttr(AbstractWriter * writer, const T & attr, T & inOutActiveAttr, const char * offStr, size_t & outCounter,
+    static void writeAttr(AbstractWriter * writer, const T & attr, T & inOutActiveAttr, size_t & outCounter,
                           std::function<void(const T &)> attrEnable = nullptr, const std::function<void()> & attrDisable = nullptr) {
         if (!attr) {
             if (inOutActiveAttr) {
-                writer->printLine(offStr);
+                writer->printLine(T::objDisableStr());
                 if (attrDisable) {
                     attrDisable();
                 }
@@ -110,7 +110,7 @@ public:
         }
         else {
             if (!inOutActiveAttr) {
-                writer->printLine(toObjString(attr));
+                printObjAttr(attr, *writer);
                 if (attrEnable) {
                     attrEnable(attr);
                 }
@@ -120,7 +120,7 @@ public:
             }
 
             if (inOutActiveAttr != attr) {
-                writer->printLine(toObjString(attr));
+                printObjAttr(attr, *writer);
                 if (attrEnable) {
                     attrEnable(attr);
                 }
@@ -151,8 +151,11 @@ void ObjWriteAttr::writeBool(const bool currVal, const std::uint32_t flag, const
     }
 }
 
-void ObjWriteAttr::writeAttributes(const AttrSet & obj) {
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
+void ObjWriteAttr::writeAttributes(const AttrSet & obj) {
     const auto manipPanelEnabled = [&](const AttrCockpit & cockpit) {
         if (mManipWriter) {
             mManipWriter->setPanelEnabled(cockpit);
@@ -171,12 +174,12 @@ void ObjWriteAttr::writeAttributes(const AttrSet & obj) {
     writeBool(!obj.isDraw(), Flags::no_draw, ATTR_DRAW_DISABLE, ATTR_DRAW_ENABLE);
     writeBool(!obj.isCastShadow(), Flags::no_shadow, ATTR_NO_SHADOW, ATTR_SHADOW);
 
-    AttrWriter::writeAttr<AttrHard>(mWriter, obj.hard(), mActiveAttrHard, ATTR_NO_HARD, mCounter);
-    AttrWriter::writeAttr<AttrShiny>(mWriter, obj.shiny(), mActiveAttrShiny, toObjString(AttrShiny()).c_str(), mCounter);
-    AttrWriter::writeAttr<AttrBlend>(mWriter, obj.blend(), mActiveAttrBlend, toObjString(AttrBlend()).c_str(), mCounter);
-    AttrWriter::writeAttr<AttrPolyOffset>(mWriter, obj.polyOffset(), mActiveAttrPolyOffset, toObjString(AttrPolyOffset(0.0f)).c_str(), mCounter);
-    AttrWriter::writeAttr<AttrLightLevel>(mWriter, obj.lightLevel(), mActiveAttrLightLevel, ATTR_LIGHT_LEVEL_RESET, mCounter);
-    AttrWriter::writeAttr<AttrCockpit>(mWriter, obj.cockpit(), mActiveAttrCockpit, ATTR_NO_COCKPIT, mCounter, manipPanelEnabled, manipPanelDisabled);
+    AttrWriter::writeAttr<AttrHard>(mWriter, obj.hard(), mActiveAttrHard, mCounter);
+    AttrWriter::writeAttr<AttrShiny>(mWriter, obj.shiny(), mActiveAttrShiny, mCounter);
+    AttrWriter::writeAttr<AttrBlend>(mWriter, obj.blend(), mActiveAttrBlend, mCounter);
+    AttrWriter::writeAttr<AttrPolyOffset>(mWriter, obj.polyOffset(), mActiveAttrPolyOffset, mCounter);
+    AttrWriter::writeAttr<AttrLightLevel>(mWriter, obj.lightLevel(), mActiveAttrLightLevel, mCounter);
+    AttrWriter::writeAttr<AttrCockpit>(mWriter, obj.cockpit(), mActiveAttrCockpit, mCounter, manipPanelEnabled, manipPanelDisabled);
 }
 
 /**************************************************************************************************/

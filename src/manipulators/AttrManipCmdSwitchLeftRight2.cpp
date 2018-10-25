@@ -85,7 +85,7 @@ std::size_t AttrManipCmdSwitchLeftRight2::printObj(AbstractWriter & writer) cons
     StringStream outStr;
     outStr << ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2;
     outStr << " " << cursor().toString();
-    outStr << " " << cmd();
+    outStr << " " << writer.actualCommand(cmd());
     outStr << " " << toolTip();
     writer.printLine(outStr.str());
     return 1;

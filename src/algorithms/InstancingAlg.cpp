@@ -34,6 +34,7 @@
 #include "xpln/obj/ObjLodGroup.h"
 #include "xpln/obj/ObjMesh.h"
 #include "common/AttributeNames.h"
+#include "common/Logger.h"
 
 namespace xobj {
 
@@ -41,7 +42,7 @@ namespace xobj {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool InstancingAlg::validateAndPrepare(ObjMain & inObjMain, const IInterrupt & /*interrupt*/) {
+bool InstancingAlg::validateAndPrepare(ObjMain & inObjMain, const IInterrupter & /*interrupt*/) {
     ULWarning << "The instance checking is in the test mode, so it may work incorrectly.";
     ULInfo << " To check whether your object is instanced, put the word DEBUG in the end of the OBJ file and run X-Plane."
             << " The log file will contain a printout about your object."

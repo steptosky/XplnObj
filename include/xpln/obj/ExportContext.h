@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,87 +29,110 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <memory>
 #include <string>
 #include "xpln/Export.h"
+#include "xpln/utils/Path.h"
+#include "xpln/common/IInterrupter.h"
+#include "IOStatistic.h"
 
 namespace xobj {
-
-class AbstractWriter;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-/*!
- * \details ATTR_shiny_rat
- * \ingroup Attributes
- */
-class AttrShiny {
+class ExportContext {
 public:
 
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrShiny();
+    ExportContext() = default;
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] ratio 
-     */
-    XpObjLib AttrShiny(float ratio);
+    /*! \see \link ExportContext::setObjFile \endlink */
+    explicit ExportContext(const Path & fullFilePath) { setObjFile(fullFilePath); }
 
-    ~AttrShiny() = default;
+    ExportContext(const ExportContext &) = delete;
+    ExportContext(ExportContext &&) = delete;
 
+    virtual ~ExportContext() = default;
+
+    ExportContext & operator=(const ExportContext &) = delete;
+    ExportContext & operator=(ExportContext &&) = delete;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*!
-     * \details Check whether the attribute is enabled. 
-     * \note All class's setters will enable this attribute.
+     * \note Takes ownership.
      */
-    XpObjLib operator bool() const;
+    XpObjLib void setInterrupter(IInterrupter * interruptor);
 
     /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note All class's setters will enable this attribute.
-     * \param [in] state 
+     * \return Always valid pointer to interrupter.
      */
-    XpObjLib void setEnabled(bool state);
+    XpObjLib IInterrupter * interrupter();
 
+    void setStatistic(const IOStatistic & stats) { mStatistic = stats; }
+    IOStatistic & statistic() { return mStatistic; }
+    const IOStatistic & statistic() const { return mStatistic; }
+
+    void setSignature(const std::string & signature) { mSignature = signature; }
+    const std::string & signature() const { return mSignature; }
+
+    /// @}
     //-------------------------------------------------------------------------
-
-    XpObjLib bool operator==(const AttrShiny & other) const;
-    XpObjLib bool operator!=(const AttrShiny & other) const;
-
-    //-------------------------------------------------------------------------
-
-    XpObjLib void setRatio(float ratio);
-    XpObjLib float ratio() const;
-
-    //-------------------------------------------------------------------------
+    /// \name Files
+    /// @{
 
     /*!
-     * \note For internal use only.
-     * \return String with default values for simulator.
-     *         It is needed when attribute has been enabled before
-     *         and now should be disabled.
+     * \details File path for obj writing.
+     * \param [in] fullFilePath
      */
-    XpObjLib static std::string objDisableStr();
+    void setObjFile(const Path & fullFilePath) { mObjFile = fullFilePath; }
 
+    /*!
+     * \details File path for datarefs reading.
+     *          These datarefs are used if you specified them as id.
+     * \todo better description what it is for.
+     * \param [in] fullFilePath
+     */
+    void setDatarefsFile(const Path & fullFilePath) { mDatarefsFile = fullFilePath; }
+
+    /*!
+     * \details File path for commands reading.
+     *          These commands are used if you specified them as id.
+     * \todo better description what it is for.
+     * \param [in] fullFilePath
+     */
+    void setCommandsFile(const Path & fullFilePath) { mCommandsFile = fullFilePath; }
+
+    /*! \see \link ExportContext::setObjFile \endlink */
+    const Path & objFile() const { return mObjFile; }
+
+    /*! \see \link ExportContext::setDatarefsFile \endlink */
+    const Path & datarefsFile() const { return mDatarefsFile; }
+
+    /*! \see \link ExportContext::setCommandsFile \endlink */
+    const Path & commandsFile() const { return mCommandsFile; }
+
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    float mRatio;
-    bool mIsEnabled : 1;
+    Path mObjFile;
+    Path mDatarefsFile;
+    Path mCommandsFile;
+    std::string mSignature;
+    IOStatistic mStatistic;
+    std::unique_ptr<IInterrupter> mInterruptor;
 
 };
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
-
 }

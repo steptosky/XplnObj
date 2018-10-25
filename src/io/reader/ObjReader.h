@@ -30,6 +30,7 @@
 */
 
 #include "ObjReaderListener.h"
+#include "xpln/obj/ImportContext.h"
 
 namespace xobj {
 class IOStatistic;
@@ -47,7 +48,7 @@ class ObjReader {
 
 public:
 
-    static bool readFile(const std::string & filePath, ObjReaderListener & listener);
+    static bool readFile(ImportContext & context, ObjReaderListener & listener);
 
 private:
 

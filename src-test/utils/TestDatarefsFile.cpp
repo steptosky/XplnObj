@@ -54,6 +54,23 @@ inline void equals(const Dataref & drf1, const Dataref & drf2) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
+TEST(Dataref, isKeyId) {
+    EXPECT_TRUE(Dataref::isKeyId("61256"));
+    EXPECT_FALSE(Dataref::isKeyId("+01256"));
+    EXPECT_FALSE(Dataref::isKeyId("v"));
+}
+
+TEST(Dataref, keyToId) {
+    EXPECT_EQ(61256, Dataref::keyToId("61256"));
+    EXPECT_EQ(25, Dataref::keyToId("25test"));
+    EXPECT_ANY_THROW(Dataref::keyToId("test"));
+    EXPECT_ANY_THROW(Dataref::keyToId("31243656867453255687685634224580987856643535435"));
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
 TEST(DatarefsFile, read_normal_drf) {
     const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
     std::stringstream stream;

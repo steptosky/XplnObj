@@ -35,6 +35,7 @@
 #include "converters/ObjAttrString.h"
 #include "io/writer/ObjWriteAttr.h"
 #include "io/writer/ObjWriteManip.h"
+#include "TestWriter.h"
 
 using namespace xobj;
 using ::testing::_;
@@ -50,6 +51,20 @@ ObjWriteManip gObjWriteManip;
  * This tests are for checking attributes logic for writing only and they are low level.
  * There are also top level tests (TestAttributesIOLogic) like this.
  */
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+template<typename T>
+std::string strAttrResult(const T & attr) {
+    TestWriter w;
+    printObjAttr(attr, w);
+    if (!w.mResult.empty()) {
+        w.mResult.pop_back(); // remove '\n'
+    }
+    return w.mResult;
+}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -365,19 +380,19 @@ TEST(TestAttributesWrite, parameterized_case1) {
     main1.pAttr.setCockpit(AttrCockpit(AttrCockpit::region_3));
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.1f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend,0.3f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(5.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(3.0f, 4.0f, "test"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_3))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(0.1f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::no_blend,0.3f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(5.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(3.0f, 4.0f, "test"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_3))))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_HARD))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny())))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend())))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_LIGHT_LEVEL_RESET))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrBlend::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrPolyOffset::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrLightLevel::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
 
     // enable
     attrWriter.write(&writer, &main1);
@@ -409,26 +424,26 @@ TEST(TestAttributesWrite, parameterized_case2) {
     main3.pAttr.setCockpit(AttrCockpit(AttrCockpit::region_3));
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.8f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::shadow_blend,0.7f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(4.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_2))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(0.8f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::shadow_blend,0.7f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(4.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_2))))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_HARD))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny())))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend())))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_LIGHT_LEVEL_RESET))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrBlend::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrPolyOffset::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrLightLevel::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::concrete), true))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(10.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::shadow_blend,0.3f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(5.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(3.0f, 4.0f, "test2"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_3))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::concrete), true))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(10.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::shadow_blend,0.3f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(5.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(3.0f, 4.0f, "test2"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_3))))).Times(1);
 
     // enable
     attrWriter.write(&writer, &main1);
@@ -461,19 +476,19 @@ TEST(TestAttributesWrite, parameterized_case3) {
     main2.pAttr.setCockpit(AttrCockpit(AttrCockpit::region_1));
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.8f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend, 0.7f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(4.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_1))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(0.8f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::no_blend, 0.7f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(4.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_1))))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_HARD))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny())))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend())))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_LIGHT_LEVEL_RESET))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrBlend::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrPolyOffset::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrLightLevel::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
 
     // enable
     attrWriter.write(&writer, &main1);
@@ -506,26 +521,26 @@ TEST(TestAttributesWrite, parameterized_case4) {
     main2.pAttr.setCockpit(AttrCockpit(AttrCockpit::cockpit));
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.8f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend, 0.7f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(4.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::region_1))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(0.8f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::no_blend, 0.7f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(4.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_1))))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::concrete), true))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(10.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend, 0.3f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(5.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(3.0f, 4.0f, "test2"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::cockpit))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::concrete), true))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(10.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::no_blend, 0.3f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(5.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(3.0f, 4.0f, "test2"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::cockpit))))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_HARD))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny())))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend())))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_LIGHT_LEVEL_RESET))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrBlend::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrPolyOffset::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrLightLevel::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
 
     // enable
     attrWriter.write(&writer, &main1);
@@ -551,19 +566,19 @@ TEST(TestAttributesWrite, parameterized_case5) {
     main2.pAttr.setCockpit(AttrCockpit(AttrCockpit::cockpit));
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny(0.1f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend(AttrBlend::no_blend, 0.3f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(5.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrLightLevel(3.0f, 4.0f, "test"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrCockpit(AttrCockpit::cockpit))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(0.1f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::no_blend, 0.3f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(5.0f))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(3.0f, 4.0f, "test"))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::cockpit))))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_HARD))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrShiny())))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrBlend())))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(toObjString(AttrPolyOffset(0.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_LIGHT_LEVEL_RESET))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrBlend::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrPolyOffset::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrLightLevel::objDisableStr()))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
 
     attrWriter.write(&writer, &main1);
     // enable

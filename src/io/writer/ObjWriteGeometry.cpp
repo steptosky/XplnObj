@@ -91,7 +91,7 @@ void ObjWriteGeometry::printMeshVerticiesRecursive(AbstractWriter & writer, cons
             }
 
             for (const MeshVertex & v : mobj->pVertices) {
-                writer.printLine(toObjString(v, mobj->pAttr.isTree()));
+                printObj(v, writer, mobj->pAttr.isTree());
             }
         }
     }
@@ -185,7 +185,7 @@ void ObjWriteGeometry::printLineVerticiesRecursive(AbstractWriter & writer, cons
             }
 
             for (const LineVertex & v : lobj->verticesList()) {
-                writer.printLine(toObjString(v));
+                printObj(v, writer);
             }
         }
     }
@@ -205,7 +205,7 @@ void ObjWriteGeometry::printLightPointVerticiesRecursive(AbstractWriter & writer
     for (auto & objBase : transform.objList()) {
         if (objBase->objType() == OBJ_LIGHT_POINT) {
             const auto lobj = static_cast<const ObjLightPoint*>(objBase.get());
-            writer.printLine(toObjString(*lobj, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LIGHT)));
+            printObj(*lobj, writer, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LIGHT));
         }
     }
 
@@ -271,11 +271,13 @@ bool ObjWriteGeometry::printLightPointObject(AbstractWriter & writer, const ObjA
 
 template<typename T>
 bool printLight(AbstractWriter & writer, const T & lobj, const ExportOptions & options, std::size_t & counter) {
-    std::string params = toObjString(lobj, options.isEnabled(XOBJ_EXP_MARK_LIGHT));
-    if (!params.empty()) {
-        writer.printLine(params.c_str());
-        ++counter;
-    }
+    printObj(lobj, writer, options.isEnabled(XOBJ_EXP_MARK_LIGHT));
+    // std::string params = toObjString(lobj, options.isEnabled(XOBJ_EXP_MARK_LIGHT));
+    // if (!params.empty()) {
+    //     writer.printLine(params.c_str());
+    //     ++counter;
+    // }
+    ++counter;
     return true;
 }
 
@@ -331,11 +333,13 @@ bool ObjWriteGeometry::printLineObject(AbstractWriter & writer, const ObjAbstrac
 bool ObjWriteGeometry::printSmokeObject(AbstractWriter & writer, const ObjAbstract & objBase) const {
     if (objBase.objType() == OBJ_SMOKE) {
         const auto & smoke = reinterpret_cast<const ObjSmoke&>(objBase);
-        std::string params = toObjString(smoke, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_SMOKE));
-        if (!params.empty()) {
-            writer.printLine(params);
-            ++mStat->pSmokeObjCount;
-        }
+        printObj(smoke, writer, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_SMOKE));
+        // std::string params = toObjString(smoke, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_SMOKE));
+        // if (!params.empty()) {
+        //     writer.printLine(params);
+        //     ++mStat->pSmokeObjCount;
+        // }
+        ++mStat->pSmokeObjCount;
         return true;
     }
     return false;
@@ -346,11 +350,13 @@ bool ObjWriteGeometry::printSmokeObject(AbstractWriter & writer, const ObjAbstra
 bool ObjWriteGeometry::printDummyObject(AbstractWriter & writer, const ObjAbstract & objBase) const {
     if (objBase.objType() == OBJ_DUMMY) {
         const auto & dummy = reinterpret_cast<const ObjDummy&>(objBase);
-        std::string params = toObjString(dummy, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_DUMMY));
-        if (!params.empty()) {
-            writer.printLine(params);
-            ++mStat->pDummyObjCount;
-        }
+        printObj(dummy, writer, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_DUMMY));
+        // std::string params = toObjString(dummy, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_DUMMY));
+        // if (!params.empty()) {
+        //     writer.printLine(params);
+        //     ++mStat->pDummyObjCount;
+        // }
+        ++mStat->pDummyObjCount;
         return true;
     }
     return false;

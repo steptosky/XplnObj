@@ -58,7 +58,7 @@ TEST(DrapedAlg, extract) {
     transform.addObject(l2M1);
     transform.addObject(l2M2);
 
-    Draped::extract(draped, transformRoot, NoInterrupt());
+    Draped::extract(draped, transformRoot, NoInterrupter());
 
     EXPECT_EQ(1, transformRoot.objList().size());
     EXPECT_EQ(1, transformRoot.childAt(0)->objList().size());

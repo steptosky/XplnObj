@@ -126,7 +126,7 @@ std::size_t AttrManipAxisSwitchLeftRight::printObj(AbstractWriter & writer) cons
     outStr << " " << maximum();
     outStr << " " << clickDelta();
     outStr << " " << holdDelta();
-    outStr << " " << dataref();
+    outStr << " " << writer.actualDataref(dataref());
     outStr << " " << toolTip();
     writer.printLine(outStr.str());
     return 1 + wheel().printObj(writer);

@@ -239,8 +239,8 @@ std::size_t AttrManipDragRotate::printObj(AbstractWriter & writer) const {
     outStr << " " << v1Max();
     outStr << " " << v2Min();
     outStr << " " << v2Max();
-    outStr << " " << dataref1();
-    outStr << " " << dataref2();
+    outStr << " " << writer.actualDataref(dataref1());
+    outStr << " " << writer.actualDataref(dataref2());
     outStr << " " << toolTip();
     writer.printLine(outStr.str());
 

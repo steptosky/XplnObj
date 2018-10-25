@@ -151,7 +151,7 @@ std::size_t AttrManipDragAxis::printObj(AbstractWriter & writer) const {
     outStr << " " << directionZ();
     outStr << " " << val1();
     outStr << " " << val2();
-    outStr << " " << dataref();
+    outStr << " " << writer.actualDataref(dataref());
     outStr << " " << toolTip();
     writer.printLine(outStr.str());
 

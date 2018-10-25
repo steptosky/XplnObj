@@ -35,6 +35,7 @@
 #include <string>
 #include <iosfwd>
 #include <algorithm>
+#include "xpln/utils/Path.h"
 
 namespace xobj {
 
@@ -71,12 +72,41 @@ public:
 
     bool isIdValid() const { return mId != invalidId(); }
 
+    /*!
+     * \details Fills necessary empty fields with specified text.
+     * \details Assume you have set only key and description but
+     *          according to the dataref format for writing description 
+     *          you have to write values before it like type, units, 
+     *          so if those values has not been set then they will be
+     *          filled up with the specified text.
+     * \param [in] val 
+     */
+    XpObjLib void fillEmptyFields(const std::string & val = "???");
+
     //-------------------------------------------------------------------------
 
     /*!
      * \return Value that is used for invalid Id.
      */
     XpObjLib static std::uint64_t invalidId();
+
+    /*!
+     * \details The key that starts from digit can be considered as an id. 
+     *          So your dataref key must not be started with digits.
+     * \return True if the specified string key can be considered as id.
+     */
+    XpObjLib static bool isKeyId(const std::string & key);
+
+    /*!
+     * \details Converts specified key to id.
+     * \return id.
+     * \exception std::stoul
+     *            - std::invalid_argument
+                  - std::out_of_range
+     */
+    XpObjLib static std::uint64_t keyToId(const std::string & key);
+
+    //-------------------------------------------------------------------------
 
 };
 
@@ -118,7 +148,7 @@ public:
      * \details Opens file and call \link DatarefsFile::loadStream \endlink for it.
      * \exception std::exception
      */
-    XpObjLib static bool loadFile(const std::string & filePath, const std::function<bool(const Dataref &)> & callback);
+    XpObjLib static bool loadFile(const Path & filePath, const std::function<bool(const Dataref &)> & callback);
 
     /*!
      * \details Loads dataref from stream.
@@ -136,7 +166,7 @@ public:
      * \details Opens file and call \link DatarefsFile::saveStream \endlink for it and then save one.
      * \exception std::exception
      */
-    XpObjLib static void saveFile(const std::string & filePath, const std::function<bool(Dataref &)> & callback);
+    XpObjLib static void saveFile(const Path & filePath, const std::function<bool(Dataref &)> & callback);
 
     /*!
      * \details Saves dataref to stream.

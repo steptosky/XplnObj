@@ -49,8 +49,8 @@ using namespace xobj;
  * Animation rotate the parent around parent's X, so as the result in the world space the rotation will be around X axis
  */
 TEST(TestTransformationAlgorithm_case2, case1) {
-    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case2)).append(".").append(TOTEXT(case1)).append(".obj"));
-    //-------------------
+    const auto fileName = XOBJ_PATH("TestTransformationAlgorithm_case2-case1.obj");
+    //-----------------------------
     // make out data and save to file
 
     ObjMain mainOut;
@@ -71,13 +71,15 @@ TEST(TestTransformationAlgorithm_case2, case1) {
     TestUtils::createTestAnimRotate(trOut1.pAnimRotate, Point3(1.0f, 0.0f, 0.0f), "rot1");
     TestUtils::createTestAnimTranslate(trOut1.pAnimTrans,
                                        AnimTransKey(-50.0f, 0.0f, 0.0f, -10.0f), AnimTransKey(50.0f, 0.0f, 0.0f, 10.0f), "trans1");
-    ASSERT_TRUE(mainOut.exportToFile(path));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 
     //-------------------
     // load data from file
 
     ObjMain mainIn;
-    ASSERT_TRUE(mainIn.importFromFile(path));
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
 
     // extract data
     ObjLodGroup * lodIn = nullptr;
@@ -115,8 +117,8 @@ TEST(TestTransformationAlgorithm_case2, case1) {
  * Then rotate the whole scene back with global matrix.
  */
 TEST(TestTransformationAlgorithm_case2, case2) {
-    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case2)).append(".").append(TOTEXT(case2)).append(".obj"));
-    //-------------------
+    const auto fileName = XOBJ_PATH("TestTransformationAlgorithm_case2-case2.obj");
+    //-----------------------------
     // make out data and save to file
 
     ObjMain mainOut;
@@ -138,13 +140,15 @@ TEST(TestTransformationAlgorithm_case2, case2) {
     TestUtils::createTestAnimRotate(trOut1.pAnimRotate, Point3(1.0f, 0.0f, 0.0f), "rot1");
     TestUtils::createTestAnimTranslate(trOut1.pAnimTrans,
                                        AnimTransKey(-50.0f, 0.0f, 0.0f, -10.0f), AnimTransKey(50.0f, 0.0f, 0.0f, 10.0f), "trans1");
-    ASSERT_TRUE(mainOut.exportToFile(path));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 
     //-------------------
     // load data from file
 
     ObjMain mainIn;
-    ASSERT_TRUE(mainIn.importFromFile(path));
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
 
     // extract data
     ObjLodGroup * lodIn = nullptr;

@@ -35,6 +35,7 @@
 #include <string>
 #include <iosfwd>
 #include <algorithm>
+#include "xpln/utils/Path.h"
 
 namespace xobj {
 
@@ -75,6 +76,23 @@ public:
      */
     XpObjLib static std::uint64_t invalidId();
 
+    /*!
+     * \details The key that starts from digit can be considered as an id.
+     *          So your command key must not be started with digits.
+     * \return True if the specified string key can be considered as id.
+     */
+    XpObjLib static bool isKeyId(const std::string & key);
+
+    /*!
+     * \details Converts specified key to id.
+     * \return id.
+     * \exception std::stoul
+     *            - std::invalid_argument
+                  - std::out_of_range
+     */
+    XpObjLib static std::uint64_t keyToId(const std::string & key);
+
+    //-------------------------------------------------------------------------
 };
 
 /**************************************************************************************************/
@@ -115,7 +133,7 @@ public:
      * \details Opens file and call \link CommandsFile::loadStream \endlink for it.
      * \exception std::exception
      */
-    XpObjLib static bool loadFile(const std::string & filePath, const std::function<bool(const Command &)> & callback);
+    XpObjLib static bool loadFile(const Path & filePath, const std::function<bool(const Command &)> & callback);
 
     /*!
      * \details Loads dataref from stream.
@@ -133,7 +151,7 @@ public:
      * \details Opens file and call \link CommandsFile::saveStream \endlink for it and then save one.
      * \exception std::exception
      */
-    XpObjLib static void saveFile(const std::string & filePath, const std::function<bool(Command &)> & callback);
+    XpObjLib static void saveFile(const Path & filePath, const std::function<bool(Command &)> & callback);
 
     /*!
      * \details Saves dataref to stream.

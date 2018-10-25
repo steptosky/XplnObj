@@ -57,6 +57,9 @@ public:
 
     std::string mResult;
 
+    std::string actualDataref(const std::string & dataref) override { return dataref; }
+    std::string actualCommand(const std::string & command) override { return command; }
+
 private:
 
     bool mPrintEol;

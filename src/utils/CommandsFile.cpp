@@ -35,6 +35,8 @@
 #include <cctype>
 #include <utility>
 #include <limits>
+#include "xpln/utils/DatarefsFile.h"
+#include "sts/string/StringUtils.h"
 
 namespace xobj {
 
@@ -44,18 +46,27 @@ namespace xobj {
 
 std::uint64_t Command::invalidId() {
     // It hides 'max' because 3Ds Max uses win api and it conflicts with win min/max
-    return std::numeric_limits<std::uint64_t>::max();
+    return Dataref::invalidId();
+}
+
+bool Command::isKeyId(const std::string & key) {
+    return Dataref::isKeyId(key);
+}
+
+std::uint64_t Command::keyToId(const std::string & key) {
+    return Dataref::keyToId(key);
 }
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool CommandsFile::loadFile(const std::string & filePath, const std::function<bool(const Command &)> & callback) {
+bool CommandsFile::loadFile(const Path & filePath, const std::function<bool(const Command &)> & callback) {
     using namespace std::string_literals;
     std::ifstream file(filePath, std::iostream::in);
     if (!file) {
-        throw std::runtime_error(ExcTxt("can't open file <"s.append(filePath).append(">")));
+        // todo sts::toMbString(filePath) may work incorrectly with UNICODE
+        throw std::runtime_error(ExcTxt("can't open file <"s.append(sts::toMbString(filePath)).append(">")));
     }
     try {
         const auto res = loadStream(file, callback);
@@ -91,8 +102,8 @@ bool CommandsFile::loadStream(std::istream & input, const std::function<bool(con
         Command cmd;
         auto extractedVal = extractValueFn(line);
 
-        if (std::isdigit(extractedVal.first.front())) {
-            cmd.mId = std::stoul(extractedVal.first);
+        if (Command::isKeyId(extractedVal.first)) {
+            cmd.mId = Command::keyToId(extractedVal.first);
             extractedVal = extractValueFn(extractedVal.second);
         }
 
@@ -110,11 +121,12 @@ bool CommandsFile::loadStream(std::istream & input, const std::function<bool(con
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void CommandsFile::saveFile(const std::string & filePath, const std::function<bool(Command &)> & callback) {
+void CommandsFile::saveFile(const Path & filePath, const std::function<bool(Command &)> & callback) {
     using namespace std::string_literals;
     std::ofstream file(filePath, std::iostream::out);
     if (!file) {
-        throw std::runtime_error(ExcTxt("can't open file <"s.append(filePath).append(">")));
+        // todo sts::toMbString(filePath) may work incorrectly with UNICODE
+        throw std::runtime_error(ExcTxt("can't open file <"s.append(sts::toMbString(filePath)).append(">")));
     }
     try {
         saveStream(file, callback);

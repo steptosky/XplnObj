@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -30,39 +30,43 @@
 */
 
 #include <string>
-#include "xpln/Export.h"
-#include "io/reader/ObjReadParser.h"
 
-/*
- * Why this functions are not the methods of the corresponding classes?
- * For simplify the library interface.
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+#ifndef XOBJ_PATH
+#   ifdef _MSC_VER
+#       define XOBJ_PATH(X) L##X;
+#   else
+#       define XOBJ_PATH(X) X;
+#   endif
+#endif
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+#ifdef _MSC_VER
+/*!
+ * \pre Windows uses UTF16 and wide string, Unix uses UTF8 and char.
+ * \note I decided to not use boost file system now
+ *       because it will increase build time on CI.
  */
-
 namespace xobj {
-
-class AbstractWriter;
-class AnimVisibilityKey;
-class AnimTransKey;
-class AnimRotateKey;
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-XpObjLib void printObj(const AnimVisibilityKey & key, AbstractWriter & writer);
-XpObjLib void printObj(const AnimTransKey & key, AbstractWriter & writer);
-XpObjLib void printObj(const AnimRotateKey & key, AbstractWriter & writer);
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-XpObjLib bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser);
-XpObjLib bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser);
-XpObjLib bool fromObjString(AnimRotateKey & outVal, ObjReadParser & parser);
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
+typedef std::wstring Path;
 }
+#else
+/*!
+ * \pre Windows uses UTF16 and wide string, Unix uses UTF8 and char.
+ * \note I decided to not use boost file system now
+ *       because it will increase build time on CI.
+ */
+namespace xobj {
+typedef std::string Path;
+}
+#endif
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/

@@ -48,17 +48,24 @@ class ObjWriter;
 class ExportOptions {
 public:
 
+    //-------------------------------------------------------------------------
+    /// @{
+
     XpObjLib ExportOptions();
     virtual ~ExportOptions() = default;
 
-    //------------------------------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool isEnabled(eExportOptions option) const;
     XpObjLib void enable(eExportOptions option);
     XpObjLib void disable(eExportOptions option);
     XpObjLib virtual void reset();
 
-    //------------------------------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
     /*!
      * \details Gets option flags.
@@ -74,22 +81,8 @@ public:
      */
     XpObjLib void setOptionFlags(std::uint64_t flags);
 
-    //------------------------------------------------------------
-
-    /*!
-     * \details Sets 'obj' file signature.
-     * The signature will be written at the end of obj file.
-     * \param [in] signature text.
-     */
-    XpObjLib void setSignature(const std::string & signature);
-
-    /*!
-     * \details Gets obj file signature.
-     * \return signature text.
-     */
-    XpObjLib const std::string & signature() const;
-
-    //------------------------------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
 
 private:
 

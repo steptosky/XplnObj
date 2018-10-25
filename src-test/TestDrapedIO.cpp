@@ -39,7 +39,7 @@ using namespace xobj;
 /**************************************************************************************************/
 
 TEST(Draped, DISABLED_io) {
-    const auto fileName = "Draped-io.obj";
+    const auto fileName = XOBJ_PATH("Draped-io.obj");
     //-------------------
     // make out data and save to file
     ObjMain mainOut;
@@ -56,13 +56,15 @@ TEST(Draped, DISABLED_io) {
     mainOut.pDraped.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("d1"));
     mainOut.pDraped.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("d2"));
 
-    ASSERT_TRUE(mainOut.exportToFile(fileName));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 
     //-------------------
     // load data from file
 
     ObjMain mainIn;
-    ASSERT_TRUE(mainIn.importFromFile(fileName));
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
 
     ObjLodGroup * lodIn1 = nullptr;
     ObjLodGroup * lodIn2 = nullptr;

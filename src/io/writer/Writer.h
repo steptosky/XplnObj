@@ -30,7 +30,12 @@
 */
 
 #include <fstream>
+#include <map>
+#include "xpln/utils/Path.h"
 #include "AbstractWriter.h"
+#include "xpln/utils/DatarefsFile.h"
+#include "xpln/utils/CommandsFile.h"
+#include "xpln/obj/ExportContext.h"
 
 namespace xobj {
 
@@ -52,8 +57,11 @@ public:
 
     //-------------------------------------------------------------------------
 
-    bool openFile(const std::string & filePath);
+    bool openFile(const Path & filePath);
     void closeFile();
+
+    bool loadDatarefs(const Path & filePath);
+    bool loadCommands(const Path & filePath);
 
     //-------------------------------------------------------------------------
 
@@ -62,8 +70,18 @@ public:
 
     //-------------------------------------------------------------------------
 
+    /*! \copydoc AbstractWriter::actualDataref */
+    std::string actualDataref(const std::string & dataref) override;
+
+    /*! \copydoc AbstractWriter::actualCommand */
+    std::string actualCommand(const std::string & command) override;
+
+    //-------------------------------------------------------------------------
+
 private:
 
+    std::map<std::uint64_t, Dataref> mDatarefs;
+    std::map<std::uint64_t, Command> mCommands;
     std::ofstream mStream;
 
 };

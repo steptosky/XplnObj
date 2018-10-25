@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,40 +29,19 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
-#include "xpln/Export.h"
-#include "io/reader/ObjReadParser.h"
-
-/*
- * Why this functions are not the methods of the corresponding classes?
- * For simplify the library interface.
- */
-
-namespace xobj {
-
-class AbstractWriter;
-class AnimVisibilityKey;
-class AnimTransKey;
-class AnimRotateKey;
+#include <stdexcept>
+#include "xpln/common/IInterrupter.h"
+#include "exceptions/defines.h"
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-XpObjLib void printObj(const AnimVisibilityKey & key, AbstractWriter & writer);
-XpObjLib void printObj(const AnimTransKey & key, AbstractWriter & writer);
-XpObjLib void printObj(const AnimRotateKey & key, AbstractWriter & writer);
+#define INTERRUPT_CHECK_WITH_RETURN(interrupt) if (interrupt.isInterrupted()) {return;}
+#define INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, retVal) if (interrupt.isInterrupted()) {return retVal;}
+#define INTERRUPT_CHECK_WITH_EXCEPTION(interrupt) if (interrupt.isInterrupted()) \
+    {throw std::runtime_error(ExcTxt("interrupted"));}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
-
-XpObjLib bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser);
-XpObjLib bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser);
-XpObjLib bool fromObjString(AnimRotateKey & outVal, ObjReadParser & parser);
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-}

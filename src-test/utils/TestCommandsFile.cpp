@@ -51,6 +51,23 @@ inline void equals(const Command & cmd1, const Command & cmd2) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
+TEST(Command, isKeyId) {
+    EXPECT_TRUE(Command::isKeyId("61256"));
+    EXPECT_FALSE(Command::isKeyId("+01256"));
+    EXPECT_FALSE(Command::isKeyId("v"));
+}
+
+TEST(Command, keyToId) {
+    EXPECT_EQ(61256, Command::keyToId("61256"));
+    EXPECT_EQ(25, Command::keyToId("25test"));
+    EXPECT_ANY_THROW(Command::keyToId("test"));
+    EXPECT_ANY_THROW(Command::keyToId("31243656867453255687685634224580987856643535435"));
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
 TEST(CommandsFile, read_normal_drf) {
     const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
     std::stringstream stream;

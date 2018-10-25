@@ -48,8 +48,8 @@ using namespace xobj;
  * Animation moving the child along parent's X, so as the result in the world space the moving will be along Y axis
  */
 TEST(TestTransformationAlgorithm_case3, case1) {
-    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case3)).append(".").append(TOTEXT(case1)).append(".obj"));
-    //-------------------
+    const auto fileName = XOBJ_PATH("TestTransformationAlgorithm_case3-case1.obj");
+    //-----------------------------
     // make out data and save to file
 
     ObjMain mainOut;
@@ -68,13 +68,15 @@ TEST(TestTransformationAlgorithm_case3, case1) {
 
     TestUtils::createTestAnimTranslate(trOut2.pAnimTrans,
                                        AnimTransKey(-50.0f, 0.0f, 0.0f, -10.0f), AnimTransKey(50.0f, 0.0f, 0.0f, 10.0f), "trans1");
-    ASSERT_TRUE(mainOut.exportToFile(path));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 
     //-------------------
     // load data from file
 
     ObjMain mainIn;
-    ASSERT_TRUE(mainIn.importFromFile(path));
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
 
     // extract data
     ObjLodGroup * lodIn = nullptr;
@@ -110,8 +112,8 @@ TEST(TestTransformationAlgorithm_case3, case1) {
  *     so as the result in the world space the moving will be along X axis
  */
 TEST(TestTransformationAlgorithm_case3, case2) {
-    const std::string path(std::string(TOTEXT(TestTransformationAlgorithm_case3)).append(".").append(TOTEXT(case2)).append(".obj"));
-    //-------------------
+    const auto fileName = XOBJ_PATH("TestTransformationAlgorithm_case3-case2.obj");
+    //-----------------------------
     // make out data and save to file
 
     ObjMain mainOut;
@@ -131,13 +133,15 @@ TEST(TestTransformationAlgorithm_case3, case2) {
 
     TestUtils::createTestAnimTranslate(trOut2.pAnimTrans,
                                        AnimTransKey(-50.0f, 0.0f, 0.0f, -10.0f), AnimTransKey(50.0f, 0.0f, 0.0f, 10.0f), "trans1");
-    ASSERT_TRUE(mainOut.exportToFile(path));
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 
     //-------------------
     // load data from file
 
     ObjMain mainIn;
-    ASSERT_TRUE(mainIn.importFromFile(path));
+    ImportContext impContext(fileName);
+    ASSERT_TRUE(mainIn.importObj(impContext));
 
     // extract data
     ObjLodGroup * lodIn = nullptr;

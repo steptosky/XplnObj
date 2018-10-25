@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,40 +29,45 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
-#include "xpln/Export.h"
-#include "io/reader/ObjReadParser.h"
-
-/*
- * Why this functions are not the methods of the corresponding classes?
- * For simplify the library interface.
- */
+#include <atomic>
 
 namespace xobj {
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
-class AbstractWriter;
-class AnimVisibilityKey;
-class AnimTransKey;
-class AnimRotateKey;
+class IInterrupter {
+public:
+    virtual ~IInterrupter() = default;
+    virtual bool isInterrupted() const = 0;
+    virtual void interrupt(bool state) = 0;
+};
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-XpObjLib void printObj(const AnimVisibilityKey & key, AbstractWriter & writer);
-XpObjLib void printObj(const AnimTransKey & key, AbstractWriter & writer);
-XpObjLib void printObj(const AnimRotateKey & key, AbstractWriter & writer);
+class NoInterrupter : public IInterrupter {
+public:
+    virtual ~NoInterrupter() = default;
+    bool isInterrupted() const override { return false; }
+    void interrupt(bool) override {}
+};
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-XpObjLib bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser);
-XpObjLib bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser);
-XpObjLib bool fromObjString(AnimRotateKey & outVal, ObjReadParser & parser);
+class DefaultInterrupter : public IInterrupter {
+public:
+    virtual ~DefaultInterrupter() = default;
+    bool isInterrupted() const override { return mInterrupt.load(); }
+    void interrupt(const bool state = true) override { mInterrupt.store(state); }
+private:
+    std::atomic_bool mInterrupt;
+};
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
-
 }

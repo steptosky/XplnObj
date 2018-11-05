@@ -42,9 +42,9 @@ using namespace std::string_literals;
 typedef std::vector<Command> Commands;
 
 inline void equals(const Command & cmd1, const Command & cmd2) {
-    ASSERT_TRUE(cmd1.mId == cmd2.mId);
-    ASSERT_TRUE(cmd1.mKey == cmd2.mKey);
-    ASSERT_TRUE(cmd1.mDescription == cmd2.mDescription);
+    ASSERT_EQ(cmd1.mId, cmd2.mId);
+    ASSERT_STREQ(cmd1.mKey.c_str() ,cmd2.mKey.c_str());
+    ASSERT_STREQ(cmd1.mDescription.c_str(), cmd2.mDescription.c_str());
 }
 
 /**************************************************************************************************/
@@ -55,6 +55,7 @@ TEST(Command, isKeyId) {
     EXPECT_TRUE(Command::isKeyId("61256"));
     EXPECT_FALSE(Command::isKeyId("+01256"));
     EXPECT_FALSE(Command::isKeyId("v"));
+    EXPECT_FALSE(Command::isKeyId("61A56"));
 }
 
 TEST(Command, keyToId) {
@@ -64,71 +65,76 @@ TEST(Command, keyToId) {
     EXPECT_ANY_THROW(Command::keyToId("31243656867453255687685634224580987856643535435"));
 }
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-TEST(CommandsFile, read_normal_drf) {
-    const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
-    std::stringstream stream;
-    stream << R"(sim/operation/quit                                 Quit X-Plane.)" << std::endl;
-    stream << R"(sim/operation/screenshot                           Take a screenshot.)" << std::endl;
-    stream << R"(sim/operation/show_menu                            Show the in-sim menu.)" << std::endl;
-    //-----------------------
-    Commands commands;
-    ASSERT_NO_THROW(CommandsFile::loadStream(stream, [&](const Command &c) ->bool {
-            commands.emplace_back(c);
-            return true;
-        }));
-    ASSERT_EQ(3, commands.size());
-
-    ASSERT_NO_FATAL_FAILURE(equals(Command{uint64Max, "sim/operation/quit", "Quit X-Plane."},
-        commands[0]));
-    ASSERT_NO_FATAL_FAILURE(equals(Command{uint64Max, "sim/operation/screenshot", "Take a screenshot."},
-        commands[1]));
-    ASSERT_NO_FATAL_FAILURE(equals(Command{uint64Max, "sim/operation/show_menu", "Show the in-sim menu."},
-        commands[2]));
-}
-
-TEST(CommandsFile, read_normal_drf_custom) {
-    const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
-    std::stringstream stream;
-    stream << R"(000001 sim/operation/quit                                 Quit X-Plane.)" << std::endl;
-    stream << R"(sim/operation/screenshot                                  Take a screenshot.)" << std::endl;
-    stream << R"(000005 sim/operation/show_menu                            Show the in-sim menu.)" << std::endl;
-    //-----------------------
-    Commands commands;
-    ASSERT_NO_THROW(CommandsFile::loadStream(stream, [&](const Command &c) ->bool {
-            commands.emplace_back(c);
-            return true;
-        }));
-    ASSERT_EQ(3, commands.size());
-
-    ASSERT_NO_FATAL_FAILURE(equals(Command{1, "sim/operation/quit", "Quit X-Plane." },
-        commands[0]));
-    ASSERT_NO_FATAL_FAILURE(equals(Command{uint64Max, "sim/operation/screenshot", "Take a screenshot." },
-        commands[1]));
-    ASSERT_NO_FATAL_FAILURE(equals(Command{5, "sim/operation/show_menu", "Show the in-sim menu." },
-        commands[2]));
+TEST(Command, invalidId) {
+    ASSERT_EQ(std::numeric_limits<std::uint64_t>::max(), Command::invalidId());
 }
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-TEST(CommandsFile, write_normal_drf_custom) {
-    const auto uint64Max = std::numeric_limits<std::uint64_t>::max();
+TEST(CommandsFile, read_normal_cmd) {
+    std::stringstream stream;
+    // it also checks id delimiter in the description - it should be ignored.
+    stream << std::endl;
+    stream << "   " << std::endl;
+    stream << R"( x/y/z )" << std::endl;
+    stream << R"(123456)" << std::endl;
+    stream << R"( 1/a/b/1       11: :d1.0 d1.1: d1.2:1.3)" << std::endl;
+    stream << R"(1/a/b/2        22: :d2.0 d2.1: d2.2:2.3)" << std::endl;
+    stream << R"(  1/a/b/3      33: :d3.0 d3.1: d3.2:3.3)" << std::endl;
+    stream << R"(   1/a/b/4     44: :d4.0 d4.1: d4.2:4.3)";
     //-----------------------
+    Commands commands;
+    ASSERT_NO_THROW(CommandsFile::loadStream(stream, [&](const Command &c) ->bool {
+            commands.emplace_back(c);
+            return true;
+        }));
+    ASSERT_EQ(6, commands.size());
+    EXPECT_NO_FATAL_FAILURE(equals(Command{ Command::invalidId(), "x/y/z", "" }, commands[0]));
+    EXPECT_NO_FATAL_FAILURE(equals(Command{ Command::invalidId(), "123456", "" }, commands[1]));
+    EXPECT_NO_FATAL_FAILURE(equals(Command{ Command::invalidId(), "1/a/b/1", "11: :d1.0 d1.1: d1.2:1.3" }, commands[2]));
+    EXPECT_NO_FATAL_FAILURE(equals(Command{ Command::invalidId(), "1/a/b/2", "22: :d2.0 d2.1: d2.2:2.3" }, commands[3]));
+    EXPECT_NO_FATAL_FAILURE(equals(Command{ Command::invalidId(), "1/a/b/3", "33: :d3.0 d3.1: d3.2:3.3" }, commands[4]));
+    EXPECT_NO_FATAL_FAILURE(equals(Command{ Command::invalidId(), "1/a/b/4", "44: :d4.0 d4.1: d4.2:4.3"}, commands[5]));
+}
+
+TEST(CommandsFile, read_normal_cmd_custom) {
+    std::stringstream stream;
+    stream << R"(  000001: x/y/z       00: :d0.0 d0.1: d0.2:0.3)" << std::endl;
+    stream << R"(  000006:1/a/b/1      11: :d1.0 d1.1: d1.2:1.3)" << std::endl;
+    stream << R"(000003:   1/a/b/2     22: :d2.0 d2.1: d2.2:2.3)" << std::endl;
+    stream << R"( 000005   :1/a/b/3    33: :d3.0 d3.1: d3.2:3.3)" << std::endl;
+    stream << R"(1/a/b/4               44: :d4.0 d4.1: d4.2:4.3)";
+    //-----------------------
+    Commands commands;
+    ASSERT_NO_THROW(CommandsFile::loadStream(stream, [&](const Command &c) ->bool {
+            commands.emplace_back(c);
+            return true;
+        }));
+    ASSERT_EQ(5, commands.size());
+    ASSERT_NO_FATAL_FAILURE(equals(Command{ 1, "x/y/z", "00: :d0.0 d0.1: d0.2:0.3" }, commands[0]));
+    ASSERT_NO_FATAL_FAILURE(equals(Command{ 6, "1/a/b/1", "11: :d1.0 d1.1: d1.2:1.3" }, commands[1]));
+    ASSERT_NO_FATAL_FAILURE(equals(Command{ 3, "1/a/b/2", "22: :d2.0 d2.1: d2.2:2.3" }, commands[2]));
+    ASSERT_NO_FATAL_FAILURE(equals(Command{ Command::invalidId(), "000005", ":1/a/b/3    33: :d3.0 d3.1: d3.2:3.3" }, commands[3]));
+    ASSERT_NO_FATAL_FAILURE(equals(Command{ Command::invalidId(), "1/a/b/4", "44: :d4.0 d4.1: d4.2:4.3" }, commands[4]));
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+TEST(CommandsFile, write_normal_cmd_custom) {
     Commands commands = {
-        Command{uint64Max, "sim/operation/quit", "Quit X-Plane."},
-        Command{3, "sim/operation/screenshot", "Take a screenshot."},
-        Command{4, "sim/operation/show_menu", "Show the in - sim menu."},
+        Command{Command::invalidId(), "1/a/b/1", ":d1.0  d1.1: d1.2:1.3"},
+        Command{3, "1/a/b/2", ":d2.0  d2.1: d2.2:2.3"},
+        Command{4, "1/a/b/3", ":d3.0  d3.1: d3.2:3.3"},
     };
     //-----------------------
     std::stringstream resultStream;
-    resultStream << R"(sim/operation/quit    Quit X-Plane.)" << std::endl;
-    resultStream << R"(000003    sim/operation/screenshot    Take a screenshot.)" << std::endl;
-    resultStream << R"(000004    sim/operation/show_menu    Show the in - sim menu.)" << std::endl;
+    resultStream << R"(1/a/b/1    :d1.0  d1.1: d1.2:1.3)" << std::endl;
+    resultStream << R"(000003:    1/a/b/2    :d2.0  d2.1: d2.2:2.3)" << std::endl;
+    resultStream << R"(000004:    1/a/b/3    :d3.0  d3.1: d3.2:3.3)" << std::endl;
     //-----------------------
     std::stringstream stream;
     std::size_t counter = 0;

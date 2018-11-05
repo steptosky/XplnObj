@@ -72,6 +72,15 @@ public:
 
     bool isIdValid() const { return mId != invalidId(); }
 
+    void clear() {
+        mId = invalidId();
+        mKey.clear();
+        mValueType.clear();
+        mValueUnits.clear();
+        mDescription.clear();
+        mWritable = false;
+    }
+
     /*!
      * \details Fills necessary empty fields with specified text.
      * \details Assume you have set only key and description but

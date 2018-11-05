@@ -100,21 +100,24 @@ bool CommandsFile::loadStream(std::istream & input, const std::function<bool(con
     std::string line;
     Command data;
 
+    const auto isBlank = [](const char ch) { return std::isblank(static_cast<unsigned char>(ch)); };
+    const auto isDigit = [](const char ch) { return std::isdigit(static_cast<unsigned char>(ch)); };
+
     while (std::getline(input, line)) {
         if (line.empty()) {
             continue;
         }
 
         // skip space
-        auto currPos = std::find_if_not(line.begin(), line.end(), std::isblank);
+        auto currPos = std::find_if_not(line.begin(), line.end(), isBlank);
         if (currPos == line.end()) {
             continue;
         }
 
         data.clear();
         //------------------
-        if (std::isdigit(*currPos)) {
-            auto iter = std::find_if_not(currPos, line.end(), std::isdigit);
+        if (isDigit(*currPos)) {
+            auto iter = std::find_if_not(currPos, line.end(), isDigit);
             if (iter != line.end()) {
                 if (*iter == ':') {
                     data.mId = Command::keyToId(std::string(currPos, iter));
@@ -122,8 +125,8 @@ bool CommandsFile::loadStream(std::istream & input, const std::function<bool(con
                     ++currPos; // skip ':'
                 }
 
-                currPos = std::find_if_not(currPos, line.end(), std::isblank);
-                iter = std::find_if(currPos, line.end(), std::isblank);
+                currPos = std::find_if_not(currPos, line.end(), isBlank);
+                iter = std::find_if(currPos, line.end(), isBlank);
                 data.mKey.assign(currPos, iter);
                 currPos = iter;
             }
@@ -133,12 +136,12 @@ bool CommandsFile::loadStream(std::istream & input, const std::function<bool(con
             }
         }
         else {
-            const auto iter = std::find_if(currPos, line.end(), std::isblank);
+            const auto iter = std::find_if(currPos, line.end(), isBlank);
             data.mKey.assign(currPos, iter);
             currPos = iter;
         }
         //------------------
-        currPos = std::find_if_not(currPos, line.end(), std::isblank);
+        currPos = std::find_if_not(currPos, line.end(), isBlank);
         data.mDescription.assign(currPos, line.end());
 
         if (!callback(data)) {

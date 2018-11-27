@@ -35,6 +35,7 @@
 #include <iomanip>
 #include <cctype>
 #include <limits>
+#include <algorithm>
 
 namespace xobj {
 
@@ -51,7 +52,12 @@ bool Dataref::isKeyId(const std::string & key) {
     if (key.empty()) {
         return false;
     }
-    return std::isdigit(key[0]) != 0;
+    for (auto ch : key) {
+        if (!std::isdigit(ch)) {
+            return false;
+        }
+    }
+    return true;
 }
 
 std::uint64_t Dataref::keyToId(const std::string & key) {
@@ -66,7 +72,6 @@ bool DatarefsFile::loadFile(const Path & filePath, const std::function<bool(cons
     using namespace std::string_literals;
     std::ifstream file(filePath, std::iostream::in);
     if (!file) {
-        // todo sts::toMbString(filePath) may work incorrectly with UNICODE
         throw std::runtime_error(ExcTxt("can't open file <"s.append(sts::toMbString(filePath)).append(">")));
     }
     try {
@@ -80,62 +85,10 @@ bool DatarefsFile::loadFile(const Path & filePath, const std::function<bool(cons
     }
 }
 
-bool DatarefsFile::loadStream(std::istream & input, const std::function<bool(const Dataref &)> & callback) {
-    assert(callback);
-    const char * sep = "\t";
-    std::string line;
-    if (!std::getline(input, line)) {
-        return true;
-    }
-    while (std::getline(input, line)) {
-        if (line.empty()) {
-            continue;
-        }
-        if (line.front() == '#') {
-            continue;
-        }
-        Dataref drf;
-        const auto values = sts::MbStrUtils::splitToVector(line, sep);
-        if (values.empty()) {
-            continue;
-        }
-
-        std::size_t position = 0;
-        if (Dataref::isKeyId(values[position])) {
-            drf.mId = Dataref::keyToId(values[position++]);
-        }
-
-        if (position != values.size()) {
-            drf.mKey = values[position++];
-        }
-        if (position != values.size()) {
-            drf.mValueType = values[position++];
-        }
-        if (position != values.size()) {
-            drf.mWritable = values[position++].front() == 'y';
-        }
-        if (position != values.size()) {
-            drf.mValueUnits = values[position++];
-        }
-        if (position != values.size()) {
-            drf.mDescription = values[position];
-        }
-        if (!callback(drf)) {
-            return false;
-        }
-    }
-    return true;
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
 void DatarefsFile::saveFile(const Path & filePath, const std::function<bool(Dataref &)> & callback) {
     using namespace std::string_literals;
     std::ofstream file(filePath, std::iostream::out);
     if (!file) {
-        // todo sts::toMbString(filePath) may work incorrectly with UNICODE
         throw std::runtime_error(ExcTxt("can't open file <"s.append(sts::toMbString(filePath)).append(">")));
     }
     try {
@@ -148,23 +101,109 @@ void DatarefsFile::saveFile(const Path & filePath, const std::function<bool(Data
     }
 }
 
-void DatarefsFile::saveStream(std::ostream & output, const std::function<bool(Dataref &)> & callback) {
-    const char * sep = "\t";
-    output << std::endl;
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
+bool DatarefsFile::loadStream(std::istream & input, const std::function<bool(const Dataref &)> & callback) {
+    assert(callback);
+    std::string line;
+    Dataref data;
+
+    const auto isDelimiter = [](const char ch) { return ch == '\t'; };
+    const auto isBlank = [](const char ch) { return std::isblank(static_cast<unsigned char>(ch)); };
+    const auto isDigit = [](const char ch) { return std::isdigit(static_cast<unsigned char>(ch)); };
+
+    // remove firs line as the datarefs format
+    // uses it for just an information.
+    if (! std::getline(input, line)) {
+        return false;
+    }
+
+    while (std::getline(input, line)) {
+        if (line.empty()) {
+            continue;
+        }
+
+        // skip space
+        auto currPos = std::find_if_not(line.begin(), line.end(), isBlank);
+        if (currPos == line.end()) {
+            continue;
+        }
+
+        data.clear();
+        //------------------
+        if (isDigit(*currPos)) {
+            auto iter = std::find_if_not(currPos, line.end(), isDigit);
+            if (iter != line.end()) {
+                if (*iter == ':') {
+                    data.mId = Dataref::keyToId(std::string(currPos, iter));
+                    currPos = iter;
+                    ++currPos; // skip ':'
+                }
+
+                currPos = std::find_if_not(currPos, line.end(), isBlank);
+                iter = std::find_if(currPos, line.end(), isBlank);
+                data.mKey.assign(currPos, iter);
+                currPos = iter;
+            }
+            else {
+                data.mKey.assign(currPos, iter);
+                currPos = iter;
+            }
+        }
+        else {
+            const auto iter = std::find_if(currPos, line.end(), isBlank);
+            data.mKey.assign(currPos, iter);
+            currPos = iter;
+        }
+        //------------------
+        currPos = std::find_if(currPos, line.end(), isDelimiter);
+        currPos = std::find_if_not(currPos, line.end(), isDelimiter); // remove delimiters
+
+        auto nextDelimiter = std::find_if(currPos, line.end(), isDelimiter);
+        data.mValueType.assign(currPos, nextDelimiter);
+        currPos = nextDelimiter;
+        //------------------
+        currPos = std::find_if_not(currPos, line.end(), isDelimiter); // remove delimiters
+
+        nextDelimiter = std::find_if(currPos, line.end(), isDelimiter);
+        const std::string tmp(currPos, nextDelimiter);
+        data.mWritable = !tmp.empty() && tmp.front() == 'y';
+        currPos = nextDelimiter;
+        //------------------
+        currPos = std::find_if_not(currPos, line.end(), isDelimiter); // remove delimiters
+
+        nextDelimiter = std::find_if(currPos, line.end(), isDelimiter);
+        data.mValueUnits.assign(currPos, nextDelimiter);
+        currPos = nextDelimiter;
+        //------------------
+        currPos = std::find_if_not(currPos, line.end(), isDelimiter); // remove delimiters
+        data.mDescription.assign(currPos, line.end());
+        //------------------
+        if (!callback(data)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void DatarefsFile::saveStream(std::ostream & output, const std::function<bool(Dataref &)> & callback) {
+    output << std::endl;
+    const char * delimiter = "\t";
     Dataref drf;
     while (callback(drf)) {
-        if (drf.mId != std::numeric_limits<std::uint64_t>::max()) {
-            output << std::setfill('0') << std::setw(6) << drf.mId << sep;
+        if (drf.mId != Dataref::invalidId()) {
+            output << std::setfill('0') << std::setw(6) << drf.mId << ":" << delimiter;
         }
         output << drf.mKey;
         if (!drf.mValueType.empty()) {
-            output << sep << drf.mValueType;
-            output << sep << (drf.mWritable ? 'y' : 'n');
+            output << delimiter << drf.mValueType;
+            output << delimiter << (drf.mWritable ? 'y' : 'n');
             if (!drf.mValueUnits.empty()) {
-                output << sep << drf.mValueUnits;
+                output << delimiter << drf.mValueUnits;
                 if (!drf.mDescription.empty()) {
-                    output << sep << drf.mDescription;
+                    output << delimiter << drf.mDescription;
                 }
             }
         }

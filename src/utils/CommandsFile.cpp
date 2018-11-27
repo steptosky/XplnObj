@@ -33,10 +33,8 @@
 #include <fstream>
 #include <iomanip>
 #include <cctype>
-#include <utility>
-#include <limits>
+#include <algorithm>
 #include "xpln/utils/DatarefsFile.h"
-#include "sts/string/StringUtils.h"
 
 namespace xobj {
 
@@ -65,7 +63,6 @@ bool CommandsFile::loadFile(const Path & filePath, const std::function<bool(cons
     using namespace std::string_literals;
     std::ifstream file(filePath, std::iostream::in);
     if (!file) {
-        // todo sts::toMbString(filePath) may work incorrectly with UNICODE
         throw std::runtime_error(ExcTxt("can't open file <"s.append(sts::toMbString(filePath)).append(">")));
     }
     try {
@@ -79,53 +76,10 @@ bool CommandsFile::loadFile(const Path & filePath, const std::function<bool(cons
     }
 }
 
-bool CommandsFile::loadStream(std::istream & input, const std::function<bool(const Command &)> & callback) {
-    std::string line;
-
-    // [val, rest string]
-    const auto extractValueFn = [](const std::string & str) ->std::pair<std::string, std::string> {
-        const auto pos = str.find_first_of(' ');
-        if (pos == std::string::npos) {
-            return std::make_pair(std::string(), str);
-        }
-        return std::make_pair(sts::MbStrUtils::trimCopy(str.substr(0, pos)),
-                              sts::MbStrUtils::trimCopy(str.substr(pos)));
-    };
-
-    while (std::getline(input, line)) {
-        if (line.empty()) {
-            continue;
-        }
-        if (line.front() == '#') {
-            continue;
-        }
-        Command cmd;
-        auto extractedVal = extractValueFn(line);
-
-        if (Command::isKeyId(extractedVal.first)) {
-            cmd.mId = Command::keyToId(extractedVal.first);
-            extractedVal = extractValueFn(extractedVal.second);
-        }
-
-        cmd.mKey = extractedVal.first;
-        cmd.mDescription = extractedVal.second;
-
-        if (!callback(cmd)) {
-            return false;
-        }
-    }
-    return true;
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
 void CommandsFile::saveFile(const Path & filePath, const std::function<bool(Command &)> & callback) {
     using namespace std::string_literals;
     std::ofstream file(filePath, std::iostream::out);
     if (!file) {
-        // todo sts::toMbString(filePath) may work incorrectly with UNICODE
         throw std::runtime_error(ExcTxt("can't open file <"s.append(sts::toMbString(filePath)).append(">")));
     }
     try {
@@ -138,12 +92,71 @@ void CommandsFile::saveFile(const Path & filePath, const std::function<bool(Comm
     }
 }
 
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+bool CommandsFile::loadStream(std::istream & input, const std::function<bool(const Command &)> & callback) {
+    std::string line;
+    Command data;
+
+    const auto isBlank = [](const char ch) { return std::isblank(static_cast<unsigned char>(ch)); };
+    const auto isDigit = [](const char ch) { return std::isdigit(static_cast<unsigned char>(ch)); };
+
+    while (std::getline(input, line)) {
+        if (line.empty()) {
+            continue;
+        }
+
+        // skip space
+        auto currPos = std::find_if_not(line.begin(), line.end(), isBlank);
+        if (currPos == line.end()) {
+            continue;
+        }
+
+        data.clear();
+        //------------------
+        if (isDigit(*currPos)) {
+            auto iter = std::find_if_not(currPos, line.end(), isDigit);
+            if (iter != line.end()) {
+                if (*iter == ':') {
+                    data.mId = Command::keyToId(std::string(currPos, iter));
+                    currPos = iter;
+                    ++currPos; // skip ':'
+                }
+
+                currPos = std::find_if_not(currPos, line.end(), isBlank);
+                iter = std::find_if(currPos, line.end(), isBlank);
+                data.mKey.assign(currPos, iter);
+                currPos = iter;
+            }
+            else {
+                data.mKey.assign(currPos, iter);
+                currPos = iter;
+            }
+        }
+        else {
+            const auto iter = std::find_if(currPos, line.end(), isBlank);
+            data.mKey.assign(currPos, iter);
+            currPos = iter;
+        }
+        //------------------
+        currPos = std::find_if_not(currPos, line.end(), isBlank);
+        data.mDescription.assign(currPos, line.end());
+
+        if (!callback(data)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 void CommandsFile::saveStream(std::ostream & output, const std::function<bool(Command &)> & callback) {
     const char * sep = "    ";
     Command cmd;
     while (callback(cmd)) {
-        if (cmd.mId != std::numeric_limits<std::uint64_t>::max()) {
-            output << std::setfill('0') << std::setw(6) << cmd.mId << sep;
+        if (cmd.mId != Command::invalidId()) {
+            output << std::setfill('0') << std::setw(6) << cmd.mId << ":" << sep;
         }
         output << cmd.mKey;
         if (!cmd.mDescription.empty()) {

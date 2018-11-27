@@ -1,5 +1,10 @@
 StepToSky: X-Plane Obj Library
 ---------------------------------------------------------------------------
+#### 0.9.0-beta (27.11.2018)
+##### Breaking backward compatibility:
+- **Changed:** Custom DataRefs and Commands format. The symbol ':' must immediate fallow ID.
+
+---------------------------------------------------------------------------
 #### 0.8.0-beta (25.10.2018)
 
 - **Added** Classes for reading/writing datarefs and commands files.

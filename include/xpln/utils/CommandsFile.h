@@ -69,6 +69,12 @@ public:
 
     bool isIdValid() const { return mId != invalidId(); }
 
+    void clear() {
+        mId = invalidId();
+        mKey.clear();
+        mDescription.clear();
+    }
+
     //-------------------------------------------------------------------------
 
     /*!

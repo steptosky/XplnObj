@@ -26,7 +26,7 @@
 - [Cmake 3.7+](https://cmake.org) - building tool.
 - [Conan 1.6+](https://www.conan.io) - package manager.
 - [Conan Package Tools](https://github.com/conan-io/conan-package-tools) - if you want to build the project with those tools.
-- [Python 2 or 3](https://www.python.org) - is needed for the Conan.
+- [Python 3](https://www.python.org) - is needed for the Conan.
 - [Doxygen](http://www.stack.nl/~dimitri/doxygen) - if you want to generate the documentation.
 - [Gtest and Gmock 1.8](https://github.com/google/googletest) - testing (is used via the conan) . 
 

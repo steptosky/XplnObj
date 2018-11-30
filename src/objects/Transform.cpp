@@ -144,6 +144,10 @@ Transform * Transform::takeChildAt(const TransformIndex index) {
     return mTreePtr->takeChildAt(index)->data();
 }
 
+bool Transform::deleteChild(const Transform * child) {
+    return mTreePtr->deleteChild(child->mTreePtr);
+}
+
 Transform & Transform::newChild(const char * name) {
     auto * tr = new Transform;
     tr->setParent(this);

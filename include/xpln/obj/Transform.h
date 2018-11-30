@@ -143,6 +143,14 @@ public:
     XpObjLib Transform * takeChildAt(TransformIndex index);
 
     /*!
+     * \details Removes child from item's children list by child's pointer.
+     *          The child's destructor will be called while removing.
+     * \param [in, out] child pointer to a children that must be deleted.
+     * \return True if the child by the specified pointer was deleted otherwise false.
+     */
+    XpObjLib bool deleteChild(const Transform * child);
+
+    /*!
      * \details Gets the child by specified index
      * \param [in] index
      * \return Pointer to a child

@@ -45,6 +45,7 @@ class ObjWritePreparer {
 public:
 
     static bool prepare(ObjMain & mainObj);
+    static void deleteEmptyTransformsRecursively(Transform & transform);
 
 private:
 

@@ -140,6 +140,10 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
             return false;
         }
 
+        for (const auto & lod : mMain->lods()) {
+            ObjWritePreparer::deleteEmptyTransformsRecursively(lod->transform());
+        }
+
         ObjTransformation::correctExportTransform(*mMain, tm, mExportOptions.isEnabled(XOBJ_EXP_APPLY_LOD_TM));
 
         //-------------------------------------------------------------------------

@@ -35,7 +35,9 @@
 #----------------------------------------------------------------------------------#
 # init
 
-cmake_minimum_required (VERSION 3.14.3)
+# for generating project fro Visual Studio 2019 cmake 3.14+ is required.
+# it is not set because some Unix CI nodes don't have necessary version.
+cmake_minimum_required (VERSION 3.7)
 
 message(STATUS "==============================================")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")

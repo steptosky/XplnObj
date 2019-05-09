@@ -28,7 +28,6 @@
 */
 
 #include "xpln/obj/attributes/AttrCockpit.h"
-#include "io/writer/AbstractWriter.h"
 #include "common/AttributeNames.h"
 
 namespace xobj {
@@ -38,8 +37,7 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool AttrCockpit::operator==(const AttrCockpit & other) const {
-    return mIsEnabled == other.mIsEnabled &&
-           mType == other.mType &&
+    return mType == other.mType &&
            mDevName == other.mDevName &&
            mDevBus == other.mDevBus &&
            mDevLighting == other.mDevLighting &&

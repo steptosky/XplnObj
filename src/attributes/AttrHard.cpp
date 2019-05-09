@@ -28,7 +28,6 @@
 */
 
 #include "xpln/obj/attributes/AttrHard.h"
-#include "io/writer/AbstractWriter.h"
 #include "common/AttributeNames.h"
 
 namespace xobj {
@@ -39,30 +38,19 @@ namespace xobj {
 
 AttrHard::AttrHard(const ESurface surface, const bool deck)
     : mESurface(surface),
-      mIsDeck(deck),
-      mIsEnabled(true) { }
+      mIsDeck(deck) { }
 
 AttrHard::AttrHard()
     : mESurface(ESurface::eId::none),
-      mIsDeck(false),
-      mIsEnabled(false) { }
+      mIsDeck(false) { }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrHard::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrHard::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrHard::operator==(const AttrHard & other) const {
-    return (mIsEnabled == other.mIsEnabled &&
-            mIsDeck == other.mIsDeck &&
-            mESurface == other.mESurface);
+    return mIsDeck == other.mIsDeck &&
+           mESurface == other.mESurface;
 }
 
 bool AttrHard::operator!=(const AttrHard & other) const {
@@ -74,7 +62,6 @@ bool AttrHard::operator!=(const AttrHard & other) const {
 /**************************************************************************************************/
 
 void AttrHard::setESurface(const ESurface & surface, const bool deck) {
-    mIsEnabled = true;
     mESurface = surface;
     mIsDeck = deck;
 }

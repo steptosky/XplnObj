@@ -61,7 +61,9 @@ public:
      * \details Constructor default.
      * \note Makes the disabled attribute.
      */
-    XpObjLib AttrBlend();
+    AttrBlend()
+        : mBlending(blend),
+          mRatio(0.5f) {}
 
     /*!
      * \details Constructor init.
@@ -69,24 +71,11 @@ public:
      * \param [in] type 
      * \param [in] ratio 
      */
-    XpObjLib AttrBlend(eType type, float ratio);
+    AttrBlend(eType type, float ratio)
+        : mBlending(type),
+          mRatio(ratio) {}
 
     ~AttrBlend() = default;
-
-    //-------------------------------------------------------------------------
-
-    /*!
-     * \details Check whether the attribute is enabled. 
-     * \note All class's setters will enable this attribute.
-     */
-    XpObjLib operator bool() const;
-
-    /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note All class's setters will enable this attribute.
-     * \param [in] state 
-     */
-    XpObjLib void setEnabled(bool state);
 
     //-------------------------------------------------------------------------
 
@@ -115,7 +104,6 @@ private:
 
     eType mBlending;
     float mRatio;
-    bool mIsEnabled : 1;
 
 };
 

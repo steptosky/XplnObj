@@ -71,8 +71,7 @@ public:
      * \note Makes the disabled attribute.
      */
     AttrCockpit()
-        : mType(cockpit),
-          mIsEnabled(false) {}
+        : mType(cockpit) {}
 
     /*!
      * \details Constructor init.
@@ -80,31 +79,9 @@ public:
      * \param [in] type
      */
     explicit AttrCockpit(const eType type)
-        : mType(type),
-          mIsEnabled(true) {}
+        : mType(type) {}
 
     ~AttrCockpit() = default;
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    /*!
-     * \details Check whether the attribute is enabled. 
-     * \note All class's setters will enable this attribute.
-     */
-    operator bool() const {
-        return mIsEnabled;
-    }
-
-    /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note All class's setters will enable this attribute.
-     * \param [in] state 
-     */
-    void setEnabled(const bool state) {
-        mIsEnabled = state;
-    }
 
     /// @}
     //-------------------------------------------------------------------------
@@ -120,60 +97,24 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    void setType(const eType type) {
-        mType = type;
-        mIsEnabled = true;
-    }
-
-    eType type() const {
-        return mType;
-    }
+    void setType(const eType type) { mType = type; }
+    eType type() const { return mType; }
 
     /// @}
     //-------------------------------------------------------------------------
     /// \name ATTR_cockpit_device
     /// @{
 
-    void setId(ECockpitDevice id) {
-        mIsEnabled = true;
-        mDevName = id.toString();
-    }
+    void setId(ECockpitDevice id) { mDevName = id.toString(); }
+    void setName(const std::string & name) { mDevName = name; }
+    void setBus(const std::size_t index) { mDevBus = index; }
+    void setLightingChannel(const std::size_t index) { mDevLighting = index; }
+    void setAutoAdjust(const bool state) { mDevAutoAdjust = state; }
 
-    void setName(const std::string & name) {
-        mIsEnabled = true;
-        mDevName = name;
-    }
-
-    void setBus(const std::size_t index) {
-        mIsEnabled = true;
-        mDevBus = index;
-    }
-
-    void setLightingChannel(const std::size_t index) {
-        mIsEnabled = true;
-        mDevLighting = index;
-    }
-
-    void setAutoAdjust(const bool state) {
-        mIsEnabled = true;
-        mDevAutoAdjust = state;
-    }
-
-    const std::string & name() const {
-        return mDevName;
-    }
-
-    std::size_t bus() const {
-        return mDevBus;
-    }
-
-    std::size_t lightingChannel() const {
-        return mDevLighting;
-    }
-
-    bool autoAdjust() const {
-        return mDevAutoAdjust;
-    }
+    const std::string & name() const { return mDevName; }
+    std::size_t bus() const { return mDevBus; }
+    std::size_t lightingChannel() const { return mDevLighting; }
+    bool autoAdjust() const { return mDevAutoAdjust; }
 
     /// @}
     //-------------------------------------------------------------------------
@@ -196,10 +137,8 @@ private:
     std::string mDevName;
     std::size_t mDevBus = 0;
     std::size_t mDevLighting = 0;
-    bool mDevAutoAdjust = false;
-
     eType mType;
-    bool mIsEnabled : 1;
+    bool mDevAutoAdjust = false;
 
 };
 

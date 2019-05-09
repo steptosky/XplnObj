@@ -64,21 +64,6 @@ public:
 
     //-------------------------------------------------------------------------
 
-    /*!
-     * \details Check whether the attribute is enabled.
-     * \note Any class's setter will enable this attribute.
-     */
-    XpObjLib operator bool() const;
-
-    /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note Any class's setter will enable this attribute.
-     * \param [in] state
-     */
-    XpObjLib void setEnabled(bool state);
-
-    //-------------------------------------------------------------------------
-
     XpObjLib bool operator==(const AttrLightLevel & other) const;
     XpObjLib bool operator!=(const AttrLightLevel & other) const;
 
@@ -109,7 +94,6 @@ private:
     float mVal1;
     float mVal2;
     std::string mDataref;
-    bool mIsEnabled : 1;
 
 };
 

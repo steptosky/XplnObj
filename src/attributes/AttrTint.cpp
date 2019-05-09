@@ -38,30 +38,19 @@ namespace xobj {
 
 AttrTint::AttrTint(const float albedoRatio, const float emissiveRatio)
     : mAlbedo(albedoRatio),
-      mEmissive(emissiveRatio),
-      mIsEnabled(true) { }
+      mEmissive(emissiveRatio) { }
 
 AttrTint::AttrTint()
     : mAlbedo(0.0f),
-      mEmissive(0.0f),
-      mIsEnabled(false) { }
+      mEmissive(0.0f) { }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrTint::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrTint::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrTint::operator==(const AttrTint & other) const {
-    return (mIsEnabled == other.mIsEnabled &&
-            sts::isEqual(mAlbedo, other.mAlbedo, 0.01f) &&
-            sts::isEqual(mEmissive, other.mEmissive, 0.01f));
+    return sts::isEqual(mAlbedo, other.mAlbedo, 0.01f) &&
+           sts::isEqual(mEmissive, other.mEmissive, 0.01f);
 }
 
 bool AttrTint::operator!=(const AttrTint & other) const {
@@ -74,12 +63,10 @@ bool AttrTint::operator!=(const AttrTint & other) const {
 
 void AttrTint::setAlbedo(const float albedoRatio) {
     mAlbedo = albedoRatio;
-    mIsEnabled = true;
 }
 
 void AttrTint::setEmissive(const float emissiveRatio) {
     mEmissive = emissiveRatio;
-    mIsEnabled = true;
 }
 
 float AttrTint::albedo() const {

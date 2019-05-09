@@ -73,21 +73,6 @@ public:
 
     //-------------------------------------------------------------------------
 
-    /*!
-     * \details Check whether the attribute is enabled. 
-     * \note All class's setters will enable this attribute.
-     */
-    XpObjLib operator bool() const;
-
-    /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note All class's setters will enable this attribute.
-     * \param [in] state 
-     */
-    XpObjLib void setEnabled(bool state);
-
-    //-------------------------------------------------------------------------
-
     XpObjLib bool operator==(const AttrCockpitRegion & other) const;
     XpObjLib bool operator!=(const AttrCockpitRegion & other) const;
 
@@ -111,7 +96,6 @@ private:
     std::int32_t mBottom;
     std::int32_t mRight;
     std::int32_t mTop;
-    bool mIsEnabled : 1;
 
 };
 

@@ -96,7 +96,7 @@ void ObjWriteAttr::write(AbstractWriter * writer, const ObjAbstract * obj) {
 class AttrWriter {
 public:
     template<typename T>
-    static void writeAttr(AbstractWriter * writer, const std::optional<T> & attr, T & inOutActiveAttr, size_t & outCounter,
+    static void writeAttr(AbstractWriter * writer, const std::optional<T> & attr, std::optional<T> & inOutActiveAttr, size_t & outCounter,
                           std::function<void(const T &)> attrEnable = nullptr, const std::function<void()> & attrDisable = nullptr) {
         if (!attr) {
             if (inOutActiveAttr) {
@@ -105,7 +105,7 @@ public:
                     attrDisable();
                 }
                 ++outCounter;
-                inOutActiveAttr = T();
+                inOutActiveAttr = std::nullopt;
             }
         }
         else {

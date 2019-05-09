@@ -163,7 +163,7 @@ void ObjWriteManip::write(AbstractWriter * writer, const AttrManipBase * manip) 
      * \link ObjWriteManip::setPanelEnabled \endlink and \link ObjWriteManip::setPanelDisabled \endlink
      * which set the \link ObjWriteManip::mIsPanelManip \endlink variable.
      */
-    assert(mIsPanelManip == mObj->pAttr.mAttrCockpit);
+    assert(mIsPanelManip == mObj->pAttr.mAttrCockpit.has_value());
     //------------------------------
     manip = prepareManip(manip);
     //------------------------------

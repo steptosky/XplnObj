@@ -119,8 +119,8 @@ TEST(TestGlobAttributesIO, attributes) {
     ASSERT_EQ(*mainIn.pAttr.mSlungLoadWeight, AttrSlungLoadWeight(500));
     ASSERT_EQ(*mainIn.pAttr.mAttrCockpitRegion1, AttrCockpitRegion(100, 200, 300, 400));
     ASSERT_EQ(*mainIn.pAttr.mAttrCockpitRegion2, AttrCockpitRegion(500, 600, 700, 800));
-    ASSERT_FALSE(*mainIn.pAttr.mAttrCockpitRegion3);
-    ASSERT_FALSE(*mainIn.pAttr.mAttrCockpitRegion4);
+    ASSERT_FALSE(mainIn.pAttr.mAttrCockpitRegion3);
+    ASSERT_FALSE(mainIn.pAttr.mAttrCockpitRegion4);
 
     ASSERT_EQ(*mainIn.pDraped.pAttr.mLod, AttrDrapedLod(1000));
     ASSERT_EQ(*mainIn.pDraped.pAttr.mLayerGroup, AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));

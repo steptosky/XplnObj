@@ -31,7 +31,6 @@
 
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrShiny.h"
-#include "io/writer/AbstractWriter.h"
 #include "common/AttributeNames.h"
 #include "converters/StringStream.h"
 
@@ -42,27 +41,17 @@ namespace xobj {
 /**************************************************************************************************/
 
 AttrShiny::AttrShiny(const float ratio)
-    : mRatio(ratio),
-      mIsEnabled(true) { }
+    : mRatio(ratio) { }
 
 AttrShiny::AttrShiny()
-    : mRatio(0.0f),
-      mIsEnabled(false) { }
+    : mRatio(0.0f) { }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrShiny::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrShiny::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrShiny::operator==(const AttrShiny & other) const {
-    return (mIsEnabled == other.mIsEnabled && sts::isEqual(mRatio, other.mRatio, 0.01f));
+    return sts::isEqual(mRatio, other.mRatio, 0.01f);
 }
 
 bool AttrShiny::operator!=(const AttrShiny & other) const {
@@ -76,7 +65,6 @@ bool AttrShiny::operator!=(const AttrShiny & other) const {
 void AttrShiny::setRatio(float ratio) {
     ratio = std::min(ratio, 1.0f);
     ratio = std::max(ratio, 0.0f);
-    mIsEnabled = true;
     mRatio = ratio;
 }
 

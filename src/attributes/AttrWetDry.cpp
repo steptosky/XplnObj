@@ -36,27 +36,17 @@ namespace xobj {
 /**************************************************************************************************/
 
 AttrWetDry::AttrWetDry(const eState state)
-    : mState(state),
-      mIsEnabled(true) { }
+    : mState(state) { }
 
 AttrWetDry::AttrWetDry()
-    : mState(wet),
-      mIsEnabled(false) { }
+    : mState(wet) { }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrWetDry::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrWetDry::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrWetDry::operator==(const AttrWetDry & other) const {
-    return (mIsEnabled == other.mIsEnabled && mState == other.mState);
+    return mState == other.mState;
 }
 
 bool AttrWetDry::operator!=(const AttrWetDry & other) const {
@@ -68,7 +58,6 @@ bool AttrWetDry::operator!=(const AttrWetDry & other) const {
 /**************************************************************************************************/
 
 void AttrWetDry::setState(const eState state) {
-    mIsEnabled = true;
     mState = state;
 }
 

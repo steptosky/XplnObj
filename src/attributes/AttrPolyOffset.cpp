@@ -29,7 +29,6 @@
 
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrPolyOffset.h"
-#include "io/writer/AbstractWriter.h"
 #include "common/AttributeNames.h"
 #include "converters/StringStream.h"
 
@@ -40,27 +39,17 @@ namespace xobj {
 /**************************************************************************************************/
 
 AttrPolyOffset::AttrPolyOffset(const float offset)
-    : mOffset(offset),
-      mIsEnabled(true) { }
+    : mOffset(offset) { }
 
 AttrPolyOffset::AttrPolyOffset()
-    : mOffset(0.0f),
-      mIsEnabled(false) { }
+    : mOffset(0.0f) { }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrPolyOffset::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrPolyOffset::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrPolyOffset::operator==(const AttrPolyOffset & other) const {
-    return (mIsEnabled == other.mIsEnabled && sts::isEqual(mOffset, other.mOffset, 0.01f));
+    return sts::isEqual(mOffset, other.mOffset, 0.01f);
 }
 
 bool AttrPolyOffset::operator!=(const AttrPolyOffset & other) const {
@@ -72,7 +61,6 @@ bool AttrPolyOffset::operator!=(const AttrPolyOffset & other) const {
 /**************************************************************************************************/
 
 void AttrPolyOffset::setOffset(const float offset) {
-    mIsEnabled = true;
     mOffset = offset;
 }
 

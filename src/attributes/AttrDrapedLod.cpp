@@ -37,27 +37,17 @@ namespace xobj {
 /**************************************************************************************************/
 
 AttrDrapedLod::AttrDrapedLod(const float distance)
-    : mDistance(distance),
-      mIsEnabled(true) { }
+    : mDistance(distance) { }
 
 AttrDrapedLod::AttrDrapedLod()
-    : mDistance(1000.0f),
-      mIsEnabled(false) { }
+    : mDistance(1000.0f) { }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrDrapedLod::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrDrapedLod::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrDrapedLod::operator==(const AttrDrapedLod & other) const {
-    return (mIsEnabled == other.mIsEnabled && sts::isEqual(mDistance, other.mDistance, 0.01f));
+    return sts::isEqual(mDistance, other.mDistance, 0.01f);
 }
 
 bool AttrDrapedLod::operator!=(const AttrDrapedLod & other) const {
@@ -70,7 +60,6 @@ bool AttrDrapedLod::operator!=(const AttrDrapedLod & other) const {
 
 void AttrDrapedLod::setDistance(const float distance) {
     mDistance = distance;
-    mIsEnabled = true;
 }
 
 float AttrDrapedLod::distance() const {

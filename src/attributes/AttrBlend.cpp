@@ -31,42 +31,18 @@
 
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrBlend.h"
-#include "io/writer/AbstractWriter.h"
 #include "common/AttributeNames.h"
 #include "converters/StringStream.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrBlend::AttrBlend(const eType type, const float ratio)
-    : mBlending(type),
-      mRatio(ratio),
-      mIsEnabled(true) {}
-
-AttrBlend::AttrBlend()
-    : mBlending(blend),
-      mRatio(0.5f),
-      mIsEnabled(false) {}
-
-/**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrBlend::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrBlend::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrBlend::operator==(const AttrBlend & other) const {
-    return (mIsEnabled == other.mIsEnabled &&
-            sts::isEqual(mRatio, other.mRatio, 0.01f) &&
-            mBlending == other.mBlending);
+    return sts::isEqual(mRatio, other.mRatio, 0.01f) &&
+           mBlending == other.mBlending;
 }
 
 bool AttrBlend::operator!=(const AttrBlend & other) const {
@@ -84,7 +60,6 @@ AttrBlend::eType AttrBlend::type() const {
 void AttrBlend::setRatio(float ratio) {
     ratio = std::min(ratio, 1.0f);
     ratio = std::max(ratio, 0.0f);
-    mIsEnabled = true;
     mRatio = ratio;
 }
 

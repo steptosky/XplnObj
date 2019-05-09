@@ -90,10 +90,8 @@ std::string strGlobAttrResult(const T & attr) {
 
 TEST(TestAttributes, AttrBlendShadow) {
     AttrBlend attr(AttrBlend::eType::shadow_blend, 0.5);
-    ASSERT_TRUE(attr);
     ASSERT_STREQ(std::string("ATTR_shadow_blend ").append(sts::toMbString(0.5f, PRECISION)).c_str(), strAttrResult(attr).c_str());
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(0.5f, attr.ratio());
 
     ASSERT_TRUE(AttrBlend() == AttrBlend());
@@ -111,10 +109,8 @@ TEST(TestAttributes, AttrBlendShadow) {
 
 TEST(TestAttributes, AttrBlend) {
     AttrBlend attr(AttrBlend::eType::no_blend, 0.5f);
-    ASSERT_TRUE(attr);
     ASSERT_STREQ(std::string("ATTR_no_blend ").append(sts::toMbString(0.5f, PRECISION)).c_str(), strAttrResult(attr).c_str());
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(0.5f, attr.ratio());
 }
 
@@ -122,10 +118,8 @@ TEST(TestAttributes, AttrBlend) {
 
 TEST(TestAttributes, AttrGlobBlendShadow) {
     AttrBlend attr(AttrBlend::eType::shadow_blend, 0.5);
-    ASSERT_TRUE(attr);
     ASSERT_STREQ(std::string("GLOBAL_shadow_blend ").append(sts::toMbString(0.5f, PRECISION)).c_str(), strGlobAttrResult(attr).c_str());
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(0.5f, attr.ratio());
 
     ASSERT_TRUE(AttrBlend() == AttrBlend());
@@ -143,10 +137,8 @@ TEST(TestAttributes, AttrGlobBlendShadow) {
 
 TEST(TestAttributes, AttrGlobBlend) {
     AttrBlend attr(AttrBlend::eType::no_blend, 0.5f);
-    ASSERT_TRUE(attr);
     ASSERT_STREQ(std::string("GLOBAL_no_blend ").append(sts::toMbString(0.5f, PRECISION)).c_str(), strGlobAttrResult(attr).c_str());
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(0.5f, attr.ratio());
 }
 
@@ -154,10 +146,8 @@ TEST(TestAttributes, AttrGlobBlend) {
 
 TEST(TestAttributes, AttrHard) {
     AttrHard attr(ESurface(ESurface::eId::grass), false);
-    ASSERT_TRUE(attr);
     ASSERT_STREQ(std::string("ATTR_hard ").append(ESurface(ESurface::eId::grass).toString()).c_str(), strAttrResult(attr).c_str());
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(ESurface::eId::grass, attr.surface().id());
 
     ASSERT_TRUE(AttrHard() == AttrHard());
@@ -175,10 +165,8 @@ TEST(TestAttributes, AttrHard) {
 
 TEST(TestAttributes, AttrHard_deck) {
     AttrHard attr(ESurface(ESurface::eId::blastpad), true);
-    ASSERT_TRUE(attr);
     ASSERT_STREQ(std::string("ATTR_hard_deck ").append(ESurface(ESurface::eId::blastpad).toString()).c_str(), strAttrResult(attr).c_str());
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(ESurface::eId::blastpad, attr.surface().id());
 }
 
@@ -186,7 +174,6 @@ TEST(TestAttributes, AttrHard_deck) {
 
 TEST(TestAttributes, AttrDrapedLayerGroup) {
     AttrDrapedLayerGroup attr;
-    ASSERT_FALSE(attr);
 
     ELayer layer(ELayer::eId::cars);
     attr.setOffset(5);
@@ -195,7 +182,6 @@ TEST(TestAttributes, AttrDrapedLayerGroup) {
     ASSERT_STREQ(std::string("ATTR_layer_group_draped ").append(layer.toString()).append(" 5").c_str(), strGlobAttrResult(attr).c_str());
 
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(5, attr.offset());
     ASSERT_STREQ(layer.toString(), attr.layer().toString());
 
@@ -216,7 +202,6 @@ TEST(TestAttributes, AttrDrapedLayerGroup) {
 
 TEST(TestAttributes, AttrLayerGroup) {
     AttrLayerGroup attr;
-    ASSERT_FALSE(attr);
 
     ELayer layer(ELayer::eId::cars);
     attr.setOffset(5);
@@ -225,7 +210,6 @@ TEST(TestAttributes, AttrLayerGroup) {
     ASSERT_STREQ(std::string("ATTR_layer_group ").append(layer.toString()).append(" 5").c_str(), strGlobAttrResult(attr).c_str());
 
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(5, attr.offset());
     ASSERT_STREQ(layer.toString(), attr.layer().toString());
 
@@ -246,7 +230,6 @@ TEST(TestAttributes, AttrLayerGroup) {
 
 TEST(TestAttributes, AttrLightLevel) {
     AttrLightLevel attr;
-    ASSERT_FALSE(attr);
 
     attr.setVal1(10.0f);
     attr.setVal2(20.0f);
@@ -259,7 +242,6 @@ TEST(TestAttributes, AttrLightLevel) {
         strAttrResult(attr).c_str());
 
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(10.0f, attr.val1());
     ASSERT_EQ(20.0f, attr.val2());
     ASSERT_STREQ("dataref", attr.dataref().c_str());
@@ -283,14 +265,12 @@ TEST(TestAttributes, AttrLightLevel) {
 
 TEST(TestAttributes, AttrLodDrap) {
     AttrDrapedLod attr;
-    ASSERT_FALSE(attr);
 
     attr.setDistance(10.0f);
 
     ASSERT_STREQ(std::string("ATTR_LOD_draped ").append(sts::toMbString(10.0f, PRECISION)).c_str(), strGlobAttrResult(attr).c_str());
 
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(10.0f, attr.distance());
 
     ASSERT_TRUE(AttrDrapedLod() == AttrDrapedLod());
@@ -308,13 +288,11 @@ TEST(TestAttributes, AttrLodDrap) {
 
 TEST(TestAttributes, AttrPolyOffset) {
     AttrPolyOffset attr;
-    ASSERT_FALSE(attr);
 
     attr.setOffset(10.0f);
 
     ASSERT_STREQ(std::string("ATTR_poly_os ").append(sts::toMbString(10.0f, PRECISION)).c_str(), strAttrResult(attr).c_str());
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(10.0f, attr.offset());
 
     ASSERT_TRUE(AttrPolyOffset() == AttrPolyOffset());
@@ -332,13 +310,11 @@ TEST(TestAttributes, AttrPolyOffset) {
 
 TEST(TestAttributes, AttrShiny) {
     AttrShiny attr;
-    ASSERT_FALSE(attr);
 
     attr.setRatio(0.5f);
 
     ASSERT_STREQ(std::string("ATTR_shiny_rat ").append(sts::toMbString(0.5f, PRECISION)).c_str(), strAttrResult(attr).c_str());
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(0.5f, attr.ratio());
 
     ASSERT_TRUE(AttrShiny() == AttrShiny());
@@ -356,14 +332,12 @@ TEST(TestAttributes, AttrShiny) {
 
 TEST(TestAttributes, AttrSlungLoadWeight) {
     AttrSlungLoadWeight attr;
-    ASSERT_FALSE(attr);
 
     attr.setWeight(10.0f);
 
     ASSERT_STREQ(std::string("slung_load_weight ").append(sts::toMbString(10.0f, PRECISION)).c_str(), strGlobAttrResult(attr).c_str());
 
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(10.0f, attr.weight());
 
     ASSERT_TRUE(AttrSlungLoadWeight() == AttrSlungLoadWeight());
@@ -381,14 +355,12 @@ TEST(TestAttributes, AttrSlungLoadWeight) {
 
 TEST(TestAttributes, AttrSpecular) {
     AttrSpecular attr;
-    ASSERT_FALSE(attr);
 
     attr.setRatio(0.5f);
 
     ASSERT_STREQ(std::string("GLOBAL_specular ").append(sts::toMbString(0.5f, PRECISION)).c_str(), strGlobAttrResult(attr).c_str());
 
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(0.5f, attr.ratio());
 
     ASSERT_TRUE(AttrSpecular() == AttrSpecular());
@@ -406,7 +378,6 @@ TEST(TestAttributes, AttrSpecular) {
 
 TEST(TestAttributes, AttrTint) {
     AttrTint attr;
-    ASSERT_FALSE(attr);
 
     attr.setAlbedo(10.0f);
     attr.setEmissive(20.0f);
@@ -416,7 +387,6 @@ TEST(TestAttributes, AttrTint) {
         .append(sts::toMbString(20.0f, PRECISION)).c_str(), strGlobAttrResult(attr).c_str());
 
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(10.0f, attr.albedo());
     ASSERT_EQ(20.0f, attr.emissive());
 
@@ -437,7 +407,6 @@ TEST(TestAttributes, AttrTint) {
 
 TEST(TestAttributes, AttrWetDry) {
     AttrWetDry attr;
-    ASSERT_FALSE(attr);
 
     attr.setState(AttrWetDry::eState::wet);
     ASSERT_STREQ("REQUIRE_WET", strGlobAttrResult(attr).c_str());
@@ -447,16 +416,12 @@ TEST(TestAttributes, AttrWetDry) {
     ASSERT_STREQ("REQUIRE_DRY", strGlobAttrResult(attr).c_str());
     ASSERT_EQ(AttrWetDry::eState::dry, attr.state());
 
-    ASSERT_TRUE(attr);
-
     ASSERT_TRUE(AttrWetDry() == AttrWetDry());
     ASSERT_TRUE(AttrWetDry(AttrWetDry::eState::wet) == AttrWetDry(AttrWetDry::eState::wet));
-    ASSERT_TRUE(AttrWetDry() != AttrWetDry(AttrWetDry::eState::wet));
     ASSERT_TRUE(AttrWetDry(AttrWetDry::eState::wet) != AttrWetDry(AttrWetDry::eState::dry));
 
     ASSERT_FALSE(AttrWetDry() != AttrWetDry());
     ASSERT_FALSE(AttrWetDry(AttrWetDry::eState::wet) != AttrWetDry(AttrWetDry::eState::wet));
-    ASSERT_FALSE(AttrWetDry() == AttrWetDry(AttrWetDry::eState::wet));
     ASSERT_FALSE(AttrWetDry(AttrWetDry::eState::wet) == AttrWetDry(AttrWetDry::eState::dry));
 }
 
@@ -464,7 +429,6 @@ TEST(TestAttributes, AttrWetDry) {
 
 TEST(TestAttributes, AttrSlopeLimit) {
     AttrSlopeLimit attr;
-    ASSERT_FALSE(attr);
 
     attr.setMinPitch(10.0f);
     attr.setMaxPitch(20.0f);
@@ -478,7 +442,6 @@ TEST(TestAttributes, AttrSlopeLimit) {
         .append(sts::toMbString(15.0f, PRECISION)).c_str(), strGlobAttrResult(attr).c_str());
 
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(10.0f, attr.minPitch());
     ASSERT_EQ(20.0f, attr.maxPitch());
     ASSERT_EQ(5.0f, attr.minRoll());
@@ -505,7 +468,6 @@ TEST(TestAttributes, AttrSlopeLimit) {
 
 TEST(TestAttributes, AttrCockpitRegion) {
     AttrCockpitRegion attr;
-    ASSERT_FALSE(attr);
 
     attr.setLeft(10);
     attr.setBottom(20);
@@ -515,7 +477,6 @@ TEST(TestAttributes, AttrCockpitRegion) {
     ASSERT_STREQ("COCKPIT_REGION 10 20 5 15", strGlobAttrResult(attr).c_str());
 
     // getters
-    ASSERT_TRUE(attr);
     ASSERT_EQ(10, attr.left());
     ASSERT_EQ(20, attr.bottom());
     ASSERT_EQ(5, attr.right());
@@ -540,9 +501,8 @@ TEST(TestAttributes, AttrCockpitRegion) {
 
 TEST(TestAttributes, AttrCockpit) {
     AttrCockpit attr;
-    ASSERT_FALSE(attr);
+
     ASSERT_EQ(AttrCockpit::cockpit, attr.type());
-    ASSERT_STREQ("", strAttrResult(attr).c_str());
 
     attr.setType(AttrCockpit::cockpit);
     ASSERT_STREQ("ATTR_cockpit", strAttrResult(attr).c_str());
@@ -551,12 +511,10 @@ TEST(TestAttributes, AttrCockpit) {
     attr.setType(AttrCockpit::region_2);
     ASSERT_STREQ("ATTR_cockpit_region 1", strAttrResult(attr).c_str());
 
-    ASSERT_TRUE(attr);
     ASSERT_EQ(AttrCockpit::region_2, attr.type());
 
     ASSERT_TRUE(AttrCockpit() == AttrCockpit());
     ASSERT_TRUE(AttrCockpit(AttrCockpit::cockpit) == AttrCockpit(AttrCockpit::cockpit));
-    ASSERT_TRUE(AttrCockpit() != AttrCockpit(AttrCockpit::cockpit));
     ASSERT_TRUE(AttrCockpit(AttrCockpit::cockpit) != AttrCockpit(AttrCockpit::region_2));
 
     ASSERT_FALSE(AttrCockpit() != AttrCockpit());

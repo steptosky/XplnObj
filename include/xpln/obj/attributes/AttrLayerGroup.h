@@ -63,21 +63,6 @@ public:
 
     //-------------------------------------------------------------------------
 
-    /*!
-     * \details Check whether the attribute is enabled.
-     * \note All class's setters will enable this attribute.
-     */
-    XpObjLib operator bool() const;
-
-    /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note All class's setters will enable this attribute.
-     * \param [in] state
-     */
-    XpObjLib void setEnabled(bool state);
-
-    //-------------------------------------------------------------------------
-
     XpObjLib bool operator==(const AttrLayerGroup & other) const;
     XpObjLib bool operator!=(const AttrLayerGroup & other) const;
 
@@ -95,7 +80,6 @@ private:
 
     std::int8_t mOffset;
     ELayer mLayer;
-    bool mIsEnabled : 1;
 
 };
 

@@ -29,7 +29,6 @@
 
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrLightLevel.h"
-#include "io/writer/AbstractWriter.h"
 #include "common/AttributeNames.h"
 
 namespace xobj {
@@ -41,32 +40,21 @@ namespace xobj {
 AttrLightLevel::AttrLightLevel(const float val1, const float val2, const std::string & dataRef)
     : mVal1(val1),
       mVal2(val2),
-      mDataref(dataRef),
-      mIsEnabled(true) { }
+      mDataref(dataRef) { }
 
 AttrLightLevel::AttrLightLevel()
     : mVal1(0.0f),
       mVal2(1.0f),
-      mDataref("none"),
-      mIsEnabled(false) { }
+      mDataref("none") { }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrLightLevel::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrLightLevel::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrLightLevel::operator==(const AttrLightLevel & other) const {
-    return (mIsEnabled == other.mIsEnabled &&
-            mDataref == other.mDataref &&
-            sts::isEqual(mVal1, other.mVal1, 0.01f) &&
-            sts::isEqual(mVal2, other.mVal2, 0.01f));
+    return mDataref == other.mDataref &&
+           sts::isEqual(mVal1, other.mVal1, 0.01f) &&
+           sts::isEqual(mVal2, other.mVal2, 0.01f);
 }
 
 bool AttrLightLevel::operator!=(const AttrLightLevel & other) const {
@@ -78,17 +66,14 @@ bool AttrLightLevel::operator!=(const AttrLightLevel & other) const {
 /**************************************************************************************************/
 
 void AttrLightLevel::setVal1(const float val1) {
-    mIsEnabled = true;
     mVal1 = val1;
 }
 
 void AttrLightLevel::setVal2(const float val2) {
-    mIsEnabled = true;
     mVal2 = val2;
 }
 
 void AttrLightLevel::setDataref(const std::string & dataRef) {
-    mIsEnabled = true;
     mDataref = dataRef;
 }
 

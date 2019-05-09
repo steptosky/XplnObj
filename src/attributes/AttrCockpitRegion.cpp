@@ -40,31 +40,20 @@ AttrCockpitRegion::AttrCockpitRegion(const std::int32_t left, const std::int32_t
     : mLeft(left),
       mBottom(bottom),
       mRight(right),
-      mTop(top),
-      mIsEnabled(true) { }
+      mTop(top) { }
 
 AttrCockpitRegion::AttrCockpitRegion()
     : mLeft(0),
       mBottom(0),
       mRight(0),
-      mTop(0),
-      mIsEnabled(false) { }
+      mTop(0) { }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrCockpitRegion::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrCockpitRegion::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrCockpitRegion::operator==(const AttrCockpitRegion & other) const {
-    return mIsEnabled == other.mIsEnabled &&
-           mLeft == other.mLeft &&
+    return mLeft == other.mLeft &&
            mBottom == other.mBottom &&
            mRight == other.mRight &&
            mTop == other.mTop;
@@ -80,22 +69,18 @@ bool AttrCockpitRegion::operator!=(const AttrCockpitRegion & other) const {
 
 void AttrCockpitRegion::setLeft(const int32_t left) {
     mLeft = left;
-    mIsEnabled = true;
 }
 
 void AttrCockpitRegion::setBottom(const int32_t bottom) {
     mBottom = bottom;
-    mIsEnabled = true;
 }
 
 void AttrCockpitRegion::setRight(const int32_t right) {
     mRight = right;
-    mIsEnabled = true;
 }
 
 void AttrCockpitRegion::setTop(const int32_t top) {
     mTop = top;
-    mIsEnabled = true;
 }
 
 int32_t AttrCockpitRegion::left() const {

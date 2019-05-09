@@ -74,12 +74,12 @@ private:
     std::size_t mCounter = 0;
     std::uint32_t mFlags = 0;
 
-    AttrLightLevel mActiveAttrLightLevel;
-    AttrPolyOffset mActiveAttrPolyOffset;
-    AttrBlend mActiveAttrBlend;
-    AttrShiny mActiveAttrShiny;
-    AttrHard mActiveAttrHard;
-    AttrCockpit mActiveAttrCockpit;
+    std::optional<AttrLightLevel> mActiveAttrLightLevel;
+    std::optional<AttrPolyOffset> mActiveAttrPolyOffset;
+    std::optional<AttrBlend> mActiveAttrBlend;
+    std::optional<AttrShiny> mActiveAttrShiny;
+    std::optional<AttrHard> mActiveAttrHard;
+    std::optional<AttrCockpit> mActiveAttrCockpit;
 
 };
 

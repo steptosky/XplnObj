@@ -28,7 +28,7 @@
 */
 
 #include <gtest/gtest.h>
-#include <io/writer/ObjWriteState.h>
+#include <io/ObjWriteState.h>
 
 using namespace std::string_literals;
 

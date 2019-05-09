@@ -32,7 +32,7 @@
 #include <cstdint>
 #include "xpln/obj/ObjMesh.h"
 #include "xpln/obj/attributes/AttrSet.h"
-#include "ObjWriteState.h"
+#include "io/ObjWriteState.h"
 
 namespace xobj {
 

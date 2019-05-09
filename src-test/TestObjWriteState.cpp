@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2019, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,61 +27,50 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <cstdint>
-#include "xpln/obj/ObjMesh.h"
-#include "xpln/obj/attributes/AttrSet.h"
-#include "ObjWriteState.h"
+#include <gtest/gtest.h>
+#include <io/writer/ObjWriteState.h>
+
+using namespace std::string_literals;
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-class AbstractWriter;
-class ObjMesh;
-class ObjAbstract;
+TEST(ObjWriteState, processAttr_bool) {
+    bool state = false;
 
-class ObjWriteManip;
+    EXPECT_FALSE(ObjWriteState::processBool(false, state, "on", "off"));
+    EXPECT_FALSE(state);
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
+    EXPECT_STREQ("on", ObjWriteState::processBool(true, state, "on", "off"));
+    EXPECT_TRUE(state);
 
-class ObjWriteAttr {
-public:
+    EXPECT_FALSE(ObjWriteState::processBool(true, state, "on", "off"));
+    EXPECT_TRUE(state);
 
-    explicit ObjWriteAttr(ObjWriteManip * manipWriter)
-        : mManipWriter(manipWriter) {}
+    EXPECT_STREQ("off", ObjWriteState::processBool(false, state, "on", "off"));
+    EXPECT_FALSE(state);
+}
 
-    ObjWriteAttr(const ObjWriteAttr &) = delete;
-    ObjWriteAttr & operator =(const ObjWriteAttr &) = delete;
+TEST(ObjWriteState, processAttr) {
+    typedef std::optional<AttrBlend> TestAttr;
+    TestAttr state;
 
-    ~ObjWriteAttr() = default;
-
-    XpObjLib void write(AbstractWriter * writer, const ObjAbstract * obj);
-    XpObjLib void reset();
-    XpObjLib std::size_t count() const;
-
-private:
-
-    void writeAttributes(const AttrSet & obj);
-
-    ObjWriteManip * mManipWriter = nullptr;
-    AbstractWriter * mWriter = nullptr;
-    std::size_t mCounter = 0;
-    std::uint32_t mFlags = 0;
-
-    std::optional<AttrLightLevel> mActiveAttrLightLevel;
-    std::optional<AttrPolyOffset> mActiveAttrPolyOffset;
-    std::optional<AttrBlend> mActiveAttrBlend;
-    std::optional<AttrShiny> mActiveAttrShiny;
-    std::optional<AttrHard> mActiveAttrHard;
-    std::optional<AttrCockpit> mActiveAttrCockpit;
-
-	ObjWriteState mAttributes;
-
-};
+    // new
+    EXPECT_STREQ("blend 0.5", ObjWriteState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.5f)), state, []() {return "blend 0.5"s; }, []() {return "off"s; }).c_str());
+    EXPECT_EQ(AttrBlend(AttrBlend::blend, 0.5f), state);
+    // the same
+    EXPECT_TRUE(ObjWriteState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.5f)), state, []() {return "blend 0.5"s; }, []() {return "off"s; }).empty());
+    EXPECT_EQ(AttrBlend (AttrBlend::blend, 0.5f), state);
+    // value changed
+    EXPECT_STREQ("blend 0.75", ObjWriteState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.75f)), state, []() {return "blend 0.75"s; }, []() {return "off"s; }).c_str());
+    EXPECT_EQ(AttrBlend(AttrBlend::blend, 0.75f), state);
+    // disabling
+    EXPECT_STREQ("off", ObjWriteState::processAttr(TestAttr(std::nullopt), state, []() {return "on"s; }, []() {return "off"s; }).c_str());
+    EXPECT_EQ(TestAttr(std::nullopt), state);
+}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

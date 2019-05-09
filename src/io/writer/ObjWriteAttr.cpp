@@ -134,23 +134,6 @@ public:
     }
 };
 
-void ObjWriteAttr::writeBool(const bool currVal, const std::uint32_t flag, const char * attrOn, const char * attrOff) {
-    if (!currVal) {
-        if (Flags::hasFlag(mFlags, flag)) {
-            mWriter->printLine(attrOff);
-            Flags::removeFlag(mFlags, flag);
-            ++mCounter;
-        }
-    }
-    else {
-        if (!Flags::hasFlag(mFlags, flag)) {
-            mWriter->printLine(attrOn);
-            Flags::addFlag(mFlags, flag);
-            ++mCounter;
-        }
-    }
-}
-
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
@@ -167,12 +150,28 @@ void ObjWriteAttr::writeAttributes(const AttrSet & attrSet) {
         }
     };
 
+	//-------------------------------------------------------------------------
+
+    const auto writeBool = [&](const char * attr) {
+        if (attr) {
+            ++mCounter;
+            mWriter->printLine(attr);
+        }
+    };
+
+	const auto writeAttr= [&](const std::string & attr) {
+		if (!attr.empty()) {
+			++mCounter;
+			mWriter->printLine(attr);
+		}
+	};
+
     //-------------------------------------------------------------------------
 
-    writeBool(attrSet.mIsDraped, Flags::draped, ATTR_DRAPED, ATTR_NO_DRAPED);
-    writeBool(attrSet.mIsSolidForCamera, Flags::solid_camera, ATTR_SOLID_CAMERA, ATTR_NO_SOLID_CAMERA);
-    writeBool(!attrSet.mIsDraw, Flags::no_draw, ATTR_DRAW_DISABLE, ATTR_DRAW_ENABLE);
-    writeBool(!attrSet.mIsCastShadow, Flags::no_shadow, ATTR_NO_SHADOW, ATTR_SHADOW);
+    writeBool(ObjWriteState::processBool(attrSet.mIsDraped, mAttributes.mObject.mIsDraped, ATTR_DRAPED, ATTR_NO_DRAPED));
+    writeBool(ObjWriteState::processBool(attrSet.mIsSolidForCamera, mAttributes.mObject.mIsSolidForCamera, ATTR_SOLID_CAMERA, ATTR_NO_SOLID_CAMERA));
+    writeBool(ObjWriteState::processBool(attrSet.mIsDraw, mAttributes.mObject.mIsDraw, ATTR_DRAW_ENABLE, ATTR_DRAW_DISABLE));
+    writeBool(ObjWriteState::processBool(attrSet.mIsCastShadow, mAttributes.mObject.mIsCastShadow, ATTR_SHADOW, ATTR_NO_SHADOW));
 
     AttrWriter::writeAttr<AttrHard>(mWriter, attrSet.mAttrHard, mActiveAttrHard, mCounter);
     AttrWriter::writeAttr<AttrShiny>(mWriter, attrSet.mAttrShiny, mActiveAttrShiny, mCounter);

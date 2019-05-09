@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2019, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,61 +27,22 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <cstdint>
-#include "xpln/obj/ObjMesh.h"
-#include "xpln/obj/attributes/AttrSet.h"
 #include "ObjWriteState.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-class AbstractWriter;
-class ObjMesh;
-class ObjAbstract;
-
-class ObjWriteManip;
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-class ObjWriteAttr {
-public:
-
-    explicit ObjWriteAttr(ObjWriteManip * manipWriter)
-        : mManipWriter(manipWriter) {}
-
-    ObjWriteAttr(const ObjWriteAttr &) = delete;
-    ObjWriteAttr & operator =(const ObjWriteAttr &) = delete;
-
-    ~ObjWriteAttr() = default;
-
-    XpObjLib void write(AbstractWriter * writer, const ObjAbstract * obj);
-    XpObjLib void reset();
-    XpObjLib std::size_t count() const;
-
-private:
-
-    void writeAttributes(const AttrSet & obj);
-
-    ObjWriteManip * mManipWriter = nullptr;
-    AbstractWriter * mWriter = nullptr;
-    std::size_t mCounter = 0;
-    std::uint32_t mFlags = 0;
-
-    std::optional<AttrLightLevel> mActiveAttrLightLevel;
-    std::optional<AttrPolyOffset> mActiveAttrPolyOffset;
-    std::optional<AttrBlend> mActiveAttrBlend;
-    std::optional<AttrShiny> mActiveAttrShiny;
-    std::optional<AttrHard> mActiveAttrHard;
-    std::optional<AttrCockpit> mActiveAttrCockpit;
-
-	ObjWriteState mAttributes;
-
-};
+const char * ObjWriteState::processBool(const bool newValue, bool & inOutStateValue,
+                                        const char * enable, const char * disable) {
+    if (newValue == inOutStateValue) {
+        return nullptr;
+    }
+    inOutStateValue = newValue;
+    return inOutStateValue ? enable : disable;
+}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

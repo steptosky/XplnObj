@@ -35,20 +35,18 @@ namespace xobj {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool ObjWriteState::processBool(const bool newValue, bool & inOutStateValue,
-                                const std::function<void()> & enable,
-                                const std::function<void()> & disable) {
+void ObjWriteState::processBool(const bool newValue, bool & inOutStateValue,
+                                const std::function<void(bool enable)> & switchFn) {
     if (newValue == inOutStateValue) {
-        return false;
+        return;
     }
     inOutStateValue = newValue;
     if (inOutStateValue) {
-        enable();
-        return true;
+        switchFn(true);
     }
-
-    disable();
-    return true;
+    else {
+        switchFn(false);
+    }
 }
 
 /**************************************************************************************************/

@@ -60,33 +60,30 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    XpObjLib static bool processBool(bool newValue, bool & inOutStateValue,
-                                     const std::function<void()> & enable = nullptr,
-                                     const std::function<void()> & disable = nullptr);
+    XpObjLib static void processBool(bool newValue, bool & inOutStateValue,
+                                     const std::function<void(bool enable)> & switchFn);
 
     template<typename T>
-    static bool processAttr(const T & newValue, T & inOutStateValue,
-                            const std::function<void()> & enable = nullptr,
-                            const std::function<void()> & disable = nullptr) {
+    static void processAttr(const T & newValue, T & inOutStateValue,
+                            const std::function<void(bool enable)> & switchFn) {
         if (newValue == inOutStateValue) {
-            return false;
+            return;
         }
 
         if (!inOutStateValue && newValue) {
             inOutStateValue = newValue;
-            enable();
-            return true;
+            switchFn(true);
+            return;
         }
 
         if (inOutStateValue && !newValue) {
             inOutStateValue = newValue;
-            disable();
-            return true;
+            switchFn(false);
+            return;
         }
 
         inOutStateValue = newValue;
-        enable();
-        return true;
+        switchFn(true);
     }
 
     /// @}

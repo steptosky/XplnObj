@@ -72,7 +72,7 @@ private:
     ObjWriteManip * mManipWriter = nullptr;
     AbstractWriter * mWriter = nullptr;
     std::size_t mCounter = 0;
-	ObjWriteState mAttributes;
+	ObjWriteState mState;
 
 };
 

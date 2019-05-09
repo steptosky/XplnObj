@@ -65,7 +65,7 @@ public:
 
     template<typename T>
     static std::string processAttr(const T & newValue, T & inOutStateValue,
-                                   const std::function<std::string()> enable = nullptr,
+                                   const std::function<std::string()> & enable = nullptr,
                                    const std::function<std::string()> & disable = nullptr) {
         if (newValue == inOutStateValue) {
             return std::string();

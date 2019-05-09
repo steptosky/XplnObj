@@ -87,7 +87,7 @@ class LibConan(ConanFile):
         cmake.build()
         cmake.install()
         if build_testing == "1":
-            cmake.test()
+            cmake.test(output_on_failure=True)
 
     def package(self):
         self.copy("license*", src=".", dst="licenses", ignore_case=True, keep_path=False)

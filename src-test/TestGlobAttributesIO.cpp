@@ -88,8 +88,8 @@ TEST(TestGlobAttributesIO, attributes) {
     mainOut.pAttr.mAttrCockpitRegion1 = AttrCockpitRegion(100, 200, 300, 400);
     mainOut.pAttr.mAttrCockpitRegion2 = AttrCockpitRegion(500, 600, 700, 800);
 
-    mainOut.pDraped.pAttr.setLod(AttrDrapedLod(1000));
-    mainOut.pDraped.pAttr.setLayerGroup(AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
+    mainOut.pDraped.pAttr.mLod = AttrDrapedLod(1000);
+    mainOut.pDraped.pAttr.mLayerGroup = AttrDrapedLayerGroup(ELayer(ELayer::airports), -3);
 
     //-------------------------------------------------------------------------
 
@@ -122,8 +122,8 @@ TEST(TestGlobAttributesIO, attributes) {
     ASSERT_FALSE(*mainIn.pAttr.mAttrCockpitRegion3);
     ASSERT_FALSE(*mainIn.pAttr.mAttrCockpitRegion4);
 
-    ASSERT_EQ(mainIn.pDraped.pAttr.lod(), AttrDrapedLod(1000));
-    ASSERT_EQ(mainIn.pDraped.pAttr.layerGroup(), AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
+    ASSERT_EQ(*mainIn.pDraped.pAttr.mLod, AttrDrapedLod(1000));
+    ASSERT_EQ(*mainIn.pDraped.pAttr.mLayerGroup, AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
 }
 
 /**************************************************************************************************/

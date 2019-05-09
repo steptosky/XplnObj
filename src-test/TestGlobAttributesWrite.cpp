@@ -189,7 +189,7 @@ TEST(TestGlobAttributesWrite, AttrDrapedLayerGroup) {
     ObjMain main;
 
     const AttrDrapedLayerGroup attr(ELayer(ELayer::eId::cars), 5);
-    main.pDraped.pAttr.setLayerGroup(attr);
+    main.pDraped.pAttr.mLayerGroup = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);
@@ -202,7 +202,7 @@ TEST(TestGlobAttributesWrite, AttrLodDrap) {
     ObjMain main;
 
     const AttrDrapedLod attr(10.0f);
-    main.pDraped.pAttr.setLod(attr);
+    main.pDraped.pAttr.mLod = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);

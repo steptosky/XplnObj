@@ -46,12 +46,6 @@ namespace xobj {
 
 template<typename T>
 std::size_t writeAttr(AbstractWriter * writer, const T & attr) {
-    printObjGlobAttr(attr, *writer);
-    return attr ? 1 : 0;
-}
-
-template<typename T>
-std::size_t writeGlobAttr(AbstractWriter * writer, const T & attr) {
     if (attr) {
         printObjGlobAttr(*attr, *writer);
     }
@@ -77,20 +71,20 @@ void ObjWriteGlobAttr::write(AbstractWriter * writer, const ObjMain * obj) {
     // It is printed in another place.
     //writeBool(inWriter, ATTR_GLOBAL_DEBUG, inObj->pAttr.isDebug());
 
-    mCounter += writeGlobAttr(writer, obj->pAttr.mAttrWetDry);
-    mCounter += writeGlobAttr(writer, obj->pAttr.mBlend);
-    mCounter += writeGlobAttr(writer, obj->pAttr.mLayerGroup);
-    mCounter += writeGlobAttr(writer, obj->pAttr.mSlungLoadWeight);
-    mCounter += writeGlobAttr(writer, obj->pAttr.mSpecular);
-    mCounter += writeGlobAttr(writer, obj->pAttr.mTint);
-    mCounter += writeGlobAttr(writer, obj->pAttr.mAttrSlopeLimit);
-    mCounter += writeGlobAttr(writer, obj->pAttr.mAttrCockpitRegion1);
-    mCounter += writeGlobAttr(writer, obj->pAttr.mAttrCockpitRegion2);
-    mCounter += writeGlobAttr(writer, obj->pAttr.mAttrCockpitRegion3);
-    mCounter += writeGlobAttr(writer, obj->pAttr.mAttrCockpitRegion4);
+    mCounter += writeAttr(writer, obj->pAttr.mAttrWetDry);
+    mCounter += writeAttr(writer, obj->pAttr.mBlend);
+    mCounter += writeAttr(writer, obj->pAttr.mLayerGroup);
+    mCounter += writeAttr(writer, obj->pAttr.mSlungLoadWeight);
+    mCounter += writeAttr(writer, obj->pAttr.mSpecular);
+    mCounter += writeAttr(writer, obj->pAttr.mTint);
+    mCounter += writeAttr(writer, obj->pAttr.mAttrSlopeLimit);
+    mCounter += writeAttr(writer, obj->pAttr.mAttrCockpitRegion1);
+    mCounter += writeAttr(writer, obj->pAttr.mAttrCockpitRegion2);
+    mCounter += writeAttr(writer, obj->pAttr.mAttrCockpitRegion3);
+    mCounter += writeAttr(writer, obj->pAttr.mAttrCockpitRegion4);
 
-    mCounter += writeAttr(writer, obj->pDraped.pAttr.layerGroup());
-    mCounter += writeAttr(writer, obj->pDraped.pAttr.lod());
+    mCounter += writeAttr(writer, obj->pDraped.pAttr.mLayerGroup);
+    mCounter += writeAttr(writer, obj->pDraped.pAttr.mLod);
 }
 
 void ObjWriteGlobAttr::writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::optional<std::string> & string) {

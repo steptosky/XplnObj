@@ -35,7 +35,7 @@
 #----------------------------------------------------------------------------------#
 # init
 
-cmake_minimum_required (VERSION 3.7.0)
+cmake_minimum_required (VERSION 3.14.3)
 
 message(STATUS "==============================================")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")

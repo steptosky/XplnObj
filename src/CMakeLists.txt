@@ -35,7 +35,7 @@
 #----------------------------------------------------------------------------------#
 # project
 
-cmake_minimum_required (VERSION 3.7.0)
+cmake_minimum_required (VERSION 3.14.3)
 
 set(TARGET ${ProjectId})
 project(${TARGET} VERSION ${ProjectVersion} LANGUAGES "CXX")
@@ -65,8 +65,8 @@ add_library(${TARGET} ${CM_FILES})
 #----------------------------------------------------------------------------------#
 # cxx standard 
 
-set_target_properties(${TARGET} PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
-target_compile_features(${TARGET} PUBLIC cxx_std_14)
+set_target_properties(${TARGET} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED YES)
+target_compile_features(${TARGET} PUBLIC cxx_std_17)
 
 #----------------------------------------------------------------------------------#
 # linkage 

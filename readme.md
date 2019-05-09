@@ -10,7 +10,7 @@
 - The library is distributed under [BSD (3-Clause)](http://opensource.org/licenses/BSD-3-Clause) license.
   For more information read the [license](license.txt) file.
 - The library uses [SemVer](http://semver.org/).
-- The library requires C++ 14 or higher.
+- The library requires C++ 17 or higher.
 - The library's versions from the ```master``` branch are available in our 
   [[bintray]](https://bintray.com/steptosky/conan-open-source) conan remote without pre-built packages.  
   ```XplnObj/X.Y.Z@steptosky/stable```
@@ -23,8 +23,8 @@
 
 
 #### dependencies
-- [Cmake 3.7+](https://cmake.org) - building tool.
-- [Conan 1.6+](https://www.conan.io) - package manager.
+- [Cmake](https://cmake.org) - building tool.
+- [Conan](https://www.conan.io) - package manager.
 - [Conan Package Tools](https://github.com/conan-io/conan-package-tools) - if you want to build the project with those tools.
 - [Python 3](https://www.python.org) - is needed for the Conan.
 - [Doxygen](http://www.stack.nl/~dimitri/doxygen) - if you want to generate the documentation.

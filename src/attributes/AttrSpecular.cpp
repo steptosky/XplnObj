@@ -35,25 +35,11 @@
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrSpecular::AttrSpecular(const float ratio)
-    : mRatio(ratio) { }
-
-AttrSpecular::AttrSpecular()
-    : mRatio(0.0f) { }
-
-/**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
 bool AttrSpecular::operator==(const AttrSpecular & other) const {
     return sts::isEqual(mRatio, other.mRatio, 0.01f);
-}
-
-bool AttrSpecular::operator!=(const AttrSpecular & other) const {
-    return !operator==(other);
 }
 
 /**************************************************************************************************/
@@ -64,10 +50,6 @@ void AttrSpecular::setRatio(float ratio) {
     ratio = std::min(ratio, 1.0f);
     ratio = std::max(ratio, 0.0f);
     mRatio = ratio;
-}
-
-float AttrSpecular::ratio() const {
-    return mRatio;
 }
 
 /**************************************************************************************************/

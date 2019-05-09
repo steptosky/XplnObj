@@ -44,36 +44,40 @@ namespace xobj {
 class AttrSpecular {
 public:
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrSpecular();
+    //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] ratio 
-     */
-    XpObjLib AttrSpecular(float ratio);
+    explicit AttrSpecular(const float ratio = 0.0f)
+        : mRatio(ratio) { }
+
+    AttrSpecular(const AttrSpecular &) = default;
+    AttrSpecular(AttrSpecular &&) = default;
 
     ~AttrSpecular() = default;
 
+    AttrSpecular & operator=(const AttrSpecular &) = default;
+    AttrSpecular & operator=(AttrSpecular &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrSpecular & other) const;
-    XpObjLib bool operator!=(const AttrSpecular & other) const;
+    bool operator!=(const AttrSpecular & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib void setRatio(float ratio);
-    XpObjLib float ratio() const;
+    float ratio() const { return mRatio; }
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    float mRatio;
+    float mRatio = 0.0f;
 
 };
 

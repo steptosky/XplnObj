@@ -33,45 +33,12 @@
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrHard::AttrHard(const ESurface surface, const bool deck)
-    : mESurface(surface),
-      mIsDeck(deck) { }
-
-AttrHard::AttrHard()
-    : mESurface(ESurface::eId::none),
-      mIsDeck(false) { }
-
-/**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
 bool AttrHard::operator==(const AttrHard & other) const {
     return mIsDeck == other.mIsDeck &&
            mESurface == other.mESurface;
-}
-
-bool AttrHard::operator!=(const AttrHard & other) const {
-    return !operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrHard::setESurface(const ESurface & surface, const bool deck) {
-    mESurface = surface;
-    mIsDeck = deck;
-}
-
-const ESurface & AttrHard::surface() const {
-    return mESurface;
-}
-
-bool AttrHard::isDeck() const {
-    return mIsDeck;
 }
 
 /**************************************************************************************************/

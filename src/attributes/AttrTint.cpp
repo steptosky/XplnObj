@@ -33,53 +33,12 @@
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrTint::AttrTint(const float albedoRatio, const float emissiveRatio)
-    : mAlbedo(albedoRatio),
-      mEmissive(emissiveRatio) { }
-
-AttrTint::AttrTint()
-    : mAlbedo(0.0f),
-      mEmissive(0.0f) { }
-
-/**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
 bool AttrTint::operator==(const AttrTint & other) const {
     return sts::isEqual(mAlbedo, other.mAlbedo, 0.01f) &&
            sts::isEqual(mEmissive, other.mEmissive, 0.01f);
-}
-
-bool AttrTint::operator!=(const AttrTint & other) const {
-    return !operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrTint::setAlbedo(const float albedoRatio) {
-    mAlbedo = albedoRatio;
-}
-
-void AttrTint::setEmissive(const float emissiveRatio) {
-    mEmissive = emissiveRatio;
-}
-
-float AttrTint::albedo() const {
-    return mAlbedo;
-}
-
-float AttrTint::emissive() const {
-    return mEmissive;
-}
-
-void AttrTint::set(const float albedoRatio, const float emissiveRatio) {
-    mAlbedo = albedoRatio;
-    mEmissive = emissiveRatio;
 }
 
 /**************************************************************************************************/

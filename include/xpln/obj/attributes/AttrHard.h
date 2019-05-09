@@ -48,35 +48,42 @@ class AttrHard {
 public:
 
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrHard();
+    AttrHard() = default;
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] surface
-     * \param [in] deck true allows the user to fly under the surface.
-     */
-    XpObjLib AttrHard(ESurface surface, bool deck = false);
+    explicit AttrHard(const ESurface surface, const bool deck = false)
+        : mESurface(surface),
+          mIsDeck(deck) { }
+
+    AttrHard(const AttrHard &) = default;
+    AttrHard(AttrHard &&) = default;
 
     ~AttrHard() = default;
 
+    AttrHard & operator=(const AttrHard &) = default;
+    AttrHard & operator=(AttrHard &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrHard & other) const;
-    XpObjLib bool operator!=(const AttrHard & other) const;
+    bool operator!=(const AttrHard & other) const { return !operator==(other); }
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setESurface(const ESurface & surface, bool deck = false);
-    XpObjLib const ESurface & surface() const;
-    XpObjLib bool isDeck() const;
+    void setESurface(const ESurface & surface, bool deck = false) {
+        mESurface = surface;
+        mIsDeck = deck;
+    }
 
+    const ESurface & surface() const { return mESurface; }
+    bool isDeck() const { return mIsDeck; }
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*!
      * \note For internal use only.
@@ -86,12 +93,13 @@ public:
      */
     XpObjLib static std::string objDisableStr();
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    ESurface mESurface;
-    bool mIsDeck : 1;
+    ESurface mESurface = ESurface(ESurface::eId::none);
+    bool mIsDeck = false;
 };
 
 /**************************************************************************************************/

@@ -45,44 +45,48 @@ class AttrWetDry {
 public:
 
     //-------------------------------------------------------------------------
+    /// @{
 
     enum eState {
         wet = 1,
         dry
     };
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrWetDry();
+    explicit AttrWetDry(const eState state = wet)
+        : mState(state) { }
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] state 
-     */
-    XpObjLib AttrWetDry(eState state);
+    AttrWetDry(const AttrWetDry &) = default;
+    AttrWetDry(AttrWetDry &&) = default;
 
     ~AttrWetDry() = default;
 
+    AttrWetDry & operator=(const AttrWetDry &) = default;
+    AttrWetDry & operator=(AttrWetDry &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrWetDry & other) const;
-    XpObjLib bool operator!=(const AttrWetDry & other) const;
+    bool operator!=(const AttrWetDry & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setState(eState state);
-    XpObjLib eState state() const;
+    void setState(const eState state) { mState = state; }
+    eState state() const { return mState; }
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    eState mState;
+    eState mState = wet;
 
 };
 

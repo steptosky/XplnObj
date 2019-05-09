@@ -55,11 +55,7 @@ public:
     /// @{
 
     AttrSet() = default;
-
-    AttrSet(const AttrSet & copy) {
-        this->operator=(copy);
-    }
-
+    AttrSet(const AttrSet & copy) { this->operator=(copy); }
     AttrSet(AttrSet &&) = delete;
 
     bool operator==(const AttrSet & other) const {
@@ -83,13 +79,9 @@ public:
                mIsSolidForCamera == other.mIsSolidForCamera;
     }
 
-    bool operator!=(const AttrSet & other) const {
-        return !this->operator==(other);
-    }
+    bool operator!=(const AttrSet & other) const { return !this->operator==(other); }
 
-    ~AttrSet() {
-        setManipulator(nullptr);
-    }
+    ~AttrSet() { setManipulator(nullptr); }
 
     AttrSet & operator=(const AttrSet & copy) {
         copy.mAttrManipBase ? setManipulator(copy.mAttrManipBase->clone()) : setManipulator(nullptr);

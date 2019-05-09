@@ -45,41 +45,47 @@ namespace xobj {
 class AttrDrapedLayerGroup {
 public:
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrDrapedLayerGroup();
+    //-------------------------------------------------------------------------
+    /// @{
+    /// 
+    AttrDrapedLayerGroup() = default;
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] layer 
-     * \param [in] offset 
-     */
-    XpObjLib AttrDrapedLayerGroup(ELayer layer, std::int32_t offset = 0);
+    explicit AttrDrapedLayerGroup(const ELayer layer, const std::int32_t offset = 0)
+        : mOffset(static_cast<uint8_t>(offset)),
+          mLayer(layer) { }
+
+    AttrDrapedLayerGroup(const AttrDrapedLayerGroup &) = default;
+    AttrDrapedLayerGroup(AttrDrapedLayerGroup &&) = default;
 
     ~AttrDrapedLayerGroup() = default;
 
+    AttrDrapedLayerGroup & operator=(const AttrDrapedLayerGroup &) = default;
+    AttrDrapedLayerGroup & operator=(AttrDrapedLayerGroup &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrDrapedLayerGroup & other) const;
-    XpObjLib bool operator!=(const AttrDrapedLayerGroup & other) const;
+    bool operator!=(const AttrDrapedLayerGroup & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib void setOffset(std::int32_t offset);
-    XpObjLib void setLayer(ELayer layer);
+    void setLayer(const ELayer layer) { mLayer = layer; }
 
-    XpObjLib int32_t offset() const;
-    XpObjLib ELayer layer() const;
+    std::int32_t offset() const { return static_cast<std::int32_t>(mOffset); }
+    ELayer layer() const { return mLayer; }
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    std::int8_t mOffset;
-    ELayer mLayer;
+    std::int8_t mOffset = 0;
+    ELayer mLayer = ELayer(ELayer::objects);
 
 };
 

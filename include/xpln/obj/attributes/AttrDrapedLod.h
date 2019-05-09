@@ -44,36 +44,42 @@ namespace xobj {
 class AttrDrapedLod {
 public:
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrDrapedLod();
+    //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] distance 
-     */
-    XpObjLib AttrDrapedLod(float distance);
+    AttrDrapedLod() = default;
+
+    explicit AttrDrapedLod(const float distance)
+        : mDistance(distance) { }
+
+    AttrDrapedLod(const AttrDrapedLod &) = default;
+    AttrDrapedLod(AttrDrapedLod &&) = default;
 
     ~AttrDrapedLod() = default;
 
+    AttrDrapedLod & operator=(const AttrDrapedLod &) = default;
+    AttrDrapedLod & operator=(AttrDrapedLod &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrDrapedLod & other) const;
-    XpObjLib bool operator!=(const AttrDrapedLod & other) const;
+    bool operator!=(const AttrDrapedLod & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setDistance(float distance);
-    XpObjLib float distance() const;
+    void setDistance(const float distance) { mDistance = distance; }
+    float distance() const { return mDistance; }
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    float mDistance;
+    float mDistance = 1000.0f;
 
 };
 

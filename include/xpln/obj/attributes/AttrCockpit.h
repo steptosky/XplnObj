@@ -66,32 +66,25 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    /*!
-     * \details Constructor default
-     * \note Makes the disabled attribute.
-     */
-    AttrCockpit()
-        : mType(cockpit) {}
+    AttrCockpit() = default;
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] type
-     */
     explicit AttrCockpit(const eType type)
         : mType(type) {}
 
+    AttrCockpit(const AttrCockpit &) = default;
+    AttrCockpit(AttrCockpit &&) = default;
+
     ~AttrCockpit() = default;
+
+    AttrCockpit & operator=(const AttrCockpit &) = default;
+    AttrCockpit & operator=(AttrCockpit &&) = default;
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
     XpObjLib bool operator==(const AttrCockpit & other) const;
-
-    bool operator!=(const AttrCockpit & other) const {
-        return !operator==(other);
-    }
+    bool operator!=(const AttrCockpit & other) const { return !operator==(other); }
 
     /// @}
     //-------------------------------------------------------------------------
@@ -105,7 +98,7 @@ public:
     /// \name ATTR_cockpit_device
     /// @{
 
-    void setId(ECockpitDevice id) { mDevName = id.toString(); }
+    void setId(const ECockpitDevice id) { mDevName = id.toString(); }
     void setName(const std::string & name) { mDevName = name; }
     void setBus(const std::size_t index) { mDevBus = index; }
     void setLightingChannel(const std::size_t index) { mDevLighting = index; }
@@ -137,7 +130,7 @@ private:
     std::string mDevName;
     std::size_t mDevBus = 0;
     std::size_t mDevLighting = 0;
-    eType mType;
+    eType mType = cockpit;
     bool mDevAutoAdjust = false;
 
 };

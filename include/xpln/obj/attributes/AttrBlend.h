@@ -48,6 +48,9 @@ class AbstractWriter;
 class AttrBlend {
 public:
 
+    //-------------------------------------------------------------------------
+    /// @{
+
     enum eType : std::uint8_t {
         // default
         blend,
@@ -55,40 +58,44 @@ public:
         shadow_blend,
     };
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
     AttrBlend()
         : mBlending(blend),
           mRatio(0.5f) {}
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] type 
-     * \param [in] ratio 
-     */
-    AttrBlend(eType type, float ratio)
+    AttrBlend(const eType type, const float ratio)
         : mBlending(type),
           mRatio(ratio) {}
 
+    AttrBlend(const AttrBlend &) = default;
+    AttrBlend(AttrBlend &&) = default;
+
     ~AttrBlend() = default;
 
+    AttrBlend & operator=(const AttrBlend &) = default;
+    AttrBlend & operator=(AttrBlend &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrBlend & other) const;
-    XpObjLib bool operator!=(const AttrBlend & other) const;
+    bool operator!=(const AttrBlend & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib void setRatio(float ratio);
     XpObjLib float ratio() const;
     XpObjLib eType type() const;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*!
      * \note For internal use only.
@@ -98,6 +105,7 @@ public:
      */
     XpObjLib static std::string objDisableStr();
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:

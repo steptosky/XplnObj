@@ -43,7 +43,7 @@ namespace xobj {
  * \details Representation of the draped geometry attributes set.
  * \ingroup Attributes
  */
-class AttrDrapedSet {
+class AttrDrapedSet final {
 public:
 
     //-------------------------------------------------------------------------
@@ -53,7 +53,7 @@ public:
     AttrDrapedSet(const AttrDrapedSet &) = default;
     AttrDrapedSet(AttrDrapedSet &&) = default;
 
-    virtual ~AttrDrapedSet() = default;
+    ~AttrDrapedSet() = default;
 
     AttrDrapedSet & operator=(const AttrDrapedSet &) = default;
     AttrDrapedSet & operator=(AttrDrapedSet &&) = default;

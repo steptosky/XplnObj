@@ -44,36 +44,40 @@ namespace xobj {
 class AttrSlungLoadWeight {
 public:
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrSlungLoadWeight();
+    //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] weight 
-     */
-    XpObjLib AttrSlungLoadWeight(float weight);
+    explicit AttrSlungLoadWeight(const float weight = 1.0f)
+        : mWeight(weight) { }
+
+    AttrSlungLoadWeight(const AttrSlungLoadWeight &) = default;
+    AttrSlungLoadWeight(AttrSlungLoadWeight &&) = default;
 
     ~AttrSlungLoadWeight() = default;
 
+    AttrSlungLoadWeight & operator=(const AttrSlungLoadWeight &) = default;
+    AttrSlungLoadWeight & operator=(AttrSlungLoadWeight &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrSlungLoadWeight & other) const;
-    XpObjLib bool operator!=(const AttrSlungLoadWeight & other) const;
+    bool operator!=(const AttrSlungLoadWeight & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setWeight(float weight);
-    XpObjLib float weight() const;
+    void setWeight(const float weight) { mWeight = weight; }
+    float weight() const { return mWeight; }
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    float mWeight;
+    float mWeight = 1.0f;
 
 };
 

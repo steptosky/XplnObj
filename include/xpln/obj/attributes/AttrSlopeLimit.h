@@ -44,49 +44,56 @@ namespace xobj {
 class AttrSlopeLimit {
 public:
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrSlopeLimit();
+    //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] minPitch 
-     * \param [in] maxPitch 
-     * \param [in] minRoll 
-     * \param [in] maxRoll 
-     */
-    XpObjLib AttrSlopeLimit(float minPitch, float maxPitch, float minRoll, float maxRoll);
+    AttrSlopeLimit() = default;
+
+    AttrSlopeLimit(const float minPitch, const float maxPitch,
+                   const float minRoll, const float maxRoll)
+        : mMinPitch(minPitch),
+          mMaxPitch(maxPitch),
+          mMinRoll(minRoll),
+          mMaxRoll(maxRoll) { }
+
+    AttrSlopeLimit(const AttrSlopeLimit &) = default;
+    AttrSlopeLimit(AttrSlopeLimit &&) = default;
 
     ~AttrSlopeLimit() = default;
 
+    AttrSlopeLimit & operator=(const AttrSlopeLimit &) = default;
+    AttrSlopeLimit & operator=(AttrSlopeLimit &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrSlopeLimit & other) const;
-    XpObjLib bool operator!=(const AttrSlopeLimit & other) const;
+    bool operator!=(const AttrSlopeLimit & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setMinPitch(float minPitch);
-    XpObjLib void setMaxPitch(float maxPitch);
-    XpObjLib void setMinRoll(float minRoll);
-    XpObjLib void setMaxRoll(float maxRoll);
+    void setMinPitch(const float minPitch) { mMinPitch = minPitch; }
+    void setMaxPitch(const float maxPitch) { mMaxPitch = maxPitch; }
+    void setMinRoll(const float minRoll) { mMinRoll = minRoll; }
+    void setMaxRoll(const float maxRoll) { mMaxRoll = maxRoll; }
 
-    XpObjLib float minPitch() const;
-    XpObjLib float maxPitch() const;
-    XpObjLib float minRoll() const;
-    XpObjLib float maxRoll() const;
+    float minPitch() const { return mMinPitch; }
+    float maxPitch() const { return mMaxPitch; }
+    float minRoll() const { return mMinRoll; }
+    float maxRoll() const { return mMaxRoll; }
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    float mMinPitch;
-    float mMaxPitch;
-    float mMinRoll;
-    float mMaxRoll;
+    float mMinPitch = 0.0f;
+    float mMaxPitch = 0.0f;
+    float mMinRoll = 0.0f;
+    float mMaxRoll = 0.0f;
 
 };
 

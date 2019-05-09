@@ -33,37 +33,11 @@
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrSlungLoadWeight::AttrSlungLoadWeight(const float weight)
-    : mWeight(weight) { }
-
-AttrSlungLoadWeight::AttrSlungLoadWeight()
-    : mWeight(1.0f) {}
-
-/**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
 bool AttrSlungLoadWeight::operator==(const AttrSlungLoadWeight & other) const {
     return sts::isEqual(mWeight, other.mWeight, 0.01f);
-}
-
-bool AttrSlungLoadWeight::operator!=(const AttrSlungLoadWeight & other) const {
-    return !operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrSlungLoadWeight::setWeight(const float weight) {
-    mWeight = weight;
-}
-
-float AttrSlungLoadWeight::weight() const {
-    return mWeight;
 }
 
 /**************************************************************************************************/

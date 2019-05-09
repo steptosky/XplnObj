@@ -45,41 +45,47 @@ namespace xobj {
 class AttrLayerGroup {
 public:
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrLayerGroup();
+    //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] layer 
-     * \param [in] offset 
-     */
-    XpObjLib AttrLayerGroup(ELayer layer, std::int32_t offset = 0);
+    AttrLayerGroup() = default;
+
+    explicit AttrLayerGroup(const ELayer layer, const std::int32_t offset = 0)
+        : mOffset(static_cast<uint8_t>(offset)),
+          mLayer(layer) { }
+
+    AttrLayerGroup(const AttrLayerGroup &) = default;
+    AttrLayerGroup(AttrLayerGroup &&) = default;
 
     ~AttrLayerGroup() = default;
 
+    AttrLayerGroup & operator=(const AttrLayerGroup &) = default;
+    AttrLayerGroup & operator=(AttrLayerGroup &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrLayerGroup & other) const;
-    XpObjLib bool operator!=(const AttrLayerGroup & other) const;
+    bool operator!=(const AttrLayerGroup & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib void setOffset(std::int32_t offset);
-    XpObjLib void setLayer(ELayer layer);
+    void setLayer(const ELayer layer) { mLayer = layer; }
 
-    XpObjLib std::int32_t offset() const;
-    XpObjLib ELayer layer() const;
+    std::int32_t offset() const { return static_cast<std::int32_t>(mOffset); }
+    ELayer layer() const { return mLayer; }
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    std::int8_t mOffset;
-    ELayer mLayer;
+    std::int8_t mOffset = 0;
+    ELayer mLayer = ELayer(ELayer::objects);
 
 };
 

@@ -44,42 +44,50 @@ namespace xobj {
 class AttrTint {
 public:
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrTint();
+    //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] albedoRatio 
-     * \param [in] emissiveRatio 
-     */
-    XpObjLib AttrTint(float albedoRatio, float emissiveRatio);
+    explicit AttrTint(const float albedoRatio = 0.0f, const float emissiveRatio = 0.0f)
+        : mAlbedo(albedoRatio),
+          mEmissive(emissiveRatio) { }
+
+    AttrTint(const AttrTint &) = default;
+    AttrTint(AttrTint &&) = default;
 
     ~AttrTint() = default;
 
+    AttrTint & operator=(const AttrTint &) = default;
+    AttrTint & operator=(AttrTint &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrTint & other) const;
-    XpObjLib bool operator!=(const AttrTint & other) const;
+    bool operator!=(const AttrTint & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void set(float albedoRatio, float emissiveRatio);
-    XpObjLib void setAlbedo(float albedoRatio);
-    XpObjLib void setEmissive(float emissiveRatio);
+    void set(const float albedoRatio, const float emissiveRatio) {
+        mAlbedo = albedoRatio;
+        mEmissive = emissiveRatio;
+    }
 
-    XpObjLib float albedo() const;
-    XpObjLib float emissive() const;
+    void setAlbedo(const float albedoRatio) { mAlbedo = albedoRatio; }
+    void setEmissive(const float emissiveRatio) { mEmissive = emissiveRatio; }
 
+    float albedo() const { return mAlbedo; }
+    float emissive() const { return mEmissive; }
+
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    float mAlbedo;
-    float mEmissive;
+    float mAlbedo = 0.0f;
+    float mEmissive = 0.0f;
 
 };
 

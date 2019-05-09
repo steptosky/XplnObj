@@ -48,33 +48,36 @@ class AttrShiny {
 public:
 
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrShiny();
+    explicit AttrShiny(const float ratio = 0.0f)
+        : mRatio(ratio) { }
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] ratio 
-     */
-    XpObjLib AttrShiny(float ratio);
+    AttrShiny(const AttrShiny &) = default;
+    AttrShiny(AttrShiny &&) = default;
 
     ~AttrShiny() = default;
 
+    AttrShiny & operator=(const AttrShiny &) = default;
+    AttrShiny & operator=(AttrShiny &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrShiny & other) const;
-    XpObjLib bool operator!=(const AttrShiny & other) const;
+    bool operator!=(const AttrShiny & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib void setRatio(float ratio);
-    XpObjLib float ratio() const;
+    float ratio() const { return mRatio; }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*!
      * \note For internal use only.
@@ -84,11 +87,12 @@ public:
      */
     XpObjLib static std::string objDisableStr();
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    float mRatio;
+    float mRatio = 0.0f;
 
 };
 

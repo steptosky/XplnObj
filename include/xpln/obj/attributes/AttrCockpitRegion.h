@@ -45,6 +45,9 @@ namespace xobj {
 class AttrCockpitRegion {
 public:
 
+    //-------------------------------------------------------------------------
+    /// @{
+
     enum eNum {
         r1,
         r2,
@@ -52,50 +55,57 @@ public:
         r4
     };
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrCockpitRegion();
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] left 
-     * \param [in] bottom 
-     * \param [in] right 
-     * \param [in] top 
-     */
-    XpObjLib AttrCockpitRegion(std::int32_t left, std::int32_t bottom,
-                               std::int32_t right, std::int32_t top);
+    AttrCockpitRegion() = default;
+
+    AttrCockpitRegion(const std::int32_t left, const std::int32_t bottom,
+                      const std::int32_t right, const std::int32_t top)
+        : mLeft(left),
+          mBottom(bottom),
+          mRight(right),
+          mTop(top) { }
+
+    AttrCockpitRegion(const AttrCockpitRegion &) = default;
+    AttrCockpitRegion(AttrCockpitRegion &&) = default;
 
     ~AttrCockpitRegion() = default;
 
+    AttrCockpitRegion & operator=(const AttrCockpitRegion &) = default;
+    AttrCockpitRegion & operator=(AttrCockpitRegion &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrCockpitRegion & other) const;
-    XpObjLib bool operator!=(const AttrCockpitRegion & other) const;
+    bool operator!=(const AttrCockpitRegion & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setLeft(int32_t left);
-    XpObjLib void setBottom(int32_t bottom);
-    XpObjLib void setRight(int32_t right);
-    XpObjLib void setTop(int32_t top);
+    void setLeft(const std::int32_t left) { mLeft = left; }
+    void setBottom(const std::int32_t bottom) { mBottom = bottom; }
+    void setRight(const std::int32_t right) { mRight = right; }
+    void setTop(const std::int32_t top) { mTop = top; }
 
-    XpObjLib int32_t left() const;
-    XpObjLib int32_t bottom() const;
-    XpObjLib int32_t right() const;
-    XpObjLib int32_t top() const;
+    std::int32_t left() const { return mLeft; }
+    std::int32_t bottom() const { return mBottom; }
+    std::int32_t right() const { return mRight; }
+    std::int32_t top() const { return mTop; }
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    std::int32_t mLeft;
-    std::int32_t mBottom;
-    std::int32_t mRight;
-    std::int32_t mTop;
+    std::int32_t mLeft = 0;
+    std::int32_t mBottom = 0;
+    std::int32_t mRight = 0;
+    std::int32_t mTop = 0;
 
 };
 

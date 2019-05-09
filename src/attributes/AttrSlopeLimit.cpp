@@ -33,23 +33,6 @@
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrSlopeLimit::AttrSlopeLimit(const float minPitch, const float maxPitch,
-                               const float minRoll, const float maxRoll)
-    : mMinPitch(minPitch),
-      mMaxPitch(maxPitch),
-      mMinRoll(minRoll),
-      mMaxRoll(maxRoll) { }
-
-AttrSlopeLimit::AttrSlopeLimit()
-    : mMinPitch(0.0f),
-      mMaxPitch(0.0f),
-      mMinRoll(0.0f),
-      mMaxRoll(0.0f) { }
-
-/**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
@@ -58,46 +41,6 @@ bool AttrSlopeLimit::operator==(const AttrSlopeLimit & other) const {
            sts::isEqual(mMaxPitch, other.mMaxPitch, 0.01f) &&
            sts::isEqual(mMinRoll, other.mMinRoll, 0.01f) &&
            sts::isEqual(mMaxRoll, other.mMaxRoll, 0.01f);
-}
-
-bool AttrSlopeLimit::operator!=(const AttrSlopeLimit & other) const {
-    return !operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrSlopeLimit::setMinPitch(const float minPitch) {
-    mMinPitch = minPitch;
-}
-
-void AttrSlopeLimit::setMaxPitch(const float maxPitch) {
-    mMaxPitch = maxPitch;
-}
-
-void AttrSlopeLimit::setMinRoll(const float minRoll) {
-    mMinRoll = minRoll;
-}
-
-void AttrSlopeLimit::setMaxRoll(const float maxRoll) {
-    mMaxRoll = maxRoll;
-}
-
-float AttrSlopeLimit::minPitch() const {
-    return mMinPitch;
-}
-
-float AttrSlopeLimit::maxPitch() const {
-    return mMaxPitch;
-}
-
-float AttrSlopeLimit::minRoll() const {
-    return mMinRoll;
-}
-
-float AttrSlopeLimit::maxRoll() const {
-    return mMaxRoll;
 }
 
 /**************************************************************************************************/

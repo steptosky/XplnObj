@@ -65,19 +65,6 @@ void ObjWriteAttr::write(AbstractWriter * writer, const ObjAbstract * obj) {
 /**************************************************************************************************/
 
 void ObjWriteAttr::writeAttributes(const AttrSet & attrSet) {
-    const auto manipPanelEnabled = [&](const AttrCockpit & cockpit) {
-        if (mManipWriter) {
-            mManipWriter->setPanelEnabled(cockpit);
-        }
-    };
-    const auto manipPanelDisabled = [&]() {
-        if (mManipWriter) {
-            mManipWriter->setPanelDisabled();
-        }
-    };
-
-    //-------------------------------------------------------------------------
-
     const auto writeBool = [&](const char * attr) {
         ++mCounter;
         mWriter->printLine(attr);
@@ -90,17 +77,21 @@ void ObjWriteAttr::writeAttributes(const AttrSet & attrSet) {
 
     //-------------------------------------------------------------------------
 
-    ObjWriteState::processBool(attrSet.mIsDraped, mState.mObject.mIsDraped,
-                               [&](const bool enable) { writeBool(enable ? ATTR_DRAPED : ATTR_NO_DRAPED); });
+    ObjWriteState::processBool(attrSet.mIsDraped, mState.mObject.mIsDraped, [&](const bool enable) {
+        writeBool(enable ? ATTR_DRAPED : ATTR_NO_DRAPED);
+    });
 
-    ObjWriteState::processBool(attrSet.mIsSolidForCamera, mState.mObject.mIsSolidForCamera,
-                               [&](const bool enable) { writeBool(enable ? ATTR_SOLID_CAMERA : ATTR_NO_SOLID_CAMERA); });
+    ObjWriteState::processBool(attrSet.mIsSolidForCamera, mState.mObject.mIsSolidForCamera, [&](const bool enable) {
+        writeBool(enable ? ATTR_SOLID_CAMERA : ATTR_NO_SOLID_CAMERA);
+    });
 
-    ObjWriteState::processBool(attrSet.mIsDraw, mState.mObject.mIsDraw,
-                               [&](const bool enable) { writeBool(enable ? ATTR_DRAW_ENABLE : ATTR_DRAW_DISABLE); });
+    ObjWriteState::processBool(attrSet.mIsDraw, mState.mObject.mIsDraw, [&](const bool enable) {
+        writeBool(enable ? ATTR_DRAW_ENABLE : ATTR_DRAW_DISABLE);
+    });
 
-    ObjWriteState::processBool(attrSet.mIsCastShadow, mState.mObject.mIsCastShadow,
-                               [&](const bool enable) { writeBool(enable ? ATTR_SHADOW : ATTR_NO_SHADOW); });
+    ObjWriteState::processBool(attrSet.mIsCastShadow, mState.mObject.mIsCastShadow, [&](const bool enable) {
+        writeBool(enable ? ATTR_SHADOW : ATTR_NO_SHADOW);
+    });
 
     //-------------------------------------------------------------------------
 
@@ -126,11 +117,15 @@ void ObjWriteAttr::writeAttributes(const AttrSet & attrSet) {
 
     ObjWriteState::processAttr(attrSet.mCockpit, mState.mObject.mCockpit, [&](const bool enable) {
         if (enable) {
-            manipPanelEnabled(*attrSet.mCockpit);
+            if (mManipWriter) {
+                mManipWriter->setPanelEnabled(*attrSet.mCockpit);
+            }
             writeAttr(attrSet.mCockpit->objStr());
         }
         else {
-            manipPanelDisabled();
+            if (mManipWriter) {
+                mManipWriter->setPanelDisabled();
+            }
             writeAttr(AttrCockpit::objDisableStr());
         }
     });

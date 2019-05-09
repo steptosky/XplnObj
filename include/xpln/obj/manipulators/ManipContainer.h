@@ -48,8 +48,6 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    ManipContainer() = default;
-
     explicit ManipContainer(AttrManipBase * manip)
         : mManip(manip) {}
 

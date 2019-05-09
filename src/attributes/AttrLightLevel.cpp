@@ -30,6 +30,7 @@
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrLightLevel.h"
 #include "common/AttributeNames.h"
+#include "converters/StringStream.h"
 
 namespace xobj {
 

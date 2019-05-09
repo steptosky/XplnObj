@@ -29,6 +29,7 @@
 
 #include "xpln/obj/attributes/AttrCockpit.h"
 #include "common/AttributeNames.h"
+#include "converters/StringStream.h"
 
 namespace xobj {
 

@@ -99,7 +99,7 @@ TEST_F(TestAttributesIOLogic, case_1) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM1->pAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh2
     // mObjMesh3
@@ -120,16 +120,16 @@ TEST_F(TestAttributesIOLogic, case_1) {
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_2) {
@@ -148,8 +148,8 @@ TEST_F(TestAttributesIOLogic, case_2) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.mAttrPolyOffset = mAttrPolyOffset;
-    outM2->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM1->pAttr.mPolyOffset = mAttrPolyOffset;
+    outM2->pAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh3
     // mObjMesh4
@@ -169,16 +169,16 @@ TEST_F(TestAttributesIOLogic, case_2) {
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_3) {
@@ -197,9 +197,9 @@ TEST_F(TestAttributesIOLogic, case_3) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.mAttrPolyOffset = mAttrPolyOffset;
-    outM2->pAttr.mAttrPolyOffset = mAttrPolyOffset;
-    outM3->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM1->pAttr.mPolyOffset = mAttrPolyOffset;
+    outM2->pAttr.mPolyOffset = mAttrPolyOffset;
+    outM3->pAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh4
 
@@ -218,16 +218,16 @@ TEST_F(TestAttributesIOLogic, case_3) {
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_4) {
@@ -246,10 +246,10 @@ TEST_F(TestAttributesIOLogic, case_4) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.mAttrPolyOffset = mAttrPolyOffset;
-    outM2->pAttr.mAttrPolyOffset = mAttrPolyOffset;
-    outM3->pAttr.mAttrPolyOffset = mAttrPolyOffset;
-    outM4->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM1->pAttr.mPolyOffset = mAttrPolyOffset;
+    outM2->pAttr.mPolyOffset = mAttrPolyOffset;
+    outM3->pAttr.mPolyOffset = mAttrPolyOffset;
+    outM4->pAttr.mPolyOffset = mAttrPolyOffset;
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -266,16 +266,16 @@ TEST_F(TestAttributesIOLogic, case_4) {
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_5) {
@@ -294,16 +294,16 @@ TEST_F(TestAttributesIOLogic, case_5) {
 
     // Attr
     mAttrPolyOffset.setOffset(1.0f);
-    outM1->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM1->pAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
     mAttrPolyOffset.setOffset(2.0f);
-    outM2->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM2->pAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
     mAttrPolyOffset.setOffset(3.0f);
-    outM3->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM3->pAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
     mAttrPolyOffset.setOffset(4.0f);
-    outM4->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM4->pAttr.mPolyOffset = mAttrPolyOffset;
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -320,16 +320,16 @@ TEST_F(TestAttributesIOLogic, case_5) {
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(4.0f), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(4.0f), inM->pAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_6) {
@@ -348,14 +348,14 @@ TEST_F(TestAttributesIOLogic, case_6) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.mAttrPolyOffset = mAttrPolyOffset;
-    outM2->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM1->pAttr.mPolyOffset = mAttrPolyOffset;
+    outM2->pAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
     mAttrPolyOffset.setOffset(2.0f);
-    outM3->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM3->pAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
     mAttrPolyOffset.setOffset(3.0f);
-    outM4->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM4->pAttr.mPolyOffset = mAttrPolyOffset;
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -372,16 +372,16 @@ TEST_F(TestAttributesIOLogic, case_6) {
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_7) {
@@ -400,15 +400,15 @@ TEST_F(TestAttributesIOLogic, case_7) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM1->pAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh2
     // Attr
     mAttrPolyOffset.setOffset(2.0f);
-    outM3->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM3->pAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
     mAttrPolyOffset.setOffset(3.0f);
-    outM4->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM4->pAttr.mPolyOffset = mAttrPolyOffset;
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -425,16 +425,16 @@ TEST_F(TestAttributesIOLogic, case_7) {
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_8) {
@@ -453,12 +453,12 @@ TEST_F(TestAttributesIOLogic, case_8) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM1->pAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh2
     // Attr
     mAttrPolyOffset.setOffset(2.0f);
-    outM3->pAttr.mAttrPolyOffset = mAttrPolyOffset;
+    outM3->pAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh4
 
@@ -477,16 +477,16 @@ TEST_F(TestAttributesIOLogic, case_8) {
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mAttrPolyOffset);
+    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.mPolyOffset);
 }
 
 /**************************************************************************************************/

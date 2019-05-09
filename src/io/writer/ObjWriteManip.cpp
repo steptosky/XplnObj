@@ -101,7 +101,7 @@ const AttrManipBase * ObjWriteManip::prepareManip(const AttrManipBase * manip) c
 
             // todo const cast isn't a good idea
             auto * panel = const_cast<AttrManipPanel*>(static_cast<const AttrManipPanel*>(manip));
-            panel->setCockpit(*mObj->pAttr.mAttrCockpit);
+            panel->setCockpit(*mObj->pAttr.mCockpit);
         }
         else if (manip->type() == EManipulator::drag_axis) {
             // todo it seems this place isn't good for such a checking
@@ -168,7 +168,7 @@ void ObjWriteManip::writeAttr(AbstractWriter * writer, const AttrManipBase * man
      * \link ObjWriteManip::setPanelEnabled \endlink and \link ObjWriteManip::setPanelDisabled \endlink
      * which set the \link ObjWriteManip::mIsPanelManip \endlink variable.
      */
-    assert(mIsPanelManip == mObj->pAttr.mAttrCockpit.has_value());
+    assert(mIsPanelManip == mObj->pAttr.mCockpit.has_value());
     //------------------------------
     manip = prepareManip(manip);
     //------------------------------

@@ -110,7 +110,7 @@ void ObjReaderInterpreter::gotGlobAttrTextureNormal(const std::string & val) {
 /**************************************************************************************************/
 
 void ObjReaderInterpreter::gotGlobAttrWetDry(const AttrWetDry & globAttr) {
-    mObjMain->pAttr.mAttrWetDry = globAttr;
+    mObjMain->pAttr.mWetDry = globAttr;
     ++mIOStatistic->pGlobAttrCount;
 }
 
@@ -165,25 +165,25 @@ void ObjReaderInterpreter::gotGlobAttrLayerGroup(const AttrLayerGroup & globAttr
 }
 
 void ObjReaderInterpreter::gotGlobAttrSlopeLimit(const AttrSlopeLimit & globAttr) {
-    mObjMain->pAttr.mAttrSlopeLimit = globAttr;
+    mObjMain->pAttr.mSlopeLimit = globAttr;
     ++mIOStatistic->pGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrCockpitRegion(const AttrCockpitRegion & globAttr) {
-    if (!mObjMain->pAttr.mAttrCockpitRegion1) {
-        mObjMain->pAttr.mAttrCockpitRegion1 = globAttr;
+    if (!mObjMain->pAttr.mCockpitRegion1) {
+        mObjMain->pAttr.mCockpitRegion1 = globAttr;
         ++mIOStatistic->pGlobAttrCount;
     }
-    else if (!mObjMain->pAttr.mAttrCockpitRegion2) {
-        mObjMain->pAttr.mAttrCockpitRegion2 = globAttr;
+    else if (!mObjMain->pAttr.mCockpitRegion2) {
+        mObjMain->pAttr.mCockpitRegion2 = globAttr;
         ++mIOStatistic->pGlobAttrCount;
     }
-    else if (!mObjMain->pAttr.mAttrCockpitRegion3) {
-        mObjMain->pAttr.mAttrCockpitRegion3 = globAttr;
+    else if (!mObjMain->pAttr.mCockpitRegion3) {
+        mObjMain->pAttr.mCockpitRegion3 = globAttr;
         ++mIOStatistic->pGlobAttrCount;
     }
-    else if (!mObjMain->pAttr.mAttrCockpitRegion4) {
-        mObjMain->pAttr.mAttrCockpitRegion4 = globAttr;
+    else if (!mObjMain->pAttr.mCockpitRegion4) {
+        mObjMain->pAttr.mCockpitRegion4 = globAttr;
         ++mIOStatistic->pGlobAttrCount;
     }
     else {
@@ -236,18 +236,18 @@ void ObjReaderInterpreter::gotMeshFaces(const FaceIndexArray & indices) {
 /**************************************************************************************************/
 
 void ObjReaderInterpreter::gotTrisAttrHard(const AttrHard & attr) {
-    mCurrentAttrSet.mAttrHard = attr;
+    mCurrentAttrSet.mHard = attr;
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrReset() {
-    mCurrentAttrSet.mAttrShiny = AttrShiny();
+    mCurrentAttrSet.mShiny = AttrShiny();
     // TODO Reset other light attributes like emission specular etc...
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrBlend(const AttrBlend & attr) {
-    mCurrentAttrSet.mAttrBlend = attr;
+    mCurrentAttrSet.mBlend = attr;
     ++mIOStatistic->pTrisAttrCount;
 }
 
@@ -262,22 +262,22 @@ void ObjReaderInterpreter::gotTrisAttrDraped(const bool state) {
 }
 
 void ObjReaderInterpreter::gotTrisAttrCockpit(const AttrCockpit & attr) {
-    mCurrentAttrSet.mAttrCockpit = attr;
+    mCurrentAttrSet.mCockpit = attr;
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrPolyOffset(const AttrPolyOffset & attr) {
-    mCurrentAttrSet.mAttrPolyOffset = attr;
+    mCurrentAttrSet.mPolyOffset = attr;
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrShiny(const AttrShiny & attr) {
-    mCurrentAttrSet.mAttrShiny = attr;
+    mCurrentAttrSet.mShiny = attr;
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrLightLevel(const AttrLightLevel & attr) {
-    mCurrentAttrSet.mAttrLightLevel = attr;
+    mCurrentAttrSet.mLightLevel = attr;
     ++mIOStatistic->pTrisAttrCount;
 }
 

@@ -59,12 +59,12 @@ public:
     AttrSet(AttrSet &&) = default;
 
     bool operator==(const AttrSet & other) const {
-        return mAttrLightLevel == other.mAttrLightLevel &&
-               mAttrPolyOffset == other.mAttrPolyOffset &&
-               mAttrBlend == other.mAttrBlend &&
-               mAttrShiny == other.mAttrShiny &&
-               mAttrHard == other.mAttrHard &&
-               mAttrCockpit == other.mAttrCockpit &&
+        return mLightLevel == other.mLightLevel &&
+               mPolyOffset == other.mPolyOffset &&
+               mBlend == other.mBlend &&
+               mShiny == other.mShiny &&
+               mHard == other.mHard &&
+               mCockpit == other.mCockpit &&
 
                mIsDraw == other.mIsDraw &&
                mIsTwoSided == other.mIsTwoSided &&
@@ -95,12 +95,12 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    std::optional<AttrLightLevel> mAttrLightLevel;
-    std::optional<AttrPolyOffset> mAttrPolyOffset;
-    std::optional<AttrBlend> mAttrBlend;
-    std::optional<AttrShiny> mAttrShiny;
-    std::optional<AttrHard> mAttrHard;
-    std::optional<AttrCockpit> mAttrCockpit;
+    std::optional<AttrLightLevel> mLightLevel;
+    std::optional<AttrPolyOffset> mPolyOffset;
+    std::optional<AttrBlend> mBlend;
+    std::optional<AttrShiny> mShiny;
+    std::optional<AttrHard> mHard;
+    std::optional<AttrCockpit> mCockpit;
     std::optional<ManipContainer> mManipContainer;
 
     bool mIsDraw = true;

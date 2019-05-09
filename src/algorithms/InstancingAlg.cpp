@@ -111,26 +111,26 @@ void InstancingAlg::proccessAttributes(ObjMesh & mesh, bool & outResult) {
                              std::string("the object has the manipulator attribute which is not allowed for instancing").c_str());
         outResult = false;
     }
-    if (mesh.pAttr.mAttrPolyOffset) {
+    if (mesh.pAttr.mPolyOffset) {
         printBreakInstancing(mesh.objectName().c_str(),
                              std::string("the object has the \"").append(ATTR_POLY_OS)
                                                                  .append("\" attribute which is not allowed for instancing").c_str());
         outResult = false;
     }
-    if (mesh.pAttr.mAttrBlend) {
+    if (mesh.pAttr.mBlend) {
         printBreakInstancing(mesh.objectName().c_str(),
                              std::string("the object has on of the \"").append(ATTR_BLEND).append("/")
                                                                        .append(ATTR_NO_BLEND).append("/").append(ATTR_SHADOW_BLEND)
                                                                        .append("\" attribute which is not allowed for instancing").c_str());
         outResult = false;
     }
-    if (mesh.pAttr.mAttrShiny) {
+    if (mesh.pAttr.mShiny) {
         printBreakInstancing(mesh.objectName().c_str(),
                              std::string("the object has the \"").append(ATTR_SHINY_RAT)
                                                                  .append("\" attribute which is not allowed for instancing").c_str());
         outResult = false;
     }
-    if (mesh.pAttr.mAttrCockpit) {
+    if (mesh.pAttr.mCockpit) {
         printBreakInstancing(mesh.objectName().c_str(),
                              std::string("the object has on of the \"").append(ATTR_COCKPIT).append("/")
                                                                        .append(ATTR_COCKPIT_REGION)

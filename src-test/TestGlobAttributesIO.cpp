@@ -83,10 +83,10 @@ TEST(TestGlobAttributesIO, attributes) {
     mainOut.pAttr.mCockpitLit = true;
     mainOut.pAttr.mDebug = true;
     mainOut.pAttr.mLayerGroup = AttrLayerGroup(ELayer(ELayer::taxiways), 5);
-    mainOut.pAttr.mAttrSlopeLimit = AttrSlopeLimit(0.3f, 0.5f, 0.7f, 0.9f);
+    mainOut.pAttr.mSlopeLimit = AttrSlopeLimit(0.3f, 0.5f, 0.7f, 0.9f);
     mainOut.pAttr.mSlungLoadWeight = AttrSlungLoadWeight(500);
-    mainOut.pAttr.mAttrCockpitRegion1 = AttrCockpitRegion(100, 200, 300, 400);
-    mainOut.pAttr.mAttrCockpitRegion2 = AttrCockpitRegion(500, 600, 700, 800);
+    mainOut.pAttr.mCockpitRegion1 = AttrCockpitRegion(100, 200, 300, 400);
+    mainOut.pAttr.mCockpitRegion2 = AttrCockpitRegion(500, 600, 700, 800);
 
     mainOut.pDraped.pAttr.mLod = AttrDrapedLod(1000);
     mainOut.pDraped.pAttr.mLayerGroup = AttrDrapedLayerGroup(ELayer(ELayer::airports), -3);
@@ -115,12 +115,12 @@ TEST(TestGlobAttributesIO, attributes) {
     ASSERT_EQ(mainIn.pAttr.mCockpitLit, true);
     ASSERT_EQ(mainIn.pAttr.mDebug, true);
     ASSERT_EQ(*mainIn.pAttr.mLayerGroup, AttrLayerGroup(ELayer(ELayer::taxiways), 5));
-    ASSERT_EQ(*mainIn.pAttr.mAttrSlopeLimit, AttrSlopeLimit(0.3f, 0.5f, 0.7f, 0.9f));
+    ASSERT_EQ(*mainIn.pAttr.mSlopeLimit, AttrSlopeLimit(0.3f, 0.5f, 0.7f, 0.9f));
     ASSERT_EQ(*mainIn.pAttr.mSlungLoadWeight, AttrSlungLoadWeight(500));
-    ASSERT_EQ(*mainIn.pAttr.mAttrCockpitRegion1, AttrCockpitRegion(100, 200, 300, 400));
-    ASSERT_EQ(*mainIn.pAttr.mAttrCockpitRegion2, AttrCockpitRegion(500, 600, 700, 800));
-    ASSERT_FALSE(mainIn.pAttr.mAttrCockpitRegion3);
-    ASSERT_FALSE(mainIn.pAttr.mAttrCockpitRegion4);
+    ASSERT_EQ(*mainIn.pAttr.mCockpitRegion1, AttrCockpitRegion(100, 200, 300, 400));
+    ASSERT_EQ(*mainIn.pAttr.mCockpitRegion2, AttrCockpitRegion(500, 600, 700, 800));
+    ASSERT_FALSE(mainIn.pAttr.mCockpitRegion3);
+    ASSERT_FALSE(mainIn.pAttr.mCockpitRegion4);
 
     ASSERT_EQ(*mainIn.pDraped.pAttr.mLod, AttrDrapedLod(1000));
     ASSERT_EQ(*mainIn.pDraped.pAttr.mLayerGroup, AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
@@ -134,7 +134,7 @@ TEST(TestGlobAttributesIO, statable_state1) {
     const auto fileName = XOBJ_PATH("TestGlobAttributesIO-statable_state1.obj");
     //-----------------------------
     ObjMain mainOut;
-    mainOut.pAttr.mAttrWetDry = AttrWetDry(AttrWetDry::wet);
+    mainOut.pAttr.mWetDry = AttrWetDry(AttrWetDry::wet);
     mainOut.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.8f);
 
     //-------------------------------------------------------------------------
@@ -152,7 +152,7 @@ TEST(TestGlobAttributesIO, statable_state1) {
 
     //-------------------------------------------------------------------------
 
-    ASSERT_EQ(*mainIn.pAttr.mAttrWetDry, AttrWetDry(AttrWetDry::wet));
+    ASSERT_EQ(*mainIn.pAttr.mWetDry, AttrWetDry(AttrWetDry::wet));
     ASSERT_EQ(*mainIn.pAttr.mBlend, AttrBlend(AttrBlend::no_blend, 0.8f));
 }
 
@@ -160,7 +160,7 @@ TEST(TestGlobAttributesIO, statable_state2) {
     const auto fileName = XOBJ_PATH("TestGlobAttributesIO-statable_state2.obj");
     //-----------------------------
     ObjMain mainOut;
-    mainOut.pAttr.mAttrWetDry = AttrWetDry(AttrWetDry::dry);
+    mainOut.pAttr.mWetDry = AttrWetDry(AttrWetDry::dry);
     mainOut.pAttr.mBlend = AttrBlend(AttrBlend::shadow_blend, 0.8f);
 
     //-------------------------------------------------------------------------
@@ -178,7 +178,7 @@ TEST(TestGlobAttributesIO, statable_state2) {
 
     //-------------------------------------------------------------------------
 
-    ASSERT_EQ(*mainIn.pAttr.mAttrWetDry, AttrWetDry(AttrWetDry::dry));
+    ASSERT_EQ(*mainIn.pAttr.mWetDry, AttrWetDry(AttrWetDry::dry));
     ASSERT_EQ(*mainIn.pAttr.mBlend, AttrBlend(AttrBlend::shadow_blend, 0.8f));
 }
 

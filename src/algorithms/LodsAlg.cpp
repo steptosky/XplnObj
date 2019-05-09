@@ -109,7 +109,7 @@ bool LodsAlg::validate(ObjMain::Lods & inOutLods,
             if (obj.objType() != OBJ_MESH) {
                 return true;
             }
-            return !bool(static_cast<const ObjMesh*>(&obj)->pAttr.mAttrHard);
+            return !bool(static_cast<const ObjMesh*>(&obj)->pAttr.mHard);
         });
         if (hasHardPoly && lod->nearVal() != 0.0f) {
             ULError << objectName << " - LOD <" << lod->objectName() << "> contains hard polygons on some objects, "

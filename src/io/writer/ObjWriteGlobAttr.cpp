@@ -71,17 +71,17 @@ void ObjWriteGlobAttr::write(AbstractWriter * writer, const ObjMain * obj) {
     // It is printed in another place.
     //writeBool(inWriter, ATTR_GLOBAL_DEBUG, inObj->pAttr.isDebug());
 
-    mCounter += writeAttr(writer, obj->pAttr.mAttrWetDry);
+    mCounter += writeAttr(writer, obj->pAttr.mWetDry);
     mCounter += writeAttr(writer, obj->pAttr.mBlend);
     mCounter += writeAttr(writer, obj->pAttr.mLayerGroup);
     mCounter += writeAttr(writer, obj->pAttr.mSlungLoadWeight);
     mCounter += writeAttr(writer, obj->pAttr.mSpecular);
     mCounter += writeAttr(writer, obj->pAttr.mTint);
-    mCounter += writeAttr(writer, obj->pAttr.mAttrSlopeLimit);
-    mCounter += writeAttr(writer, obj->pAttr.mAttrCockpitRegion1);
-    mCounter += writeAttr(writer, obj->pAttr.mAttrCockpitRegion2);
-    mCounter += writeAttr(writer, obj->pAttr.mAttrCockpitRegion3);
-    mCounter += writeAttr(writer, obj->pAttr.mAttrCockpitRegion4);
+    mCounter += writeAttr(writer, obj->pAttr.mSlopeLimit);
+    mCounter += writeAttr(writer, obj->pAttr.mCockpitRegion1);
+    mCounter += writeAttr(writer, obj->pAttr.mCockpitRegion2);
+    mCounter += writeAttr(writer, obj->pAttr.mCockpitRegion3);
+    mCounter += writeAttr(writer, obj->pAttr.mCockpitRegion4);
 
     mCounter += writeAttr(writer, obj->pDraped.pAttr.mLayerGroup);
     mCounter += writeAttr(writer, obj->pDraped.pAttr.mLod);

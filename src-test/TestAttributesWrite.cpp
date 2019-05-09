@@ -372,12 +372,12 @@ TEST(TestAttributesWrite, parameterized_case1) {
     ObjMesh main2;
     ObjMesh main3;
 
-    main1.pAttr.mAttrHard = AttrHard(ESurface(ESurface::eId::dirt), false);
-    main1.pAttr.mAttrShiny = AttrShiny(0.1f);
-    main1.pAttr.mAttrBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
-    main1.pAttr.mAttrPolyOffset = AttrPolyOffset(5.0f);
-    main1.pAttr.mAttrLightLevel = AttrLightLevel(3.0f, 4.0f, "test");
-    main1.pAttr.mAttrCockpit = AttrCockpit(AttrCockpit::region_3);
+    main1.pAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
+    main1.pAttr.mShiny = AttrShiny(0.1f);
+    main1.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
+    main1.pAttr.mPolyOffset = AttrPolyOffset(5.0f);
+    main1.pAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test");
+    main1.pAttr.mCockpit = AttrCockpit(AttrCockpit::region_3);
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
@@ -409,19 +409,19 @@ TEST(TestAttributesWrite, parameterized_case2) {
     ObjMesh main2;
     ObjMesh main3;
 
-    main1.pAttr.mAttrHard = AttrHard(ESurface(ESurface::eId::dirt), false);
-    main1.pAttr.mAttrShiny = AttrShiny(0.8f);
-    main1.pAttr.mAttrBlend = AttrBlend(AttrBlend::shadow_blend, 0.7f);
-    main1.pAttr.mAttrPolyOffset = AttrPolyOffset(4.0f);
-    main1.pAttr.mAttrLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
-    main1.pAttr.mAttrCockpit = AttrCockpit(AttrCockpit::region_2);
+    main1.pAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
+    main1.pAttr.mShiny = AttrShiny(0.8f);
+    main1.pAttr.mBlend = AttrBlend(AttrBlend::shadow_blend, 0.7f);
+    main1.pAttr.mPolyOffset = AttrPolyOffset(4.0f);
+    main1.pAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
+    main1.pAttr.mCockpit = AttrCockpit(AttrCockpit::region_2);
 
-    main3.pAttr.mAttrHard = AttrHard(ESurface(ESurface::eId::concrete), true);
-    main3.pAttr.mAttrShiny = AttrShiny(10.0f);
-    main3.pAttr.mAttrBlend = AttrBlend(AttrBlend::shadow_blend, 0.3f);
-    main3.pAttr.mAttrPolyOffset = AttrPolyOffset(5.0f);
-    main3.pAttr.mAttrLightLevel = AttrLightLevel(3.0f, 4.0f, "test2");
-    main3.pAttr.mAttrCockpit = AttrCockpit(AttrCockpit::region_3);
+    main3.pAttr.mHard = AttrHard(ESurface(ESurface::eId::concrete), true);
+    main3.pAttr.mShiny = AttrShiny(10.0f);
+    main3.pAttr.mBlend = AttrBlend(AttrBlend::shadow_blend, 0.3f);
+    main3.pAttr.mPolyOffset = AttrPolyOffset(5.0f);
+    main3.pAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test2");
+    main3.pAttr.mCockpit = AttrCockpit(AttrCockpit::region_3);
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
@@ -461,19 +461,19 @@ TEST(TestAttributesWrite, parameterized_case3) {
     ObjMesh main2;
     ObjMesh main3;
 
-    main1.pAttr.mAttrHard = AttrHard(ESurface(ESurface::eId::dirt), false);
-    main1.pAttr.mAttrShiny = AttrShiny(0.8f);
-    main1.pAttr.mAttrBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
-    main1.pAttr.mAttrPolyOffset = AttrPolyOffset(4.0f);
-    main1.pAttr.mAttrLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
-    main1.pAttr.mAttrCockpit = AttrCockpit(AttrCockpit::region_1);
+    main1.pAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
+    main1.pAttr.mShiny = AttrShiny(0.8f);
+    main1.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
+    main1.pAttr.mPolyOffset = AttrPolyOffset(4.0f);
+    main1.pAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
+    main1.pAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
 
-    main2.pAttr.mAttrHard = AttrHard(ESurface(ESurface::eId::dirt), false);
-    main2.pAttr.mAttrShiny = AttrShiny(0.8f);
-    main2.pAttr.mAttrBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
-    main2.pAttr.mAttrPolyOffset = AttrPolyOffset(4.0f);
-    main2.pAttr.mAttrLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
-    main2.pAttr.mAttrCockpit = AttrCockpit(AttrCockpit::region_1);
+    main2.pAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
+    main2.pAttr.mShiny = AttrShiny(0.8f);
+    main2.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
+    main2.pAttr.mPolyOffset = AttrPolyOffset(4.0f);
+    main2.pAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
+    main2.pAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
@@ -506,19 +506,19 @@ TEST(TestAttributesWrite, parameterized_case4) {
     ObjMesh main2;
     ObjMesh main3;
 
-    main1.pAttr.mAttrHard = AttrHard(ESurface(ESurface::eId::dirt), false);
-    main1.pAttr.mAttrShiny = AttrShiny(0.8f);
-    main1.pAttr.mAttrBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
-    main1.pAttr.mAttrPolyOffset = AttrPolyOffset(4.0f);
-    main1.pAttr.mAttrLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
-    main1.pAttr.mAttrCockpit = AttrCockpit(AttrCockpit::region_1);
+    main1.pAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
+    main1.pAttr.mShiny = AttrShiny(0.8f);
+    main1.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
+    main1.pAttr.mPolyOffset = AttrPolyOffset(4.0f);
+    main1.pAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
+    main1.pAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
 
-    main2.pAttr.mAttrHard = AttrHard(ESurface(ESurface::eId::concrete), true);
-    main2.pAttr.mAttrShiny = AttrShiny(10.0f);
-    main2.pAttr.mAttrBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
-    main2.pAttr.mAttrPolyOffset = AttrPolyOffset(5.0f);
-    main2.pAttr.mAttrLightLevel = AttrLightLevel(3.0f, 4.0f, "test2");
-    main2.pAttr.mAttrCockpit = AttrCockpit(AttrCockpit::cockpit);
+    main2.pAttr.mHard = AttrHard(ESurface(ESurface::eId::concrete), true);
+    main2.pAttr.mShiny = AttrShiny(10.0f);
+    main2.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
+    main2.pAttr.mPolyOffset = AttrPolyOffset(5.0f);
+    main2.pAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test2");
+    main2.pAttr.mCockpit = AttrCockpit(AttrCockpit::cockpit);
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
@@ -558,12 +558,12 @@ TEST(TestAttributesWrite, parameterized_case5) {
     ObjMesh main2;
     ObjMesh main3;
 
-    main2.pAttr.mAttrHard = AttrHard(ESurface(ESurface::eId::dirt), false);
-    main2.pAttr.mAttrShiny = AttrShiny(0.1f);
-    main2.pAttr.mAttrBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
-    main2.pAttr.mAttrPolyOffset = AttrPolyOffset(5.0f);
-    main2.pAttr.mAttrLightLevel = AttrLightLevel(3.0f, 4.0f, "test");
-    main2.pAttr.mAttrCockpit = AttrCockpit(AttrCockpit::cockpit);
+    main2.pAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
+    main2.pAttr.mShiny = AttrShiny(0.1f);
+    main2.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
+    main2.pAttr.mPolyOffset = AttrPolyOffset(5.0f);
+    main2.pAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test");
+    main2.pAttr.mCockpit = AttrCockpit(AttrCockpit::cockpit);
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);

@@ -125,7 +125,7 @@ TEST(TestGlobAttributesWrite, AttrWetDry_wet) {
     ObjMain main;
 
     const AttrWetDry attr(AttrWetDry::eState::wet);
-    main.pAttr.mAttrWetDry = attr;
+    main.pAttr.mWetDry = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);
@@ -137,7 +137,7 @@ TEST(TestGlobAttributesWrite, AttrWetDry_Dry) {
     ObjMain main;
 
     const AttrWetDry attr(AttrWetDry::eState::dry);
-    main.pAttr.mAttrWetDry = attr;
+    main.pAttr.mWetDry = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);
@@ -254,7 +254,7 @@ TEST(TestGlobAttributesWrite, AttrSlopeLimit) {
     ObjMain main;
 
     const AttrSlopeLimit attr(0.5f, 0.8f, 5.0f, 10.0f);
-    main.pAttr.mAttrSlopeLimit = attr;
+    main.pAttr.mSlopeLimit = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);
@@ -270,10 +270,10 @@ TEST(TestGlobAttributesWrite, AttrCockpitRegion) {
     const AttrCockpitRegion attr1(5, 6, 7, 8);
     const AttrCockpitRegion attr2(9, 10, 11, 12);
     const AttrCockpitRegion attr3(13, 14, 15, 16);
-    main.pAttr.mAttrCockpitRegion1 = attr0;
-    main.pAttr.mAttrCockpitRegion2 = attr1;
-    main.pAttr.mAttrCockpitRegion3 = attr2;
-    main.pAttr.mAttrCockpitRegion4 = attr3;
+    main.pAttr.mCockpitRegion1 = attr0;
+    main.pAttr.mCockpitRegion2 = attr1;
+    main.pAttr.mCockpitRegion3 = attr2;
+    main.pAttr.mCockpitRegion4 = attr3;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr0)))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr1)))).Times(1);

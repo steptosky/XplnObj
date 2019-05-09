@@ -83,12 +83,12 @@ public:
     std::optional<AttrSlungLoadWeight> mSlungLoadWeight;
     std::optional<AttrSpecular> mSpecular;
     std::optional<AttrTint> mTint;
-    std::optional<AttrWetDry> mAttrWetDry;
-    std::optional<AttrSlopeLimit> mAttrSlopeLimit;
-    std::optional<AttrCockpitRegion> mAttrCockpitRegion1;
-    std::optional<AttrCockpitRegion> mAttrCockpitRegion2;
-    std::optional<AttrCockpitRegion> mAttrCockpitRegion3;
-    std::optional<AttrCockpitRegion> mAttrCockpitRegion4;
+    std::optional<AttrWetDry> mWetDry;
+    std::optional<AttrSlopeLimit> mSlopeLimit;
+    std::optional<AttrCockpitRegion> mCockpitRegion1;
+    std::optional<AttrCockpitRegion> mCockpitRegion2;
+    std::optional<AttrCockpitRegion> mCockpitRegion3;
+    std::optional<AttrCockpitRegion> mCockpitRegion4;
 
     bool mBlendClass = false;
     bool mNormalMetalness = false;

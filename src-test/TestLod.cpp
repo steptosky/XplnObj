@@ -316,7 +316,7 @@ TEST_F(TestLod, validator_attr_hard) {
     ObjLodGroup & lGroup2 = main.addLod(new ObjLodGroup(TOTEXT(lGroup2), 100.0f, 200.0f));
     lGroup1.transform().addObject(m1);
     lGroup2.transform().addObject(m2);
-    m2->pAttr.mAttrHard = AttrHard(ESurface(ESurface::grass), false);
+    m2->pAttr.mHard = AttrHard(ESurface(ESurface::grass), false);
     ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
     m1 = nullptr;
     m2 = nullptr;

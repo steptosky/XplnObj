@@ -104,30 +104,30 @@ void ObjWriteAttr::writeAttributes(const AttrSet & attrSet) {
 
     //-------------------------------------------------------------------------
 
-    ObjWriteState::processAttr(attrSet.mAttrHard, mState.mObject.mAttrHard, [&](const bool enable) {
-        writeAttr(enable ? attrSet.mAttrHard->objStr() : AttrHard::objDisableStr());
+    ObjWriteState::processAttr(attrSet.mHard, mState.mObject.mHard, [&](const bool enable) {
+        writeAttr(enable ? attrSet.mHard->objStr() : AttrHard::objDisableStr());
     });
 
-    ObjWriteState::processAttr(attrSet.mAttrShiny, mState.mObject.mAttrShiny, [&](const bool enable) {
-        writeAttr(enable ? attrSet.mAttrShiny->objStr() : AttrShiny::objDisableStr());
+    ObjWriteState::processAttr(attrSet.mShiny, mState.mObject.mShiny, [&](const bool enable) {
+        writeAttr(enable ? attrSet.mShiny->objStr() : AttrShiny::objDisableStr());
     });
 
-    ObjWriteState::processAttr(attrSet.mAttrBlend, mState.mObject.mAttrBlend, [&](const bool enable) {
-        writeAttr(enable ? attrSet.mAttrBlend->objStr() : AttrBlend::objDisableStr());
+    ObjWriteState::processAttr(attrSet.mBlend, mState.mObject.mBlend, [&](const bool enable) {
+        writeAttr(enable ? attrSet.mBlend->objStr() : AttrBlend::objDisableStr());
     });
 
-    ObjWriteState::processAttr(attrSet.mAttrPolyOffset, mState.mObject.mAttrPolyOffset, [&](const bool enable) {
-        writeAttr(enable ? attrSet.mAttrPolyOffset->objStr() : AttrPolyOffset::objDisableStr());
+    ObjWriteState::processAttr(attrSet.mPolyOffset, mState.mObject.mPolyOffset, [&](const bool enable) {
+        writeAttr(enable ? attrSet.mPolyOffset->objStr() : AttrPolyOffset::objDisableStr());
     });
 
-    ObjWriteState::processAttr(attrSet.mAttrLightLevel, mState.mObject.mAttrLightLevel, [&](const bool enable) {
-        writeAttr(enable ? attrSet.mAttrLightLevel->objStr() : AttrLightLevel::objDisableStr());
+    ObjWriteState::processAttr(attrSet.mLightLevel, mState.mObject.mLightLevel, [&](const bool enable) {
+        writeAttr(enable ? attrSet.mLightLevel->objStr() : AttrLightLevel::objDisableStr());
     });
 
-    ObjWriteState::processAttr(attrSet.mAttrCockpit, mState.mObject.mAttrCockpit, [&](const bool enable) {
+    ObjWriteState::processAttr(attrSet.mCockpit, mState.mObject.mCockpit, [&](const bool enable) {
         if (enable) {
-            manipPanelEnabled(*attrSet.mAttrCockpit);
-            writeAttr(attrSet.mAttrCockpit->objStr());
+            manipPanelEnabled(*attrSet.mCockpit);
+            writeAttr(attrSet.mCockpit->objStr());
         }
         else {
             manipPanelDisabled();

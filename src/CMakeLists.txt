@@ -35,7 +35,9 @@
 #----------------------------------------------------------------------------------#
 # project
 
-cmake_minimum_required (VERSION 3.7.0)
+# for generating project fro Visual Studio 2019 cmake 3.14+ is required.
+# it is not set because some Unix CI nodes don't have necessary version.
+cmake_minimum_required (VERSION 3.7)
 
 set(TARGET ${ProjectId})
 project(${TARGET} VERSION ${ProjectVersion} LANGUAGES "CXX")
@@ -65,8 +67,8 @@ add_library(${TARGET} ${CM_FILES})
 #----------------------------------------------------------------------------------#
 # cxx standard 
 
-set_target_properties(${TARGET} PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
-target_compile_features(${TARGET} PUBLIC cxx_std_14)
+set_target_properties(${TARGET} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED YES)
+target_compile_features(${TARGET} PUBLIC cxx_std_17)
 
 #----------------------------------------------------------------------------------#
 # linkage 

@@ -1,4 +1,3 @@
-:: Generate VS 2017 project
 ::==========================================================
 @echo off
 :: Fix problems with some symbols.
@@ -13,12 +12,14 @@ CLS
 if exist set-conan-user.bat call set-conan-user.bat
 ::==========================================================
 :: Creating building DIR and use it as working one.
-set dir="msvc-2017"
+set dir="msvc-2019"
 if not exist %dir% mkdir %dir%
 cd %dir%
 ::==========================================================
 :: Generating Visual Studio project.
-call cmake -G "Visual Studio 15 Win64" ../ ^
+:: If you want to select specific tool-set use -T.
+:: Example VS 2015: call cmake -G "Visual Studio 15 Win64" -T v140 ...
+call cmake -G "Visual Studio 16" ../ ^
     -DBUILD_SHARED_LIBS=OFF ^
     -DCMAKE_INSTALL_PREFIX=../output ^
     -DBUILD_TESTING=ON

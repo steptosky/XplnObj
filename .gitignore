@@ -15,3 +15,5 @@ vcs_data
 test.bat
 doc.bat
 bintray-upload.bat
+msvc-2019/
+.vs/

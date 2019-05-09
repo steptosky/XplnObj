@@ -44,7 +44,7 @@ class LibConan(ConanFile):
     name = 'XplnObj'
     url = 'https://github.com/steptosky/XplnObj'
     license = 'BSD 3-Clause'
-    description = "This library is for working with the X-Plane's obj format. It requires C++ 14."
+    description = "This library is for working with the X-Plane's obj format. It requires C++ 17."
     author = 'StepToSky <info@steptosky.com>'
 
     settings = "os", "compiler", "build_type", "arch"
@@ -60,12 +60,12 @@ class LibConan(ConanFile):
         
     build_test_var = "CONAN_BUILD_TESTING"
     test_dir_var = "CONAN_TESTING_REPORT_DIR"
-    
     vcs_data = VcsInfo()
 
+
     def configure(self):
-        if self.settings.compiler == "Visual Studio" and float(str(self.settings.compiler.version)) < 14:
-            raise Exception("Visual Studio 14 (2015) or higher is required")
+        if self.settings.compiler == "Visual Studio" and float(str(self.settings.compiler.version)) < 15:
+            raise Exception("Visual Studio 15 (2017) or higher is required")
 
     def config_options(self):
         if self.settings.os == "Windows":
@@ -73,7 +73,7 @@ class LibConan(ConanFile):
 
     def requirements(self):
         if os.getenv(self.build_test_var, "0") == "1":
-            self.requires('gtest/1.8.0@bincrafters/stable', private=True)
+            self.requires('gtest/1.8.1@bincrafters/stable', private=True)
 
     def build(self):
         build_testing = os.getenv(self.build_test_var, "0")

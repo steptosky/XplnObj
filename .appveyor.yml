@@ -9,7 +9,6 @@ environment:
     CONAN_TESTING_REPORT_DIR: "report"
     CONAN_BUILD_POLICY: "outdated"
     CONAN_ARCHS: x86_64
-    CTEST_OUTPUT_ON_FAILURE: 1
     
     matrix:
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017

@@ -29,7 +29,6 @@
 
 #include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
-#include "converters/ObjAttrString.h"
 #include "io/writer/AbstractWriter.h"
 
 namespace xobj {
@@ -40,6 +39,10 @@ namespace xobj {
 
 AttrManipPanel::AttrManipPanel()
     : AttrManipBase(EManipulator(EManipulator::panel)) {}
+
+AttrManipPanel::AttrManipPanel(const AttrCockpit & cockpit)
+    : AttrManipBase(EManipulator(EManipulator::panel)),
+      mAttrCockpit(cockpit) {}
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
@@ -82,7 +85,7 @@ std::size_t AttrManipPanel::printObj(AbstractWriter & writer) const {
     //     writer.printEol();
     //     writer.printLine("## panel manip");
     // #endif
-	writer.printLine(cockpit().objStr());
+    writer.printLine(cockpit().objStr());
     return 1;
 }
 

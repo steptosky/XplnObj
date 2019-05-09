@@ -154,17 +154,17 @@ public:
 
     static ObjMesh * createObjMeshNotDefaultAttributes1(const char * inName, const float inValShift) {
         ObjMesh * outMesh = createObjMesh2StatesNotDefaultAttributes(inName, inValShift);
-        outMesh->pAttr.setBlend(AttrBlend(AttrBlend::no_blend, 0.2f));
-        outMesh->pAttr.setHard(AttrHard(ESurface(ESurface::concrete), true));
-        outMesh->pAttr.setCockpit(AttrCockpit(AttrCockpit::cockpit));
+        outMesh->pAttr.mAttrBlend = AttrBlend(AttrBlend::no_blend, 0.2f);
+        outMesh->pAttr.mAttrHard = AttrHard(ESurface(ESurface::concrete), true);
+        outMesh->pAttr.mAttrCockpit = AttrCockpit(AttrCockpit::cockpit);
         return outMesh;
     }
 
     static ObjMesh * createObjMeshNotDefaultAttributes2(const char * inName, const float inValShift) {
         ObjMesh * outMesh = createObjMesh2StatesNotDefaultAttributes(inName, inValShift);
-        outMesh->pAttr.setBlend(AttrBlend(AttrBlend::shadow_blend, 0.2f));
-        outMesh->pAttr.setHard(AttrHard(ESurface(ESurface::concrete), false));
-        outMesh->pAttr.setCockpit(AttrCockpit(AttrCockpit::region_1));
+        outMesh->pAttr.mAttrBlend = AttrBlend(AttrBlend::shadow_blend, 0.2f);
+        outMesh->pAttr.mAttrHard = AttrHard(ESurface(ESurface::concrete), false);
+        outMesh->pAttr.mAttrCockpit = AttrCockpit(AttrCockpit::region_1);
         return outMesh;
     }
 
@@ -172,14 +172,14 @@ private:
 
     static ObjMesh * createObjMesh2StatesNotDefaultAttributes(const char * inName, const float inValShift) {
         ObjMesh * outMesh = createObjMesh(inName, inValShift);
-        outMesh->pAttr.setDraw(false);
-        outMesh->pAttr.setCastShadow(false);
-        outMesh->pAttr.setSolidForCamera(true);
+        outMesh->pAttr.mIsDraw = false;
+        outMesh->pAttr.mIsCastShadow = false;
+        outMesh->pAttr.mIsSolidForCamera = true;
 
-        outMesh->pAttr.setPolyOffset(AttrPolyOffset(1.0f));
-        outMesh->pAttr.setShiny(AttrShiny(0.8f));
-        outMesh->pAttr.setLightLevel(AttrLightLevel(0.3f, 0.8f, "dataref"));
-        outMesh->pAttr.setCockpit(AttrCockpit(AttrCockpit::region_2));
+        outMesh->pAttr.mAttrPolyOffset = AttrPolyOffset(1.0f);
+        outMesh->pAttr.mAttrShiny = AttrShiny(0.8f);
+        outMesh->pAttr.mAttrLightLevel = AttrLightLevel(0.3f, 0.8f, "dataref");
+        outMesh->pAttr.mAttrCockpit = AttrCockpit(AttrCockpit::region_2);
         return outMesh;
     }
 

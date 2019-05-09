@@ -236,58 +236,58 @@ void ObjReaderInterpreter::gotMeshFaces(const FaceIndexArray & indices) {
 /**************************************************************************************************/
 
 void ObjReaderInterpreter::gotTrisAttrHard(const AttrHard & attr) {
-    mCurrentAttrSet.setHard(attr);
+    mCurrentAttrSet.mAttrHard = attr;
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrReset() {
-    mCurrentAttrSet.setShiny(AttrShiny());
+    mCurrentAttrSet.mAttrShiny = AttrShiny();
     // TODO Reset other light attributes like emission specular etc...
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrBlend(const AttrBlend & attr) {
-    mCurrentAttrSet.setBlend(attr);
+    mCurrentAttrSet.mAttrBlend = attr;
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrShadow(const bool state) {
-    mCurrentAttrSet.setCastShadow(state);
+    mCurrentAttrSet.mIsCastShadow = state;
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrDraped(const bool state) {
-    mCurrentAttrSet.setDraped(state);
+    mCurrentAttrSet.mIsDraped = state;
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrCockpit(const AttrCockpit & attr) {
-    mCurrentAttrSet.setCockpit(attr);
+    mCurrentAttrSet.mAttrCockpit = attr;
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrPolyOffset(const AttrPolyOffset & attr) {
-    mCurrentAttrSet.setPolyOffset(attr);
+    mCurrentAttrSet.mAttrPolyOffset = attr;
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrShiny(const AttrShiny & attr) {
-    mCurrentAttrSet.setShiny(attr);
+    mCurrentAttrSet.mAttrShiny = attr;
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrLightLevel(const AttrLightLevel & attr) {
-    mCurrentAttrSet.setLightLevel(attr);
+    mCurrentAttrSet.mAttrLightLevel = attr;
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrDrawEnable(const bool state) {
-    mCurrentAttrSet.setDraw(state);
+    mCurrentAttrSet.mIsDraw = state;
     ++mIOStatistic->pTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrSolidCamera(const bool state) {
-    mCurrentAttrSet.setSolidForCamera(state);
+    mCurrentAttrSet.mIsSolidForCamera = state;
     ++mIOStatistic->pTrisAttrCount;
 }
 
@@ -541,7 +541,7 @@ void ObjReaderInterpreter::gotTris(const Index offset, const Index count, const 
 
     //--------------------------
 
-    if (!mesh->pAttr.isDraped()) {
+    if (!mesh->pAttr.mIsDraped) {
         mCurrentTransform->addObject(mesh);
     }
     else {

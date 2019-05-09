@@ -596,9 +596,9 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case1) {
     const AttrCockpit cpAttr1(AttrCockpit::region_1);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
     mManipPanel.setCockpit(cpAttr1);
     //---------------------------
@@ -640,9 +640,9 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case2) {
     const AttrCockpit cpAttr1(AttrCockpit::cockpit);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
@@ -684,10 +684,10 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case3) {
     const AttrCockpit cpAttr1(AttrCockpit::cockpit);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
@@ -725,10 +725,10 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case4) {
     const AttrCockpit cpAttr1(AttrCockpit::cockpit);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
@@ -771,9 +771,9 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case5) {
     const AttrCockpit cpAttr2(AttrCockpit::region_1);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr2);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr2;
     //---------------------------
     // check printing
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
@@ -814,7 +814,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_1) {
     const AttrCockpit cpAttr1(AttrCockpit::cockpit);
     //---------------------------
     // set data
-    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
     //---------------------------
     // check printing
     EXPECT_CALL(writer, printLine(_)).Times(0);
@@ -853,7 +853,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_2) {
     // set data
     mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
     //------
     // mObjMesh3
     //------
@@ -898,7 +898,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_4) {
     const AttrCockpit cpAttr1(AttrCockpit::cockpit);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
@@ -943,10 +943,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_5) {
     const AttrCockpit cpAttr2(AttrCockpit::region_1);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr2);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr2;
     mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
@@ -984,10 +984,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_6) {
     const AttrCockpit cpAttr2(AttrCockpit::region_1);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr2);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr2;
     mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
@@ -1031,10 +1031,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_7) {
     const AttrCockpit cpAttr2(AttrCockpit::region_1);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr2);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr2;
     mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
@@ -1077,10 +1077,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_8) {
     const AttrCockpit cpAttr2(AttrCockpit::region_1);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr2);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr2;
     mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
@@ -1131,10 +1131,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_1) {
     const AttrCockpit cpAttr2(AttrCockpit::region_1);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr2);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr2;
     mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //------
     mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
@@ -1195,7 +1195,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_2) {
     // set data
     mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh2.pAttr.setManipulator(new AttrManipCmdAxis(mManipComdAxis));
     //------
     mObjMesh3.pAttr.setManipulator(new AttrManipPush(mManipPush));
@@ -1259,14 +1259,14 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_3) {
     const AttrCockpit cpAttr1(AttrCockpit::cockpit);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
     //------
-    mObjMesh3.pAttr.setCockpit(cpAttr1);
+    mObjMesh3.pAttr.mAttrCockpit = cpAttr1;
     //------
-    mObjMesh4.pAttr.setCockpit(cpAttr1);
+    mObjMesh4.pAttr.mAttrCockpit = cpAttr1;
     //---------------------------
     // check printing
     TestWriter w(false);
@@ -1315,12 +1315,12 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_4) {
     const AttrCockpit cpAttr1(AttrCockpit::cockpit);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //------
-    mObjMesh3.pAttr.setCockpit(cpAttr1);
+    mObjMesh3.pAttr.mAttrCockpit = cpAttr1;
     //------
     // mObjMesh4
     //---------------------------
@@ -1374,12 +1374,12 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_5) {
     const AttrCockpit cpAttr1(AttrCockpit::cockpit);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setCockpit(cpAttr1);
+    mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     //------
-    mObjMesh2.pAttr.setCockpit(cpAttr1);
+    mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //------
-    mObjMesh3.pAttr.setCockpit(cpAttr1);
+    mObjMesh3.pAttr.mAttrCockpit = cpAttr1;
     mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
     //------
     // mObjMesh4

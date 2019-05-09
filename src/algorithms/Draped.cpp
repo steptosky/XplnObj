@@ -41,7 +41,7 @@ namespace xobj {
 void Draped::ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrupter & interrupt) {
     inOutDraped.transform().visitAllObjects([&](const Transform &, ObjAbstract & obj) {
         if (obj.objType() == OBJ_MESH) {
-            static_cast<ObjMesh*>(&obj)->pAttr.setDraped(true);
+            static_cast<ObjMesh*>(&obj)->pAttr.mIsDraped = true;
         }
         INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
         return true;
@@ -93,7 +93,7 @@ Transform::ObjList Draped::processObjects(Transform & transform) {
             continue;
         }
         auto mesh = static_cast<ObjMesh*>(obj.get());
-        if (mesh->pAttr.isDraped()) {
+        if (mesh->pAttr.mIsDraped) {
             mesh->applyTransform(transform.pMatrix);
             out.emplace_back(mesh);
         }

@@ -77,7 +77,7 @@ private:
 
     const AttrManipBase * prepareManip(const AttrManipBase * manip) const;
 
-    void write(AbstractWriter * writer, const AttrManipBase * manip);
+    void writeAttr(AbstractWriter * writer, const AttrManipBase * manip);
     void print(AbstractWriter * writer, const AttrManipBase * manip);
 
     const ObjMesh * mObj = nullptr;

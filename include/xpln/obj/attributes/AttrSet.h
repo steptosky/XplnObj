@@ -34,9 +34,9 @@
 #include "xpln/obj/attributes/AttrShiny.h"
 #include "xpln/obj/attributes/AttrBlend.h"
 #include "xpln/obj/attributes/AttrPolyOffset.h"
-#include "xpln/obj/manipulators/AttrManipBase.h"
 #include "xpln/obj/attributes/AttrLightLevel.h"
 #include "xpln/obj/attributes/AttrCockpit.h"
+#include "xpln/obj/manipulators/ManipContainer.h"
 
 namespace xobj {
 
@@ -55,15 +55,10 @@ public:
     /// @{
 
     AttrSet() = default;
-    AttrSet(const AttrSet & copy) { this->operator=(copy); }
-    AttrSet(AttrSet &&) = delete;
+    AttrSet(const AttrSet & copy) = default;
+    AttrSet(AttrSet &&) = default;
 
     bool operator==(const AttrSet & other) const {
-        if (mAttrManipBase != nullptr) {
-            if (!mAttrManipBase->equals(other.mAttrManipBase)) {
-                return false;
-            }
-        }
         return mAttrLightLevel == other.mAttrLightLevel &&
                mAttrPolyOffset == other.mAttrPolyOffset &&
                mAttrBlend == other.mAttrBlend &&
@@ -76,56 +71,24 @@ public:
                mIsDraped == other.mIsDraped &&
                mIsTree == other.mIsTree &&
                mIsCastShadow == other.mIsCastShadow &&
-               mIsSolidForCamera == other.mIsSolidForCamera;
+               mIsSolidForCamera == other.mIsSolidForCamera &&
+               mManipContainer == other.mManipContainer;
     }
 
     bool operator!=(const AttrSet & other) const { return !this->operator==(other); }
 
-    ~AttrSet() { setManipulator(nullptr); }
+    ~AttrSet() = default;
 
-    AttrSet & operator=(const AttrSet & copy) {
-        copy.mAttrManipBase ? setManipulator(copy.mAttrManipBase->clone()) : setManipulator(nullptr);
-
-        mAttrLightLevel = copy.mAttrLightLevel;
-        mAttrPolyOffset = copy.mAttrPolyOffset;
-        mAttrBlend = copy.mAttrBlend;
-        mAttrShiny = copy.mAttrShiny;
-        mAttrHard = copy.mAttrHard;
-        mAttrCockpit = copy.mAttrCockpit;
-
-        mIsDraw = copy.mIsDraw;
-        mIsTwoSided = copy.mIsTwoSided;
-        mIsDraped = copy.mIsDraped;
-        mIsTree = copy.mIsTree;
-        mIsCastShadow = copy.mIsCastShadow;
-        mIsSolidForCamera = copy.mIsSolidForCamera;
-        return *this;
-    }
-
-    AttrSet & operator=(AttrSet &&) = delete;
+    AttrSet & operator=(const AttrSet &) = default;
+    AttrSet & operator=(AttrSet &&) = default;
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
     void reset() {
-        setManipulator(nullptr);
         const AttrSet clear;
         this->operator=(clear);
-    }
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    //!< takes ownership
-    void setManipulator(AttrManipBase * manip) {
-        delete mAttrManipBase;
-        mAttrManipBase = manip;
-    }
-
-    const AttrManipBase * manipulator() const {
-        return mAttrManipBase;
     }
 
     /// @}
@@ -138,6 +101,7 @@ public:
     std::optional<AttrShiny> mAttrShiny;
     std::optional<AttrHard> mAttrHard;
     std::optional<AttrCockpit> mAttrCockpit;
+    std::optional<ManipContainer> mManipContainer;
 
     bool mIsDraw = true;
     bool mIsDraped = false;
@@ -148,10 +112,6 @@ public:
 
     /// @}
     //-------------------------------------------------------------------------
-
-private:
-
-    AttrManipBase * mAttrManipBase = nullptr;
 
 };
 

@@ -35,8 +35,8 @@
 #include "xpln/obj/manipulators/AttrManipCmdAxis.h"
 #include "xpln/obj/manipulators/AttrManipNoop.h"
 #include "xpln/obj/manipulators/AttrManipPush.h"
+#include "xpln/obj/manipulators/ManipContainer.h"
 
-#include "totext.h"
 #include "xpln/obj/IOStatistic.h"
 #include "xpln/obj/ObjMain.h"
 #include "TestUtilsObjMesh.h"
@@ -84,7 +84,11 @@ public:
     static void extractManip(const ObjMain & inMain, const size_t inLodNumber, const size_t inMeshNumber, const MANIP *& outAttr) {
         ObjMesh * inM = nullptr;
         extractMesh(inMain, inLodNumber, inMeshNumber, inM);
-        outAttr = inM->pAttr.manipulator() == nullptr ? nullptr : static_cast<const MANIP *>(inM->pAttr.manipulator());
+        if (!inM->pAttr.mManipContainer || !inM->pAttr.mManipContainer->hasManip()) {
+            outAttr = nullptr;
+            return;
+        }
+        outAttr = static_cast<const MANIP *>(inM->pAttr.mManipContainer->mManip.get());
     }
 
     AttrManipCmd mManipComd;
@@ -153,7 +157,7 @@ TEST_F(TestManipIOLogic, case_2) {
 
     mManipComd.setCmd("test");
     // Manip
-    outM1->pAttr.setManipulator(mManipComd.clone());
+    outM1->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
     // No Manip
     // mObjMesh2
     // mObjMesh3
@@ -203,8 +207,8 @@ TEST_F(TestManipIOLogic, case_3) {
 
     mManipComd.setCmd("test");
     // Manip
-    outM1->pAttr.setManipulator(mManipComd.clone());
-    outM2->pAttr.setManipulator(mManipComd.clone());
+    outM1->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
+    outM2->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
     // No Manip
     // mObjMesh3
     // mObjMesh4
@@ -254,9 +258,9 @@ TEST_F(TestManipIOLogic, case_4) {
 
     mManipComd.setCmd("test");
     // Manip
-    outM1->pAttr.setManipulator(mManipComd.clone());
-    outM2->pAttr.setManipulator(mManipComd.clone());
-    outM3->pAttr.setManipulator(mManipComd.clone());
+    outM1->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
+    outM2->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
+    outM3->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
     // No Manip
     // mObjMesh4
 
@@ -306,10 +310,10 @@ TEST_F(TestManipIOLogic, case_5) {
 
     mManipComd.setCmd("test");
     // Manip
-    outM1->pAttr.setManipulator(mManipComd.clone());
-    outM2->pAttr.setManipulator(mManipComd.clone());
-    outM3->pAttr.setManipulator(mManipComd.clone());
-    outM4->pAttr.setManipulator(mManipComd.clone());
+    outM1->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
+    outM2->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
+    outM3->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
+    outM4->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -358,16 +362,16 @@ TEST_F(TestManipIOLogic, case_6) {
 
     // Manip
     mManipComd.setCmd("test1");
-    outM1->pAttr.setManipulator(mManipComd.clone());
+    outM1->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
     // Manip
     mManipComd.setCmd("test2");
-    outM2->pAttr.setManipulator(mManipComd.clone());
+    outM2->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
     // Manip
     mManipComd.setCmd("test3");
-    outM3->pAttr.setManipulator(mManipComd.clone());
+    outM3->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
     // Manip
     mManipComd.setCmd("test4");
-    outM4->pAttr.setManipulator(mManipComd.clone());
+    outM4->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -423,13 +427,13 @@ TEST_F(TestManipIOLogic, case_7) {
     outLGroup.transform().addObject(outM4);
 
     // Manip
-    outM1->pAttr.setManipulator(mManipComd.clone());
+    outM1->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
     // Manip
-    outM2->pAttr.setManipulator(mManipComdAxis.clone());
+    outM2->pAttr.mManipContainer = ManipContainer(mManipComdAxis.clone());
     // Manip
-    outM3->pAttr.setManipulator(mManipNoop.clone());
+    outM3->pAttr.mManipContainer = ManipContainer(mManipNoop.clone());
     // Manip
-    outM4->pAttr.setManipulator(mManipPush.clone());
+    outM4->pAttr.mManipContainer = ManipContainer(mManipPush.clone());
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -477,11 +481,11 @@ TEST_F(TestManipIOLogic, case_8) {
     outLGroup.transform().addObject(outM4);
 
     // Manip
-    outM1->pAttr.setManipulator(mManipComd.clone());
+    outM1->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
     // Manip
-    outM2->pAttr.setManipulator(mManipComdAxis.clone());
+    outM2->pAttr.mManipContainer = ManipContainer(mManipComdAxis.clone());
     // Manip
-    outM3->pAttr.setManipulator(mManipNoop.clone());
+    outM3->pAttr.mManipContainer = ManipContainer(mManipNoop.clone());
     // No Manip
     // mObjMesh4
 
@@ -530,12 +534,12 @@ TEST_F(TestManipIOLogic, case_9) {
     outLGroup.transform().addObject(outM4);
 
     // Manip
-    outM1->pAttr.setManipulator(mManipComd.clone());
-    outM2->pAttr.setManipulator(mManipComd.clone());
+    outM1->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
+    outM2->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
     // Manip
-    outM3->pAttr.setManipulator(mManipNoop.clone());
+    outM3->pAttr.mManipContainer = ManipContainer(mManipNoop.clone());
     // Manip
-    outM4->pAttr.setManipulator(mManipPush.clone());
+    outM4->pAttr.mManipContainer = ManipContainer(mManipPush.clone());
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -583,13 +587,13 @@ TEST_F(TestManipIOLogic, case_10) {
     outLGroup.transform().addObject(outM4);
 
     // Manip
-    outM1->pAttr.setManipulator(mManipComd.clone());
+    outM1->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
     // No Manip
     // mObjMesh2
     // Manip
-    outM3->pAttr.setManipulator(mManipNoop.clone());
+    outM3->pAttr.mManipContainer = ManipContainer(mManipNoop.clone());
     // Manip
-    outM4->pAttr.setManipulator(mManipPush.clone());
+    outM4->pAttr.mManipContainer = ManipContainer(mManipPush.clone());
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -636,11 +640,11 @@ TEST_F(TestManipIOLogic, case_11) {
     outLGroup.transform().addObject(outM4);
 
     // Manip
-    outM1->pAttr.setManipulator(mManipComd.clone());
+    outM1->pAttr.mManipContainer = ManipContainer(mManipComd.clone());
     // No Manip
     // mObjMesh2
     // Manip
-    outM3->pAttr.setManipulator(mManipNoop.clone());
+    outM3->pAttr.mManipContainer = ManipContainer(mManipNoop.clone());
     // No Manip
     // mObjMesh4
 

@@ -66,7 +66,12 @@ size_t ObjWriteManip::count() const {
 void ObjWriteManip::write(AbstractWriter * writer, const ObjAbstract * obj) {
     if (obj->objType() == eObjectType::OBJ_MESH) {
         mObj = static_cast<const ObjMesh *>(obj);
-        write(writer, mObj->pAttr.manipulator());
+		if (!mObj->pAttr.mManipContainer || !mObj->pAttr.mManipContainer->mManip) {
+			writeAttr(writer, nullptr);
+		}
+		else {
+			writeAttr(writer, mObj->pAttr.mManipContainer->mManip.get());
+		}
     }
     else {
         mObj = nullptr;
@@ -154,7 +159,7 @@ const AttrManipBase * ObjWriteManip::prepareManip(const AttrManipBase * manip) c
     return manip;
 }
 
-void ObjWriteManip::write(AbstractWriter * writer, const AttrManipBase * manip) {
+void ObjWriteManip::writeAttr(AbstractWriter * writer, const AttrManipBase * manip) {
     assert(writer);
     //------------------------------
     /*! 

@@ -78,16 +78,17 @@ void extractManip(const ObjMain & inMain, EManipulator::eId inManipType, const M
     ObjAbstract * obj = inLGroup.transform().objList().begin()->get();
     ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
     auto * inM = static_cast<ObjMesh *>(obj);
-    ASSERT_TRUE(inM->pAttr.manipulator() != nullptr);
-    ASSERT_EQ(EManipulator(inManipType), inM->pAttr.manipulator()->type());
-    outAttr = static_cast<const MANIP *>(inM->pAttr.manipulator());
+    ASSERT_TRUE(inM->pAttr.mManipContainer);
+    ASSERT_TRUE(inM->pAttr.mManipContainer->hasManip());
+    ASSERT_EQ(EManipulator(inManipType), inM->pAttr.mManipContainer->mManip->type());
+    outAttr = static_cast<const MANIP *>(inM->pAttr.mManipContainer->mManip.get());
 }
 
 void addManip(ObjMain & inOutMain, AttrManipBase * inManip) {
     ObjMesh * outM = TestUtilsObjMesh::createObjMesh("m1", 0.0);
     ObjLodGroup & outLGroup = inOutMain.addLod();
     outLGroup.transform().addObject(outM);
-    outM->pAttr.setManipulator(inManip);
+    outM->pAttr.mManipContainer = ManipContainer(inManip);
 }
 
 /**************************************************************************************************/

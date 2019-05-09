@@ -68,7 +68,7 @@ using ::testing::InSequence;
 template<typename T>
 std::string strAttrResult(const T & attr) {
     TestWriter w;
-	w.printLine(attr.objStr());
+    w.printLine(attr.objStr());
     if (!w.mResult.empty()) {
         w.mResult.pop_back(); // remove '\n'
     }
@@ -167,14 +167,14 @@ TEST_F(ManipsStates, one_manip) {
 
     mManipCmd.setCmd("test");
     // Manip
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     // No Manip
     // mObjMesh2
     // mObjMesh3
     // mObjMesh4
 
     TestWriter w(false);
-    const auto count = mObjMesh1.pAttr.manipulator()->printObj(w);
+    const auto count = mObjMesh1.pAttr.mManipContainer->printObj(w);
 
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
@@ -199,14 +199,14 @@ TEST_F(ManipsStates, two_manips_with_the_same_vals) {
 
     mManipCmd.setCmd("test");
     // Manip
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     // No Manip
     // mObjMesh3
     // mObjMesh4
 
     TestWriter w(false);
-    const auto count = mObjMesh1.pAttr.manipulator()->printObj(w);
+    const auto count = mObjMesh1.pAttr.mManipContainer->printObj(w);
 
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
@@ -231,14 +231,14 @@ TEST_F(ManipsStates, three_manips_with_the_same_vals) {
 
     mManipCmd.setCmd("test");
     // Manip
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-    mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
+    mObjMesh3.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     // No Manip
     // mObjMesh4
 
     TestWriter w(false);
-    const auto count = mObjMesh1.pAttr.manipulator()->printObj(w);
+    const auto count = mObjMesh1.pAttr.mManipContainer->printObj(w);
 
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
@@ -262,13 +262,13 @@ TEST_F(ManipsStates, four_manips_with_the_same_vals) {
 
     mManipCmd.setCmd("test");
     // Manip
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-    mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-    mObjMesh4.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
+    mObjMesh3.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
+    mObjMesh4.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
 
     TestWriter w(false);
-    const auto count = mObjMesh1.pAttr.manipulator()->printObj(w);
+    const auto count = mObjMesh1.pAttr.mManipContainer->printObj(w);
 
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     processMeshes(&writer);
@@ -294,25 +294,25 @@ TEST_F(ManipsStates, four_manips_with_the_different_vals) {
 
     // Manip
     mManipCmd.setCmd("test1");
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     // Manip
     mManipCmd.setCmd("test2");
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     // Manip
     mManipCmd.setCmd("test3");
-    mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh3.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     // Manip
     mManipCmd.setCmd("test4");
-    mObjMesh4.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh4.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
 
     TestWriter w1(false);
     TestWriter w2(false);
     TestWriter w3(false);
     TestWriter w4(false);
-    const auto count1 = mObjMesh1.pAttr.manipulator()->printObj(w1);
-    const auto count2 = mObjMesh2.pAttr.manipulator()->printObj(w2);
-    const auto count3 = mObjMesh3.pAttr.manipulator()->printObj(w3);
-    const auto count4 = mObjMesh4.pAttr.manipulator()->printObj(w4);
+    const auto count1 = mObjMesh1.pAttr.mManipContainer->printObj(w1);
+    const auto count2 = mObjMesh2.pAttr.mManipContainer->printObj(w2);
+    const auto count3 = mObjMesh3.pAttr.mManipContainer->printObj(w3);
+    const auto count4 = mObjMesh4.pAttr.mManipContainer->printObj(w4);
 
     EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w2.mResult))).Times(1);
@@ -343,22 +343,22 @@ TEST_F(ManipsStates, four_different_manips) {
     MockWriter writer;
 
     // Manip
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     // Manip
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmdAxis(mManipComdAxis));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmdAxis(mManipComdAxis));
     // Manip
-    mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
+    mObjMesh3.pAttr.mManipContainer = ManipContainer(new AttrManipNoop(mManipNoop));
     // Manip
-    mObjMesh4.pAttr.setManipulator(new AttrManipPush(mManipPush));
+    mObjMesh4.pAttr.mManipContainer = ManipContainer(new AttrManipPush(mManipPush));
 
     TestWriter w1(false);
     TestWriter w2(false);
     TestWriter w3(false);
     TestWriter w4(false);
-    const auto count1 = mObjMesh1.pAttr.manipulator()->printObj(w1);
-    const auto count2 = mObjMesh2.pAttr.manipulator()->printObj(w2);
-    const auto count3 = mObjMesh3.pAttr.manipulator()->printObj(w3);
-    const auto count4 = mObjMesh4.pAttr.manipulator()->printObj(w4);
+    const auto count1 = mObjMesh1.pAttr.mManipContainer->printObj(w1);
+    const auto count2 = mObjMesh2.pAttr.mManipContainer->printObj(w2);
+    const auto count3 = mObjMesh3.pAttr.mManipContainer->printObj(w3);
+    const auto count4 = mObjMesh4.pAttr.mManipContainer->printObj(w4);
 
     EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w2.mResult))).Times(1);
@@ -385,20 +385,20 @@ TEST_F(ManipsStates, three_different_manips) {
     MockWriter writer;
 
     // Manip
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     // Manip
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmdAxis(mManipComdAxis));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmdAxis(mManipComdAxis));
     // Manip
-    mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
+    mObjMesh3.pAttr.mManipContainer = ManipContainer(new AttrManipNoop(mManipNoop));
     // No Manip
     // mObjMesh4
 
     TestWriter w1(false);
     TestWriter w2(false);
     TestWriter w3(false);
-    const auto count1 = mObjMesh1.pAttr.manipulator()->printObj(w1);
-    const auto count2 = mObjMesh2.pAttr.manipulator()->printObj(w2);
-    const auto count3 = mObjMesh3.pAttr.manipulator()->printObj(w3);
+    const auto count1 = mObjMesh1.pAttr.mManipContainer->printObj(w1);
+    const auto count2 = mObjMesh2.pAttr.mManipContainer->printObj(w2);
+    const auto count3 = mObjMesh3.pAttr.mManipContainer->printObj(w3);
 
     EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w2.mResult))).Times(1);
@@ -424,19 +424,19 @@ TEST_F(ManipsStates, two_the_same_and_two_different_manips) {
     MockWriter writer;
 
     // Manip
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     // Manip
-    mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
+    mObjMesh3.pAttr.mManipContainer = ManipContainer(new AttrManipNoop(mManipNoop));
     // Manip
-    mObjMesh4.pAttr.setManipulator(new AttrManipPush(mManipPush));
+    mObjMesh4.pAttr.mManipContainer = ManipContainer(new AttrManipPush(mManipPush));
 
     TestWriter w1(false);
     TestWriter w3(false);
     TestWriter w4(false);
-    const auto count1 = mObjMesh1.pAttr.manipulator()->printObj(w1);
-    const auto count3 = mObjMesh3.pAttr.manipulator()->printObj(w3);
-    const auto count4 = mObjMesh4.pAttr.manipulator()->printObj(w4);
+    const auto count1 = mObjMesh1.pAttr.mManipContainer->printObj(w1);
+    const auto count3 = mObjMesh3.pAttr.mManipContainer->printObj(w3);
+    const auto count4 = mObjMesh4.pAttr.mManipContainer->printObj(w4);
 
     EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
@@ -462,20 +462,20 @@ TEST_F(ManipsStates, one_manip_and_two_different_manips) {
     MockWriter writer;
 
     // Manip
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     // No Manip
     // mObjMesh2
     // Manip
-    mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
+    mObjMesh3.pAttr.mManipContainer = ManipContainer(new AttrManipNoop(mManipNoop));
     // Manip
-    mObjMesh4.pAttr.setManipulator(new AttrManipPush(mManipPush));
+    mObjMesh4.pAttr.mManipContainer = ManipContainer(new AttrManipPush(mManipPush));
 
     TestWriter w1(false);
     TestWriter w3(false);
     TestWriter w4(false);
-    const auto count1 = mObjMesh1.pAttr.manipulator()->printObj(w1);
-    const auto count3 = mObjMesh3.pAttr.manipulator()->printObj(w3);
-    const auto count4 = mObjMesh4.pAttr.manipulator()->printObj(w4);
+    const auto count1 = mObjMesh1.pAttr.mManipContainer->printObj(w1);
+    const auto count3 = mObjMesh3.pAttr.mManipContainer->printObj(w3);
+    const auto count4 = mObjMesh4.pAttr.mManipContainer->printObj(w4);
 
     EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
@@ -502,11 +502,11 @@ TEST_F(ManipsStates, two_different_manips) {
     MockWriter writer;
 
     // Manip
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     // No Manip
     // mObjMesh2
     // Manip
-    mObjMesh3.pAttr.setManipulator(new AttrManipNoop(mManipNoop));
+    mObjMesh3.pAttr.mManipContainer = ManipContainer(new AttrManipNoop(mManipNoop));
     // No Manip
     // mObjMesh4
 
@@ -514,8 +514,8 @@ TEST_F(ManipsStates, two_different_manips) {
     TestWriter w2(false);
     TestWriter w3(false);
     TestWriter w4(false);
-    const auto count1 = mObjMesh1.pAttr.manipulator()->printObj(w1);
-    const auto count3 = mObjMesh3.pAttr.manipulator()->printObj(w3);
+    const auto count1 = mObjMesh1.pAttr.mManipContainer->printObj(w1);
+    const auto count3 = mObjMesh3.pAttr.mManipContainer->printObj(w3);
 
     EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
@@ -548,7 +548,7 @@ TEST_F(ManipsStates, manip_panel_relation_simple_case2) {
     InSequence dummy;
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
     EXPECT_CALL(writer, printLine(_)).Times(0);
@@ -599,7 +599,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case1) {
     mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipPanel(mManipPanel));
     mManipPanel.setCockpit(cpAttr1);
     //---------------------------
     // check printing
@@ -643,7 +643,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case2) {
     mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
@@ -685,10 +685,10 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case3) {
     //---------------------------
     // set data
     mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipPanel(mManipPanel));
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
@@ -726,10 +726,10 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case4) {
     //---------------------------
     // set data
     mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
     TestWriter w(false);
@@ -851,7 +851,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_2) {
     const AttrCockpit cpAttr1(AttrCockpit::cockpit);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
     //------
@@ -899,9 +899,9 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_4) {
     //---------------------------
     // set data
     mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //------
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
     TestWriter w(false);
@@ -944,10 +944,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_5) {
     //---------------------------
     // set data
     mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipPanel(mManipPanel));
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr2;
-    mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
@@ -985,10 +985,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_6) {
     //---------------------------
     // set data
     mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr2;
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
     TestWriter w(false);
@@ -1032,10 +1032,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_7) {
     //---------------------------
     // set data
     mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh1.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipPanel(mManipPanel));
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr2;
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
@@ -1078,10 +1078,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_8) {
     //---------------------------
     // set data
     mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr2;
-    mObjMesh2.pAttr.setManipulator(new AttrManipPanel(mManipPanel));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
     TestWriter w(false);
@@ -1132,14 +1132,14 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_1) {
     //---------------------------
     // set data
     mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr2;
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //------
-    mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh3.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //------
-    mObjMesh4.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh4.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
     TestWriter w(false);
@@ -1193,14 +1193,14 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_2) {
     const AttrCockpit cpAttr1(AttrCockpit::cockpit);
     //---------------------------
     // set data
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmdAxis(mManipComdAxis));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmdAxis(mManipComdAxis));
     //------
-    mObjMesh3.pAttr.setManipulator(new AttrManipPush(mManipPush));
+    mObjMesh3.pAttr.mManipContainer = ManipContainer(new AttrManipPush(mManipPush));
     //------
-    mObjMesh4.pAttr.setManipulator(new AttrManipPush(mManipPush));
+    mObjMesh4.pAttr.mManipContainer = ManipContainer(new AttrManipPush(mManipPush));
     //---------------------------
     // check printing
     TestWriter w1(false);
@@ -1260,7 +1260,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_3) {
     //---------------------------
     // set data
     mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh1.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh1.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
     //------
@@ -1318,7 +1318,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_4) {
     mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //------
     mObjMesh3.pAttr.mAttrCockpit = cpAttr1;
     //------
@@ -1377,10 +1377,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_5) {
     mObjMesh1.pAttr.mAttrCockpit = cpAttr1;
     //------
     mObjMesh2.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh2.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh2.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //------
     mObjMesh3.pAttr.mAttrCockpit = cpAttr1;
-    mObjMesh3.pAttr.setManipulator(new AttrManipCmd(mManipCmd));
+    mObjMesh3.pAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //------
     // mObjMesh4
     //---------------------------

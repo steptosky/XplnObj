@@ -296,160 +296,160 @@ void ObjReaderInterpreter::gotTrisAttrSolidCamera(const bool state) {
 /**************************************************************************************************/
 
 void ObjReaderInterpreter::gotTrisAttrManipNo() {
-    mCurrentAttrSet.setManipulator(nullptr);
+    mCurrentAttrSet.mManipContainer = std::nullopt;
 }
 
 void ObjReaderInterpreter::gotTrisAttrManipAxisDetented(const AttrAxisDetented & manip) {
-    const auto * currManip = mCurrentAttrSet.manipulator();
-    if (!currManip) {
+    const auto & currManip = mCurrentAttrSet.mManipContainer;
+    if (!currManip || !currManip->hasManip()) {
         ULError << ATTR_MANIP_AXIS_DETENTED << " is specified without main manipulator";
     }
     //--------------------------
-    if (currManip->type() != EManipulator::drag_axis) {
-        ULError << "Manipulator <" << currManip->type().toString() << "> doesn't support axis detented";
+    if (currManip->mManip->type() != EManipulator::drag_axis) {
+        ULError << "Manipulator <" << currManip->mManip->type().toString() << "> doesn't support axis detented";
         return;
     }
 
-    auto * clonedManip = currManip->clone();
+    auto * clonedManip = currManip->mManip->clone();
     auto * castedClonedManip = dynamic_cast<AttrManipDragAxis *>(clonedManip);
     assert(castedClonedManip);
     if (castedClonedManip->axisDetented().isEnabled()) {
         LWarning << "Rewriting existing and enabled sub-manipulator";
     }
     castedClonedManip->setAxisDetented(manip);
-    mCurrentAttrSet.setManipulator(castedClonedManip);
+    mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
 }
 
 void ObjReaderInterpreter::gotTrisAttrManipAxisDetentRange(const AttrAxisDetentRange & manip) {
-    const auto * currManip = mCurrentAttrSet.manipulator();
-    if (!currManip) {
+    const auto & currManip = mCurrentAttrSet.mManipContainer;
+    if (!currManip || !currManip->hasManip()) {
         ULError << ATTR_MANIP_AXIS_DETENT_RANGE << " is specified without main manipulator";
     }
     //--------------------------
-    if (currManip->type() == EManipulator::drag_axis) {
-        auto * clonedManip = currManip->clone();
+    if (currManip->mManip->type() == EManipulator::drag_axis) {
+        auto * clonedManip = currManip->mManip->clone();
         auto * castedClonedManip = dynamic_cast<AttrManipDragAxis *>(clonedManip);
         assert(castedClonedManip);
         if (!castedClonedManip->axisDetented().isEnabled()) {
             ULWarning << ATTR_MANIP_AXIS_DETENT_RANGE << " is used when " << ATTR_MANIP_AXIS_DETENTED << " isn't enabled";
         }
         castedClonedManip->detentRanges().emplace_back(manip);
-        mCurrentAttrSet.setManipulator(castedClonedManip);
+        mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
     }
-    else if (currManip->type() == EManipulator::drag_rotate) {
-        auto * clonedManip = currManip->clone();
+    else if (currManip->mManip->type() == EManipulator::drag_rotate) {
+        auto * clonedManip = currManip->mManip->clone();
         auto * castedClonedManip = dynamic_cast<AttrManipDragRotate *>(clonedManip);
         assert(castedClonedManip);
         castedClonedManip->detentRanges().emplace_back(manip);
-        mCurrentAttrSet.setManipulator(castedClonedManip);
+        mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
     }
     else {
-        ULError << "Manipulator <" << currManip->type().toString() << "> doesn't support axis detent range";
+        ULError << "Manipulator <" << currManip->mManip->type().toString() << "> doesn't support axis detent range";
     }
 }
 
 void ObjReaderInterpreter::gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & manip) {
-    const auto * currManip = mCurrentAttrSet.manipulator();
-    if (!currManip) {
+    const auto & currManip = mCurrentAttrSet.mManipContainer;
+    if (!currManip || !currManip->hasManip()) {
         ULError << ATTR_MANIP_AXIS_DETENT_RANGE << " is specified without main manipulator";
     }
     //--------------------------
-    if (currManip->type() == EManipulator::drag_rotate) {
-        auto * clonedManip = currManip->clone();
+    if (currManip->mManip->type() == EManipulator::drag_rotate) {
+        auto * clonedManip = currManip->mManip->clone();
         auto * castedClonedManip = dynamic_cast<AttrManipDragRotate *>(clonedManip);
         assert(castedClonedManip);
         castedClonedManip->keys().emplace_back(manip);
-        mCurrentAttrSet.setManipulator(castedClonedManip);
+        mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
     }
     else {
-        ULError << "Manipulator <" << currManip->type().toString() << "> doesn't support key frame";
+        ULError << "Manipulator <" << currManip->mManip->type().toString() << "> doesn't support key frame";
     }
 }
 
 void ObjReaderInterpreter::gotTrisAttrManipWheel(const AttrManipWheel & manip) {
-    const auto * currManip = mCurrentAttrSet.manipulator();
-    if (!currManip) {
+    const auto & currManip = mCurrentAttrSet.mManipContainer;
+    if (!currManip || !currManip->hasManip()) {
         ULError << ATTR_MANIP_WHEEL << " is specified without main manipulator";
     }
     //--------------------------
-    if (currManip->type() == EManipulator::axis_knob) {
-        auto * clonedManip = currManip->clone();
+    if (currManip->mManip->type() == EManipulator::axis_knob) {
+        auto * clonedManip = currManip->mManip->clone();
         auto * castedClonedManip = dynamic_cast<AttrManipAxisKnob *>(clonedManip);
         assert(castedClonedManip);
         castedClonedManip->setWheel(manip);
-        mCurrentAttrSet.setManipulator(castedClonedManip);
+        mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
     }
-    else if (currManip->type() == EManipulator::axis_switch_lr) {
-        auto * clonedManip = currManip->clone();
+    else if (currManip->mManip->type() == EManipulator::axis_switch_lr) {
+        auto * clonedManip = currManip->mManip->clone();
         auto * castedClonedManip = dynamic_cast<AttrManipAxisSwitchLeftRight *>(clonedManip);
         assert(castedClonedManip);
         castedClonedManip->setWheel(manip);
-        mCurrentAttrSet.setManipulator(castedClonedManip);
+        mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
     }
-    else if (currManip->type() == EManipulator::axis_switch_ud) {
-        auto * clonedManip = currManip->clone();
+    else if (currManip->mManip->type() == EManipulator::axis_switch_ud) {
+        auto * clonedManip = currManip->mManip->clone();
         auto * castedClonedManip = dynamic_cast<AttrManipAxisSwitchUpDown *>(clonedManip);
         assert(castedClonedManip);
         castedClonedManip->setWheel(manip);
-        mCurrentAttrSet.setManipulator(castedClonedManip);
+        mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
     }
-    else if (currManip->type() == EManipulator::delta) {
-        auto * clonedManip = currManip->clone();
+    else if (currManip->mManip->type() == EManipulator::delta) {
+        auto * clonedManip = currManip->mManip->clone();
         auto * castedClonedManip = dynamic_cast<AttrManipDelta *>(clonedManip);
         assert(castedClonedManip);
         castedClonedManip->setWheel(manip);
-        mCurrentAttrSet.setManipulator(castedClonedManip);
+        mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
     }
-    else if (currManip->type() == EManipulator::drag_axis) {
-        auto * clonedManip = currManip->clone();
+    else if (currManip->mManip->type() == EManipulator::drag_axis) {
+        auto * clonedManip = currManip->mManip->clone();
         auto * castedClonedManip = dynamic_cast<AttrManipDragAxis *>(clonedManip);
         assert(castedClonedManip);
         castedClonedManip->setWheel(manip);
-        mCurrentAttrSet.setManipulator(castedClonedManip);
+        mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
     }
-    else if (currManip->type() == EManipulator::drag_axis_pix) {
-        auto * clonedManip = currManip->clone();
+    else if (currManip->mManip->type() == EManipulator::drag_axis_pix) {
+        auto * clonedManip = currManip->mManip->clone();
         auto * castedClonedManip = dynamic_cast<AttrManipDragAxisPix *>(clonedManip);
         assert(castedClonedManip);
         castedClonedManip->setWheel(manip);
-        mCurrentAttrSet.setManipulator(castedClonedManip);
+        mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
     }
-    else if (currManip->type() == EManipulator::push) {
-        auto * clonedManip = currManip->clone();
+    else if (currManip->mManip->type() == EManipulator::push) {
+        auto * clonedManip = currManip->mManip->clone();
         auto * castedClonedManip = dynamic_cast<AttrManipPush *>(clonedManip);
         assert(castedClonedManip);
         castedClonedManip->setWheel(manip);
-        mCurrentAttrSet.setManipulator(castedClonedManip);
+        mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
     }
-    else if (currManip->type() == EManipulator::radio) {
-        auto * clonedManip = currManip->clone();
+    else if (currManip->mManip->type() == EManipulator::radio) {
+        auto * clonedManip = currManip->mManip->clone();
         auto * castedClonedManip = dynamic_cast<AttrManipRadio *>(clonedManip);
         assert(castedClonedManip);
         castedClonedManip->setWheel(manip);
-        mCurrentAttrSet.setManipulator(castedClonedManip);
+        mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
     }
-    else if (currManip->type() == EManipulator::toggle) {
-        auto * clonedManip = currManip->clone();
+    else if (currManip->mManip->type() == EManipulator::toggle) {
+        auto * clonedManip = currManip->mManip->clone();
         auto * castedClonedManip = dynamic_cast<AttrManipToggle *>(clonedManip);
         assert(castedClonedManip);
         castedClonedManip->setWheel(manip);
-        mCurrentAttrSet.setManipulator(castedClonedManip);
+        mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
     }
-    else if (currManip->type() == EManipulator::wrap) {
-        auto * clonedManip = currManip->clone();
+    else if (currManip->mManip->type() == EManipulator::wrap) {
+        auto * clonedManip = currManip->mManip->clone();
         auto * castedClonedManip = dynamic_cast<AttrManipWrap *>(clonedManip);
         assert(castedClonedManip);
         castedClonedManip->setWheel(manip);
-        mCurrentAttrSet.setManipulator(castedClonedManip);
+        mCurrentAttrSet.mManipContainer->setManip(castedClonedManip);
     }
     else {
-        ULError << "Manipulator <" << currManip->type().toString() << "> doesn't support mouse wheel";
+        ULError << "Manipulator <" << currManip->mManip->type().toString() << "> doesn't support mouse wheel";
     }
 }
 
 void ObjReaderInterpreter::gotTrisAttrManip(const AttrManipBase & manip) {
-    if (mCurrentAttrSet.manipulator() != nullptr) {
-        if (manip.equals(mCurrentAttrSet.manipulator())) {
+    if (mCurrentAttrSet.mManipContainer) {
+        if (mCurrentAttrSet.mManipContainer->mManip && mCurrentAttrSet.mManipContainer->mManip->equals(&manip)) {
             return;
         }
     }
@@ -457,7 +457,7 @@ void ObjReaderInterpreter::gotTrisAttrManip(const AttrManipBase & manip) {
     // So equals does not work as expected for this logic.
     // I don't have a good solution yet.
     ++mIOStatistic->pTrisManipCount;
-    mCurrentAttrSet.setManipulator(manip.clone());
+    mCurrentAttrSet.mManipContainer = ManipContainer(manip.clone());
 }
 
 /**************************************************************************************************/

@@ -30,6 +30,7 @@
 */
 
 #include <vector>
+#include <optional>
 #include "xpln/Export.h"
 #include "xpln/common/Point3.h"
 #include "AnimRotateKey.h"
@@ -47,7 +48,7 @@ namespace xobj {
 class AnimRotate {
 public:
 
-    XpObjLib AnimRotate();
+    AnimRotate() = default;
     virtual ~AnimRotate() = default;
 
     //-----------------------------------------------------
@@ -75,8 +76,7 @@ public:
 
     //-----------------------------------------------
 
-    bool pHasLoop;
-    float pLoopValue;
+    std::optional<float> pLoopValue;
     Point3 pVector;
     KeyList pKeys;
     std::string pDrf;

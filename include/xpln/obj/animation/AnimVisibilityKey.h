@@ -31,6 +31,7 @@
 
 #include <cstdint>
 #include <string>
+#include <optional>
 #include "xpln/Export.h"
 
 namespace xobj {
@@ -75,8 +76,7 @@ public:
     float pValue2;
     std::string pDrf;
 
-    float pLoopValue;
-    bool pHasLoop;
+    std::optional<float> pLoopValue;
 
     //-------------------------------------------------------------------------
 

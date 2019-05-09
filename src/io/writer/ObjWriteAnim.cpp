@@ -118,8 +118,8 @@ void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const Transform &
                         << " " << a.pKeys[1].pDrfValue
                         << sep << (a.pDrf.empty() ? "none" : mWriter->actualDataref(a.pDrf).c_str());
                 mWriter->printLine(stream.str());
-                if (a.pHasLoop) {
-                    printLoop(a.pLoopValue);
+                if (a.pLoopValue) {
+                    printLoop(*a.pLoopValue);
                 }
 
                 ++mStat->pAnimAttrCount;
@@ -134,8 +134,8 @@ void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const Transform &
                     printObj(key, *mWriter);
                 }
 
-                if (a.pHasLoop) {
-                    printLoop(a.pLoopValue);
+                if (a.pLoopValue) {
+                    printLoop(*a.pLoopValue);
                 }
 
                 mWriter->spaceLess();
@@ -163,8 +163,8 @@ void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const Transform &
                         << " " << a.pKeys[1].pDrfValue
                         << sep << (a.pDrf.empty() ? "none" : mWriter->actualDataref(a.pDrf).c_str());
                 mWriter->printLine(stream.str());
-                if (a.pHasLoop) {
-                    printLoop(a.pLoopValue);
+                if (a.pLoopValue) {
+                    printLoop(*a.pLoopValue);
                 }
 
                 ++mStat->pAnimAttrCount;
@@ -181,8 +181,8 @@ void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const Transform &
                     printObj(key, *mWriter);
                 }
 
-                if (a.pHasLoop) {
-                    printLoop(a.pLoopValue);
+                if (a.pLoopValue) {
+                    printLoop(*a.pLoopValue);
                 }
 
                 mWriter->spaceLess();
@@ -205,8 +205,8 @@ void ObjWriteAnim::printVisible(const AnimVisibility & inAnim, const Transform &
         if (checkParameters(curr, std::string("Transform: ").append(transform.name()))) {
             ++mStat->pAnimAttrCount;
             printObj(curr, *mWriter);
-            if (curr.pHasLoop) {
-                printLoop(curr.pLoopValue);
+            if (curr.pLoopValue) {
+                printLoop(*curr.pLoopValue);
             }
             ++mStat->pAnimAttrCount;
         }

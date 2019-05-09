@@ -1110,7 +1110,7 @@ bool ObjReader::readTranslateAnim(ObjReadParser & parser) const {
 
         float loopVal = 0.0f;
         const bool hasLoop = readAnimLoop(parser, loopVal);
-        mObjParserListener->gotTranslateAnim(keys, dataref, hasLoop, loopVal);
+        mObjParserListener->gotTranslateAnim(keys, dataref, hasLoop ? std::optional<float>(loopVal) : std::nullopt);
         return true;
     }
     return false;
@@ -1149,7 +1149,7 @@ bool ObjReader::readRotateAnim(ObjReadParser & parser) const {
 
         float loopVal = 0.0f;
         const bool hasLoop = readAnimLoop(parser, loopVal);
-        mObjParserListener->gotRotateAnim(keys, vector, dataref, hasLoop, loopVal);
+        mObjParserListener->gotRotateAnim(keys, vector, dataref, hasLoop ? std::optional<float>(loopVal) : std::nullopt);
         return true;
     }
     return false;
@@ -1180,7 +1180,7 @@ bool ObjReader::readTranslateKeysAnim(ObjReadParser & parser) const {
         if (parser.isMatch(ATTR_TRANS_END)) {
             float loopVal = 0.0f;
             const bool hasLoop = readAnimLoop(parser, loopVal);
-            mObjParserListener->gotTranslateAnim(keys, dataref, hasLoop, loopVal);
+            mObjParserListener->gotTranslateAnim(keys, dataref, hasLoop ? std::optional<float>(loopVal) : std::nullopt);
         }
         else {
             ULError << "Incorrect translate key animation.";
@@ -1220,7 +1220,7 @@ bool ObjReader::readRotateKeysAnim(ObjReadParser & parser) const {
         if (parser.isMatch(ATTR_ROTATE_END)) {
             float loopVal = 0.0f;
             const bool hasLoop = readAnimLoop(parser, loopVal);
-            mObjParserListener->gotRotateAnim(keys, vector, dataref, hasLoop, loopVal);
+            mObjParserListener->gotRotateAnim(keys, vector, dataref, hasLoop ? std::optional<float>(loopVal) : std::nullopt);
         }
         else {
             ULError << "Incorrect rotate key animation.";

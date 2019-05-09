@@ -33,20 +33,11 @@
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AnimTrans::AnimTrans()
-    : pLoopValue(0.0f),
-      pHasLoop(false) { }
-
-/**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
 bool AnimTrans::operator==(const AnimTrans & other) const {
-    return pHasLoop == other.pHasLoop &&
-           sts::isEqual(pLoopValue, other.pLoopValue) &&
+    return sts::isEqual(pLoopValue, other.pLoopValue) &&
            pDrf == other.pDrf &&
            pKeys == other.pKeys;
 }
@@ -56,7 +47,6 @@ bool AnimTrans::operator==(const AnimTrans & other) const {
 /**************************************************************************************************/
 
 void AnimTrans::reset() {
-    pHasLoop = false;
     pLoopValue = 0.0f;
     pDrf.clear();
     pKeys.clear();

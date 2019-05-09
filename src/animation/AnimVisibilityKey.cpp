@@ -40,17 +40,13 @@ AnimVisibilityKey::AnimVisibilityKey()
     : pType(UNDEFINED),
       pValue1(0.0f),
       pValue2(1.0f),
-      pDrf("none"),
-      pLoopValue(0.0f),
-      pHasLoop(false) {}
+      pDrf("none"){}
 
 AnimVisibilityKey::AnimVisibilityKey(const eType type, const float val1, const float val2, const std::string & dataRef)
     : pType(type),
       pValue1(val1),
       pValue2(val2),
-      pDrf(dataRef),
-      pLoopValue(0.0f),
-      pHasLoop(false) {}
+      pDrf(dataRef){}
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
@@ -61,7 +57,6 @@ bool AnimVisibilityKey::operator==(const AnimVisibilityKey & other) const {
            sts::isEqual(pValue1, other.pValue1) &&
            sts::isEqual(pValue2, other.pValue2) &&
            sts::isEqual(pLoopValue, other.pLoopValue) &&
-           pHasLoop == other.pHasLoop &&
            pDrf == other.pDrf;
 }
 
@@ -75,7 +70,6 @@ void AnimVisibilityKey::reset() {
     pValue2 = 1.0f;
     pDrf = "none";
     pLoopValue = 0.0f;
-    pHasLoop = false;
 }
 
 /**************************************************************************************************/

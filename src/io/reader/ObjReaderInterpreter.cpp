@@ -593,20 +593,19 @@ void ObjReaderInterpreter::gotAnimShow(const AnimVisibility::Key & key) {
 }
 
 void ObjReaderInterpreter::gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
-                                            const bool hasLoop, const float loopVal) {
+                                            const std::optional<float> loopVal) {
     checkForCreateLod();
     if (mCurrentTransform) {
         mCurrentTransform->pAnimTrans.emplace_back();
         AnimTrans & anim = mCurrentTransform->pAnimTrans.back();
         anim.pKeys.swap(key);
         anim.pDrf = dataref;
-        anim.pHasLoop = hasLoop;
         anim.pLoopValue = loopVal;
     }
 }
 
 void ObjReaderInterpreter::gotRotateAnim(AnimRotate::KeyList & key, float ( & inVector)[3], std::string & dataref,
-                                         const bool hasLoop, const float loopVal) {
+                                         const std::optional<float> loopVal) {
     checkForCreateLod();
     if (mCurrentTransform) {
         mCurrentTransform->pAnimRotate.emplace_back();
@@ -614,7 +613,6 @@ void ObjReaderInterpreter::gotRotateAnim(AnimRotate::KeyList & key, float ( & in
         anim.pKeys.swap(key);
         anim.pDrf = dataref;
         anim.pVector.set(inVector[0], inVector[1], inVector[2]);
-        anim.pHasLoop = hasLoop;
         anim.pLoopValue = loopVal;
     }
 }

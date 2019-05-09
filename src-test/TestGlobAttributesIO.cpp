@@ -38,43 +38,13 @@ using namespace xobj;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-TEST(TestGlobAttributesIO, defaults) {
-    ObjMain mainOut;
-
-    ASSERT_TRUE(mainOut.pAttr.texture().empty());
-    ASSERT_TRUE(mainOut.pAttr.textureLit().empty());
-    ASSERT_TRUE(mainOut.pAttr.textureNormal().empty());
-
-    ASSERT_FALSE(mainOut.pAttr.isBlendGlass());
-    ASSERT_FALSE(mainOut.pAttr.isNormalMetalness());
-    ASSERT_FALSE(mainOut.pAttr.isTilted());
-    ASSERT_FALSE(mainOut.pAttr.isNoShadow());
-    ASSERT_FALSE(mainOut.pAttr.isCockpitLit());
-
-    ASSERT_FALSE(mainOut.pAttr.wetDry());
-    ASSERT_FALSE(mainOut.pAttr.blend());
-    ASSERT_FALSE(mainOut.pAttr.layerGroup());
-    ASSERT_FALSE(mainOut.pAttr.slungLoadWeight());
-    ASSERT_FALSE(mainOut.pAttr.specular());
-    ASSERT_FALSE(mainOut.pAttr.tint());
-    ASSERT_FALSE(mainOut.pAttr.slopeLimit());
-    ASSERT_FALSE(mainOut.pAttr.isDebug());
-    ASSERT_FALSE(mainOut.pAttr.cockpitRegion(AttrCockpitRegion::r1));
-    ASSERT_FALSE(mainOut.pAttr.cockpitRegion(AttrCockpitRegion::r2));
-    ASSERT_FALSE(mainOut.pAttr.cockpitRegion(AttrCockpitRegion::r3));
-    ASSERT_FALSE(mainOut.pAttr.cockpitRegion(AttrCockpitRegion::r4));
-
-    ASSERT_FALSE(mainOut.pDraped.pAttr.layerGroup());
-    ASSERT_FALSE(mainOut.pDraped.pAttr.lod());
-}
-
 TEST(TestGlobAttributesIO, textures) {
     const auto fileName = XOBJ_PATH("TestGlobAttributesIO-textures.obj");
     //-----------------------------
     ObjMain mainOut;
-    mainOut.pAttr.setTexture("test");
-    mainOut.pAttr.setTextureLit("test_lit");
-    mainOut.pAttr.setTextureNormal("test_normal");
+    mainOut.pAttr.mTexture = "test";
+    mainOut.pAttr.mTextureLit = "test_lit";
+    mainOut.pAttr.mTextureNormal = "test_normal";
 
     //-------------------------------------------------------------------------
 
@@ -91,28 +61,32 @@ TEST(TestGlobAttributesIO, textures) {
 
     //-------------------------------------------------------------------------
 
-    ASSERT_STREQ(mainOut.pAttr.texture().c_str(), "test");
-    ASSERT_STREQ(mainOut.pAttr.textureLit().c_str(),"test_lit");
-    ASSERT_STREQ(mainOut.pAttr.textureNormal().c_str(), "test_normal");
+    ASSERT_TRUE(mainOut.pAttr.mTexture);
+    ASSERT_TRUE(mainOut.pAttr.mTextureLit);
+    ASSERT_TRUE(mainOut.pAttr.mTextureNormal);
+
+    ASSERT_STREQ(mainOut.pAttr.mTexture->c_str(), "test");
+    ASSERT_STREQ(mainOut.pAttr.mTextureLit->c_str(), "test_lit");
+    ASSERT_STREQ(mainOut.pAttr.mTextureNormal->c_str(), "test_normal");
 }
 
 TEST(TestGlobAttributesIO, attributes) {
     const auto fileName = XOBJ_PATH("TestGlobAttributesIO-attributes.obj");
     //-----------------------------
     ObjMain mainOut;
-    mainOut.pAttr.setTint(AttrTint(0.3f, 0.7f));
-    mainOut.pAttr.setBlendGlass(true);
-    mainOut.pAttr.setNormalMetalness(true);
-    mainOut.pAttr.setTilted(true);
-    mainOut.pAttr.setSpecular(AttrSpecular(0.9f));
-    mainOut.pAttr.setNoShadow(true);
-    mainOut.pAttr.setCockpitLit(true);
-    mainOut.pAttr.setDebug(true);
-    mainOut.pAttr.setLayerGroup(AttrLayerGroup(ELayer(ELayer::taxiways), 5));
-    mainOut.pAttr.setSlopeLimit(AttrSlopeLimit(0.3f, 0.5f, 0.7f, 0.9f));
-    mainOut.pAttr.setSlungLoadWeight(AttrSlungLoadWeight(500));
-    mainOut.pAttr.setCockpitRegion(AttrCockpitRegion(100, 200, 300, 400), AttrCockpitRegion::r1);
-    mainOut.pAttr.setCockpitRegion(AttrCockpitRegion(500, 600, 700, 800), AttrCockpitRegion::r2);
+    mainOut.pAttr.mTint = AttrTint(0.3f, 0.7f);
+    mainOut.pAttr.mBlendClass = true;
+    mainOut.pAttr.mNormalMetalness = true;
+    mainOut.pAttr.mTilted = true;
+    mainOut.pAttr.mSpecular = AttrSpecular(0.9f);
+    mainOut.pAttr.mDropShadow = true;
+    mainOut.pAttr.mCockpitLit = true;
+    mainOut.pAttr.mDebug = true;
+    mainOut.pAttr.mLayerGroup = AttrLayerGroup(ELayer(ELayer::taxiways), 5);
+    mainOut.pAttr.mAttrSlopeLimit = AttrSlopeLimit(0.3f, 0.5f, 0.7f, 0.9f);
+    mainOut.pAttr.mSlungLoadWeight = AttrSlungLoadWeight(500);
+    mainOut.pAttr.mAttrCockpitRegion1 = AttrCockpitRegion(100, 200, 300, 400);
+    mainOut.pAttr.mAttrCockpitRegion2 = AttrCockpitRegion(500, 600, 700, 800);
 
     mainOut.pDraped.pAttr.setLod(AttrDrapedLod(1000));
     mainOut.pDraped.pAttr.setLayerGroup(AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
@@ -132,21 +106,21 @@ TEST(TestGlobAttributesIO, attributes) {
 
     //-------------------------------------------------------------------------
 
-    ASSERT_EQ(mainIn.pAttr.tint(), AttrTint(0.3f, 0.7f));
-    ASSERT_EQ(mainIn.pAttr.isBlendGlass(), true);
-    ASSERT_EQ(mainIn.pAttr.isNormalMetalness(), true);
-    ASSERT_EQ(mainIn.pAttr.isTilted(), true);
-    ASSERT_EQ(mainIn.pAttr.specular(), AttrSpecular(0.9f));
-    ASSERT_EQ(mainIn.pAttr.isNoShadow(), true);
-    ASSERT_EQ(mainIn.pAttr.isCockpitLit(),true);
-    ASSERT_EQ(mainIn.pAttr.isDebug(), true);
-    ASSERT_EQ(mainIn.pAttr.layerGroup(), AttrLayerGroup(ELayer(ELayer::taxiways), 5));
-    ASSERT_EQ(mainIn.pAttr.slopeLimit(), AttrSlopeLimit(0.3f, 0.5f, 0.7f, 0.9f));
-    ASSERT_EQ(mainIn.pAttr.slungLoadWeight(), AttrSlungLoadWeight(500));
-    ASSERT_EQ(mainIn.pAttr.cockpitRegion(AttrCockpitRegion::r1), AttrCockpitRegion(100, 200, 300, 400));
-    ASSERT_EQ(mainIn.pAttr.cockpitRegion(AttrCockpitRegion::r2), AttrCockpitRegion(500, 600, 700, 800));
-    ASSERT_EQ(mainIn.pAttr.cockpitRegion(AttrCockpitRegion::r3), AttrCockpitRegion());
-    ASSERT_EQ(mainIn.pAttr.cockpitRegion(AttrCockpitRegion::r4), AttrCockpitRegion());
+    ASSERT_EQ(*mainIn.pAttr.mTint, AttrTint(0.3f, 0.7f));
+    ASSERT_EQ(mainIn.pAttr.mBlendClass, true);
+    ASSERT_EQ(mainIn.pAttr.mNormalMetalness, true);
+    ASSERT_EQ(mainIn.pAttr.mTilted, true);
+    ASSERT_EQ(*mainIn.pAttr.mSpecular, AttrSpecular(0.9f));
+    ASSERT_EQ(mainIn.pAttr.mDropShadow, true);
+    ASSERT_EQ(mainIn.pAttr.mCockpitLit, true);
+    ASSERT_EQ(mainIn.pAttr.mDebug, true);
+    ASSERT_EQ(*mainIn.pAttr.mLayerGroup, AttrLayerGroup(ELayer(ELayer::taxiways), 5));
+    ASSERT_EQ(*mainIn.pAttr.mAttrSlopeLimit, AttrSlopeLimit(0.3f, 0.5f, 0.7f, 0.9f));
+    ASSERT_EQ(*mainIn.pAttr.mSlungLoadWeight, AttrSlungLoadWeight(500));
+    ASSERT_EQ(*mainIn.pAttr.mAttrCockpitRegion1, AttrCockpitRegion(100, 200, 300, 400));
+    ASSERT_EQ(*mainIn.pAttr.mAttrCockpitRegion2, AttrCockpitRegion(500, 600, 700, 800));
+    ASSERT_EQ(*mainIn.pAttr.mAttrCockpitRegion3, AttrCockpitRegion());
+    ASSERT_EQ(*mainIn.pAttr.mAttrCockpitRegion4, AttrCockpitRegion());
 
     ASSERT_EQ(mainIn.pDraped.pAttr.lod(), AttrDrapedLod(1000));
     ASSERT_EQ(mainIn.pDraped.pAttr.layerGroup(), AttrDrapedLayerGroup(ELayer(ELayer::airports), -3));
@@ -160,8 +134,8 @@ TEST(TestGlobAttributesIO, statable_state1) {
     const auto fileName = XOBJ_PATH("TestGlobAttributesIO-statable_state1.obj");
     //-----------------------------
     ObjMain mainOut;
-    mainOut.pAttr.setWetDry(AttrWetDry(AttrWetDry::wet));
-    mainOut.pAttr.setBlend(AttrBlend(AttrBlend::no_blend, 0.8f));
+    mainOut.pAttr.mAttrWetDry = AttrWetDry(AttrWetDry::wet);
+    mainOut.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.8f);
 
     //-------------------------------------------------------------------------
 
@@ -178,16 +152,16 @@ TEST(TestGlobAttributesIO, statable_state1) {
 
     //-------------------------------------------------------------------------
 
-    ASSERT_EQ(mainIn.pAttr.wetDry(), AttrWetDry(AttrWetDry::wet));
-    ASSERT_EQ(mainIn.pAttr.blend(), AttrBlend(AttrBlend::no_blend, 0.8f));
+    ASSERT_EQ(*mainIn.pAttr.mAttrWetDry, AttrWetDry(AttrWetDry::wet));
+    ASSERT_EQ(*mainIn.pAttr.mBlend, AttrBlend(AttrBlend::no_blend, 0.8f));
 }
 
 TEST(TestGlobAttributesIO, statable_state2) {
     const auto fileName = XOBJ_PATH("TestGlobAttributesIO-statable_state2.obj");
     //-----------------------------
     ObjMain mainOut;
-    mainOut.pAttr.setWetDry(AttrWetDry(AttrWetDry::dry));
-    mainOut.pAttr.setBlend(AttrBlend(AttrBlend::shadow_blend, 0.8f));
+    mainOut.pAttr.mAttrWetDry = AttrWetDry(AttrWetDry::dry);
+    mainOut.pAttr.mBlend = AttrBlend(AttrBlend::shadow_blend, 0.8f);
 
     //-------------------------------------------------------------------------
 
@@ -204,8 +178,8 @@ TEST(TestGlobAttributesIO, statable_state2) {
 
     //-------------------------------------------------------------------------
 
-    ASSERT_EQ(mainIn.pAttr.wetDry(), AttrWetDry(AttrWetDry::dry));
-    ASSERT_EQ(mainIn.pAttr.blend(), AttrBlend(AttrBlend::shadow_blend, 0.8f));
+    ASSERT_EQ(*mainIn.pAttr.mAttrWetDry, AttrWetDry(AttrWetDry::dry));
+    ASSERT_EQ(*mainIn.pAttr.mBlend, AttrBlend(AttrBlend::shadow_blend, 0.8f));
 }
 
 /**************************************************************************************************/

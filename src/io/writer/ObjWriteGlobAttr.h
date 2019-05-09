@@ -30,6 +30,7 @@
 */
 
 #include <string>
+#include <optional>
 #include <cstddef>
 #include "xpln/Export.h"
 
@@ -63,7 +64,7 @@ public:
 
 private:
 
-    void writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString);
+    void writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::optional<std::string>& inString);
     void writeBool(AbstractWriter * inWriter, const char * inAttr, bool inState);
 
     std::size_t mCounter = 0;

@@ -62,20 +62,20 @@ TEST(TestGlobAttributesWrite, textures) {
     MockWriter writer;
     ObjWriteGlobAttr attrWriter;
     ObjMain main;
-    main.pAttr.setTexture("test");
-    main.pAttr.setTextureLit("test_lit");
-    main.pAttr.setTextureNormal("test_normal");
+    main.pAttr.mTexture = "test";
+    main.pAttr.mTextureLit = "test_lit";
+    main.pAttr.mTextureNormal = "test_normal";
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE).append(" ").append(main.pAttr.texture())))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_LIT).append(" ").append(main.pAttr.textureLit())))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_NORMAL).append(" ").append(main.pAttr.textureNormal())))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE).append(" ").append(*main.pAttr.mTexture)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_LIT).append(" ").append(*main.pAttr.mTextureLit)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_NORMAL).append(" ").append(*main.pAttr.mTextureNormal)))).Times(1);
 
     attrWriter.write(&writer, &main);
     ASSERT_EQ(3, attrWriter.count());
-    ASSERT_STREQ("test", main.pAttr.texture().c_str());
-    ASSERT_STREQ("test_lit", main.pAttr.textureLit().c_str());
-    ASSERT_STREQ("test_normal", main.pAttr.textureNormal().c_str());
+    ASSERT_STREQ("test", main.pAttr.mTexture->c_str());
+    ASSERT_STREQ("test_lit", main.pAttr.mTextureLit->c_str());
+    ASSERT_STREQ("test_normal", main.pAttr.mTextureNormal->c_str());
 }
 
 TEST(TestGlobAttributesWrite, boolean) {
@@ -83,19 +83,19 @@ TEST(TestGlobAttributesWrite, boolean) {
     ObjWriteGlobAttr attrWriter;
     ObjMain main;
 
-    ASSERT_FALSE(main.pAttr.isBlendGlass());
-    ASSERT_FALSE(main.pAttr.isNormalMetalness());
-    ASSERT_FALSE(main.pAttr.isTilted());
-    ASSERT_FALSE(main.pAttr.isNoShadow());
-    ASSERT_FALSE(main.pAttr.isCockpitLit());
-    ASSERT_FALSE(main.pAttr.isDebug());
+    ASSERT_FALSE(main.pAttr.mBlendClass);
+    ASSERT_FALSE(main.pAttr.mNormalMetalness);
+    ASSERT_FALSE(main.pAttr.mTilted);
+    ASSERT_FALSE(main.pAttr.mDropShadow);
+    ASSERT_FALSE(main.pAttr.mCockpitLit);
+    ASSERT_FALSE(main.pAttr.mDebug);
 
-    main.pAttr.setBlendGlass(true);
-    main.pAttr.setNormalMetalness(true);
-    main.pAttr.setTilted(true);
-    main.pAttr.setNoShadow(true);
-    main.pAttr.setCockpitLit(true);
-    main.pAttr.setDebug(true);
+    main.pAttr.mBlendClass = true;
+    main.pAttr.mNormalMetalness = true;
+    main.pAttr.mTilted = true;
+    main.pAttr.mDropShadow = true;
+    main.pAttr.mCockpitLit = true;
+    main.pAttr.mDebug = true;
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(ATTR_GLOBAL_BLEND_GLASS))).Times(1);
@@ -107,12 +107,12 @@ TEST(TestGlobAttributesWrite, boolean) {
 
     attrWriter.write(&writer, &main);
     ASSERT_EQ(5, attrWriter.count());
-    ASSERT_TRUE(main.pAttr.isBlendGlass());
-    ASSERT_TRUE(main.pAttr.isNormalMetalness());
-    ASSERT_TRUE(main.pAttr.isTilted());
-    ASSERT_TRUE(main.pAttr.isNoShadow());
-    ASSERT_TRUE(main.pAttr.isCockpitLit());
-    ASSERT_TRUE(main.pAttr.isDebug());
+    ASSERT_TRUE(main.pAttr.mBlendClass);
+    ASSERT_TRUE(main.pAttr.mNormalMetalness);
+    ASSERT_TRUE(main.pAttr.mTilted);
+    ASSERT_TRUE(main.pAttr.mDropShadow);
+    ASSERT_TRUE(main.pAttr.mCockpitLit);
+    ASSERT_TRUE(main.pAttr.mDebug);
 }
 
 /**************************************************************************************************/
@@ -125,7 +125,7 @@ TEST(TestGlobAttributesWrite, AttrWetDry_wet) {
     ObjMain main;
 
     const AttrWetDry attr(AttrWetDry::eState::wet);
-    main.pAttr.setWetDry(attr);
+    main.pAttr.mAttrWetDry = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);
@@ -137,7 +137,7 @@ TEST(TestGlobAttributesWrite, AttrWetDry_Dry) {
     ObjMain main;
 
     const AttrWetDry attr(AttrWetDry::eState::dry);
-    main.pAttr.setWetDry(attr);
+    main.pAttr.mAttrWetDry = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);
@@ -150,7 +150,7 @@ TEST(TestGlobAttributesWrite, AttrGlobBlend_no_blend) {
     ObjMain main;
 
     const AttrBlend attr(AttrBlend::eType::no_blend, 0.5);
-    main.pAttr.setBlend(attr);
+    main.pAttr.mBlend = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);
@@ -163,7 +163,7 @@ TEST(TestGlobAttributesWrite, AttrGlobBlend_shadow_blend) {
     ObjMain main;
 
     const AttrBlend attr(AttrBlend::eType::shadow_blend, 0.5);
-    main.pAttr.setBlend(attr);
+    main.pAttr.mBlend = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);
@@ -176,7 +176,7 @@ TEST(TestGlobAttributesWrite, AttrLayerGroup) {
     ObjMain main;
 
     const AttrLayerGroup attr(ELayer(ELayer::eId::cars), 5);
-    main.pAttr.setLayerGroup(attr);
+    main.pAttr.mLayerGroup = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);
@@ -215,7 +215,7 @@ TEST(TestGlobAttributesWrite, AttrSlungLoadWeight) {
     ObjMain main;
 
     const AttrSlungLoadWeight attr(10.0f);
-    main.pAttr.setSlungLoadWeight(attr);
+    main.pAttr.mSlungLoadWeight = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);
@@ -228,7 +228,7 @@ TEST(TestGlobAttributesWrite, AttrSpecular) {
     ObjMain main;
 
     const AttrSpecular attr(0.5f);
-    main.pAttr.setSpecular(attr);
+    main.pAttr.mSpecular = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);
@@ -241,7 +241,7 @@ TEST(TestGlobAttributesWrite, AttrTint) {
     ObjMain main;
 
     const AttrTint attr(0.5f, 0.8f);
-    main.pAttr.setTint(attr);
+    main.pAttr.mTint = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);
@@ -254,7 +254,7 @@ TEST(TestGlobAttributesWrite, AttrSlopeLimit) {
     ObjMain main;
 
     const AttrSlopeLimit attr(0.5f, 0.8f, 5.0f, 10.0f);
-    main.pAttr.setSlopeLimit(attr);
+    main.pAttr.mAttrSlopeLimit = attr;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr)))).Times(1);
     attrWriter.write(&writer, &main);
@@ -270,10 +270,10 @@ TEST(TestGlobAttributesWrite, AttrCockpitRegion) {
     const AttrCockpitRegion attr1(5, 6, 7, 8);
     const AttrCockpitRegion attr2(9, 10, 11, 12);
     const AttrCockpitRegion attr3(13, 14, 15, 16);
-    main.pAttr.setCockpitRegion(attr0, AttrCockpitRegion::r1);
-    main.pAttr.setCockpitRegion(attr1, AttrCockpitRegion::r2);
-    main.pAttr.setCockpitRegion(attr2, AttrCockpitRegion::r3);
-    main.pAttr.setCockpitRegion(attr3, AttrCockpitRegion::r4);
+    main.pAttr.mAttrCockpitRegion1 = attr0;
+    main.pAttr.mAttrCockpitRegion2 = attr1;
+    main.pAttr.mAttrCockpitRegion3 = attr2;
+    main.pAttr.mAttrCockpitRegion4 = attr3;
 
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr0)))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strGlobAttrResult(attr1)))).Times(1);

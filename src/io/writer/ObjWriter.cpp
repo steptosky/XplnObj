@@ -210,7 +210,7 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
         mStatistic.pTrisManipCount += mObjWriteManip.count();
         mStatistic.pTrisAttrCount += mWriteAttr.count();
 
-        if (mMain->pAttr.isDebug()) {
+        if (mMain->pAttr.mDebug) {
             ++mStatistic.pGlobAttrCount;
             writer.printLine("DEBUG");
             writer.printEol();

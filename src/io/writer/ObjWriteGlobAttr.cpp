@@ -50,6 +50,14 @@ std::size_t writeAttr(AbstractWriter * writer, const T & attr) {
     return attr ? 1 : 0;
 }
 
+template<typename T>
+std::size_t writeGlobAttr(AbstractWriter * writer, const T & attr) {
+    if (attr) {
+        printObjGlobAttr(*attr, *writer);
+    }
+    return attr ? 1 : 0;
+}
+
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
@@ -57,38 +65,38 @@ std::size_t writeAttr(AbstractWriter * writer, const T & attr) {
 void ObjWriteGlobAttr::write(AbstractWriter * writer, const ObjMain * obj) {
     assert(obj);
 
-    writeTexture(writer, ATTR_GLOBAL_TEXTURE, obj->pAttr.texture());
-    writeTexture(writer, ATTR_GLOBAL_TEXTURE_LIT, obj->pAttr.textureLit());
-    writeTexture(writer, ATTR_GLOBAL_TEXTURE_NORMAL, obj->pAttr.textureNormal());
+    writeTexture(writer, ATTR_GLOBAL_TEXTURE, obj->pAttr.mTexture);
+    writeTexture(writer, ATTR_GLOBAL_TEXTURE_LIT, obj->pAttr.mTextureLit);
+    writeTexture(writer, ATTR_GLOBAL_TEXTURE_NORMAL, obj->pAttr.mTextureNormal);
 
-    writeBool(writer, ATTR_GLOBAL_BLEND_GLASS, obj->pAttr.isBlendGlass());
-    writeBool(writer, ATTR_GLOBAL_NORMAL_METALNESS, obj->pAttr.isNormalMetalness());
-    writeBool(writer, ATTR_GLOBAL_TILTED, obj->pAttr.isTilted());
-    writeBool(writer, ATTR_GLOBAL_NO_SHADOW, obj->pAttr.isNoShadow());
-    writeBool(writer, ATTR_GLOBAL_COCKPIT_LIT, obj->pAttr.isCockpitLit());
+    writeBool(writer, ATTR_GLOBAL_BLEND_GLASS, obj->pAttr.mBlendClass);
+    writeBool(writer, ATTR_GLOBAL_NORMAL_METALNESS, obj->pAttr.mNormalMetalness);
+    writeBool(writer, ATTR_GLOBAL_TILTED, obj->pAttr.mTilted);
+    writeBool(writer, ATTR_GLOBAL_NO_SHADOW, obj->pAttr.mDropShadow);
+    writeBool(writer, ATTR_GLOBAL_COCKPIT_LIT, obj->pAttr.mCockpitLit);
     // It is printed in another place.
     //writeBool(inWriter, ATTR_GLOBAL_DEBUG, inObj->pAttr.isDebug());
 
-    mCounter += writeAttr(writer, obj->pAttr.wetDry());
-    mCounter += writeAttr(writer, obj->pAttr.blend());
-    mCounter += writeAttr(writer, obj->pAttr.layerGroup());
-    mCounter += writeAttr(writer, obj->pAttr.slungLoadWeight());
-    mCounter += writeAttr(writer, obj->pAttr.specular());
-    mCounter += writeAttr(writer, obj->pAttr.tint());
-    mCounter += writeAttr(writer, obj->pAttr.slopeLimit());
-    mCounter += writeAttr(writer, obj->pAttr.cockpitRegion(AttrCockpitRegion::r1));
-    mCounter += writeAttr(writer, obj->pAttr.cockpitRegion(AttrCockpitRegion::r2));
-    mCounter += writeAttr(writer, obj->pAttr.cockpitRegion(AttrCockpitRegion::r3));
-    mCounter += writeAttr(writer, obj->pAttr.cockpitRegion(AttrCockpitRegion::r4));
+    mCounter += writeGlobAttr(writer, obj->pAttr.mAttrWetDry);
+    mCounter += writeGlobAttr(writer, obj->pAttr.mBlend);
+    mCounter += writeGlobAttr(writer, obj->pAttr.mLayerGroup);
+    mCounter += writeGlobAttr(writer, obj->pAttr.mSlungLoadWeight);
+    mCounter += writeGlobAttr(writer, obj->pAttr.mSpecular);
+    mCounter += writeGlobAttr(writer, obj->pAttr.mTint);
+    mCounter += writeGlobAttr(writer, obj->pAttr.mAttrSlopeLimit);
+    mCounter += writeGlobAttr(writer, obj->pAttr.mAttrCockpitRegion1);
+    mCounter += writeGlobAttr(writer, obj->pAttr.mAttrCockpitRegion2);
+    mCounter += writeGlobAttr(writer, obj->pAttr.mAttrCockpitRegion3);
+    mCounter += writeGlobAttr(writer, obj->pAttr.mAttrCockpitRegion4);
 
     mCounter += writeAttr(writer, obj->pDraped.pAttr.layerGroup());
     mCounter += writeAttr(writer, obj->pDraped.pAttr.lod());
 }
 
-void ObjWriteGlobAttr::writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::string & inString) {
-    if (!inString.empty()) {
-        if (!StringValidator::hasIllegalSymbols(inString, "\t\n\r")) {
-            inWriter->printLine(std::string(inAttr).append(" ").append(inString));
+void ObjWriteGlobAttr::writeTexture(AbstractWriter * inWriter, const char * inAttr, const std::optional<std::string> & string) {
+    if (string && !string->empty()) {
+        if (!StringValidator::hasIllegalSymbols(*string, "\t\n\r")) {
+            inWriter->printLine(std::string(inAttr).append(" ").append(*string));
             ++mCounter;
         }
     }

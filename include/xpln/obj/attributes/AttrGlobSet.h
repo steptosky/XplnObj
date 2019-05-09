@@ -29,6 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <optional>
 #include "xpln/obj/attributes/AttrBlend.h"
 #include "xpln/obj/attributes/AttrLayerGroup.h"
 #include "xpln/obj/attributes/AttrSlungLoadWeight.h"
@@ -48,272 +49,59 @@ namespace xobj {
  * \details Representation of the global attributes set
  * \ingroup Attributes
  */
-class AttrGlobSet {
+class AttrGlobSet final {
 public:
 
-    AttrGlobSet();
-    virtual ~AttrGlobSet() = default;
-
     //-------------------------------------------------------------------------
+    /// @{
 
-    void setTexture(const std::string & val);
-    void setTextureLit(const std::string & val);
-    void setTextureNormal(const std::string & val);
+    AttrGlobSet() = default;
+    AttrGlobSet(const AttrGlobSet &) = default;
+    AttrGlobSet(AttrGlobSet &&) = default;
 
-    void setNormalMetalness(bool val);
-    void setBlendGlass(bool val);
-    void setTilted(bool val);
-    void setNoShadow(bool val);
-    void setCockpitLit(bool val);
-    void setDebug(bool val);
+    ~AttrGlobSet() = default;
 
-    void setWetDry(const AttrWetDry & attr);
-    void setBlend(const AttrBlend & attr);
-    void setLayerGroup(const AttrLayerGroup & attr);
-    void setSlungLoadWeight(const AttrSlungLoadWeight & attr);
-    void setSpecular(const AttrSpecular & attr);
-    void setTint(const AttrTint & attr);
-    void setSlopeLimit(const AttrSlopeLimit & attr);
-    void setCockpitRegion(const AttrCockpitRegion & attr, AttrCockpitRegion::eNum num);
+    AttrGlobSet & operator=(const AttrGlobSet &) = default;
+    AttrGlobSet & operator=(AttrGlobSet &&) = default;
 
-    const std::string & texture() const;
-    const std::string & textureLit() const;
-    const std::string & textureNormal() const;
-
-    bool isNormalMetalness() const;
-    bool isBlendGlass() const;
-    bool isTilted() const;
-    bool isNoShadow() const;
-    bool isCockpitLit() const;
-    bool isDebug() const;
-
-    const AttrWetDry & wetDry() const;
-    const AttrBlend & blend() const;
-    const AttrLayerGroup & layerGroup() const;
-    const AttrSlungLoadWeight & slungLoadWeight() const;
-    const AttrSpecular & specular() const;
-    const AttrTint & tint() const;
-    const AttrSlopeLimit & slopeLimit() const;
-    const AttrCockpitRegion & cockpitRegion(AttrCockpitRegion::eNum num) const;
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    void reset();
+    void reset() { *this = AttrGlobSet(); }
 
-private:
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
-    std::string mTexture;
-    std::string mTextureLit;
-    std::string mTextureNormal;
+    std::optional<std::string> mTexture;
+    std::optional<std::string> mTextureLit;
+    std::optional<std::string> mTextureNormal;
 
-    AttrBlend mBlend;
-    AttrLayerGroup mLayerGroup;
-    AttrSlungLoadWeight mSlungLoadWeight;
-    AttrSpecular mSpecular;
-    AttrTint mTint;
-    AttrWetDry mAttrWetDry;
-    AttrSlopeLimit mAttrSlopeLimit;
-    AttrCockpitRegion mAttrCockpitRegion[4];
+    std::optional<AttrBlend> mBlend;
+    std::optional<AttrLayerGroup> mLayerGroup;
+    std::optional<AttrSlungLoadWeight> mSlungLoadWeight;
+    std::optional<AttrSpecular> mSpecular;
+    std::optional<AttrTint> mTint;
+    std::optional<AttrWetDry> mAttrWetDry;
+    std::optional<AttrSlopeLimit> mAttrSlopeLimit;
+    std::optional<AttrCockpitRegion> mAttrCockpitRegion1;
+    std::optional<AttrCockpitRegion> mAttrCockpitRegion2;
+    std::optional<AttrCockpitRegion> mAttrCockpitRegion3;
+    std::optional<AttrCockpitRegion> mAttrCockpitRegion4;
 
-    bool mBlendClass : 1;
-    bool mNormalMetalness : 1;
-    bool mTilted : 1;
-    bool mDropShadow : 1;
-    bool mIsWet : 1;
-    bool mIsDry : 1;
-    bool mIsCockpitLit : 1;
-    bool mIsDebug : 1;
+    bool mBlendClass = false;
+    bool mNormalMetalness = false;
+    bool mTilted = false;
+    // todo check for bool inversion as the method was named as "setNoShadow()"
+    bool mDropShadow = false;
+    bool mCockpitLit = false;
+    bool mDebug = false;
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-inline AttrGlobSet::AttrGlobSet()
-    : mBlendClass(false),
-      mNormalMetalness(false),
-      mTilted(false),
-      mDropShadow(false),
-      mIsWet(false),
-      mIsDry(false),
-      mIsCockpitLit(false),
-      mIsDebug(false) {}
-
-inline void AttrGlobSet::reset() {
-    mBlendClass = false;
-    mNormalMetalness = false;
-    mTilted = false;
-    mDropShadow = false;
-    mIsWet = false;
-    mIsDry = false;
-    mIsCockpitLit = false;
-    mIsDebug = false;
-
-    mTexture.clear();
-    mTextureLit.clear();
-    mTextureNormal.clear();
-
-    mBlend = AttrBlend();
-    mLayerGroup = AttrLayerGroup();
-    mSlungLoadWeight = AttrSlungLoadWeight();
-    mSpecular = AttrSpecular();
-    mTint = AttrTint();
-    mAttrWetDry = AttrWetDry();
-    mAttrSlopeLimit = AttrSlopeLimit();
-    mAttrCockpitRegion[0] = AttrCockpitRegion();
-    mAttrCockpitRegion[1] = AttrCockpitRegion();
-    mAttrCockpitRegion[2] = AttrCockpitRegion();
-    mAttrCockpitRegion[3] = AttrCockpitRegion();
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-inline void AttrGlobSet::setTexture(const std::string & val) {
-    mTexture = val;
-}
-
-inline const std::string & AttrGlobSet::texture() const {
-    return mTexture;
-}
-
-inline void AttrGlobSet::setTextureLit(const std::string & val) {
-    mTextureLit = val;
-}
-
-inline const std::string & AttrGlobSet::textureLit() const {
-    return mTextureLit;
-}
-
-inline void AttrGlobSet::setTextureNormal(const std::string & val) {
-    mTextureNormal = val;
-}
-
-inline const std::string & AttrGlobSet::textureNormal() const {
-    return mTextureNormal;
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-inline void AttrGlobSet::setNormalMetalness(const bool val) {
-    mNormalMetalness = val;
-}
-
-inline bool AttrGlobSet::isNormalMetalness() const {
-    return mNormalMetalness;
-}
-
-inline void AttrGlobSet::setBlendGlass(const bool val) {
-    mBlendClass = val;
-}
-
-inline bool AttrGlobSet::isBlendGlass() const {
-    return mBlendClass;
-}
-
-inline void AttrGlobSet::setTilted(const bool val) {
-    mTilted = val;
-}
-
-inline bool AttrGlobSet::isTilted() const {
-    return mTilted;
-}
-
-inline void AttrGlobSet::setNoShadow(const bool val) {
-    mDropShadow = val;
-}
-
-inline bool AttrGlobSet::isNoShadow() const {
-    return mDropShadow;
-}
-
-inline void AttrGlobSet::setCockpitLit(const bool val) {
-    mIsCockpitLit = val;
-}
-
-inline void AttrGlobSet::setDebug(const bool val) {
-    mIsDebug = val;
-}
-
-inline bool AttrGlobSet::isCockpitLit() const {
-    return mIsCockpitLit;
-}
-
-inline bool AttrGlobSet::isDebug() const {
-    return mIsDebug;
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-inline void AttrGlobSet::setBlend(const AttrBlend & attr) {
-    mBlend = attr;
-}
-
-inline const AttrBlend & AttrGlobSet::blend() const {
-    return mBlend;
-}
-
-inline void AttrGlobSet::setLayerGroup(const AttrLayerGroup & attr) {
-    mLayerGroup = attr;
-}
-
-inline const AttrLayerGroup & AttrGlobSet::layerGroup() const {
-    return mLayerGroup;
-}
-
-inline void AttrGlobSet::setSlungLoadWeight(const AttrSlungLoadWeight & attr) {
-    mSlungLoadWeight = attr;
-}
-
-inline const AttrSlungLoadWeight & AttrGlobSet::slungLoadWeight() const {
-    return mSlungLoadWeight;
-}
-
-inline void AttrGlobSet::setSpecular(const AttrSpecular & attr) {
-    mSpecular = attr;
-}
-
-inline const AttrSpecular & AttrGlobSet::specular() const {
-    return mSpecular;
-}
-
-inline void AttrGlobSet::setTint(const AttrTint & attr) {
-    mTint = attr;
-}
-
-inline const AttrTint & AttrGlobSet::tint() const {
-    return mTint;
-}
-
-inline void AttrGlobSet::setWetDry(const AttrWetDry & attr) {
-    mAttrWetDry = attr;
-}
-
-inline const AttrWetDry & AttrGlobSet::wetDry() const {
-    return mAttrWetDry;
-}
-
-inline void AttrGlobSet::setSlopeLimit(const AttrSlopeLimit & attr) {
-    mAttrSlopeLimit = attr;
-}
-
-inline const AttrSlopeLimit & AttrGlobSet::slopeLimit() const {
-    return mAttrSlopeLimit;
-}
-
-inline void AttrGlobSet::setCockpitRegion(const AttrCockpitRegion & attr, const AttrCockpitRegion::eNum num) {
-    mAttrCockpitRegion[static_cast<size_t>(num)] = attr;
-}
-
-inline const AttrCockpitRegion & AttrGlobSet::cockpitRegion(const AttrCockpitRegion::eNum num) const {
-    return mAttrCockpitRegion[static_cast<size_t>(num)];
-}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

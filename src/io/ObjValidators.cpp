@@ -58,21 +58,21 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool checkParameters(const AttrGlobSet & attrSet, const std::string & prefix) {
-    if (attrSet.texture() == "none" || attrSet.texture().empty()) {
+    if (!attrSet.mTexture || attrSet.mTexture->empty() || *attrSet.mTexture == "none") {
         ULWarning << prefix << " - Texture is not specified";
     }
     bool result = true;
-    if (StringValidator::hasIllegalSymbols(attrSet.texture())) {
+    if (StringValidator::hasIllegalSymbols(attrSet.mTexture.value_or(std::string()))) {
         result = false;
-        ULError << prefix << " contains illegal symbols in the texture name <" << attrSet.texture() << ">";
+        ULError << prefix << " contains illegal symbols in the texture name <" << *attrSet.mTexture << ">";
     }
-    if (StringValidator::hasIllegalSymbols(attrSet.textureLit())) {
+    if (StringValidator::hasIllegalSymbols(attrSet.mTextureLit.value_or(std::string()))) {
         result = false;
-        ULError << prefix << " contains illegal symbols in the lit texture name <" << attrSet.textureLit() << ">";
+        ULError << prefix << " contains illegal symbols in the lit texture name <" << *attrSet.mTextureLit << ">";
     }
-    if (StringValidator::hasIllegalSymbols(attrSet.textureNormal())) {
+    if (StringValidator::hasIllegalSymbols(attrSet.mTextureNormal.value_or(std::string()))) {
         result = false;
-        ULError << prefix << " contains illegal symbols in the normal texture name <" << attrSet.textureNormal() << ">";
+        ULError << prefix << " contains illegal symbols in the normal texture name <" << *attrSet.mTextureNormal << ">";
     }
     return result;
 }
@@ -111,7 +111,7 @@ bool checkParameters(const ObjLine & /*obj*/, const std::string & /*prefix*/) {
 
 bool checkParameters(const ObjMain & mainObj, const std::string & prefix) {
     bool result = true;
-    if (mainObj.pAttr.isDebug()) {
+    if (mainObj.pAttr.mDebug) {
         ULWarning << prefix
                 << " - \"DEBUG\" option is enabled. Turn it off if you don't know what it is or if you don't need it.";
     }

@@ -87,7 +87,7 @@ ObjReaderInterpreter::~ObjReaderInterpreter() {
 
 void ObjReaderInterpreter::gotGlobAttrTexture(const std::string & val) {
     if (!val.empty()) {
-        mObjMain->pAttr.setTexture(val);
+        mObjMain->pAttr.mTexture = val;
         ++mIOStatistic->pGlobAttrCount;
     }
     else {
@@ -96,12 +96,12 @@ void ObjReaderInterpreter::gotGlobAttrTexture(const std::string & val) {
 }
 
 void ObjReaderInterpreter::gotGlobAttrTextureLit(const std::string & val) {
-    mObjMain->pAttr.setTextureLit(val);
+    mObjMain->pAttr.mTextureLit = val;
     ++mIOStatistic->pGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrTextureNormal(const std::string & val) {
-    mObjMain->pAttr.setTextureNormal(val);
+    mObjMain->pAttr.mTextureNormal = val;
     ++mIOStatistic->pGlobAttrCount;
 }
 
@@ -110,32 +110,32 @@ void ObjReaderInterpreter::gotGlobAttrTextureNormal(const std::string & val) {
 /**************************************************************************************************/
 
 void ObjReaderInterpreter::gotGlobAttrWetDry(const AttrWetDry & globAttr) {
-    mObjMain->pAttr.setWetDry(globAttr);
+    mObjMain->pAttr.mAttrWetDry = globAttr;
     ++mIOStatistic->pGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrTint(const AttrTint & globAttr) {
-    mObjMain->pAttr.setTint(globAttr);
+    mObjMain->pAttr.mTint = globAttr;
     ++mIOStatistic->pGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrTilted() {
-    mObjMain->pAttr.setTilted(true);
+    mObjMain->pAttr.mTilted = true;
     ++mIOStatistic->pGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrBlend(const AttrBlend & globAttr) {
-    mObjMain->pAttr.setBlend(globAttr);
+    mObjMain->pAttr.mBlend = globAttr;
     ++mIOStatistic->pGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrSpecular(const AttrSpecular & globAttr) {
-    mObjMain->pAttr.setSpecular(globAttr);
+    mObjMain->pAttr.mSpecular = globAttr;
     ++mIOStatistic->pGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrNoShadow() {
-    mObjMain->pAttr.setNoShadow(true);
+    mObjMain->pAttr.mDropShadow = true;
     ++mIOStatistic->pGlobAttrCount;
 }
 
@@ -145,45 +145,45 @@ void ObjReaderInterpreter::gotGlobAttrDrapedLod(const AttrDrapedLod & globAttr) 
 }
 
 void ObjReaderInterpreter::gotGlobAttrCockpitLit() {
-    mObjMain->pAttr.setCockpitLit(true);
+    mObjMain->pAttr.mCockpitLit = true;
     ++mIOStatistic->pGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrNormalMetalness() {
-    mObjMain->pAttr.setNormalMetalness(true);
+    mObjMain->pAttr.mNormalMetalness = true;
     ++mIOStatistic->pGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrBlendGlass() {
-    mObjMain->pAttr.setBlendGlass(true);
+    mObjMain->pAttr.mBlendClass = true;
     ++mIOStatistic->pGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrLayerGroup(const AttrLayerGroup & globAttr) {
-    mObjMain->pAttr.setLayerGroup(globAttr);
+    mObjMain->pAttr.mLayerGroup = globAttr;
     ++mIOStatistic->pGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrSlopeLimit(const AttrSlopeLimit & globAttr) {
-    mObjMain->pAttr.setSlopeLimit(globAttr);
+    mObjMain->pAttr.mAttrSlopeLimit = globAttr;
     ++mIOStatistic->pGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrCockpitRegion(const AttrCockpitRegion & globAttr) {
-    if (!mObjMain->pAttr.cockpitRegion(AttrCockpitRegion::r1)) {
-        mObjMain->pAttr.setCockpitRegion(globAttr, AttrCockpitRegion::r1);
+    if (!mObjMain->pAttr.mAttrCockpitRegion1) {
+        mObjMain->pAttr.mAttrCockpitRegion1 = globAttr;
         ++mIOStatistic->pGlobAttrCount;
     }
-    else if (!mObjMain->pAttr.cockpitRegion(AttrCockpitRegion::r2)) {
-        mObjMain->pAttr.setCockpitRegion(globAttr, AttrCockpitRegion::r2);
+    else if (!mObjMain->pAttr.mAttrCockpitRegion2) {
+        mObjMain->pAttr.mAttrCockpitRegion2 = globAttr;
         ++mIOStatistic->pGlobAttrCount;
     }
-    else if (!mObjMain->pAttr.cockpitRegion(AttrCockpitRegion::r3)) {
-        mObjMain->pAttr.setCockpitRegion(globAttr, AttrCockpitRegion::r3);
+    else if (!mObjMain->pAttr.mAttrCockpitRegion3) {
+        mObjMain->pAttr.mAttrCockpitRegion3 = globAttr;
         ++mIOStatistic->pGlobAttrCount;
     }
-    else if (!mObjMain->pAttr.cockpitRegion(AttrCockpitRegion::r4)) {
-        mObjMain->pAttr.setCockpitRegion(globAttr, AttrCockpitRegion::r4);
+    else if (!mObjMain->pAttr.mAttrCockpitRegion4) {
+        mObjMain->pAttr.mAttrCockpitRegion4 = globAttr;
         ++mIOStatistic->pGlobAttrCount;
     }
     else {
@@ -192,7 +192,7 @@ void ObjReaderInterpreter::gotGlobAttrCockpitRegion(const AttrCockpitRegion & gl
 }
 
 void ObjReaderInterpreter::gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & globAttr) {
-    mObjMain->pAttr.setSlungLoadWeight(globAttr);
+    mObjMain->pAttr.mSlungLoadWeight = globAttr;
     ++mIOStatistic->pGlobAttrCount;
 }
 
@@ -203,7 +203,7 @@ void ObjReaderInterpreter::gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGrou
 
 void ObjReaderInterpreter::gotGlobAttrDebug() {
     mObjMain->pExportOptions.enable(XOBJ_EXP_DEBUG);
-    mObjMain->pAttr.setDebug(true);
+    mObjMain->pAttr.mDebug = true;
     ++mIOStatistic->pGlobAttrCount;
 }
 

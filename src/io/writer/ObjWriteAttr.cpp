@@ -28,51 +28,22 @@
 */
 
 #include <cassert>
-#include <functional>
 
 #include "ObjWriteAttr.h"
 #include "ObjWriteManip.h"
 
 #include "AbstractWriter.h"
 #include "common/AttributeNames.h"
-#include "converters/ObjAttrString.h"
 #include "xpln/obj/ObjMesh.h"
 
 namespace xobj {
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Static area *///////////////////////////////////////////
-/**************************************************************************************************/
-
-class Flags {
-public:
-
-    enum eAttrTypes : uint32_t {
-        no_draw = 1 << 1,
-        draped = 1 << 2,
-        no_shadow = 1 << 3,
-        solid_camera = 1 << 4,
-    };
-
-    static void removeFlag(uint32_t & inOutFlags, const uint32_t inFlag) {
-        inOutFlags -= (inOutFlags & inFlag);
-    }
-
-    static void addFlag(uint32_t & inOutFlags, const uint32_t inFlag) {
-        inOutFlags |= inFlag;
-    }
-
-    static bool hasFlag(const uint32_t inFlags, const uint32_t inFlag) {
-        return (inFlags & inFlag) != 0;
-    }
-};
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
 void ObjWriteAttr::reset() {
-    mFlags = 0;
+    mAttributes.reset();
     mCounter = 0;
 }
 
@@ -90,51 +61,6 @@ void ObjWriteAttr::write(AbstractWriter * writer, const ObjAbstract * obj) {
 }
 
 /**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-class AttrWriter {
-public:
-    template<typename T>
-    static void writeAttr(AbstractWriter * writer, const std::optional<T> & attr, std::optional<T> & inOutActiveAttr, size_t & outCounter,
-                          std::function<void(const T &)> attrEnable = nullptr, const std::function<void()> & attrDisable = nullptr) {
-        if (!attr) {
-            if (inOutActiveAttr) {
-                writer->printLine(T::objDisableStr());
-                if (attrDisable) {
-                    attrDisable();
-                }
-                ++outCounter;
-                inOutActiveAttr = std::nullopt;
-            }
-        }
-        else {
-            if (!inOutActiveAttr) {
-                printObjAttr(*attr, *writer);
-                if (attrEnable) {
-                    attrEnable(*attr);
-                }
-                ++outCounter;
-                inOutActiveAttr = *attr;
-                return;
-            }
-
-            if (inOutActiveAttr != *attr) {
-                printObjAttr(*attr, *writer);
-                if (attrEnable) {
-                    attrEnable(*attr);
-                }
-                ++outCounter;
-                inOutActiveAttr = *attr;
-                return;
-            }
-
-            inOutActiveAttr = *attr;
-        }
-    }
-};
-
-/**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
@@ -150,7 +76,7 @@ void ObjWriteAttr::writeAttributes(const AttrSet & attrSet) {
         }
     };
 
-	//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 
     const auto writeBool = [&](const char * attr) {
         if (attr) {
@@ -159,12 +85,12 @@ void ObjWriteAttr::writeAttributes(const AttrSet & attrSet) {
         }
     };
 
-	const auto writeAttr= [&](const std::string & attr) {
-		if (!attr.empty()) {
-			++mCounter;
-			mWriter->printLine(attr);
-		}
-	};
+    const auto writeAttr = [&](const std::string & attr) {
+        if (!attr.empty()) {
+            ++mCounter;
+            mWriter->printLine(attr);
+        }
+    };
 
     //-------------------------------------------------------------------------
 
@@ -173,12 +99,60 @@ void ObjWriteAttr::writeAttributes(const AttrSet & attrSet) {
     writeBool(ObjWriteState::processBool(attrSet.mIsDraw, mAttributes.mObject.mIsDraw, ATTR_DRAW_ENABLE, ATTR_DRAW_DISABLE));
     writeBool(ObjWriteState::processBool(attrSet.mIsCastShadow, mAttributes.mObject.mIsCastShadow, ATTR_SHADOW, ATTR_NO_SHADOW));
 
-    AttrWriter::writeAttr<AttrHard>(mWriter, attrSet.mAttrHard, mActiveAttrHard, mCounter);
-    AttrWriter::writeAttr<AttrShiny>(mWriter, attrSet.mAttrShiny, mActiveAttrShiny, mCounter);
-    AttrWriter::writeAttr<AttrBlend>(mWriter, attrSet.mAttrBlend, mActiveAttrBlend, mCounter);
-    AttrWriter::writeAttr<AttrPolyOffset>(mWriter, attrSet.mAttrPolyOffset, mActiveAttrPolyOffset, mCounter);
-    AttrWriter::writeAttr<AttrLightLevel>(mWriter, attrSet.mAttrLightLevel, mActiveAttrLightLevel, mCounter);
-    AttrWriter::writeAttr<AttrCockpit>(mWriter, attrSet.mAttrCockpit, mActiveAttrCockpit, mCounter, manipPanelEnabled, manipPanelDisabled);
+    writeAttr(ObjWriteState::processAttr(attrSet.mAttrHard, mAttributes.mObject.mAttrHard,
+                                         [&]() {
+                                             return attrSet.mAttrHard ? attrSet.mAttrHard->objStr() : std::string();
+                                         },
+                                         []() {
+                                             return AttrHard::objDisableStr();
+                                         }));
+
+    writeAttr(ObjWriteState::processAttr(attrSet.mAttrShiny, mAttributes.mObject.mAttrShiny,
+                                         [&]() {
+                                             return attrSet.mAttrShiny ? attrSet.mAttrShiny->objStr() : std::string();
+                                         },
+                                         []() {
+                                             return AttrShiny::objDisableStr();
+                                         }));
+
+    writeAttr(ObjWriteState::processAttr(attrSet.mAttrBlend, mAttributes.mObject.mAttrBlend,
+                                         [&]() {
+                                             return attrSet.mAttrBlend ? attrSet.mAttrBlend->objStr() : std::string();
+                                         },
+                                         []() {
+                                             return AttrBlend::objDisableStr();
+                                         }));
+
+    writeAttr(ObjWriteState::processAttr(attrSet.mAttrPolyOffset, mAttributes.mObject.mAttrPolyOffset,
+                                         [&]() {
+                                             return attrSet.mAttrPolyOffset ? attrSet.mAttrPolyOffset->objStr() : std::string();
+                                         },
+                                         []() {
+                                             return AttrPolyOffset::objDisableStr();
+                                         }));
+
+    writeAttr(ObjWriteState::processAttr(attrSet.mAttrLightLevel, mAttributes.mObject.mAttrLightLevel,
+                                         [&]() {
+                                             if (!attrSet.mAttrLightLevel) {
+                                                 return std::string();
+                                             }
+                                             auto copy = *attrSet.mAttrLightLevel;
+                                             copy.setDataref(mWriter->actualDataref(copy.dataref()));
+                                             return copy.objStr();
+                                         },
+                                         []() {
+                                             return AttrLightLevel::objDisableStr();
+                                         }));
+
+    writeAttr(ObjWriteState::processAttr(attrSet.mAttrCockpit, mAttributes.mObject.mAttrCockpit,
+                                         [&]() {
+                                             manipPanelEnabled(*attrSet.mAttrCockpit);
+                                             return attrSet.mAttrCockpit->objStr();
+                                         },
+                                         [&]() {
+                                             manipPanelDisabled();
+                                             return AttrCockpit::objDisableStr();
+                                         }));
 }
 
 /**************************************************************************************************/

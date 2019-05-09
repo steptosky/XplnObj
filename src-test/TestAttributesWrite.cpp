@@ -59,7 +59,7 @@ ObjWriteManip gObjWriteManip;
 template<typename T>
 std::string strAttrResult(const T & attr) {
     TestWriter w;
-    printObjAttr(attr, w);
+	w.printLine(attr.objStr());
     if (!w.mResult.empty()) {
         w.mResult.pop_back(); // remove '\n'
     }

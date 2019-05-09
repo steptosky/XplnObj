@@ -82,7 +82,7 @@ std::size_t AttrManipPanel::printObj(AbstractWriter & writer) const {
     //     writer.printEol();
     //     writer.printLine("## panel manip");
     // #endif
-    printObjAttr(cockpit(), writer);
+	writer.printLine(cockpit().objStr());
     return 1;
 }
 

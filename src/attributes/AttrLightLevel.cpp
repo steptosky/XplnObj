@@ -51,6 +51,15 @@ std::string AttrLightLevel::objDisableStr() {
     return ATTR_LIGHT_LEVEL_RESET;
 }
 
+std::string AttrLightLevel::objStr() const {
+    StringStream outStr;
+    outStr << ATTR_LIGHT_LEVEL;
+    outStr << " " << val1();
+    outStr << " " << val2();
+    outStr << " " << dataref();
+    return outStr.str();
+}
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/

@@ -29,6 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <functional>
 #include "xpln/Export.h"
 #include "xpln/obj/attributes/AttrGlobSet.h"
 #include "xpln/obj/attributes/AttrDrapedSet.h"
@@ -59,14 +60,6 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    AttrGlobSet mGlobal;
-    AttrDrapedSet mDraped;
-    AttrSet mObject;
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
     XpObjLib static const char * processBool(bool newValue, bool & inOutStateValue,
                                              const char * enable, const char * disable);
 
@@ -88,9 +81,27 @@ public:
             return disable();
         }
 
-		inOutStateValue = newValue;
+        inOutStateValue = newValue;
         return enable();
     }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    void reset() {
+        mGlobal.reset();
+        mDraped.reset();
+        mObject.reset();
+    }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    AttrGlobSet mGlobal;
+    AttrDrapedSet mDraped;
+    AttrSet mObject;
 
     /// @}
     //-------------------------------------------------------------------------

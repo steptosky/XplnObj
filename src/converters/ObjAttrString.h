@@ -75,13 +75,6 @@ XpObjLib void printObjGlobAttr(const AttrWetDry & globAttr, AbstractWriter & wri
 XpObjLib void printObjGlobAttr(const AttrSlopeLimit & globAttr, AbstractWriter & writer);
 XpObjLib void printObjGlobAttr(const AttrCockpitRegion & globAttr, AbstractWriter & writer);
 
-XpObjLib void printObjAttr(const AttrBlend & attr, AbstractWriter & writer);
-XpObjLib void printObjAttr(const AttrHard & attr, AbstractWriter & writer);
-XpObjLib void printObjAttr(const AttrLightLevel & attr, AbstractWriter & writer);
-XpObjLib void printObjAttr(const AttrPolyOffset & attr, AbstractWriter & writer);
-XpObjLib void printObjAttr(const AttrShiny & attr, AbstractWriter & writer);
-XpObjLib void printObjAttr(const AttrCockpit & attr, AbstractWriter & writer);
-
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/

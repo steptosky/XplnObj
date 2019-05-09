@@ -94,6 +94,12 @@ public:
      */
     XpObjLib static std::string objDisableStr();
 
+	/*!
+	 * \note For internal use only.
+	 * \return String for obj format.
+	 */
+	XpObjLib std::string objStr() const;
+
     /// @}
     //-------------------------------------------------------------------------
 

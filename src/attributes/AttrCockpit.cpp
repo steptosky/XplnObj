@@ -52,6 +52,33 @@ std::string AttrCockpit::objDisableStr() {
     return ATTR_NO_COCKPIT;
 }
 
+std::string AttrCockpit::objStr() const {
+    if (type() == cockpit) {
+        return ATTR_COCKPIT;
+    }
+    StringStream outStr;
+    if (type() == region_1) {
+        outStr << ATTR_COCKPIT_REGION << " " << "0";
+    }
+    else if (type() == region_2) {
+        outStr << ATTR_COCKPIT_REGION << " " << "1";
+    }
+    else if (type() == region_3) {
+        outStr << ATTR_COCKPIT_REGION << " " << "2";
+    }
+    else if (type() == region_4) {
+        outStr << ATTR_COCKPIT_REGION << " " << "3";
+    }
+    else if (type() == cockpit_device) {
+        outStr << ATTR_COCKPIT_DEVICE
+                << " " << name()
+                << " " << bus()
+                << " " << lightingChannel()
+                << " " << autoAdjust();
+    }
+    return outStr.str();
+}
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/

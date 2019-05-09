@@ -67,20 +67,11 @@ public:
 
 private:
 
-    void writeAttributes(const AttrSet & obj);
+    void writeAttributes(const AttrSet & attrSet);
 
     ObjWriteManip * mManipWriter = nullptr;
     AbstractWriter * mWriter = nullptr;
     std::size_t mCounter = 0;
-    std::uint32_t mFlags = 0;
-
-    std::optional<AttrLightLevel> mActiveAttrLightLevel;
-    std::optional<AttrPolyOffset> mActiveAttrPolyOffset;
-    std::optional<AttrBlend> mActiveAttrBlend;
-    std::optional<AttrShiny> mActiveAttrShiny;
-    std::optional<AttrHard> mActiveAttrHard;
-    std::optional<AttrCockpit> mActiveAttrCockpit;
-
 	ObjWriteState mAttributes;
 
 };

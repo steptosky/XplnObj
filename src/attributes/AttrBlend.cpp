@@ -73,6 +73,21 @@ std::string AttrBlend::objDisableStr() {
     return outStr.str();
 }
 
+std::string AttrBlend::objStr() const {
+    StringStream outStr;
+    if (type() == no_blend) {
+        outStr << ATTR_NO_BLEND;
+    }
+    else if (type() == shadow_blend) {
+        outStr << ATTR_SHADOW_BLEND;
+    }
+    else {
+        outStr << ATTR_BLEND;
+    }
+    outStr << " " << ratio();
+    return outStr.str();
+}
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/

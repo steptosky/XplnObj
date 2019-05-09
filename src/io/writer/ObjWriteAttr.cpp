@@ -79,80 +79,93 @@ void ObjWriteAttr::writeAttributes(const AttrSet & attrSet) {
     //-------------------------------------------------------------------------
 
     const auto writeBool = [&](const char * attr) {
-        if (attr) {
-            ++mCounter;
-            mWriter->printLine(attr);
-        }
+        ++mCounter;
+        mWriter->printLine(attr);
     };
 
     const auto writeAttr = [&](const std::string & attr) {
-        if (!attr.empty()) {
-            ++mCounter;
-            mWriter->printLine(attr);
-        }
+        ++mCounter;
+        mWriter->printLine(attr);
     };
 
     //-------------------------------------------------------------------------
 
-    writeBool(ObjWriteState::processBool(attrSet.mIsDraped, mAttributes.mObject.mIsDraped, ATTR_DRAPED, ATTR_NO_DRAPED));
-    writeBool(ObjWriteState::processBool(attrSet.mIsSolidForCamera, mAttributes.mObject.mIsSolidForCamera, ATTR_SOLID_CAMERA, ATTR_NO_SOLID_CAMERA));
-    writeBool(ObjWriteState::processBool(attrSet.mIsDraw, mAttributes.mObject.mIsDraw, ATTR_DRAW_ENABLE, ATTR_DRAW_DISABLE));
-    writeBool(ObjWriteState::processBool(attrSet.mIsCastShadow, mAttributes.mObject.mIsCastShadow, ATTR_SHADOW, ATTR_NO_SHADOW));
+    ObjWriteState::processBool(attrSet.mIsDraped, mAttributes.mObject.mIsDraped,
+                               [&]() { writeBool(ATTR_DRAPED); }, [&]() { writeBool(ATTR_NO_DRAPED); });
 
-    writeAttr(ObjWriteState::processAttr(attrSet.mAttrHard, mAttributes.mObject.mAttrHard,
-                                         [&]() {
-                                             return attrSet.mAttrHard ? attrSet.mAttrHard->objStr() : std::string();
-                                         },
-                                         []() {
-                                             return AttrHard::objDisableStr();
-                                         }));
+    ObjWriteState::processBool(attrSet.mIsSolidForCamera, mAttributes.mObject.mIsSolidForCamera,
+                               [&]() { writeBool(ATTR_SOLID_CAMERA); }, [&]() { writeBool(ATTR_NO_SOLID_CAMERA); });
 
-    writeAttr(ObjWriteState::processAttr(attrSet.mAttrShiny, mAttributes.mObject.mAttrShiny,
-                                         [&]() {
-                                             return attrSet.mAttrShiny ? attrSet.mAttrShiny->objStr() : std::string();
-                                         },
-                                         []() {
-                                             return AttrShiny::objDisableStr();
-                                         }));
+    ObjWriteState::processBool(attrSet.mIsDraw, mAttributes.mObject.mIsDraw,
+                               [&]() { writeBool(ATTR_DRAW_ENABLE); }, [&]() { writeBool(ATTR_DRAW_DISABLE); });
 
-    writeAttr(ObjWriteState::processAttr(attrSet.mAttrBlend, mAttributes.mObject.mAttrBlend,
-                                         [&]() {
-                                             return attrSet.mAttrBlend ? attrSet.mAttrBlend->objStr() : std::string();
-                                         },
-                                         []() {
-                                             return AttrBlend::objDisableStr();
-                                         }));
+    ObjWriteState::processBool(attrSet.mIsCastShadow, mAttributes.mObject.mIsCastShadow,
+                               [&]() { writeBool(ATTR_SHADOW); }, [&]() { writeBool(ATTR_NO_SHADOW); });
 
-    writeAttr(ObjWriteState::processAttr(attrSet.mAttrPolyOffset, mAttributes.mObject.mAttrPolyOffset,
-                                         [&]() {
-                                             return attrSet.mAttrPolyOffset ? attrSet.mAttrPolyOffset->objStr() : std::string();
-                                         },
-                                         []() {
-                                             return AttrPolyOffset::objDisableStr();
-                                         }));
+    //-------------------------------------------------------------------------
 
-    writeAttr(ObjWriteState::processAttr(attrSet.mAttrLightLevel, mAttributes.mObject.mAttrLightLevel,
-                                         [&]() {
-                                             if (!attrSet.mAttrLightLevel) {
-                                                 return std::string();
-                                             }
-                                             auto copy = *attrSet.mAttrLightLevel;
-                                             copy.setDataref(mWriter->actualDataref(copy.dataref()));
-                                             return copy.objStr();
-                                         },
-                                         []() {
-                                             return AttrLightLevel::objDisableStr();
-                                         }));
+    ObjWriteState::processAttr(attrSet.mAttrHard, mAttributes.mObject.mAttrHard,
+                               [&]() {
+                                   if (attrSet.mAttrHard) {
+                                       writeAttr(attrSet.mAttrHard->objStr());
+                                   }
+                               },
+                               [&]() {
+                                   writeAttr(AttrHard::objDisableStr());
+                               });
 
-    writeAttr(ObjWriteState::processAttr(attrSet.mAttrCockpit, mAttributes.mObject.mAttrCockpit,
-                                         [&]() {
-                                             manipPanelEnabled(*attrSet.mAttrCockpit);
-                                             return attrSet.mAttrCockpit->objStr();
-                                         },
-                                         [&]() {
-                                             manipPanelDisabled();
-                                             return AttrCockpit::objDisableStr();
-                                         }));
+    ObjWriteState::processAttr(attrSet.mAttrShiny, mAttributes.mObject.mAttrShiny,
+                               [&]() {
+                                   if (attrSet.mAttrShiny) {
+                                       writeAttr(attrSet.mAttrShiny->objStr());
+                                   }
+                               },
+                               [&]() {
+                                   writeAttr(AttrShiny::objDisableStr());
+                               });
+
+    ObjWriteState::processAttr(attrSet.mAttrBlend, mAttributes.mObject.mAttrBlend,
+                               [&]() {
+                                   if (attrSet.mAttrBlend) {
+                                       writeAttr(attrSet.mAttrBlend->objStr());
+                                   }
+                               },
+                               [&]() {
+                                   writeAttr(AttrBlend::objDisableStr());
+                               });
+
+    ObjWriteState::processAttr(attrSet.mAttrPolyOffset, mAttributes.mObject.mAttrPolyOffset,
+                               [&]() {
+                                   if (attrSet.mAttrPolyOffset) {
+                                       writeAttr(attrSet.mAttrPolyOffset->objStr());
+                                   }
+                               },
+                               [&]() {
+                                   writeAttr(AttrPolyOffset::objDisableStr());
+                               });
+
+    ObjWriteState::processAttr(attrSet.mAttrLightLevel, mAttributes.mObject.mAttrLightLevel,
+                               [&]() {
+                                   if (attrSet.mAttrLightLevel) {
+                                       writeAttr(attrSet.mAttrLightLevel->objStr());
+                                   }
+                               },
+                               [&]() {
+                                   writeAttr(AttrLightLevel::objDisableStr());
+                               });
+
+    ObjWriteState::processAttr(attrSet.mAttrCockpit, mAttributes.mObject.mAttrCockpit,
+                               [&]() {
+                                   if (attrSet.mAttrCockpit) {
+                                       manipPanelEnabled(*attrSet.mAttrCockpit);
+                                       writeAttr(attrSet.mAttrCockpit->objStr());
+                                   }
+                               },
+                               [&]() {
+                                   manipPanelDisabled();
+                                   writeAttr(AttrCockpit::objDisableStr());
+                               });
+
 }
 
 /**************************************************************************************************/

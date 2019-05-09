@@ -40,36 +40,74 @@ namespace xobj {
 
 TEST(ObjWriteState, processAttr_bool) {
     bool state = false;
+    bool calledEnable = false;
+    bool calledDisable = false;
 
-    EXPECT_FALSE(ObjWriteState::processBool(false, state, "on", "off"));
+    EXPECT_FALSE(ObjWriteState::processBool(false, state, [&]() {calledEnable = true; }, [&]() {calledDisable = true; }));
     EXPECT_FALSE(state);
+    EXPECT_FALSE(calledEnable);
+    EXPECT_FALSE(calledDisable);
 
-    EXPECT_STREQ("on", ObjWriteState::processBool(true, state, "on", "off"));
+    calledEnable = false;
+    calledDisable = false;
+    EXPECT_TRUE(ObjWriteState::processBool(true, state, [&]() {calledEnable = true; }, [&]() {calledDisable = true; }));
     EXPECT_TRUE(state);
+    EXPECT_TRUE(calledEnable);
+    EXPECT_FALSE(calledDisable);
 
-    EXPECT_FALSE(ObjWriteState::processBool(true, state, "on", "off"));
+    calledEnable = false;
+    calledDisable = false;
+    EXPECT_FALSE(ObjWriteState::processBool(true, state, [&]() {calledEnable = true; }, [&]() {calledDisable = true; }));
     EXPECT_TRUE(state);
+    EXPECT_FALSE(calledEnable);
+    EXPECT_FALSE(calledDisable);
 
-    EXPECT_STREQ("off", ObjWriteState::processBool(false, state, "on", "off"));
+    calledEnable = false;
+    calledDisable = false;
+    EXPECT_TRUE(ObjWriteState::processBool(false, state, [&]() {calledEnable = true; }, [&]() {calledDisable = true; }));
     EXPECT_FALSE(state);
+    EXPECT_FALSE(calledEnable);
+    EXPECT_TRUE(calledDisable);
 }
 
 TEST(ObjWriteState, processAttr) {
     typedef std::optional<AttrBlend> TestAttr;
     TestAttr state;
-
-    // new
-    EXPECT_STREQ("blend 0.5", ObjWriteState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.5f)), state, []() {return "blend 0.5"s; }, []() {return "off"s; }).c_str());
-    EXPECT_EQ(AttrBlend(AttrBlend::blend, 0.5f), state);
-    // the same
-    EXPECT_TRUE(ObjWriteState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.5f)), state, []() {return "blend 0.5"s; }, []() {return "off"s; }).empty());
-    EXPECT_EQ(AttrBlend (AttrBlend::blend, 0.5f), state);
-    // value changed
-    EXPECT_STREQ("blend 0.75", ObjWriteState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.75f)), state, []() {return "blend 0.75"s; }, []() {return "off"s; }).c_str());
-    EXPECT_EQ(AttrBlend(AttrBlend::blend, 0.75f), state);
-    // disabling
-    EXPECT_STREQ("off", ObjWriteState::processAttr(TestAttr(std::nullopt), state, []() {return "on"s; }, []() {return "off"s; }).c_str());
+    bool calledEnable = false;
+    bool calledDisable = false;
+    // empty
+    EXPECT_FALSE(ObjWriteState::processAttr(TestAttr(std::nullopt), state, [&]() {calledEnable = true; }, [&]() {calledDisable = true; }));
     EXPECT_EQ(TestAttr(std::nullopt), state);
+    EXPECT_FALSE(calledEnable);
+    EXPECT_FALSE(calledDisable);
+    // new
+    calledEnable = false;
+    calledDisable = false;
+    EXPECT_TRUE(ObjWriteState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.5f)), state, [&]() {calledEnable = true; }, [&]() {calledDisable = true; }));
+    EXPECT_EQ(AttrBlend(AttrBlend::blend, 0.5f), state);
+    EXPECT_TRUE(calledEnable);
+    EXPECT_FALSE(calledDisable);
+    // the same
+    calledEnable = false;
+    calledDisable = false;
+    EXPECT_FALSE(ObjWriteState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.5f)), state, [&]() {calledEnable = true; }, [&]() {calledDisable = true; }));
+    EXPECT_EQ(AttrBlend (AttrBlend::blend, 0.5f), state);
+    EXPECT_FALSE(calledEnable);
+    EXPECT_FALSE(calledDisable);
+    // value changed
+    calledEnable = false;
+    calledDisable = false;
+    EXPECT_TRUE(ObjWriteState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.75f)), state, [&]() {calledEnable = true; }, [&]() {calledDisable = true; }));
+    EXPECT_EQ(AttrBlend(AttrBlend::blend, 0.75f), state);
+    EXPECT_TRUE(calledEnable);
+    EXPECT_FALSE(calledDisable);
+    // disabling
+    calledEnable = false;
+    calledDisable = false;
+    EXPECT_TRUE(ObjWriteState::processAttr(TestAttr(std::nullopt), state, [&]() {calledEnable = true; }, [&]() {calledDisable = true; }));
+    EXPECT_EQ(TestAttr(std::nullopt), state);
+    EXPECT_FALSE(calledEnable);
+    EXPECT_TRUE(calledDisable);
 }
 
 /**************************************************************************************************/

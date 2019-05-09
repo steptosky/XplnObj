@@ -42,7 +42,7 @@ namespace xobj {
  * \details COCKPIT_REGION
  * \ingroup Attributes
  */
-class AttrCockpitRegion {
+class AttrCockpitRegion final {
 public:
 
     //-------------------------------------------------------------------------

@@ -41,7 +41,7 @@ namespace xobj {
  * \details GLOBAL_tint
  * \ingroup Attributes
  */
-class AttrTint {
+class AttrTint final {
 public:
 
     //-------------------------------------------------------------------------

@@ -42,7 +42,7 @@ namespace xobj {
  * \details ATTR_layer_group_draped
  * \ingroup Attributes
  */
-class AttrDrapedLayerGroup {
+class AttrDrapedLayerGroup final {
 public:
 
     //-------------------------------------------------------------------------

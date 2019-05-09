@@ -41,7 +41,7 @@ namespace xobj {
  * \details slung_load_weight
  * \ingroup Attributes
  */
-class AttrSlungLoadWeight {
+class AttrSlungLoadWeight final {
 public:
 
     //-------------------------------------------------------------------------

@@ -41,7 +41,7 @@ namespace xobj {
  * \details SLOPE_LIMIT
  * \ingroup Attributes
  */
-class AttrSlopeLimit {
+class AttrSlopeLimit final {
 public:
 
     //-------------------------------------------------------------------------

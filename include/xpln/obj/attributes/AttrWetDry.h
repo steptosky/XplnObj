@@ -41,7 +41,7 @@ namespace xobj {
  * \details REQUIRE_WET/REQUIRE_DRY
  * \ingroup Attributes
  */
-class AttrWetDry {
+class AttrWetDry final {
 public:
 
     //-------------------------------------------------------------------------

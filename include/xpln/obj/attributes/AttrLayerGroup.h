@@ -42,7 +42,7 @@ namespace xobj {
  * \details ATTR_layer_group
  * \ingroup Attributes
  */
-class AttrLayerGroup {
+class AttrLayerGroup final {
 public:
 
     //-------------------------------------------------------------------------

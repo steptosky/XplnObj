@@ -41,7 +41,7 @@ namespace xobj {
  * \details ATTR_LOD_draped
  * \ingroup Attributes
  */
-class AttrDrapedLod {
+class AttrDrapedLod final {
 public:
 
     //-------------------------------------------------------------------------

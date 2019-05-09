@@ -41,7 +41,7 @@ namespace xobj {
  * \details GLOBAL_specular
  * \ingroup Attributes
  */
-class AttrSpecular {
+class AttrSpecular final {
 public:
 
     //-------------------------------------------------------------------------

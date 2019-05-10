@@ -56,6 +56,7 @@ protected:
     void gotGlobAttrTexture(const std::string & val) override;
     void gotGlobAttrTextureLit(const std::string & val) override;
     void gotGlobAttrTextureNormal(const std::string & val) override;
+    void gotGlobAttrParticleSystemPath(const std::string & val) override;
 
     //-----------------------------------------------------
 

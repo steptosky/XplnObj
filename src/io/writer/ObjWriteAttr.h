@@ -55,7 +55,11 @@ class ObjWriteManip;
 class ObjWriteAttr {
 public:
 
-    ObjWriteAttr() = default;
+    explicit ObjWriteAttr(ObjState::Ptr state)
+        : mState(std::move(state)) {
+        assert(mState);
+    }
+
     ObjWriteAttr(const ObjWriteAttr &) = delete;
     ObjWriteAttr & operator =(const ObjWriteAttr &) = delete;
 
@@ -63,7 +67,7 @@ public:
 
     XpObjLib void writeGlobAttr(AbstractWriter * writer, const ObjMain * obj);
     XpObjLib void writeObjAttr(AbstractWriter * writer, const ObjAbstract * obj);
-    XpObjLib void reset();
+    XpObjLib void reset(ObjState::Ptr state);
     XpObjLib std::tuple<std::size_t, std::size_t, std::size_t> count() const;
 
 private:
@@ -74,7 +78,7 @@ private:
 
     const ObjMesh * mObj = nullptr;
     AbstractWriter * mWriter = nullptr;
-    ObjState mState;
+    ObjState::Ptr mState;
     bool mIsPanelManip = false;
 
     std::size_t mGlobNum = 0;

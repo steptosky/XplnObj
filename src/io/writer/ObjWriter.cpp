@@ -51,8 +51,10 @@ namespace xobj {
 /**************************************************************************************************/
 
 ObjWriter::ObjWriter()
-    : mAnimationWritter(&mExportOptions, &mStatistic),
-      mObjWriteGeometry(&mExportOptions, &mStatistic) {
+    : mState(std::make_shared<ObjState>()),
+      mAnimationWritter(&mExportOptions, &mStatistic),
+      mObjWriteGeometry(&mExportOptions, &mStatistic),
+      mWriteAttr(mState) {
 
     reset();
 }
@@ -68,8 +70,9 @@ ObjWriter::~ObjWriter() {
 /**************************************************************************************************/
 
 void ObjWriter::reset() {
+    mState->reset();
     mStatistic.reset();
-    mWriteAttr.reset();
+    mWriteAttr.reset(mState);
     mObjWriteGeometry.reset();
 }
 

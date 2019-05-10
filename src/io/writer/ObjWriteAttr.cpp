@@ -48,8 +48,8 @@ namespace xobj {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjWriteAttr::reset() {
-    mState.reset();
+void ObjWriteAttr::reset(ObjState::Ptr state) {
+    mState = std::move(state);
     mGlobNum = 0;
     mAttrNum = 0;
     mManipNum = 0;
@@ -152,25 +152,25 @@ void ObjWriteAttr::writeAttr() {
 
     //-------------------------------------------------------------------------
 
-    ObjState::processBool(attrs.mIsDraped, mState.mObject.mIsDraped, [&](const bool enable) {
+    ObjState::processBool(attrs.mIsDraped, mState->mObject.mIsDraped, [&](const bool enable) {
         writeBool(enable ? ATTR_DRAPED : ATTR_NO_DRAPED);
     });
 
-    ObjState::processBool(attrs.mIsSolidForCamera, mState.mObject.mIsSolidForCamera, [&](const bool enable) {
+    ObjState::processBool(attrs.mIsSolidForCamera, mState->mObject.mIsSolidForCamera, [&](const bool enable) {
         writeBool(enable ? ATTR_SOLID_CAMERA : ATTR_NO_SOLID_CAMERA);
     });
 
-    ObjState::processBool(attrs.mIsDraw, mState.mObject.mIsDraw, [&](const bool enable) {
+    ObjState::processBool(attrs.mIsDraw, mState->mObject.mIsDraw, [&](const bool enable) {
         writeBool(enable ? ATTR_DRAW_ENABLE : ATTR_DRAW_DISABLE);
     });
 
-    ObjState::processBool(attrs.mIsCastShadow, mState.mObject.mIsCastShadow, [&](const bool enable) {
+    ObjState::processBool(attrs.mIsCastShadow, mState->mObject.mIsCastShadow, [&](const bool enable) {
         writeBool(enable ? ATTR_SHADOW : ATTR_NO_SHADOW);
     });
 
     //-------------------------------------------------------------------------
 
-    ObjState::processAttr(attrs.mHard, mState.mObject.mHard, [&](const bool enable) {
+    ObjState::processAttr(attrs.mHard, mState->mObject.mHard, [&](const bool enable) {
         if (enable) {
             mAttrNum += attrs.mHard->printObj(*mWriter);
         }
@@ -180,7 +180,7 @@ void ObjWriteAttr::writeAttr() {
         }
     });
 
-    ObjState::processAttr(attrs.mShiny, mState.mObject.mShiny, [&](const bool enable) {
+    ObjState::processAttr(attrs.mShiny, mState->mObject.mShiny, [&](const bool enable) {
         if (enable) {
             mAttrNum += attrs.mShiny->printObj(*mWriter);
         }
@@ -190,7 +190,7 @@ void ObjWriteAttr::writeAttr() {
         }
     });
 
-    ObjState::processAttr(attrs.mBlend, mState.mObject.mBlend, [&](const bool enable) {
+    ObjState::processAttr(attrs.mBlend, mState->mObject.mBlend, [&](const bool enable) {
         if (enable) {
             mAttrNum += attrs.mBlend->printObj(*mWriter);
         }
@@ -200,7 +200,7 @@ void ObjWriteAttr::writeAttr() {
         }
     });
 
-    ObjState::processAttr(attrs.mPolyOffset, mState.mObject.mPolyOffset, [&](const bool enable) {
+    ObjState::processAttr(attrs.mPolyOffset, mState->mObject.mPolyOffset, [&](const bool enable) {
         if (enable) {
             mAttrNum += attrs.mPolyOffset->printObj(*mWriter);
         }
@@ -210,7 +210,7 @@ void ObjWriteAttr::writeAttr() {
         }
     });
 
-    ObjState::processAttr(attrs.mLightLevel, mState.mObject.mLightLevel, [&](const bool enable) {
+    ObjState::processAttr(attrs.mLightLevel, mState->mObject.mLightLevel, [&](const bool enable) {
         if (enable) {
             mAttrNum += attrs.mLightLevel->printObj(*mWriter);
         }
@@ -220,15 +220,15 @@ void ObjWriteAttr::writeAttr() {
         }
     });
 
-    ObjState::processAttr(attrs.mCockpit, mState.mObject.mCockpit, [&](const bool enable) {
+    ObjState::processAttr(attrs.mCockpit, mState->mObject.mCockpit, [&](const bool enable) {
         if (enable) {
             mIsPanelManip = true;
-            mState.mObject.mManipContainer = ManipContainer(new AttrManipPanel(*attrs.mCockpit));
+            mState->mObject.mManipContainer = ManipContainer(new AttrManipPanel(*attrs.mCockpit));
             mAttrNum += attrs.mCockpit->printObj(*mWriter);
         }
         else {
             mIsPanelManip = false;
-            mState.mObject.mManipContainer = std::nullopt;
+            mState->mObject.mManipContainer = std::nullopt;
             mWriter->printLine(AttrCockpit::objDisableStr());
             ++mAttrNum;
         }
@@ -340,7 +340,7 @@ void ObjWriteAttr::writeManip() {
         }
     };
 
-    ObjState::processAttr(manipContainer, mState.mObject.mManipContainer, switchFn);
+    ObjState::processAttr(manipContainer, mState->mObject.mManipContainer, switchFn);
 }
 
 /**************************************************************************************************/

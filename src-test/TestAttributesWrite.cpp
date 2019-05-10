@@ -70,7 +70,7 @@ std::string strAttrResult(const T & attr) {
 
 TEST(TestAttributesWrite, default) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+    ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
 
@@ -85,7 +85,7 @@ TEST(TestAttributesWrite, default) {
 
 TEST(TestAttributesWrite, boolean_case1) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -124,7 +124,7 @@ TEST(TestAttributesWrite, boolean_case1) {
 
 TEST(TestAttributesWrite, boolean_case2) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -163,7 +163,7 @@ TEST(TestAttributesWrite, boolean_case2) {
 
 TEST(TestAttributesWrite, boolean_case3) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -196,7 +196,7 @@ TEST(TestAttributesWrite, boolean_case3) {
 
 TEST(TestAttributesWrite, boolean_case4) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -234,7 +234,7 @@ TEST(TestAttributesWrite, boolean_case4) {
 
 TEST(TestAttributesWrite, boolean_case5) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -272,7 +272,7 @@ TEST(TestAttributesWrite, boolean_case5) {
 
 TEST(TestAttributesWrite, boolean_case6) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -317,7 +317,7 @@ TEST(TestAttributesWrite, boolean_case6) {
 
 TEST(TestAttributesWrite, boolean_case7) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -365,7 +365,7 @@ TEST(TestAttributesWrite, boolean_case7) {
 
 TEST(TestAttributesWrite, parameterized_case1) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -403,7 +403,7 @@ TEST(TestAttributesWrite, parameterized_case1) {
 
 TEST(TestAttributesWrite, parameterized_case2) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -457,7 +457,7 @@ TEST(TestAttributesWrite, parameterized_case2) {
 
 TEST(TestAttributesWrite, parameterized_case3) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -503,7 +503,7 @@ TEST(TestAttributesWrite, parameterized_case3) {
 
 TEST(TestAttributesWrite, parameterized_case4) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -557,7 +557,7 @@ TEST(TestAttributesWrite, parameterized_case4) {
 
 TEST(TestAttributesWrite, parameterized_case5) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;

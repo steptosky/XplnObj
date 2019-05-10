@@ -65,7 +65,7 @@ using ::testing::InSequence;
 template<typename T>
 std::string strAttrResult(const T & attr) {
     TestWriter w;
-	attr.printObj(w);
+    attr.printObj(w);
     if (!w.mResult.empty()) {
         w.mResult.pop_back(); // remove '\n'
     }
@@ -82,7 +82,8 @@ public:
     ManipsStates(const ManipsStates &) = delete;
     ManipsStates & operator =(const ManipsStates &) = delete;
 
-    ManipsStates() {
+    ManipsStates()
+        : mObjWriteAttr(std::make_shared<ObjState>()) {
         mObjMesh1.setObjectName(TOTEXT(mObjMesh1));
         mObjMesh2.setObjectName(TOTEXT(mObjMesh2));
         mObjMesh3.setObjectName(TOTEXT(mObjMesh3));

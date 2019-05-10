@@ -29,6 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <memory>
 #include <functional>
 #include "xpln/Export.h"
 #include "xpln/obj/attributes/AttrGlobSet.h"
@@ -43,6 +44,8 @@ namespace xobj {
 
 class ObjState final {
 public:
+
+    typedef std::shared_ptr<ObjState> Ptr;
 
     //-------------------------------------------------------------------------
     /// @{

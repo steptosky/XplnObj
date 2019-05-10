@@ -40,6 +40,7 @@
 #include "io/StringValidator.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
 #include "converters/ObjAttrString.h"
+#include "common/Logger.h"
 
 namespace xobj {
 

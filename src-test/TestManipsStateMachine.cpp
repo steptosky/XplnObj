@@ -536,7 +536,7 @@ TEST_F(ManipsStates, two_different_manips) {
  *       [obj2]                  [obj2]
  *
 \* ================================================ */
-TEST_F(ManipsStates, manip_panel_relation_simple_case2) {
+TEST_F(ManipsStates, manip_panel_relation_simple_case1) {
     // make data
     MockWriter writer;
     InSequence dummy;
@@ -609,7 +609,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case1) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
-    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 1, 1 + 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -652,7 +652,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case2) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
-    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 1, 1 + 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -693,7 +693,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case3) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(std::make_tuple(0, 0, 0), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 1, 0), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -738,7 +738,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case4) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(std::make_tuple(0, 0, 1), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 1, 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -780,7 +780,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case5) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
-    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 1 + 1, 1 + 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -820,7 +820,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_1) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
-    ASSERT_EQ(std::make_tuple(0, 0, 1), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 1, 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -866,7 +866,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_2) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
-    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 1, 1 + 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -911,7 +911,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_4) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(std::make_tuple(0, 0, 2), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 2, 2), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -952,7 +952,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_5) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(std::make_tuple(0, 0, 0), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 2, 0), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -998,7 +998,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_6) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(std::make_tuple(0, 0, 2), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 2, 2), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -1044,7 +1044,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_7) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(std::make_tuple(0, 0, 1), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 2, 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -1090,7 +1090,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_8) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(std::make_tuple(0, 0, 1), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 2, 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -1158,7 +1158,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_1) {
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
-    ASSERT_EQ(std::make_tuple(0, 0, 3), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 3, 3), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -1224,7 +1224,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_2) {
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
-    ASSERT_EQ(std::make_tuple(0, 0, 3), mObjWriteAttr.count());
+    ASSERT_EQ(std::make_tuple(0, 2, 3), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -1280,7 +1280,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_3) {
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
-    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
+    ASSERT_EQ(std::make_tuple(0, 1, 1 + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
     //---------------------------
 }
 
@@ -1339,7 +1339,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_4) {
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
-    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1 + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
+    ASSERT_EQ(std::make_tuple(0, 2, 1 + 1 + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
     //---------------------------
 }
 
@@ -1399,7 +1399,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_5) {
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
-    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
+    ASSERT_EQ(std::make_tuple(0, 2, 1 + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
     //---------------------------
 }
 

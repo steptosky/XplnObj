@@ -251,7 +251,7 @@ bool ObjWriteAttr::checkManip(AttrManipBase * manip) const {
         else if (manip->type() == EManipulator::panel) {
             if (!mIsPanelManip) {
                 ULError << "The object <" << mObj->objectName() << "> uses <" << manip->type().toUiString()
-                        << "> manipulator but the object hasn't the attribute <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
+                        << "> manipulator but the object doesn't have the attributes <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
                         << "> the <" << manip->type().toUiString() << "> can be used only for the geometry with one of those attributes.";
                 return false;
             }
@@ -316,11 +316,11 @@ bool ObjWriteAttr::checkManip(AttrManipBase * manip) const {
 
 void ObjWriteAttr::writeManip() {
     const auto & attrs = mObj->pAttr;
+	auto manipContainer = attrs.mManipContainer;
     //------------------------------
     // Checks the order of processing, the attributes must be processed before the manipulators.
     assert(mIsPanelManip == mObj->pAttr.mCockpit.has_value());
     //------------------------------
-    auto manipContainer = attrs.mManipContainer;
     if (manipContainer && manipContainer->hasManip()) {
         if (!checkManip(manipContainer->mManip.get())) {
             manipContainer = std::nullopt;
@@ -329,16 +329,16 @@ void ObjWriteAttr::writeManip() {
 
     const auto switchFn = [&](const bool enable) {
         if (enable) {
-            assert(attrs.mManipContainer);
-            assert(attrs.mManipContainer->hasManip());
-            mManipNum += attrs.mManipContainer->mManip->printObj(*mWriter);
+            assert(manipContainer);
+            assert(manipContainer->hasManip());
+            mManipNum += manipContainer->mManip->printObj(*mWriter);
         }
         else {
             mManipNum += AttrManipNone().printObj(*mWriter);
         }
     };
 
-    ObjWriteState::processAttr(attrs.mManipContainer, mState.mObject.mManipContainer, switchFn);
+    ObjWriteState::processAttr(manipContainer, mState.mObject.mManipContainer, switchFn);
 }
 
 /**************************************************************************************************/

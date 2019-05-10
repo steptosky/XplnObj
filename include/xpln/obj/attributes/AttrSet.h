@@ -69,7 +69,6 @@ public:
                mIsDraw == other.mIsDraw &&
                mIsTwoSided == other.mIsTwoSided &&
                mIsDraped == other.mIsDraped &&
-               mIsTree == other.mIsTree &&
                mIsCastShadow == other.mIsCastShadow &&
                mIsSolidForCamera == other.mIsSolidForCamera &&
                mManipContainer == other.mManipContainer;
@@ -105,8 +104,7 @@ public:
 
     bool mIsDraw = true;
     bool mIsDraped = false;
-    bool mIsTree = false;
-    bool mIsTwoSided = false;
+    bool mIsTwoSided = false; //!< replacement for ATTR_no_cull
     bool mIsCastShadow = true;
     bool mIsSolidForCamera = false;
 

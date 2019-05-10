@@ -91,7 +91,7 @@ void ObjWriteGeometry::printMeshVerticiesRecursive(AbstractWriter & writer, cons
             }
 
             for (const MeshVertex & v : mobj->pVertices) {
-                printObj(v, writer, mobj->pAttr.mIsTree);
+                printObj(v, writer, mobj->isTree());
             }
         }
     }

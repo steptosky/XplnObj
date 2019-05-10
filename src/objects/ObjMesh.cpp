@@ -71,11 +71,11 @@ void ObjMesh::flipNormals() {
 }
 
 void ObjMesh::makeTwoSided() {
-    if (!mTwoSided) {
+    if (!mIsTwoSided) {
         ObjMesh copy(*this);
         copy.flipNormals();
         attach(copy);
-        mTwoSided = true;
+        mIsTwoSided = true;
     }
 }
 

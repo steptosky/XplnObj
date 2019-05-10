@@ -54,23 +54,6 @@ ObjAbstract * ObjEmitter::clone() const {
     return new ObjEmitter(*this);
 }
 
-std::size_t ObjEmitter::printObj(AbstractWriter & writer) const {
-    StringStream out;
-    out << ATTR_EMITTER
-            << " " << objectName()
-            << " " << mPosition.toString(PRECISION)
-            << " " << mPsi
-            << " " << mThe
-            << " " << mPhi;
-
-    if (mIndex != 0) {
-        out << " " << mIndex;
-    }
-
-    writer.printLine(out.str());
-    return 1;
-}
-
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/

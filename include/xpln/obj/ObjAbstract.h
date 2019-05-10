@@ -116,12 +116,6 @@ public:
      */
     virtual ObjAbstract * clone() const = 0;
 
-    /*!
-     * \todo
-     * \details Not implemented yet.
-     */
-    XpObjLib virtual std::size_t printObj(AbstractWriter &) const { return 0; }
-
     //--------------------------------------------------------v
 
     /*!

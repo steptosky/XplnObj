@@ -177,12 +177,24 @@ void printObj(const ObjLightPoint & obj, AbstractWriter & writer, const bool pri
 //-------------------------------------------------------------------------
 
 void printObj(const ObjEmitter & obj, AbstractWriter & writer, const bool printName) {
+    StringStream out;
     if (printName) {
-        StringStream out;
         out << "## " << obj.objectName() << std::endl;
-        writer.printLine(out.str());
     }
-    obj.printObj(writer);
+    out << ATTR_EMITTER
+            << " " << obj.objectName()
+            << " " << obj.position().toString(PRECISION);
+
+    auto [psi, the, phi] = obj.orientation();
+    out << " " << psi
+            << " " << the
+            << " " << phi;
+
+    const auto index = obj.index();
+    if (index != 0) {
+        out << " " << index;
+    }
+    writer.printLine(out.str());
 }
 
 //-------------------------------------------------------------------------

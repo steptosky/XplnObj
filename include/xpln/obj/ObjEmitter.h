@@ -79,7 +79,7 @@ public:
     }
 
     /*!
-     * \returnt [mPsi, mThe, mPhi].
+     * \returnt [psi, the, phi].
      */
     std::tuple<float, float, float> orientation() const {
         return std::make_tuple(mPsi, mThe, mPhi);
@@ -96,7 +96,17 @@ public:
     /*!
      * \returnt index.
      */
-    std::size_t index() const { return mIndex; }
+    std::size_t index() const {
+        return mIndex;
+    }
+
+    void setPosition(const Point3 & pos) {
+        mPosition = pos;
+    }
+
+    const Point3 & position() const {
+        return mPosition;
+    }
 
     /// @}
     //-------------------------------------------------------------------------
@@ -110,9 +120,6 @@ public:
 
     /*! \copydoc ObjAbstract::clone */
     XpObjLib ObjAbstract * clone() const override;
-
-    /*! \copydoc ObjAbstract::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
 
     /// @}
     //-------------------------------------------------------------------------

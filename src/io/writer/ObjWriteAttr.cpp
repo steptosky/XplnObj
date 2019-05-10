@@ -86,7 +86,7 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
         }
     };
 
-    const auto writeTexture = [&](const char * inAttr, const std::optional<std::string> & string) {
+    const auto writeString = [&](const char * inAttr, const std::optional<std::string> & string) {
         if (string && !string->empty()) {
             if (!StringValidator::hasIllegalSymbols(*string, "\t\n\r")) {
                 mWriter->printLine(std::string(inAttr).append(" ").append(*string));
@@ -97,9 +97,10 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
 
     //-------------------------------------------------------------------------
 
-    writeTexture(ATTR_GLOBAL_TEXTURE, obj->mAttr.mTexture);
-    writeTexture(ATTR_GLOBAL_TEXTURE_LIT, obj->mAttr.mTextureLit);
-    writeTexture(ATTR_GLOBAL_TEXTURE_NORMAL, obj->mAttr.mTextureNormal);
+    writeString(ATTR_GLOBAL_TEXTURE, obj->mAttr.mTexture);
+    writeString(ATTR_GLOBAL_TEXTURE_LIT, obj->mAttr.mTextureLit);
+    writeString(ATTR_GLOBAL_TEXTURE_NORMAL, obj->mAttr.mTextureNormal);
+    writeString(ATTR_GLOBAL_PARTICLE_SYSTEM, obj->mAttr.mParticleSystemPath);
 
     writeBool(ATTR_GLOBAL_BLEND_GLASS, obj->mAttr.mBlendClass);
     writeBool(ATTR_GLOBAL_NORMAL_METALNESS, obj->mAttr.mNormalMetalness);
@@ -317,7 +318,7 @@ bool ObjWriteAttr::checkManip(AttrManipBase * manip) const {
 
 void ObjWriteAttr::writeManip() {
     const auto & attrs = mObj->mAttr;
-	auto manipContainer = attrs.mManipContainer;
+    auto manipContainer = attrs.mManipContainer;
     //------------------------------
     // Checks the order of processing, the attributes must be processed before the manipulators.
     assert(mIsPanelManip == mObj->mAttr.mCockpit.has_value());

@@ -77,6 +77,7 @@ public:
     std::optional<std::string> mTexture;
     std::optional<std::string> mTextureLit;
     std::optional<std::string> mTextureNormal;
+    std::optional<std::string> mParticleSystemPath;
 
     std::optional<AttrBlend> mBlend;
     std::optional<AttrLayerGroup> mLayerGroup;

@@ -58,24 +58,27 @@ std::string strGlobAttrResult(const T & attr) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-TEST(TestGlobAttributesWrite, textures) {
+TEST(TestGlobAttributesWrite, strings) {
     MockWriter writer;
     ObjWriteAttr attrWriter;
     ObjMain main;
     main.mAttr.mTexture = "test";
     main.mAttr.mTextureLit = "test_lit";
     main.mAttr.mTextureNormal = "test_normal";
+    main.mAttr.mParticleSystemPath = "test_particle_system";
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE).append(" ").append(*main.mAttr.mTexture)))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_LIT).append(" ").append(*main.mAttr.mTextureLit)))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_NORMAL).append(" ").append(*main.mAttr.mTextureNormal)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_PARTICLE_SYSTEM).append(" ").append(*main.mAttr.mParticleSystemPath)))).Times(1);
 
     attrWriter.writeGlobAttr(&writer, &main);
-    ASSERT_EQ(std::make_tuple(3,0,0), attrWriter.count());
+    ASSERT_EQ(std::make_tuple(4, 0, 0), attrWriter.count());
     ASSERT_STREQ("test", main.mAttr.mTexture->c_str());
     ASSERT_STREQ("test_lit", main.mAttr.mTextureLit->c_str());
     ASSERT_STREQ("test_normal", main.mAttr.mTextureNormal->c_str());
+    ASSERT_STREQ("test_particle_system", main.mAttr.mParticleSystemPath->c_str());
 }
 
 TEST(TestGlobAttributesWrite, boolean) {

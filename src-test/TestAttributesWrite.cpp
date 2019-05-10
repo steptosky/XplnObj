@@ -34,6 +34,7 @@
 #include "common/AttributeNames.h"
 #include "io/writer/ObjWriteAttr.h"
 #include "TestWriter.h"
+#include <xpln/obj/manipulators/AttrManipNone.h>
 
 using namespace xobj;
 using ::testing::_;
@@ -383,6 +384,7 @@ TEST(TestAttributesWrite, parameterized_case1) {
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(5.0f))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(3.0f, 4.0f, "test"))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_3))))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
 
     EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
@@ -396,7 +398,7 @@ TEST(TestAttributesWrite, parameterized_case1) {
     // disable
     attrWriter.writeObjAttr(&writer, &main2);
     attrWriter.writeObjAttr(&writer, &main3);
-    ASSERT_EQ(std::make_tuple(0, 12, 0), attrWriter.count());
+    ASSERT_EQ(std::make_tuple(0, 12, 1), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, parameterized_case2) {
@@ -427,6 +429,7 @@ TEST(TestAttributesWrite, parameterized_case2) {
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(4.0f))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_2))))).Times(1);
+	EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
 
     EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
@@ -441,6 +444,7 @@ TEST(TestAttributesWrite, parameterized_case2) {
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(5.0f))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(3.0f, 4.0f, "test2"))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_3))))).Times(1);
+	EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
 
     // enable
     attrWriter.writeObjAttr(&writer, &main1);
@@ -448,7 +452,7 @@ TEST(TestAttributesWrite, parameterized_case2) {
     attrWriter.writeObjAttr(&writer, &main2);
     // enable
     attrWriter.writeObjAttr(&writer, &main3);
-    ASSERT_EQ(std::make_tuple(0, 18, 0), attrWriter.count());
+    ASSERT_EQ(std::make_tuple(0, 18, 2), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, parameterized_case3) {
@@ -479,6 +483,7 @@ TEST(TestAttributesWrite, parameterized_case3) {
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(4.0f))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_1))))).Times(1);
+	EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
 
     EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
@@ -493,7 +498,7 @@ TEST(TestAttributesWrite, parameterized_case3) {
     attrWriter.writeObjAttr(&writer, &main2);
     // disable
     attrWriter.writeObjAttr(&writer, &main3);
-    ASSERT_EQ(std::make_tuple(0, 12, 0), attrWriter.count());
+    ASSERT_EQ(std::make_tuple(0, 12, 1), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, parameterized_case4) {
@@ -524,6 +529,7 @@ TEST(TestAttributesWrite, parameterized_case4) {
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(4.0f))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_1))))).Times(1);
+	EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
 
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::concrete), true))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(10.0f))))).Times(1);
@@ -531,6 +537,7 @@ TEST(TestAttributesWrite, parameterized_case4) {
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(5.0f))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(3.0f, 4.0f, "test2"))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::cockpit))))).Times(1);
+	EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
 
     EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
@@ -545,7 +552,7 @@ TEST(TestAttributesWrite, parameterized_case4) {
     attrWriter.writeObjAttr(&writer, &main2);
     // disable
     attrWriter.writeObjAttr(&writer, &main3);
-    ASSERT_EQ(std::make_tuple(0, 18, 0), attrWriter.count());
+    ASSERT_EQ(std::make_tuple(0, 18, 2), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, parameterized_case5) {
@@ -569,6 +576,7 @@ TEST(TestAttributesWrite, parameterized_case5) {
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(5.0f))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(3.0f, 4.0f, "test"))))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::cockpit))))).Times(1);
+	EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
 
     EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
@@ -582,7 +590,7 @@ TEST(TestAttributesWrite, parameterized_case5) {
     attrWriter.writeObjAttr(&writer, &main2);
     // disable
     attrWriter.writeObjAttr(&writer, &main3);
-    ASSERT_EQ(std::make_tuple(0, 12, 0), attrWriter.count());
+    ASSERT_EQ(std::make_tuple(0, 12, 1), attrWriter.count());
 }
 
 /**************************************************************************************************/

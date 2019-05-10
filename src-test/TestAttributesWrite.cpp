@@ -32,16 +32,13 @@
 #include "MockIWriter.h"
 #include "xpln/obj/ObjMesh.h"
 #include "common/AttributeNames.h"
-#include "converters/ObjAttrString.h"
 #include "io/writer/ObjWriteAttr.h"
-#include "io/writer/ObjWriteManip.h"
 #include "TestWriter.h"
 
 using namespace xobj;
 using ::testing::_;
 using ::testing::StrEq;
 using ::testing::InSequence;
-ObjWriteManip gObjWriteManip;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,7 +56,7 @@ ObjWriteManip gObjWriteManip;
 template<typename T>
 std::string strAttrResult(const T & attr) {
     TestWriter w;
-	w.printLine(attr.objStr());
+    w.printLine(attr.objStr());
     if (!w.mResult.empty()) {
         w.mResult.pop_back(); // remove '\n'
     }
@@ -72,13 +69,13 @@ std::string strAttrResult(const T & attr) {
 
 TEST(TestAttributesWrite, default) {
     MockWriter writer;
-    ObjWriteAttr attrWriter(&gObjWriteManip);
+    ObjWriteAttr attrWriter;
     ObjMesh main1;
     ObjMesh main2;
 
     EXPECT_CALL(writer, printLine(_)).Times(0);
-    attrWriter.write(&writer, &main1);
-    attrWriter.write(&writer, &main2);
+    attrWriter.writeObjAttr(&writer, &main1);
+    attrWriter.writeObjAttr(&writer, &main2);
 }
 
 /**************************************************************************************************/
@@ -87,7 +84,7 @@ TEST(TestAttributesWrite, default) {
 
 TEST(TestAttributesWrite, boolean_case1) {
     MockWriter writer;
-    ObjWriteAttr attrWriter(&gObjWriteManip);
+    ObjWriteAttr attrWriter;
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -118,15 +115,15 @@ TEST(TestAttributesWrite, boolean_case1) {
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
-    attrWriter.write(&writer, &main1);
-    attrWriter.write(&writer, &main2);
-    attrWriter.write(&writer, &main3);
-    ASSERT_EQ(6, attrWriter.count());
+    attrWriter.writeObjAttr(&writer, &main1);
+    attrWriter.writeObjAttr(&writer, &main2);
+    attrWriter.writeObjAttr(&writer, &main3);
+    ASSERT_EQ(std::make_tuple(0, 6, 0), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, boolean_case2) {
     MockWriter writer;
-    ObjWriteAttr attrWriter(&gObjWriteManip);
+    ObjWriteAttr attrWriter;
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -157,15 +154,15 @@ TEST(TestAttributesWrite, boolean_case2) {
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
-    attrWriter.write(&writer, &main1);
-    attrWriter.write(&writer, &main2);
-    attrWriter.write(&writer, &main3);
-    ASSERT_EQ(6, attrWriter.count());
+    attrWriter.writeObjAttr(&writer, &main1);
+    attrWriter.writeObjAttr(&writer, &main2);
+    attrWriter.writeObjAttr(&writer, &main3);
+    ASSERT_EQ(std::make_tuple(0, 6, 0), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, boolean_case3) {
     MockWriter writer;
-    ObjWriteAttr attrWriter(&gObjWriteManip);
+    ObjWriteAttr attrWriter;
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -190,15 +187,15 @@ TEST(TestAttributesWrite, boolean_case3) {
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
 
-    attrWriter.write(&writer, &main1);
-    attrWriter.write(&writer, &main2);
-    attrWriter.write(&writer, &main3);
-    ASSERT_EQ(2, attrWriter.count());
+    attrWriter.writeObjAttr(&writer, &main1);
+    attrWriter.writeObjAttr(&writer, &main2);
+    attrWriter.writeObjAttr(&writer, &main3);
+    ASSERT_EQ(std::make_tuple(0, 2, 0), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, boolean_case4) {
     MockWriter writer;
-    ObjWriteAttr attrWriter(&gObjWriteManip);
+    ObjWriteAttr attrWriter;
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -228,15 +225,15 @@ TEST(TestAttributesWrite, boolean_case4) {
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_SHADOW))).Times(1);
 
-    attrWriter.write(&writer, &main1);
-    attrWriter.write(&writer, &main2);
-    attrWriter.write(&writer, &main3);
-    ASSERT_EQ(6, attrWriter.count());
+    attrWriter.writeObjAttr(&writer, &main1);
+    attrWriter.writeObjAttr(&writer, &main2);
+    attrWriter.writeObjAttr(&writer, &main3);
+    ASSERT_EQ(std::make_tuple(0, 6, 0), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, boolean_case5) {
     MockWriter writer;
-    ObjWriteAttr attrWriter(&gObjWriteManip);
+    ObjWriteAttr attrWriter;
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -266,15 +263,15 @@ TEST(TestAttributesWrite, boolean_case5) {
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_SHADOW))).Times(1);
 
-    attrWriter.write(&writer, &main1);
-    attrWriter.write(&writer, &main2);
-    attrWriter.write(&writer, &main3);
-    ASSERT_EQ(6, attrWriter.count());
+    attrWriter.writeObjAttr(&writer, &main1);
+    attrWriter.writeObjAttr(&writer, &main2);
+    attrWriter.writeObjAttr(&writer, &main3);
+    ASSERT_EQ(std::make_tuple(0, 6, 0), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, boolean_case6) {
     MockWriter writer;
-    ObjWriteAttr attrWriter(&gObjWriteManip);
+    ObjWriteAttr attrWriter;
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -311,15 +308,15 @@ TEST(TestAttributesWrite, boolean_case6) {
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_SHADOW))).Times(1);
 
-    attrWriter.write(&writer, &main1);
-    attrWriter.write(&writer, &main2);
-    attrWriter.write(&writer, &main3);
-    ASSERT_EQ(10, attrWriter.count());
+    attrWriter.writeObjAttr(&writer, &main1);
+    attrWriter.writeObjAttr(&writer, &main2);
+    attrWriter.writeObjAttr(&writer, &main3);
+    ASSERT_EQ(std::make_tuple(0, 10, 0), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, boolean_case7) {
     MockWriter writer;
-    ObjWriteAttr attrWriter(&gObjWriteManip);
+    ObjWriteAttr attrWriter;
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -355,10 +352,10 @@ TEST(TestAttributesWrite, boolean_case7) {
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
-    attrWriter.write(&writer, &main1);
-    attrWriter.write(&writer, &main2);
-    attrWriter.write(&writer, &main3);
-    ASSERT_EQ(10, attrWriter.count());
+    attrWriter.writeObjAttr(&writer, &main1);
+    attrWriter.writeObjAttr(&writer, &main2);
+    attrWriter.writeObjAttr(&writer, &main3);
+    ASSERT_EQ(std::make_tuple(0, 10, 0), attrWriter.count());
 }
 
 /**************************************************************************************************/
@@ -367,7 +364,7 @@ TEST(TestAttributesWrite, boolean_case7) {
 
 TEST(TestAttributesWrite, parameterized_case1) {
     MockWriter writer;
-    ObjWriteAttr attrWriter(&gObjWriteManip);
+    ObjWriteAttr attrWriter;
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -395,16 +392,16 @@ TEST(TestAttributesWrite, parameterized_case1) {
     EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
 
     // enable
-    attrWriter.write(&writer, &main1);
+    attrWriter.writeObjAttr(&writer, &main1);
     // disable
-    attrWriter.write(&writer, &main2);
-    attrWriter.write(&writer, &main3);
-    ASSERT_EQ(12, attrWriter.count());
+    attrWriter.writeObjAttr(&writer, &main2);
+    attrWriter.writeObjAttr(&writer, &main3);
+    ASSERT_EQ(std::make_tuple(0, 12, 0), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, parameterized_case2) {
     MockWriter writer;
-    ObjWriteAttr attrWriter(&gObjWriteManip);
+    ObjWriteAttr attrWriter;
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -446,17 +443,17 @@ TEST(TestAttributesWrite, parameterized_case2) {
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_3))))).Times(1);
 
     // enable
-    attrWriter.write(&writer, &main1);
+    attrWriter.writeObjAttr(&writer, &main1);
     // disable
-    attrWriter.write(&writer, &main2);
+    attrWriter.writeObjAttr(&writer, &main2);
     // enable
-    attrWriter.write(&writer, &main3);
-    ASSERT_EQ(18, attrWriter.count());
+    attrWriter.writeObjAttr(&writer, &main3);
+    ASSERT_EQ(std::make_tuple(0, 18, 0), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, parameterized_case3) {
     MockWriter writer;
-    ObjWriteAttr attrWriter(&gObjWriteManip);
+    ObjWriteAttr attrWriter;
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -491,17 +488,17 @@ TEST(TestAttributesWrite, parameterized_case3) {
     EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
 
     // enable
-    attrWriter.write(&writer, &main1);
+    attrWriter.writeObjAttr(&writer, &main1);
     // equals
-    attrWriter.write(&writer, &main2);
+    attrWriter.writeObjAttr(&writer, &main2);
     // disable
-    attrWriter.write(&writer, &main3);
-    ASSERT_EQ(12, attrWriter.count());
+    attrWriter.writeObjAttr(&writer, &main3);
+    ASSERT_EQ(std::make_tuple(0, 12, 0), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, parameterized_case4) {
     MockWriter writer;
-    ObjWriteAttr attrWriter(&gObjWriteManip);
+    ObjWriteAttr attrWriter;
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -543,17 +540,17 @@ TEST(TestAttributesWrite, parameterized_case4) {
     EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
 
     // enable
-    attrWriter.write(&writer, &main1);
+    attrWriter.writeObjAttr(&writer, &main1);
     // NOT equals
-    attrWriter.write(&writer, &main2);
+    attrWriter.writeObjAttr(&writer, &main2);
     // disable
-    attrWriter.write(&writer, &main3);
-    ASSERT_EQ(18, attrWriter.count());
+    attrWriter.writeObjAttr(&writer, &main3);
+    ASSERT_EQ(std::make_tuple(0, 18, 0), attrWriter.count());
 }
 
 TEST(TestAttributesWrite, parameterized_case5) {
     MockWriter writer;
-    ObjWriteAttr attrWriter(&gObjWriteManip);
+    ObjWriteAttr attrWriter;
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -580,12 +577,12 @@ TEST(TestAttributesWrite, parameterized_case5) {
     EXPECT_CALL(writer, printLine(StrEq(AttrLightLevel::objDisableStr()))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
 
-    attrWriter.write(&writer, &main1);
+    attrWriter.writeObjAttr(&writer, &main1);
     // enable
-    attrWriter.write(&writer, &main2);
+    attrWriter.writeObjAttr(&writer, &main2);
     // disable
-    attrWriter.write(&writer, &main3);
-    ASSERT_EQ(12, attrWriter.count());
+    attrWriter.writeObjAttr(&writer, &main3);
+    ASSERT_EQ(std::make_tuple(0, 12, 0), attrWriter.count());
 }
 
 /**************************************************************************************************/

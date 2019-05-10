@@ -75,6 +75,8 @@ std::size_t writeGlobAttrT(AbstractWriter * writer, const T & attr) {
 
 void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
     assert(obj);
+    assert(writer);
+	mWriter = writer;
 
     const auto writeBool = [&](const char * inAttr, const bool inState) {
         if (inState) {

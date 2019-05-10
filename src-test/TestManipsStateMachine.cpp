@@ -29,10 +29,7 @@
 
 #include <gtest/gtest.h>
 
-#include "converters/ObjAttrString.h"
-
 #include "MockIWriter.h"
-#include "io/writer/ObjWriteManip.h"
 #include "io/writer/ObjWriteAttr.h"
 #include "common/AttributeNames.h"
 
@@ -85,8 +82,7 @@ public:
     ManipsStates(const ManipsStates &) = delete;
     ManipsStates & operator =(const ManipsStates &) = delete;
 
-    ManipsStates()
-        : mObjWriteAttr(&mObjWriteManip) {
+    ManipsStates() {
         mObjMesh1.setObjectName(TOTEXT(mObjMesh1));
         mObjMesh2.setObjectName(TOTEXT(mObjMesh2));
         mObjMesh3.setObjectName(TOTEXT(mObjMesh3));
@@ -112,11 +108,9 @@ public:
      * \param mesh 
      */
     void processMesh(AbstractWriter * writer, ObjMesh & mesh) {
-        mObjWriteAttr.write(writer, &mesh);
-        mObjWriteManip.write(writer, &mesh);
+        mObjWriteAttr.writeObjAttr(writer, &mesh);
     }
 
-    ObjWriteManip mObjWriteManip;
     ObjWriteAttr mObjWriteAttr;
 
     ObjMesh mObjMesh1;
@@ -143,7 +137,7 @@ TEST_F(ManipsStates, no_manips) {
     MockWriter writer;
     EXPECT_CALL(writer, printLine(_)).Times(0);
     processMeshes(&writer);
-    ASSERT_EQ(0, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 0), mObjWriteAttr.count());
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -179,7 +173,7 @@ TEST_F(ManipsStates, one_manip) {
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
+    ASSERT_EQ(std::make_tuple(0, 0, count + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -211,7 +205,7 @@ TEST_F(ManipsStates, two_manips_with_the_same_vals) {
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
+    ASSERT_EQ(std::make_tuple(0, 0, count + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -243,7 +237,7 @@ TEST_F(ManipsStates, three_manips_with_the_same_vals) {
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
+    ASSERT_EQ(std::make_tuple(0, 0, count + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -272,7 +266,7 @@ TEST_F(ManipsStates, four_manips_with_the_same_vals) {
 
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, count), mObjWriteAttr.count());
 }
 
 /* ================================================ *\
@@ -319,7 +313,7 @@ TEST_F(ManipsStates, four_manips_with_the_different_vals) {
     EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w4.mResult))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count1 + count2 + count3 + count4, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, count1 + count2 + count3 + count4), mObjWriteAttr.count());
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -365,7 +359,7 @@ TEST_F(ManipsStates, four_different_manips) {
     EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w4.mResult))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count1 + count2 + count3 + count4, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, count1 + count2 + count3 + count4), mObjWriteAttr.count());
 }
 
 /* ================================================ *\
@@ -405,7 +399,7 @@ TEST_F(ManipsStates, three_different_manips) {
     EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count1 + count2 + count3 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
+    ASSERT_EQ(std::make_tuple(0, 0, count1 + count2 + count3 + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -442,7 +436,7 @@ TEST_F(ManipsStates, two_the_same_and_two_different_manips) {
     EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w4.mResult))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count1 + count3 + count4, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, count1 + count3 + count4), mObjWriteAttr.count());
 }
 
 /* ================================================ *\
@@ -482,7 +476,7 @@ TEST_F(ManipsStates, one_manip_and_two_different_manips) {
     EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w4.mResult))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count1 + count3 + count4 + 1, mObjWriteManip.count()); //  + ATTR_MANIP_NONE
+    ASSERT_EQ(std::make_tuple(0, 0, count1 + count3 + count4 + 1), mObjWriteAttr.count()); //  + ATTR_MANIP_NONE
 }
 
 /* ================================================ *\
@@ -522,7 +516,7 @@ TEST_F(ManipsStates, two_different_manips) {
     EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
-    ASSERT_EQ(count1 + count3 + 1 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
+    ASSERT_EQ(std::make_tuple(0, 0, count1 + count3 + 1 + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
 }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -556,7 +550,7 @@ TEST_F(ManipsStates, manip_panel_relation_simple_case2) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(0, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 0), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -615,7 +609,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case1) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
-    ASSERT_EQ(1 + 1, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -658,7 +652,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case2) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
-    ASSERT_EQ(1 + 1, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -699,7 +693,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case3) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(0, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 0), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -744,7 +738,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case4) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(1, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -786,7 +780,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case5) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
-    ASSERT_EQ(1 + 1, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -826,7 +820,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_1) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
-    ASSERT_EQ(1, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -872,7 +866,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_2) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
-    ASSERT_EQ(1 + 1, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -917,7 +911,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_4) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(2, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 2), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -958,7 +952,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_5) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(0, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 0), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -1004,7 +998,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_6) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(2, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 2), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -1050,7 +1044,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_7) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(1, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -1096,7 +1090,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_8) {
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
-    ASSERT_EQ(1, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -1164,7 +1158,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_1) {
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
-    ASSERT_EQ(3, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 3), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -1230,7 +1224,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_2) {
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
-    ASSERT_EQ(3, mObjWriteManip.count());
+    ASSERT_EQ(std::make_tuple(0, 0, 3), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -1286,7 +1280,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_3) {
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
-    ASSERT_EQ(1 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
+    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
     //---------------------------
 }
 
@@ -1345,7 +1339,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_4) {
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
-    ASSERT_EQ(1 + 1 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
+    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1 + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
     //---------------------------
 }
 
@@ -1405,7 +1399,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_5) {
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
-    ASSERT_EQ(1 + 1, mObjWriteManip.count()); // + ATTR_MANIP_NONE
+    ASSERT_EQ(std::make_tuple(0, 0, 1 + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
     //---------------------------
 }
 

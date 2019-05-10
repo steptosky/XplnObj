@@ -31,6 +31,7 @@
 #include "xpln/obj/attributes/AttrPolyOffset.h"
 #include "common/AttributeNames.h"
 #include "converters/StringStream.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -52,10 +53,11 @@ std::string AttrPolyOffset::objDisableStr() {
     return outStr.str();
 }
 
-std::string AttrPolyOffset::objStr() const {
+std::size_t AttrPolyOffset::printObj(AbstractWriter & writer) const {
     StringStream outStr;
     outStr << ATTR_POLY_OS << " " << offset();
-    return outStr.str();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

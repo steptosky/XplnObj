@@ -30,6 +30,7 @@
 #include "xpln/obj/attributes/AttrHard.h"
 #include "common/AttributeNames.h"
 #include "converters/StringStream.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -50,10 +51,11 @@ std::string AttrHard::objDisableStr() {
     return ATTR_NO_HARD;
 }
 
-std::string AttrHard::objStr() const {
+std::size_t AttrHard::printObj(AbstractWriter & writer) const {
     StringStream outStr;
     outStr << (isDeck() ? ATTR_HARD_DECK : ATTR_HARD) << " " << surface().toString();
-    return outStr.str();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

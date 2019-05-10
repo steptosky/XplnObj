@@ -35,6 +35,8 @@
 
 namespace xobj {
 
+class AbstractWriter;
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
@@ -103,11 +105,11 @@ public:
      */
     XpObjLib static std::string objDisableStr();
 
-	/*!
-	 * \note For internal use only.
-	 * \return String for obj format.
-	 */
-	XpObjLib std::string objStr() const;
+    /*!
+     * \note For internal use only.
+     * \copydoc AttrManipBase::printObj
+     */
+    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
 
     /// @}
     //-------------------------------------------------------------------------

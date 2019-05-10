@@ -33,6 +33,7 @@
 #include "xpln/obj/attributes/AttrShiny.h"
 #include "common/AttributeNames.h"
 #include "converters/StringStream.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -64,10 +65,11 @@ std::string AttrShiny::objDisableStr() {
     return outStr.str();
 }
 
-std::string AttrShiny::objStr() const {
+std::size_t AttrShiny::printObj(AbstractWriter & writer) const {
     StringStream outStr;
     outStr << ATTR_SHINY_RAT << " " << ratio();
-    return outStr.str();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

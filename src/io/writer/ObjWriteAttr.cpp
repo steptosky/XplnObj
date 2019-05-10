@@ -49,7 +49,7 @@ namespace xobj {
 
 void ObjWriteAttr::reset() {
     mState.reset();
-	mGlobNum = 0;
+    mGlobNum = 0;
     mAttrNum = 0;
     mManipNum = 0;
     mObj = nullptr;
@@ -76,7 +76,7 @@ std::size_t writeGlobAttrT(AbstractWriter * writer, const T & attr) {
 void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
     assert(obj);
     assert(writer);
-	mWriter = writer;
+    mWriter = writer;
 
     const auto writeBool = [&](const char * inAttr, const bool inState) {
         if (inState) {
@@ -146,11 +146,6 @@ void ObjWriteAttr::writeAttr() {
         mWriter->printLine(attr);
     };
 
-    const auto writeAttr = [&](const std::string & attr) {
-        ++mAttrNum;
-        mWriter->printLine(attr);
-    };
-
     const auto & attrs = mObj->pAttr;
 
     //-------------------------------------------------------------------------
@@ -174,35 +169,66 @@ void ObjWriteAttr::writeAttr() {
     //-------------------------------------------------------------------------
 
     ObjWriteState::processAttr(attrs.mHard, mState.mObject.mHard, [&](const bool enable) {
-        writeAttr(enable ? attrs.mHard->objStr() : AttrHard::objDisableStr());
+        if (enable) {
+            mAttrNum += attrs.mHard->printObj(*mWriter);
+        }
+        else {
+            mWriter->printLine(AttrHard::objDisableStr());
+            ++mAttrNum;
+        }
     });
 
     ObjWriteState::processAttr(attrs.mShiny, mState.mObject.mShiny, [&](const bool enable) {
-        writeAttr(enable ? attrs.mShiny->objStr() : AttrShiny::objDisableStr());
+        if (enable) {
+            mAttrNum += attrs.mShiny->printObj(*mWriter);
+        }
+        else {
+            mWriter->printLine(AttrShiny::objDisableStr());
+            ++mAttrNum;
+        }
     });
 
     ObjWriteState::processAttr(attrs.mBlend, mState.mObject.mBlend, [&](const bool enable) {
-        writeAttr(enable ? attrs.mBlend->objStr() : AttrBlend::objDisableStr());
+        if (enable) {
+            mAttrNum += attrs.mBlend->printObj(*mWriter);
+        }
+        else {
+            mWriter->printLine(AttrBlend::objDisableStr());
+            ++mAttrNum;
+        }
     });
 
     ObjWriteState::processAttr(attrs.mPolyOffset, mState.mObject.mPolyOffset, [&](const bool enable) {
-        writeAttr(enable ? attrs.mPolyOffset->objStr() : AttrPolyOffset::objDisableStr());
+        if (enable) {
+            mAttrNum += attrs.mPolyOffset->printObj(*mWriter);
+        }
+        else {
+            mWriter->printLine(AttrPolyOffset::objDisableStr());
+            ++mAttrNum;
+        }
     });
 
     ObjWriteState::processAttr(attrs.mLightLevel, mState.mObject.mLightLevel, [&](const bool enable) {
-        writeAttr(enable ? attrs.mLightLevel->objStr() : AttrLightLevel::objDisableStr());
+        if (enable) {
+            mAttrNum += attrs.mLightLevel->printObj(*mWriter);
+        }
+        else {
+            mWriter->printLine(AttrLightLevel::objDisableStr());
+            ++mAttrNum;
+        }
     });
 
     ObjWriteState::processAttr(attrs.mCockpit, mState.mObject.mCockpit, [&](const bool enable) {
         if (enable) {
             mIsPanelManip = true;
             mState.mObject.mManipContainer = ManipContainer(new AttrManipPanel(*attrs.mCockpit));
-            writeAttr(attrs.mCockpit->objStr());
+            mAttrNum += attrs.mCockpit->printObj(*mWriter);
         }
         else {
             mIsPanelManip = false;
             mState.mObject.mManipContainer = std::nullopt;
-            writeAttr(AttrCockpit::objDisableStr());
+            mWriter->printLine(AttrCockpit::objDisableStr());
+            ++mAttrNum;
         }
     });
 
@@ -290,10 +316,10 @@ bool ObjWriteAttr::checkManip(AttrManipBase * manip) const {
 
 void ObjWriteAttr::writeManip() {
     const auto & attrs = mObj->pAttr;
-	//------------------------------
-	// Checks the order of processing, the attributes must be processed before the manipulators.
-	assert(mIsPanelManip == mObj->pAttr.mCockpit.has_value());
-	//------------------------------
+    //------------------------------
+    // Checks the order of processing, the attributes must be processed before the manipulators.
+    assert(mIsPanelManip == mObj->pAttr.mCockpit.has_value());
+    //------------------------------
     auto manipContainer = attrs.mManipContainer;
     if (manipContainer && manipContainer->hasManip()) {
         if (!checkManip(manipContainer->mManip.get())) {

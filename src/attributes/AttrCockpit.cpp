@@ -30,6 +30,7 @@
 #include "xpln/obj/attributes/AttrCockpit.h"
 #include "common/AttributeNames.h"
 #include "converters/StringStream.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -53,9 +54,10 @@ std::string AttrCockpit::objDisableStr() {
     return ATTR_NO_COCKPIT;
 }
 
-std::string AttrCockpit::objStr() const {
+std::size_t AttrCockpit::printObj(AbstractWriter & writer) const {
     if (type() == cockpit) {
-        return ATTR_COCKPIT;
+        writer.printLine(ATTR_COCKPIT);
+        return 1;
     }
     StringStream outStr;
     if (type() == region_1) {
@@ -77,7 +79,8 @@ std::string AttrCockpit::objStr() const {
                 << " " << lightingChannel()
                 << " " << autoAdjust();
     }
-    return outStr.str();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

@@ -31,6 +31,7 @@
 #include "xpln/obj/attributes/AttrLightLevel.h"
 #include "common/AttributeNames.h"
 #include "converters/StringStream.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -52,13 +53,14 @@ std::string AttrLightLevel::objDisableStr() {
     return ATTR_LIGHT_LEVEL_RESET;
 }
 
-std::string AttrLightLevel::objStr() const {
+std::size_t AttrLightLevel::printObj(AbstractWriter & writer) const {
     StringStream outStr;
     outStr << ATTR_LIGHT_LEVEL;
     outStr << " " << val1();
     outStr << " " << val2();
     outStr << " " << dataref();
-    return outStr.str();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

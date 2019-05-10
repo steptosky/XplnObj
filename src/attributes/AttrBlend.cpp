@@ -33,6 +33,7 @@
 #include "xpln/obj/attributes/AttrBlend.h"
 #include "common/AttributeNames.h"
 #include "converters/StringStream.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -73,7 +74,7 @@ std::string AttrBlend::objDisableStr() {
     return outStr.str();
 }
 
-std::string AttrBlend::objStr() const {
+std::size_t AttrBlend::printObj(AbstractWriter & writer) const {
     StringStream outStr;
     if (type() == no_blend) {
         outStr << ATTR_NO_BLEND;
@@ -85,7 +86,8 @@ std::string AttrBlend::objStr() const {
         outStr << ATTR_BLEND;
     }
     outStr << " " << ratio();
-    return outStr.str();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

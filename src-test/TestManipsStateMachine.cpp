@@ -65,7 +65,7 @@ using ::testing::InSequence;
 template<typename T>
 std::string strAttrResult(const T & attr) {
     TestWriter w;
-    w.printLine(attr.objStr());
+	attr.printObj(w);
     if (!w.mResult.empty()) {
         w.mResult.pop_back(); // remove '\n'
     }

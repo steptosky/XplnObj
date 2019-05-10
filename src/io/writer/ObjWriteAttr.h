@@ -30,6 +30,7 @@
 */
 
 #include <cstdint>
+#include <cassert>
 #include <tuple>
 #include "xpln/obj/attributes/AttrSet.h"
 #include "xpln/obj/ObjMesh.h"

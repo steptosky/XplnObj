@@ -31,6 +31,7 @@
 
 #include "ObjWriteGeometry.h"
 #include "converters/ObjString.h"
+#include "converters/StringStream.h"
 
 #include "xpln/obj/ObjMain.h"
 #include "xpln/obj/ObjMesh.h"

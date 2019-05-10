@@ -31,7 +31,6 @@
 
 #include "ObjWriteGeometry.h"
 #include "converters/ObjString.h"
-#include "converters/StringStream.h"
 
 #include "xpln/obj/ObjMain.h"
 #include "xpln/obj/ObjMesh.h"
@@ -42,6 +41,7 @@
 #include "xpln/obj/ObjLightParam.h"
 #include "xpln/obj/ObjLightSpillCust.h"
 #include "xpln/obj/ObjSmoke.h"
+#include "xpln/obj/ObjEmitter.h"
 
 #include "xpln/obj/IOStatistic.h"
 #include "xpln/obj/ExportOptions.h"
@@ -357,6 +357,18 @@ bool ObjWriteGeometry::printDummyObject(AbstractWriter & writer, const ObjAbstra
         //     ++mStat->mDummyObjCount;
         // }
         ++mStat->mDummyObjCount;
+        return true;
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------
+
+bool ObjWriteGeometry::printEmitterObject(AbstractWriter & writer, const ObjAbstract & objBase) const {
+    if (objBase.objType() == OBJ_PARTICLE_EMITTER) {
+        const auto & emitter = reinterpret_cast<const ObjEmitter&>(objBase);
+        printObj(emitter, writer, mOptions->isEnabled(eExportOptions::XOBJ_EXP_PARTICLE_EMITTER));
+        ++mStat->mEmitterObjCount;
         return true;
     }
     return false;

@@ -354,7 +354,12 @@ void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) 
             continue;
         }
 
-        mObjWriteGeometry.printLightPointObject(writer, *objBase);
+        if (mObjWriteGeometry.printLightPointObject(writer, *objBase)) {
+            mStatistic.mCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+            continue;
+        }
+
+        mObjWriteGeometry.printEmitterObject(writer, *objBase);
         mStatistic.mCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
 
         //--------------

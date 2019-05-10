@@ -78,6 +78,7 @@ public:
     bool printLineObject(AbstractWriter & writer, const ObjAbstract & objBase);
     bool printSmokeObject(AbstractWriter & writer, const ObjAbstract & objBase) const;
     bool printDummyObject(AbstractWriter & writer, const ObjAbstract & objBase) const;
+    bool printEmitterObject(AbstractWriter & writer, const ObjAbstract & objBase) const;
 
     void reset();
 

@@ -65,6 +65,7 @@ public:
     std::size_t mLightObjSpillCustCount; //!< Light spill custom objects count
     std::size_t mDummyObjCount;          //!< Dummy objects count
     std::size_t mSmokeObjCount;          //!< Dummy objects count
+    std::size_t mEmitterObjCount;        //!< Particle emitter objects count
 
     std::size_t mCustomLinesCount; //!< Count of lines that are printed before and after objects.
     std::size_t mGlobAttrCount;    //!< Global attributes count

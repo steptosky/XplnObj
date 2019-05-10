@@ -41,55 +41,45 @@ namespace xobj {
  * \details ATTR_LOD_draped
  * \ingroup Attributes
  */
-class AttrDrapedLod {
+class AttrDrapedLod final {
 public:
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrDrapedLod();
+    //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] distance 
-     */
-    XpObjLib AttrDrapedLod(float distance);
+    AttrDrapedLod() = default;
+
+    explicit AttrDrapedLod(const float distance)
+        : mDistance(distance) { }
+
+    AttrDrapedLod(const AttrDrapedLod &) = default;
+    AttrDrapedLod(AttrDrapedLod &&) = default;
 
     ~AttrDrapedLod() = default;
 
+    AttrDrapedLod & operator=(const AttrDrapedLod &) = default;
+    AttrDrapedLod & operator=(AttrDrapedLod &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
-
-    /*!
-     * \details Check whether the attribute is enabled. 
-     * \note All class's setters will enable this attribute.
-     */
-    XpObjLib operator bool() const;
-
-    /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note All class's setters will enable this attribute.
-     * \param [in] state 
-     */
-    XpObjLib void setEnabled(bool state);
-
-    //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrDrapedLod & other) const;
-    XpObjLib bool operator!=(const AttrDrapedLod & other) const;
+    bool operator!=(const AttrDrapedLod & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setDistance(float distance);
-    XpObjLib float distance() const;
+    void setDistance(const float distance) { mDistance = distance; }
+    float distance() const { return mDistance; }
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    float mDistance;
-    bool mIsEnabled : 1;
+    float mDistance = 1000.0f;
 
 };
 

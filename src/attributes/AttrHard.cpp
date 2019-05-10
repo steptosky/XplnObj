@@ -28,63 +28,19 @@
 */
 
 #include "xpln/obj/attributes/AttrHard.h"
-#include "io/writer/AbstractWriter.h"
 #include "common/AttributeNames.h"
+#include "converters/StringStream.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
-
-/**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrHard::AttrHard(const ESurface surface, const bool deck)
-    : mESurface(surface),
-      mIsDeck(deck),
-      mIsEnabled(true) { }
-
-AttrHard::AttrHard()
-    : mESurface(ESurface::eId::none),
-      mIsDeck(false),
-      mIsEnabled(false) { }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrHard::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrHard::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrHard::operator==(const AttrHard & other) const {
-    return (mIsEnabled == other.mIsEnabled &&
-            mIsDeck == other.mIsDeck &&
-            mESurface == other.mESurface);
-}
-
-bool AttrHard::operator!=(const AttrHard & other) const {
-    return !operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrHard::setESurface(const ESurface & surface, const bool deck) {
-    mIsEnabled = true;
-    mESurface = surface;
-    mIsDeck = deck;
-}
-
-const ESurface & AttrHard::surface() const {
-    return mESurface;
-}
-
-bool AttrHard::isDeck() const {
-    return mIsDeck;
+    return mIsDeck == other.mIsDeck &&
+           mESurface == other.mESurface;
 }
 
 /**************************************************************************************************/
@@ -93,6 +49,13 @@ bool AttrHard::isDeck() const {
 
 std::string AttrHard::objDisableStr() {
     return ATTR_NO_HARD;
+}
+
+std::size_t AttrHard::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << (isDeck() ? ATTR_HARD_DECK : ATTR_HARD) << " " << surface().toString();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

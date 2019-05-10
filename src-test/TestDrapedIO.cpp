@@ -53,8 +53,8 @@ TEST(Draped, DISABLED_io) {
     lod2.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l2-m1"));
     lod2.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l2-m2"));
 
-    mainOut.pDraped.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("d1"));
-    mainOut.pDraped.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("d2"));
+    mainOut.mDraped.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("d1"));
+    mainOut.mDraped.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("d2"));
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(mainOut.exportObj(expContext));
@@ -77,7 +77,7 @@ TEST(Draped, DISABLED_io) {
 
     EXPECT_EQ(2, lodIn1->transform().objList().size());
     EXPECT_EQ(2, lodIn2->transform().objList().size());
-    EXPECT_EQ(2, mainIn.pDraped.transform().objList().size());
+    EXPECT_EQ(2, mainIn.mDraped.transform().objList().size());
 }
 
 /**************************************************************************************************/

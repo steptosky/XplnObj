@@ -29,88 +29,92 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <cstdint>
-#include "xpln/Export.h"
+#include <memory>
+#include "AttrManipBase.h"
 
 namespace xobj {
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
 /*!
- * \details COCKPIT_REGION
- * \ingroup Attributes
+ * \details This class is container for base manipulator.
+ *          It is used for unification internal algorithms.
  */
-class AttrCockpitRegion final {
+class ManipContainer final {
 public:
 
     //-------------------------------------------------------------------------
     /// @{
 
-    enum eNum {
-        r1,
-        r2,
-        r3,
-        r4
-    };
+    explicit ManipContainer(AttrManipBase * manip)
+        : mManip(manip) {}
+
+    ManipContainer(const ManipContainer & copy) { *this = copy; }
+    ManipContainer(ManipContainer &&) = default;
+
+    ~ManipContainer() = default;
+
+    ManipContainer & operator=(const ManipContainer & copy) {
+        if (copy.mManip) {
+            mManip = std::unique_ptr<AttrManipBase>(copy.mManip->clone());
+        }
+        return *this;
+    }
+
+    ManipContainer & operator=(ManipContainer &&) = default;
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
-    AttrCockpitRegion() = default;
+    bool operator!=(const ManipContainer & other) const {
+        return !(*this == other);
+    }
 
-    AttrCockpitRegion(const std::int32_t left, const std::int32_t bottom,
-                      const std::int32_t right, const std::int32_t top)
-        : mLeft(left),
-          mBottom(bottom),
-          mRight(right),
-          mTop(top) { }
+    bool operator==(const ManipContainer & other) const {
+        if (mManip && other.mManip) {
+            return mManip->equals(other.mManip.get());
+        }
+        return !mManip && !other.mManip;
+    }
 
-    AttrCockpitRegion(const AttrCockpitRegion &) = default;
-    AttrCockpitRegion(AttrCockpitRegion &&) = default;
+    bool hasManip() const {
+        return mManip != nullptr;
+    }
 
-    ~AttrCockpitRegion() = default;
-
-    AttrCockpitRegion & operator=(const AttrCockpitRegion &) = default;
-    AttrCockpitRegion & operator=(AttrCockpitRegion &&) = default;
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    XpObjLib bool operator==(const AttrCockpitRegion & other) const;
-    bool operator!=(const AttrCockpitRegion & other) const { return !operator==(other); }
+    void setManip(AttrManipBase * manip) {
+        mManip = std::unique_ptr<AttrManipBase>(manip);
+    }
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
-    void setLeft(const std::int32_t left) { mLeft = left; }
-    void setBottom(const std::int32_t bottom) { mBottom = bottom; }
-    void setRight(const std::int32_t right) { mRight = right; }
-    void setTop(const std::int32_t top) { mTop = top; }
-
-    std::int32_t left() const { return mLeft; }
-    std::int32_t bottom() const { return mBottom; }
-    std::int32_t right() const { return mRight; }
-    std::int32_t top() const { return mTop; }
+    /*!
+     * \note For internal use only.
+     * \return String for obj format.
+     */
+    std::size_t printObj(AbstractWriter & writer) const {
+        if (mManip) {
+            return mManip->printObj(writer);
+        }
+        return 0;
+    }
 
     /// @}
     //-------------------------------------------------------------------------
 
-private:
+    std::unique_ptr<AttrManipBase> mManip;
 
-    std::int32_t mLeft = 0;
-    std::int32_t mBottom = 0;
-    std::int32_t mRight = 0;
-    std::int32_t mTop = 0;
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
+/********************************************************************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/********************************************************************************************************/
 
 }

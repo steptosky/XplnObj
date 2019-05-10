@@ -29,55 +29,18 @@
 
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrPolyOffset.h"
-#include "io/writer/AbstractWriter.h"
 #include "common/AttributeNames.h"
 #include "converters/StringStream.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
-
-/**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrPolyOffset::AttrPolyOffset(const float offset)
-    : mOffset(offset),
-      mIsEnabled(true) { }
-
-AttrPolyOffset::AttrPolyOffset()
-    : mOffset(0.0f),
-      mIsEnabled(false) { }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrPolyOffset::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrPolyOffset::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrPolyOffset::operator==(const AttrPolyOffset & other) const {
-    return (mIsEnabled == other.mIsEnabled && sts::isEqual(mOffset, other.mOffset, 0.01f));
-}
-
-bool AttrPolyOffset::operator!=(const AttrPolyOffset & other) const {
-    return !operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrPolyOffset::setOffset(const float offset) {
-    mIsEnabled = true;
-    mOffset = offset;
-}
-
-float AttrPolyOffset::offset() const {
-    return mOffset;
+    return sts::isEqual(mOffset, other.mOffset, 0.01f);
 }
 
 /**************************************************************************************************/
@@ -88,6 +51,13 @@ std::string AttrPolyOffset::objDisableStr() {
     StringStream outStr;
     outStr << ATTR_POLY_OS << " " << AttrPolyOffset().offset();
     return outStr.str();
+}
+
+std::size_t AttrPolyOffset::printObj(AbstractWriter & writer) const {
+    StringStream outStr;
+    outStr << ATTR_POLY_OS << " " << offset();
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

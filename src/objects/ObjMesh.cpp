@@ -38,8 +38,8 @@ namespace xobj {
 
 ObjMesh::ObjMesh(const ObjMesh & copy)
     : ObjAbstract(copy),
-      pVertices(copy.pVertices),
-      pFaces(copy.pFaces) {}
+      mVertices(copy.mVertices),
+      mFaces(copy.mFaces) {}
 
 ObjMesh::ObjMesh() {
     setObjectName("Obj Mesh");
@@ -52,30 +52,30 @@ ObjMesh::~ObjMesh() { }
 /**************************************************************************************************/
 
 void ObjMesh::attach(const ObjMesh & otherMesh) {
-    const size_t vCount = pVertices.size();
-    for (auto & currVert : otherMesh.pVertices) {
-        pVertices.emplace_back(currVert);
+    const size_t vCount = mVertices.size();
+    for (auto & currVert : otherMesh.mVertices) {
+        mVertices.emplace_back(currVert);
     }
-    for (auto & f : otherMesh.pFaces) {
-        pFaces.emplace_back(f.pV0 + vCount, f.pV1 + vCount, f.pV2 + vCount);
+    for (auto & f : otherMesh.mFaces) {
+        mFaces.emplace_back(f.mV0 + vCount, f.mV1 + vCount, f.mV2 + vCount);
     }
 }
 
 void ObjMesh::flipNormals() {
-    for (auto & vert : pVertices) {
-        vert.pNormal *= -1.0;
+    for (auto & vert : mVertices) {
+        vert.mNormal *= -1.0;
     }
-    for (auto & face : pFaces) {
-        std::swap(face.pV0, face.pV2);
+    for (auto & face : mFaces) {
+        std::swap(face.mV0, face.mV2);
     }
 }
 
 void ObjMesh::makeTwoSided() {
-    if (!mTwoSided) {
+    if (!mIsTwoSided) {
         ObjMesh copy(*this);
         copy.flipNormals();
         attach(copy);
-        mTwoSided = true;
+        mIsTwoSided = true;
     }
 }
 
@@ -84,9 +84,9 @@ void ObjMesh::makeTwoSided() {
 /**************************************************************************************************/
 
 void ObjMesh::applyTransform(const TMatrix & tm, const bool useParity) {
-    for (auto & curr : pVertices) {
-        tm.transformPoint(curr.pPosition);
-        tm.transformVector(curr.pNormal);
+    for (auto & curr : mVertices) {
+        tm.transformPoint(curr.mPosition);
+        tm.transformVector(curr.mNormal);
     }
 
     if (useParity && tm.parity()) {

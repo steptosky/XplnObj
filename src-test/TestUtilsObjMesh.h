@@ -52,29 +52,29 @@ public:
         auto * mesh = new ObjMesh();
         mesh->setObjectName(inName);
 
-        mesh->pVertices.emplace_back(ObjMesh::Vertex(Point3(0.0f, 0.0f, -50.0f),
+        mesh->mVertices.emplace_back(ObjMesh::Vertex(Point3(0.0f, 0.0f, -50.0f),
                                                      Point3(0.0f, 0.894427f, -0.447214f),
                                                      Point2(0.968750f, 0.500000f)));
-        inMtx.transformPoint(mesh->pVertices.back().pPosition);
-        inMtx.transformVector(mesh->pVertices.back().pNormal);
-        mesh->pVertices.emplace_back(ObjMesh::Vertex(Point3(-20.0f, 0.0f, 25.0f),
+        inMtx.transformPoint(mesh->mVertices.back().mPosition);
+        inMtx.transformVector(mesh->mVertices.back().mNormal);
+        mesh->mVertices.emplace_back(ObjMesh::Vertex(Point3(-20.0f, 0.0f, 25.0f),
                                                      Point3(-0.468997f, 0.783273f, 0.408075f),
                                                      Point2(0.031250f, 0.750000f)));
-        inMtx.transformPoint(mesh->pVertices.back().pPosition);
-        inMtx.transformVector(mesh->pVertices.back().pNormal);
-        mesh->pVertices.emplace_back(ObjMesh::Vertex(Point3(0.0f, 25.0f, 0.0f),
+        inMtx.transformPoint(mesh->mVertices.back().mPosition);
+        inMtx.transformVector(mesh->mVertices.back().mNormal);
+        mesh->mVertices.emplace_back(ObjMesh::Vertex(Point3(0.0f, 25.0f, 0.0f),
                                                      Point3(0.0f, 0.998791f, 0.049158f),
                                                      Point2(0.343750f, 0.500000f)));
-        inMtx.transformPoint(mesh->pVertices.back().pPosition);
-        inMtx.transformVector(mesh->pVertices.back().pNormal);
-        mesh->pVertices.emplace_back(ObjMesh::Vertex(Point3(20.0f, 0.0f, 25.0f),
+        inMtx.transformPoint(mesh->mVertices.back().mPosition);
+        inMtx.transformVector(mesh->mVertices.back().mNormal);
+        mesh->mVertices.emplace_back(ObjMesh::Vertex(Point3(20.0f, 0.0f, 25.0f),
                                                      Point3(0.468997f, 0.783273f, 0.408075f),
                                                      Point2(0.031250f, 0.250000f)));
-        inMtx.transformPoint(mesh->pVertices.back().pPosition);
-        inMtx.transformVector(mesh->pVertices.back().pNormal);
-        mesh->pFaces.emplace_back(ObjMesh::Face(2, 1, 0));
-        mesh->pFaces.emplace_back(ObjMesh::Face(2, 3, 1));
-        mesh->pFaces.emplace_back(ObjMesh::Face(2, 0, 3));
+        inMtx.transformPoint(mesh->mVertices.back().mPosition);
+        inMtx.transformVector(mesh->mVertices.back().mNormal);
+        mesh->mFaces.emplace_back(ObjMesh::Face(2, 1, 0));
+        mesh->mFaces.emplace_back(ObjMesh::Face(2, 3, 1));
+        mesh->mFaces.emplace_back(ObjMesh::Face(2, 0, 3));
         return mesh;
     }
 
@@ -111,30 +111,30 @@ public:
         ASSERT_TRUE(m1 != nullptr);
         ASSERT_TRUE(m2 != nullptr);
         ASSERT_STREQ(m1->objectName().c_str(), m2->objectName().c_str());
-        ASSERT_TRUE(m1->pVertices == m2->pVertices);
-        ASSERT_TRUE(m1->pFaces == m2->pFaces);
+        ASSERT_TRUE(m1->mVertices == m2->mVertices);
+        ASSERT_TRUE(m1->mFaces == m2->mFaces);
     }
 
     static ObjMesh * createObjMesh(const char * inName, float inValShift) {
         auto * outMesh = new ObjMesh();
 
-        outMesh->pVertices.emplace_back(ObjMesh::Vertex(Point3(-1.0f, -1.0f, 0.0f) + inValShift,
+        outMesh->mVertices.emplace_back(ObjMesh::Vertex(Point3(-1.0f, -1.0f, 0.0f) + inValShift,
                                                         Point3(1.0f, 0.0f, 0.0f),
                                                         Point2(0.0f, 0.0f) + inValShift));
 
-        outMesh->pVertices.emplace_back(ObjMesh::Vertex(Point3(1.0f, 1.0f, 0.0f) + inValShift,
+        outMesh->mVertices.emplace_back(ObjMesh::Vertex(Point3(1.0f, 1.0f, 0.0f) + inValShift,
                                                         Point3(0.0f, 1.0f, 0.0f),
                                                         Point2(0.0f, 0.0f) + inValShift));
 
-        outMesh->pVertices.emplace_back(ObjMesh::Vertex(Point3(1.0f, -1.0f, 0.0f) + inValShift,
+        outMesh->mVertices.emplace_back(ObjMesh::Vertex(Point3(1.0f, -1.0f, 0.0f) + inValShift,
                                                         Point3(0.0f, 0.0f, 1.0f),
                                                         Point2(0.0f, 0.0f) + inValShift));
 
-        outMesh->pVertices.emplace_back(ObjMesh::Vertex(Point3(-1.0f, 1.0f, 0.0f) + inValShift,
+        outMesh->mVertices.emplace_back(ObjMesh::Vertex(Point3(-1.0f, 1.0f, 0.0f) + inValShift,
                                                         Point3(0.0f, 1.0f, 0.0f),
                                                         Point2(0.0f, 0.0f) + inValShift));
-        outMesh->pFaces.push_back(MeshFace(0, 1, 2));
-        outMesh->pFaces.push_back(MeshFace(0, 2, 3));
+        outMesh->mFaces.push_back(MeshFace(0, 1, 2));
+        outMesh->mFaces.push_back(MeshFace(0, 2, 3));
         if (inName) {
             outMesh->setObjectName(inName);
         }
@@ -144,27 +144,27 @@ public:
     //-----------------------------------------------------
 
     static void compareMeshAttributes(const ObjMesh * m1, const ObjMesh * m2) {
-        ASSERT_EQ(m1->pAttr, m2->pAttr);
+        ASSERT_EQ(m1->mAttr, m2->mAttr);
     }
 
     static void compareMeshData(const ObjMesh * m1, const ObjMesh * m2) {
-        ASSERT_TRUE(m1->pVertices == m2->pVertices);
-        ASSERT_TRUE(m1->pFaces == m2->pFaces);
+        ASSERT_TRUE(m1->mVertices == m2->mVertices);
+        ASSERT_TRUE(m1->mFaces == m2->mFaces);
     }
 
     static ObjMesh * createObjMeshNotDefaultAttributes1(const char * inName, const float inValShift) {
         ObjMesh * outMesh = createObjMesh2StatesNotDefaultAttributes(inName, inValShift);
-        outMesh->pAttr.setBlend(AttrBlend(AttrBlend::no_blend, 0.2f));
-        outMesh->pAttr.setHard(AttrHard(ESurface(ESurface::concrete), true));
-        outMesh->pAttr.setCockpit(AttrCockpit(AttrCockpit::cockpit));
+        outMesh->mAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.2f);
+        outMesh->mAttr.mHard = AttrHard(ESurface(ESurface::concrete), true);
+        outMesh->mAttr.mCockpit = AttrCockpit(AttrCockpit::cockpit);
         return outMesh;
     }
 
     static ObjMesh * createObjMeshNotDefaultAttributes2(const char * inName, const float inValShift) {
         ObjMesh * outMesh = createObjMesh2StatesNotDefaultAttributes(inName, inValShift);
-        outMesh->pAttr.setBlend(AttrBlend(AttrBlend::shadow_blend, 0.2f));
-        outMesh->pAttr.setHard(AttrHard(ESurface(ESurface::concrete), false));
-        outMesh->pAttr.setCockpit(AttrCockpit(AttrCockpit::region_1));
+        outMesh->mAttr.mBlend = AttrBlend(AttrBlend::shadow_blend, 0.2f);
+        outMesh->mAttr.mHard = AttrHard(ESurface(ESurface::concrete), false);
+        outMesh->mAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
         return outMesh;
     }
 
@@ -172,14 +172,14 @@ private:
 
     static ObjMesh * createObjMesh2StatesNotDefaultAttributes(const char * inName, const float inValShift) {
         ObjMesh * outMesh = createObjMesh(inName, inValShift);
-        outMesh->pAttr.setDraw(false);
-        outMesh->pAttr.setCastShadow(false);
-        outMesh->pAttr.setSolidForCamera(true);
+        outMesh->mAttr.mIsDraw = false;
+        outMesh->mAttr.mIsCastShadow = false;
+        outMesh->mAttr.mIsSolidForCamera = true;
 
-        outMesh->pAttr.setPolyOffset(AttrPolyOffset(1.0f));
-        outMesh->pAttr.setShiny(AttrShiny(0.8f));
-        outMesh->pAttr.setLightLevel(AttrLightLevel(0.3f, 0.8f, "dataref"));
-        outMesh->pAttr.setCockpit(AttrCockpit(AttrCockpit::region_2));
+        outMesh->mAttr.mPolyOffset = AttrPolyOffset(1.0f);
+        outMesh->mAttr.mShiny = AttrShiny(0.8f);
+        outMesh->mAttr.mLightLevel = AttrLightLevel(0.3f, 0.8f, "dataref");
+        outMesh->mAttr.mCockpit = AttrCockpit(AttrCockpit::region_2);
         return outMesh;
     }
 

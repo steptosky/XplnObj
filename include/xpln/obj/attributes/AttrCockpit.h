@@ -47,7 +47,7 @@ class AbstractWriter;
  * \details ATTR_cockpit, ATTR_cockpit_region, ATTR_no_cockpit, ATTR_cockpit_device 
  * \ingroup Attributes
  */
-class AttrCockpit {
+class AttrCockpit final {
 public:
 
     //-------------------------------------------------------------------------
@@ -66,114 +66,48 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    /*!
-     * \details Constructor default
-     * \note Makes the disabled attribute.
-     */
-    AttrCockpit()
-        : mType(cockpit),
-          mIsEnabled(false) {}
+    AttrCockpit() = default;
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] type
-     */
     explicit AttrCockpit(const eType type)
-        : mType(type),
-          mIsEnabled(true) {}
+        : mType(type) {}
+
+    AttrCockpit(const AttrCockpit &) = default;
+    AttrCockpit(AttrCockpit &&) = default;
 
     ~AttrCockpit() = default;
 
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    /*!
-     * \details Check whether the attribute is enabled. 
-     * \note All class's setters will enable this attribute.
-     */
-    operator bool() const {
-        return mIsEnabled;
-    }
-
-    /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note All class's setters will enable this attribute.
-     * \param [in] state 
-     */
-    void setEnabled(const bool state) {
-        mIsEnabled = state;
-    }
+    AttrCockpit & operator=(const AttrCockpit &) = default;
+    AttrCockpit & operator=(AttrCockpit &&) = default;
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
     XpObjLib bool operator==(const AttrCockpit & other) const;
-
-    bool operator!=(const AttrCockpit & other) const {
-        return !operator==(other);
-    }
+    bool operator!=(const AttrCockpit & other) const { return !operator==(other); }
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
-    void setType(const eType type) {
-        mType = type;
-        mIsEnabled = true;
-    }
-
-    eType type() const {
-        return mType;
-    }
+    void setType(const eType type) { mType = type; }
+    eType type() const { return mType; }
 
     /// @}
     //-------------------------------------------------------------------------
     /// \name ATTR_cockpit_device
     /// @{
 
-    void setId(ECockpitDevice id) {
-        mIsEnabled = true;
-        mDevName = id.toString();
-    }
+    void setId(const ECockpitDevice id) { mDevName = id.toString(); }
+    void setName(const std::string & name) { mDevName = name; }
+    void setBus(const std::size_t index) { mDevBus = index; }
+    void setLightingChannel(const std::size_t index) { mDevLighting = index; }
+    void setAutoAdjust(const bool state) { mDevAutoAdjust = state; }
 
-    void setName(const std::string & name) {
-        mIsEnabled = true;
-        mDevName = name;
-    }
-
-    void setBus(const std::size_t index) {
-        mIsEnabled = true;
-        mDevBus = index;
-    }
-
-    void setLightingChannel(const std::size_t index) {
-        mIsEnabled = true;
-        mDevLighting = index;
-    }
-
-    void setAutoAdjust(const bool state) {
-        mIsEnabled = true;
-        mDevAutoAdjust = state;
-    }
-
-    const std::string & name() const {
-        return mDevName;
-    }
-
-    std::size_t bus() const {
-        return mDevBus;
-    }
-
-    std::size_t lightingChannel() const {
-        return mDevLighting;
-    }
-
-    bool autoAdjust() const {
-        return mDevAutoAdjust;
-    }
+    const std::string & name() const { return mDevName; }
+    std::size_t bus() const { return mDevBus; }
+    std::size_t lightingChannel() const { return mDevLighting; }
+    bool autoAdjust() const { return mDevAutoAdjust; }
 
     /// @}
     //-------------------------------------------------------------------------
@@ -188,6 +122,12 @@ public:
      */
     XpObjLib static std::string objDisableStr();
 
+    /*!
+     * \note For internal use only.
+     * \copydoc AttrManipBase::printObj
+     */
+    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
+
     /// @}
     //-------------------------------------------------------------------------
 
@@ -196,10 +136,8 @@ private:
     std::string mDevName;
     std::size_t mDevBus = 0;
     std::size_t mDevLighting = 0;
+    eType mType = cockpit;
     bool mDevAutoAdjust = false;
-
-    eType mType;
-    bool mIsEnabled : 1;
 
 };
 

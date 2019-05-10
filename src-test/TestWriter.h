@@ -30,6 +30,7 @@
 */
 
 #include <io/writer/AbstractWriter.h>
+#include <fstream>
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,6 +51,8 @@ public:
         }
     }
 
+    using AbstractWriter::printLine;
+
     TestWriter & clear() {
         mResult.clear();
         return *this;
@@ -59,6 +62,13 @@ public:
 
     std::string actualDataref(const std::string & dataref) override { return dataref; }
     std::string actualCommand(const std::string & command) override { return command; }
+
+    void dropToFile(const std::string & path = "writer-drop.obj") const {
+        std::ofstream file(path);
+        assert(file);
+        file << mResult;
+        file.close();
+    }
 
 private:
 

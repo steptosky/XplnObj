@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2019, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,7 +29,11 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <cstddef>
+#include <functional>
+#include "xpln/Export.h"
+#include "xpln/obj/attributes/AttrGlobSet.h"
+#include "xpln/obj/attributes/AttrDrapedSet.h"
+#include "xpln/obj/attributes/AttrSet.h"
 
 namespace xobj {
 
@@ -37,41 +41,72 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**********************************************************************************************************************/
 
-/*!
- * \details Representation Face of the mesh object
- * \ingroup Objects
- */
-class MeshFace {
+class ObjWriteState final {
 public:
 
-    typedef std::size_t value_type;
+    //-------------------------------------------------------------------------
+    /// @{
 
-    MeshFace() = default;
+    ObjWriteState() = default;
+    ObjWriteState(const ObjWriteState &) = default;
+    ObjWriteState(ObjWriteState &&) = delete;
 
-    MeshFace(const value_type v0, const value_type v1, const value_type v2)
-        : mV0(v0),
-          mV1(v1),
-          mV2(v2) {}
+    ~ObjWriteState() = default;
 
-    //--------------------------------------------------
+    ObjWriteState & operator=(const ObjWriteState &) = default;
+    ObjWriteState & operator=(ObjWriteState &&) = delete;
 
-    bool operator==(const MeshFace & other) const {
-        return mV0 == other.mV0 &&
-               mV1 == other.mV1 &&
-               mV2 == other.mV2;
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    XpObjLib static void processBool(bool newValue, bool & inOutStateValue,
+                                     const std::function<void(bool enable)> & switchFn);
+
+    template<typename T>
+    static void processAttr(const T & newValue, T & inOutStateValue,
+                            const std::function<void(bool enable)> & switchFn) {
+        if (newValue == inOutStateValue) {
+            return;
+        }
+
+        if (!inOutStateValue && newValue) {
+            inOutStateValue = newValue;
+            switchFn(true);
+            return;
+        }
+
+        if (inOutStateValue && !newValue) {
+            inOutStateValue = newValue;
+            switchFn(false);
+            return;
+        }
+
+        inOutStateValue = newValue;
+        switchFn(true);
     }
 
-    bool operator!=(const MeshFace & other) const {
-        return !this->operator==(other);
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    void reset() {
+        mGlobal.reset();
+        mDraped.reset();
+        mObject.reset();
     }
 
-    //--------------------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
-    value_type mV0 = 0;
-    value_type mV1 = 0;
-    value_type mV2 = 0;
+    AttrGlobSet mGlobal;
+    AttrDrapedSet mDraped;
+    AttrSet mObject;
 
-    //--------------------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
+
 };
 
 /**********************************************************************************************************************/

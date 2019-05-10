@@ -52,26 +52,26 @@ public:
 
     //-----------------------------------
 
-    std::size_t pMeshVerticesCount; //!< Mesh vertices count
-    std::size_t pMeshFacesCount;    //!< Mesh faces count (triangles)
-    std::size_t pLineVerticesCount; //!< Line vertices count
+    std::size_t mMeshVerticesCount; //!< Mesh vertices count
+    std::size_t mMeshFacesCount;    //!< Mesh faces count (triangles)
+    std::size_t mLineVerticesCount; //!< Line vertices count
 
-    std::size_t pMeshObjCount;           //!< Mesh objects count
-    std::size_t pLineObjCount;           //!< Line objects count
-    std::size_t pLightObjPointCount;     //!< Light named objects count
-    std::size_t pLightObjNamedCount;     //!< Light named objects count
-    std::size_t pLightObjCustomCount;    //!< Light custom objects count
-    std::size_t pLightObjParamCount;     //!< Light param objects count
-    std::size_t pLightObjSpillCustCount; //!< Light spill custom objects count
-    std::size_t pDummyObjCount;          //!< Dummy objects count
-    std::size_t pSmokeObjCount;          //!< Dummy objects count
+    std::size_t mMeshObjCount;           //!< Mesh objects count
+    std::size_t mLineObjCount;           //!< Line objects count
+    std::size_t mLightObjPointCount;     //!< Light named objects count
+    std::size_t mLightObjNamedCount;     //!< Light named objects count
+    std::size_t mLightObjCustomCount;    //!< Light custom objects count
+    std::size_t mLightObjParamCount;     //!< Light param objects count
+    std::size_t mLightObjSpillCustCount; //!< Light spill custom objects count
+    std::size_t mDummyObjCount;          //!< Dummy objects count
+    std::size_t mSmokeObjCount;          //!< Dummy objects count
 
-    std::size_t pCustomLinesCount; //!< Count of lines that are printed before and after objects.
-    std::size_t pGlobAttrCount;    //!< Global attributes count
-    std::size_t pTrisManipCount;   //!< Object manipulators count
-    std::size_t pTrisAttrCount;    //!< Object attributes count
+    std::size_t mCustomLinesCount; //!< Count of lines that are printed before and after objects.
+    std::size_t mGlobAttrCount;    //!< Global attributes count
+    std::size_t mTrisManipCount;   //!< Object manipulators count
+    std::size_t mTrisAttrCount;    //!< Object attributes count
 
-    std::size_t pAnimAttrCount;
+    std::size_t mAnimAttrCount;
 
     //------------------------------------------------------------
 

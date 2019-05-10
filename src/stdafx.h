@@ -51,6 +51,7 @@
 #include <algorithm>
 #include <cstring>
 #include <atomic>
+#include <optional>
 
 #include <iostream>
 #include <sstream>

@@ -45,14 +45,14 @@ class AnimTransKey {
 public:
 
     AnimTransKey()
-        : pDrfValue(0.0f) {}
+        : mDrfValue(0.0f) {}
 
     AnimTransKey(const float x, const float y, const float z, const float dataRefValue)
         : AnimTransKey(Point3(x, y, z), dataRefValue) {}
 
     AnimTransKey(const Point3 & pos, const float dataRefValue)
-        : pPosition(pos),
-          pDrfValue(dataRefValue) {}
+        : mPosition(pos),
+          mDrfValue(dataRefValue) {}
 
     //-----------------------------------------
 
@@ -65,14 +65,14 @@ public:
     //-----------------------------------------
 
     void reset() {
-        pPosition.clear();
-        pDrfValue = 0.0f;
+        mPosition.clear();
+        mDrfValue = 0.0f;
     }
 
     //-----------------------------------------
 
-    Point3 pPosition;
-    float pDrfValue;
+    Point3 mPosition;
+    float mDrfValue;
 
     //-----------------------------------------
 

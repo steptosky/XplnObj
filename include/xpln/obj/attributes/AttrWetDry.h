@@ -41,64 +41,52 @@ namespace xobj {
  * \details REQUIRE_WET/REQUIRE_DRY
  * \ingroup Attributes
  */
-class AttrWetDry {
+class AttrWetDry final {
 public:
 
     //-------------------------------------------------------------------------
+    /// @{
 
     enum eState {
         wet = 1,
         dry
     };
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrWetDry();
+    explicit AttrWetDry(const eState state = wet)
+        : mState(state) { }
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] state 
-     */
-    XpObjLib AttrWetDry(eState state);
+    AttrWetDry(const AttrWetDry &) = default;
+    AttrWetDry(AttrWetDry &&) = default;
 
     ~AttrWetDry() = default;
 
+    AttrWetDry & operator=(const AttrWetDry &) = default;
+    AttrWetDry & operator=(AttrWetDry &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
-
-    /*!
-     * \details Check whether the attribute is enabled. 
-     * \note All class's setters will enable this attribute.
-     */
-    XpObjLib operator bool() const;
-
-    /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note All class's setters will enable this attribute.
-     * \param [in] state 
-     */
-    XpObjLib void setEnabled(bool state);
-
-    //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrWetDry & other) const;
-    XpObjLib bool operator!=(const AttrWetDry & other) const;
+    bool operator!=(const AttrWetDry & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setState(eState state);
-    XpObjLib eState state() const;
+    void setState(const eState state) { mState = state; }
+    eState state() const { return mState; }
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    eState mState;
-    bool mIsEnabled : 1;
+    eState mState = wet;
 
 };
 

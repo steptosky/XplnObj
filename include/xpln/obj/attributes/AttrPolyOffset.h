@@ -44,52 +44,40 @@ class AbstractWriter;
  * \details ATTR_poly_os
  * \ingroup Attributes
  */
-class AttrPolyOffset {
+class AttrPolyOffset final {
 public:
 
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrPolyOffset();
+    explicit AttrPolyOffset(const float offset = 0.0f)
+        : mOffset(offset) { }
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] offset 
-     */
-    XpObjLib explicit AttrPolyOffset(float offset);
+    AttrPolyOffset(const AttrPolyOffset &) = default;
+    AttrPolyOffset(AttrPolyOffset &&) = default;
 
     ~AttrPolyOffset() = default;
 
+    AttrPolyOffset & operator=(const AttrPolyOffset &) = default;
+    AttrPolyOffset & operator=(AttrPolyOffset &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
-
-    /*!
-     * \details Check whether the attribute is enabled. 
-     * \note All class's setters will enable this attribute.
-     */
-    XpObjLib operator bool() const;
-
-    /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note All class's setters will enable this attribute.
-     * \param [in] state 
-     */
-    XpObjLib void setEnabled(bool state);
-
-    //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrPolyOffset & other) const;
-    XpObjLib bool operator!=(const AttrPolyOffset & other) const;
+    bool operator!=(const AttrPolyOffset & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setOffset(float offset);
-    XpObjLib float offset() const;
+    void setOffset(const float offset) { mOffset = offset; }
+    float offset() const { return mOffset; }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*!
      * \note For internal use only.
@@ -99,12 +87,18 @@ public:
      */
     XpObjLib static std::string objDisableStr();
 
+    /*!
+     * \note For internal use only.
+     * \copydoc AttrManipBase::printObj
+     */
+    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
+
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    float mOffset;
-    bool mIsEnabled : 1;
+    float mOffset = 0.0f;
 
 };
 

@@ -29,6 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <optional>
 #include "xpln/obj/attributes/AttrDrapedLayerGroup.h"
 #include "xpln/obj/attributes/AttrDrapedLod.h"
 
@@ -42,69 +43,41 @@ namespace xobj {
  * \details Representation of the draped geometry attributes set.
  * \ingroup Attributes
  */
-class AttrDrapedSet {
+class AttrDrapedSet final {
 public:
 
     //-------------------------------------------------------------------------
     /// @{
 
     AttrDrapedSet() = default;
-    virtual ~AttrDrapedSet() = default;
+    AttrDrapedSet(const AttrDrapedSet &) = default;
+    AttrDrapedSet(AttrDrapedSet &&) = default;
+
+    ~AttrDrapedSet() = default;
+
+    AttrDrapedSet & operator=(const AttrDrapedSet &) = default;
+    AttrDrapedSet & operator=(AttrDrapedSet &&) = default;
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
-    void setLayerGroup(const AttrDrapedLayerGroup & attr);
-    void setLod(const AttrDrapedLod & attr);
-
-    const AttrDrapedLayerGroup & layerGroup() const;
-    const AttrDrapedLod & lod() const;
+    void reset() {
+        mLayerGroup = std::nullopt;
+        mLod = std::nullopt;
+    }
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
-    void reset();
+    std::optional<AttrDrapedLayerGroup> mLayerGroup;
+    std::optional<AttrDrapedLod> mLod;
 
     /// @}
     //-------------------------------------------------------------------------
-
-private:
-
-    AttrDrapedLayerGroup mLayerGroup;
-    AttrDrapedLod mLod;
 
 };
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-inline void AttrDrapedSet::reset() {
-    mLayerGroup = AttrDrapedLayerGroup();
-    mLod = AttrDrapedLod();
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-inline void AttrDrapedSet::setLayerGroup(const AttrDrapedLayerGroup & attr) {
-    mLayerGroup = attr;
-}
-
-inline const AttrDrapedLayerGroup & AttrDrapedSet::layerGroup() const {
-    return mLayerGroup;
-}
-
-inline void AttrDrapedSet::setLod(const AttrDrapedLod & attr) {
-    mLod = attr;
-}
-
-inline const AttrDrapedLod & AttrDrapedSet::lod() const {
-    return mLod;
-}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

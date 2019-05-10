@@ -78,16 +78,17 @@ void extractManip(const ObjMain & inMain, EManipulator::eId inManipType, const M
     ObjAbstract * obj = inLGroup.transform().objList().begin()->get();
     ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
     auto * inM = static_cast<ObjMesh *>(obj);
-    ASSERT_TRUE(inM->pAttr.manipulator() != nullptr);
-    ASSERT_EQ(EManipulator(inManipType), inM->pAttr.manipulator()->type());
-    outAttr = static_cast<const MANIP *>(inM->pAttr.manipulator());
+    ASSERT_TRUE(inM->mAttr.mManipContainer);
+    ASSERT_TRUE(inM->mAttr.mManipContainer->hasManip());
+    ASSERT_EQ(EManipulator(inManipType), inM->mAttr.mManipContainer->mManip->type());
+    outAttr = static_cast<const MANIP *>(inM->mAttr.mManipContainer->mManip.get());
 }
 
 void addManip(ObjMain & inOutMain, AttrManipBase * inManip) {
     ObjMesh * outM = TestUtilsObjMesh::createObjMesh("m1", 0.0);
     ObjLodGroup & outLGroup = inOutMain.addLod();
     outLGroup.transform().addObject(outM);
-    outM->pAttr.setManipulator(inManip);
+    outM->mAttr.mManipContainer = ManipContainer(inManip);
 }
 
 /**************************************************************************************************/
@@ -110,14 +111,14 @@ TEST(TestManipIO, AttrManipAxisKnob) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipAxisKnob * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisKnob>(inObj, EManipulator::axis_knob, inManip));
 
@@ -140,14 +141,14 @@ TEST(TestManipIO, AttrManipAxisKnob) {
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ExportContext expWheelContext(fileName);
     ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
-    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(2, expWheelContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
     ImportContext impWheelContext(fileName);
     ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
-    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impWheelContext.statistic().mTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisKnob>(inWheelObj, EManipulator::axis_knob, inManip));
 
@@ -177,14 +178,14 @@ TEST(TestManipIO, AttrManipAxisSwitchLeftRight) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipAxisSwitchLeftRight * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisSwitchLeftRight>(inObj, EManipulator::axis_switch_lr, inManip));
 
@@ -207,14 +208,14 @@ TEST(TestManipIO, AttrManipAxisSwitchLeftRight) {
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ExportContext expWheelContext(fileName);
     ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
-    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(2, expWheelContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
     ImportContext impWheelContext(fileName);
     ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
-    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impWheelContext.statistic().mTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisSwitchLeftRight>(inWheelObj, EManipulator::axis_switch_lr, inManip));
 
@@ -244,14 +245,14 @@ TEST(TestManipIO, AttrManipAxisSwitchUpDown) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipAxisSwitchUpDown * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisSwitchUpDown>(inObj, EManipulator::axis_switch_ud, inManip));
 
@@ -274,14 +275,14 @@ TEST(TestManipIO, AttrManipAxisSwitchUpDown) {
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ExportContext expWheelContext(fileName);
     ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
-    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(2, expWheelContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
     ImportContext impWheelContext(fileName);
     ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
-    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impWheelContext.statistic().mTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisSwitchUpDown>(inWheelObj, EManipulator::axis_switch_ud, inManip));
 
@@ -307,14 +308,14 @@ TEST(TestManipIO, AttrManipCmd) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipCmd * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, EManipulator::command, inManip));
 
@@ -345,14 +346,14 @@ TEST(TestManipIO, AttrManipCmdAxis) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipCmdAxis * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdAxis>(inObj, EManipulator::command_axis, inManip));
 
@@ -384,14 +385,14 @@ TEST(TestManipIO, AttrManipCmdKnob) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipCmdKnob * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdKnob>(inObj, EManipulator::command_knob, inManip));
 
@@ -419,14 +420,14 @@ TEST(TestManipIO, AttrManipCmdKnob2) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipCmdKnob2 * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdKnob2>(inObj, EManipulator::command_knob2, inManip));
 
@@ -454,14 +455,14 @@ TEST(TestManipIO, AttrManipCmdSwitchLeftRight) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipCmdSwitchLeftRight * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdSwitchLeftRight>(inObj, EManipulator::command_switch_lr, inManip));
 
@@ -489,14 +490,14 @@ TEST(TestManipIO, AttrManipCmdSwitchLeftRight2) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipCmdSwitchLeftRight2 * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdSwitchLeftRight2>(inObj, EManipulator::command_switch_lr2, inManip));
 
@@ -524,14 +525,14 @@ TEST(TestManipIO, AttrManipCmdSwitchUpDown) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipCmdSwitchUpDown * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdSwitchUpDown>(inObj, EManipulator::command_switch_ud, inManip));
 
@@ -559,14 +560,14 @@ TEST(TestManipIO, AttrManipCmdSwitchUpDown2) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipCmdSwitchUpDown2 * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdSwitchUpDown2>(inObj, EManipulator::command_switch_ud2, inManip));
 
@@ -597,14 +598,14 @@ TEST(TestManipIO, AttrManipDelta) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipDelta * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDelta>(inObj, EManipulator::delta, inManip));
 
@@ -627,14 +628,14 @@ TEST(TestManipIO, AttrManipDelta) {
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ExportContext expWheelContext(fileName);
     ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
-    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(2, expWheelContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
     ImportContext impWheelContext(fileName);
     ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
-    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impWheelContext.statistic().mTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDelta>(inWheelObj, EManipulator::delta, inManip));
 
@@ -674,14 +675,14 @@ TEST(TestManipIO, AttrManipDragAxis) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(5, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(5, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipDragAxis * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDragAxis>(inObj, EManipulator::drag_axis, inManip));
 
@@ -733,14 +734,14 @@ TEST(TestManipIO, AttrManipDragAxisPix) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipDragAxisPix * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDragAxisPix>(inObj, EManipulator::drag_axis_pix, inManip));
 
@@ -764,14 +765,14 @@ TEST(TestManipIO, AttrManipDragAxisPix) {
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ExportContext expWheelContext(fileName);
     ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
-    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(2, expWheelContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
     ImportContext impWheelContext(fileName);
     ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
-    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impWheelContext.statistic().mTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDragAxisPix>(inWheelObj, EManipulator::drag_axis_pix, inManip));
 
@@ -806,14 +807,14 @@ TEST(TestManipIO, AttrManipDragRotate) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(5, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(5, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipDragRotate * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDragRotate>(inObj, EManipulator::drag_rotate, inManip));
 
@@ -869,14 +870,14 @@ TEST(TestManipIO, AttrManipDragXy) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipDragXy * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDragXy>(inObj, EManipulator::drag_xy, inManip));
 
@@ -907,14 +908,14 @@ TEST(TestManipIO, AttrManipNoop) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipNoop * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipNoop>(inObj, EManipulator::noop, inManip));
 
@@ -939,14 +940,14 @@ TEST(TestManipIO, AttrManipPush) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipPush * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipPush>(inObj, EManipulator::push, inManip));
 
@@ -967,14 +968,14 @@ TEST(TestManipIO, AttrManipPush) {
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ExportContext expWheelContext(fileName);
     ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
-    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(2, expWheelContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
     ImportContext impWheelContext(fileName);
     ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
-    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impWheelContext.statistic().mTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipPush>(inWheelObj, EManipulator::push, inManip));
 
@@ -1001,14 +1002,14 @@ TEST(TestManipIO, AttrManipRadio) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipRadio * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipRadio>(inObj, EManipulator::radio, inManip));
 
@@ -1028,14 +1029,14 @@ TEST(TestManipIO, AttrManipRadio) {
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ExportContext expWheelContext(fileName);
     ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
-    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(2, expWheelContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
     ImportContext impWheelContext(fileName);
     ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
-    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impWheelContext.statistic().mTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipRadio>(inWheelObj, EManipulator::radio, inManip));
 
@@ -1063,14 +1064,14 @@ TEST(TestManipIO, AttrManipToggle) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipToggle * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipToggle>(inObj, EManipulator::toggle, inManip));
 
@@ -1091,14 +1092,14 @@ TEST(TestManipIO, AttrManipToggle) {
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ExportContext expWheelContext(fileName);
     ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
-    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(2, expWheelContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
     ImportContext impWheelContext(fileName);
     ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
-    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impWheelContext.statistic().mTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipToggle>(inWheelObj, EManipulator::toggle, inManip));
 
@@ -1128,14 +1129,14 @@ TEST(TestManipIO, AttrManipWrap) {
     ASSERT_NO_FATAL_FAILURE(addManip(outObj, outManip));
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisManipCount);
     const AttrManipWrap * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipWrap>(inObj, EManipulator::wrap, inManip));
 
@@ -1158,14 +1159,14 @@ TEST(TestManipIO, AttrManipWrap) {
     ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip->clone()));
     ExportContext expWheelContext(fileName);
     ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
-    ASSERT_EQ(2, expWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(2, expWheelContext.statistic().mTrisManipCount);
 
     //-----------------------------
 
     ObjMain inWheelObj;
     ImportContext impWheelContext(fileName);
     ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
-    ASSERT_EQ(1, impWheelContext.statistic().pTrisManipCount);
+    ASSERT_EQ(1, impWheelContext.statistic().mTrisManipCount);
     inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipWrap>(inWheelObj, EManipulator::wrap, inManip));
 

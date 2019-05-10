@@ -44,55 +44,49 @@ class AbstractWriter;
  * \details ATTR_light_level
  * \ingroup Attributes
  */
-class AttrLightLevel {
+class AttrLightLevel final {
 public:
 
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrLightLevel();
+    AttrLightLevel() = default;
 
-    /*!
-     * \note Makes the enabled attribute.
-     */
-    XpObjLib AttrLightLevel(float val1, float val2, const std::string & dataRef);
+    AttrLightLevel(const float val1, const float val2, std::string dataRef)
+        : mVal1(val1),
+          mVal2(val2),
+          mDataref(std::move(dataRef)) { }
+
+    AttrLightLevel(const AttrLightLevel &) = default;
+    AttrLightLevel(AttrLightLevel &&) = default;
 
     ~AttrLightLevel() = default;
 
+    AttrLightLevel & operator=(const AttrLightLevel &) = default;
+    AttrLightLevel & operator=(AttrLightLevel &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
-
-    /*!
-     * \details Check whether the attribute is enabled.
-     * \note Any class's setter will enable this attribute.
-     */
-    XpObjLib operator bool() const;
-
-    /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note Any class's setter will enable this attribute.
-     * \param [in] state
-     */
-    XpObjLib void setEnabled(bool state);
-
-    //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrLightLevel & other) const;
-    XpObjLib bool operator!=(const AttrLightLevel & other) const;
+    bool operator!=(const AttrLightLevel & other) const { return !operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setVal1(float val1);
-    XpObjLib void setVal2(float val2);
-    XpObjLib void setDataref(const std::string & dataRef);
+    void setVal1(const float val1) { mVal1 = val1; }
+    void setVal2(const float val2) { mVal2 = val2; }
+    void setDataref(const std::string & dataRef) { mDataref = dataRef; }
 
-    XpObjLib float val1() const;
-    XpObjLib float val2() const;
-    XpObjLib const std::string & dataref() const;
+    float val1() const { return mVal1; }
+    float val2() const { return mVal2; }
+    const std::string & dataref() const { return mDataref; }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*!
      * \note For internal use only.
@@ -102,14 +96,20 @@ public:
      */
     XpObjLib static std::string objDisableStr();
 
+    /*!
+     * \note For internal use only.
+     * \copydoc AttrManipBase::printObj
+     */
+    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
+
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    float mVal1;
-    float mVal2;
+    float mVal1 = 0.0f;
+    float mVal2 = 1.0f;
     std::string mDataref;
-    bool mIsEnabled : 1;
 
 };
 

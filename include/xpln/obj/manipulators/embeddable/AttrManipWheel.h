@@ -44,43 +44,39 @@ class AbstractWriter;
  * \details ATTR_manip_wheel
  * \ingroup Manipulators
  */
-class AttrManipWheel {
+class AttrManipWheel final {
 public:
 
-    AttrManipWheel() = default;
-    virtual ~AttrManipWheel() = default;
-
     //-------------------------------------------------------------------------
+    /// @{
+
+    AttrManipWheel() = default;
+    ~AttrManipWheel() = default;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrManipWheel & other) const;
     XpObjLib bool operator!=(const AttrManipWheel & other) const;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib void setEnabled(bool state);
     XpObjLib void setDelta(float delta);
     XpObjLib bool isEnabled() const;
     XpObjLib float delta() const;
 
+    /// @}
     //-------------------------------------------------------------------------
-
-    [[deprecated("use serEnabled()")]]
-    void setWheelEnabled(const bool state) { setEnabled(state); }
-
-    [[deprecated("use setDelta()")]]
-    void setWheelDelta(const float delta) { setDelta(delta); }
-
-    [[deprecated("use isEnabled()")]]
-    bool isWheelEnabled() const { return isEnabled(); }
-
-    [[deprecated("use delta()")]]
-    float wheelDelta() const { return delta(); }
-
-    //-------------------------------------------------------------------------
+    /// @{
 
     /*! \copydoc AttrManipBase::printObj */
     XpObjLib std::size_t printObj(AbstractWriter & writer) const;
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:

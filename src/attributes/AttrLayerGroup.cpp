@@ -34,39 +34,12 @@
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrLayerGroup::AttrLayerGroup(const ELayer layer, const std::int32_t offset)
-    : mOffset(static_cast<uint8_t>(offset)),
-      mLayer(layer),
-      mIsEnabled(true) { }
-
-AttrLayerGroup::AttrLayerGroup()
-    : mOffset(0),
-      mLayer(ELayer(ELayer::objects)),
-      mIsEnabled(false) { }
-
-/**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrLayerGroup::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrLayerGroup::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrLayerGroup::operator==(const AttrLayerGroup & other) const {
-    return (mIsEnabled == other.mIsEnabled &&
-            mOffset == other.mOffset &&
-            mLayer == other.mLayer);
-}
-
-bool AttrLayerGroup::operator!=(const AttrLayerGroup & other) const {
-    return !operator==(other);
+    return mOffset == other.mOffset &&
+           mLayer == other.mLayer;
 }
 
 /**************************************************************************************************/
@@ -77,20 +50,6 @@ void AttrLayerGroup::setOffset(std::int32_t offset) {
     offset = std::min(offset, 5);
     offset = std::max(offset, -5);
     mOffset = static_cast<std::int8_t>(offset);
-    mIsEnabled = true;
-}
-
-std::int32_t AttrLayerGroup::offset() const {
-    return static_cast<std::int32_t>(mOffset);
-}
-
-void AttrLayerGroup::setLayer(const ELayer layer) {
-    mLayer = layer;
-    mIsEnabled = true;
-}
-
-ELayer AttrLayerGroup::layer() const {
-    return mLayer;
 }
 
 /**************************************************************************************************/

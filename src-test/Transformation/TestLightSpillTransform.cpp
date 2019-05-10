@@ -110,7 +110,7 @@ TEST(ObjLightSpillCust, real_usecase_case1) {
     TestUtils::setTestExportOptions(mainOut);
 
     // set OGL mtx
-    mainOut.pMatrix.set(1.0f, 0.0f, 0.0f,
+    mainOut.mMatrix.set(1.0f, 0.0f, 0.0f,
                         0.0f, 0.0f, -1.0f,
                         0.0f, 1.0f, 0.0f,
                         0.0f, 0.0f, 0.0f);
@@ -130,7 +130,7 @@ TEST(ObjLightSpillCust, real_usecase_case1) {
     light->setDirection(Point3(0.0f, -5.0f, 0.0f) - light->position());
     lightTransform.addObject(light);
 
-    ObjTransformation::correctExportTransform(mainOut, mainOut.pMatrix, true);
+    ObjTransformation::correctExportTransform(mainOut, mainOut.mMatrix, true);
 
     const auto resultTrPos = lightTransform.pMatrix.position();
     EXPECT_FLOAT_EQ(0.0f, resultTrPos.x) << resultTrPos.toString();

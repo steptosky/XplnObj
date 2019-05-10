@@ -49,8 +49,8 @@ TEST(DrapedAlg, extract) {
     auto l1M2 = TestUtilsObjMesh::createPyramidTestMesh("l1-m1");
     auto l2M2 = TestUtilsObjMesh::createPyramidTestMesh("l2-m2");
 
-    l1M2->pAttr.setDraped(true);
-    l2M2->pAttr.setDraped(true);
+    l1M2->mAttr.mIsDraped = true;
+    l2M2->mAttr.mIsDraped = true;
 
     transformRoot.addObject(l1M1);
     transformRoot.addObject(l1M2);

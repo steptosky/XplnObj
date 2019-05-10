@@ -115,8 +115,8 @@ TEST(DISABLED_TestTransform_case5, tr_case1) {
     transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-    mainOut.pMatrix.rotateDegreesY(90.0f);
-    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.mMatrix.rotateDegreesY(90.0f);
+    mainOut.mMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
     transformOut1.pMatrix.rotateDegreesY(-90.0f);
     transformOut2.pMatrix.rotateDegreesY(-90.0f);
@@ -230,8 +230,8 @@ TEST(DISABLED_TestTransform_case5, tr_case2) {
     transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-    mainOut.pMatrix.rotateDegreesY(90.0f);
-    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.mMatrix.rotateDegreesY(90.0f);
+    mainOut.mMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
     transformOut1.pMatrix.rotateDegreesY(-90.0f);
     transformOut2.pMatrix.rotateDegreesY(-90.0f);
@@ -350,8 +350,8 @@ TEST(TestTransform_case5, r_case1) {
     transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-    mainOut.pMatrix.rotateDegreesY(90.0f);
-    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.mMatrix.rotateDegreesY(90.0f);
+    mainOut.mMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
     transformOut1.pMatrix.rotateDegreesY(-90.0f);
     transformOut2.pMatrix.rotateDegreesY(-90.0f);
@@ -461,8 +461,8 @@ TEST(TestTransform_case5, r_case2) {
     transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-    mainOut.pMatrix.rotateDegreesY(90.0f);
-    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.mMatrix.rotateDegreesY(90.0f);
+    mainOut.mMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
     transformOut1.pMatrix.rotateDegreesY(-90.0f);
     transformOut2.pMatrix.rotateDegreesY(-90.0f);
@@ -574,8 +574,8 @@ TEST(DISABLED_TestTransform_case5, t_case1) {
     transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-    mainOut.pMatrix.rotateDegreesY(90.0f);
-    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.mMatrix.rotateDegreesY(90.0f);
+    mainOut.mMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
     transformOut1.pMatrix.rotateDegreesY(-90.0f);
     transformOut2.pMatrix.rotateDegreesY(-90.0f);
@@ -690,8 +690,8 @@ TEST(DISABLED_TestTransform_case5, t_case2) {
     transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-    mainOut.pMatrix.rotateDegreesY(90.0f);
-    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.mMatrix.rotateDegreesY(90.0f);
+    mainOut.mMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
     transformOut1.pMatrix.rotateDegreesY(-90.0f);
     transformOut2.pMatrix.rotateDegreesY(-90.0f);
@@ -806,8 +806,8 @@ TEST(TestTransform_case5, t_case3) {
     transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-    mainOut.pMatrix.rotateDegreesY(90.0f);
-    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    mainOut.mMatrix.rotateDegreesY(90.0f);
+    mainOut.mMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
 
     transformOut1.pMatrix.rotateDegreesY(-90.0f);
     transformOut2.pMatrix.rotateDegreesY(-90.0f);

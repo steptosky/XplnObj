@@ -77,8 +77,8 @@ TEST_F(TestLod, lods_grouping) {
     const auto fileName = XOBJ_PATH("TestLod-lods_grouping.obj");
     //-----------------------------
     ObjMain mainOut;
-    mainOut.pExportOptions.enable(eExportOptions::XOBJ_EXP_MARK_MESH);
-    mainOut.pExportOptions.enable(eExportOptions::XOBJ_EXP_DEBUG);
+    mainOut.mExportOptions.enable(eExportOptions::XOBJ_EXP_MARK_MESH);
+    mainOut.mExportOptions.enable(eExportOptions::XOBJ_EXP_DEBUG);
     ObjLodGroup & lGroup1 = mainOut.addLod();
     ObjLodGroup & lGroup2 = mainOut.addLod();
     ObjLodGroup & lGroup3 = mainOut.addLod();
@@ -287,8 +287,8 @@ TEST_F(TestLod, validator_animation) {
     ObjLodGroup & lGroup1 = main.addLod();
     lGroup1.transform().addObject(m1);
     lGroup1.transform().pAnimTrans.emplace_back(AnimTrans());
-    lGroup1.transform().pAnimTrans.back().pKeys.emplace_back(AnimTransKey(1.0f, 1.0f, 1.0f, 1.0f));
-    lGroup1.transform().pAnimTrans.back().pKeys.emplace_back(AnimTransKey(2.0f, 2.0f, 2.0f, 2.0f));
+    lGroup1.transform().pAnimTrans.back().mKeys.emplace_back(AnimTransKey(1.0f, 1.0f, 1.0f, 1.0f));
+    lGroup1.transform().pAnimTrans.back().mKeys.emplace_back(AnimTransKey(2.0f, 2.0f, 2.0f, 2.0f));
     m1 = nullptr;
 
     lGroup1.setNearVal(0.0);
@@ -316,7 +316,7 @@ TEST_F(TestLod, validator_attr_hard) {
     ObjLodGroup & lGroup2 = main.addLod(new ObjLodGroup(TOTEXT(lGroup2), 100.0f, 200.0f));
     lGroup1.transform().addObject(m1);
     lGroup2.transform().addObject(m2);
-    m2->pAttr.setHard(AttrHard(ESurface(ESurface::grass), false));
+    m2->mAttr.mHard = AttrHard(ESurface(ESurface::grass), false);
     ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
     m1 = nullptr;
     m2 = nullptr;

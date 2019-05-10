@@ -34,12 +34,10 @@
 #include "xpln/obj/ExportOptions.h"
 #include "xpln/obj/IOStatistic.h"
 
-#include "ObjWriteGlobAttr.h"
 #include "ObjWriteAttr.h"
 #include "ObjWritePreparer.h"
 #include "ObjWriteAnim.h"
 #include "ObjWriteGeometry.h"
-#include "ObjWriteManip.h"
 
 namespace xobj {
 
@@ -72,8 +70,6 @@ private:
 
     ObjWriteAnim mAnimationWritter;
     ObjWriteGeometry mObjWriteGeometry;
-    ObjWriteManip mObjWriteManip;
-    ObjWriteGlobAttr mWriteGlobAttr;
     ObjWriteAttr mWriteAttr;
 
     ObjMain * mMain;

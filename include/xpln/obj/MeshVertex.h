@@ -48,16 +48,16 @@ public:
     MeshVertex() = default;
 
     MeshVertex(const Point3 & pos, const Point3 & normal, const Point2 & texCoord)
-        : pPosition(pos),
-          pNormal(normal),
-          pTexture(texCoord) {}
+        : mPosition(pos),
+          mNormal(normal),
+          mTexture(texCoord) {}
 
     //------------------------------------------------------------------
 
     bool operator==(const MeshVertex & other) const {
-        return pPosition == other.pPosition &&
-               pNormal == other.pNormal &&
-               pTexture == other.pTexture;
+        return mPosition == other.mPosition &&
+               mNormal == other.mNormal &&
+               mTexture == other.mTexture;
     }
 
     bool operator!=(const MeshVertex & inOther) const {
@@ -66,9 +66,9 @@ public:
 
     //------------------------------------------------------------------
 
-    Point3 pPosition;
-    Point3 pNormal;
-    Point2 pTexture; // (y)s - vertical, (x)t - horizontal
+    Point3 mPosition;
+    Point3 mNormal;
+    Point2 mTexture; // (y)s - vertical, (x)t - horizontal
 
     //------------------------------------------------------------------
 

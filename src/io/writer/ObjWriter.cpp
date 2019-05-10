@@ -52,8 +52,7 @@ namespace xobj {
 
 ObjWriter::ObjWriter()
     : mAnimationWritter(&mExportOptions, &mStatistic),
-      mObjWriteGeometry(&mExportOptions, &mStatistic),
-      mWriteAttr(&mObjWriteManip) {
+      mObjWriteGeometry(&mExportOptions, &mStatistic) {
 
     reset();
 }
@@ -70,10 +69,8 @@ ObjWriter::~ObjWriter() {
 
 void ObjWriter::reset() {
     mStatistic.reset();
-    mWriteGlobAttr.reset();
     mWriteAttr.reset();
     mObjWriteGeometry.reset();
-    mObjWriteManip.reset();
 }
 
 /**************************************************************************************************/
@@ -89,13 +86,13 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
             return false;
         }
 
-        if (root->pExportOptions.isEnabled(XOBJ_EXP_DEBUG)) {
+        if (root->mExportOptions.isEnabled(XOBJ_EXP_DEBUG)) {
             // todo sts::toMbString may work incorrectly.
             ULMessage << "File: " << sts::toMbString(context.objFile());
         }
 
         mMain = root;
-        mExportOptions = root->pExportOptions;
+        mExportOptions = root->mExportOptions;
 
         Writer writer;
         if (!writer.openFile(context.objFile())) {
@@ -110,18 +107,18 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
         writer.spaceEnable(mExportOptions.isEnabled(XOBJ_EXP_MARK_TREE_HIERARCHY));
         //-------------------------------------------------------------------------
 
-        if (mMain->pDraped.objectName().empty()) {
-            mMain->pDraped.setObjectName(mMain->objectName());
+        if (mMain->mDraped.objectName().empty()) {
+            mMain->mDraped.setObjectName(mMain->objectName());
         }
 
         if (!LodsAlg::validate(mMain->lods(), mMain->objectName(), interrupt)) {
             return false;
         }
 
-        // Draped::ensureDrapedAttrIsSet(mMain->pDraped, interrupt);
+        // Draped::ensureDrapedAttrIsSet(mMain->mDraped, interrupt);
         // for (const auto & lod : mMain->lods()) {
         //     INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
-        //     Draped::extract(mMain->pDraped, lod->transform(), interrupt);
+        //     Draped::extract(mMain->mDraped, lod->transform(), interrupt);
         // }
 
         LodsAlg::removeWithoutObjects(mMain->lods(), interrupt);
@@ -152,41 +149,41 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
             calculateVerticiesAndFaces(lod->transform());
         }
 
-        calculateVerticiesAndFaces(mMain->pDraped.transform());
+        calculateVerticiesAndFaces(mMain->mDraped.transform());
 
         //-------------------------------------------------------------------------
         // print global
         printGlobalInformation(writer, *mMain);
 
         // print mesh vertex 
-        if (mStatistic.pMeshVerticesCount) {
+        if (mStatistic.mMeshVerticesCount) {
             for (const auto & lod : mMain->lods()) {
                 mObjWriteGeometry.printMeshVerticiesRecursive(writer, lod->transform());
             }
         }
 
         // print line vertex 
-        if (mStatistic.pLineVerticesCount) {
+        if (mStatistic.mLineVerticesCount) {
             for (const auto & lod : mMain->lods()) {
                 mObjWriteGeometry.printLineVerticiesRecursive(writer, lod->transform());
             }
         }
 
         // print VLIGHT vertex 
-        if (mStatistic.pLightObjPointCount) {
+        if (mStatistic.mLightObjPointCount) {
             for (const auto & lod : mMain->lods()) {
                 mObjWriteGeometry.printLightPointVerticiesRecursive(writer, lod->transform());
             }
         }
 
         // print draped
-        mObjWriteGeometry.printMeshVerticiesRecursive(writer, mMain->pDraped.transform());
+        mObjWriteGeometry.printMeshVerticiesRecursive(writer, mMain->mDraped.transform());
 
         writer.printEol();
 
         //-------------------------------------------------------------------------
         // print mesh faces 
-        if (mStatistic.pMeshVerticesCount) {
+        if (mStatistic.mMeshVerticesCount) {
             mObjWriteGeometry.printMeshFaceRecursive(writer, *mMain);
         }
 
@@ -204,14 +201,16 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
             writer.printEol();
         }
 
-        printObjects(writer, mMain->pDraped.transform());
+        printObjects(writer, mMain->mDraped.transform());
         writer.printEol();
 
-        mStatistic.pTrisManipCount += mObjWriteManip.count();
-        mStatistic.pTrisAttrCount += mWriteAttr.count();
+        const auto [globAttrNum,objAttrNum, manipNum] = mWriteAttr.count();
+        mStatistic.mGlobAttrCount += globAttrNum;
+        mStatistic.mTrisAttrCount += objAttrNum;
+        mStatistic.mTrisManipCount += manipNum;
 
-        if (mMain->pAttr.isDebug()) {
-            ++mStatistic.pGlobAttrCount;
+        if (mMain->mAttr.mDebug) {
+            ++mStatistic.mGlobAttrCount;
             writer.printLine("DEBUG");
             writer.printEol();
         }
@@ -275,15 +274,15 @@ void ObjWriter::calculateVerticiesAndFaces(const Transform & parent) {
     for (auto & obj : parent.objList()) {
         if (obj->objType() == OBJ_MESH) {
             mobj = static_cast<const ObjMesh*>(obj.get());
-            mStatistic.pMeshVerticesCount += mobj->pVertices.size();
-            mStatistic.pMeshFacesCount += mobj->pFaces.size();
+            mStatistic.mMeshVerticesCount += mobj->mVertices.size();
+            mStatistic.mMeshFacesCount += mobj->mFaces.size();
         }
         else if (obj->objType() == OBJ_LINE) {
             lobj = static_cast<const ObjLine*>(obj.get());
-            mStatistic.pLineVerticesCount += lobj->verticesList().size();
+            mStatistic.mLineVerticesCount += lobj->verticesList().size();
         }
         else if (obj->objType() == OBJ_LIGHT_POINT) {
-            ++mStatistic.pLightObjPointCount;
+            ++mStatistic.mLightObjPointCount;
         }
     }
 
@@ -297,15 +296,14 @@ void ObjWriter::calculateVerticiesAndFaces(const Transform & parent) {
 void ObjWriter::printGlobalInformation(AbstractWriter & writer, const ObjMain & objRoot) {
     // write header
     writer.printLine("I\n800\nOBJ\n");
-    mWriteGlobAttr.write(&writer, &objRoot);
-    mStatistic.pGlobAttrCount += mWriteGlobAttr.count();
+    mWriteAttr.writeGlobAttr(&writer, &objRoot);
 
     writer.printEol();
     std::stringstream stream;
-    stream << "POINT_COUNTS " << static_cast<uint32_t>(mStatistic.pMeshVerticesCount) << " "
-            << mStatistic.pLineVerticesCount << " "
-            << mStatistic.pLightObjPointCount << " "
-            << (mStatistic.pMeshFacesCount * 3);
+    stream << "POINT_COUNTS " << static_cast<uint32_t>(mStatistic.mMeshVerticesCount) << " "
+            << mStatistic.mLineVerticesCount << " "
+            << mStatistic.mLightObjPointCount << " "
+            << (mStatistic.mMeshFacesCount * 3);
     writer.printLine(stream.str());
 }
 
@@ -323,40 +321,38 @@ void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) 
 
     for (auto & objBase : parent.objList()) {
         // order attr and manip is important.
-        mWriteAttr.write(&writer, objBase.get());
-        mObjWriteManip.write(&writer, objBase.get());
-
+        mWriteAttr.writeObjAttr(&writer, objBase.get());
         //--------------
 
-        mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataBefore());
+        mStatistic.mCustomLinesCount += printObjCustomData(writer, objBase->dataBefore());
 
         if (mObjWriteGeometry.printMeshObject(writer, *objBase)) {
-            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+            mStatistic.mCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
             continue;
         }
 
         if (mObjWriteGeometry.printLightObject(writer, *objBase, parent)) {
-            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+            mStatistic.mCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
             continue;
         }
 
         if (mObjWriteGeometry.printSmokeObject(writer, *objBase)) {
-            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+            mStatistic.mCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
             continue;
         }
 
         if (mObjWriteGeometry.printDummyObject(writer, *objBase)) {
-            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+            mStatistic.mCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
             continue;
         }
 
         if (mObjWriteGeometry.printLineObject(writer, *objBase)) {
-            mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+            mStatistic.mCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
             continue;
         }
 
         mObjWriteGeometry.printLightPointObject(writer, *objBase);
-        mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+        mStatistic.mCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
 
         //--------------
     }

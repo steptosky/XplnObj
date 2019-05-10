@@ -44,10 +44,11 @@ class AbstractWriter;
  * \details ATTR_axis_detent_range
  * \ingroup Manipulators
  */
-class AttrAxisDetentRange {
+class AttrAxisDetentRange final {
 public:
 
     //-------------------------------------------------------------------------
+    /// @{
 
     AttrAxisDetentRange() = default;
 
@@ -59,17 +60,21 @@ public:
     AttrAxisDetentRange(const AttrAxisDetentRange &) = default;
     AttrAxisDetentRange(AttrAxisDetentRange &&) = default;
 
-    virtual ~AttrAxisDetentRange() = default;
+    ~AttrAxisDetentRange() = default;
 
     AttrAxisDetentRange & operator=(const AttrAxisDetentRange &) = default;
     AttrAxisDetentRange & operator=(AttrAxisDetentRange &&) = default;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrAxisDetentRange & other) const;
     XpObjLib bool operator!=(const AttrAxisDetentRange & other) const;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib void setStart(float val);
     XpObjLib void setEnd(float val);
@@ -79,11 +84,14 @@ public:
     XpObjLib float end() const;
     XpObjLib float height() const;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*! \copydoc AttrManipBase::printObj */
     XpObjLib std::size_t printObj(AbstractWriter & writer) const;
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:

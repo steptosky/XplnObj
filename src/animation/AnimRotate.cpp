@@ -33,23 +33,14 @@
 namespace xobj {
 
 /**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-AnimRotate::AnimRotate()
-    : pHasLoop(false),
-      pLoopValue(0.0f) {}
-
-/**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
 bool AnimRotate::operator==(const AnimRotate & other) const {
-    return pHasLoop == other.pHasLoop &&
-           sts::isEqual(pLoopValue, other.pLoopValue) &&
-           pVector == other.pVector &&
-           pKeys == other.pKeys &&
-           pDrf == other.pDrf;
+    return sts::isEqual(mLoop, other.mLoop) &&
+           mVector == other.mVector &&
+           mKeys == other.mKeys &&
+           mDrf == other.mDrf;
 }
 
 /**************************************************************************************************/
@@ -57,11 +48,10 @@ bool AnimRotate::operator==(const AnimRotate & other) const {
 /**************************************************************************************************/
 
 void AnimRotate::reset() {
-    pHasLoop = false;
-    pLoopValue = 0.0f;
-    pVector.clear();
-    pKeys.clear();
-    pDrf.clear();
+    mLoop = 0.0f;
+    mVector.clear();
+    mKeys.clear();
+    mDrf.clear();
 }
 
 /**************************************************************************************************/

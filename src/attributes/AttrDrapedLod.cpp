@@ -33,48 +33,11 @@
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrDrapedLod::AttrDrapedLod(const float distance)
-    : mDistance(distance),
-      mIsEnabled(true) { }
-
-AttrDrapedLod::AttrDrapedLod()
-    : mDistance(1000.0f),
-      mIsEnabled(false) { }
-
-/**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrDrapedLod::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrDrapedLod::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrDrapedLod::operator==(const AttrDrapedLod & other) const {
-    return (mIsEnabled == other.mIsEnabled && sts::isEqual(mDistance, other.mDistance, 0.01f));
-}
-
-bool AttrDrapedLod::operator!=(const AttrDrapedLod & other) const {
-    return !operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrDrapedLod::setDistance(const float distance) {
-    mDistance = distance;
-    mIsEnabled = true;
-}
-
-float AttrDrapedLod::distance() const {
-    return mDistance;
+    return sts::isEqual(mDistance, other.mDistance, 0.01f);
 }
 
 /**************************************************************************************************/

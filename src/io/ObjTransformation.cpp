@@ -64,7 +64,7 @@ void ObjTransformation::correctTransform(ObjMain & mainObj, const TMatrix & tm, 
         }
         proccess(transform, tmCopy, exp);
     }
-    proccess(mainObj.pDraped.transform(), tm, exp);
+    proccess(mainObj.mDraped.transform(), tm, exp);
 }
 
 void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatrix, bool exp) {
@@ -270,8 +270,8 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
 void ObjTransformation::translationOfTransformToAnimTransKeys(Transform & inOutTrans) {
     if (inOutTrans.hasAnimRotate() && !inOutTrans.hasAnimTrans()) {
         AnimTrans animTr;
-        animTr.pKeys.emplace_back(AnimTrans::Key(Point3(), 0.0f));
-        animTr.pKeys.emplace_back(AnimTrans::Key(Point3(), 0.0f));
+        animTr.mKeys.emplace_back(AnimTrans::Key(Point3(), 0.0f));
+        animTr.mKeys.emplace_back(AnimTrans::Key(Point3(), 0.0f));
         inOutTrans.pAnimTrans.emplace_back(animTr);
     }
 }

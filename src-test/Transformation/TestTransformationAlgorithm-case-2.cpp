@@ -132,7 +132,7 @@ TEST(TestTransformationAlgorithm_case2, case2) {
     trOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     trOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-    mainOut.pMatrix.rotateDegreesZ(-90.0f);
+    mainOut.mMatrix.rotateDegreesZ(-90.0f);
     trOut1.pMatrix.rotateDegreesZ(90.0f);
     trOut1.pMatrix.setPosition(Point3(-50.0f, 0.0f, -50.0f));
     trOut2.pMatrix.setPosition(Point3(50.0f, 0.0f, 50.0f));

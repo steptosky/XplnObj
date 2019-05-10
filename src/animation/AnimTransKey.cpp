@@ -37,7 +37,7 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool AnimTransKey::operator==(const AnimTransKey & other) const {
-    return pPosition == other.pPosition && sts::isEqual(pDrfValue, other.pDrfValue);
+    return mPosition == other.mPosition && sts::isEqual(mDrfValue, other.mDrfValue);
 }
 
 /**************************************************************************************************/

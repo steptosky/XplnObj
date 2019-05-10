@@ -40,9 +40,9 @@ namespace xobj {
 
 void TransformAlg::applyTranslateKeysToTransform(Transform & inOutTrans, AnimTransList & inOutAnim) {
     for (auto animTr = inOutAnim.begin(); animTr != inOutAnim.end();) {
-        if (animTr->pKeys.size() == 1) {
+        if (animTr->mKeys.size() == 1) {
             const Point3 currPos = inOutTrans.pMatrix.position();
-            inOutTrans.pMatrix.setPosition(currPos + animTr->pKeys[0].pPosition);
+            inOutTrans.pMatrix.setPosition(currPos + animTr->mKeys[0].mPosition);
             animTr = inOutTrans.pAnimTrans.erase(animTr);
         }
         else {
@@ -53,9 +53,9 @@ void TransformAlg::applyTranslateKeysToTransform(Transform & inOutTrans, AnimTra
 
 void TransformAlg::applyRotateKeysToTransform(Transform & inOutTrans, AnimRotateList & inOutAnim) {
     for (auto animRot = inOutAnim.begin(); animRot != inOutAnim.end();) {
-        if (animRot->pKeys.size() == 1) {
+        if (animRot->mKeys.size() == 1) {
             TMatrix mtx;
-            mtx.setRotate(animRot->pVector, animRot->pKeys[0].pAngleDegrees);
+            mtx.setRotate(animRot->mVector, animRot->mKeys[0].mAngleDegrees);
             inOutTrans.pMatrix *= mtx;
             animRot = inOutTrans.pAnimRotate.erase(animRot);
         }
@@ -71,15 +71,15 @@ void TransformAlg::applyRotateKeysToTransform(Transform & inOutTrans, AnimRotate
 
 void TransformAlg::applyMatrixToAnimTranslate(AnimTransList & inOutAnim, const TMatrix & tm) {
     for (auto & a : inOutAnim) {
-        for (auto & k : a.pKeys) {
-            tm.transformPoint(k.pPosition);
+        for (auto & k : a.mKeys) {
+            tm.transformPoint(k.mPosition);
         }
     }
 }
 
 void TransformAlg::applyMatrixToAnimRotate(AnimRotateList & inOutAnim, const TMatrix & tm) {
     for (auto & a : inOutAnim) {
-        tm.transformPoint(a.pVector);
+        tm.transformPoint(a.mVector);
     }
 }
 

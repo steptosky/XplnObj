@@ -58,8 +58,8 @@ TEST(TestTransformCommon, anim_enabled) {
 
     lod.transform().pAnimTrans.emplace_back();
     AnimTrans & animTrans = lod.transform().pAnimTrans.back();
-    animTrans.pKeys.emplace_back(AnimTrans::Key(Point3(1.0f, 2.0f, 3.0f), 1.0f));
-    animTrans.pKeys.emplace_back(AnimTrans::Key(Point3(10.0f, 20.0f, 30.0f), 5.0f));
+    animTrans.mKeys.emplace_back(AnimTrans::Key(Point3(1.0f, 2.0f, 3.0f), 1.0f));
+    animTrans.mKeys.emplace_back(AnimTrans::Key(Point3(10.0f, 20.0f, 30.0f), 5.0f));
 
     ASSERT_TRUE(lod.transform().hasAnimTrans());
     ASSERT_TRUE(lod.transform().hasAnim());
@@ -71,8 +71,8 @@ TEST(TestTransformCommon, anim_enabled) {
 
     lod.transform().pAnimRotate.emplace_back();
     AnimRotate & animRotate = lod.transform().pAnimRotate.back();
-    animRotate.pKeys.emplace_back(AnimRotate::Key(20.0f, 1.0f));
-    animRotate.pKeys.emplace_back(AnimRotate::Key(30.0f, 5.0f));
+    animRotate.mKeys.emplace_back(AnimRotate::Key(20.0f, 1.0f));
+    animRotate.mKeys.emplace_back(AnimRotate::Key(30.0f, 5.0f));
 
     ASSERT_TRUE(lod.transform().hasAnimTrans());
     ASSERT_TRUE(lod.transform().hasAnim());
@@ -83,8 +83,8 @@ TEST(TestTransformCommon, anim_enabled) {
     // visibility
 
     AnimVisibility & animVis = lod.transform().pAnimVis;
-    animVis.pKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 1.0f, 2.0f, "data-ref"));
-    animVis.pKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 3.0f, 4.0f, "data-ref"));
+    animVis.mKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 1.0f, 2.0f, "data-ref"));
+    animVis.mKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 3.0f, 4.0f, "data-ref"));
 
     ASSERT_TRUE(lod.transform().hasAnimTrans());
     ASSERT_TRUE(lod.transform().hasAnim());

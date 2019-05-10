@@ -127,7 +127,7 @@ TEST(TestTransformationAlgorithm_case3, case2) {
     trOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     trOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-    mainOut.pMatrix.rotateDegreesZ(-90.0f);
+    mainOut.mMatrix.rotateDegreesZ(-90.0f);
     trOut1.pMatrix.rotateDegreesZ(90.0f);
     trOut2.pMatrix.setPosition(Point3(50.0f, 0.0f, 50.0f));
 
@@ -160,7 +160,7 @@ TEST(TestTransformationAlgorithm_case3, case2) {
     TestUtils::createTestAnimTranslate(animResult1.pAnimTrans,
                                        AnimTransKey(-50.0f, -50.0f, 50.0f, -10.0f), AnimTransKey(50.0f, -50.0f, 50.0f, 10.0f), "trans1");
     std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
-    std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", mainOut.pMatrix));
+    std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", mainOut.mMatrix));
 
     ASSERT_TRUE(trIn1->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
     ASSERT_TRUE(trIn1->pAnimRotate == animResult1.pAnimRotate);

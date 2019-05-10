@@ -54,9 +54,6 @@ namespace xobj {
 /**************************************************************************************************/
 
 void printObjGlobAttr(const AttrBlend & globAttr, AbstractWriter & writer) {
-    if (!globAttr) {
-        return;
-    }
     StringStream outStr;
     if (globAttr.type() == AttrBlend::no_blend) {
         outStr << ATTR_GLOBAL_NO_BLEND;
@@ -69,9 +66,6 @@ void printObjGlobAttr(const AttrBlend & globAttr, AbstractWriter & writer) {
 }
 
 void printObjGlobAttr(const AttrLayerGroup & globAttr, AbstractWriter & writer) {
-    if (!globAttr) {
-        return;
-    }
     StringStream outStr;
     outStr << ATTR_GLOBAL_LAYER_GROUP;
     outStr << " " << globAttr.layer().toString();
@@ -80,9 +74,6 @@ void printObjGlobAttr(const AttrLayerGroup & globAttr, AbstractWriter & writer) 
 }
 
 void printObjGlobAttr(const AttrDrapedLayerGroup & globAttr, AbstractWriter & writer) {
-    if (!globAttr) {
-        return;
-    }
     StringStream outStr;
     outStr << ATTR_GLOBAL_LAYER_GROUP_DRAPED;
     outStr << " " << globAttr.layer().toString();
@@ -91,36 +82,24 @@ void printObjGlobAttr(const AttrDrapedLayerGroup & globAttr, AbstractWriter & wr
 }
 
 void printObjGlobAttr(const AttrDrapedLod & globAttr, AbstractWriter & writer) {
-    if (!globAttr) {
-        return;
-    }
     StringStream outStr;
     outStr << ATTR_GLOBAL_LOD_DRAPED << " " << globAttr.distance();
     writer.printLine(outStr.str());
 }
 
 void printObjGlobAttr(const AttrSlungLoadWeight & globAttr, AbstractWriter & writer) {
-    if (!globAttr) {
-        return;
-    }
     StringStream outStr;
     outStr << ATTR_GLOBAL_SLUNG_LOAD_WEIGHT << " " << globAttr.weight();
     writer.printLine(outStr.str());
 }
 
 void printObjGlobAttr(const AttrSpecular & globAttr, AbstractWriter & writer) {
-    if (!globAttr) {
-        return;
-    }
     StringStream outStr;
     outStr << ATTR_GLOBAL_SPECULAR << " " << globAttr.ratio();
     writer.printLine(outStr.str());
 }
 
 void printObjGlobAttr(const AttrTint & globAttr, AbstractWriter & writer) {
-    if (!globAttr) {
-        return;
-    }
     StringStream outStr;
     outStr << ATTR_GLOBAL_TINT;
     outStr << " " << globAttr.albedo();
@@ -129,16 +108,10 @@ void printObjGlobAttr(const AttrTint & globAttr, AbstractWriter & writer) {
 }
 
 void printObjGlobAttr(const AttrWetDry & globAttr, AbstractWriter & writer) {
-    if (!globAttr) {
-        return;
-    }
     writer.printLine(globAttr.state() == AttrWetDry::eState::wet ? ATTR_GLOBAL_WET : ATTR_GLOBAL_DRY);
 }
 
 void printObjGlobAttr(const AttrSlopeLimit & globAttr, AbstractWriter & writer) {
-    if (!globAttr) {
-        return;
-    }
     StringStream outStr;
     outStr << ATTR_GLOBAL_SLOPE_LIMIT;
     outStr << " " << globAttr.minPitch();
@@ -149,108 +122,12 @@ void printObjGlobAttr(const AttrSlopeLimit & globAttr, AbstractWriter & writer) 
 }
 
 void printObjGlobAttr(const AttrCockpitRegion & globAttr, AbstractWriter & writer) {
-    if (!globAttr) {
-        return;
-    }
     StringStream outStr;
     outStr << ATTR_GLOBAL_COCKPIT_REGION;
     outStr << " " << globAttr.left();
     outStr << " " << globAttr.bottom();
     outStr << " " << globAttr.right();
     outStr << " " << globAttr.top();
-    writer.printLine(outStr.str());
-}
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-void printObjAttr(const AttrBlend & attr, AbstractWriter & writer) {
-    if (!attr) {
-        return;
-    }
-    StringStream outStr;
-    if (attr.type() == AttrBlend::no_blend) {
-        outStr << ATTR_NO_BLEND;
-    }
-    else if (attr.type() == AttrBlend::shadow_blend) {
-        outStr << ATTR_SHADOW_BLEND;
-    }
-    else {
-        outStr << ATTR_BLEND;
-    }
-    outStr << " " << attr.ratio();
-    writer.printLine(outStr.str());
-}
-
-void printObjAttr(const AttrHard & attr, AbstractWriter & writer) {
-    if (!attr) {
-        return;
-    }
-    StringStream outStr;
-    outStr << (attr.isDeck() ? ATTR_HARD_DECK : ATTR_HARD)
-            << " " << attr.surface().toString();
-    writer.printLine(outStr.str());
-}
-
-void printObjAttr(const AttrLightLevel & attr, AbstractWriter & writer) {
-    if (!attr) {
-        return;
-    }
-    StringStream outStr;
-    outStr << ATTR_LIGHT_LEVEL;
-    outStr << " " << attr.val1();
-    outStr << " " << attr.val2();
-    outStr << " " << writer.actualDataref(attr.dataref());
-    writer.printLine(outStr.str());
-}
-
-void printObjAttr(const AttrPolyOffset & attr, AbstractWriter & writer) {
-    if (!attr) {
-        return;
-    }
-    StringStream outStr;
-    outStr << ATTR_POLY_OS << " " << attr.offset();
-    writer.printLine(outStr.str());
-}
-
-void printObjAttr(const AttrShiny & attr, AbstractWriter & writer) {
-    if (!attr) {
-        return;
-    }
-    StringStream outStr;
-    outStr << ATTR_SHINY_RAT << " " << attr.ratio();
-    writer.printLine(outStr.str());
-}
-
-void printObjAttr(const AttrCockpit & attr, AbstractWriter & writer) {
-    if (!attr) {
-        return;
-    }
-    if (attr.type() == AttrCockpit::eType::cockpit) {
-        writer.printLine(ATTR_COCKPIT);
-        return;
-    }
-    StringStream outStr;
-    if (attr.type() == AttrCockpit::eType::region_1) {
-        outStr << ATTR_COCKPIT_REGION << " " << "0";
-    }
-    else if (attr.type() == AttrCockpit::eType::region_2) {
-        outStr << ATTR_COCKPIT_REGION << " " << "1";
-    }
-    else if (attr.type() == AttrCockpit::eType::region_3) {
-        outStr << ATTR_COCKPIT_REGION << " " << "2";
-    }
-    else if (attr.type() == AttrCockpit::eType::region_4) {
-        outStr << ATTR_COCKPIT_REGION << " " << "3";
-    }
-    else if (attr.type() == AttrCockpit::eType::cockpit_device) {
-        outStr << ATTR_COCKPIT_DEVICE
-                << " " << attr.name()
-                << " " << attr.bus()
-                << " " << attr.lightingChannel()
-                << " " << attr.autoAdjust();
-    }
     writer.printLine(outStr.str());
 }
 

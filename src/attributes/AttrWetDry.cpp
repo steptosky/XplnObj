@@ -32,48 +32,11 @@
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrWetDry::AttrWetDry(const eState state)
-    : mState(state),
-      mIsEnabled(true) { }
-
-AttrWetDry::AttrWetDry()
-    : mState(wet),
-      mIsEnabled(false) { }
-
-/**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrWetDry::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrWetDry::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrWetDry::operator==(const AttrWetDry & other) const {
-    return (mIsEnabled == other.mIsEnabled && mState == other.mState);
-}
-
-bool AttrWetDry::operator!=(const AttrWetDry & other) const {
-    return !operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrWetDry::setState(const eState state) {
-    mIsEnabled = true;
-    mState = state;
-}
-
-AttrWetDry::eState AttrWetDry::state() const {
-    return mState;
+    return mState == other.mState;
 }
 
 /**************************************************************************************************/

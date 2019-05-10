@@ -44,54 +44,46 @@ class AbstractWriter;
  * \details ATTR_hard, ATTR_no_hard / ATTR_hard_deck
  * \ingroup Attributes
  */
-class AttrHard {
+class AttrHard final {
 public:
 
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Constructor default.
-     * \note Makes the disabled attribute.
-     */
-    XpObjLib AttrHard();
+    AttrHard() = default;
 
-    /*!
-     * \details Constructor init.
-     * \note Makes the enabled attribute.
-     * \param [in] surface
-     * \param [in] deck true allows the user to fly under the surface.
-     */
-    XpObjLib AttrHard(ESurface surface, bool deck = false);
+    explicit AttrHard(const ESurface surface, const bool deck = false)
+        : mESurface(surface),
+          mIsDeck(deck) { }
+
+    AttrHard(const AttrHard &) = default;
+    AttrHard(AttrHard &&) = default;
 
     ~AttrHard() = default;
 
+    AttrHard & operator=(const AttrHard &) = default;
+    AttrHard & operator=(AttrHard &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
-
-    /*!
-     * \details Check whether the attribute is enabled. 
-     * \note All class's setters will enable this attribute.
-     */
-    XpObjLib operator bool() const;
-
-    /*!
-     * \details Sets the attribute enabled/disabled.
-     * \note All class's setters will enable this attribute.
-     * \param [in] state 
-     */
-    XpObjLib void setEnabled(bool state);
-
-    //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrHard & other) const;
-    XpObjLib bool operator!=(const AttrHard & other) const;
+    bool operator!=(const AttrHard & other) const { return !operator==(other); }
 
     //-------------------------------------------------------------------------
 
-    XpObjLib void setESurface(const ESurface & surface, bool deck = false);
-    XpObjLib const ESurface & surface() const;
-    XpObjLib bool isDeck() const;
+    void setESurface(const ESurface & surface, bool deck = false) {
+        mESurface = surface;
+        mIsDeck = deck;
+    }
 
+    const ESurface & surface() const { return mESurface; }
+    bool isDeck() const { return mIsDeck; }
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*!
      * \note For internal use only.
@@ -101,13 +93,19 @@ public:
      */
     XpObjLib static std::string objDisableStr();
 
+    /*!
+     * \note For internal use only.
+     * \copydoc AttrManipBase::printObj
+     */
+    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
+
+    /// @}
     //-------------------------------------------------------------------------
 
 private:
 
-    ESurface mESurface;
-    bool mIsDeck : 1;
-    bool mIsEnabled : 1;
+    ESurface mESurface = ESurface(ESurface::eId::none);
+    bool mIsDeck = false;
 };
 
 /**************************************************************************************************/

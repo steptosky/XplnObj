@@ -30,6 +30,7 @@
 */
 
 #include <vector>
+#include <optional>
 #include "AnimTransKey.h"
 
 namespace xobj {
@@ -45,7 +46,7 @@ namespace xobj {
 class AnimTrans {
 public:
 
-    XpObjLib AnimTrans();
+    AnimTrans() = default;
     virtual ~AnimTrans() = default;
 
     //-----------------------------------------------------
@@ -64,7 +65,7 @@ public:
     //-----------------------------------------------------
 
     bool isAnimated() const {
-        return !pKeys.empty();
+        return !mKeys.empty();
     }
 
     //-----------------------------------------------------
@@ -73,11 +74,9 @@ public:
 
     //-----------------------------------------------------
 
-    // TODO With c++17 the loop should be as std::optional
-    float pLoopValue;
-    bool pHasLoop;
-    std::string pDrf;
-    KeyList pKeys;
+    std::optional<float> mLoop;
+    std::string mDrf;
+    KeyList mKeys;
 
 };
 

@@ -99,7 +99,7 @@ TEST_F(TestAttributesIOLogic, case_1) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM1->mAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh2
     // mObjMesh3
@@ -107,29 +107,29 @@ TEST_F(TestAttributesIOLogic, case_1) {
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(2, expContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(2, expContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(2, impContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(2, impContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_EQ(mAttrPolyOffset, inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(), inM->mAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_2) {
@@ -148,37 +148,37 @@ TEST_F(TestAttributesIOLogic, case_2) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
-    outM2->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM1->mAttr.mPolyOffset = mAttrPolyOffset;
+    outM2->mAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh3
     // mObjMesh4
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(2, expContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(2, expContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(2, impContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(2, impContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_EQ(mAttrPolyOffset, inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_EQ(mAttrPolyOffset, inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(), inM->mAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_3) {
@@ -197,37 +197,37 @@ TEST_F(TestAttributesIOLogic, case_3) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
-    outM2->pAttr.setPolyOffset(mAttrPolyOffset);
-    outM3->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM1->mAttr.mPolyOffset = mAttrPolyOffset;
+    outM2->mAttr.mPolyOffset = mAttrPolyOffset;
+    outM3->mAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh4
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(2, expContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(2, expContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(2, impContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(2, impContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_EQ(mAttrPolyOffset, inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_EQ(mAttrPolyOffset, inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_EQ(mAttrPolyOffset, inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(), inM->mAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_4) {
@@ -246,36 +246,36 @@ TEST_F(TestAttributesIOLogic, case_4) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
-    outM2->pAttr.setPolyOffset(mAttrPolyOffset);
-    outM3->pAttr.setPolyOffset(mAttrPolyOffset);
-    outM4->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM1->mAttr.mPolyOffset = mAttrPolyOffset;
+    outM2->mAttr.mPolyOffset = mAttrPolyOffset;
+    outM3->mAttr.mPolyOffset = mAttrPolyOffset;
+    outM4->mAttr.mPolyOffset = mAttrPolyOffset;
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(1, expContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(1, expContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(1, impContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(1, impContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_EQ(mAttrPolyOffset, inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_EQ(mAttrPolyOffset, inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_EQ(mAttrPolyOffset, inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(mAttrPolyOffset, inM->pAttr.polyOffset());
+    ASSERT_EQ(mAttrPolyOffset, inM->mAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_5) {
@@ -294,42 +294,42 @@ TEST_F(TestAttributesIOLogic, case_5) {
 
     // Attr
     mAttrPolyOffset.setOffset(1.0f);
-    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM1->mAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
     mAttrPolyOffset.setOffset(2.0f);
-    outM2->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM2->mAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
     mAttrPolyOffset.setOffset(3.0f);
-    outM3->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM3->mAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
     mAttrPolyOffset.setOffset(4.0f);
-    outM4->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM4->mAttr.mPolyOffset = mAttrPolyOffset;
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(4, expContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(4, expContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(4, impContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(4, impContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(2.0f), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(3.0f), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(4.0f), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(4.0f), inM->mAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_6) {
@@ -348,40 +348,40 @@ TEST_F(TestAttributesIOLogic, case_6) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
-    outM2->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM1->mAttr.mPolyOffset = mAttrPolyOffset;
+    outM2->mAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
     mAttrPolyOffset.setOffset(2.0f);
-    outM3->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM3->mAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
     mAttrPolyOffset.setOffset(3.0f);
-    outM4->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM4->mAttr.mPolyOffset = mAttrPolyOffset;
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(3, expContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(3, expContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(3, impContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(3, impContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(2.0f), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(3.0f), inM->mAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_7) {
@@ -400,41 +400,41 @@ TEST_F(TestAttributesIOLogic, case_7) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM1->mAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh2
     // Attr
     mAttrPolyOffset.setOffset(2.0f);
-    outM3->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM3->mAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
     mAttrPolyOffset.setOffset(3.0f);
-    outM4->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM4->mAttr.mPolyOffset = mAttrPolyOffset;
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(4, expContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(4, expContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(4, impContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(4, impContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(2.0f), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(3.0f), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(3.0f), inM->mAttr.mPolyOffset);
 }
 
 TEST_F(TestAttributesIOLogic, case_8) {
@@ -453,40 +453,40 @@ TEST_F(TestAttributesIOLogic, case_8) {
 
     mAttrPolyOffset.setOffset(1.0f);
     // Attr
-    outM1->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM1->mAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh2
     // Attr
     mAttrPolyOffset.setOffset(2.0f);
-    outM3->pAttr.setPolyOffset(mAttrPolyOffset);
+    outM3->mAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh4
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(4, expContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(4, expContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMain inObj;
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(4, impContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(4, impContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 0, inM));
-    ASSERT_EQ(AttrPolyOffset(1.0f), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(1.0f), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 1, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 2, inM));
-    ASSERT_EQ(AttrPolyOffset(2.0f), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(2.0f), inM->mAttr.mPolyOffset);
 
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, 0, 3, inM));
-    ASSERT_EQ(AttrPolyOffset(), inM->pAttr.polyOffset());
+    ASSERT_EQ(AttrPolyOffset(), inM->mAttr.mPolyOffset);
 }
 
 /**************************************************************************************************/

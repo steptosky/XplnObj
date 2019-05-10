@@ -46,6 +46,7 @@ class AttrManipPanel : public AttrManipBase {
 public:
 
     XpObjLib AttrManipPanel();
+	XpObjLib explicit  AttrManipPanel(const AttrCockpit& cockpit);
     virtual ~AttrManipPanel() = default;
 
     //-------------------------------------------------------------------------

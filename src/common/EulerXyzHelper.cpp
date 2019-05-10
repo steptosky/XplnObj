@@ -54,14 +54,14 @@ void EulerXyzHelper::addToTransform(Transform & inOutTransform) {
 /**************************************************************************************************/
 
 bool EulerXyzHelper::isAnimated(const AnimRotate & r) {
-    return r.pKeys.size() > 1;
+    return r.mKeys.size() > 1;
 }
 
 float EulerXyzHelper::value(const AnimRotate & r) {
     float v = 0.0f;
-    if (!r.pKeys.empty()) {
-        assert(r.pKeys.size() == 1);
-        v = r.pKeys[0].pAngleDegrees;
+    if (!r.mKeys.empty()) {
+        assert(r.mKeys.size() == 1);
+        v = r.mKeys[0].mAngleDegrees;
     }
     return v;
 }
@@ -92,9 +92,9 @@ TMatrix EulerXyzHelper::prepareY() const {
 //-------------------------------------------------------------------------
 
 AnimRotateList EulerXyzHelper::animation() {
-    pX.pVector.set(1.0f, 0.0f, 0.0f);
-    pY.pVector.set(0.0f, 1.0f, 0.0f);
-    pZ.pVector.set(0.0f, 0.0f, 1.0f);
+    pX.mVector.set(1.0f, 0.0f, 0.0f);
+    pY.mVector.set(0.0f, 1.0f, 0.0f);
+    pZ.mVector.set(0.0f, 0.0f, 1.0f);
     AnimRotateList outAnim;
 
     if (isAnimated(pZ)) {
@@ -105,14 +105,14 @@ AnimRotateList EulerXyzHelper::animation() {
         outAnim.emplace_back(pY);
         AnimRotate & a = outAnim.back();
         TMatrix mtx = prepareY();
-        mtx.transformVector(a.pVector);
+        mtx.transformVector(a.mVector);
     }
 
     if (isAnimated(pX)) {
         outAnim.emplace_back(pX);
         AnimRotate & a = outAnim.back();
         TMatrix mtx = prepareX();
-        mtx.transformVector(a.pVector);
+        mtx.transformVector(a.mVector);
     }
 
     return outAnim;

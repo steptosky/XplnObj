@@ -58,21 +58,21 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool checkParameters(const AttrGlobSet & attrSet, const std::string & prefix) {
-    if (attrSet.texture() == "none" || attrSet.texture().empty()) {
+    if (!attrSet.mTexture || attrSet.mTexture->empty() || *attrSet.mTexture == "none") {
         ULWarning << prefix << " - Texture is not specified";
     }
     bool result = true;
-    if (StringValidator::hasIllegalSymbols(attrSet.texture())) {
+    if (StringValidator::hasIllegalSymbols(attrSet.mTexture.value_or(std::string()))) {
         result = false;
-        ULError << prefix << " contains illegal symbols in the texture name <" << attrSet.texture() << ">";
+        ULError << prefix << " contains illegal symbols in the texture name <" << *attrSet.mTexture << ">";
     }
-    if (StringValidator::hasIllegalSymbols(attrSet.textureLit())) {
+    if (StringValidator::hasIllegalSymbols(attrSet.mTextureLit.value_or(std::string()))) {
         result = false;
-        ULError << prefix << " contains illegal symbols in the lit texture name <" << attrSet.textureLit() << ">";
+        ULError << prefix << " contains illegal symbols in the lit texture name <" << *attrSet.mTextureLit << ">";
     }
-    if (StringValidator::hasIllegalSymbols(attrSet.textureNormal())) {
+    if (StringValidator::hasIllegalSymbols(attrSet.mTextureNormal.value_or(std::string()))) {
         result = false;
-        ULError << prefix << " contains illegal symbols in the normal texture name <" << attrSet.textureNormal() << ">";
+        ULError << prefix << " contains illegal symbols in the normal texture name <" << *attrSet.mTextureNormal << ">";
     }
     return result;
 }
@@ -111,40 +111,40 @@ bool checkParameters(const ObjLine & /*obj*/, const std::string & /*prefix*/) {
 
 bool checkParameters(const ObjMain & mainObj, const std::string & prefix) {
     bool result = true;
-    if (mainObj.pAttr.isDebug()) {
+    if (mainObj.mAttr.mDebug) {
         ULWarning << prefix
                 << " - \"DEBUG\" option is enabled. Turn it off if you don't know what it is or if you don't need it.";
     }
     if (result) {
-        result = checkParameters(mainObj.pAttr, prefix);
+        result = checkParameters(mainObj.mAttr, prefix);
     }
     return result;
 }
 
 bool checkParameters(const ObjMesh & obj, const std::string & prefix) {
     bool result = true;
-    if (obj.pVertices.empty()) {
+    if (obj.mVertices.empty()) {
         result = false;
         LError << prefix << " - Doesn't have any vertices.";
     }
 
-    if (obj.pFaces.empty()) {
+    if (obj.mFaces.empty()) {
         result = false;
         LError << prefix << " - Doesn't have any faces.";
     }
     {
-        std::vector<bool> vertUsed(obj.pVertices.size(), false);
+        std::vector<bool> vertUsed(obj.mVertices.size(), false);
         const size_t vertSize = vertUsed.size();
-        for (size_t i = 0; i < obj.pFaces.size(); ++i) {
-            const MeshFace & currFace = obj.pFaces[i];
-            if (currFace.pV0 >= vertSize || currFace.pV1 >= vertSize || currFace.pV2 >= vertSize) {
+        for (size_t i = 0; i < obj.mFaces.size(); ++i) {
+            const MeshFace & currFace = obj.mFaces[i];
+            if (currFace.mV0 >= vertSize || currFace.mV1 >= vertSize || currFace.mV2 >= vertSize) {
                 result = false;
                 LError << prefix << " - The face [" << i << "] is out of the vertices range.";
                 return result;
             }
-            vertUsed[currFace.pV0] = true;
-            vertUsed[currFace.pV1] = true;
-            vertUsed[currFace.pV2] = true;
+            vertUsed[currFace.mV0] = true;
+            vertUsed[currFace.mV1] = true;
+            vertUsed[currFace.mV2] = true;
         }
         for (size_t i = 0; i < vertUsed.size(); ++i) {
             if (!vertUsed[i]) {
@@ -186,7 +186,7 @@ bool checkParameters(const AnimTransKey & /*key*/, const std::string & /*prefix*
 bool checkParameters(const AnimVisibilityKey & key, const std::string & prefix) {
     bool result = true;
     std::string currtype;
-    switch (key.pType) {
+    switch (key.mType) {
         case AnimVisibilityKey::SHOW:
             currtype = " - Show: ";
             break;
@@ -198,17 +198,17 @@ bool checkParameters(const AnimVisibilityKey & key, const std::string & prefix) 
             break;
     }
 
-    if (key.pType == AnimVisibilityKey::UNDEFINED) {
+    if (key.mType == AnimVisibilityKey::UNDEFINED) {
         result = false;
         ULError << prefix.c_str() << " - The visible key is undefined";
     }
 
-    if (key.pDrf.empty() || key.pDrf == "none") {
+    if (key.mDrf.empty() || key.mDrf == "none") {
         result = false;
         ULError << prefix.c_str() << currtype.c_str() << "Dataref isn't specified.";
     }
 
-    if (StringValidator::hasIllegalSymbols(key.pDrf)) {
+    if (StringValidator::hasIllegalSymbols(key.mDrf)) {
         result = false;
         ULError << prefix.c_str() << currtype.c_str() << "Dataref contains illegal symbols.";
     }
@@ -221,24 +221,24 @@ bool checkParameters(const AnimVisibilityKey & key, const std::string & prefix) 
 bool checkParameters(const AnimTrans & anim, const std::string & prefix) {
     bool result = true;
 
-    if (anim.pKeys.empty()) {
+    if (anim.mKeys.empty()) {
         result = false;
         ULError << prefix << " - Does not contain any keys.";
     }
 
-    if (anim.pKeys.size() == 1) {
+    if (anim.mKeys.size() == 1) {
         result = false;
         ULError << prefix << " - Contains only one key.";
     }
 
-    if (anim.pKeys.size() != 2) {
-        if (anim.pDrf.empty() || anim.pDrf == "none") {
+    if (anim.mKeys.size() != 2) {
+        if (anim.mDrf.empty() || anim.mDrf == "none") {
             result = false;
             ULError << prefix << " - Dataref isn't specified.";
         }
     }
 
-    if (StringValidator::hasIllegalSymbols(anim.pDrf)) {
+    if (StringValidator::hasIllegalSymbols(anim.mDrf)) {
         result = false;
         ULError << prefix << " - Dataref contains illegal symbols.";
     }
@@ -251,24 +251,24 @@ bool checkParameters(const AnimTrans & anim, const std::string & prefix) {
 bool checkParameters(const AnimRotate & anim, const std::string & prefix) {
     bool result = true;
 
-    if (anim.pKeys.empty()) {
+    if (anim.mKeys.empty()) {
         result = false;
         ULError << prefix << " - Does not contain any keys.";
     }
 
-    if (anim.pKeys.size() == 1) {
+    if (anim.mKeys.size() == 1) {
         result = false;
         ULError << prefix << " - Contains only one key.";
     }
 
-    if (anim.pKeys.size() != 2) {
-        if (anim.pDrf.empty() || anim.pDrf == "none") {
+    if (anim.mKeys.size() != 2) {
+        if (anim.mDrf.empty() || anim.mDrf == "none") {
             result = false;
             ULError << prefix.c_str() << " - Dataref isn't specified.";
         }
     }
 
-    if (StringValidator::hasIllegalSymbols(anim.pDrf)) {
+    if (StringValidator::hasIllegalSymbols(anim.mDrf)) {
         result = false;
         ULError << prefix.c_str() << " - Dataref contains illegal symbols.";
     }

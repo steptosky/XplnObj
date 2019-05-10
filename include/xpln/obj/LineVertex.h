@@ -48,16 +48,16 @@ public:
     LineVertex() = default;
 
     LineVertex(const Point3 & pos, const Color & color)
-        : pPosition(pos),
-          pColor(color) { }
+        : mPosition(pos),
+          mColor(color) { }
 
     ~LineVertex() = default;
 
     //--------------------------------------------------
 
     bool operator==(const LineVertex & other) const {
-        return pPosition == other.pPosition &&
-               pColor == other.pColor;
+        return mPosition == other.mPosition &&
+               mColor == other.mColor;
     }
 
     bool operator!=(const LineVertex & other) const {
@@ -66,8 +66,8 @@ public:
 
     //--------------------------------------------------
 
-    Point3 pPosition;
-    Color pColor;
+    Point3 mPosition;
+    Color mColor;
 
     //--------------------------------------------------
 

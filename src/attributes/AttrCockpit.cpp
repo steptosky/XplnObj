@@ -28,8 +28,9 @@
 */
 
 #include "xpln/obj/attributes/AttrCockpit.h"
-#include "io/writer/AbstractWriter.h"
 #include "common/AttributeNames.h"
+#include "converters/StringStream.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -38,8 +39,7 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool AttrCockpit::operator==(const AttrCockpit & other) const {
-    return mIsEnabled == other.mIsEnabled &&
-           mType == other.mType &&
+    return mType == other.mType &&
            mDevName == other.mDevName &&
            mDevBus == other.mDevBus &&
            mDevLighting == other.mDevLighting &&
@@ -52,6 +52,35 @@ bool AttrCockpit::operator==(const AttrCockpit & other) const {
 
 std::string AttrCockpit::objDisableStr() {
     return ATTR_NO_COCKPIT;
+}
+
+std::size_t AttrCockpit::printObj(AbstractWriter & writer) const {
+    if (type() == cockpit) {
+        writer.printLine(ATTR_COCKPIT);
+        return 1;
+    }
+    StringStream outStr;
+    if (type() == region_1) {
+        outStr << ATTR_COCKPIT_REGION << " " << "0";
+    }
+    else if (type() == region_2) {
+        outStr << ATTR_COCKPIT_REGION << " " << "1";
+    }
+    else if (type() == region_3) {
+        outStr << ATTR_COCKPIT_REGION << " " << "2";
+    }
+    else if (type() == region_4) {
+        outStr << ATTR_COCKPIT_REGION << " " << "3";
+    }
+    else if (type() == cockpit_device) {
+        outStr << ATTR_COCKPIT_DEVICE
+                << " " << name()
+                << " " << bus()
+                << " " << lightingChannel()
+                << " " << autoAdjust();
+    }
+    writer.printLine(outStr.str());
+    return 1;
 }
 
 /**************************************************************************************************/

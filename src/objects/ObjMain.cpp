@@ -39,13 +39,13 @@ namespace xobj {
 /********************************************************************************************************/
 
 bool ObjMain::exportObj(ExportContext & inOutContext) {
-    return ObjWriter().writeFile(this, inOutContext, pMatrix);
+    return ObjWriter().writeFile(this, inOutContext, mMatrix);
 }
 
 //-------------------------------------------------------------------------
 
 bool ObjMain::importObj(ImportContext & inOutContext) {
-    ObjReaderInterpreter interpreter(this, pMatrix, &inOutContext.statistic());
+    ObjReaderInterpreter interpreter(this, mMatrix, &inOutContext.statistic());
     return ObjReader::readFile(inOutContext, interpreter);
 }
 

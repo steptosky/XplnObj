@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2019, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,67 +27,30 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/Export.h"
-#include "xpln/obj/attributes/AttrCockpit.h"
-#include "xpln/obj/manipulators/AttrManipPanel.h"
+#include "ObjWriteState.h"
 
 namespace xobj {
 
-/**********************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**********************************************************************************************************************/
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
-class AbstractWriter;
-class AttrManipBase;
-class ObjAbstract;
-class ObjMesh;
+void ObjWriteState::processBool(const bool newValue, bool & inOutStateValue,
+                                const std::function<void(bool enable)> & switchFn) {
+    if (newValue == inOutStateValue) {
+        return;
+    }
+    inOutStateValue = newValue;
+    if (inOutStateValue) {
+        switchFn(true);
+    }
+    else {
+        switchFn(false);
+    }
+}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-/*!
- * \details Manipulators' state machine.
- * \remark This algorithm auto-disables the panel manipulator, 
- *         so you have to explicitly set the manipulator to each object that needs it.
- *         
- * \warning Don't delete \link ObjWriteManip::mActiveManip \endlink 
- *          because it will be deleted with the object which is owner 
- *          of the pointer to the manipulator. 
- *          This class just uses the manipulators and does not take ownership.
- */
-class ObjWriteManip {
-public:
-
-    ObjWriteManip() = default;
-    ObjWriteManip(const ObjWriteManip &) = delete;
-    ObjWriteManip & operator =(const ObjWriteManip &) = delete;
-    ~ObjWriteManip() = default;
-
-    XpObjLib void write(AbstractWriter * writer, const ObjAbstract * obj);
-    XpObjLib void reset();
-    XpObjLib size_t count() const;
-
-    XpObjLib void setPanelEnabled(const AttrCockpit & cockpit);
-    XpObjLib void setPanelDisabled();
-
-private:
-
-    const AttrManipBase * prepareManip(const AttrManipBase * manip) const;
-
-    void write(AbstractWriter * writer, const AttrManipBase * manip);
-    void print(AbstractWriter * writer, const AttrManipBase * manip);
-
-    const ObjMesh * mObj = nullptr;
-    const AttrManipBase * mActiveManip = nullptr;
-    size_t mManipCounter = 0;
-    bool mIsPanelManip = false;
-
-    AttrManipPanel mAttrManipPanel;
-
-};
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
 }

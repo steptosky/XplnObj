@@ -33,66 +33,12 @@
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrTint::AttrTint(const float albedoRatio, const float emissiveRatio)
-    : mAlbedo(albedoRatio),
-      mEmissive(emissiveRatio),
-      mIsEnabled(true) { }
-
-AttrTint::AttrTint()
-    : mAlbedo(0.0f),
-      mEmissive(0.0f),
-      mIsEnabled(false) { }
-
-/**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrTint::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrTint::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrTint::operator==(const AttrTint & other) const {
-    return (mIsEnabled == other.mIsEnabled &&
-            sts::isEqual(mAlbedo, other.mAlbedo, 0.01f) &&
-            sts::isEqual(mEmissive, other.mEmissive, 0.01f));
-}
-
-bool AttrTint::operator!=(const AttrTint & other) const {
-    return !operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrTint::setAlbedo(const float albedoRatio) {
-    mAlbedo = albedoRatio;
-    mIsEnabled = true;
-}
-
-void AttrTint::setEmissive(const float emissiveRatio) {
-    mEmissive = emissiveRatio;
-    mIsEnabled = true;
-}
-
-float AttrTint::albedo() const {
-    return mAlbedo;
-}
-
-float AttrTint::emissive() const {
-    return mEmissive;
-}
-
-void AttrTint::set(const float albedoRatio, const float emissiveRatio) {
-    mAlbedo = albedoRatio;
-    mEmissive = emissiveRatio;
+    return sts::isEqual(mAlbedo, other.mAlbedo, 0.01f) &&
+           sts::isEqual(mEmissive, other.mEmissive, 0.01f);
 }
 
 /**************************************************************************************************/

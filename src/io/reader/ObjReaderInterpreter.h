@@ -119,9 +119,9 @@ protected:
     void gotAnimHide(const AnimVisibility::Key & key) override;
     void gotAnimShow(const AnimVisibility::Key & key) override;
     void gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
-                          bool hasLoop, float loopVal) override;
+                          std::optional<float> loopVal) override;
     void gotRotateAnim(AnimRotate::KeyList & key, float ( & inVector)[3], std::string & dataref,
-                       bool hasLoop, float loopVal) override;
+                       std::optional<float> loopVal) override;
 
     //-----------------------------------------------------
 

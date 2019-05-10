@@ -34,37 +34,11 @@
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrDrapedLayerGroup::AttrDrapedLayerGroup(const ELayer layer, const std::int32_t offset)
-    : mOffset(static_cast<uint8_t>(offset)),
-      mLayer(layer),
-      mIsEnabled(true) { }
-
-AttrDrapedLayerGroup::AttrDrapedLayerGroup()
-    : mOffset(0),
-      mLayer(ELayer(ELayer::objects)),
-      mIsEnabled(false) { }
-
-/**************************************************************************************************/
 ///////////////////////////////////////////* Operators *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrDrapedLayerGroup::operator bool() const {
-    return mIsEnabled;
-}
-
-void AttrDrapedLayerGroup::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
 bool AttrDrapedLayerGroup::operator==(const AttrDrapedLayerGroup & other) const {
-    return (mIsEnabled == other.mIsEnabled && mOffset == other.mOffset && mLayer == other.mLayer);
-}
-
-bool AttrDrapedLayerGroup::operator!=(const AttrDrapedLayerGroup & other) const {
-    return !operator==(other);
+    return mOffset == other.mOffset && mLayer == other.mLayer;
 }
 
 /**************************************************************************************************/
@@ -75,20 +49,6 @@ void AttrDrapedLayerGroup::setOffset(std::int32_t offset) {
     offset = std::min(offset, 5);
     offset = std::max(offset, -5);
     mOffset = static_cast<std::int8_t>(offset);
-    mIsEnabled = true;
-}
-
-std::int32_t AttrDrapedLayerGroup::offset() const {
-    return static_cast<std::int32_t>(mOffset);
-}
-
-void AttrDrapedLayerGroup::setLayer(const ELayer layer) {
-    mLayer = layer;
-    mIsEnabled = true;
-}
-
-ELayer AttrDrapedLayerGroup::layer() const {
-    return mLayer;
 }
 
 /**************************************************************************************************/

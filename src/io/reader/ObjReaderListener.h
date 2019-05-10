@@ -165,9 +165,9 @@ public:
     virtual void gotAnimHide(const AnimVisibility::Key & key) = 0;
     virtual void gotAnimShow(const AnimVisibility::Key & key) = 0;
     virtual void gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
-                                  bool hasLoop, float loopVal) = 0;
+                                  std::optional<float> loopVal) = 0;
     virtual void gotRotateAnim(AnimRotate::KeyList & keys, float (&inVector)[3], std::string & dataref,
-                               bool hasLoop, float loopVal) = 0;
+                               std::optional<float> loopVal) = 0;
 
     //-----------------------------------------------------
 

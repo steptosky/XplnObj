@@ -28,6 +28,8 @@
 */
 
 #include "ObjState.h"
+#include "common/Logger.h"
+#include "common/AttributeNames.h"
 
 namespace xobj {
 
@@ -36,7 +38,7 @@ namespace xobj {
 /**************************************************************************************************/
 
 void ObjState::processBool(const bool newValue, bool & inOutStateValue,
-                                const std::function<void(bool enable)> & switchFn) {
+                           const std::function<void(bool enable)> & switchFn) {
     if (newValue == inOutStateValue) {
         return;
     }
@@ -46,6 +48,13 @@ void ObjState::processBool(const bool newValue, bool & inOutStateValue,
     }
     else {
         switchFn(false);
+    }
+}
+
+void ObjState::finish(const std::string & objName) {
+    if (!mObjHasParticleEmitters && mGlobal.mParticleSystemPath && !mGlobal.mParticleSystemPath->empty()) {
+        ULWarning << "The obj <" << objName << "> has the attribute <" << ATTR_GLOBAL_PARTICLE_SYSTEM
+                << "> but it doesn't contain any particle emitters";
     }
 }
 

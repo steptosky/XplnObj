@@ -32,6 +32,8 @@
 #include "ObjWriteGeometry.h"
 #include "converters/ObjString.h"
 #include "converters/StringStream.h"
+#include "common/Logger.h"
+#include "common/AttributeNames.h"
 
 #include "xpln/obj/ObjMain.h"
 #include "xpln/obj/ObjMesh.h"
@@ -56,8 +58,9 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
-ObjWriteGeometry::ObjWriteGeometry(const ExportOptions * option, IOStatistic * outStat)
-    : mMeshFaceOffset(0),
+ObjWriteGeometry::ObjWriteGeometry(const ExportOptions * option, IOStatistic * outStat, ObjState::Ptr state)
+    : mState(std::move(state)),
+      mMeshFaceOffset(0),
       mMeshVertexOffset(0),
       mPointLightOffsetByObject(0) {
 
@@ -73,6 +76,7 @@ ObjWriteGeometry::ObjWriteGeometry(const ExportOptions * option, IOStatistic * o
 /**************************************************************************************************/
 
 void ObjWriteGeometry::reset() {
+    mState->reset();
     mMeshVertexOffset = 0;
     mMeshFaceOffset = 0;
     mPointLightOffsetByObject = 0;
@@ -368,6 +372,14 @@ bool ObjWriteGeometry::printDummyObject(AbstractWriter & writer, const ObjAbstra
 bool ObjWriteGeometry::printEmitterObject(AbstractWriter & writer, const ObjAbstract & objBase) const {
     if (objBase.objType() == OBJ_PARTICLE_EMITTER) {
         const auto & emitter = reinterpret_cast<const ObjEmitter&>(objBase);
+
+        mState->mObjHasParticleEmitters = true;
+        if (!mState->mGlobal.mParticleSystemPath || mState->mGlobal.mParticleSystemPath->empty()) {
+            ULError << "The object <" << objBase.objectName() << "> is an particle emitter but you "
+                    << "don't have particle system specified for the object."
+                    << "You have to put attribute: " << ATTR_GLOBAL_PARTICLE_SYSTEM;
+        }
+
         printObj(emitter, writer, mOptions->isEnabled(eExportOptions::XOBJ_EXP_PARTICLE_EMITTER));
         ++mStat->mEmitterObjCount;
         return true;

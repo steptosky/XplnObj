@@ -53,7 +53,7 @@ namespace xobj {
 ObjWriter::ObjWriter()
     : mState(std::make_shared<ObjState>()),
       mAnimationWritter(&mExportOptions, &mStatistic),
-      mObjWriteGeometry(&mExportOptions, &mStatistic),
+      mObjWriteGeometry(&mExportOptions, &mStatistic, mState),
       mWriteAttr(mState) {
 
     reset();
@@ -213,6 +213,8 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
         mStatistic.mGlobAttrCount += globAttrNum;
         mStatistic.mTrisAttrCount += objAttrNum;
         mStatistic.mTrisManipCount += manipNum;
+
+        mState->finish(root->objectName());
 
         if (mMain->mAttr.mDebug) {
             ++mStatistic.mGlobAttrCount;

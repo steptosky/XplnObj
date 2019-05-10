@@ -44,26 +44,31 @@ class AbstractWriter;
  * \details ATTR_axis_detented
  * \ingroup Manipulators
  */
-class AttrAxisDetented {
+class AttrAxisDetented final {
 public:
 
     //-------------------------------------------------------------------------
+    /// @{
 
     AttrAxisDetented() = default;
     AttrAxisDetented(const AttrAxisDetented &) = default;
     AttrAxisDetented(AttrAxisDetented &&) = default;
 
-    virtual ~AttrAxisDetented() = default;
+    ~AttrAxisDetented() = default;
 
     AttrAxisDetented & operator=(const AttrAxisDetented &) = default;
     AttrAxisDetented & operator=(AttrAxisDetented &&) = default;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrAxisDetented & other) const;
     XpObjLib bool operator!=(const AttrAxisDetented & other) const;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     bool isEnabled() const { return mIsEnabled; }
     void setEnabled(const bool state) { mIsEnabled = state; }
@@ -96,11 +101,14 @@ public:
     XpObjLib void setDataref(const std::string & val);
     XpObjLib const std::string & dataref() const;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*! \copydoc AttrManipBase::printObj */
     XpObjLib std::size_t printObj(AbstractWriter & writer) const;
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:

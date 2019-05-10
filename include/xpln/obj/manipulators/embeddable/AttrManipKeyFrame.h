@@ -45,36 +45,46 @@ class AbstractWriter;
  * \details ATTR_manip_keyframe
  * \ingroup Manipulators
  */
-class AttrManipKeyFrame {
+class AttrManipKeyFrame final {
 public:
+
+    //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib explicit AttrManipKeyFrame(float value = 0.0f, float angle = 0.0f);
 
     AttrManipKeyFrame(const AttrManipKeyFrame &) = default;
     AttrManipKeyFrame(AttrManipKeyFrame &&) = default;
 
-    virtual ~AttrManipKeyFrame() = default;
+    ~AttrManipKeyFrame() = default;
 
     AttrManipKeyFrame & operator=(const AttrManipKeyFrame &) = default;
     AttrManipKeyFrame & operator=(AttrManipKeyFrame &&) = default;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AttrManipKeyFrame & other) const;
     XpObjLib bool operator!=(const AttrManipKeyFrame & other) const;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib void setValue(float vales);
     XpObjLib void setAngle(float angle);
     XpObjLib float value() const;
     XpObjLib float angle() const;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
     /*! \copydoc AttrManipBase::printObj */
     XpObjLib std::size_t printObj(AbstractWriter & writer) const;
 
+    /// @}
     //-------------------------------------------------------------------------
 
 private:

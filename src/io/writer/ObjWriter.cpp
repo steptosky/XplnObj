@@ -52,8 +52,7 @@ namespace xobj {
 
 ObjWriter::ObjWriter()
     : mAnimationWritter(&mExportOptions, &mStatistic),
-      mObjWriteGeometry(&mExportOptions, &mStatistic),
-      mWriteAttr(&mObjWriteManip) {
+      mObjWriteGeometry(&mExportOptions, &mStatistic) {
 
     reset();
 }
@@ -70,10 +69,8 @@ ObjWriter::~ObjWriter() {
 
 void ObjWriter::reset() {
     mStatistic.reset();
-    mWriteGlobAttr.reset();
     mWriteAttr.reset();
     mObjWriteGeometry.reset();
-    mObjWriteManip.reset();
 }
 
 /**************************************************************************************************/
@@ -207,8 +204,10 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
         printObjects(writer, mMain->pDraped.transform());
         writer.printEol();
 
-        mStatistic.pTrisManipCount += mObjWriteManip.count();
-        mStatistic.pTrisAttrCount += mWriteAttr.count();
+        const auto [globAttrNum,objAttrNum, manipNum] = mWriteAttr.count();
+        mStatistic.pGlobAttrCount += globAttrNum;
+        mStatistic.pTrisAttrCount += objAttrNum;
+        mStatistic.pTrisManipCount += manipNum;
 
         if (mMain->pAttr.mDebug) {
             ++mStatistic.pGlobAttrCount;
@@ -297,8 +296,7 @@ void ObjWriter::calculateVerticiesAndFaces(const Transform & parent) {
 void ObjWriter::printGlobalInformation(AbstractWriter & writer, const ObjMain & objRoot) {
     // write header
     writer.printLine("I\n800\nOBJ\n");
-    mWriteGlobAttr.write(&writer, &objRoot);
-    mStatistic.pGlobAttrCount += mWriteGlobAttr.count();
+    mWriteAttr.writeGlobAttr(&writer, &objRoot);
 
     writer.printEol();
     std::stringstream stream;
@@ -323,9 +321,7 @@ void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) 
 
     for (auto & objBase : parent.objList()) {
         // order attr and manip is important.
-        mWriteAttr.write(&writer, objBase.get());
-        mObjWriteManip.write(&writer, objBase.get());
-
+        mWriteAttr.writeObjAttr(&writer, objBase.get());
         //--------------
 
         mStatistic.pCustomLinesCount += printObjCustomData(writer, objBase->dataBefore());

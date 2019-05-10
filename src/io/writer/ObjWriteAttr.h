@@ -30,9 +30,11 @@
 */
 
 #include <cstdint>
-#include "xpln/obj/ObjMesh.h"
+#include <tuple>
 #include "xpln/obj/attributes/AttrSet.h"
+#include "xpln/obj/ObjMesh.h"
 #include "io/ObjWriteState.h"
+#include "xpln/obj/ObjMain.h"
 
 namespace xobj {
 
@@ -53,26 +55,31 @@ class ObjWriteManip;
 class ObjWriteAttr {
 public:
 
-    explicit ObjWriteAttr(ObjWriteManip * manipWriter)
-        : mManipWriter(manipWriter) {}
-
+    ObjWriteAttr() = default;
     ObjWriteAttr(const ObjWriteAttr &) = delete;
     ObjWriteAttr & operator =(const ObjWriteAttr &) = delete;
 
     ~ObjWriteAttr() = default;
 
-    XpObjLib void write(AbstractWriter * writer, const ObjAbstract * obj);
+    XpObjLib void writeGlobAttr(AbstractWriter * writer, const ObjMain * obj);
+    XpObjLib void writeObjAttr(AbstractWriter * writer, const ObjAbstract * obj);
     XpObjLib void reset();
-    XpObjLib std::size_t count() const;
+    XpObjLib std::tuple<std::size_t, std::size_t, std::size_t> count() const;
 
 private:
 
-    void writeAttributes(const AttrSet & attrSet);
+    void writeAttr();
+    void writeManip();
+    bool checkManip(AttrManipBase * manip) const;
 
-    ObjWriteManip * mManipWriter = nullptr;
+    const ObjMesh * mObj = nullptr;
     AbstractWriter * mWriter = nullptr;
-    std::size_t mCounter = 0;
-	ObjWriteState mState;
+    ObjWriteState mState;
+    bool mIsPanelManip = false;
+
+    std::size_t mGlobNum = 0;
+    std::size_t mAttrNum = 0;
+    std::size_t mManipNum = 0;
 
 };
 

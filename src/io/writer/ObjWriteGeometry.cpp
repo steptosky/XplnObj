@@ -90,7 +90,7 @@ void ObjWriteGeometry::printMeshVerticiesRecursive(AbstractWriter & writer, cons
                 writer.printLine(std::string("# ").append(mobj->objectName()));
             }
 
-            for (const MeshVertex & v : mobj->pVertices) {
+            for (const MeshVertex & v : mobj->mVertices) {
                 printObj(v, writer, mobj->isTree());
             }
         }
@@ -119,7 +119,7 @@ void ObjWriteGeometry::printMeshFaceRecursive(AbstractWriter & writer, const Obj
     for (const auto & lod : main.lods()) {
         writeMeshFaceRecursive(stream, lod->transform(), idx, offset);
     }
-    writeMeshFaceRecursive(stream, main.pDraped.transform(), idx, offset);
+    writeMeshFaceRecursive(stream, main.mDraped.transform(), idx, offset);
     writer.printLine(stream.str());
 }
 
@@ -131,10 +131,10 @@ void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Trans
         }
 
         const auto * mobj = static_cast<const ObjMesh*>(objBase.get());
-        const ObjMesh::FaceList & faces = mobj->pFaces;
+        const ObjMesh::FaceList & faces = mobj->mFaces;
 
         const std::size_t idxNum = faces.size() * 3U;
-        const std::size_t vEnd = mStat->pMeshFacesCount * 3U;
+        const std::size_t vEnd = mStat->mMeshFacesCount * 3U;
 
         for (size_t currIdx = 0; currIdx < idxNum; ++currIdx) {
             const std::size_t last = (idx % 10);
@@ -151,15 +151,15 @@ void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Trans
             const std::size_t modulo = currIdx % 3U;
             const MeshFace & f = faces.at(currIdx / 3U);
             switch (modulo) {
-                case 0: writer << (f.pV0 + offset) << " ";
+                case 0: writer << (f.mV0 + offset) << " ";
                     break;
-                case 2: writer << (f.pV2 + offset) << " ";
+                case 2: writer << (f.mV2 + offset) << " ";
                     break;
-                default: writer << (f.pV1 + offset) << " ";
+                default: writer << (f.mV1 + offset) << " ";
                     break;
             }
         }
-        offset += mobj->pVertices.size();
+        offset += mobj->mVertices.size();
     }
 
     for (Transform::TransformIndex i = 0; i < inNode.childrenNum(); ++i) {
@@ -225,7 +225,7 @@ void ObjWriteGeometry::printLightPointVerticiesRecursive(AbstractWriter & writer
 bool ObjWriteGeometry::printMeshObject(AbstractWriter & writer, const ObjAbstract & objBase) {
     if (objBase.objType() == OBJ_MESH) {
         const auto * mobj = static_cast<const ObjMesh*>(&objBase);
-        const std::size_t numface = mobj->pFaces.size();
+        const std::size_t numface = mobj->mFaces.size();
         std::stringstream stream;
         stream.precision(PRECISION);
         stream << std::fixed;
@@ -238,7 +238,7 @@ bool ObjWriteGeometry::printMeshObject(AbstractWriter & writer, const ObjAbstrac
         }
 
         writer.printLine(stream.str());
-        ++mStat->pMeshObjCount;
+        ++mStat->mMeshObjCount;
         mMeshFaceOffset += numface;
         return true;
     }
@@ -261,7 +261,7 @@ bool ObjWriteGeometry::printLightPointObject(AbstractWriter & writer, const ObjA
 
         writer.printLine(stream.str());
         ++mPointLightOffsetByObject;
-        ++mStat->pLightObjPointCount;
+        ++mStat->mLightObjPointCount;
         return true;
     }
     return false;
@@ -287,16 +287,16 @@ printLightObject(AbstractWriter & writer, const ObjAbstract & objBase, const Tra
     switch (type) {
         case OBJ_LIGHT_NAMED:
             return printLight<ObjLightNamed>(writer, static_cast<const ObjLightNamed&>(objBase), *mOptions,
-                                             mStat->pLightObjNamedCount);
+                                             mStat->mLightObjNamedCount);
         case OBJ_LIGHT_CUSTOM:
             return printLight<ObjLightCustom>(writer, static_cast<const ObjLightCustom&>(objBase), *mOptions,
-                                              mStat->pLightObjCustomCount);
+                                              mStat->mLightObjCustomCount);
         case OBJ_LIGHT_PARAM:
             return printLight<ObjLightParam>(writer, static_cast<const ObjLightParam&>(objBase), *mOptions,
-                                             mStat->pLightObjParamCount);
+                                             mStat->mLightObjParamCount);
         case OBJ_LIGHT_SPILL_CUSTOM:
             return printLight<ObjLightSpillCust>(writer, static_cast<const ObjLightSpillCust&>(objBase), *mOptions,
-                                                 mStat->pLightObjSpillCustCount);
+                                                 mStat->mLightObjSpillCustCount);
         default:
             return false;
     }
@@ -322,7 +322,7 @@ bool ObjWriteGeometry::printLineObject(AbstractWriter & writer, const ObjAbstrac
 
         writer.printLine(stream.str());
         mMeshVertexOffset += numvert;
-        ++mStat->pLineObjCount;
+        ++mStat->mLineObjCount;
         return true;
     }
     return false;
@@ -337,9 +337,9 @@ bool ObjWriteGeometry::printSmokeObject(AbstractWriter & writer, const ObjAbstra
         // std::string params = toObjString(smoke, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_SMOKE));
         // if (!params.empty()) {
         //     writer.printLine(params);
-        //     ++mStat->pSmokeObjCount;
+        //     ++mStat->mSmokeObjCount;
         // }
-        ++mStat->pSmokeObjCount;
+        ++mStat->mSmokeObjCount;
         return true;
     }
     return false;
@@ -354,9 +354,9 @@ bool ObjWriteGeometry::printDummyObject(AbstractWriter & writer, const ObjAbstra
         // std::string params = toObjString(dummy, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_DUMMY));
         // if (!params.empty()) {
         //     writer.printLine(params);
-        //     ++mStat->pDummyObjCount;
+        //     ++mStat->mDummyObjCount;
         // }
-        ++mStat->pDummyObjCount;
+        ++mStat->mDummyObjCount;
         return true;
     }
     return false;

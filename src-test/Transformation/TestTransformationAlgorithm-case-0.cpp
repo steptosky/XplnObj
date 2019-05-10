@@ -112,8 +112,8 @@ TEST(TestTransformationAlgorithm_case0, case2) {
     Transform & transformOut1 = transformOut0.newChild(TOTEXT(transformOut1));
     transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
 
-    mainOut.pMatrix.rotateDegreesY(-90.0f);
-    mainOut.pMatrix.setPosition(Point3(50.0f, 0.0f, 0.0f));
+    mainOut.mMatrix.rotateDegreesY(-90.0f);
+    mainOut.mMatrix.setPosition(Point3(50.0f, 0.0f, 0.0f));
 
     transformOut1.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
     transformOut1.pMatrix.rotateDegreesY(+90.0f);

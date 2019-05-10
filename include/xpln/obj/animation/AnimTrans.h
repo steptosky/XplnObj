@@ -65,7 +65,7 @@ public:
     //-----------------------------------------------------
 
     bool isAnimated() const {
-        return !pKeys.empty();
+        return !mKeys.empty();
     }
 
     //-----------------------------------------------------
@@ -74,9 +74,9 @@ public:
 
     //-----------------------------------------------------
 
-    std::optional<float> pLoopValue;
-    std::string pDrf;
-    KeyList pKeys;
+    std::optional<float> mLoop;
+    std::string mDrf;
+    KeyList mKeys;
 
 };
 

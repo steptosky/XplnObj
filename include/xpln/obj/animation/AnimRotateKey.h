@@ -45,12 +45,12 @@ class AnimRotateKey {
 public:
 
     AnimRotateKey()
-        : pAngleDegrees(0.0f),
-          pDrfValue(0.0f) {}
+        : mAngleDegrees(0.0f),
+          mDrfValue(0.0f) {}
 
     AnimRotateKey(const float angleDegrees, const float dataRefValue)
-        : pAngleDegrees(angleDegrees),
-          pDrfValue(dataRefValue) {}
+        : mAngleDegrees(angleDegrees),
+          mDrfValue(dataRefValue) {}
 
     //-----------------------------------------
 
@@ -63,14 +63,14 @@ public:
     //-----------------------------------------
 
     void reset() {
-        pAngleDegrees = 0.0f;
-        pDrfValue = 0.0f;
+        mAngleDegrees = 0.0f;
+        mDrfValue = 0.0f;
     }
 
     //-----------------------------------------
 
-    float pAngleDegrees;
-    float pDrfValue;
+    float mAngleDegrees;
+    float mDrfValue;
 
     //-----------------------------------------
 

@@ -194,8 +194,8 @@ TEST(TestTransform_case3, case2) {
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
     transformOut3.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 3"));
 
-    mainOut.pMatrix.setPosition(Point3(-50.0f, 0.0f, -50.0f));
-    mainOut.pMatrix.rotateDegreesY(45.0f);
+    mainOut.mMatrix.setPosition(Point3(-50.0f, 0.0f, -50.0f));
+    mainOut.mMatrix.rotateDegreesY(45.0f);
 
     transformOut1.pMatrix.rotateDegreesY(-45.0f);
     transformOut2.pMatrix.rotateDegreesY(-45.0f);
@@ -288,18 +288,18 @@ TEST(TestTransform_case3, case3) {
     transformOut3.pMatrix.setPosition(Point3(150.0f));
 
     AnimTrans animTr1;
-    animTr1.pKeys.emplace_back(AnimTrans::Key());
-    animTr1.pKeys.emplace_back(AnimTrans::Key());
+    animTr1.mKeys.emplace_back(AnimTrans::Key());
+    animTr1.mKeys.emplace_back(AnimTrans::Key());
     transformOut1.pAnimTrans.emplace_back(animTr1);
 
     AnimTrans animTr2;
-    animTr2.pKeys.emplace_back(AnimTrans::Key());
-    animTr2.pKeys.emplace_back(AnimTrans::Key());
+    animTr2.mKeys.emplace_back(AnimTrans::Key());
+    animTr2.mKeys.emplace_back(AnimTrans::Key());
     transformOut2.pAnimTrans.emplace_back(animTr2);
 
     AnimTrans animTr3;
-    animTr3.pKeys.emplace_back(AnimTrans::Key());
-    animTr3.pKeys.emplace_back(AnimTrans::Key());
+    animTr3.mKeys.emplace_back(AnimTrans::Key());
+    animTr3.mKeys.emplace_back(AnimTrans::Key());
     transformOut3.pAnimTrans.emplace_back(animTr3);
 
     ExportContext expContext(fileName);
@@ -391,7 +391,7 @@ TEST(TestTransform_case3, case4) {
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
     transformOut3.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 3"));
 
-    mainOut.pMatrix.setPosition(Point3(-50.0f));
+    mainOut.mMatrix.setPosition(Point3(-50.0f));
     transformOut1.pMatrix.setPosition(Point3(50.0f));
     transformOut2.pMatrix.setPosition(Point3(100.0f));
     transformOut3.pMatrix.setPosition(Point3(150.0f));

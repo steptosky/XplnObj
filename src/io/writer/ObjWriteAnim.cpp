@@ -109,39 +109,39 @@ void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const Transform &
     std::string sep = mOptions->isEnabled(XOBJ_EXP_DEBUG) ? "   " : " ";
     for (auto & a : animTrans) {
         if (a.isAnimated() && checkParameters(a, std::string("Transform: ").append(transform.name()))) {
-            if (a.pKeys.size() == 2) {
+            if (a.mKeys.size() == 2) {
                 StringStream stream;
                 stream << ATTR_TRANS
-                        << sep << a.pKeys[0].pPosition.toString(PRECISION)
-                        << sep << a.pKeys[1].pPosition.toString(PRECISION)
-                        << sep << a.pKeys[0].pDrfValue
-                        << " " << a.pKeys[1].pDrfValue
-                        << sep << (a.pDrf.empty() ? "none" : mWriter->actualDataref(a.pDrf).c_str());
+                        << sep << a.mKeys[0].mPosition.toString(PRECISION)
+                        << sep << a.mKeys[1].mPosition.toString(PRECISION)
+                        << sep << a.mKeys[0].mDrfValue
+                        << " " << a.mKeys[1].mDrfValue
+                        << sep << (a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf).c_str());
                 mWriter->printLine(stream.str());
-                if (a.pLoopValue) {
-                    printLoop(*a.pLoopValue);
+                if (a.mLoop) {
+                    printLoop(*a.mLoop);
                 }
 
-                ++mStat->pAnimAttrCount;
+                ++mStat->mAnimAttrCount;
             }
             else {
                 StringStream stream;
-                stream << ATTR_TRANS_BEGIN << sep << (a.pDrf.empty() ? "none" : mWriter->actualDataref(a.pDrf).c_str());
+                stream << ATTR_TRANS_BEGIN << sep << (a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf).c_str());
                 mWriter->printLine(stream.str());
                 mWriter->spaceMore();
 
-                for (auto & key : a.pKeys) {
+                for (auto & key : a.mKeys) {
                     printObj(key, *mWriter);
                 }
 
-                if (a.pLoopValue) {
-                    printLoop(*a.pLoopValue);
+                if (a.mLoop) {
+                    printLoop(*a.mLoop);
                 }
 
                 mWriter->spaceLess();
                 mWriter->printLine(ATTR_TRANS_END);
 
-                ++mStat->pAnimAttrCount;
+                ++mStat->mAnimAttrCount;
             }
         }
     }
@@ -153,42 +153,42 @@ void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const Transform &
     std::string sep = mOptions->isEnabled(XOBJ_EXP_DEBUG) ? "   " : " ";
     for (auto & a : animRot) {
         if (a.isAnimated() && checkParameters(a, std::string("Transform: ").append(transform.name()))) {
-            if (a.pKeys.size() == 2) {
+            if (a.mKeys.size() == 2) {
                 StringStream stream;
                 stream << ATTR_ROTATE
-                        << sep << a.pVector.normalized().toString(PRECISION)
-                        << sep << a.pKeys[0].pAngleDegrees
-                        << " " << a.pKeys[1].pAngleDegrees
-                        << sep << a.pKeys[0].pDrfValue
-                        << " " << a.pKeys[1].pDrfValue
-                        << sep << (a.pDrf.empty() ? "none" : mWriter->actualDataref(a.pDrf).c_str());
+                        << sep << a.mVector.normalized().toString(PRECISION)
+                        << sep << a.mKeys[0].mAngleDegrees
+                        << " " << a.mKeys[1].mAngleDegrees
+                        << sep << a.mKeys[0].mDrfValue
+                        << " " << a.mKeys[1].mDrfValue
+                        << sep << (a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf).c_str());
                 mWriter->printLine(stream.str());
-                if (a.pLoopValue) {
-                    printLoop(*a.pLoopValue);
+                if (a.mLoop) {
+                    printLoop(*a.mLoop);
                 }
 
-                ++mStat->pAnimAttrCount;
+                ++mStat->mAnimAttrCount;
             }
             else {
                 StringStream stream;
                 stream << ATTR_ROTATE_BEGIN
-                        << sep << a.pVector.normalized().toString(PRECISION)
-                        << sep << (a.pDrf.empty() ? "none" : mWriter->actualDataref(a.pDrf).c_str());
+                        << sep << a.mVector.normalized().toString(PRECISION)
+                        << sep << (a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf).c_str());
                 mWriter->printLine(stream.str());
                 mWriter->spaceMore();
 
-                for (auto & key : a.pKeys) {
+                for (auto & key : a.mKeys) {
                     printObj(key, *mWriter);
                 }
 
-                if (a.pLoopValue) {
-                    printLoop(*a.pLoopValue);
+                if (a.mLoop) {
+                    printLoop(*a.mLoop);
                 }
 
                 mWriter->spaceLess();
                 mWriter->printLine(ATTR_ROTATE_END);
 
-                ++mStat->pAnimAttrCount;
+                ++mStat->mAnimAttrCount;
             }
         }
     }
@@ -198,17 +198,17 @@ void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const Transform &
 //-------------------------------------------------------------------------
 
 void ObjWriteAnim::printVisible(const AnimVisibility & inAnim, const Transform & transform) const {
-    if (inAnim.pKeys.empty())
+    if (inAnim.mKeys.empty())
         return;
 
-    for (auto & curr : inAnim.pKeys) {
+    for (auto & curr : inAnim.mKeys) {
         if (checkParameters(curr, std::string("Transform: ").append(transform.name()))) {
-            ++mStat->pAnimAttrCount;
+            ++mStat->mAnimAttrCount;
             printObj(curr, *mWriter);
-            if (curr.pLoopValue) {
-                printLoop(*curr.pLoopValue);
+            if (curr.mLoopValue) {
+                printLoop(*curr.mLoopValue);
             }
-            ++mStat->pAnimAttrCount;
+            ++mStat->mAnimAttrCount;
         }
     }
 }
@@ -221,7 +221,7 @@ void ObjWriteAnim::printLoop(const float val) const {
     StringStream stream;
     stream << ANIM_KEYFRAME_LOOP << " " << val;
     mWriter->printLine(stream.str());
-    ++mStat->pAnimAttrCount;
+    ++mStat->mAnimAttrCount;
 }
 
 /**************************************************************************************************/

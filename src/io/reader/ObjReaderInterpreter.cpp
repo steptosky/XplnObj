@@ -87,8 +87,8 @@ ObjReaderInterpreter::~ObjReaderInterpreter() {
 
 void ObjReaderInterpreter::gotGlobAttrTexture(const std::string & val) {
     if (!val.empty()) {
-        mObjMain->pAttr.mTexture = val;
-        ++mIOStatistic->pGlobAttrCount;
+        mObjMain->mAttr.mTexture = val;
+        ++mIOStatistic->mGlobAttrCount;
     }
     else {
         ULWarning << "Texture is not specified.";
@@ -96,13 +96,13 @@ void ObjReaderInterpreter::gotGlobAttrTexture(const std::string & val) {
 }
 
 void ObjReaderInterpreter::gotGlobAttrTextureLit(const std::string & val) {
-    mObjMain->pAttr.mTextureLit = val;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mTextureLit = val;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrTextureNormal(const std::string & val) {
-    mObjMain->pAttr.mTextureNormal = val;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mTextureNormal = val;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 /**************************************************************************************************/
@@ -110,81 +110,81 @@ void ObjReaderInterpreter::gotGlobAttrTextureNormal(const std::string & val) {
 /**************************************************************************************************/
 
 void ObjReaderInterpreter::gotGlobAttrWetDry(const AttrWetDry & globAttr) {
-    mObjMain->pAttr.mWetDry = globAttr;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mWetDry = globAttr;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrTint(const AttrTint & globAttr) {
-    mObjMain->pAttr.mTint = globAttr;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mTint = globAttr;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrTilted() {
-    mObjMain->pAttr.mTilted = true;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mTilted = true;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrBlend(const AttrBlend & globAttr) {
-    mObjMain->pAttr.mBlend = globAttr;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mBlend = globAttr;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrSpecular(const AttrSpecular & globAttr) {
-    mObjMain->pAttr.mSpecular = globAttr;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mSpecular = globAttr;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrNoShadow() {
-    mObjMain->pAttr.mDropShadow = true;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mDropShadow = true;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrDrapedLod(const AttrDrapedLod & globAttr) {
-    mObjMain->pDraped.pAttr.mLod = globAttr;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mDraped.mAttr.mLod = globAttr;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrCockpitLit() {
-    mObjMain->pAttr.mCockpitLit = true;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mCockpitLit = true;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrNormalMetalness() {
-    mObjMain->pAttr.mNormalMetalness = true;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mNormalMetalness = true;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrBlendGlass() {
-    mObjMain->pAttr.mBlendClass = true;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mBlendClass = true;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrLayerGroup(const AttrLayerGroup & globAttr) {
-    mObjMain->pAttr.mLayerGroup = globAttr;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mLayerGroup = globAttr;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrSlopeLimit(const AttrSlopeLimit & globAttr) {
-    mObjMain->pAttr.mSlopeLimit = globAttr;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mSlopeLimit = globAttr;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrCockpitRegion(const AttrCockpitRegion & globAttr) {
-    if (!mObjMain->pAttr.mCockpitRegion1) {
-        mObjMain->pAttr.mCockpitRegion1 = globAttr;
-        ++mIOStatistic->pGlobAttrCount;
+    if (!mObjMain->mAttr.mCockpitRegion1) {
+        mObjMain->mAttr.mCockpitRegion1 = globAttr;
+        ++mIOStatistic->mGlobAttrCount;
     }
-    else if (!mObjMain->pAttr.mCockpitRegion2) {
-        mObjMain->pAttr.mCockpitRegion2 = globAttr;
-        ++mIOStatistic->pGlobAttrCount;
+    else if (!mObjMain->mAttr.mCockpitRegion2) {
+        mObjMain->mAttr.mCockpitRegion2 = globAttr;
+        ++mIOStatistic->mGlobAttrCount;
     }
-    else if (!mObjMain->pAttr.mCockpitRegion3) {
-        mObjMain->pAttr.mCockpitRegion3 = globAttr;
-        ++mIOStatistic->pGlobAttrCount;
+    else if (!mObjMain->mAttr.mCockpitRegion3) {
+        mObjMain->mAttr.mCockpitRegion3 = globAttr;
+        ++mIOStatistic->mGlobAttrCount;
     }
-    else if (!mObjMain->pAttr.mCockpitRegion4) {
-        mObjMain->pAttr.mCockpitRegion4 = globAttr;
-        ++mIOStatistic->pGlobAttrCount;
+    else if (!mObjMain->mAttr.mCockpitRegion4) {
+        mObjMain->mAttr.mCockpitRegion4 = globAttr;
+        ++mIOStatistic->mGlobAttrCount;
     }
     else {
         ULError << "Too many cockpit regions, must be 4 per file.";
@@ -192,19 +192,19 @@ void ObjReaderInterpreter::gotGlobAttrCockpitRegion(const AttrCockpitRegion & gl
 }
 
 void ObjReaderInterpreter::gotGlobAttrSlungLoadWeight(const AttrSlungLoadWeight & globAttr) {
-    mObjMain->pAttr.mSlungLoadWeight = globAttr;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mAttr.mSlungLoadWeight = globAttr;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrLayerGroupDraped(const AttrDrapedLayerGroup & globAttr) {
-    mObjMain->pDraped.pAttr.mLayerGroup = globAttr;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mDraped.mAttr.mLayerGroup = globAttr;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 void ObjReaderInterpreter::gotGlobAttrDebug() {
-    mObjMain->pExportOptions.enable(XOBJ_EXP_DEBUG);
-    mObjMain->pAttr.mDebug = true;
-    ++mIOStatistic->pGlobAttrCount;
+    mObjMain->mExportOptions.enable(XOBJ_EXP_DEBUG);
+    mObjMain->mAttr.mDebug = true;
+    ++mIOStatistic->mGlobAttrCount;
 }
 
 /**************************************************************************************************/
@@ -216,7 +216,7 @@ void ObjReaderInterpreter::gotLod(const float near, const float far, const std::
     l.setObjectName(extractComment(endLineComment, l.objectName().c_str()));
     mCurrentLod = &l;
     mCurrentTransform = &l.transform();
-    //mCurrentTransform->pMatrix *= mRootMtx;
+    //mCurrentTransform->mMatrix *= mRootMtx;
 }
 
 /**************************************************************************************************/
@@ -237,58 +237,58 @@ void ObjReaderInterpreter::gotMeshFaces(const FaceIndexArray & indices) {
 
 void ObjReaderInterpreter::gotTrisAttrHard(const AttrHard & attr) {
     mCurrentAttrSet.mHard = attr;
-    ++mIOStatistic->pTrisAttrCount;
+    ++mIOStatistic->mTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrReset() {
     mCurrentAttrSet.mShiny = AttrShiny();
     // TODO Reset other light attributes like emission specular etc...
-    ++mIOStatistic->pTrisAttrCount;
+    ++mIOStatistic->mTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrBlend(const AttrBlend & attr) {
     mCurrentAttrSet.mBlend = attr;
-    ++mIOStatistic->pTrisAttrCount;
+    ++mIOStatistic->mTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrShadow(const bool state) {
     mCurrentAttrSet.mIsCastShadow = state;
-    ++mIOStatistic->pTrisAttrCount;
+    ++mIOStatistic->mTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrDraped(const bool state) {
     mCurrentAttrSet.mIsDraped = state;
-    ++mIOStatistic->pTrisAttrCount;
+    ++mIOStatistic->mTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrCockpit(const AttrCockpit & attr) {
     mCurrentAttrSet.mCockpit = attr;
-    ++mIOStatistic->pTrisAttrCount;
+    ++mIOStatistic->mTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrPolyOffset(const AttrPolyOffset & attr) {
     mCurrentAttrSet.mPolyOffset = attr;
-    ++mIOStatistic->pTrisAttrCount;
+    ++mIOStatistic->mTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrShiny(const AttrShiny & attr) {
     mCurrentAttrSet.mShiny = attr;
-    ++mIOStatistic->pTrisAttrCount;
+    ++mIOStatistic->mTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrLightLevel(const AttrLightLevel & attr) {
     mCurrentAttrSet.mLightLevel = attr;
-    ++mIOStatistic->pTrisAttrCount;
+    ++mIOStatistic->mTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrDrawEnable(const bool state) {
     mCurrentAttrSet.mIsDraw = state;
-    ++mIOStatistic->pTrisAttrCount;
+    ++mIOStatistic->mTrisAttrCount;
 }
 
 void ObjReaderInterpreter::gotTrisAttrSolidCamera(const bool state) {
     mCurrentAttrSet.mIsSolidForCamera = state;
-    ++mIOStatistic->pTrisAttrCount;
+    ++mIOStatistic->mTrisAttrCount;
 }
 
 /**************************************************************************************************/
@@ -456,7 +456,7 @@ void ObjReaderInterpreter::gotTrisAttrManip(const AttrManipBase & manip) {
     // TODO Incorrect counting because AttrManipWheel is used as part of the manipulators.
     // So equals does not work as expected for this logic.
     // I don't have a good solution yet.
-    ++mIOStatistic->pTrisManipCount;
+    ++mIOStatistic->mTrisManipCount;
     mCurrentAttrSet.mManipContainer = ManipContainer(manip.clone());
 }
 
@@ -494,17 +494,17 @@ void ObjReaderInterpreter::gotTris(const Index offset, const Index count, const 
     for (FaceIndex i = 0, idx = 0; i < count; i += 3) {
         ObjMesh::Face & face = flist.at(idx++);
 
-        face.pV0 = mIndices.at(offset + i);
-        face.pV1 = mIndices.at(offset + i + 1);
-        face.pV2 = mIndices.at(offset + i + 2);
+        face.mV0 = mIndices.at(offset + i);
+        face.mV1 = mIndices.at(offset + i + 1);
+        face.mV2 = mIndices.at(offset + i + 2);
 
-        min = std::min(min, face.pV0);
-        min = std::min(min, face.pV1);
-        min = std::min(min, face.pV2);
+        min = std::min(min, face.mV0);
+        min = std::min(min, face.mV1);
+        min = std::min(min, face.mV2);
 
-        max = std::max(max, face.pV0);
-        max = std::max(max, face.pV1);
-        max = std::max(max, face.pV2);
+        max = std::max(max, face.mV0);
+        max = std::max(max, face.mV1);
+        max = std::max(max, face.mV2);
     }
 
     if (max > mVertices.size() - 1) {
@@ -518,35 +518,35 @@ void ObjReaderInterpreter::gotTris(const Index offset, const Index count, const 
 
     // make vertex array and fix vertex id of the faces
     for (auto & face : flist) {
-        face.pV0 -= min;
-        face.pV1 -= min;
-        face.pV2 -= min;
+        face.mV0 -= min;
+        face.mV1 -= min;
+        face.mV2 -= min;
         /* can be optimized, there are identical idx values,
          * so there are the situations when the same vertices are copied more than one time.
          * example:
          * IDX 2 1 0 2 3 1 2 0 3
          */
-        vlist.at(face.pV0) = mVertices.at(face.pV0 + min);
-        vlist.at(face.pV1) = mVertices.at(face.pV1 + min);
-        vlist.at(face.pV2) = mVertices.at(face.pV2 + min);
+        vlist.at(face.mV0) = mVertices.at(face.mV0 + min);
+        vlist.at(face.mV1) = mVertices.at(face.mV1 + min);
+        vlist.at(face.mV2) = mVertices.at(face.mV2 + min);
     }
 
     //--------------------------
 
     auto * mesh = new ObjMesh;
-    mesh->pFaces.swap(flist);
-    mesh->pVertices.swap(vlist);
+    mesh->mFaces.swap(flist);
+    mesh->mVertices.swap(vlist);
     mesh->setObjectName(extractComment(endLineComment, mesh->objectName().c_str()));
-    mesh->pAttr = mCurrentAttrSet;
+    mesh->mAttr = mCurrentAttrSet;
 
     //--------------------------
 
-    if (!mesh->pAttr.mIsDraped) {
+    if (!mesh->mAttr.mIsDraped) {
         mCurrentTransform->addObject(mesh);
     }
     else {
         mesh->applyTransform(mCurrentTransform->pMatrix);
-        mObjMain->pDraped.transform().addObject(mesh);
+        mObjMain->mDraped.transform().addObject(mesh);
     }
 }
 
@@ -578,17 +578,17 @@ void ObjReaderInterpreter::gotAnimEnd() {
 
 void ObjReaderInterpreter::gotAnimHide(const AnimVisibility::Key & key) {
     checkForCreateLod();
-    assert(key.pType == AnimVisibility::Key::HIDE);
+    assert(key.mType == AnimVisibility::Key::HIDE);
     if (mCurrentTransform) {
-        mCurrentTransform->pAnimVis.pKeys.emplace_back(key);
+        mCurrentTransform->pAnimVis.mKeys.emplace_back(key);
     }
 }
 
 void ObjReaderInterpreter::gotAnimShow(const AnimVisibility::Key & key) {
     checkForCreateLod();
-    assert(key.pType == AnimVisibility::Key::SHOW);
+    assert(key.mType == AnimVisibility::Key::SHOW);
     if (mCurrentTransform) {
-        mCurrentTransform->pAnimVis.pKeys.emplace_back(key);
+        mCurrentTransform->pAnimVis.mKeys.emplace_back(key);
     }
 }
 
@@ -598,9 +598,9 @@ void ObjReaderInterpreter::gotTranslateAnim(AnimTrans::KeyList & key, std::strin
     if (mCurrentTransform) {
         mCurrentTransform->pAnimTrans.emplace_back();
         AnimTrans & anim = mCurrentTransform->pAnimTrans.back();
-        anim.pKeys.swap(key);
-        anim.pDrf = dataref;
-        anim.pLoopValue = loopVal;
+        anim.mKeys.swap(key);
+        anim.mDrf = dataref;
+        anim.mLoop = loopVal;
     }
 }
 
@@ -610,10 +610,10 @@ void ObjReaderInterpreter::gotRotateAnim(AnimRotate::KeyList & key, float ( & in
     if (mCurrentTransform) {
         mCurrentTransform->pAnimRotate.emplace_back();
         AnimRotate & anim = mCurrentTransform->pAnimRotate.back();
-        anim.pKeys.swap(key);
-        anim.pDrf = dataref;
-        anim.pVector.set(inVector[0], inVector[1], inVector[2]);
-        anim.pLoopValue = loopVal;
+        anim.mKeys.swap(key);
+        anim.mDrf = dataref;
+        anim.mVector.set(inVector[0], inVector[1], inVector[2]);
+        anim.mLoop = loopVal;
     }
 }
 

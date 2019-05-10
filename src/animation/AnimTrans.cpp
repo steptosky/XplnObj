@@ -37,9 +37,9 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool AnimTrans::operator==(const AnimTrans & other) const {
-    return sts::isEqual(pLoopValue, other.pLoopValue) &&
-           pDrf == other.pDrf &&
-           pKeys == other.pKeys;
+    return sts::isEqual(mLoop, other.mLoop) &&
+           mDrf == other.mDrf &&
+           mKeys == other.mKeys;
 }
 
 /**************************************************************************************************/
@@ -47,9 +47,9 @@ bool AnimTrans::operator==(const AnimTrans & other) const {
 /**************************************************************************************************/
 
 void AnimTrans::reset() {
-    pLoopValue = 0.0f;
-    pDrf.clear();
-    pKeys.clear();
+    mLoop = 0.0f;
+    mDrf.clear();
+    mKeys.clear();
 }
 
 /**************************************************************************************************/

@@ -37,27 +37,27 @@ namespace xobj {
 /**************************************************************************************************/
 
 AnimVisibilityKey::AnimVisibilityKey()
-    : pType(UNDEFINED),
-      pValue1(0.0f),
-      pValue2(1.0f),
-      pDrf("none"){}
+    : mType(UNDEFINED),
+      mValue1(0.0f),
+      mValue2(1.0f),
+      mDrf("none"){}
 
 AnimVisibilityKey::AnimVisibilityKey(const eType type, const float val1, const float val2, const std::string & dataRef)
-    : pType(type),
-      pValue1(val1),
-      pValue2(val2),
-      pDrf(dataRef){}
+    : mType(type),
+      mValue1(val1),
+      mValue2(val2),
+      mDrf(dataRef){}
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
 bool AnimVisibilityKey::operator==(const AnimVisibilityKey & other) const {
-    return pType == other.pType &&
-           sts::isEqual(pValue1, other.pValue1) &&
-           sts::isEqual(pValue2, other.pValue2) &&
-           sts::isEqual(pLoopValue, other.pLoopValue) &&
-           pDrf == other.pDrf;
+    return mType == other.mType &&
+           sts::isEqual(mValue1, other.mValue1) &&
+           sts::isEqual(mValue2, other.mValue2) &&
+           sts::isEqual(mLoopValue, other.mLoopValue) &&
+           mDrf == other.mDrf;
 }
 
 /**************************************************************************************************/
@@ -65,11 +65,11 @@ bool AnimVisibilityKey::operator==(const AnimVisibilityKey & other) const {
 /**************************************************************************************************/
 
 void AnimVisibilityKey::reset() {
-    pType = UNDEFINED;
-    pValue1 = 0.0f;
-    pValue2 = 1.0f;
-    pDrf = "none";
-    pLoopValue = 0.0f;
+    mType = UNDEFINED;
+    mValue1 = 0.0f;
+    mValue2 = 1.0f;
+    mDrf = "none";
+    mLoopValue = 0.0f;
 }
 
 /**************************************************************************************************/

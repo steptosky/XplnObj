@@ -95,7 +95,7 @@ public:
     /*!
      * \details Set of the attributes.
      */
-    AttrDrapedSet pAttr;
+    AttrDrapedSet mAttr;
 
     /// @}
     //-------------------------------------------------------------------------

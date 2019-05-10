@@ -120,7 +120,7 @@ void ObjWritePreparer::checkForTwoSided(ObjAbstract & obj) {
         return;
     }
     auto * mesh = static_cast<ObjMesh*>(&obj);
-    if (mesh->pAttr.mIsTwoSided) {
+    if (mesh->mAttr.mIsTwoSided) {
         mesh->makeTwoSided();
     }
 }

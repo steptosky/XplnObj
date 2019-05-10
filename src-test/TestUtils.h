@@ -45,11 +45,11 @@ public:
     //-----------------------------------------------------
 
     static void setTestExportOptions(ObjMain & inOutMain) {
-        inOutMain.pExportOptions.enable(XOBJ_EXP_MARK_VERTEX);
-        inOutMain.pExportOptions.enable(XOBJ_EXP_MARK_TRANSFORM);
-        inOutMain.pExportOptions.enable(XOBJ_EXP_MARK_TREE_HIERARCHY);
-        inOutMain.pExportOptions.enable(XOBJ_EXP_MARK_MESH);
-        inOutMain.pExportOptions.enable(XOBJ_EXP_DEBUG);
+        inOutMain.mExportOptions.enable(XOBJ_EXP_MARK_VERTEX);
+        inOutMain.mExportOptions.enable(XOBJ_EXP_MARK_TRANSFORM);
+        inOutMain.mExportOptions.enable(XOBJ_EXP_MARK_TREE_HIERARCHY);
+        inOutMain.mExportOptions.enable(XOBJ_EXP_MARK_MESH);
+        inOutMain.mExportOptions.enable(XOBJ_EXP_DEBUG);
     }
 
     //-----------------------------------------------------
@@ -77,17 +77,17 @@ public:
     static void createTestAnimTranslate(AnimTransList & outAnim, const Point3 & inVec, const TMatrix & inMtx, const char * inDrf = nullptr) {
         AnimTrans anim;
         if (!inDrf) {
-            anim.pDrf = "test";
+            anim.mDrf = "test";
         }
         else {
-            anim.pDrf = inDrf;
+            anim.mDrf = inDrf;
         }
-        anim.pKeys.emplace_back(AnimTrans::Key(inVec * -1.0f, -10.0f));
-        inMtx.transformPoint(anim.pKeys.back().pPosition);
-        //			anim.pKeys.emplace_back(AnimTrans::Key(Point3(0.0), 0.0f));
-        //			inMtx.transformPoint(anim.pKeys.back().pPosition);
-        anim.pKeys.emplace_back(AnimTrans::Key(inVec, 10.0f));
-        inMtx.transformPoint(anim.pKeys.back().pPosition);
+        anim.mKeys.emplace_back(AnimTrans::Key(inVec * -1.0f, -10.0f));
+        inMtx.transformPoint(anim.mKeys.back().mPosition);
+        //			anim.mKeys.emplace_back(AnimTrans::Key(Point3(0.0), 0.0f));
+        //			inMtx.transformPoint(anim.mKeys.back().mPosition);
+        anim.mKeys.emplace_back(AnimTrans::Key(inVec, 10.0f));
+        inMtx.transformPoint(anim.mKeys.back().mPosition);
         outAnim.emplace_back(anim);
     }
 
@@ -98,29 +98,29 @@ public:
     static void createTestAnimTranslate(AnimTransList & outAnim, const AnimTransKey & inKey1, const AnimTransKey & inKey2, const TMatrix & inMtx = TMatrix(), const char * inDrf = nullptr) {
         AnimTrans anim;
         if (!inDrf) {
-            anim.pDrf = "test";
+            anim.mDrf = "test";
         }
         else {
-            anim.pDrf = inDrf;
+            anim.mDrf = inDrf;
         }
-        anim.pKeys.emplace_back(inKey1);
-        inMtx.transformPoint(anim.pKeys.back().pPosition);
-        anim.pKeys.emplace_back(inKey2);
-        inMtx.transformPoint(anim.pKeys.back().pPosition);
+        anim.mKeys.emplace_back(inKey1);
+        inMtx.transformPoint(anim.mKeys.back().mPosition);
+        anim.mKeys.emplace_back(inKey2);
+        inMtx.transformPoint(anim.mKeys.back().mPosition);
         outAnim.emplace_back(anim);
     }
 
     static void createTestAnimTranslate(AnimTransList & outAnim, const AnimTransKey * inKey, size_t inCount, const TMatrix & inMtx, const char * inDrf = nullptr) {
         AnimTrans anim;
         if (!inDrf) {
-            anim.pDrf = "test";
+            anim.mDrf = "test";
         }
         else {
-            anim.pDrf = inDrf;
+            anim.mDrf = inDrf;
         }
         for (size_t i = 0; i < inCount; ++i) {
-            anim.pKeys.emplace_back(inKey[i]);
-            inMtx.transformPoint(anim.pKeys.back().pPosition);
+            anim.mKeys.emplace_back(inKey[i]);
+            inMtx.transformPoint(anim.mKeys.back().mPosition);
         }
         outAnim.emplace_back(anim);
     }
@@ -148,17 +148,17 @@ public:
     static void createTestAnimRotate(AnimRotateList & outAnim, const Point3 & onVec, const TMatrix & inMtx, const char * inDrf = nullptr) {
         AnimRotate anim;
         if (!inDrf) {
-            anim.pDrf = "test";
+            anim.mDrf = "test";
         }
         else {
-            anim.pDrf = inDrf;
+            anim.mDrf = inDrf;
         }
-        anim.pVector = onVec.normalized();
-        inMtx.transformVector(anim.pVector);
+        anim.mVector = onVec.normalized();
+        inMtx.transformVector(anim.mVector);
 
-        anim.pKeys.emplace_back(AnimRotate::Key(-90.0f, -10.0f));
-        //anim.pKeys.emplace_back(AnimRotate::Key(0.0f, 0.0f));
-        anim.pKeys.emplace_back(AnimRotate::Key(90.0f, 10.0f));
+        anim.mKeys.emplace_back(AnimRotate::Key(-90.0f, -10.0f));
+        //anim.mKeys.emplace_back(AnimRotate::Key(0.0f, 0.0f));
+        anim.mKeys.emplace_back(AnimRotate::Key(90.0f, 10.0f));
         outAnim.emplace_back(anim);
     }
 

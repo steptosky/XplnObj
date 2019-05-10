@@ -49,16 +49,16 @@ public:
     MeshFace() = default;
 
     MeshFace(const value_type v0, const value_type v1, const value_type v2)
-        : pV0(v0),
-          pV1(v1),
-          pV2(v2) {}
+        : mV0(v0),
+          mV1(v1),
+          mV2(v2) {}
 
     //--------------------------------------------------
 
     bool operator==(const MeshFace & other) const {
-        return pV0 == other.pV0 &&
-               pV1 == other.pV1 &&
-               pV2 == other.pV2;
+        return mV0 == other.mV0 &&
+               mV1 == other.mV1 &&
+               mV2 == other.mV2;
     }
 
     bool operator!=(const MeshFace & other) const {
@@ -67,9 +67,9 @@ public:
 
     //--------------------------------------------------
 
-    value_type pV0 = 0;
-    value_type pV1 = 0;
-    value_type pV2 = 0;
+    value_type mV0 = 0;
+    value_type mV1 = 0;
+    value_type mV2 = 0;
 
     //--------------------------------------------------
 };

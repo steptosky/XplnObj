@@ -74,7 +74,7 @@ TEST(TestAttributesIO, default_vals) {
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(0, expContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(0, expContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
@@ -82,7 +82,7 @@ TEST(TestAttributesIO, default_vals) {
 
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(0, impContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(0, impContext.statistic().mTrisAttrCount);
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
 
@@ -102,7 +102,7 @@ TEST(TestAttributesIO, not_default_vals_case_1) {
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(9, expContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(9, expContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
@@ -110,7 +110,7 @@ TEST(TestAttributesIO, not_default_vals_case_1) {
 
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(9, impContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(9, impContext.statistic().mTrisAttrCount);
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
 
@@ -130,7 +130,7 @@ TEST(TestAttributesIO, not_default_vals_case_2) {
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
-    ASSERT_EQ(9, expContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(9, expContext.statistic().mTrisAttrCount);
 
     //-----------------------------
 
@@ -138,7 +138,7 @@ TEST(TestAttributesIO, not_default_vals_case_2) {
 
     ImportContext impContext(fileName);
     ASSERT_TRUE(inObj.importObj(impContext));
-    ASSERT_EQ(9, impContext.statistic().pTrisAttrCount);
+    ASSERT_EQ(9, impContext.statistic().mTrisAttrCount);
     ObjMesh * inM = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractMesh(inObj, inM));
 

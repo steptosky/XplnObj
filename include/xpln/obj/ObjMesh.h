@@ -66,17 +66,17 @@ public:
     /*!
      * \details Attributes set.
      */
-    AttrSet pAttr;
+    AttrSet mAttr;
 
     /*!
      * \details Vertices list.
      */
-    VertexList pVertices;
+    VertexList mVertices;
 
     /*!
      * \details Faces list.
      */
-    FaceList pFaces;
+    FaceList mFaces;
 
     /*!
      * \details Tree objects need some changes for its mesh's normals.

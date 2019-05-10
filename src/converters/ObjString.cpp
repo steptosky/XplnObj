@@ -57,24 +57,24 @@ namespace xobj {
 
 void printObj(const MeshVertex & vertex, AbstractWriter & writer, const bool isTree) {
     StringStream out;
-    out << MESH_VT << " " << vertex.pPosition.toString(PRECISION) << "  ";
+    out << MESH_VT << " " << vertex.mPosition.toString(PRECISION) << "  ";
 
     if (isTree)
         out << 0.0f << " " << 1.0f << " " << 0.0f;
     else
-        out << vertex.pNormal.normalized().toString(PRECISION);
+        out << vertex.mNormal.normalized().toString(PRECISION);
 
-    out << "  " << vertex.pTexture.toString(PRECISION);
+    out << "  " << vertex.mTexture.toString(PRECISION);
     writer.printLine(out.str());
 }
 
 void printObj(const LineVertex & vertex, AbstractWriter & writer) {
     StringStream out;
     out << VLINE
-            << " " << vertex.pPosition.toString(PRECISION)
-            << " " << vertex.pColor.red()
-            << " " << vertex.pColor.green()
-            << " " << vertex.pColor.blue();
+            << " " << vertex.mPosition.toString(PRECISION)
+            << " " << vertex.mColor.red()
+            << " " << vertex.mColor.green()
+            << " " << vertex.mColor.blue();
     writer.printLine(out.str());
 }
 

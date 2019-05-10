@@ -77,19 +77,19 @@ public:
     /*!
      * \details Set of the attributes.
      */
-    AttrGlobSet pAttr;
+    AttrGlobSet mAttr;
 
     /*!
      * \todo move it into context
      * \details Export options.
      */
-    ExportOptions pExportOptions;
+    ExportOptions mExportOptions;
 
     /*!
      * \details Transform matrix for applying while exporting/importing.
      * \details With this matrix you can move, rotate, convert to another system coordinates all the objects.
      */
-    TMatrix pMatrix;
+    TMatrix mMatrix;
 
     /// @}
     //-------------------------------------------------------------------------
@@ -98,7 +98,7 @@ public:
     /*!
      * \details Contains draped geometry and attributes.
      */
-    ObjDrapedGroup pDraped;
+    ObjDrapedGroup mDraped;
 
     /// @}
     //-------------------------------------------------------------------------

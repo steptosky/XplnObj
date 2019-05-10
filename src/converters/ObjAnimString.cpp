@@ -44,7 +44,7 @@ namespace xobj {
 
 void printObj(const AnimVisibilityKey & key, AbstractWriter & writer) {
     StringStream outStr;
-    switch (key.pType) {
+    switch (key.mType) {
         case AnimVisibilityKey::SHOW:
             outStr << ATTR_ANIM_SHOW;
             break;
@@ -56,9 +56,9 @@ void printObj(const AnimVisibilityKey & key, AbstractWriter & writer) {
             LError << TOTEXT(AnimVisibilityKey) << " has undefined type";
             return;
     }
-    outStr << " " << key.pValue1
-            << " " << key.pValue2
-            << " " << writer.actualDataref(key.pDrf);
+    outStr << " " << key.mValue1
+            << " " << key.mValue2
+            << " " << writer.actualDataref(key.mDrf);
     writer.printLine(outStr.str());
 }
 
@@ -74,11 +74,11 @@ bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser) {
         return false;
     }
     parser.skipSpace();
-    outVal.pValue1 = parser.extractFloat();
+    outVal.mValue1 = parser.extractFloat();
     parser.skipSpace();
-    outVal.pValue2 = parser.extractFloat();
+    outVal.mValue2 = parser.extractFloat();
     parser.skipSpace();
-    outVal.pDrf = parser.extractWord();
+    outVal.mDrf = parser.extractWord();
     return true;
 }
 
@@ -87,8 +87,8 @@ bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser) {
 void printObj(const AnimTransKey & key, AbstractWriter & writer) {
     StringStream outStr;
     outStr << ATTR_TRANS_KEY
-            << " " << key.pDrfValue
-            << " " << key.pPosition.toString(PRECISION);
+            << " " << key.mDrfValue
+            << " " << key.mPosition.toString(PRECISION);
     writer.printLine(outStr.str());
 }
 
@@ -97,13 +97,13 @@ bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser) {
         return false;
     }
     parser.skipSpace();
-    outVal.pDrfValue = parser.extractFloat();
+    outVal.mDrfValue = parser.extractFloat();
     parser.skipSpace();
-    outVal.pPosition.x = parser.extractFloat();
+    outVal.mPosition.x = parser.extractFloat();
     parser.skipSpace();
-    outVal.pPosition.y = parser.extractFloat();
+    outVal.mPosition.y = parser.extractFloat();
     parser.skipSpace();
-    outVal.pPosition.z = parser.extractFloat();
+    outVal.mPosition.z = parser.extractFloat();
     return true;
 }
 
@@ -112,8 +112,8 @@ bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser) {
 void printObj(const AnimRotateKey & key, AbstractWriter & writer) {
     StringStream outStr;
     outStr << ATTR_ROTATE_KEY
-            << " " << key.pDrfValue
-            << " " << key.pAngleDegrees;
+            << " " << key.mDrfValue
+            << " " << key.mAngleDegrees;
     writer.printLine(outStr.str());
 }
 
@@ -122,9 +122,9 @@ bool fromObjString(AnimRotateKey & outVal, ObjReadParser & parser) {
         return false;
     }
     parser.skipSpace();
-    outVal.pDrfValue = parser.extractFloat();
+    outVal.mDrfValue = parser.extractFloat();
     parser.skipSpace();
-    outVal.pAngleDegrees = parser.extractFloat();
+    outVal.mAngleDegrees = parser.extractFloat();
     return true;
 }
 

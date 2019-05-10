@@ -52,7 +52,7 @@ ObjLine::~ObjLine() {}
 
 void ObjLine::applyTransform(const TMatrix & tm, const bool) {
     for (auto & vertex : mVertices) {
-        tm.transformPoint(vertex.pPosition);
+        tm.transformPoint(vertex.mPosition);
     }
 }
 

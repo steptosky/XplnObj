@@ -71,12 +71,12 @@ public:
 
     //-------------------------------------------------------------------------
 
-    eType pType;
-    float pValue1;
-    float pValue2;
-    std::string pDrf;
+    eType mType;
+    float mValue1;
+    float mValue2;
+    std::string mDrf;
 
-    std::optional<float> pLoopValue;
+    std::optional<float> mLoopValue;
 
     //-------------------------------------------------------------------------
 

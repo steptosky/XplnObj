@@ -91,21 +91,21 @@ TEST(TestAttributesWrite, boolean_case1) {
     ObjMesh main3;
 
     // enable
-    main1.pAttr.mIsDraw = true; // default
-    main1.pAttr.mIsDraped = true;
-    main1.pAttr.mIsCastShadow = true; // default
-    main1.pAttr.mIsSolidForCamera = true;
+    main1.mAttr.mIsDraw = true; // default
+    main1.mAttr.mIsDraped = true;
+    main1.mAttr.mIsCastShadow = true; // default
+    main1.mAttr.mIsSolidForCamera = true;
 
     // disable
-    main2.pAttr.mIsDraw = false;
-    main2.pAttr.mIsDraped = false;
-    main2.pAttr.mIsCastShadow = false;
-    main2.pAttr.mIsSolidForCamera = false;
+    main2.mAttr.mIsDraw = false;
+    main2.mAttr.mIsDraped = false;
+    main2.mAttr.mIsCastShadow = false;
+    main2.mAttr.mIsSolidForCamera = false;
 
-    main3.pAttr.mIsDraw = false;
-    main3.pAttr.mIsDraped = false;
-    main3.pAttr.mIsCastShadow = false;
-    main3.pAttr.mIsSolidForCamera = false;
+    main3.mAttr.mIsDraw = false;
+    main3.mAttr.mIsDraped = false;
+    main3.mAttr.mIsCastShadow = false;
+    main3.mAttr.mIsSolidForCamera = false;
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
@@ -130,21 +130,21 @@ TEST(TestAttributesWrite, boolean_case2) {
     ObjMesh main3;
 
     // enable
-    main1.pAttr.mIsDraw = true; // default
-    main1.pAttr.mIsDraped = true;
-    main1.pAttr.mIsCastShadow = true; // default
-    main1.pAttr.mIsSolidForCamera = true;
+    main1.mAttr.mIsDraw = true; // default
+    main1.mAttr.mIsDraped = true;
+    main1.mAttr.mIsCastShadow = true; // default
+    main1.mAttr.mIsSolidForCamera = true;
 
-    main2.pAttr.mIsDraw = true; // default
-    main2.pAttr.mIsDraped = true;
-    main2.pAttr.mIsCastShadow = true; // default
-    main2.pAttr.mIsSolidForCamera = true;
+    main2.mAttr.mIsDraw = true; // default
+    main2.mAttr.mIsDraped = true;
+    main2.mAttr.mIsCastShadow = true; // default
+    main2.mAttr.mIsSolidForCamera = true;
 
     // disable
-    main3.pAttr.mIsDraw = false;
-    main3.pAttr.mIsDraped = false;
-    main3.pAttr.mIsCastShadow = false;
-    main3.pAttr.mIsSolidForCamera = false;
+    main3.mAttr.mIsDraw = false;
+    main3.mAttr.mIsDraped = false;
+    main3.mAttr.mIsCastShadow = false;
+    main3.mAttr.mIsSolidForCamera = false;
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
@@ -169,20 +169,20 @@ TEST(TestAttributesWrite, boolean_case3) {
     ObjMesh main3;
 
     // enable
-    main1.pAttr.mIsDraw = true; // default
-    main1.pAttr.mIsDraped = true;
-    main1.pAttr.mIsCastShadow = true; // default
-    main1.pAttr.mIsSolidForCamera = true;
+    main1.mAttr.mIsDraw = true; // default
+    main1.mAttr.mIsDraped = true;
+    main1.mAttr.mIsCastShadow = true; // default
+    main1.mAttr.mIsSolidForCamera = true;
 
-    main2.pAttr.mIsDraw = true; // default
-    main2.pAttr.mIsDraped = true;
-    main2.pAttr.mIsCastShadow = true; // default
-    main2.pAttr.mIsSolidForCamera = true;
+    main2.mAttr.mIsDraw = true; // default
+    main2.mAttr.mIsDraped = true;
+    main2.mAttr.mIsCastShadow = true; // default
+    main2.mAttr.mIsSolidForCamera = true;
 
-    main3.pAttr.mIsDraw = true; // default
-    main3.pAttr.mIsDraped = true;
-    main3.pAttr.mIsCastShadow = true; // default
-    main3.pAttr.mIsSolidForCamera = true;
+    main3.mAttr.mIsDraw = true; // default
+    main3.mAttr.mIsDraped = true;
+    main3.mAttr.mIsCastShadow = true; // default
+    main3.mAttr.mIsSolidForCamera = true;
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
@@ -201,21 +201,21 @@ TEST(TestAttributesWrite, boolean_case4) {
     ObjMesh main2;
     ObjMesh main3;
 
-    main1.pAttr.mIsDraw = false;
-    main1.pAttr.mIsDraped = false;
-    main1.pAttr.mIsCastShadow = false;
-    main1.pAttr.mIsSolidForCamera = false;
+    main1.mAttr.mIsDraw = false;
+    main1.mAttr.mIsDraped = false;
+    main1.mAttr.mIsCastShadow = false;
+    main1.mAttr.mIsSolidForCamera = false;
 
     // enable
-    main2.pAttr.mIsDraw = true; // default
-    main2.pAttr.mIsDraped = true;
-    main2.pAttr.mIsCastShadow = true; // default
-    main2.pAttr.mIsSolidForCamera = true;
+    main2.mAttr.mIsDraw = true; // default
+    main2.mAttr.mIsDraped = true;
+    main2.mAttr.mIsCastShadow = true; // default
+    main2.mAttr.mIsSolidForCamera = true;
 
-    main3.pAttr.mIsDraw = true; // default
-    main3.pAttr.mIsDraped = true;
-    main3.pAttr.mIsCastShadow = true; // default
-    main3.pAttr.mIsSolidForCamera = true;
+    main3.mAttr.mIsDraw = true; // default
+    main3.mAttr.mIsDraped = true;
+    main3.mAttr.mIsCastShadow = true; // default
+    main3.mAttr.mIsSolidForCamera = true;
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
@@ -239,21 +239,21 @@ TEST(TestAttributesWrite, boolean_case5) {
     ObjMesh main2;
     ObjMesh main3;
 
-    main1.pAttr.mIsDraw = false;
-    main1.pAttr.mIsDraped = false;
-    main1.pAttr.mIsCastShadow = false;
-    main1.pAttr.mIsSolidForCamera = false;
+    main1.mAttr.mIsDraw = false;
+    main1.mAttr.mIsDraped = false;
+    main1.mAttr.mIsCastShadow = false;
+    main1.mAttr.mIsSolidForCamera = false;
 
-    main2.pAttr.mIsDraw = false;
-    main2.pAttr.mIsDraped = false;
-    main2.pAttr.mIsCastShadow = false;
-    main2.pAttr.mIsSolidForCamera = false;
+    main2.mAttr.mIsDraw = false;
+    main2.mAttr.mIsDraped = false;
+    main2.mAttr.mIsCastShadow = false;
+    main2.mAttr.mIsSolidForCamera = false;
 
     // enable
-    main3.pAttr.mIsDraw = true; // default
-    main3.pAttr.mIsDraped = true;
-    main3.pAttr.mIsCastShadow = true; // default
-    main3.pAttr.mIsSolidForCamera = true;
+    main3.mAttr.mIsDraw = true; // default
+    main3.mAttr.mIsDraped = true;
+    main3.mAttr.mIsCastShadow = true; // default
+    main3.mAttr.mIsSolidForCamera = true;
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
@@ -278,22 +278,22 @@ TEST(TestAttributesWrite, boolean_case6) {
     ObjMesh main3;
 
     // enable
-    main1.pAttr.mIsDraw = true; // default
-    main1.pAttr.mIsDraped = true;
-    main1.pAttr.mIsCastShadow = true; // default
-    main1.pAttr.mIsSolidForCamera = true;
+    main1.mAttr.mIsDraw = true; // default
+    main1.mAttr.mIsDraped = true;
+    main1.mAttr.mIsCastShadow = true; // default
+    main1.mAttr.mIsSolidForCamera = true;
 
     // disable
-    main2.pAttr.mIsDraw = false;
-    main2.pAttr.mIsDraped = false;
-    main2.pAttr.mIsCastShadow = false;
-    main2.pAttr.mIsSolidForCamera = false;
+    main2.mAttr.mIsDraw = false;
+    main2.mAttr.mIsDraped = false;
+    main2.mAttr.mIsCastShadow = false;
+    main2.mAttr.mIsSolidForCamera = false;
 
     // enable
-    main3.pAttr.mIsDraw = true; // default
-    main3.pAttr.mIsDraped = true;
-    main3.pAttr.mIsCastShadow = true; // default
-    main3.pAttr.mIsSolidForCamera = true;
+    main3.mAttr.mIsDraw = true; // default
+    main3.mAttr.mIsDraped = true;
+    main3.mAttr.mIsCastShadow = true; // default
+    main3.mAttr.mIsSolidForCamera = true;
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
@@ -322,22 +322,22 @@ TEST(TestAttributesWrite, boolean_case7) {
     ObjMesh main2;
     ObjMesh main3;
 
-    main1.pAttr.mIsDraw = false;
-    main1.pAttr.mIsDraped = false;
-    main1.pAttr.mIsCastShadow = false;
-    main1.pAttr.mIsSolidForCamera = false;
+    main1.mAttr.mIsDraw = false;
+    main1.mAttr.mIsDraped = false;
+    main1.mAttr.mIsCastShadow = false;
+    main1.mAttr.mIsSolidForCamera = false;
 
     // enable
-    main2.pAttr.mIsDraw = true; // default
-    main2.pAttr.mIsDraped = true;
-    main2.pAttr.mIsCastShadow = true; // default
-    main2.pAttr.mIsSolidForCamera = true;
+    main2.mAttr.mIsDraw = true; // default
+    main2.mAttr.mIsDraped = true;
+    main2.mAttr.mIsCastShadow = true; // default
+    main2.mAttr.mIsSolidForCamera = true;
 
     // disable
-    main3.pAttr.mIsDraw = false;
-    main3.pAttr.mIsDraped = false;
-    main3.pAttr.mIsCastShadow = false;
-    main3.pAttr.mIsSolidForCamera = false;
+    main3.mAttr.mIsDraw = false;
+    main3.mAttr.mIsDraped = false;
+    main3.mAttr.mIsCastShadow = false;
+    main3.mAttr.mIsSolidForCamera = false;
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
@@ -370,12 +370,12 @@ TEST(TestAttributesWrite, parameterized_case1) {
     ObjMesh main2;
     ObjMesh main3;
 
-    main1.pAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
-    main1.pAttr.mShiny = AttrShiny(0.1f);
-    main1.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
-    main1.pAttr.mPolyOffset = AttrPolyOffset(5.0f);
-    main1.pAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test");
-    main1.pAttr.mCockpit = AttrCockpit(AttrCockpit::region_3);
+    main1.mAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
+    main1.mAttr.mShiny = AttrShiny(0.1f);
+    main1.mAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
+    main1.mAttr.mPolyOffset = AttrPolyOffset(5.0f);
+    main1.mAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test");
+    main1.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_3);
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
@@ -408,19 +408,19 @@ TEST(TestAttributesWrite, parameterized_case2) {
     ObjMesh main2;
     ObjMesh main3;
 
-    main1.pAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
-    main1.pAttr.mShiny = AttrShiny(0.8f);
-    main1.pAttr.mBlend = AttrBlend(AttrBlend::shadow_blend, 0.7f);
-    main1.pAttr.mPolyOffset = AttrPolyOffset(4.0f);
-    main1.pAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
-    main1.pAttr.mCockpit = AttrCockpit(AttrCockpit::region_2);
+    main1.mAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
+    main1.mAttr.mShiny = AttrShiny(0.8f);
+    main1.mAttr.mBlend = AttrBlend(AttrBlend::shadow_blend, 0.7f);
+    main1.mAttr.mPolyOffset = AttrPolyOffset(4.0f);
+    main1.mAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
+    main1.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_2);
 
-    main3.pAttr.mHard = AttrHard(ESurface(ESurface::eId::concrete), true);
-    main3.pAttr.mShiny = AttrShiny(10.0f);
-    main3.pAttr.mBlend = AttrBlend(AttrBlend::shadow_blend, 0.3f);
-    main3.pAttr.mPolyOffset = AttrPolyOffset(5.0f);
-    main3.pAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test2");
-    main3.pAttr.mCockpit = AttrCockpit(AttrCockpit::region_3);
+    main3.mAttr.mHard = AttrHard(ESurface(ESurface::eId::concrete), true);
+    main3.mAttr.mShiny = AttrShiny(10.0f);
+    main3.mAttr.mBlend = AttrBlend(AttrBlend::shadow_blend, 0.3f);
+    main3.mAttr.mPolyOffset = AttrPolyOffset(5.0f);
+    main3.mAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test2");
+    main3.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_3);
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
@@ -462,19 +462,19 @@ TEST(TestAttributesWrite, parameterized_case3) {
     ObjMesh main2;
     ObjMesh main3;
 
-    main1.pAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
-    main1.pAttr.mShiny = AttrShiny(0.8f);
-    main1.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
-    main1.pAttr.mPolyOffset = AttrPolyOffset(4.0f);
-    main1.pAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
-    main1.pAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
+    main1.mAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
+    main1.mAttr.mShiny = AttrShiny(0.8f);
+    main1.mAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
+    main1.mAttr.mPolyOffset = AttrPolyOffset(4.0f);
+    main1.mAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
+    main1.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
 
-    main2.pAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
-    main2.pAttr.mShiny = AttrShiny(0.8f);
-    main2.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
-    main2.pAttr.mPolyOffset = AttrPolyOffset(4.0f);
-    main2.pAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
-    main2.pAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
+    main2.mAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
+    main2.mAttr.mShiny = AttrShiny(0.8f);
+    main2.mAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
+    main2.mAttr.mPolyOffset = AttrPolyOffset(4.0f);
+    main2.mAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
+    main2.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
@@ -508,19 +508,19 @@ TEST(TestAttributesWrite, parameterized_case4) {
     ObjMesh main2;
     ObjMesh main3;
 
-    main1.pAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
-    main1.pAttr.mShiny = AttrShiny(0.8f);
-    main1.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
-    main1.pAttr.mPolyOffset = AttrPolyOffset(4.0f);
-    main1.pAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
-    main1.pAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
+    main1.mAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
+    main1.mAttr.mShiny = AttrShiny(0.8f);
+    main1.mAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
+    main1.mAttr.mPolyOffset = AttrPolyOffset(4.0f);
+    main1.mAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
+    main1.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
 
-    main2.pAttr.mHard = AttrHard(ESurface(ESurface::eId::concrete), true);
-    main2.pAttr.mShiny = AttrShiny(10.0f);
-    main2.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
-    main2.pAttr.mPolyOffset = AttrPolyOffset(5.0f);
-    main2.pAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test2");
-    main2.pAttr.mCockpit = AttrCockpit(AttrCockpit::cockpit);
+    main2.mAttr.mHard = AttrHard(ESurface(ESurface::eId::concrete), true);
+    main2.mAttr.mShiny = AttrShiny(10.0f);
+    main2.mAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
+    main2.mAttr.mPolyOffset = AttrPolyOffset(5.0f);
+    main2.mAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test2");
+    main2.mAttr.mCockpit = AttrCockpit(AttrCockpit::cockpit);
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
@@ -562,12 +562,12 @@ TEST(TestAttributesWrite, parameterized_case5) {
     ObjMesh main2;
     ObjMesh main3;
 
-    main2.pAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
-    main2.pAttr.mShiny = AttrShiny(0.1f);
-    main2.pAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
-    main2.pAttr.mPolyOffset = AttrPolyOffset(5.0f);
-    main2.pAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test");
-    main2.pAttr.mCockpit = AttrCockpit(AttrCockpit::cockpit);
+    main2.mAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
+    main2.mAttr.mShiny = AttrShiny(0.1f);
+    main2.mAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
+    main2.mAttr.mPolyOffset = AttrPolyOffset(5.0f);
+    main2.mAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test");
+    main2.mAttr.mCockpit = AttrCockpit(AttrCockpit::cockpit);
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);

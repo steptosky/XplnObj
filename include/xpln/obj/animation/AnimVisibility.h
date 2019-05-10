@@ -53,18 +53,18 @@ public:
     //-----------------------------------------
 
     bool isAnimated() const {
-        return !pKeys.empty();
+        return !mKeys.empty();
     }
 
     //-----------------------------------------
 
     void reset() {
-        pKeys.clear();
+        mKeys.clear();
     }
 
     //-----------------------------------------
 
-    KeyList pKeys;
+    KeyList mKeys;
 
     //-----------------------------------------
 

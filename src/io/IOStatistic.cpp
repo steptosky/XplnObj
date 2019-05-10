@@ -36,26 +36,26 @@ namespace xobj {
 /*********************************************************************************************************/
 
 IOStatistic::IOStatistic()
-    : pMeshVerticesCount(0),
-      pMeshFacesCount(0),
-      pLineVerticesCount(0),
+    : mMeshVerticesCount(0),
+      mMeshFacesCount(0),
+      mLineVerticesCount(0),
 
-      pMeshObjCount(0),
-      pLineObjCount(0),
-      pLightObjPointCount(0),
-      pLightObjNamedCount(0),
-      pLightObjCustomCount(0),
-      pLightObjParamCount(0),
-      pLightObjSpillCustCount(0),
-      pDummyObjCount(0),
-      pSmokeObjCount(0),
+      mMeshObjCount(0),
+      mLineObjCount(0),
+      mLightObjPointCount(0),
+      mLightObjNamedCount(0),
+      mLightObjCustomCount(0),
+      mLightObjParamCount(0),
+      mLightObjSpillCustCount(0),
+      mDummyObjCount(0),
+      mSmokeObjCount(0),
 
-      pCustomLinesCount(0),
-      pGlobAttrCount(0),
-      pTrisManipCount(0),
-      pTrisAttrCount(0),
+      mCustomLinesCount(0),
+      mGlobAttrCount(0),
+      mTrisManipCount(0),
+      mTrisAttrCount(0),
 
-      pAnimAttrCount(0) { }
+      mAnimAttrCount(0) { }
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////

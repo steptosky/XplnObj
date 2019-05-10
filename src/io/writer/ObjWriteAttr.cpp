@@ -97,32 +97,32 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
 
     //-------------------------------------------------------------------------
 
-    writeTexture(ATTR_GLOBAL_TEXTURE, obj->pAttr.mTexture);
-    writeTexture(ATTR_GLOBAL_TEXTURE_LIT, obj->pAttr.mTextureLit);
-    writeTexture(ATTR_GLOBAL_TEXTURE_NORMAL, obj->pAttr.mTextureNormal);
+    writeTexture(ATTR_GLOBAL_TEXTURE, obj->mAttr.mTexture);
+    writeTexture(ATTR_GLOBAL_TEXTURE_LIT, obj->mAttr.mTextureLit);
+    writeTexture(ATTR_GLOBAL_TEXTURE_NORMAL, obj->mAttr.mTextureNormal);
 
-    writeBool(ATTR_GLOBAL_BLEND_GLASS, obj->pAttr.mBlendClass);
-    writeBool(ATTR_GLOBAL_NORMAL_METALNESS, obj->pAttr.mNormalMetalness);
-    writeBool(ATTR_GLOBAL_TILTED, obj->pAttr.mTilted);
-    writeBool(ATTR_GLOBAL_NO_SHADOW, obj->pAttr.mDropShadow);
-    writeBool(ATTR_GLOBAL_COCKPIT_LIT, obj->pAttr.mCockpitLit);
+    writeBool(ATTR_GLOBAL_BLEND_GLASS, obj->mAttr.mBlendClass);
+    writeBool(ATTR_GLOBAL_NORMAL_METALNESS, obj->mAttr.mNormalMetalness);
+    writeBool(ATTR_GLOBAL_TILTED, obj->mAttr.mTilted);
+    writeBool(ATTR_GLOBAL_NO_SHADOW, obj->mAttr.mDropShadow);
+    writeBool(ATTR_GLOBAL_COCKPIT_LIT, obj->mAttr.mCockpitLit);
     // It is printed in another place.
-    //writeBool(inWriter, ATTR_GLOBAL_DEBUG, inObj->pAttr.isDebug());
+    //writeBool(inWriter, ATTR_GLOBAL_DEBUG, inObj->mAttr.isDebug());
 
-    mGlobNum += writeGlobAttrT(writer, obj->pAttr.mWetDry);
-    mGlobNum += writeGlobAttrT(writer, obj->pAttr.mBlend);
-    mGlobNum += writeGlobAttrT(writer, obj->pAttr.mLayerGroup);
-    mGlobNum += writeGlobAttrT(writer, obj->pAttr.mSlungLoadWeight);
-    mGlobNum += writeGlobAttrT(writer, obj->pAttr.mSpecular);
-    mGlobNum += writeGlobAttrT(writer, obj->pAttr.mTint);
-    mGlobNum += writeGlobAttrT(writer, obj->pAttr.mSlopeLimit);
-    mGlobNum += writeGlobAttrT(writer, obj->pAttr.mCockpitRegion1);
-    mGlobNum += writeGlobAttrT(writer, obj->pAttr.mCockpitRegion2);
-    mGlobNum += writeGlobAttrT(writer, obj->pAttr.mCockpitRegion3);
-    mGlobNum += writeGlobAttrT(writer, obj->pAttr.mCockpitRegion4);
+    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mWetDry);
+    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mBlend);
+    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mLayerGroup);
+    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mSlungLoadWeight);
+    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mSpecular);
+    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mTint);
+    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mSlopeLimit);
+    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mCockpitRegion1);
+    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mCockpitRegion2);
+    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mCockpitRegion3);
+    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mCockpitRegion4);
 
-    mGlobNum += writeGlobAttrT(writer, obj->pDraped.pAttr.mLayerGroup);
-    mGlobNum += writeGlobAttrT(writer, obj->pDraped.pAttr.mLod);
+    mGlobNum += writeGlobAttrT(writer, obj->mDraped.mAttr.mLayerGroup);
+    mGlobNum += writeGlobAttrT(writer, obj->mDraped.mAttr.mLod);
 }
 
 /**************************************************************************************************/
@@ -147,7 +147,7 @@ void ObjWriteAttr::writeAttr() {
         mWriter->printLine(attr);
     };
 
-    const auto & attrs = mObj->pAttr;
+    const auto & attrs = mObj->mAttr;
 
     //-------------------------------------------------------------------------
 
@@ -257,7 +257,7 @@ bool ObjWriteAttr::checkManip(AttrManipBase * manip) const {
                 return false;
             }
             auto * panel = static_cast<AttrManipPanel*>(manip);
-            panel->setCockpit(*mObj->pAttr.mCockpit);
+            panel->setCockpit(*mObj->mAttr.mCockpit);
         }
         else if (manip->type() == EManipulator::drag_axis) {
             // todo it seems this place isn't good for such a checking
@@ -316,11 +316,11 @@ bool ObjWriteAttr::checkManip(AttrManipBase * manip) const {
 }
 
 void ObjWriteAttr::writeManip() {
-    const auto & attrs = mObj->pAttr;
+    const auto & attrs = mObj->mAttr;
 	auto manipContainer = attrs.mManipContainer;
     //------------------------------
     // Checks the order of processing, the attributes must be processed before the manipulators.
-    assert(mIsPanelManip == mObj->pAttr.mCockpit.has_value());
+    assert(mIsPanelManip == mObj->mAttr.mCockpit.has_value());
     //------------------------------
     if (manipContainer && manipContainer->hasManip()) {
         if (!checkManip(manipContainer->mManip.get())) {

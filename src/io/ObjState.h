@@ -41,20 +41,20 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**********************************************************************************************************************/
 
-class ObjWriteState final {
+class ObjState final {
 public:
 
     //-------------------------------------------------------------------------
     /// @{
 
-    ObjWriteState() = default;
-    ObjWriteState(const ObjWriteState &) = default;
-    ObjWriteState(ObjWriteState &&) = delete;
+    ObjState() = default;
+    ObjState(const ObjState &) = default;
+    ObjState(ObjState &&) = delete;
 
-    ~ObjWriteState() = default;
+    ~ObjState() = default;
 
-    ObjWriteState & operator=(const ObjWriteState &) = default;
-    ObjWriteState & operator=(ObjWriteState &&) = delete;
+    ObjState & operator=(const ObjState &) = default;
+    ObjState & operator=(ObjState &&) = delete;
 
     /// @}
     //-------------------------------------------------------------------------

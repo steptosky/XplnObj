@@ -33,7 +33,7 @@
 #include <tuple>
 #include "xpln/obj/attributes/AttrSet.h"
 #include "xpln/obj/ObjMesh.h"
-#include "io/ObjWriteState.h"
+#include "io/ObjState.h"
 #include "xpln/obj/ObjMain.h"
 
 namespace xobj {
@@ -74,7 +74,7 @@ private:
 
     const ObjMesh * mObj = nullptr;
     AbstractWriter * mWriter = nullptr;
-    ObjWriteState mState;
+    ObjState mState;
     bool mIsPanelManip = false;
 
     std::size_t mGlobNum = 0;

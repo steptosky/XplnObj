@@ -27,7 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "ObjWriteState.h"
+#include "ObjState.h"
 
 namespace xobj {
 
@@ -35,7 +35,7 @@ namespace xobj {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjWriteState::processBool(const bool newValue, bool & inOutStateValue,
+void ObjState::processBool(const bool newValue, bool & inOutStateValue,
                                 const std::function<void(bool enable)> & switchFn) {
     if (newValue == inOutStateValue) {
         return;

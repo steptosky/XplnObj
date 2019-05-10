@@ -96,6 +96,8 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
 
         mMain = root;
         mExportOptions = root->mExportOptions;
+        mState->mGlobal = mMain->mAttr;
+        mState->mDraped = mMain->mDraped.mAttr;
 
         Writer writer;
         if (!writer.openFile(context.objFile())) {

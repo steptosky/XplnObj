@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2019, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,49 +27,51 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <cstdint>
+#include "xpln/obj/ObjEmitter.h"
+#include "xpln/obj/Transform.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
+
+eObjectType ObjEmitter::objType() const {
+    return OBJ_PARTICLE_EMITTER;
+}
+
+void ObjEmitter::applyTransform(const TMatrix & tm, const bool) {
+    tm.transformPoint(mPosition);
+}
+
+ObjAbstract * ObjEmitter::clone() const {
+    return new ObjEmitter(*this);
+}
+
+std::size_t ObjEmitter::printObj(AbstractWriter & writer) const {
+    StringStream out;
+    out << ATTR_EMITTER
+            << " " << objectName()
+            << " " << mPosition.toString(PRECISION)
+            << " " << mPsi
+            << " " << mThe
+            << " " << mPhi;
+
+    if (mIndex != 0) {
+        out << " " << mIndex;
+    }
+
+    writer.printLine(out.str());
+    return 1;
+}
+
+/**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
-
-/*!
- * \details Object types
- * \ingroup Enumerations
- */
-enum eObjectType : std::int32_t {
-    //!< Is not correct object
-    OBJ_NO = 0,
-
-    //!< Geometric line object
-    OBJ_LINE = 100,
-    //!< Dummy object
-    OBJ_DUMMY,
-    //!< Smoke object
-    OBJ_SMOKE,
-    //!< Geometric mesh object
-    OBJ_MESH,
-
-    //!< Light named
-    OBJ_LIGHT_NAMED = 200,
-    //!< Light custom
-    OBJ_LIGHT_CUSTOM,
-    //!< Light param
-    OBJ_LIGHT_PARAM,
-    //!< Light spill custom
-    OBJ_LIGHT_SPILL_CUSTOM,
-    //!< Light point custom
-    OBJ_LIGHT_POINT,
-
-    //!< Particle emitter
-    OBJ_PARTICLE_EMITTER = 300,
-
-};
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
 }

@@ -85,6 +85,7 @@
 #define ATTR_SHADOW "ATTR_shadow"
 #define ATTR_DRAPED "ATTR_draped"
 #define ATTR_COCKPIT "ATTR_cockpit"
+#define ATTR_EMITTER "EMITTER"
 #define ATTR_POLY_OS "ATTR_poly_os"
 #define ATTR_NO_HARD "ATTR_no_hard"
 #define ATTR_NO_BLEND "ATTR_no_blend"

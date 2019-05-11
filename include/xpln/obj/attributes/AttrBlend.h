@@ -30,12 +30,9 @@
 */
 
 #include <cstdint>
-#include <string>
 #include "xpln/Export.h"
 
 namespace xobj {
-
-class AbstractWriter;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,7 +49,6 @@ public:
     /// @{
 
     enum eType : std::uint8_t {
-        // default
         blend,
         no_blend,
         shadow_blend,
@@ -62,12 +58,10 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    AttrBlend()
-        : mBlending(blend),
-          mRatio(0.5f) {}
+    AttrBlend() = default;
 
     AttrBlend(const eType type, const float ratio)
-        : mBlending(type),
+        : mType(type),
           mRatio(ratio) {}
 
     AttrBlend(const AttrBlend &) = default;
@@ -89,35 +83,15 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    XpObjLib void setRatio(float ratio);
-    XpObjLib float ratio() const;
-    XpObjLib eType type() const;
+    eType mType = blend;
+
+    /*!
+     * \details Must be between 0.0 and 1.0
+     */
+    float mRatio = 0.5f;
 
     /// @}
     //-------------------------------------------------------------------------
-    /// @{
-
-    /*!
-     * \note For internal use only.
-     * \return String with default values for simulator.
-     *         It is needed when attribute has been enabled before
-     *         and now should be disabled.
-     */
-    XpObjLib static std::string objDisableStr();
-
-    /*!
-     * \note For internal use only.
-     * \copydoc AttrManipBase::printObj
-     */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
-
-    /// @}
-    //-------------------------------------------------------------------------
-
-private:
-
-    eType mBlending;
-    float mRatio;
 
 };
 

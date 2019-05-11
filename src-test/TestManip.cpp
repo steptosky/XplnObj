@@ -878,7 +878,8 @@ TEST(TestManip, AttrManipNoop) {
 
 //-------------------------------------------------------------------------
 
-TEST(TestManip, AttrManipPanel) {
+// disabled because internal attribute cockpit doesn't support printing anymore after refactoring
+TEST(TestManip, DISABLED_AttrManipPanel) {
     TestWriter w;
     AttrManipPanel manip;
     manip.setCockpit(AttrCockpit(AttrCockpit::cockpit));

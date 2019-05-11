@@ -31,6 +31,7 @@
 
 #include <string>
 #include <stdexcept>
+#include "converters/StringStream.h"
 
 namespace xobj {
 
@@ -65,6 +66,17 @@ public:
      * \param [in] msg if it is empty then only EOL will be printed
      */
     void printLine(const std::string & msg);
+
+    /*!
+     * \details Print line with EOL.
+     * \param [in] args comma separated arguments.
+     */
+    template<typename... Args>
+    void printLine(const Args & ... args) {
+        StringStream stream;
+        int unpack[]{0, ((stream << args), 0)...};
+        printLine(stream.str());
+    };
 
     /*!
      * \details Print only EOL.

@@ -560,11 +560,11 @@ bool ObjReader::readAttribute(ObjReadParser & parser) const {
     if (parser.isMatch(ATTR_LIGHT_LEVEL)) {
         AttrLightLevel ll;
         parser.skipSpace();
-        ll.setVal1(parser.extractFloat());
+        ll.mVal1 = parser.extractFloat();
         parser.skipSpace();
-        ll.setVal2(parser.extractFloat());
+        ll.mVal2 = parser.extractFloat();
         parser.skipSpace();
-        ll.setDataref(parser.extractWord());
+        ll.mDataref = parser.extractWord();
         mObjParserListener->gotTrisAttrLightLevel(ll);
         return true;
     }

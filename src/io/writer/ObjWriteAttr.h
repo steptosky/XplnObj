@@ -73,6 +73,11 @@ public:
 
 private:
 
+    template<typename T>
+    void switchAttrState(const T & attr, bool enable) {
+		static_assert(false, "not implemented");
+    }
+
     void writeAttr();
     void writeManip();
     bool checkManip(AttrManipBase * manip) const;

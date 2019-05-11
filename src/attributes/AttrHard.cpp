@@ -28,9 +28,6 @@
 */
 
 #include "xpln/obj/attributes/AttrHard.h"
-#include "common/AttributeNames.h"
-#include "converters/StringStream.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -40,22 +37,7 @@ namespace xobj {
 
 bool AttrHard::operator==(const AttrHard & other) const {
     return mIsDeck == other.mIsDeck &&
-           mESurface == other.mESurface;
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::string AttrHard::objDisableStr() {
-    return ATTR_NO_HARD;
-}
-
-std::size_t AttrHard::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << (isDeck() ? ATTR_HARD_DECK : ATTR_HARD) << " " << surface().toString();
-    writer.printLine(outStr.str());
-    return 1;
+           mSurface == other.mSurface;
 }
 
 /**************************************************************************************************/

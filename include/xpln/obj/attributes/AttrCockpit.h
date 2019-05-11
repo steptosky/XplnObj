@@ -37,8 +37,6 @@
 
 namespace xobj {
 
-class AbstractWriter;
-
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
@@ -90,54 +88,21 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    void setType(const eType type) { mType = type; }
-    eType type() const { return mType; }
+    eType mType = cockpit;
 
     /// @}
     //-------------------------------------------------------------------------
     /// \name ATTR_cockpit_device
     /// @{
 
-    void setId(const ECockpitDevice id) { mDevName = id.toString(); }
-    void setName(const std::string & name) { mDevName = name; }
-    void setBus(const std::size_t index) { mDevBus = index; }
-    void setLightingChannel(const std::size_t index) { mDevLighting = index; }
-    void setAutoAdjust(const bool state) { mDevAutoAdjust = state; }
-
-    const std::string & name() const { return mDevName; }
-    std::size_t bus() const { return mDevBus; }
-    std::size_t lightingChannel() const { return mDevLighting; }
-    bool autoAdjust() const { return mDevAutoAdjust; }
+    /*! \link ECockpitDevice \endlink can be used*/
+    std::string mDeviceName;
+    std::size_t mDeviceBus = 0;
+    std::size_t mDeviceLightingChan = 0;
+    bool mDeviceAutoAdjust = false;
 
     /// @}
     //-------------------------------------------------------------------------
-    /// \name For internal use only
-    /// @{
-
-    /*!
-     * \note For internal use only.
-     * \return String with default values for simulator.
-     *         It is needed when attribute has been enabled before
-     *         and now should be disabled.
-     */
-    XpObjLib static std::string objDisableStr();
-
-    /*!
-     * \note For internal use only.
-     * \copydoc AttrManipBase::printObj
-     */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
-
-    /// @}
-    //-------------------------------------------------------------------------
-
-private:
-
-    std::string mDevName;
-    std::size_t mDevBus = 0;
-    std::size_t mDevLighting = 0;
-    eType mType = cockpit;
-    bool mDevAutoAdjust = false;
 
 };
 

@@ -62,15 +62,15 @@ using ::testing::InSequence;
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
-template<typename T>
-std::string strAttrResult(const T & attr) {
-    TestWriter w;
-    attr.printObj(w);
-    if (!w.mResult.empty()) {
-        w.mResult.pop_back(); // remove '\n'
-    }
-    return w.mResult;
-}
+// template<typename T>
+// std::string strAttrResult(const T & attr) {
+//     TestWriter w;
+//     attr.printObj(w);
+//     if (!w.mResult.empty()) {
+//         w.mResult.pop_back(); // remove '\n'
+//     }
+//     return w.mResult;
+// }
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -598,19 +598,16 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case1) {
     mManipPanel.setCockpit(cpAttr1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(HasSubstr(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(HasSubstr("ATTR_cockpit_region 0"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    TestWriter w(false);
-    const auto result = mManipPanel.printObj(w);
-    ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
-    // check counter + ATTR_MANIP_NONE
-    ASSERT_EQ(std::make_tuple(0, 1, 1 + 1), mObjWriteAttr.count());
+    // check counter
+    ASSERT_EQ(std::make_tuple(0, 2, 1), mObjWriteAttr.count());
     //---------------------------
 }
 
@@ -641,7 +638,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case2) {
     mObjMesh2.mAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
@@ -686,7 +683,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case3) {
     mObjMesh2.mAttr.mManipContainer = ManipContainer(new AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
@@ -730,7 +727,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case4) {
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
@@ -771,12 +768,12 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case5) {
     mObjMesh2.mAttr.mCockpit = cpAttr2;
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr2)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
@@ -816,7 +813,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_1) {
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
@@ -862,7 +859,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_2) {
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
@@ -902,7 +899,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_4) {
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
@@ -945,11 +942,11 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_5) {
     mObjMesh2.mAttr.mManipContainer = ManipContainer(new AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr2)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
@@ -989,12 +986,12 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_6) {
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr2)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
@@ -1033,14 +1030,14 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_7) {
     mObjMesh2.mAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr2)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
@@ -1082,12 +1079,12 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_8) {
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr2)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
@@ -1140,12 +1137,12 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_1) {
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr2)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
@@ -1208,7 +1205,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_2) {
     TestWriter w2(false);
     const auto result2 = mManipComdAxis.printObj(w2);
     ASSERT_EQ(1, result2);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w2.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
@@ -1267,7 +1264,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_3) {
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
@@ -1320,7 +1317,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_4) {
     // mObjMesh4
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
@@ -1380,7 +1377,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_5) {
     // mObjMesh4
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(cpAttr1)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------

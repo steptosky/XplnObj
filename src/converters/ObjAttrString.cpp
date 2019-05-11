@@ -27,6 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <algorithm>
 #include "converters/StringStream.h"
 #include "ObjAttrString.h"
 #include "common/AttributeNames.h"
@@ -55,13 +56,13 @@ namespace xobj {
 
 void printObjGlobAttr(const AttrBlend & globAttr, AbstractWriter & writer) {
     StringStream outStr;
-    if (globAttr.type() == AttrBlend::no_blend) {
+    if (globAttr.mType == AttrBlend::no_blend) {
         outStr << ATTR_GLOBAL_NO_BLEND;
     }
-    else if (globAttr.type() == AttrBlend::shadow_blend) {
+    else if (globAttr.mType == AttrBlend::shadow_blend) {
         outStr << ATTR_GLOBAL_SHADOW_BLEND;
     }
-    outStr << " " << globAttr.ratio();
+    outStr << " " << std::clamp(globAttr.mRatio, 0.0f, 1.0f);
     writer.printLine(outStr.str());
 }
 

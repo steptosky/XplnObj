@@ -29,9 +29,6 @@
 
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrLightLevel.h"
-#include "common/AttributeNames.h"
-#include "converters/StringStream.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -43,24 +40,6 @@ bool AttrLightLevel::operator==(const AttrLightLevel & other) const {
     return mDataref == other.mDataref &&
            sts::isEqual(mVal1, other.mVal1, 0.01f) &&
            sts::isEqual(mVal2, other.mVal2, 0.01f);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::string AttrLightLevel::objDisableStr() {
-    return ATTR_LIGHT_LEVEL_RESET;
-}
-
-std::size_t AttrLightLevel::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_LIGHT_LEVEL;
-    outStr << " " << val1();
-    outStr << " " << val2();
-    outStr << " " << dataref();
-    writer.printLine(outStr.str());
-    return 1;
 }
 
 /**************************************************************************************************/

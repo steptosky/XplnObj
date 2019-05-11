@@ -29,12 +29,9 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
 #include "xpln/enums/ESurface.h"
 
 namespace xobj {
-
-class AbstractWriter;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +50,7 @@ public:
     AttrHard() = default;
 
     explicit AttrHard(const ESurface surface, const bool deck = false)
-        : mESurface(surface),
+        : mSurface(surface),
           mIsDeck(deck) { }
 
     AttrHard(const AttrHard &) = default;
@@ -71,41 +68,16 @@ public:
     XpObjLib bool operator==(const AttrHard & other) const;
     bool operator!=(const AttrHard & other) const { return !operator==(other); }
 
-    //-------------------------------------------------------------------------
-
-    void setESurface(const ESurface & surface, bool deck = false) {
-        mESurface = surface;
-        mIsDeck = deck;
-    }
-
-    const ESurface & surface() const { return mESurface; }
-    bool isDeck() const { return mIsDeck; }
-
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
-    /*!
-     * \note For internal use only.
-     * \return String with default values for simulator.
-     *         It is needed when attribute has been enabled before
-     *         and now should be disabled.
-     */
-    XpObjLib static std::string objDisableStr();
-
-    /*!
-     * \note For internal use only.
-     * \copydoc AttrManipBase::printObj
-     */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
+    ESurface mSurface = ESurface(ESurface::eId::none);
+    bool mIsDeck = false;
 
     /// @}
     //-------------------------------------------------------------------------
 
-private:
-
-    ESurface mESurface = ESurface(ESurface::eId::none);
-    bool mIsDeck = false;
 };
 
 /**************************************************************************************************/

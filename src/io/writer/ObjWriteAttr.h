@@ -87,6 +87,7 @@ private:
     void writeManip();
     bool checkManip(AttrManipBase * manip) const;
 
+    const ObjMain* mMainObj = nullptr;
     const ObjMesh * mObj = nullptr;
     AbstractWriter * mWriter = nullptr;
     ObjState::Ptr mState;

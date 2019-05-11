@@ -77,6 +77,10 @@ void ObjWriteAttr::writeGlobAttrState<std::optional<AttrWetDry>>(const std::opti
 template<>
 void ObjWriteAttr::writeGlobAttrState<std::optional<AttrBlend>>(const std::optional<AttrBlend> & attr) {
     if (attr) {
+        if (attr->mRatio < 0.0f || attr->mRatio > 1.0f) {
+            ULWarning << "The object <" << mMainObj->objectName()
+                    << "> has the blending attribute with the out of range ration [0 > ration < 1].";
+        }
         const auto ration = std::clamp(attr->mRatio, 0.0f, 1.0f);
         if (attr->mType == AttrBlend::no_blend) {
             mWriter->writeLine(ATTR_GLOBAL_NO_BLEND, " ", ration);
@@ -91,6 +95,10 @@ void ObjWriteAttr::writeGlobAttrState<std::optional<AttrBlend>>(const std::optio
 template<>
 void ObjWriteAttr::writeGlobAttrState<std::optional<AttrLayerGroup>>(const std::optional<AttrLayerGroup> & attr) {
     if (attr) {
+        if (attr->mOffset < -5 || attr->mOffset > 5) {
+            ULWarning << "The object <" << mMainObj->objectName() << "> has the attribute <"
+                    << ATTR_GLOBAL_LAYER_GROUP << "> with the out of range offset [-5 > ration < 5].";
+        }
         mWriter->writeLine(ATTR_GLOBAL_LAYER_GROUP, " ", attr->mLayer.toString(), " ", std::clamp(attr->mOffset, -5, 5));
         ++mGlobNum;
     }
@@ -107,6 +115,10 @@ void ObjWriteAttr::writeGlobAttrState<std::optional<AttrSlungLoadWeight>>(const 
 template<>
 void ObjWriteAttr::writeGlobAttrState<std::optional<AttrSpecular>>(const std::optional<AttrSpecular> & attr) {
     if (attr) {
+        if (attr->mRatio < 0.0f || attr->mRatio > 1.0f) {
+            ULWarning << "The object <" << mMainObj->objectName() << "> has the attribute <"
+                    << ATTR_GLOBAL_SPECULAR << "> with the out of range ration [0 > ration < 1].";
+        }
         mWriter->writeLine(ATTR_GLOBAL_SPECULAR, " ", std::clamp(attr->mRatio, 0.0f, 1.0f));
         ++mGlobNum;
     }
@@ -149,6 +161,10 @@ void ObjWriteAttr::writeGlobAttrState<std::optional<AttrCockpitRegion>>(const st
 template<>
 void ObjWriteAttr::writeGlobAttrState<std::optional<AttrDrapedLayerGroup>>(const std::optional<AttrDrapedLayerGroup> & attr) {
     if (attr) {
+        if (attr->mOffset < -5 || attr->mOffset > 5) {
+            ULWarning << "The object <" << mMainObj->objectName() << "> has the attribute <"
+                    << ATTR_GLOBAL_LAYER_GROUP_DRAPED << "> with the out of range offset [-5 > ration < 5].";
+        }
         mWriter->writeLine(ATTR_GLOBAL_LAYER_GROUP_DRAPED,
                            " ", attr->mLayer.toString(),
                            " ", std::clamp(attr->mOffset, -5, 5));
@@ -172,6 +188,7 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
     assert(obj);
     assert(writer);
     mWriter = writer;
+    mMainObj = obj;
 
     const auto writeBool = [&](const char * inAttr, const bool inState) {
         if (inState) {
@@ -218,6 +235,7 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
 
     writeGlobAttrState(obj->mDraped.mAttr.mLayerGroup);
     writeGlobAttrState(obj->mDraped.mAttr.mLod);
+    mMainObj = nullptr;
 }
 
 /**************************************************************************************************/
@@ -227,6 +245,10 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
 template<>
 void ObjWriteAttr::switchAttrState<AttrBlend>(const AttrBlend & attr, const bool enable) {
     if (enable) {
+        if (attr.mRatio < 0.0f || attr.mRatio > 1.0f) {
+            ULWarning << "The object <" << mObj->objectName()
+                    << "> has the blending attribute with the out of range ration [0 > ration < 1].";
+        }
         const auto ratio = std::clamp(attr.mRatio, 0.0f, 1.0f);
         if (attr.mType == AttrBlend::no_blend) {
             mWriter->writeLine(ATTR_NO_BLEND, " ", ratio);
@@ -318,6 +340,10 @@ void ObjWriteAttr::switchAttrState<AttrPolyOffset>(const AttrPolyOffset & attr, 
 template<>
 void ObjWriteAttr::switchAttrState<AttrShiny>(const AttrShiny & attr, const bool enable) {
     if (enable) {
+        if (attr.mRatio < 0.0f || attr.mRatio > 1.0f) {
+            ULWarning << "The object <" << mObj->objectName() << "> has the attribute <"
+                    << ATTR_SHINY_RAT << "> with the out of range ration [0 > ration < 1].";
+        }
         mWriter->writeLine(ATTR_SHINY_RAT, " ", std::clamp(attr.mRatio, 0.0f, 1.0f));
     }
     else {
@@ -340,6 +366,7 @@ void ObjWriteAttr::writeObjAttr(AbstractWriter * writer, const ObjAbstract * obj
     mObj = static_cast<const ObjMesh*>(obj);
     writeAttr();
     writeManip();
+    mObj = nullptr;
 }
 
 void ObjWriteAttr::writeAttr() {

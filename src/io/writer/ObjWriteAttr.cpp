@@ -134,18 +134,16 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
 template<>
 void ObjWriteAttr::switchAttrState<AttrBlend>(const AttrBlend & attr, const bool enable) {
     if (enable) {
-        StringStream outStr;
+        const auto ratio = std::clamp(attr.mRatio, 0.0f, 1.0f);
         if (attr.mType == AttrBlend::no_blend) {
-            outStr << ATTR_NO_BLEND;
+            mWriter->writeLine(ATTR_NO_BLEND, " ", ratio);
         }
         else if (attr.mType == AttrBlend::shadow_blend) {
-            outStr << ATTR_SHADOW_BLEND;
+            mWriter->writeLine(ATTR_SHADOW_BLEND, " ", ratio);
         }
         else {
-            outStr << ATTR_BLEND;
+            mWriter->writeLine(ATTR_BLEND, " ", ratio);
         }
-        outStr << " " << std::clamp(attr.mRatio, 0.0f, 1.0f);
-        mWriter->writeLine(outStr.str());
     }
     else {
         mWriter->writeLine(ATTR_BLEND, " ", AttrBlend().mRatio);

@@ -45,8 +45,11 @@ namespace xobj {
  * \warning eType::UNDEFINED means key isn't valid
  * \ingroup Animation
  */
-class AnimVisibilityKey {
+class AnimVisibilityKey final {
 public:
+
+    //-------------------------------------------------------------------------
+    /// @{
 
     enum eType : std::uint8_t {
         UNDEFINED = 0,
@@ -54,30 +57,44 @@ public:
         HIDE = 'H'
     };
 
-    XpObjLib AnimVisibilityKey();
-    XpObjLib AnimVisibilityKey(eType type, float val1, float val2, const std::string & dataRef);
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
+
+    AnimVisibilityKey() = default;
+
+    AnimVisibilityKey(const eType type, const float val1, const float val2, std::string dataRef)
+        : mType(type),
+          mValue1(val1),
+          mValue2(val2),
+          mDrf(std::move(dataRef)) {}
+
+    AnimVisibilityKey(const AnimVisibilityKey &) = default;
+    AnimVisibilityKey(AnimVisibilityKey &&) = default;
+
+    ~AnimVisibilityKey() = default;
+
+    AnimVisibilityKey & operator=(const AnimVisibilityKey &) = default;
+    AnimVisibilityKey & operator=(AnimVisibilityKey &&) = default;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AnimVisibilityKey & other) const;
+    bool operator!=(const AnimVisibilityKey & other) const { return !this->operator==(other); }
 
-    bool operator!=(const AnimVisibilityKey & other) const {
-        return !this->operator==(other);
-    }
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    void reset();
-
-    //-------------------------------------------------------------------------
-
-    eType mType;
-    float mValue1;
-    float mValue2;
+    eType mType = UNDEFINED;
+    float mValue1 = 0.0f;
+    float mValue2 = 1.0f;
     std::string mDrf;
-
     std::optional<float> mLoopValue;
 
+    /// @}
     //-------------------------------------------------------------------------
 
 };

@@ -41,38 +41,42 @@ namespace xobj {
  * \details Representation of the animation rotation key
  * \ingroup Animation
  */
-class AnimRotateKey {
+class AnimRotateKey final {
 public:
 
-    AnimRotateKey()
-        : mAngleDegrees(0.0f),
-          mDrfValue(0.0f) {}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    AnimRotateKey() = default;
 
     AnimRotateKey(const float angleDegrees, const float dataRefValue)
         : mAngleDegrees(angleDegrees),
           mDrfValue(dataRefValue) {}
 
-    //-----------------------------------------
+    AnimRotateKey(const AnimRotateKey &) = default;
+    AnimRotateKey(AnimRotateKey &&) = default;
+
+    ~AnimRotateKey() = default;
+
+    AnimRotateKey & operator=(const AnimRotateKey &) = default;
+    AnimRotateKey & operator=(AnimRotateKey &&) = default;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AnimRotateKey & other) const;
+    bool operator!=(const AnimRotateKey & other) const { return !this->operator==(other); }
 
-    bool operator!=(const AnimRotateKey & other) const {
-        return !this->operator==(other);
-    }
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
-    //-----------------------------------------
+    float mAngleDegrees = 0.0f;
+    float mDrfValue = 0.0f;
 
-    void reset() {
-        mAngleDegrees = 0.0f;
-        mDrfValue = 0.0f;
-    }
-
-    //-----------------------------------------
-
-    float mAngleDegrees;
-    float mDrfValue;
-
-    //-----------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

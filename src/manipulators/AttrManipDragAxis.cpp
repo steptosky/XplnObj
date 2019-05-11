@@ -153,7 +153,7 @@ std::size_t AttrManipDragAxis::printObj(AbstractWriter & writer) const {
     outStr << " " << val2();
     outStr << " " << writer.actualDataref(dataref());
     outStr << " " << toolTip();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 
     outCounter += wheel().printObj(writer);
 

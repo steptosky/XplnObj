@@ -68,10 +68,10 @@ std::size_t AttrManipNoop::printObj(AbstractWriter & writer) const {
     if (!tooltip.empty()) {
         StringStream outStr;
         outStr << ATTR_MANIP_NOOP" " << toolTip();
-        writer.printLine(outStr.str());
+        writer.writeLine(outStr.str());
     }
     else {
-        writer.printLine(ATTR_MANIP_NOOP);
+        writer.writeLine(ATTR_MANIP_NOOP);
     }
     return 1;
 }

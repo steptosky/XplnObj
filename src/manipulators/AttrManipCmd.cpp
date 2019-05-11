@@ -86,7 +86,7 @@ std::size_t AttrManipCmd::printObj(AbstractWriter & writer) const {
     outStr << " " << cursor().toString();
     outStr << " " << writer.actualCommand(cmd());
     outStr << " " << toolTip();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
     return 1;
 }
 

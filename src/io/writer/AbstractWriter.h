@@ -59,23 +59,23 @@ public:
      * \details Print line with EOL.
      * \param [in] msg nullptr means only EOL will be printed
      */
-    virtual void printLine(const char * msg) = 0;
+    virtual void writeLine(const char * msg) = 0;
 
     /*!
      * \details Print line with EOL.
      * \param [in] msg if it is empty then only EOL will be printed
      */
-    void printLine(const std::string & msg);
+    void writeLine(const std::string & msg);
 
     /*!
      * \details Print line with EOL.
      * \param [in] args comma separated arguments.
      */
     template<typename... Args>
-    void printLine(const Args & ... args) {
+    void writeLine(const Args & ... args) {
         StringStream stream;
         int unpack[]{0, ((stream << args), 0)...};
-        printLine(stream.str());
+        writeLine(stream.str());
     };
 
     /*!
@@ -168,12 +168,12 @@ inline const std::string & AbstractWriter::space() const {
 
 //-------------------------------------------------------------------------
 
-inline void AbstractWriter::printLine(const std::string & msg) {
-    msg.empty() ? printEol() : printLine(msg.c_str());
+inline void AbstractWriter::writeLine(const std::string & msg) {
+    msg.empty() ? printEol() : writeLine(msg.c_str());
 }
 
 inline void AbstractWriter::printEol() {
-    printLine("");
+    writeLine("");
 }
 
 /**************************************************************************************************/

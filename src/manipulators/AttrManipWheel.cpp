@@ -76,7 +76,7 @@ std::size_t AttrManipWheel::printObj(AbstractWriter & writer) const {
         StringStream outStr;
         outStr << ATTR_MANIP_WHEEL;
         outStr << " " << delta();
-        writer.printLine(outStr.str());
+        writer.writeLine(outStr.str());
         return 1;
     }
     return 0;

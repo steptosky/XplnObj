@@ -136,7 +136,7 @@ public:
 // The objects do not have any manipulator.
 TEST_F(ManipsStates, no_manips) {
     MockWriter writer;
-    EXPECT_CALL(writer, printLine(_)).Times(0);
+    EXPECT_CALL(writer, writeLine(_)).Times(0);
     processMeshes(&writer);
     ASSERT_EQ(std::make_tuple(0, 0, 0), mObjWriteAttr.count());
 }
@@ -171,8 +171,8 @@ TEST_F(ManipsStates, one_manip) {
     TestWriter w(false);
     const auto count = mObjMesh1.mAttr.mManipContainer->printObj(w);
 
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
     ASSERT_EQ(std::make_tuple(0, 0, count + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
 }
@@ -203,8 +203,8 @@ TEST_F(ManipsStates, two_manips_with_the_same_vals) {
     TestWriter w(false);
     const auto count = mObjMesh1.mAttr.mManipContainer->printObj(w);
 
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
     ASSERT_EQ(std::make_tuple(0, 0, count + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
 }
@@ -235,8 +235,8 @@ TEST_F(ManipsStates, three_manips_with_the_same_vals) {
     TestWriter w(false);
     const auto count = mObjMesh1.mAttr.mManipContainer->printObj(w);
 
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
     ASSERT_EQ(std::make_tuple(0, 0, count + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
 }
@@ -265,7 +265,7 @@ TEST_F(ManipsStates, four_manips_with_the_same_vals) {
     TestWriter w(false);
     const auto count = mObjMesh1.mAttr.mManipContainer->printObj(w);
 
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMeshes(&writer);
     ASSERT_EQ(std::make_tuple(0, 0, count), mObjWriteAttr.count());
 }
@@ -309,10 +309,10 @@ TEST_F(ManipsStates, four_manips_with_the_different_vals) {
     const auto count3 = mObjMesh3.mAttr.mManipContainer->printObj(w3);
     const auto count4 = mObjMesh4.mAttr.mManipContainer->printObj(w4);
 
-    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w2.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w4.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w1.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w2.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w3.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w4.mResult))).Times(1);
     processMeshes(&writer);
     ASSERT_EQ(std::make_tuple(0, 0, count1 + count2 + count3 + count4), mObjWriteAttr.count());
 }
@@ -355,10 +355,10 @@ TEST_F(ManipsStates, four_different_manips) {
     const auto count3 = mObjMesh3.mAttr.mManipContainer->printObj(w3);
     const auto count4 = mObjMesh4.mAttr.mManipContainer->printObj(w4);
 
-    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w2.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w4.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w1.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w2.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w3.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w4.mResult))).Times(1);
     processMeshes(&writer);
     ASSERT_EQ(std::make_tuple(0, 0, count1 + count2 + count3 + count4), mObjWriteAttr.count());
 }
@@ -395,10 +395,10 @@ TEST_F(ManipsStates, three_different_manips) {
     const auto count2 = mObjMesh2.mAttr.mManipContainer->printObj(w2);
     const auto count3 = mObjMesh3.mAttr.mManipContainer->printObj(w3);
 
-    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w2.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w1.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w2.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w3.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
     ASSERT_EQ(std::make_tuple(0, 0, count1 + count2 + count3 + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
 }
@@ -433,9 +433,9 @@ TEST_F(ManipsStates, two_the_same_and_two_different_manips) {
     const auto count3 = mObjMesh3.mAttr.mManipContainer->printObj(w3);
     const auto count4 = mObjMesh4.mAttr.mManipContainer->printObj(w4);
 
-    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w4.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w1.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w3.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w4.mResult))).Times(1);
     processMeshes(&writer);
     ASSERT_EQ(std::make_tuple(0, 0, count1 + count3 + count4), mObjWriteAttr.count());
 }
@@ -472,10 +472,10 @@ TEST_F(ManipsStates, one_manip_and_two_different_manips) {
     const auto count3 = mObjMesh3.mAttr.mManipContainer->printObj(w3);
     const auto count4 = mObjMesh4.mAttr.mManipContainer->printObj(w4);
 
-    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w4.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w1.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w3.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w4.mResult))).Times(1);
     processMeshes(&writer);
     ASSERT_EQ(std::make_tuple(0, 0, count1 + count3 + count4 + 1), mObjWriteAttr.count()); //  + ATTR_MANIP_NONE
 }
@@ -512,10 +512,10 @@ TEST_F(ManipsStates, two_different_manips) {
     const auto count1 = mObjMesh1.mAttr.mManipContainer->printObj(w1);
     const auto count3 = mObjMesh3.mAttr.mManipContainer->printObj(w3);
 
-    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w1.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w3.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMeshes(&writer);
     ASSERT_EQ(std::make_tuple(0, 0, count1 + count3 + 1 + 1), mObjWriteAttr.count()); // + ATTR_MANIP_NONE
 }
@@ -546,7 +546,7 @@ TEST_F(ManipsStates, manip_panel_relation_simple_case1) {
     mObjMesh1.mAttr.mManipContainer = ManipContainer(new AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(_)).Times(0);
+    EXPECT_CALL(writer, writeLine(_)).Times(0);
     processMesh(&writer, mObjMesh1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
@@ -598,12 +598,12 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case1) {
     mManipPanel.setCockpit(cpAttr1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(HasSubstr("ATTR_cockpit_region 0"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(HasSubstr("ATTR_cockpit_region 0"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
@@ -638,15 +638,15 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case2) {
     mObjMesh2.mAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
@@ -683,11 +683,11 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case3) {
     mObjMesh2.mAttr.mManipContainer = ManipContainer(new AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(_)).Times(0);
+    EXPECT_CALL(writer, writeLine(_)).Times(0);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
@@ -727,12 +727,12 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case4) {
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(_)).Times(0);
+    EXPECT_CALL(writer, writeLine(_)).Times(0);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
@@ -768,13 +768,13 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case5) {
     mObjMesh2.mAttr.mCockpit = cpAttr2;
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
@@ -809,12 +809,12 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_1) {
     mObjMesh2.mAttr.mCockpit = cpAttr1;
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(_)).Times(0);
+    EXPECT_CALL(writer, writeLine(_)).Times(0);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
@@ -855,12 +855,12 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_2) {
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter + ATTR_MANIP_NONE
@@ -899,13 +899,13 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_4) {
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
@@ -942,11 +942,11 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_5) {
     mObjMesh2.mAttr.mManipContainer = ManipContainer(new AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
@@ -986,13 +986,13 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_6) {
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
@@ -1030,15 +1030,15 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_7) {
     mObjMesh2.mAttr.mManipContainer = ManipContainer(new AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
@@ -1079,12 +1079,12 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_8) {
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check counter
@@ -1137,22 +1137,22 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_1) {
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh3);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(_)).Times(0);
+    EXPECT_CALL(writer, writeLine(_)).Times(0);
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
@@ -1198,27 +1198,27 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_2) {
     TestWriter w1(false);
     const auto result1 = mManipCmd.printObj(w1);
     ASSERT_EQ(1, result1);
-    EXPECT_CALL(writer, printLine(StrEq(w1.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w1.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
     TestWriter w2(false);
     const auto result2 = mManipComdAxis.printObj(w2);
     ASSERT_EQ(1, result2);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w2.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w2.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check printing
     TestWriter w3(false);
     const auto result3 = mManipPush.printObj(w3);
     ASSERT_EQ(1, result3);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w3.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w3.mResult))).Times(1);
     processMesh(&writer, mObjMesh3);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(_)).Times(0);
+    EXPECT_CALL(writer, writeLine(_)).Times(0);
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
@@ -1264,16 +1264,16 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_3) {
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(_)).Times(0);
+    EXPECT_CALL(writer, writeLine(_)).Times(0);
     processMesh(&writer, mObjMesh3);
     processMesh(&writer, mObjMesh4);
     //---------------------------
@@ -1317,23 +1317,23 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_4) {
     // mObjMesh4
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh3);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter
@@ -1377,23 +1377,23 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_5) {
     // mObjMesh4
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_MANIP_NONE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_MANIP_NONE))).Times(1);
     processMesh(&writer, mObjMesh1);
     //---------------------------
     // check printing
     TestWriter w(false);
     const auto result = mManipCmd.printObj(w);
     ASSERT_EQ(1, result);
-    EXPECT_CALL(writer, printLine(StrEq(w.mResult))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(w.mResult))).Times(1);
     processMesh(&writer, mObjMesh2);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(_)).Times(0);
+    EXPECT_CALL(writer, writeLine(_)).Times(0);
     processMesh(&writer, mObjMesh3);
     //---------------------------
     // check printing
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_COCKPIT))).Times(1);
     processMesh(&writer, mObjMesh4);
     //---------------------------
     // check counter

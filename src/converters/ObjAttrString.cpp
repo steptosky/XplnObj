@@ -63,7 +63,7 @@ void printObjGlobAttr(const AttrBlend & globAttr, AbstractWriter & writer) {
         outStr << ATTR_GLOBAL_SHADOW_BLEND;
     }
     outStr << " " << std::clamp(globAttr.mRatio, 0.0f, 1.0f);
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 }
 
 void printObjGlobAttr(const AttrLayerGroup & globAttr, AbstractWriter & writer) {
@@ -71,7 +71,7 @@ void printObjGlobAttr(const AttrLayerGroup & globAttr, AbstractWriter & writer) 
     outStr << ATTR_GLOBAL_LAYER_GROUP;
     outStr << " " << globAttr.layer().toString();
     outStr << " " << globAttr.offset();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 }
 
 void printObjGlobAttr(const AttrDrapedLayerGroup & globAttr, AbstractWriter & writer) {
@@ -79,25 +79,25 @@ void printObjGlobAttr(const AttrDrapedLayerGroup & globAttr, AbstractWriter & wr
     outStr << ATTR_GLOBAL_LAYER_GROUP_DRAPED;
     outStr << " " << globAttr.layer().toString();
     outStr << " " << globAttr.offset();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 }
 
 void printObjGlobAttr(const AttrDrapedLod & globAttr, AbstractWriter & writer) {
     StringStream outStr;
     outStr << ATTR_GLOBAL_LOD_DRAPED << " " << globAttr.distance();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 }
 
 void printObjGlobAttr(const AttrSlungLoadWeight & globAttr, AbstractWriter & writer) {
     StringStream outStr;
     outStr << ATTR_GLOBAL_SLUNG_LOAD_WEIGHT << " " << globAttr.weight();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 }
 
 void printObjGlobAttr(const AttrSpecular & globAttr, AbstractWriter & writer) {
     StringStream outStr;
     outStr << ATTR_GLOBAL_SPECULAR << " " << globAttr.ratio();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 }
 
 void printObjGlobAttr(const AttrTint & globAttr, AbstractWriter & writer) {
@@ -105,11 +105,11 @@ void printObjGlobAttr(const AttrTint & globAttr, AbstractWriter & writer) {
     outStr << ATTR_GLOBAL_TINT;
     outStr << " " << globAttr.albedo();
     outStr << " " << globAttr.emissive();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 }
 
 void printObjGlobAttr(const AttrWetDry & globAttr, AbstractWriter & writer) {
-    writer.printLine(globAttr.state() == AttrWetDry::eState::wet ? ATTR_GLOBAL_WET : ATTR_GLOBAL_DRY);
+    writer.writeLine(globAttr.state() == AttrWetDry::eState::wet ? ATTR_GLOBAL_WET : ATTR_GLOBAL_DRY);
 }
 
 void printObjGlobAttr(const AttrSlopeLimit & globAttr, AbstractWriter & writer) {
@@ -119,7 +119,7 @@ void printObjGlobAttr(const AttrSlopeLimit & globAttr, AbstractWriter & writer) 
     outStr << " " << globAttr.maxPitch();
     outStr << " " << globAttr.minRoll();
     outStr << " " << globAttr.maxRoll();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 }
 
 void printObjGlobAttr(const AttrCockpitRegion & globAttr, AbstractWriter & writer) {
@@ -129,7 +129,7 @@ void printObjGlobAttr(const AttrCockpitRegion & globAttr, AbstractWriter & write
     outStr << " " << globAttr.bottom();
     outStr << " " << globAttr.right();
     outStr << " " << globAttr.top();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 }
 
 /**************************************************************************************************/

@@ -91,7 +91,7 @@ std::size_t AttrAxisDetentRange::printObj(AbstractWriter & writer) const {
     outStr << " " << start();
     outStr << " " << end();
     outStr << " " << height();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
     return 1;
 }
 

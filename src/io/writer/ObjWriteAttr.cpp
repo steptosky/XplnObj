@@ -82,7 +82,7 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
 
     const auto writeBool = [&](const char * inAttr, const bool inState) {
         if (inState) {
-            mWriter->printLine(inAttr);
+            mWriter->writeLine(inAttr);
             ++mGlobNum;
         }
     };
@@ -90,7 +90,7 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
     const auto writeString = [&](const char * inAttr, const std::optional<std::string> & string) {
         if (string && !string->empty()) {
             if (!StringValidator::hasIllegalSymbols(*string, "\t\n\r")) {
-                mWriter->printLine(std::string(inAttr).append(" ").append(*string));
+                mWriter->writeLine(std::string(inAttr).append(" ").append(*string));
                 ++mGlobNum;
             }
         }
@@ -145,10 +145,10 @@ void ObjWriteAttr::switchAttrState<AttrBlend>(const AttrBlend & attr, const bool
             outStr << ATTR_BLEND;
         }
         outStr << " " << std::clamp(attr.mRatio, 0.0f, 1.0f);
-        mWriter->printLine(outStr.str());
+        mWriter->writeLine(outStr.str());
     }
     else {
-        mWriter->printLine(ATTR_BLEND, " ", AttrBlend().mRatio);
+        mWriter->writeLine(ATTR_BLEND, " ", AttrBlend().mRatio);
     }
     ++mAttrNum;
 }
@@ -159,22 +159,22 @@ void ObjWriteAttr::switchAttrState<AttrCockpit>(const AttrCockpit & attr, const 
         mIsPanelManip = true;
         mState->mObject.mManipContainer = ManipContainer(new AttrManipPanel(attr));
         if (attr.mType == AttrCockpit::cockpit) {
-            mWriter->printLine(ATTR_COCKPIT);
+            mWriter->writeLine(ATTR_COCKPIT);
         }
         else if (attr.mType == AttrCockpit::region_1) {
-            mWriter->printLine(ATTR_COCKPIT_REGION, " 0");
+            mWriter->writeLine(ATTR_COCKPIT_REGION, " 0");
         }
         else if (attr.mType == AttrCockpit::region_2) {
-            mWriter->printLine(ATTR_COCKPIT_REGION, " 1");
+            mWriter->writeLine(ATTR_COCKPIT_REGION, " 1");
         }
         else if (attr.mType == AttrCockpit::region_3) {
-            mWriter->printLine(ATTR_COCKPIT_REGION, " 2");
+            mWriter->writeLine(ATTR_COCKPIT_REGION, " 2");
         }
         else if (attr.mType == AttrCockpit::region_4) {
-            mWriter->printLine(ATTR_COCKPIT_REGION, " 3");
+            mWriter->writeLine(ATTR_COCKPIT_REGION, " 3");
         }
         else if (attr.mType == AttrCockpit::cockpit_device) {
-            mWriter->printLine(ATTR_COCKPIT_DEVICE, " ", attr.mDeviceName, " ", attr.mDeviceBus, " ",
+            mWriter->writeLine(ATTR_COCKPIT_DEVICE, " ", attr.mDeviceName, " ", attr.mDeviceBus, " ",
                                attr.mDeviceLightingChan, " ", attr.mDeviceAutoAdjust);
         }
         else {
@@ -184,7 +184,7 @@ void ObjWriteAttr::switchAttrState<AttrCockpit>(const AttrCockpit & attr, const 
     else {
         mIsPanelManip = false;
         mState->mObject.mManipContainer = std::nullopt;
-        mWriter->printLine(ATTR_NO_COCKPIT);
+        mWriter->writeLine(ATTR_NO_COCKPIT);
     }
     ++mAttrNum;
 }
@@ -192,10 +192,10 @@ void ObjWriteAttr::switchAttrState<AttrCockpit>(const AttrCockpit & attr, const 
 template<>
 void ObjWriteAttr::switchAttrState<AttrHard>(const AttrHard & attr, const bool enable) {
     if (enable) {
-        mWriter->printLine(attr.mIsDeck ? ATTR_HARD_DECK : ATTR_HARD, " ", attr.mSurface.toString());
+        mWriter->writeLine(attr.mIsDeck ? ATTR_HARD_DECK : ATTR_HARD, " ", attr.mSurface.toString());
     }
     else {
-        mWriter->printLine(ATTR_NO_HARD);
+        mWriter->writeLine(ATTR_NO_HARD);
     }
     ++mAttrNum;
 }
@@ -203,10 +203,10 @@ void ObjWriteAttr::switchAttrState<AttrHard>(const AttrHard & attr, const bool e
 template<>
 void ObjWriteAttr::switchAttrState<AttrLightLevel>(const AttrLightLevel & attr, const bool enable) {
     if (enable) {
-        mWriter->printLine(ATTR_LIGHT_LEVEL, " ", attr.mVal1, " ", attr.mVal2, " ", attr.mDataref);
+        mWriter->writeLine(ATTR_LIGHT_LEVEL, " ", attr.mVal1, " ", attr.mVal2, " ", attr.mDataref);
     }
     else {
-        mWriter->printLine(ATTR_LIGHT_LEVEL_RESET);
+        mWriter->writeLine(ATTR_LIGHT_LEVEL_RESET);
     }
     ++mAttrNum;
 }
@@ -214,10 +214,10 @@ void ObjWriteAttr::switchAttrState<AttrLightLevel>(const AttrLightLevel & attr, 
 template<>
 void ObjWriteAttr::switchAttrState<AttrPolyOffset>(const AttrPolyOffset & attr, const bool enable) {
     if (enable) {
-        mWriter->printLine(ATTR_POLY_OS, " ", attr.mOffset);
+        mWriter->writeLine(ATTR_POLY_OS, " ", attr.mOffset);
     }
     else {
-        mWriter->printLine(ATTR_POLY_OS, " ", AttrPolyOffset().mOffset);
+        mWriter->writeLine(ATTR_POLY_OS, " ", AttrPolyOffset().mOffset);
     }
     ++mAttrNum;
 }
@@ -225,10 +225,10 @@ void ObjWriteAttr::switchAttrState<AttrPolyOffset>(const AttrPolyOffset & attr, 
 template<>
 void ObjWriteAttr::switchAttrState<AttrShiny>(const AttrShiny & attr, const bool enable) {
     if (enable) {
-        mWriter->printLine(ATTR_SHINY_RAT, " ", std::clamp(attr.mRatio, 0.0f, 1.0f));
+        mWriter->writeLine(ATTR_SHINY_RAT, " ", std::clamp(attr.mRatio, 0.0f, 1.0f));
     }
     else {
-        mWriter->printLine(ATTR_SHINY_RAT, " ", 0.0f);
+        mWriter->writeLine(ATTR_SHINY_RAT, " ", 0.0f);
     }
     ++mAttrNum;
 }
@@ -252,7 +252,7 @@ void ObjWriteAttr::writeObjAttr(AbstractWriter * writer, const ObjAbstract * obj
 void ObjWriteAttr::writeAttr() {
     const auto writeBool = [&](const char * attr) {
         ++mAttrNum;
-        mWriter->printLine(attr);
+        mWriter->writeLine(attr);
     };
 
     const auto & attrs = mObj->mAttr;

@@ -108,7 +108,7 @@ std::size_t AttrManipPush::printObj(AbstractWriter & writer) const {
     outStr << " " << up();
     outStr << " " << writer.actualDataref(dataref());
     outStr << " " << toolTip();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
     return 1 + wheel().printObj(writer);
 }
 

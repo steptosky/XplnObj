@@ -242,7 +242,7 @@ std::size_t AttrManipDragRotate::printObj(AbstractWriter & writer) const {
     outStr << " " << writer.actualDataref(dataref1());
     outStr << " " << writer.actualDataref(dataref2());
     outStr << " " << toolTip();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 
     const auto & keysList = keys();
     for (const auto & k : keysList) {

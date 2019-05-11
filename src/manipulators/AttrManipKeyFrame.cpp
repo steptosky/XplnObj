@@ -82,7 +82,7 @@ std::size_t AttrManipKeyFrame::printObj(AbstractWriter & writer) const {
     outStr << ATTR_MANIP_KEYFRAME;
     outStr << " " << value();
     outStr << " " << angle();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
     return 1;
 }
 

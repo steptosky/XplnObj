@@ -157,7 +157,7 @@ std::size_t AttrManipDragXy::printObj(AbstractWriter & writer) const {
     outStr << " " << writer.actualDataref(xDataref());
     outStr << " " << writer.actualDataref(yDataref());
     outStr << " " << toolTip();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
     return 1;
 }
 

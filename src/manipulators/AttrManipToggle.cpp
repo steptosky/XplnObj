@@ -108,7 +108,7 @@ std::size_t AttrManipToggle::printObj(AbstractWriter & writer) const {
     outStr << " " << off();
     outStr << " " << writer.actualDataref(dataref());
     outStr << " " << toolTip();
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
     return 1 + wheel().printObj(writer);
 }
 

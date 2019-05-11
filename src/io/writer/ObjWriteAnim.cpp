@@ -70,10 +70,10 @@ bool ObjWriteAnim::printAnimationStart(AbstractWriter & writer, const Transform 
     //-------------------------------------------------------------------------
 
     if (mOptions->isEnabled(XOBJ_EXP_MARK_TRANSFORM)) {
-        mWriter->printLine(std::string(ATTR_ANIM_BEGIN).append(" ## ").append(transform.name()));
+        mWriter->writeLine(std::string(ATTR_ANIM_BEGIN).append(" ## ").append(transform.name()));
     }
     else {
-        mWriter->printLine(ATTR_ANIM_BEGIN);
+        mWriter->writeLine(ATTR_ANIM_BEGIN);
     }
 
     mWriter->spaceMore();
@@ -93,10 +93,10 @@ bool ObjWriteAnim::printAnimationEnd(AbstractWriter & writer, const Transform & 
     mWriter->spaceLess();
 
     if (mOptions->isEnabled(XOBJ_EXP_MARK_TRANSFORM)) {
-        mWriter->printLine(std::string(ATTR_ANIM_END).append(" ## ").append(transform.name()));
+        mWriter->writeLine(std::string(ATTR_ANIM_END).append(" ## ").append(transform.name()));
     }
     else {
-        mWriter->printLine(ATTR_ANIM_END);
+        mWriter->writeLine(ATTR_ANIM_END);
     }
     return true;
 }
@@ -117,7 +117,7 @@ void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const Transform &
                         << sep << a.mKeys[0].mDrfValue
                         << " " << a.mKeys[1].mDrfValue
                         << sep << (a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf).c_str());
-                mWriter->printLine(stream.str());
+                mWriter->writeLine(stream.str());
                 if (a.mLoop) {
                     printLoop(*a.mLoop);
                 }
@@ -127,7 +127,7 @@ void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const Transform &
             else {
                 StringStream stream;
                 stream << ATTR_TRANS_BEGIN << sep << (a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf).c_str());
-                mWriter->printLine(stream.str());
+                mWriter->writeLine(stream.str());
                 mWriter->spaceMore();
 
                 for (auto & key : a.mKeys) {
@@ -139,7 +139,7 @@ void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const Transform &
                 }
 
                 mWriter->spaceLess();
-                mWriter->printLine(ATTR_TRANS_END);
+                mWriter->writeLine(ATTR_TRANS_END);
 
                 ++mStat->mAnimAttrCount;
             }
@@ -162,7 +162,7 @@ void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const Transform &
                         << sep << a.mKeys[0].mDrfValue
                         << " " << a.mKeys[1].mDrfValue
                         << sep << (a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf).c_str());
-                mWriter->printLine(stream.str());
+                mWriter->writeLine(stream.str());
                 if (a.mLoop) {
                     printLoop(*a.mLoop);
                 }
@@ -174,7 +174,7 @@ void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const Transform &
                 stream << ATTR_ROTATE_BEGIN
                         << sep << a.mVector.normalized().toString(PRECISION)
                         << sep << (a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf).c_str());
-                mWriter->printLine(stream.str());
+                mWriter->writeLine(stream.str());
                 mWriter->spaceMore();
 
                 for (auto & key : a.mKeys) {
@@ -186,7 +186,7 @@ void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const Transform &
                 }
 
                 mWriter->spaceLess();
-                mWriter->printLine(ATTR_ROTATE_END);
+                mWriter->writeLine(ATTR_ROTATE_END);
 
                 ++mStat->mAnimAttrCount;
             }
@@ -220,7 +220,7 @@ void ObjWriteAnim::printVisible(const AnimVisibility & inAnim, const Transform &
 void ObjWriteAnim::printLoop(const float val) const {
     StringStream stream;
     stream << ANIM_KEYFRAME_LOOP << " " << val;
-    mWriter->printLine(stream.str());
+    mWriter->writeLine(stream.str());
     ++mStat->mAnimAttrCount;
 }
 

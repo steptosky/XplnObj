@@ -60,7 +60,7 @@ AttrManipBase * AttrManipNone::clone() const {
 /**************************************************************************************************/
 
 std::size_t AttrManipNone::printObj(AbstractWriter & writer) const {
-    writer.printLine(ATTR_MANIP_NONE);
+    writer.writeLine(ATTR_MANIP_NONE);
     return 1;
 }
 

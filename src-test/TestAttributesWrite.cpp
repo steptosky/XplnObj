@@ -74,7 +74,7 @@ TEST(TestAttributesWrite, default) {
     ObjMesh main1;
     ObjMesh main2;
 
-    EXPECT_CALL(writer, printLine(_)).Times(0);
+    EXPECT_CALL(writer, writeLine(_)).Times(0);
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
 }
@@ -108,13 +108,13 @@ TEST(TestAttributesWrite, boolean_case1) {
     main3.mAttr.mIsSolidForCamera = false;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -147,13 +147,13 @@ TEST(TestAttributesWrite, boolean_case2) {
     main3.mAttr.mIsSolidForCamera = false;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -185,8 +185,8 @@ TEST(TestAttributesWrite, boolean_case3) {
     main3.mAttr.mIsSolidForCamera = true;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -218,13 +218,13 @@ TEST(TestAttributesWrite, boolean_case4) {
     main3.mAttr.mIsSolidForCamera = true;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SHADOW))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -256,13 +256,13 @@ TEST(TestAttributesWrite, boolean_case5) {
     main3.mAttr.mIsSolidForCamera = true;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SHADOW))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -296,18 +296,18 @@ TEST(TestAttributesWrite, boolean_case6) {
     main3.mAttr.mIsSolidForCamera = true;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SHADOW))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -340,18 +340,18 @@ TEST(TestAttributesWrite, boolean_case7) {
     main3.mAttr.mIsSolidForCamera = false;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SHADOW))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -378,21 +378,21 @@ TEST(TestAttributesWrite, parameterized_case1) {
     main1.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_3);
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_hard dirt"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shiny_rat 0.10000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_blend 0.30000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_poly_os 5.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_light_level 3.00000 4.00000 test"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 2"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_manip_none"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard dirt"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.10000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_blend 0.30000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 5.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 3.00000 4.00000 test"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 2"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
     // default
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_hard"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_blend 0.50000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_light_level_reset"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_hard"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_blend 0.50000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level_reset"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_cockpit"))).Times(1);
 
     // enable
     attrWriter.writeObjAttr(&writer, &main1);
@@ -424,29 +424,29 @@ TEST(TestAttributesWrite, parameterized_case2) {
     main3.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_3);
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_hard dirt"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shiny_rat 0.80000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shadow_blend 0.70000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_poly_os 4.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_light_level 2.00000 6.00000 test"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 1"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_manip_none"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard dirt"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.80000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shadow_blend 0.70000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 4.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 2.00000 6.00000 test"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 1"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
     // default
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_hard"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_blend 0.50000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_light_level_reset"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_hard"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_blend 0.50000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level_reset"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_cockpit"))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_hard_deck concrete"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shiny_rat 1.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shadow_blend 0.30000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_poly_os 5.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_light_level 3.00000 4.00000 test2"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 2"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_manip_none"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard_deck concrete"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 1.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shadow_blend 0.30000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 5.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 3.00000 4.00000 test2"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 2"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
     // enable
     attrWriter.writeObjAttr(&writer, &main1);
@@ -479,21 +479,21 @@ TEST(TestAttributesWrite, parameterized_case3) {
     main2.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_hard dirt"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shiny_rat 0.80000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_blend 0.70000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_poly_os 4.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_light_level 2.00000 6.00000 test"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_manip_none"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard dirt"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.80000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_blend 0.70000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 4.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 2.00000 6.00000 test"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
     // default
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_hard"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_blend 0.50000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_light_level_reset"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_hard"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_blend 0.50000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level_reset"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_cockpit"))).Times(1);
 
     // enable
     attrWriter.writeObjAttr(&writer, &main1);
@@ -526,29 +526,29 @@ TEST(TestAttributesWrite, parameterized_case4) {
     main2.mAttr.mCockpit = AttrCockpit(AttrCockpit::cockpit);
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_hard dirt"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shiny_rat 0.80000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_blend 0.70000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_poly_os 4.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_light_level 2.00000 6.00000 test"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_manip_none"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard dirt"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.80000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_blend 0.70000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 4.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 2.00000 6.00000 test"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_hard_deck concrete"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shiny_rat 1.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_blend 0.30000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_poly_os 5.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_light_level 3.00000 4.00000 test2"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_manip_none"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard_deck concrete"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 1.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_blend 0.30000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 5.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 3.00000 4.00000 test2"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
     // default
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_hard"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_blend 0.50000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_light_level_reset"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_hard"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_blend 0.50000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level_reset"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_cockpit"))).Times(1);
 
     // enable
     attrWriter.writeObjAttr(&writer, &main1);
@@ -574,21 +574,21 @@ TEST(TestAttributesWrite, parameterized_case5) {
     main2.mAttr.mCockpit = AttrCockpit(AttrCockpit::cockpit);
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_hard dirt"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shiny_rat 0.10000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_blend 0.30000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_poly_os 5.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_light_level 3.00000 4.00000 test"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_cockpit"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_manip_none"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard dirt"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.10000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_blend 0.30000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 5.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 3.00000 4.00000 test"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
     // default
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_hard"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_blend 0.50000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_light_level_reset"))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq("ATTR_no_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_hard"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_blend 0.50000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level_reset"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_cockpit"))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     // enable

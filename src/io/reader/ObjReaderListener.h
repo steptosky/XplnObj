@@ -94,6 +94,7 @@ public:
     virtual void gotGlobAttrTexture(const std::string & val) = 0;
     virtual void gotGlobAttrTextureLit(const std::string & val) = 0;
     virtual void gotGlobAttrTextureNormal(const std::string & val) = 0;
+    virtual void gotGlobAttrParticleSystemPath(const std::string & val) = 0;
 
     //-----------------------------------------------------
     // Global attributes

@@ -51,8 +51,10 @@ namespace xobj {
 /**************************************************************************************************/
 
 ObjWriter::ObjWriter()
-    : mAnimationWritter(&mExportOptions, &mStatistic),
-      mObjWriteGeometry(&mExportOptions, &mStatistic) {
+    : mState(std::make_shared<ObjState>()),
+      mAnimationWritter(&mExportOptions, &mStatistic),
+      mObjWriteGeometry(&mExportOptions, &mStatistic, mState),
+      mWriteAttr(mState) {
 
     reset();
 }
@@ -68,8 +70,9 @@ ObjWriter::~ObjWriter() {
 /**************************************************************************************************/
 
 void ObjWriter::reset() {
+    mState->reset();
     mStatistic.reset();
-    mWriteAttr.reset();
+    mWriteAttr.reset(mState);
     mObjWriteGeometry.reset();
 }
 
@@ -93,6 +96,8 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
 
         mMain = root;
         mExportOptions = root->mExportOptions;
+        mState->mGlobal = mMain->mAttr;
+        mState->mDraped = mMain->mDraped.mAttr;
 
         Writer writer;
         if (!writer.openFile(context.objFile())) {
@@ -208,6 +213,8 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
         mStatistic.mGlobAttrCount += globAttrNum;
         mStatistic.mTrisAttrCount += objAttrNum;
         mStatistic.mTrisManipCount += manipNum;
+
+        mState->finish(root->objectName());
 
         if (mMain->mAttr.mDebug) {
             ++mStatistic.mGlobAttrCount;
@@ -351,7 +358,12 @@ void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) 
             continue;
         }
 
-        mObjWriteGeometry.printLightPointObject(writer, *objBase);
+        if (mObjWriteGeometry.printLightPointObject(writer, *objBase)) {
+            mStatistic.mCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+            continue;
+        }
+
+        mObjWriteGeometry.printEmitterObject(writer, *objBase);
         mStatistic.mCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
 
         //--------------

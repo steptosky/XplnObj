@@ -1,5 +1,3 @@
-#pragma once
-
 /*
 **  Copyright(C) 2017, StepToSky
 **
@@ -29,67 +27,50 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <cstdint>
-#include <cassert>
-#include <tuple>
-#include "xpln/obj/attributes/AttrSet.h"
-#include "xpln/obj/ObjMesh.h"
-#include "io/ObjState.h"
+#include <gtest/gtest.h>
 #include "xpln/obj/ObjMain.h"
+#include <xpln/obj/ObjEmitter.h>
 
-namespace xobj {
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-class AbstractWriter;
-class ObjMesh;
-class ObjAbstract;
-
-class ObjWriteManip;
+using namespace xobj;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-class ObjWriteAttr {
-public:
-
-    explicit ObjWriteAttr(ObjState::Ptr state)
-        : mState(std::move(state)) {
-        assert(mState);
-    }
-
-    ObjWriteAttr(const ObjWriteAttr &) = delete;
-    ObjWriteAttr & operator =(const ObjWriteAttr &) = delete;
-
-    ~ObjWriteAttr() = default;
-
-    XpObjLib void writeGlobAttr(AbstractWriter * writer, const ObjMain * obj);
-    XpObjLib void writeObjAttr(AbstractWriter * writer, const ObjAbstract * obj);
-    XpObjLib void reset(ObjState::Ptr state);
-    XpObjLib std::tuple<std::size_t, std::size_t, std::size_t> count() const;
-
-private:
-
-    void writeAttr();
-    void writeManip();
-    bool checkManip(AttrManipBase * manip) const;
-
-    const ObjMesh * mObj = nullptr;
-    AbstractWriter * mWriter = nullptr;
-    ObjState::Ptr mState;
-    bool mIsPanelManip = false;
-
-    std::size_t mGlobNum = 0;
-    std::size_t mAttrNum = 0;
-    std::size_t mManipNum = 0;
-
-};
+/*
+ * This tests are for manual checking.
+ * Sometime you want to see result yourself and to analyze it.
+ * this section is for code that create such a results.
+ * In normal way it is disabled and can be enable when it is needed.
+ * 
+ * For example: I write a code that generates some obj file instead of
+ * compiling 3Ds Max plugin, open 3Ds Max, create scene and export to see some result.
+ * 
+ */
 
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
+#if 0
+TEST(Manual, case1) {
+    const auto fileName = XOBJ_PATH("manual-case1.obj");
+    //-----------------------------
+    ObjMain mainOut;
+    mainOut.mAttr.mParticleSystemPath = "some_path";
+    auto & lod = mainOut.addLod();
+    auto * emitter = new ObjEmitter;
+	emitter->setObjectName("object-name");
+	emitter->setName("emitter-name");
+    emitter->setIndex(1);
+    emitter->setPosition(Point3(1, 2, 3));
+    emitter->setOrientation(10.0f, 20.0f, 30.0f);
+    lod.transform().addObject(emitter);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
 }
+#endif
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/

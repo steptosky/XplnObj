@@ -31,6 +31,7 @@
 
 #include <cstddef>
 #include "AbstractWriter.h"
+#include "io/ObjState.h"
 
 namespace xobj {
 
@@ -60,7 +61,7 @@ class ObjMain;
 class ObjWriteGeometry {
 public:
 
-    ObjWriteGeometry(const ExportOptions * option, IOStatistic * outStat);
+    ObjWriteGeometry(const ExportOptions * option, IOStatistic * outStat, ObjState::Ptr state );
 
     ObjWriteGeometry(const ObjWriteGeometry &) = delete;
     ObjWriteGeometry & operator =(const ObjWriteGeometry &) = delete;
@@ -78,6 +79,7 @@ public:
     bool printLineObject(AbstractWriter & writer, const ObjAbstract & objBase);
     bool printSmokeObject(AbstractWriter & writer, const ObjAbstract & objBase) const;
     bool printDummyObject(AbstractWriter & writer, const ObjAbstract & objBase) const;
+    bool printEmitterObject(AbstractWriter & writer, const ObjAbstract & objBase) const;
 
     void reset();
 
@@ -87,6 +89,7 @@ private:
 
     IOStatistic * mStat;
     const ExportOptions * mOptions;
+	ObjState::Ptr mState;
 
     // Mesh
     std::size_t mMeshFaceOffset;

@@ -34,6 +34,7 @@
 #include "xpln/obj/ExportOptions.h"
 #include "xpln/obj/IOStatistic.h"
 
+#include "io/ObjState.h"
 #include "ObjWriteAttr.h"
 #include "ObjWritePreparer.h"
 #include "ObjWriteAnim.h"
@@ -67,12 +68,13 @@ private:
 
     ExportOptions mExportOptions;
     IOStatistic mStatistic;
+    ObjState::Ptr mState;
 
     ObjWriteAnim mAnimationWritter;
     ObjWriteGeometry mObjWriteGeometry;
     ObjWriteAttr mWriteAttr;
 
-    ObjMain * mMain;
+    ObjMain * mMain = nullptr;
 
     void calculateVerticiesAndFaces(const Transform & parent);
     void printGlobalInformation(AbstractWriter & writer, const ObjMain & objRoot);

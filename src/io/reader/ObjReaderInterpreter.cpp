@@ -105,6 +105,11 @@ void ObjReaderInterpreter::gotGlobAttrTextureNormal(const std::string & val) {
     ++mIOStatistic->mGlobAttrCount;
 }
 
+void ObjReaderInterpreter::gotGlobAttrParticleSystemPath(const std::string & val) {
+    mObjMain->mAttr.mParticleSystemPath = val;
+    ++mIOStatistic->mGlobAttrCount;
+}
+
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/

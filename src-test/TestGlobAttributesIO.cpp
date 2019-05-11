@@ -36,36 +36,39 @@ using namespace xobj;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-TEST(TestGlobAttributesIO, textures) {
+TEST(TestGlobAttributesIO, strings) {
     const auto fileName = XOBJ_PATH("TestGlobAttributesIO-textures.obj");
     //-----------------------------
     ObjMain mainOut;
     mainOut.mAttr.mTexture = "test";
     mainOut.mAttr.mTextureLit = "test_lit";
     mainOut.mAttr.mTextureNormal = "test_normal";
+    mainOut.mAttr.mParticleSystemPath = "test_particle_system";
 
     //-------------------------------------------------------------------------
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(mainOut.exportObj(expContext));
-    ASSERT_EQ(3, expContext.statistic().mGlobAttrCount);
+    ASSERT_EQ(4, expContext.statistic().mGlobAttrCount);
 
     //-------------------------------------------------------------------------
 
     ObjMain mainIn;
     ImportContext impContext(fileName);
     ASSERT_TRUE(mainIn.importObj(impContext));
-    ASSERT_EQ(3, impContext.statistic().mGlobAttrCount);
+    ASSERT_EQ(4, impContext.statistic().mGlobAttrCount);
 
     //-------------------------------------------------------------------------
 
     ASSERT_TRUE(mainOut.mAttr.mTexture);
     ASSERT_TRUE(mainOut.mAttr.mTextureLit);
     ASSERT_TRUE(mainOut.mAttr.mTextureNormal);
+    ASSERT_TRUE(mainOut.mAttr.mParticleSystemPath);
 
     ASSERT_STREQ(mainOut.mAttr.mTexture->c_str(), "test");
     ASSERT_STREQ(mainOut.mAttr.mTextureLit->c_str(), "test_lit");
     ASSERT_STREQ(mainOut.mAttr.mTextureNormal->c_str(), "test_normal");
+    ASSERT_STREQ(mainOut.mAttr.mParticleSystemPath->c_str(), "test_particle_system");
 }
 
 TEST(TestGlobAttributesIO, attributes) {

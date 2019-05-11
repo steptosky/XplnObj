@@ -70,6 +70,9 @@ enum eExportOptions : std::uint64_t {
     /*! \details Mark smokes by objectName in the 'obj' file */
     XOBJ_EXP_MARK_SMOKE = 1 << 7,
 
+    /*! \details Mark particle emitter by objectName in the 'obj' file */
+    XOBJ_EXP_PARTICLE_EMITTER = 1 << 8,
+
     /*!
      * \details Applying the LOD transform matrix to the hierarchy.
      * \details Use it if you want the LOD's transform matrix to affect all its children,

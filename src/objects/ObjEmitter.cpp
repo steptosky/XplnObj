@@ -27,7 +27,10 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "ObjWriteState.h"
+#include "xpln/obj/ObjEmitter.h"
+#include "xpln/obj/Transform.h"
+#include "common/AttributeNames.h"
+#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -35,22 +38,23 @@ namespace xobj {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjWriteState::processBool(const bool newValue, bool & inOutStateValue,
-                                const std::function<void(bool enable)> & switchFn) {
-    if (newValue == inOutStateValue) {
-        return;
-    }
-    inOutStateValue = newValue;
-    if (inOutStateValue) {
-        switchFn(true);
-    }
-    else {
-        switchFn(false);
-    }
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
+
+eObjectType ObjEmitter::objType() const {
+    return OBJ_PARTICLE_EMITTER;
+}
+
+void ObjEmitter::applyTransform(const TMatrix & tm, const bool) {
+    tm.transformPoint(mPosition);
+}
+
+ObjAbstract * ObjEmitter::clone() const {
+    return new ObjEmitter(*this);
 }
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
-
 }

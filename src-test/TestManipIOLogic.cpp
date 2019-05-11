@@ -84,11 +84,11 @@ public:
     static void extractManip(const ObjMain & inMain, const size_t inLodNumber, const size_t inMeshNumber, const MANIP *& outAttr) {
         ObjMesh * inM = nullptr;
         extractMesh(inMain, inLodNumber, inMeshNumber, inM);
-        if (!inM->mAttr.mManipContainer) {
+        if (!inM->mAttr.mManip) {
             outAttr = nullptr;
             return;
         }
-        outAttr = std::get_if<MANIP>(&inM->mAttr.mManipContainer->mType);
+        outAttr = std::get_if<MANIP>(&inM->mAttr.mManip->mType);
     }
 
     AttrManipCmd mManipComd;
@@ -157,7 +157,7 @@ TEST_F(TestManipIOLogic, case_2) {
 
     mManipComd.setCmd("test");
     // Manip
-    outM1->mAttr.mManipContainer = AttrManip(mManipComd);
+    outM1->mAttr.mManip = AttrManip(mManipComd);
     // No Manip
     // mObjMesh2
     // mObjMesh3
@@ -207,8 +207,8 @@ TEST_F(TestManipIOLogic, case_3) {
 
     mManipComd.setCmd("test");
     // Manip
-    outM1->mAttr.mManipContainer = AttrManip(mManipComd);
-    outM2->mAttr.mManipContainer = AttrManip(mManipComd);
+    outM1->mAttr.mManip = AttrManip(mManipComd);
+    outM2->mAttr.mManip = AttrManip(mManipComd);
     // No Manip
     // mObjMesh3
     // mObjMesh4
@@ -258,9 +258,9 @@ TEST_F(TestManipIOLogic, case_4) {
 
     mManipComd.setCmd("test");
     // Manip
-    outM1->mAttr.mManipContainer = AttrManip(mManipComd);
-    outM2->mAttr.mManipContainer = AttrManip(mManipComd);
-    outM3->mAttr.mManipContainer = AttrManip(mManipComd);
+    outM1->mAttr.mManip = AttrManip(mManipComd);
+    outM2->mAttr.mManip = AttrManip(mManipComd);
+    outM3->mAttr.mManip = AttrManip(mManipComd);
     // No Manip
     // mObjMesh4
 
@@ -310,10 +310,10 @@ TEST_F(TestManipIOLogic, case_5) {
 
     mManipComd.setCmd("test");
     // Manip
-    outM1->mAttr.mManipContainer = AttrManip(mManipComd);
-    outM2->mAttr.mManipContainer = AttrManip(mManipComd);
-    outM3->mAttr.mManipContainer = AttrManip(mManipComd);
-    outM4->mAttr.mManipContainer = AttrManip(mManipComd);
+    outM1->mAttr.mManip = AttrManip(mManipComd);
+    outM2->mAttr.mManip = AttrManip(mManipComd);
+    outM3->mAttr.mManip = AttrManip(mManipComd);
+    outM4->mAttr.mManip = AttrManip(mManipComd);
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -362,16 +362,16 @@ TEST_F(TestManipIOLogic, case_6) {
 
     // Manip
     mManipComd.setCmd("test1");
-    outM1->mAttr.mManipContainer = AttrManip(mManipComd);
+    outM1->mAttr.mManip = AttrManip(mManipComd);
     // Manip
     mManipComd.setCmd("test2");
-    outM2->mAttr.mManipContainer = AttrManip(mManipComd);
+    outM2->mAttr.mManip = AttrManip(mManipComd);
     // Manip
     mManipComd.setCmd("test3");
-    outM3->mAttr.mManipContainer = AttrManip(mManipComd);
+    outM3->mAttr.mManip = AttrManip(mManipComd);
     // Manip
     mManipComd.setCmd("test4");
-    outM4->mAttr.mManipContainer = AttrManip(mManipComd);
+    outM4->mAttr.mManip = AttrManip(mManipComd);
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -427,13 +427,13 @@ TEST_F(TestManipIOLogic, case_7) {
     outLGroup.transform().addObject(outM4);
 
     // Manip
-    outM1->mAttr.mManipContainer = AttrManip(mManipComd);
+    outM1->mAttr.mManip = AttrManip(mManipComd);
     // Manip
-    outM2->mAttr.mManipContainer = AttrManip(mManipComdAxis);
+    outM2->mAttr.mManip = AttrManip(mManipComdAxis);
     // Manip
-    outM3->mAttr.mManipContainer = AttrManip(mManipNoop);
+    outM3->mAttr.mManip = AttrManip(mManipNoop);
     // Manip
-    outM4->mAttr.mManipContainer = AttrManip(mManipPush);
+    outM4->mAttr.mManip = AttrManip(mManipPush);
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -484,11 +484,11 @@ TEST_F(TestManipIOLogic, case_8) {
     outLGroup.transform().addObject(outM4);
 
     // Manip
-    outM1->mAttr.mManipContainer = AttrManip(mManipComd);
+    outM1->mAttr.mManip = AttrManip(mManipComd);
     // Manip
-    outM2->mAttr.mManipContainer = AttrManip(mManipComdAxis);
+    outM2->mAttr.mManip = AttrManip(mManipComdAxis);
     // Manip
-    outM3->mAttr.mManipContainer = AttrManip(mManipNoop);
+    outM3->mAttr.mManip = AttrManip(mManipNoop);
     // No Manip
     // mObjMesh4
 
@@ -540,12 +540,12 @@ TEST_F(TestManipIOLogic, case_9) {
     outLGroup.transform().addObject(outM4);
 
     // Manip
-    outM1->mAttr.mManipContainer = AttrManip(mManipComd);
-    outM2->mAttr.mManipContainer = AttrManip(mManipComd);
+    outM1->mAttr.mManip = AttrManip(mManipComd);
+    outM2->mAttr.mManip = AttrManip(mManipComd);
     // Manip
-    outM3->mAttr.mManipContainer = AttrManip(mManipNoop);
+    outM3->mAttr.mManip = AttrManip(mManipNoop);
     // Manip
-    outM4->mAttr.mManipContainer = AttrManip(mManipPush);
+    outM4->mAttr.mManip = AttrManip(mManipPush);
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -596,13 +596,13 @@ TEST_F(TestManipIOLogic, case_10) {
     outLGroup.transform().addObject(outM4);
 
     // Manip
-    outM1->mAttr.mManipContainer = AttrManip(mManipComd);
+    outM1->mAttr.mManip = AttrManip(mManipComd);
     // No Manip
     // mObjMesh2
     // Manip
-    outM3->mAttr.mManipContainer = AttrManip(mManipNoop);
+    outM3->mAttr.mManip = AttrManip(mManipNoop);
     // Manip
-    outM4->mAttr.mManipContainer = AttrManip(mManipPush);
+    outM4->mAttr.mManip = AttrManip(mManipPush);
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -652,11 +652,11 @@ TEST_F(TestManipIOLogic, case_11) {
     outLGroup.transform().addObject(outM4);
 
     // Manip
-    outM1->mAttr.mManipContainer = AttrManip(mManipComd);
+    outM1->mAttr.mManip = AttrManip(mManipComd);
     // No Manip
     // mObjMesh2
     // Manip
-    outM3->mAttr.mManipContainer = AttrManip(mManipNoop);
+    outM3->mAttr.mManip = AttrManip(mManipNoop);
     // No Manip
     // mObjMesh4
 

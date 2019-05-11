@@ -78,8 +78,8 @@ void extractManip(const ObjMain & inMain, const MANIP *& outAttr) {
     ObjAbstract * obj = inLGroup.transform().objList().begin()->get();
     ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
     auto * inM = static_cast<ObjMesh *>(obj);
-    ASSERT_TRUE(inM->mAttr.mManipContainer);
-    const auto manip = std::get_if<MANIP>(&inM->mAttr.mManipContainer->mType);
+    ASSERT_TRUE(inM->mAttr.mManip);
+    const auto manip = std::get_if<MANIP>(&inM->mAttr.mManip->mType);
     ASSERT_TRUE(manip);
     outAttr = manip;
 }
@@ -89,7 +89,7 @@ void addManip(ObjMain & inOutMain, const MANIP & inManip) {
     ObjMesh * outM = TestUtilsObjMesh::createObjMesh("m1", 0.0);
     ObjLodGroup & outLGroup = inOutMain.addLod();
     outLGroup.transform().addObject(outM);
-    outM->mAttr.mManipContainer = AttrManip(inManip);
+    outM->mAttr.mManip = AttrManip(inManip);
 }
 
 /**************************************************************************************************/

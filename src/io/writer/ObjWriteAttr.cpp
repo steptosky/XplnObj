@@ -270,7 +270,7 @@ template<>
 void ObjWriteAttr::switchAttrState<AttrCockpit>(const AttrCockpit & attr, const bool enable) {
     if (enable) {
         mIsPanelManip = true;
-        mState->mObject.mManipContainer = AttrManip(AttrManipPanel(attr));
+        mState->mObject.mManip = AttrManip(AttrManipPanel(attr));
 
         if (attr.mType == AttrCockpit::cockpit) {
             mWriter->writeLine(ATTR_COCKPIT);
@@ -297,7 +297,7 @@ void ObjWriteAttr::switchAttrState<AttrCockpit>(const AttrCockpit & attr, const 
     }
     else {
         mIsPanelManip = false;
-        mState->mObject.mManipContainer = std::nullopt;
+        mState->mObject.mManip = std::nullopt;
 
         mWriter->writeLine(ATTR_NO_COCKPIT);
     }
@@ -574,7 +574,7 @@ public:
 
 void ObjWriteAttr::writeManip() {
     const auto & attrs = mObj->mAttr;
-    auto manipContainer = attrs.mManipContainer;
+    auto manipContainer = attrs.mManip;
     //------------------------------
     // Checks the order of processing, the attributes must be processed before the manipulators.
     assert(mIsPanelManip == mObj->mAttr.mCockpit.has_value());
@@ -600,7 +600,7 @@ void ObjWriteAttr::writeManip() {
         }
     };
 
-    ObjState::processAttr(manipContainer, mState->mObject.mManipContainer, switchFn);
+    ObjState::processAttr(manipContainer, mState->mObject.mManip, switchFn);
 }
 
 /**************************************************************************************************/

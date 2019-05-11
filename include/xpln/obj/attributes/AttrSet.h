@@ -71,7 +71,7 @@ public:
                mIsDraped == other.mIsDraped &&
                mIsCastShadow == other.mIsCastShadow &&
                mIsSolidForCamera == other.mIsSolidForCamera &&
-               mManipContainer == other.mManipContainer;
+               mManip == other.mManip;
     }
 
     bool operator!=(const AttrSet & other) const { return !this->operator==(other); }
@@ -100,7 +100,7 @@ public:
     std::optional<AttrShiny> mShiny;
     std::optional<AttrHard> mHard;
     std::optional<AttrCockpit> mCockpit;
-    std::optional<AttrManip> mManipContainer;
+    std::optional<AttrManip> mManip;
 
     bool mIsDraw = true;
     bool mIsDraped = false;

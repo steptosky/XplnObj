@@ -162,14 +162,14 @@ TEST_F(ManipsStates, one_manip) {
 
     mManipCmd.setCmd("test");
     // Manip
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     // No Manip
     // mObjMesh2
     // mObjMesh3
     // mObjMesh4
 
     TestWriter w(false);
-    const auto manip = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManipContainer->mType);
+    const auto manip = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManip->mType);
     ASSERT_TRUE(manip);
     const auto count = manip->printObj(w);
 
@@ -196,14 +196,14 @@ TEST_F(ManipsStates, two_manips_with_the_same_vals) {
 
     mManipCmd.setCmd("test");
     // Manip
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     // No Manip
     // mObjMesh3
     // mObjMesh4
 
     TestWriter w(false);
-    const auto manip = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManipContainer->mType);
+    const auto manip = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManip->mType);
     ASSERT_TRUE(manip);
     const auto count = manip->printObj(w);
 
@@ -230,14 +230,14 @@ TEST_F(ManipsStates, three_manips_with_the_same_vals) {
 
     mManipCmd.setCmd("test");
     // Manip
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
-    mObjMesh3.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh3.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     // No Manip
     // mObjMesh4
 
     TestWriter w(false);
-    const auto manip = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManipContainer->mType);
+    const auto manip = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManip->mType);
     ASSERT_TRUE(manip);
     const auto count = manip->printObj(w);
 
@@ -263,13 +263,13 @@ TEST_F(ManipsStates, four_manips_with_the_same_vals) {
 
     mManipCmd.setCmd("test");
     // Manip
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
-    mObjMesh3.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
-    mObjMesh4.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh3.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh4.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
 
     TestWriter w(false);
-    const auto manip = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManipContainer->mType);
+    const auto manip = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManip->mType);
     ASSERT_TRUE(manip);
     const auto count = manip->printObj(w);
 
@@ -297,35 +297,35 @@ TEST_F(ManipsStates, four_manips_with_the_different_vals) {
 
     // Manip
     mManipCmd.setCmd("test1");
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     // Manip
     mManipCmd.setCmd("test2");
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     // Manip
     mManipCmd.setCmd("test3");
-    mObjMesh3.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh3.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     // Manip
     mManipCmd.setCmd("test4");
-    mObjMesh4.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh4.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
 
     TestWriter w1(false);
     TestWriter w2(false);
     TestWriter w3(false);
     TestWriter w4(false);
 
-    auto manip = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManipContainer->mType);
+    auto manip = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManip->mType);
     ASSERT_TRUE(manip);
     const auto count1 = manip->printObj(w1);
 
-    manip = std::get_if<AttrManipCmd>(&mObjMesh2.mAttr.mManipContainer->mType);
+    manip = std::get_if<AttrManipCmd>(&mObjMesh2.mAttr.mManip->mType);
     ASSERT_TRUE(manip);
     const auto count2 = manip->printObj(w2);
 
-    manip = std::get_if<AttrManipCmd>(&mObjMesh3.mAttr.mManipContainer->mType);
+    manip = std::get_if<AttrManipCmd>(&mObjMesh3.mAttr.mManip->mType);
     ASSERT_TRUE(manip);
     const auto count3 = manip->printObj(w3);
 
-    manip = std::get_if<AttrManipCmd>(&mObjMesh4.mAttr.mManipContainer->mType);
+    manip = std::get_if<AttrManipCmd>(&mObjMesh4.mAttr.mManip->mType);
     ASSERT_TRUE(manip);
     const auto count4 = manip->printObj(w4);
 
@@ -358,32 +358,32 @@ TEST_F(ManipsStates, four_different_manips) {
     MockWriter writer;
 
     // Manip
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     // Manip                   
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmdAxis(mManipComdAxis));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmdAxis(mManipComdAxis));
     // Manip                 
-    mObjMesh3.mAttr.mManipContainer = AttrManip(AttrManipNoop(mManipNoop));
+    mObjMesh3.mAttr.mManip = AttrManip(AttrManipNoop(mManipNoop));
     // Manip                 
-    mObjMesh4.mAttr.mManipContainer = AttrManip(AttrManipPush(mManipPush));
+    mObjMesh4.mAttr.mManip = AttrManip(AttrManipPush(mManipPush));
 
     TestWriter w1(false);
     TestWriter w2(false);
     TestWriter w3(false);
     TestWriter w4(false);
 
-    const auto manip1 = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManipContainer->mType);
+    const auto manip1 = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManip->mType);
     ASSERT_TRUE(manip1);
     const auto count1 = manip1->printObj(w1);
 
-    const auto manip2 = std::get_if<AttrManipCmdAxis>(&mObjMesh2.mAttr.mManipContainer->mType);
+    const auto manip2 = std::get_if<AttrManipCmdAxis>(&mObjMesh2.mAttr.mManip->mType);
     ASSERT_TRUE(manip2);
     const auto count2 = manip2->printObj(w2);
 
-    const auto manip3 = std::get_if<AttrManipNoop>(&mObjMesh3.mAttr.mManipContainer->mType);
+    const auto manip3 = std::get_if<AttrManipNoop>(&mObjMesh3.mAttr.mManip->mType);
     ASSERT_TRUE(manip3);
     const auto count3 = manip3->printObj(w3);
 
-    const auto manip4 = std::get_if<AttrManipPush>(&mObjMesh4.mAttr.mManipContainer->mType);
+    const auto manip4 = std::get_if<AttrManipPush>(&mObjMesh4.mAttr.mManip->mType);
     ASSERT_TRUE(manip4);
     const auto count4 = manip4->printObj(w4);
 
@@ -412,11 +412,11 @@ TEST_F(ManipsStates, three_different_manips) {
     MockWriter writer;
 
     // Manip
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     // Manip
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmdAxis(mManipComdAxis));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmdAxis(mManipComdAxis));
     // Manip
-    mObjMesh3.mAttr.mManipContainer = AttrManip(AttrManipNoop(mManipNoop));
+    mObjMesh3.mAttr.mManip = AttrManip(AttrManipNoop(mManipNoop));
     // No Manip
     // mObjMesh4
 
@@ -424,15 +424,15 @@ TEST_F(ManipsStates, three_different_manips) {
     TestWriter w2(false);
     TestWriter w3(false);
 
-    const auto manip1 = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManipContainer->mType);
+    const auto manip1 = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManip->mType);
     ASSERT_TRUE(manip1);
     const auto count1 = manip1->printObj(w1);
 
-    const auto manip2 = std::get_if<AttrManipCmdAxis>(&mObjMesh2.mAttr.mManipContainer->mType);
+    const auto manip2 = std::get_if<AttrManipCmdAxis>(&mObjMesh2.mAttr.mManip->mType);
     ASSERT_TRUE(manip2);
     const auto count2 = manip2->printObj(w2);
 
-    const auto manip3 = std::get_if<AttrManipNoop>(&mObjMesh3.mAttr.mManipContainer->mType);
+    const auto manip3 = std::get_if<AttrManipNoop>(&mObjMesh3.mAttr.mManip->mType);
     ASSERT_TRUE(manip3);
     const auto count3 = manip3->printObj(w3);
 
@@ -460,26 +460,26 @@ TEST_F(ManipsStates, two_the_same_and_two_different_manips) {
     MockWriter writer;
 
     // Manip
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     // Manip
-    mObjMesh3.mAttr.mManipContainer = AttrManip(AttrManipNoop(mManipNoop));
+    mObjMesh3.mAttr.mManip = AttrManip(AttrManipNoop(mManipNoop));
     // Manip
-    mObjMesh4.mAttr.mManipContainer = AttrManip(AttrManipPush(mManipPush));
+    mObjMesh4.mAttr.mManip = AttrManip(AttrManipPush(mManipPush));
 
     TestWriter w1(false);
     TestWriter w3(false);
     TestWriter w4(false);
 
-    const auto manip1 = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManipContainer->mType);
+    const auto manip1 = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManip->mType);
     ASSERT_TRUE(manip1);
     const auto count1 = manip1->printObj(w1);
 
-    const auto manip3 = std::get_if<AttrManipNoop>(&mObjMesh3.mAttr.mManipContainer->mType);
+    const auto manip3 = std::get_if<AttrManipNoop>(&mObjMesh3.mAttr.mManip->mType);
     ASSERT_TRUE(manip3);
     const auto count3 = manip3->printObj(w3);
 
-    const auto manip4 = std::get_if<AttrManipPush>(&mObjMesh4.mAttr.mManipContainer->mType);
+    const auto manip4 = std::get_if<AttrManipPush>(&mObjMesh4.mAttr.mManip->mType);
     ASSERT_TRUE(manip4);
     const auto count4 = manip4->printObj(w4);
 
@@ -507,27 +507,27 @@ TEST_F(ManipsStates, one_manip_and_two_different_manips) {
     MockWriter writer;
 
     // Manip
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     // No Manip
     // mObjMesh2
     // Manip
-    mObjMesh3.mAttr.mManipContainer = AttrManip(AttrManipNoop(mManipNoop));
+    mObjMesh3.mAttr.mManip = AttrManip(AttrManipNoop(mManipNoop));
     // Manip
-    mObjMesh4.mAttr.mManipContainer = AttrManip(AttrManipPush(mManipPush));
+    mObjMesh4.mAttr.mManip = AttrManip(AttrManipPush(mManipPush));
 
     TestWriter w1(false);
     TestWriter w3(false);
     TestWriter w4(false);
 
-    const auto manip1 = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManipContainer->mType);
+    const auto manip1 = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManip->mType);
     ASSERT_TRUE(manip1);
     const auto count1 = manip1->printObj(w1);
 
-    const auto manip3 = std::get_if<AttrManipNoop>(&mObjMesh3.mAttr.mManipContainer->mType);
+    const auto manip3 = std::get_if<AttrManipNoop>(&mObjMesh3.mAttr.mManip->mType);
     ASSERT_TRUE(manip3);
     const auto count3 = manip3->printObj(w3);
 
-    const auto manip4 = std::get_if<AttrManipPush>(&mObjMesh4.mAttr.mManipContainer->mType);
+    const auto manip4 = std::get_if<AttrManipPush>(&mObjMesh4.mAttr.mManip->mType);
     ASSERT_TRUE(manip4);
     const auto count4 = manip4->printObj(w4);
 
@@ -556,11 +556,11 @@ TEST_F(ManipsStates, two_different_manips) {
     MockWriter writer;
 
     // Manip
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     // No Manip
     // mObjMesh2
     // Manip
-    mObjMesh3.mAttr.mManipContainer = AttrManip(AttrManipNoop(mManipNoop));
+    mObjMesh3.mAttr.mManip = AttrManip(AttrManipNoop(mManipNoop));
     // No Manip
     // mObjMesh4
 
@@ -569,11 +569,11 @@ TEST_F(ManipsStates, two_different_manips) {
     TestWriter w3(false);
     TestWriter w4(false);
 
-    const auto manip1 = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManipContainer->mType);
+    const auto manip1 = std::get_if<AttrManipCmd>(&mObjMesh1.mAttr.mManip->mType);
     ASSERT_TRUE(manip1);
     const auto count1 = manip1->printObj(w1);
 
-    const auto manip3 = std::get_if<AttrManipNoop>(&mObjMesh3.mAttr.mManipContainer->mType);
+    const auto manip3 = std::get_if<AttrManipNoop>(&mObjMesh3.mAttr.mManip->mType);
     ASSERT_TRUE(manip3);
     const auto count3 = manip3->printObj(w3);
 
@@ -608,7 +608,7 @@ TEST_F(ManipsStates, manip_panel_relation_simple_case1) {
     InSequence dummy;
     //---------------------------
     // set data
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipPanel(mManipPanel));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
     EXPECT_CALL(writer, writeLine(_)).Times(0);
@@ -659,7 +659,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case1) {
     mObjMesh1.mAttr.mCockpit = cpAttr1;
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr1;
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipPanel(mManipPanel));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipPanel(mManipPanel));
     mManipPanel.setCockpit(cpAttr1);
     //---------------------------
     // check printing
@@ -700,7 +700,7 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case2) {
     mObjMesh1.mAttr.mCockpit = cpAttr1;
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr1;
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
     EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
@@ -742,10 +742,10 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case3) {
     //---------------------------
     // set data
     mObjMesh1.mAttr.mCockpit = cpAttr1;
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipPanel(mManipPanel));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipPanel(mManipPanel));
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr1;
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipPanel(mManipPanel));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
     EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
@@ -783,10 +783,10 @@ TEST_F(ManipsStates, manip_panel_disabling_panel_case4) {
     //---------------------------
     // set data
     mObjMesh1.mAttr.mCockpit = cpAttr1;
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr1;
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
     TestWriter w(false);
@@ -908,7 +908,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_2) {
     const AttrCockpit cpAttr1(AttrCockpit::cockpit);
     //---------------------------
     // set data
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr1;
     //------
@@ -956,9 +956,9 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_4) {
     //---------------------------
     // set data
     mObjMesh1.mAttr.mCockpit = cpAttr1;
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //------
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
     TestWriter w(false);
@@ -1001,10 +1001,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_5) {
     //---------------------------
     // set data
     mObjMesh1.mAttr.mCockpit = cpAttr1;
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipPanel(mManipPanel));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipPanel(mManipPanel));
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr2;
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipPanel(mManipPanel));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
     EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
@@ -1042,10 +1042,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_6) {
     //---------------------------
     // set data
     mObjMesh1.mAttr.mCockpit = cpAttr1;
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr2;
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
     TestWriter w(false);
@@ -1089,10 +1089,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_7) {
     //---------------------------
     // set data
     mObjMesh1.mAttr.mCockpit = cpAttr1;
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipPanel(mManipPanel));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipPanel(mManipPanel));
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr2;
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
     EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
@@ -1135,10 +1135,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_simple_case_8) {
     //---------------------------
     // set data
     mObjMesh1.mAttr.mCockpit = cpAttr1;
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr2;
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipPanel(mManipPanel));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipPanel(mManipPanel));
     //---------------------------
     // check printing
     TestWriter w(false);
@@ -1189,14 +1189,14 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_1) {
     //---------------------------
     // set data
     mObjMesh1.mAttr.mCockpit = cpAttr1;
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr2;
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //------
-    mObjMesh3.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh3.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //------
-    mObjMesh4.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh4.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //---------------------------
     // check printing
     TestWriter w(false);
@@ -1250,14 +1250,14 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_2) {
     const AttrCockpit cpAttr1(AttrCockpit::cockpit);
     //---------------------------
     // set data
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr1;
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmdAxis(mManipComdAxis));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmdAxis(mManipComdAxis));
     //------
-    mObjMesh3.mAttr.mManipContainer = AttrManip(AttrManipPush(mManipPush));
+    mObjMesh3.mAttr.mManip = AttrManip(AttrManipPush(mManipPush));
     //------
-    mObjMesh4.mAttr.mManipContainer = AttrManip(AttrManipPush(mManipPush));
+    mObjMesh4.mAttr.mManip = AttrManip(AttrManipPush(mManipPush));
     //---------------------------
     // check printing
     TestWriter w1(false);
@@ -1317,7 +1317,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_3) {
     //---------------------------
     // set data
     mObjMesh1.mAttr.mCockpit = cpAttr1;
-    mObjMesh1.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh1.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr1;
     //------
@@ -1375,7 +1375,7 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_4) {
     mObjMesh1.mAttr.mCockpit = cpAttr1;
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr1;
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //------
     mObjMesh3.mAttr.mCockpit = cpAttr1;
     //------
@@ -1434,10 +1434,10 @@ TEST_F(ManipsStates, manip_cockpit_relation_complex_case_5) {
     mObjMesh1.mAttr.mCockpit = cpAttr1;
     //------
     mObjMesh2.mAttr.mCockpit = cpAttr1;
-    mObjMesh2.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh2.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //------
     mObjMesh3.mAttr.mCockpit = cpAttr1;
-    mObjMesh3.mAttr.mManipContainer = AttrManip(AttrManipCmd(mManipCmd));
+    mObjMesh3.mAttr.mManip = AttrManip(AttrManipCmd(mManipCmd));
     //------
     // mObjMesh4
     //---------------------------

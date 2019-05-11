@@ -301,11 +301,11 @@ void ObjReaderInterpreter::gotTrisAttrSolidCamera(const bool state) {
 /**************************************************************************************************/
 
 void ObjReaderInterpreter::gotTrisAttrManipNo() {
-    mCurrentAttrSet.mManipContainer = std::nullopt;
+    mCurrentAttrSet.mManip = std::nullopt;
 }
 
 void ObjReaderInterpreter::gotTrisAttrManipAxisDetented(const AttrAxisDetented & manip) {
-    if (!mCurrentAttrSet.mManipContainer) {
+    if (!mCurrentAttrSet.mManip) {
         ULError << ATTR_MANIP_AXIS_DETENTED << " is specified without main manipulator";
     }
     //--------------------------
@@ -322,11 +322,11 @@ void ObjReaderInterpreter::gotTrisAttrManipAxisDetented(const AttrAxisDetented &
         }
     };
     //--------------------------
-    std::visit(visitor, mCurrentAttrSet.mManipContainer->mType);
+    std::visit(visitor, mCurrentAttrSet.mManip->mType);
 }
 
 void ObjReaderInterpreter::gotTrisAttrManipAxisDetentRange(const AttrAxisDetentRange & manip) {
-    if (!mCurrentAttrSet.mManipContainer) {
+    if (!mCurrentAttrSet.mManip) {
         ULError << ATTR_MANIP_AXIS_DETENT_RANGE << " is specified without main manipulator";
     }
     //--------------------------
@@ -346,11 +346,11 @@ void ObjReaderInterpreter::gotTrisAttrManipAxisDetentRange(const AttrAxisDetentR
         }
     };
     //--------------------------
-    std::visit(visitor, mCurrentAttrSet.mManipContainer->mType);
+    std::visit(visitor, mCurrentAttrSet.mManip->mType);
 }
 
 void ObjReaderInterpreter::gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & manip) {
-    if (!mCurrentAttrSet.mManipContainer) {
+    if (!mCurrentAttrSet.mManip) {
         ULError << ATTR_MANIP_AXIS_DETENT_RANGE << " is specified without main manipulator";
     }
     //--------------------------
@@ -364,11 +364,11 @@ void ObjReaderInterpreter::gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & ma
         }
     };
     //--------------------------
-    std::visit(visitor, mCurrentAttrSet.mManipContainer->mType);
+    std::visit(visitor, mCurrentAttrSet.mManip->mType);
 }
 
 void ObjReaderInterpreter::gotTrisAttrManipWheel(const AttrManipWheel & manip) {
-    if (!mCurrentAttrSet.mManipContainer) {
+    if (!mCurrentAttrSet.mManip) {
         ULError << ATTR_MANIP_WHEEL << " is specified without main manipulator";
     }
     //--------------------------
@@ -387,13 +387,13 @@ void ObjReaderInterpreter::gotTrisAttrManipWheel(const AttrManipWheel & manip) {
         else { ULError << "Manipulator <" << currManip.type().toString() << "> doesn't support mouse wheel"; }
     };
     //--------------------------
-    std::visit(visitor, mCurrentAttrSet.mManipContainer->mType);
+    std::visit(visitor, mCurrentAttrSet.mManip->mType);
 }
 
 void ObjReaderInterpreter::gotTrisAttrManip(const AttrManip & manip) {
     // TODO Incorrect counting because AttrManipWheel is used as part of the manipulators.
     ++mIOStatistic->mTrisManipCount;
-    mCurrentAttrSet.mManipContainer = manip;
+    mCurrentAttrSet.mManip = manip;
 }
 
 /**************************************************************************************************/

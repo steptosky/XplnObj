@@ -3,6 +3,7 @@ StepToSky: X-Plane Obj Library
 #### next
 
 - **Added** Particle system support.
+- **Added** Constraint for macos deployment target - 10.14, because of [error: call to unavailable function 'visit': introduced in macOS 10.14 std::visit].
 
 ##### Breaking backward compatibility:
 - **Changed** Code style: public variable now have the prefix m instead of p.

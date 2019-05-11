@@ -47,6 +47,9 @@ public:
     XpObjLib AttrManipNone();
     virtual ~AttrManipNone() = default;
 
+	bool operator==(const AttrManipNone& other) const { return equals(&other); }
+	bool operator!=(const AttrManipNone& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     /*! \copydoc AttrManipBase::equals */

@@ -48,6 +48,9 @@ public:
     XpObjLib AttrManipDragAxisPix();
     virtual ~AttrManipDragAxisPix() = default;
 
+	bool operator==(const AttrManipDragAxisPix& other) const { return equals(&other); }
+	bool operator!=(const AttrManipDragAxisPix& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     XpObjLib void setDxPix(int val);

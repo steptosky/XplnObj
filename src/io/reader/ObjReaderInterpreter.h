@@ -107,7 +107,7 @@ protected:
     void gotTrisAttrManipAxisDetentRange(const AttrAxisDetentRange & manip) override;
     void gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & manip) override;
     void gotTrisAttrManipWheel(const AttrManipWheel & manip) override;
-    void gotTrisAttrManip(const AttrManipBase & manip) override;
+    void gotTrisAttrManip(const AttrManip& manip) override;
 
     //-----------------------------------------------------
 

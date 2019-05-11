@@ -47,6 +47,9 @@ public:
     XpObjLib AttrManipNoop();
     virtual ~AttrManipNoop() = default;
 
+	bool operator==(const AttrManipNoop& other) const { return equals(&other); }
+	bool operator!=(const AttrManipNoop& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     /*! \copydoc AttrManipBase::equals */

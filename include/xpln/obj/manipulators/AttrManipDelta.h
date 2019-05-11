@@ -48,6 +48,9 @@ public:
     XpObjLib AttrManipDelta();
     virtual ~AttrManipDelta() = default;
 
+	bool operator==(const AttrManipDelta& other) const { return equals(&other); }
+	bool operator!=(const AttrManipDelta& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     XpObjLib void setDown(float val);

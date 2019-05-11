@@ -48,6 +48,9 @@ public:
     XpObjLib AttrManipWrap();
     virtual ~AttrManipWrap() = default;
 
+	bool operator==(const AttrManipWrap& other) const { return equals(&other); }
+	bool operator!=(const AttrManipWrap& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     XpObjLib void setDown(float val);

@@ -47,6 +47,9 @@ public:
     XpObjLib AttrManipDragXy();
     virtual ~AttrManipDragXy() = default;
 
+	bool operator==(const AttrManipDragXy& other) const { return equals(&other); }
+	bool operator!=(const AttrManipDragXy& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     XpObjLib void setX(float val);

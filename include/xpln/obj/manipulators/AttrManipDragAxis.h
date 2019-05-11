@@ -50,6 +50,9 @@ public:
 
     typedef std::vector<AttrAxisDetentRange> DetentRanges;
 
+	bool operator==(const AttrManipDragAxis& other) const { return equals(&other); }
+	bool operator!=(const AttrManipDragAxis& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     XpObjLib AttrManipDragAxis();

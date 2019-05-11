@@ -623,7 +623,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setDataref(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_AXIS_SWITCH_LEFT_RIGHT)) {
@@ -642,7 +642,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setDataref(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_AXIS_SWITCH_UP_DOWN)) {
@@ -661,7 +661,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setDataref(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_COMMAND)) {
@@ -672,7 +672,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setCmd(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_COMMAND_AXIS)) {
@@ -691,7 +691,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setCmdNegative(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_COMMAND_KNOB)) {
@@ -704,7 +704,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setCmdNegative(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_COMMAND_KNOB2)) {
@@ -715,7 +715,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setCmd(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT)) {
@@ -728,7 +728,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setCmdNegative(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2)) {
@@ -739,7 +739,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setCmd(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN)) {
@@ -752,7 +752,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setCmdNegative(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2)) {
@@ -763,7 +763,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setCmd(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_DELTA)) {
@@ -782,7 +782,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setDataref(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_DRAG_AXIS)) {
@@ -803,7 +803,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setDataref(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_DRAG_ROTATE)) {
@@ -842,7 +842,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setDataref2(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_DRAG_AXIS_PIX)) {
@@ -863,7 +863,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setDataref(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_DRAG_XY)) {
@@ -888,11 +888,11 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setYDataref(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_NOOP)) {
-        mObjParserListener->gotTrisAttrManip(AttrManipNoop());
+        mObjParserListener->gotTrisAttrManip(AttrManip(AttrManipNoop()));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_PUSH)) {
@@ -907,7 +907,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setDataref(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_RADIO)) {
@@ -920,7 +920,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setDataref(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_TOGGLE)) {
@@ -935,7 +935,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setDataref(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_WRAP)) {
@@ -954,7 +954,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         m.setDataref(parser.extractWord());
         parser.skipSpace();
         m.setToolTip(parser.extractWord());
-        mObjParserListener->gotTrisAttrManip(m);
+        mObjParserListener->gotTrisAttrManip(AttrManip(m));
         return true;
     }
     if (parser.isMatch(ATTR_MANIP_WHEEL)) {

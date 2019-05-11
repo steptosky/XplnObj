@@ -25,7 +25,7 @@ matrix:
         env: CONAN_CLANG_VERSIONS=6.0 CONAN_DOCKER_IMAGE=lasote/conanclang60
       - <<: *osx
         osx_image: xcode10.1
-        env: CONAN_APPLE_CLANG_VERSIONS=10.0
+        env: CONAN_APPLE_CLANG_VERSIONS=10.0 MACOSX_DEPLOYMENT_TARGET=10.14
 
 install:
   - chmod +x .ci/travis-install.sh

@@ -47,6 +47,9 @@ public:
     XpObjLib AttrManipCmd();
     virtual ~AttrManipCmd() = default;
 
+	bool operator==(const AttrManipCmd& other) const { return equals(&other); }
+	bool operator!=(const AttrManipCmd& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     [[deprecated("use setCmd")]]

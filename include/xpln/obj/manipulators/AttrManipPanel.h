@@ -49,6 +49,9 @@ public:
 	XpObjLib explicit  AttrManipPanel(const AttrCockpit& cockpit);
     virtual ~AttrManipPanel() = default;
 
+	bool operator==(const AttrManipPanel& other) const { return equals(&other); }
+	bool operator!=(const AttrManipPanel& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     /*!

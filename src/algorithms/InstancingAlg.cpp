@@ -106,7 +106,7 @@ void InstancingAlg::proccessObjects(Transform & transform, bool & outResult) {
 }
 
 void InstancingAlg::proccessAttributes(ObjMesh & mesh, bool & outResult) {
-    if (mesh.mAttr.mManipContainer && mesh.mAttr.mManipContainer->hasManip()) {
+    if (mesh.mAttr.mManipContainer) {
         printBreakInstancing(mesh.objectName().c_str(),
                              std::string("the object has the manipulator attribute which is not allowed for instancing").c_str());
         outResult = false;

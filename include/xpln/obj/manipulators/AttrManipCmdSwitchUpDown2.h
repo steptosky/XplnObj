@@ -48,6 +48,9 @@ public:
     XpObjLib AttrManipCmdSwitchUpDown2();
     virtual ~AttrManipCmdSwitchUpDown2() = default;
 
+	bool operator==(const AttrManipCmdSwitchUpDown2& other) const { return equals(&other); }
+	bool operator!=(const AttrManipCmdSwitchUpDown2& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     XpObjLib void setCmd(const std::string & val);

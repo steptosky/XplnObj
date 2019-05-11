@@ -29,14 +29,33 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <optional>
-#include "xpln/obj/attributes/AttrHard.h"
-#include "xpln/obj/attributes/AttrShiny.h"
-#include "xpln/obj/attributes/AttrBlend.h"
-#include "xpln/obj/attributes/AttrPolyOffset.h"
-#include "xpln/obj/attributes/AttrLightLevel.h"
-#include "xpln/obj/attributes/AttrCockpit.h"
-#include "xpln/obj/manipulators/AttrManip.h"
+#include <variant>
+#include <string>
+#include "xpln/enums/ECursor.h"
+
+#include "AttrManipAxisKnob.h"
+#include "AttrManipAxisSwitchLeftRight.h"
+#include "AttrManipAxisSwitchUpDown.h"
+#include "AttrManipCmd.h"
+#include "AttrManipCmdAxis.h"
+#include "AttrManipCmdKnob.h"
+#include "AttrManipCmdKnob2.h"
+#include "AttrManipCmdSwitchLeftRight.h"
+#include "AttrManipCmdSwitchLeftRight2.h"
+#include "AttrManipCmdSwitchUpDown.h"
+#include "AttrManipCmdSwitchUpDown2.h"
+#include "AttrManipDelta.h"
+#include "AttrManipDragAxis.h"
+#include "AttrManipDragAxisPix.h"
+#include "AttrManipDragRotate.h"
+#include "AttrManipDragXy.h"
+#include "AttrManipNone.h"
+#include "AttrManipNoop.h"
+#include "AttrManipPanel.h"
+#include "AttrManipPush.h"
+#include "AttrManipRadio.h"
+#include "AttrManipToggle.h"
+#include "AttrManipWrap.h"
 
 namespace xobj {
 
@@ -45,68 +64,69 @@ namespace xobj {
 /**************************************************************************************************/
 
 /*!
- * \details Representation of the attributes set
- * \ingroup Attributes
+ * \details Base class for all manipulators.
+ * \ingroup Manipulators
  */
-class AttrSet final {
+class AttrManip final {
 public:
 
     //-------------------------------------------------------------------------
     /// @{
 
-    AttrSet() = default;
-    AttrSet(const AttrSet & copy) = default;
-    AttrSet(AttrSet &&) = default;
-
-    bool operator==(const AttrSet & other) const {
-        return mLightLevel == other.mLightLevel &&
-               mPolyOffset == other.mPolyOffset &&
-               mBlend == other.mBlend &&
-               mShiny == other.mShiny &&
-               mHard == other.mHard &&
-               mCockpit == other.mCockpit &&
-
-               mIsDraw == other.mIsDraw &&
-               mIsTwoSided == other.mIsTwoSided &&
-               mIsDraped == other.mIsDraped &&
-               mIsCastShadow == other.mIsCastShadow &&
-               mIsSolidForCamera == other.mIsSolidForCamera &&
-               mManipContainer == other.mManipContainer;
-    }
-
-    bool operator!=(const AttrSet & other) const { return !this->operator==(other); }
-
-    ~AttrSet() = default;
-
-    AttrSet & operator=(const AttrSet &) = default;
-    AttrSet & operator=(AttrSet &&) = default;
+    typedef std::variant<AttrManipAxisKnob,
+                         AttrManipAxisSwitchLeftRight,
+                         AttrManipAxisSwitchUpDown,
+                         AttrManipCmd,
+                         AttrManipCmdAxis,
+                         AttrManipCmdKnob,
+                         AttrManipCmdKnob2,
+                         AttrManipCmdSwitchLeftRight,
+                         AttrManipCmdSwitchLeftRight2,
+                         AttrManipCmdSwitchUpDown,
+                         AttrManipCmdSwitchUpDown2,
+                         AttrManipDelta,
+                         AttrManipDragAxis,
+                         AttrManipDragAxisPix,
+                         AttrManipDragRotate,
+                         AttrManipDragXy,
+                         AttrManipNone,
+                         AttrManipNoop,
+                         AttrManipPanel,
+                         AttrManipPush,
+                         AttrManipRadio,
+                         AttrManipToggle,
+                         AttrManipWrap> Type;
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
-    void reset() {
-        const AttrSet clear;
-        this->operator=(clear);
-    }
+    template<typename T>
+    explicit AttrManip(const T & type)
+        : mType(type) {}
+
+    AttrManip(const AttrManip &) = default;
+    AttrManip(AttrManip &&) = default;
+
+    ~AttrManip() = default;
+
+    AttrManip & operator=(const AttrManip &) = default;
+    AttrManip & operator=(AttrManip &&) = default;
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
-    std::optional<AttrLightLevel> mLightLevel;
-    std::optional<AttrPolyOffset> mPolyOffset;
-    std::optional<AttrBlend> mBlend;
-    std::optional<AttrShiny> mShiny;
-    std::optional<AttrHard> mHard;
-    std::optional<AttrCockpit> mCockpit;
-    std::optional<AttrManip> mManipContainer;
+    XpObjLib bool operator==(const AttrManip & other) const;
+    bool operator!=(const AttrManip & other) const { return !this->operator==(other); }
 
-    bool mIsDraw = true;
-    bool mIsDraped = false;
-    bool mIsTwoSided = false; //!< replacement for ATTR_no_cull
-    bool mIsCastShadow = true;
-    bool mIsSolidForCamera = false;
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    ECursor mCursor;
+    std::string mToolType;
+    Type mType;
 
     /// @}
     //-------------------------------------------------------------------------
@@ -116,5 +136,4 @@ public:
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
-
 }

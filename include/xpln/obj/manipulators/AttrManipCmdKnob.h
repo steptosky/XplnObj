@@ -47,6 +47,9 @@ public:
     XpObjLib AttrManipCmdKnob();
     virtual ~AttrManipCmdKnob() = default;
 
+	bool operator==(const AttrManipCmdKnob& other) const { return equals(&other); }
+	bool operator!=(const AttrManipCmdKnob& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     XpObjLib void setCmdNegative(const std::string & val);

@@ -48,6 +48,9 @@ public:
     XpObjLib AttrManipRadio();
     virtual ~AttrManipRadio() = default;
 
+	bool operator==(const AttrManipRadio& other) const { return equals(&other); }
+	bool operator!=(const AttrManipRadio& other) const { return !equals(&other); }
+
     //------------------------------------------------------------------------
 
     XpObjLib void setDown(float val);

@@ -48,6 +48,9 @@ public:
     XpObjLib AttrManipPush();
     virtual ~AttrManipPush() = default;
 
+	bool operator==(const AttrManipPush& other) const { return equals(&other); }
+	bool operator!=(const AttrManipPush& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     XpObjLib void setDown(float val);

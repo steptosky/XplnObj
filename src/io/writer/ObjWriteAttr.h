@@ -47,13 +47,13 @@ class AbstractWriter;
 class ObjMesh;
 class ObjAbstract;
 
-class ObjWriteManip;
-
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
 class ObjWriteAttr {
+    class ManipChecker;
+    friend ManipChecker;
 public:
 
     explicit ObjWriteAttr(ObjState::Ptr state)
@@ -85,9 +85,8 @@ private:
 
     void writeAttr();
     void writeManip();
-    bool checkManip(AttrManipBase * manip) const;
 
-    const ObjMain* mMainObj = nullptr;
+    const ObjMain * mMainObj = nullptr;
     const ObjMesh * mObj = nullptr;
     AbstractWriter * mWriter = nullptr;
     ObjState::Ptr mState;

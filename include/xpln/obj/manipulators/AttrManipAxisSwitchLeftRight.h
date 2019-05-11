@@ -48,6 +48,9 @@ public:
     XpObjLib AttrManipAxisSwitchLeftRight();
     virtual ~AttrManipAxisSwitchLeftRight() = default;
 
+	bool operator==(const AttrManipAxisSwitchLeftRight& other) const { return equals(&other); }
+	bool operator!=(const AttrManipAxisSwitchLeftRight& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     XpObjLib void setClickDelta(float val);

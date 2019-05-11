@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2018, StepToSky
+**  Copyright(C) 2017, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,45 +27,21 @@
 **  Contacts: www.steptosky.com
 */
 
+#include "xpln/obj/manipulators/AttrManip.h"
+
+namespace xobj {
+
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
+bool AttrManip::operator==(const AttrManip & other) const {
+    return mType == other.mType &&
+           mCursor == other.mCursor &&
+           mToolType == other.mToolType;
+}
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-#ifdef _MSC_VER
-#   define ENABLE_PRECOMPILED_HEADERS
-#endif
-
-#ifdef ENABLE_PRECOMPILED_HEADERS
-
-#include <cassert>
-#include <string>
-#include <cstddef>
-#include <cstdint>
-#include <stdexcept>
-#include <algorithm>
-#include <memory>
-#include <vector>
-#include <functional>
-#include <algorithm>
-#include <cstring>
-#include <atomic>
-#include <optional>
-#include <variant>
-
-#include <iostream>
-#include <sstream>
-#include <fstream>
-
-#include "xpln/Export.h"
-#include "exceptions/defines.h"
-#include "sts/utilities/Compare.h"
-#include "sts/string/StringUtils.h"
-#include "converters/StringStream.h"
-#include "common/Logger.h"
-#include "xpln/utils/Path.h"
-
-#endif
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
+}

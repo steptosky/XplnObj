@@ -47,6 +47,9 @@ public:
     XpObjLib AttrManipCmdAxis();
     virtual ~AttrManipCmdAxis() = default;
 
+	bool operator==(const AttrManipCmdAxis& other) const { return equals(&other); }
+	bool operator!=(const AttrManipCmdAxis& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     [[deprecated("use setDirectionX")]]

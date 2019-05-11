@@ -49,6 +49,9 @@ public:
     typedef std::vector<AttrManipKeyFrame> Keys;
     typedef std::vector<AttrAxisDetentRange> DetentRanges;
 
+	bool operator==(const AttrManipDragRotate& other) const { return equals(&other); }
+	bool operator!=(const AttrManipDragRotate& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     XpObjLib AttrManipDragRotate();

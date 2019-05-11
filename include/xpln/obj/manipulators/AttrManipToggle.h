@@ -48,6 +48,9 @@ public:
     XpObjLib AttrManipToggle();
     virtual ~AttrManipToggle() = default;
 
+	bool operator==(const AttrManipToggle& other) const { return equals(&other); }
+	bool operator!=(const AttrManipToggle& other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     XpObjLib void setOn(float val);

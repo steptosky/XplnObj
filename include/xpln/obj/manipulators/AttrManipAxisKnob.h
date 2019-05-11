@@ -48,6 +48,9 @@ public:
     XpObjLib AttrManipAxisKnob();
     virtual ~AttrManipAxisKnob() = default;
 
+    bool operator==(const AttrManipAxisKnob & other) const { return equals(&other); }
+    bool operator!=(const AttrManipAxisKnob & other) const { return !equals(&other); }
+
     //-------------------------------------------------------------------------
 
     XpObjLib void setClickDelta(float val);

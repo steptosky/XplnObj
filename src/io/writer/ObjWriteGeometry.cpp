@@ -377,7 +377,12 @@ bool ObjWriteGeometry::printEmitterObject(AbstractWriter & writer, const ObjAbst
         if (!mState->mGlobal.mParticleSystemPath || mState->mGlobal.mParticleSystemPath->empty()) {
             ULError << "The object <" << objBase.objectName() << "> is an particle emitter but you "
                     << "don't have particle system specified for the object."
-                    << "You have to put attribute: " << ATTR_GLOBAL_PARTICLE_SYSTEM;
+                    << "You have to put attribute <" << ATTR_GLOBAL_PARTICLE_SYSTEM << ">.";
+        }
+
+        if (emitter.name().empty()) {
+            ULError << "The object <" << objBase.objectName()
+                    << "> doesn't have the emitter name. You have to use a name from your .pss file.";
         }
 
         printObj(emitter, writer, mOptions->isEnabled(eExportOptions::XOBJ_EXP_PARTICLE_EMITTER));

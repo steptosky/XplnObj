@@ -182,7 +182,7 @@ void printObj(const ObjEmitter & obj, AbstractWriter & writer, const bool printN
         out << "## " << obj.objectName() << std::endl;
     }
     out << ATTR_EMITTER
-            << " " << obj.objectName()
+            << " " << obj.name()
             << " " << obj.position().toString(PRECISION);
 
     auto [psi, the, phi] = obj.orientation();

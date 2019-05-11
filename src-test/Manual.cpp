@@ -60,7 +60,8 @@ TEST(Manual, case1) {
     mainOut.mAttr.mParticleSystemPath = "some_path";
     auto & lod = mainOut.addLod();
     auto * emitter = new ObjEmitter;
-	emitter->setObjectName("some_name");
+	emitter->setObjectName("object-name");
+	emitter->setName("emitter-name");
     emitter->setIndex(1);
     emitter->setPosition(Point3(1, 2, 3));
     emitter->setOrientation(10.0f, 20.0f, 30.0f);

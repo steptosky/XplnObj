@@ -67,6 +67,21 @@ public:
     /// @{
 
     /*!
+     * \details Name of the emitter. Must be one from your .pss file.
+     * \param [in] name from your .pss file.
+     */
+    void setName(const std::string & name) {
+        mName = name;
+    }
+
+    /*!
+     * \returnt emitter name.
+     */
+    const std::string & name() const {
+        return mName;
+    }
+
+    /*!
      * \details Orientation - degrees roll, pitch, heading in Eulers.
      * \param [in] psi roll.
      * \param [in] the pitch.
@@ -126,6 +141,7 @@ public:
 
 private:
 
+    std::string mName;
     Point3 mPosition;
     float mPsi = 0.0f;
     float mThe = 0.0f;

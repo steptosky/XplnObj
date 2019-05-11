@@ -80,7 +80,7 @@ private:
     void printGlobalInformation(AbstractWriter & writer, const ObjMain & objRoot);
     void printObjects(AbstractWriter & writer, const Transform & parent);
 
-    static void printSignature(AbstractWriter & writer, const std::string & signature);
+    static void printSignature(AbstractWriter & writer, const std::string & signature, bool timeStamp);
     void printLOD(AbstractWriter & writer, const ObjLodGroup & lod, size_t count) const;
 
     static size_t printObjCustomData(AbstractWriter & writer, const std::vector<std::string> & strings);

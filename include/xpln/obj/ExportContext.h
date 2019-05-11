@@ -109,6 +109,12 @@ public:
      */
     void setCommandsFile(const Path & fullFilePath) { mCommandsFile = fullFilePath; }
 
+    /*!
+     * \details Enable/disable printing time stamp at the end of the obj file.
+     * \param [in] state
+     */
+    void setPrintTimeStamp(const bool state) { mIsPrintTimeStamp = state; }
+
     /*! \see \link ExportContext::setObjFile \endlink */
     const Path & objFile() const { return mObjFile; }
 
@@ -117,6 +123,8 @@ public:
 
     /*! \see \link ExportContext::setCommandsFile \endlink */
     const Path & commandsFile() const { return mCommandsFile; }
+
+    bool isPrintTimeStamp() const { return mIsPrintTimeStamp; }
 
     /// @}
     //-------------------------------------------------------------------------
@@ -129,6 +137,7 @@ private:
     std::string mSignature;
     IOStatistic mStatistic;
     std::unique_ptr<IInterrupter> mInterruptor;
+    bool mIsPrintTimeStamp = true;
 
 };
 

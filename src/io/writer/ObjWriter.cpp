@@ -222,7 +222,7 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
             writer.printEol();
         }
 
-        printSignature(writer, context.signature());
+        printSignature(writer, context.signature(), context.isPrintTimeStamp());
         writer.closeFile();
         context.setStatistic(mStatistic);
         return true;
@@ -252,7 +252,7 @@ inline std::string currentDateTime() {
     return buf;
 }
 
-void ObjWriter::printSignature(AbstractWriter & writer, const std::string & signature) {
+void ObjWriter::printSignature(AbstractWriter & writer, const std::string & signature, const bool timeStamp) {
     if (!signature.empty()) {
         writer.printEol();
         std::string s("## ");
@@ -268,7 +268,9 @@ void ObjWriter::printSignature(AbstractWriter & writer, const std::string & sign
     }
     msg.append("+[").append(XOBJ_COMPILE_DATE).append("]");
     writer.printLine(msg);
-    writer.printLine(std::string("## Object created: ").append(currentDateTime()));
+    if (timeStamp) {
+        writer.printLine(std::string("## Object created: ").append(currentDateTime()));
+    }
 }
 
 /********************************************************************************************************/

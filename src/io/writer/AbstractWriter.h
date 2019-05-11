@@ -76,7 +76,7 @@ public:
         StringStream stream;
         int unpack[]{0, ((stream << args), 0)...};
         writeLine(stream.str());
-    };
+    }
 
     /*!
      * \details Print only EOL.

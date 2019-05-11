@@ -158,6 +158,7 @@ void ObjWriteAttr::switchAttrState<AttrCockpit>(const AttrCockpit & attr, const 
     if (enable) {
         mIsPanelManip = true;
         mState->mObject.mManipContainer = ManipContainer(new AttrManipPanel(attr));
+
         if (attr.mType == AttrCockpit::cockpit) {
             mWriter->writeLine(ATTR_COCKPIT);
         }
@@ -184,6 +185,7 @@ void ObjWriteAttr::switchAttrState<AttrCockpit>(const AttrCockpit & attr, const 
     else {
         mIsPanelManip = false;
         mState->mObject.mManipContainer = std::nullopt;
+
         mWriter->writeLine(ATTR_NO_COCKPIT);
     }
     ++mAttrNum;
@@ -250,29 +252,28 @@ void ObjWriteAttr::writeObjAttr(AbstractWriter * writer, const ObjAbstract * obj
 }
 
 void ObjWriteAttr::writeAttr() {
-    const auto writeBool = [&](const char * attr) {
-        ++mAttrNum;
-        mWriter->writeLine(attr);
-    };
-
     const auto & attrs = mObj->mAttr;
 
     //-------------------------------------------------------------------------
 
     ObjState::processBool(attrs.mIsDraped, mState->mObject.mIsDraped, [&](const bool enable) {
-        writeBool(enable ? ATTR_DRAPED : ATTR_NO_DRAPED);
+        mWriter->writeLine(enable ? ATTR_DRAPED : ATTR_NO_DRAPED);
+        ++mAttrNum;
     });
 
     ObjState::processBool(attrs.mIsSolidForCamera, mState->mObject.mIsSolidForCamera, [&](const bool enable) {
-        writeBool(enable ? ATTR_SOLID_CAMERA : ATTR_NO_SOLID_CAMERA);
+        mWriter->writeLine(enable ? ATTR_SOLID_CAMERA : ATTR_NO_SOLID_CAMERA);
+        ++mAttrNum;
     });
 
     ObjState::processBool(attrs.mIsDraw, mState->mObject.mIsDraw, [&](const bool enable) {
-        writeBool(enable ? ATTR_DRAW_ENABLE : ATTR_DRAW_DISABLE);
+        mWriter->writeLine(enable ? ATTR_DRAW_ENABLE : ATTR_DRAW_DISABLE);
+        ++mAttrNum;
     });
 
     ObjState::processBool(attrs.mIsCastShadow, mState->mObject.mIsCastShadow, [&](const bool enable) {
-        writeBool(enable ? ATTR_SHADOW : ATTR_NO_SHADOW);
+        mWriter->writeLine(enable ? ATTR_SHADOW : ATTR_NO_SHADOW);
+        ++mAttrNum;
     });
 
     //-------------------------------------------------------------------------

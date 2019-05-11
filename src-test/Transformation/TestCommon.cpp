@@ -56,8 +56,8 @@ TEST(TestTransformCommon, anim_enabled) {
     //--------------------
     // translate
 
-    lod.transform().pAnimTrans.emplace_back();
-    AnimTrans & animTrans = lod.transform().pAnimTrans.back();
+    lod.transform().mAnimTrans.emplace_back();
+    AnimTrans & animTrans = lod.transform().mAnimTrans.back();
     animTrans.mKeys.emplace_back(AnimTrans::Key(Point3(1.0f, 2.0f, 3.0f), 1.0f));
     animTrans.mKeys.emplace_back(AnimTrans::Key(Point3(10.0f, 20.0f, 30.0f), 5.0f));
 
@@ -69,8 +69,8 @@ TEST(TestTransformCommon, anim_enabled) {
     //--------------------
     // rotation
 
-    lod.transform().pAnimRotate.emplace_back();
-    AnimRotate & animRotate = lod.transform().pAnimRotate.back();
+    lod.transform().mAnimRotate.emplace_back();
+    AnimRotate & animRotate = lod.transform().mAnimRotate.back();
     animRotate.mKeys.emplace_back(AnimRotate::Key(20.0f, 1.0f));
     animRotate.mKeys.emplace_back(AnimRotate::Key(30.0f, 5.0f));
 
@@ -82,7 +82,7 @@ TEST(TestTransformCommon, anim_enabled) {
     //--------------------
     // visibility
 
-    AnimVisibility & animVis = lod.transform().pAnimVis;
+    AnimVisibility & animVis = lod.transform().mAnimVis;
     animVis.mKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 1.0f, 2.0f, "data-ref"));
     animVis.mKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 3.0f, 4.0f, "data-ref"));
 
@@ -111,8 +111,8 @@ TEST(TestTransformCommon, apliing_root_transformation) {
     ObjMesh * meshOut1 = TestUtilsObjMesh::createPyramidTestMesh("mesh");
     Transform & transformOut1 = lodOut.transform().newChild();
     transformOut1.addObject(meshOut1);
-    transformOut1.pMatrix.setPosition(Point3(10.0f));
-    transformOut1.pMatrix.setRotate(Quaternion(0.5f, 0.5f, 0.5f, 0.5f));
+    transformOut1.mMatrix.setPosition(Point3(10.0f));
+    transformOut1.mMatrix.setRotate(Quaternion(0.5f, 0.5f, 0.5f, 0.5f));
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(mainOut.exportObj(expContext));
@@ -134,7 +134,7 @@ TEST(TestTransformCommon, apliing_root_transformation) {
     // check results
 
     std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh"));
-    meshTarget1->applyTransform(transformOut1.pMatrix, false);
+    meshTarget1->applyTransform(transformOut1.mMatrix, false);
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
 }
 

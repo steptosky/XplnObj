@@ -74,7 +74,7 @@ void Draped::extract(ObjDrapedGroup & inOutDraped,
         }
 
         for (auto & obj : drapedObjects) {
-            obj->applyTransform(inOutDraped.transform().pMatrix.inversed());
+            obj->applyTransform(inOutDraped.transform().mMatrix.inversed());
             inOutDraped.transform().addObject(obj.release());
         }
     }
@@ -94,7 +94,7 @@ Transform::ObjList Draped::processObjects(Transform & transform) {
         }
         auto mesh = static_cast<ObjMesh*>(obj.get());
         if (mesh->mAttr.mIsDraped) {
-            mesh->applyTransform(transform.pMatrix);
+            mesh->applyTransform(transform.mMatrix);
             out.emplace_back(mesh);
         }
     }

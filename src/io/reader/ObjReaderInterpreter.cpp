@@ -550,7 +550,7 @@ void ObjReaderInterpreter::gotTris(const Index offset, const Index count, const 
         mCurrentTransform->addObject(mesh);
     }
     else {
-        mesh->applyTransform(mCurrentTransform->pMatrix);
+        mesh->applyTransform(mCurrentTransform->mMatrix);
         mObjMain->mDraped.transform().addObject(mesh);
     }
 }
@@ -585,7 +585,7 @@ void ObjReaderInterpreter::gotAnimHide(const AnimVisibility::Key & key) {
     checkForCreateLod();
     assert(key.mType == AnimVisibility::Key::HIDE);
     if (mCurrentTransform) {
-        mCurrentTransform->pAnimVis.mKeys.emplace_back(key);
+        mCurrentTransform->mAnimVis.mKeys.emplace_back(key);
     }
 }
 
@@ -593,7 +593,7 @@ void ObjReaderInterpreter::gotAnimShow(const AnimVisibility::Key & key) {
     checkForCreateLod();
     assert(key.mType == AnimVisibility::Key::SHOW);
     if (mCurrentTransform) {
-        mCurrentTransform->pAnimVis.mKeys.emplace_back(key);
+        mCurrentTransform->mAnimVis.mKeys.emplace_back(key);
     }
 }
 
@@ -601,8 +601,8 @@ void ObjReaderInterpreter::gotTranslateAnim(AnimTrans::KeyList & key, std::strin
                                             const std::optional<float> loopVal) {
     checkForCreateLod();
     if (mCurrentTransform) {
-        mCurrentTransform->pAnimTrans.emplace_back();
-        AnimTrans & anim = mCurrentTransform->pAnimTrans.back();
+        mCurrentTransform->mAnimTrans.emplace_back();
+        AnimTrans & anim = mCurrentTransform->mAnimTrans.back();
         anim.mKeys.swap(key);
         anim.mDrf = dataref;
         anim.mLoop = loopVal;
@@ -613,8 +613,8 @@ void ObjReaderInterpreter::gotRotateAnim(AnimRotate::KeyList & key, float ( & in
                                          const std::optional<float> loopVal) {
     checkForCreateLod();
     if (mCurrentTransform) {
-        mCurrentTransform->pAnimRotate.emplace_back();
-        AnimRotate & anim = mCurrentTransform->pAnimRotate.back();
+        mCurrentTransform->mAnimRotate.emplace_back();
+        AnimRotate & anim = mCurrentTransform->mAnimRotate.back();
         anim.mKeys.swap(key);
         anim.mDrf = dataref;
         anim.mVector.set(inVector[0], inVector[1], inVector[2]);

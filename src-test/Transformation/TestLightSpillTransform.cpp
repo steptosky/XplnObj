@@ -119,11 +119,11 @@ TEST(ObjLightSpillCust, real_usecase_case1) {
     Transform & lodTransform = lod.transform();
     Transform & lightTransform = lodTransform.newChild("light transform");
     // scale
-    lodTransform.pMatrix.set(0.1f, 0.0f, 0.0f,
+    lodTransform.mMatrix.set(0.1f, 0.0f, 0.0f,
                              0.0f, 0.1f, 0.0f,
                              0.0f, 0.0f, 0.1f,
                              0.0f, 0.0f, 0.0f);
-    lightTransform.pMatrix.setPosition(Point3(0.0f, -10.0f, 0.0f));
+    lightTransform.mMatrix.setPosition(Point3(0.0f, -10.0f, 0.0f));
 
     auto * light = new ObjLightSpillCust;
     light->setPosition(Point3(0.0f, -10.0f, 0.0f));
@@ -132,7 +132,7 @@ TEST(ObjLightSpillCust, real_usecase_case1) {
 
     ObjTransformation::correctExportTransform(mainOut, mainOut.mMatrix, true);
 
-    const auto resultTrPos = lightTransform.pMatrix.position();
+    const auto resultTrPos = lightTransform.mMatrix.position();
     EXPECT_FLOAT_EQ(0.0f, resultTrPos.x) << resultTrPos.toString();
     EXPECT_FLOAT_EQ(-10.0f, resultTrPos.y) << resultTrPos.toString();
     EXPECT_FLOAT_EQ(0.0f, resultTrPos.z) << resultTrPos.toString();

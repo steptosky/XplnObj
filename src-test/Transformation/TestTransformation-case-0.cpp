@@ -93,13 +93,13 @@ TEST(TestTransform_case0, case1) {
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
     transformOut3.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 3"));
 
-    transformOut1.pMatrix.rotateDegreesY(+90.0f);
-    transformOut2.pMatrix.rotateDegreesY(0.0f);
-    transformOut3.pMatrix.rotateDegreesY(-90.0f);
+    transformOut1.mMatrix.rotateDegreesY(+90.0f);
+    transformOut2.mMatrix.rotateDegreesY(0.0f);
+    transformOut3.mMatrix.rotateDegreesY(-90.0f);
 
-    transformOut1.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
-    transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, -50.0f));
-    transformOut3.pMatrix.setPosition(Point3(50.0f, 0.0f, 0.0f));
+    transformOut1.mMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    transformOut2.mMatrix.setPosition(Point3(0.0f, 0.0f, -50.0f));
+    transformOut3.mMatrix.setPosition(Point3(50.0f, 0.0f, 0.0f));
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(mainOut.exportObj(expContext));
@@ -180,12 +180,12 @@ TEST(TestTransform_case0, case2) {
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
     mainOut.mMatrix.rotateDegreesY(-90.0f);
-    transformOut1.pMatrix.rotateDegreesY(180.0f);
-    transformOut2.pMatrix.rotateDegreesY(0.0f);
+    transformOut1.mMatrix.rotateDegreesY(180.0f);
+    transformOut2.mMatrix.rotateDegreesY(0.0f);
 
     mainOut.mMatrix.setPosition(Point3(50.0f, 0.0f, 0.0f));
-    transformOut1.pMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
-    transformOut2.pMatrix.setPosition(Point3(0.0f, 0.0f, -50.0f));
+    transformOut1.mMatrix.setPosition(Point3(0.0f, 0.0f, 50.0f));
+    transformOut2.mMatrix.setPosition(Point3(0.0f, 0.0f, -50.0f));
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(mainOut.exportObj(expContext));

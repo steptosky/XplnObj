@@ -65,14 +65,14 @@ TEST(TestTransformationAlgorithm_case5, case1) {
     trOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     trOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-    trOut1.pMatrix.rotateDegreesZ(90.0f);
-    trOut1.pMatrix.setPosition(Point3(-50.0f, 0.0f, -50.0f));
-    trOut2.pMatrix.setPosition(Point3(50.0f, 0.0f, 50.0f));
+    trOut1.mMatrix.rotateDegreesZ(90.0f);
+    trOut1.mMatrix.setPosition(Point3(-50.0f, 0.0f, -50.0f));
+    trOut2.mMatrix.setPosition(Point3(50.0f, 0.0f, 50.0f));
 
-    TestUtils::createTestAnimRotate(trOut1.pAnimRotate, Point3(1.0f, 0.0f, 0.0f), "rot1");
-    TestUtils::createTestAnimTranslate(trOut1.pAnimTrans,
+    TestUtils::createTestAnimRotate(trOut1.mAnimRotate, Point3(1.0f, 0.0f, 0.0f), "rot1");
+    TestUtils::createTestAnimTranslate(trOut1.mAnimTrans,
                                        AnimTransKey(-50.0f, 0.0f, 0.0f, -10.0f), AnimTransKey(50.0f, 0.0f, 0.0f, 10.0f), "trans1");
-    TestUtils::createTestAnimTranslate(trOut2.pAnimTrans,
+    TestUtils::createTestAnimTranslate(trOut2.mAnimTrans,
                                        AnimTransKey(-50.0f, 0.0f, 0.0f, -10.0f), AnimTransKey(50.0f, 0.0f, 0.0f, 10.0f), "trans2");
     ExportContext expContext(fileName);
     ASSERT_TRUE(mainOut.exportObj(expContext));
@@ -101,20 +101,20 @@ TEST(TestTransformationAlgorithm_case5, case1) {
 
     Transform animResult1;
     Transform animResult2;
-    TestUtils::createTestAnimRotate(animResult1.pAnimRotate, Point3(1.0f, 0.0f, 0.0f), "rot1");
-    TestUtils::createTestAnimTranslate(animResult1.pAnimTrans,
+    TestUtils::createTestAnimRotate(animResult1.mAnimRotate, Point3(1.0f, 0.0f, 0.0f), "rot1");
+    TestUtils::createTestAnimTranslate(animResult1.mAnimTrans,
                                        AnimTransKey(-100.0f, 0.0f, -50.0f, -10.0f), AnimTransKey(0.0f, 0.0f, -50.0f, 10.0f), "trans1");
-    TestUtils::createTestAnimTranslate(animResult2.pAnimTrans,
+    TestUtils::createTestAnimTranslate(animResult2.mAnimTrans,
                                        AnimTransKey(100.0f, -50.0f, 100.0f, -10.0f), AnimTransKey(100.0f, 50.0f, 100.0f, 10.0f), "trans2");
-    std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", trOut1.pMatrix.toRotation()));
+    std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", trOut1.mMatrix.toRotation()));
     std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-    ASSERT_TRUE(trIn1->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
-    ASSERT_TRUE(trIn1->pAnimRotate == animResult1.pAnimRotate);
-    ASSERT_TRUE(trIn1->pAnimTrans == animResult1.pAnimTrans);
-    ASSERT_TRUE(trIn2->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
-    ASSERT_TRUE(trIn2->pAnimRotate == animResult2.pAnimRotate);
-    ASSERT_TRUE(trIn2->pAnimTrans == animResult2.pAnimTrans);
+    ASSERT_TRUE(trIn1->mMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
+    ASSERT_TRUE(trIn1->mAnimRotate == animResult1.mAnimRotate);
+    ASSERT_TRUE(trIn1->mAnimTrans == animResult1.mAnimTrans);
+    ASSERT_TRUE(trIn2->mMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
+    ASSERT_TRUE(trIn2->mAnimRotate == animResult2.mAnimRotate);
+    ASSERT_TRUE(trIn2->mAnimTrans == animResult2.mAnimTrans);
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
 }
@@ -145,14 +145,14 @@ TEST(TestTransformationAlgorithm_case5, case2) {
     trOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
     mainOut.mMatrix.rotateDegreesZ(-90.0f);
-    trOut1.pMatrix.rotateDegreesZ(90.0f);
-    trOut1.pMatrix.setPosition(Point3(-50.0f, 0.0f, -50.0f));
-    trOut2.pMatrix.setPosition(Point3(50.0f, 0.0f, 50.0f));
+    trOut1.mMatrix.rotateDegreesZ(90.0f);
+    trOut1.mMatrix.setPosition(Point3(-50.0f, 0.0f, -50.0f));
+    trOut2.mMatrix.setPosition(Point3(50.0f, 0.0f, 50.0f));
 
-    TestUtils::createTestAnimRotate(trOut1.pAnimRotate, Point3(1.0f, 0.0f, 0.0f), "rot1");
-    TestUtils::createTestAnimTranslate(trOut1.pAnimTrans,
+    TestUtils::createTestAnimRotate(trOut1.mAnimRotate, Point3(1.0f, 0.0f, 0.0f), "rot1");
+    TestUtils::createTestAnimTranslate(trOut1.mAnimTrans,
                                        AnimTransKey(-50.0f, 0.0f, 0.0f, -10.0f), AnimTransKey(50.0f, 0.0f, 0.0f, 10.0f), "trans1");
-    TestUtils::createTestAnimTranslate(trOut2.pAnimTrans,
+    TestUtils::createTestAnimTranslate(trOut2.mAnimTrans,
                                        AnimTransKey(-50.0f, 0.0f, 0.0f, -10.0f), AnimTransKey(50.0f, 0.0f, 0.0f, 10.0f), "trans2");
     ExportContext expContext(fileName);
     ASSERT_TRUE(mainOut.exportObj(expContext));
@@ -181,20 +181,20 @@ TEST(TestTransformationAlgorithm_case5, case2) {
 
     Transform animResult1;
     Transform animResult2;
-    TestUtils::createTestAnimRotate(animResult1.pAnimRotate, Point3(0.0f, -1.0f, 0.0f), "rot1");
-    TestUtils::createTestAnimTranslate(animResult1.pAnimTrans,
+    TestUtils::createTestAnimRotate(animResult1.mAnimRotate, Point3(0.0f, -1.0f, 0.0f), "rot1");
+    TestUtils::createTestAnimTranslate(animResult1.mAnimTrans,
                                        AnimTransKey(0.0f, 100.0f, -50.0f, -10.0f), AnimTransKey(0.0f, 0.0f, -50.0f, 10.0f), "trans1");
-    TestUtils::createTestAnimTranslate(animResult2.pAnimTrans,
+    TestUtils::createTestAnimTranslate(animResult2.mAnimTrans,
                                        AnimTransKey(-50.0f, -100.0f, 100.0f, -10.0f), AnimTransKey(50.0f, -100.0f, 100.0f, 10.0f), "trans2");
     std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", mainOut.mMatrix.toRotation()));
 
-    ASSERT_TRUE(trIn1->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
-    ASSERT_TRUE(trIn1->pAnimRotate == animResult1.pAnimRotate);
-    ASSERT_TRUE(trIn1->pAnimTrans == animResult1.pAnimTrans);
-    ASSERT_TRUE(trIn2->pMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
-    ASSERT_TRUE(trIn2->pAnimRotate == animResult2.pAnimRotate);
-    ASSERT_TRUE(trIn2->pAnimTrans == animResult2.pAnimTrans);
+    ASSERT_TRUE(trIn1->mMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
+    ASSERT_TRUE(trIn1->mAnimRotate == animResult1.mAnimRotate);
+    ASSERT_TRUE(trIn1->mAnimTrans == animResult1.mAnimTrans);
+    ASSERT_TRUE(trIn2->mMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
+    ASSERT_TRUE(trIn2->mAnimRotate == animResult2.mAnimRotate);
+    ASSERT_TRUE(trIn2->mAnimTrans == animResult2.mAnimTrans);
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
 }

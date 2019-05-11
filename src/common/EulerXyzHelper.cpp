@@ -45,7 +45,7 @@ namespace xobj {
 void EulerXyzHelper::addToTransform(Transform & inOutTransform) {
     AnimRotateList anim = animation();
     for (auto & a : anim) {
-        inOutTransform.pAnimRotate.push_back(a);
+        inOutTransform.mAnimRotate.push_back(a);
     }
 }
 

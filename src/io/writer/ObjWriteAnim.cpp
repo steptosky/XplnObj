@@ -78,9 +78,9 @@ bool ObjWriteAnim::printAnimationStart(AbstractWriter & writer, const Transform 
 
     mWriter->spaceMore();
     //-------------------------------------------------------------------------
-    printVisible(transform.pAnimVis, transform);
-    printTrans(transform.pAnimTrans, transform);
-    printRotate(transform.pAnimRotate, transform);
+    printVisible(transform.mAnimVis, transform);
+    printTrans(transform.mAnimTrans, transform);
+    printRotate(transform.mAnimRotate, transform);
     //-------------------------------------------------------------------------
     return true;
 }

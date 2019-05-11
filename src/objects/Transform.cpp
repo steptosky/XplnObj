@@ -357,7 +357,7 @@ bool Transform::hasAnim() const {
 }
 
 bool Transform::hasAnimRotate() const {
-    for (auto & a : pAnimRotate) {
+    for (auto & a : mAnimRotate) {
         if (a.isAnimated()) {
             return true;
         }
@@ -366,7 +366,7 @@ bool Transform::hasAnimRotate() const {
 }
 
 bool Transform::hasAnimTrans() const {
-    for (auto & a : pAnimTrans) {
+    for (auto & a : mAnimTrans) {
         if (a.isAnimated()) {
             return true;
         }
@@ -375,7 +375,7 @@ bool Transform::hasAnimTrans() const {
 }
 
 bool Transform::hasAnimVis() const {
-    return pAnimVis.isAnimated();
+    return mAnimVis.isAnimated();
 }
 
 /**************************************************************************************************/
@@ -384,7 +384,7 @@ bool Transform::hasAnimVis() const {
 
 TMatrix Transform::parentMatrix() const {
     const auto p = parent();
-    return p ? p->pMatrix : TMatrix();
+    return p ? p->mMatrix : TMatrix();
 }
 
 /**************************************************************************************************/

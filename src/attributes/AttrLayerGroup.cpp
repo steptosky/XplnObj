@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <algorithm>
-
 #include "xpln/obj/attributes/AttrLayerGroup.h"
 
 namespace xobj {
@@ -40,16 +38,6 @@ namespace xobj {
 bool AttrLayerGroup::operator==(const AttrLayerGroup & other) const {
     return mOffset == other.mOffset &&
            mLayer == other.mLayer;
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrLayerGroup::setOffset(std::int32_t offset) {
-    offset = std::min(offset, 5);
-    offset = std::max(offset, -5);
-    mOffset = static_cast<std::int8_t>(offset);
 }
 
 /**************************************************************************************************/

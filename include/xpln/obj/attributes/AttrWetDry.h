@@ -78,15 +78,10 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    void setState(const eState state) { mState = state; }
-    eState state() const { return mState; }
+    eState mState = wet;
 
     /// @}
     //-------------------------------------------------------------------------
-
-private:
-
-    eState mState = wet;
 
 };
 

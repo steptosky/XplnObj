@@ -74,8 +74,13 @@ public:
 private:
 
     template<typename T>
+    void writeGlobAttrState(const T & attr) {
+        static_assert(false, "not implemented");
+    }
+
+    template<typename T>
     void switchAttrState(const T & attr, bool enable) {
-		static_assert(false, "not implemented");
+        static_assert(false, "not implemented");
     }
 
     void writeAttr();

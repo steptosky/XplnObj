@@ -40,7 +40,6 @@
 #include "xpln/obj/manipulators/AttrManipNone.h"
 #include "io/StringValidator.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
-#include "converters/ObjAttrString.h"
 #include "common/Logger.h"
 
 namespace xobj {
@@ -67,13 +66,107 @@ std::tuple<std::size_t, std::size_t, std::size_t> ObjWriteAttr::count() const {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-template<typename T>
-std::size_t writeGlobAttrT(AbstractWriter * writer, const T & attr) {
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrWetDry>>(const std::optional<AttrWetDry> & attr) {
     if (attr) {
-        printObjGlobAttr(*attr, *writer);
+        mWriter->writeLine(attr->mState == AttrWetDry::eState::wet ? ATTR_GLOBAL_WET : ATTR_GLOBAL_DRY);
+        ++mGlobNum;
     }
-    return attr ? 1 : 0;
 }
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrBlend>>(const std::optional<AttrBlend> & attr) {
+    if (attr) {
+        const auto ration = std::clamp(attr->mRatio, 0.0f, 1.0f);
+        if (attr->mType == AttrBlend::no_blend) {
+            mWriter->writeLine(ATTR_GLOBAL_NO_BLEND, " ", ration);
+        }
+        else if (attr->mType == AttrBlend::shadow_blend) {
+            mWriter->writeLine(ATTR_GLOBAL_SHADOW_BLEND, " ", ration);
+        }
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrLayerGroup>>(const std::optional<AttrLayerGroup> & attr) {
+    if (attr) {
+        mWriter->writeLine(ATTR_GLOBAL_LAYER_GROUP, " ", attr->mLayer.toString(), " ", std::clamp(attr->mOffset, -5, 5));
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrSlungLoadWeight>>(const std::optional<AttrSlungLoadWeight> & attr) {
+    if (attr) {
+        mWriter->writeLine(ATTR_GLOBAL_SLUNG_LOAD_WEIGHT, " ", attr->mWeight);
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrSpecular>>(const std::optional<AttrSpecular> & attr) {
+    if (attr) {
+        mWriter->writeLine(ATTR_GLOBAL_SPECULAR, " ", std::clamp(attr->mRatio, 0.0f, 1.0f));
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrTint>>(const std::optional<AttrTint> & attr) {
+    if (attr) {
+        mWriter->writeLine(ATTR_GLOBAL_TINT, " ", attr->mAlbedo, " ", attr->mEmissive);
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrSlopeLimit>>(const std::optional<AttrSlopeLimit> & attr) {
+    if (attr) {
+        mWriter->writeLine(ATTR_GLOBAL_SLOPE_LIMIT,
+                           " ", attr->mMinPitch,
+                           " ", attr->mMaxPitch,
+                           " ", attr->mMinRoll,
+                           " ", attr->mMaxRoll);
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrCockpitRegion>>(const std::optional<AttrCockpitRegion> & attr) {
+    if (attr) {
+        mWriter->writeLine(ATTR_GLOBAL_COCKPIT_REGION,
+                           " ", attr->mLeft,
+                           " ", attr->mBottom,
+                           " ", attr->mRight,
+                           " ", attr->mTop);
+        ++mGlobNum;
+    }
+}
+
+//-------------------------------------------------------------------------
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrDrapedLayerGroup>>(const std::optional<AttrDrapedLayerGroup> & attr) {
+    if (attr) {
+        mWriter->writeLine(ATTR_GLOBAL_LAYER_GROUP_DRAPED,
+                           " ", attr->mLayer.toString(),
+                           " ", std::clamp(attr->mOffset, -5, 5));
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrDrapedLod>>(const std::optional<AttrDrapedLod> & attr) {
+    if (attr) {
+        mWriter->writeLine(ATTR_GLOBAL_LOD_DRAPED, " ", attr->mDistance);
+        ++mGlobNum;
+    }
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
 void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
     assert(obj);
@@ -111,20 +204,20 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
     // It is printed in another place.
     //writeBool(inWriter, ATTR_GLOBAL_DEBUG, inObj->mAttr.isDebug());
 
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mWetDry);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mBlend);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mLayerGroup);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mSlungLoadWeight);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mSpecular);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mTint);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mSlopeLimit);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mCockpitRegion1);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mCockpitRegion2);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mCockpitRegion3);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mCockpitRegion4);
+    writeGlobAttrState(obj->mAttr.mWetDry);
+    writeGlobAttrState(obj->mAttr.mBlend);
+    writeGlobAttrState(obj->mAttr.mLayerGroup);
+    writeGlobAttrState(obj->mAttr.mSlungLoadWeight);
+    writeGlobAttrState(obj->mAttr.mSpecular);
+    writeGlobAttrState(obj->mAttr.mTint);
+    writeGlobAttrState(obj->mAttr.mSlopeLimit);
+    writeGlobAttrState(obj->mAttr.mCockpitRegion1);
+    writeGlobAttrState(obj->mAttr.mCockpitRegion2);
+    writeGlobAttrState(obj->mAttr.mCockpitRegion3);
+    writeGlobAttrState(obj->mAttr.mCockpitRegion4);
 
-    mGlobNum += writeGlobAttrT(writer, obj->mDraped.mAttr.mLayerGroup);
-    mGlobNum += writeGlobAttrT(writer, obj->mDraped.mAttr.mLod);
+    writeGlobAttrState(obj->mDraped.mAttr.mLayerGroup);
+    writeGlobAttrState(obj->mDraped.mAttr.mLod);
 }
 
 /**************************************************************************************************/

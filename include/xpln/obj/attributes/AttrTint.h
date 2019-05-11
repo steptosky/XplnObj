@@ -70,24 +70,11 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    void set(const float albedoRatio, const float emissiveRatio) {
-        mAlbedo = albedoRatio;
-        mEmissive = emissiveRatio;
-    }
-
-    void setAlbedo(const float albedoRatio) { mAlbedo = albedoRatio; }
-    void setEmissive(const float emissiveRatio) { mEmissive = emissiveRatio; }
-
-    float albedo() const { return mAlbedo; }
-    float emissive() const { return mEmissive; }
+    float mAlbedo = 0.0f;
+    float mEmissive = 0.0f;
 
     /// @}
     //-------------------------------------------------------------------------
-
-private:
-
-    float mAlbedo = 0.0f;
-    float mEmissive = 0.0f;
 
 };
 

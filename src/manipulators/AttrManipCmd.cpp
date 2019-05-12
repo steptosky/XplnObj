@@ -27,67 +27,24 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipCmd.h"
-#include "xpln/enums//EManipulator.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipCmd::AttrManipCmd()
-    : AttrManipBase(EManipulator(EManipulator::command)) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipCmd::setCmd(const std::string & cmd) {
-    mCommand = cmd.empty() ? "none" : cmd;
-}
-
-const std::string & AttrManipCmd::cmd() const {
-    return mCommand;
-}
+const EManipulator AttrManipCmd::mType(EManipulator::command);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipCmd::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const auto * right = dynamic_cast<const AttrManipCmd*>(manip);
-    if (!right)
-        return false;
-
-    return mCommand == right->mCommand;
-}
-
-AttrManipBase * AttrManipCmd::clone() const {
-    return new AttrManipCmd(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipCmd::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_COMMAND;
-    outStr << " " << cursor().toString();
-    outStr << " " << writer.actualCommand(cmd());
-    outStr << " " << toolTip();
-    writer.writeLine(outStr.str());
-    return 1;
+bool AttrManipCmd::operator==(const AttrManipCmd & other) const {
+    return mCursor == other.mCursor &&
+           mToolType == other.mToolType &&
+           mCommand == other.mCommand;
 }
 
 /**************************************************************************************************/

@@ -27,68 +27,24 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipCmdKnob2.h"
-#include "xpln/enums/EManipulator.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipCmdKnob2::AttrManipCmdKnob2()
-    : AttrManipBase(EManipulator(EManipulator::command_knob2)) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipCmdKnob2::setCmd(const std::string & val) {
-    mCommand = val;
-}
-
-const std::string & AttrManipCmdKnob2::cmd() const {
-    return mCommand;
-}
+const EManipulator AttrManipCmdKnob2::mType(EManipulator::command_knob2);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipCmdKnob2::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const auto * right = dynamic_cast<const AttrManipCmdKnob2*>(manip);
-    if (!right)
-        return false;
-
-    return sts::isEqual(mCommand, right->mCommand);
-}
-
-AttrManipBase * AttrManipCmdKnob2::clone() const {
-    return new AttrManipCmdKnob2(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipCmdKnob2::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_COMMAND_KNOB2;
-    outStr << " " << cursor().toString();
-    outStr << " " << writer.actualCommand(cmd());
-    outStr << " " << toolTip();
-    writer.writeLine(outStr.str());
-    return 1;
+bool AttrManipCmdKnob2::operator==(const AttrManipCmdKnob2 & other) const {
+    return mCursor == other.mCursor &&
+           mToolType == other.mToolType &&
+           mCommand == other.mCommand;
 }
 
 /**************************************************************************************************/

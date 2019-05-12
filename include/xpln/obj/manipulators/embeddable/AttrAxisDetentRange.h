@@ -29,7 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <cstddef>
 #include "xpln/Export.h"
 
 namespace xobj {
@@ -70,35 +69,18 @@ public:
     /// @{
 
     XpObjLib bool operator==(const AttrAxisDetentRange & other) const;
-    XpObjLib bool operator!=(const AttrAxisDetentRange & other) const;
+    bool operator!=(const AttrAxisDetentRange & other) const { return !this->operator==(other); }
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
-
-    XpObjLib void setStart(float val);
-    XpObjLib void setEnd(float val);
-    XpObjLib void setHeight(float val);
-
-    XpObjLib float start() const;
-    XpObjLib float end() const;
-    XpObjLib float height() const;
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
-
-    /// @}
-    //-------------------------------------------------------------------------
-
-private:
 
     float mStart = 0.0f;
     float mEnd = 0.0f;
     float mHeight = 0.0f;
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

@@ -29,12 +29,9 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <cstddef>
 #include "xpln/Export.h"
 
 namespace xobj {
-
-class AbstractWriter;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,7 +48,9 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    XpObjLib explicit AttrManipKeyFrame(float value = 0.0f, float angle = 0.0f);
+    explicit AttrManipKeyFrame(const float value = 0.0f, const float angle = 0.0f)
+        : mValue(value),
+          mAngle(angle) {}
 
     AttrManipKeyFrame(const AttrManipKeyFrame &) = default;
     AttrManipKeyFrame(AttrManipKeyFrame &&) = default;
@@ -66,31 +65,17 @@ public:
     /// @{
 
     XpObjLib bool operator==(const AttrManipKeyFrame & other) const;
-    XpObjLib bool operator!=(const AttrManipKeyFrame & other) const;
+    bool operator!=(const AttrManipKeyFrame & other) const { return !this->operator==(other); }
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
-
-    XpObjLib void setValue(float vales);
-    XpObjLib void setAngle(float angle);
-    XpObjLib float value() const;
-    XpObjLib float angle() const;
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
-
-    /// @}
-    //-------------------------------------------------------------------------
-
-private:
 
     float mValue = 0.0f;
     float mAngle = 0.0f;
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

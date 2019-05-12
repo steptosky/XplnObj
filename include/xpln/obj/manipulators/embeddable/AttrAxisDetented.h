@@ -64,54 +64,11 @@ public:
     /// @{
 
     XpObjLib bool operator==(const AttrAxisDetented & other) const;
-    XpObjLib bool operator!=(const AttrAxisDetented & other) const;
+    bool operator!=(const AttrAxisDetented & other) const { return !this->operator==(other); }
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
-
-    bool isEnabled() const { return mIsEnabled; }
-    void setEnabled(const bool state) { mIsEnabled = state; }
-
-    //-------------------------------------------------------------------------
-
-    void setDirection(const float x, const float y, const float z) {
-        setDirectionX(x);
-        setDirectionY(y);
-        setDirectionZ(z);
-    }
-
-    void setValue(const float min, const float max) {
-        setVMin(min);
-        setVMax(max);
-    }
-
-    XpObjLib void setDirectionX(float val);
-    XpObjLib void setDirectionY(float val);
-    XpObjLib void setDirectionZ(float val);
-    XpObjLib float directionX() const;
-    XpObjLib float directionY() const;
-    XpObjLib float directionZ() const;
-
-    XpObjLib void setVMin(float val);
-    XpObjLib void setVMax(float val);
-    XpObjLib float vMin() const;
-    XpObjLib float vMax() const;
-
-    XpObjLib void setDataref(const std::string & val);
-    XpObjLib const std::string & dataref() const;
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
-
-    /// @}
-    //-------------------------------------------------------------------------
-
-private:
 
     float mDirX = 0.0f;
     float mDirY = 0.0f;
@@ -120,9 +77,10 @@ private:
     float mVMin = 0.0f;
     float mVMax = 1.0f;
 
-    std::string mDataref = "none";
+    std::string mDataref;
 
-    bool mIsEnabled = false;
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

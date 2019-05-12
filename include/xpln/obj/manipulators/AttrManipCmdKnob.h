@@ -29,7 +29,10 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
+#include <string>
+#include "xpln/Export.h"
+#include "xpln/enums/ECursor.h"
+#include "xpln/enums/EManipulator.h"
 
 namespace xobj {
 
@@ -41,41 +44,41 @@ namespace xobj {
  * \details ATTR_manip_command_knob
  * \ingroup Manipulators
  */
-class AttrManipCmdKnob : public AttrManipBase {
+class AttrManipCmdKnob final {
 public:
 
-    XpObjLib AttrManipCmdKnob();
-    virtual ~AttrManipCmdKnob() = default;
-
-	bool operator==(const AttrManipCmdKnob& other) const { return equals(&other); }
-	bool operator!=(const AttrManipCmdKnob& other) const { return !equals(&other); }
-
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setCmdNegative(const std::string & val);
-    XpObjLib void setCmdPositive(const std::string & val);
-    XpObjLib const std::string & cmdNegative() const;
-    XpObjLib const std::string & cmdPositive() const;
+    AttrManipCmdKnob() = default;
+    AttrManipCmdKnob(const AttrManipCmdKnob &) = default;
+    AttrManipCmdKnob(AttrManipCmdKnob &&) = default;
 
+    ~AttrManipCmdKnob() = default;
+
+    AttrManipCmdKnob & operator=(const AttrManipCmdKnob &) = default;
+    AttrManipCmdKnob & operator=(AttrManipCmdKnob &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
+    XpObjLib bool operator==(const AttrManipCmdKnob & other) const;
+    bool operator!=(const AttrManipCmdKnob & other) const { return !this->operator==(other); }
 
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
+    static const EManipulator mType;
+    ECursor mCursor;
+    std::string mToolType;
 
+    std::string mPosCommand;
+    std::string mNegCommand;
+
+    /// @}
     //-------------------------------------------------------------------------
-
-private:
-
-    std::string mPosCommand = "none";
-    std::string mNegCommand = "none";
 
 };
 

@@ -29,7 +29,10 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
+#include <string>
+#include "xpln/Export.h"
+#include "xpln/enums/ECursor.h"
+#include "xpln/enums/EManipulator.h"
 
 namespace xobj {
 
@@ -42,38 +45,40 @@ namespace xobj {
  * \details For VR
  * \ingroup Manipulators
  */
-class AttrManipCmdSwitchUpDown2 : public AttrManipBase {
+class AttrManipCmdSwitchUpDown2 final {
 public:
 
-    XpObjLib AttrManipCmdSwitchUpDown2();
-    virtual ~AttrManipCmdSwitchUpDown2() = default;
-
-	bool operator==(const AttrManipCmdSwitchUpDown2& other) const { return equals(&other); }
-	bool operator!=(const AttrManipCmdSwitchUpDown2& other) const { return !equals(&other); }
-
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setCmd(const std::string & val);
-    XpObjLib const std::string & cmd() const;
+    AttrManipCmdSwitchUpDown2() = default;
+    AttrManipCmdSwitchUpDown2(const AttrManipCmdSwitchUpDown2 &) = default;
+    AttrManipCmdSwitchUpDown2(AttrManipCmdSwitchUpDown2 &&) = default;
 
+    ~AttrManipCmdSwitchUpDown2() = default;
+
+    AttrManipCmdSwitchUpDown2 & operator=(const AttrManipCmdSwitchUpDown2 &) = default;
+    AttrManipCmdSwitchUpDown2 & operator=(AttrManipCmdSwitchUpDown2 &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
+    XpObjLib bool operator==(const AttrManipCmdSwitchUpDown2 & other) const;
+    bool operator!=(const AttrManipCmdSwitchUpDown2 & other) const { return !this->operator==(other); }
 
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
+    static const EManipulator mType;
+    ECursor mCursor;
+    std::string mToolType;
 
+    std::string mCommand;
+
+    /// @}
     //-------------------------------------------------------------------------
-
-private:
-
-    std::string mCommand = "none";
 
 };
 

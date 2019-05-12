@@ -28,88 +28,27 @@
 */
 
 #include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipToggle.h"
-#include "xpln/enums/EManipulator.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipToggle::AttrManipToggle()
-    : AttrManipBase(EManipulator(EManipulator::toggle)) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipToggle::setOn(const float val) {
-    mOn = val;
-}
-
-void AttrManipToggle::setOff(const float val) {
-    mOff = val;
-}
-
-float AttrManipToggle::on() const {
-    return mOn;
-}
-
-float AttrManipToggle::off() const {
-    return mOff;
-}
-
-const std::string & AttrManipToggle::dataref() const {
-    return mDataref;
-}
-
-void AttrManipToggle::setDataref(const std::string & val) {
-    mDataref = val;
-}
+const EManipulator AttrManipToggle::mType(EManipulator::toggle);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipToggle::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const auto * right = dynamic_cast<const AttrManipToggle*>(manip);
-    if (!right)
-        return false;
-
-    return (sts::isEqual(mOn, right->mOn) &&
-            sts::isEqual(mOff, right->mOff) &&
-            sts::isEqual(mWheel, right->mWheel) &&
-            sts::isEqual(mDataref, right->mDataref));
-}
-
-AttrManipBase * AttrManipToggle::clone() const {
-    return new AttrManipToggle(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipToggle::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_TOGGLE;
-    outStr << " " << cursor().toString();
-    outStr << " " << on();
-    outStr << " " << off();
-    outStr << " " << writer.actualDataref(dataref());
-    outStr << " " << toolTip();
-    writer.writeLine(outStr.str());
-    return 1 + wheel().printObj(writer);
+bool AttrManipToggle::operator==(const AttrManipToggle & other) const {
+    return mCursor == other.mCursor &&
+           mToolType == other.mToolType &&
+           sts::isEqual(mOn, other.mOn) &&
+           sts::isEqual(mOff, other.mOff) &&
+           mDataref == other.mDataref &&
+           mWheel == other.mWheel;
 }
 
 /**************************************************************************************************/

@@ -29,7 +29,10 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
+#include <string>
+#include "xpln/Export.h"
+#include "xpln/enums/ECursor.h"
+#include "xpln/enums/EManipulator.h"
 
 namespace xobj {
 
@@ -42,38 +45,40 @@ namespace xobj {
  * \details For VR
  * \ingroup Manipulators
  */
-class AttrManipCmdSwitchLeftRight2 : public AttrManipBase {
+class AttrManipCmdSwitchLeftRight2 final {
 public:
 
-    XpObjLib AttrManipCmdSwitchLeftRight2();
-    virtual ~AttrManipCmdSwitchLeftRight2() = default;
-
-	bool operator==(const AttrManipCmdSwitchLeftRight2& other) const { return equals(&other); }
-	bool operator!=(const AttrManipCmdSwitchLeftRight2& other) const { return !equals(&other); }
-
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setCmd(const std::string & val);
-    XpObjLib const std::string & cmd() const;
+    AttrManipCmdSwitchLeftRight2() = default;
+    AttrManipCmdSwitchLeftRight2(const AttrManipCmdSwitchLeftRight2 &) = default;
+    AttrManipCmdSwitchLeftRight2(AttrManipCmdSwitchLeftRight2 &&) = default;
 
+    ~AttrManipCmdSwitchLeftRight2() = default;
+
+    AttrManipCmdSwitchLeftRight2 & operator=(const AttrManipCmdSwitchLeftRight2 &) = default;
+    AttrManipCmdSwitchLeftRight2 & operator=(AttrManipCmdSwitchLeftRight2 &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
+    XpObjLib bool operator==(const AttrManipCmdSwitchLeftRight2 & other) const;
+    bool operator!=(const AttrManipCmdSwitchLeftRight2 & other) const { return !this->operator==(other); }
 
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
+    static const EManipulator mType;
+    ECursor mCursor;
+    std::string mToolType;
 
+    std::string mCommand;
+
+    /// @}
     //-------------------------------------------------------------------------
-
-private:
-
-    std::string mCommand = "none";
 
 };
 

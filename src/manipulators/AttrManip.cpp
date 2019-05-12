@@ -35,9 +35,7 @@ namespace xobj {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 bool AttrManip::operator==(const AttrManip & other) const {
-    return mType == other.mType &&
-           mCursor == other.mCursor &&
-           mToolType == other.mToolType;
+    return mType == other.mType;
 }
 
 /**************************************************************************************************/

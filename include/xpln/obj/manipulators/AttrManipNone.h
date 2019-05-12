@@ -29,7 +29,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/manipulators/AttrManipBase.h"
+#include "xpln/Export.h"
+#include "xpln/enums/EManipulator.h"
 
 namespace xobj {
 
@@ -41,28 +42,35 @@ namespace xobj {
  * \details Represents the state - no manip enabled.
  * \ingroup Manipulators
  */
-class AttrManipNone : public AttrManipBase {
+class AttrManipNone final {
 public:
 
-    XpObjLib AttrManipNone();
-    virtual ~AttrManipNone() = default;
-
-	bool operator==(const AttrManipNone& other) const { return equals(&other); }
-	bool operator!=(const AttrManipNone& other) const { return !equals(&other); }
-
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
+    AttrManipNone() = default;
+    AttrManipNone(const AttrManipNone &) = default;
+    AttrManipNone(AttrManipNone &&) = default;
 
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
+    ~AttrManipNone() = default;
 
+    AttrManipNone & operator=(const AttrManipNone &) = default;
+    AttrManipNone & operator=(AttrManipNone &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
+    bool operator==(const AttrManipNone &) const { return true; }
+    bool operator!=(const AttrManipNone &) const { return true; }
 
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    static const EManipulator mType;
+
+    /// @}
     //-------------------------------------------------------------------------
 
 };

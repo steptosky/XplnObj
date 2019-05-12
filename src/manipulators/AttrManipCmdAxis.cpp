@@ -28,107 +28,28 @@
 */
 
 #include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipCmdAxis.h"
-#include "xpln/enums//EManipulator.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipCmdAxis::AttrManipCmdAxis()
-    : AttrManipBase(EManipulator(EManipulator::command_axis)) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipCmdAxis::setDirectionX(const float val) {
-    mX = val;
-}
-
-void AttrManipCmdAxis::setDirectionY(const float val) {
-    mY = val;
-}
-
-void AttrManipCmdAxis::setDirectionZ(const float val) {
-    mZ = val;
-}
-
-float AttrManipCmdAxis::directionX() const {
-    return mX;
-}
-
-float AttrManipCmdAxis::directionY() const {
-    return mY;
-}
-
-float AttrManipCmdAxis::directionZ() const {
-    return mZ;
-}
-
-const std::string & AttrManipCmdAxis::cmdPositive() const {
-    return mPosCommand;
-}
-
-void AttrManipCmdAxis::setCmdPositive(const std::string & val) {
-    mPosCommand = val;
-}
-
-const std::string & AttrManipCmdAxis::cmdNegative() const {
-    return mNegCommand;
-}
-
-void AttrManipCmdAxis::setCmdNegative(const std::string & val) {
-    mNegCommand = val;
-}
+const EManipulator AttrManipCmdAxis::mType(EManipulator::command_axis);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipCmdAxis::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const auto * right = dynamic_cast<const AttrManipCmdAxis*>(manip);
-    if (!right)
-        return false;
-
-    return (sts::isEqual(mX, right->mX) &&
-            sts::isEqual(mY, right->mY) &&
-            sts::isEqual(mZ, right->mZ) &&
-            sts::isEqual(mPosCommand, right->mPosCommand) &&
-            sts::isEqual(mNegCommand, right->mNegCommand));
-}
-
-AttrManipBase * AttrManipCmdAxis::clone() const {
-    return new AttrManipCmdAxis(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipCmdAxis::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_COMMAND_AXIS;
-    outStr << " " << cursor().toString();
-    outStr << " " << directionX();
-    outStr << " " << directionY();
-    outStr << " " << directionZ();
-    outStr << " " << writer.actualCommand(cmdPositive());
-    outStr << " " << writer.actualCommand(cmdNegative());
-    outStr << " " << toolTip();
-    writer.writeLine(outStr.str());
-    return 1;
+bool AttrManipCmdAxis::operator==(const AttrManipCmdAxis & other) const {
+    return mCursor == other.mCursor &&
+           mToolType == other.mToolType &&
+           sts::isEqual(mX, other.mX) &&
+           sts::isEqual(mY, other.mY) &&
+           sts::isEqual(mZ, other.mZ) &&
+           mPosCommand == other.mPosCommand &&
+           mNegCommand == other.mNegCommand;
 }
 
 /**************************************************************************************************/

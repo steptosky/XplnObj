@@ -28,146 +28,32 @@
 */
 
 #include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipDragAxis.h"
-#include "xpln/enums//EManipulator.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipDragAxis::AttrManipDragAxis()
-    : AttrManipBase(EManipulator(EManipulator::drag_axis)) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipDragAxis::setDirectionX(const float val) {
-    mX = val;
-}
-
-void AttrManipDragAxis::setDirectionY(const float val) {
-    mY = val;
-}
-
-void AttrManipDragAxis::setDirectionZ(const float val) {
-    mZ = val;
-}
-
-float AttrManipDragAxis::directionX() const {
-    return mX;
-}
-
-float AttrManipDragAxis::directionY() const {
-    return mY;
-}
-
-float AttrManipDragAxis::directionZ() const {
-    return mZ;
-}
-
-void AttrManipDragAxis::setVal1(const float val) {
-    mVal1 = val;
-}
-
-void AttrManipDragAxis::setVal2(const float val) {
-    mVal2 = val;
-}
-
-float AttrManipDragAxis::val1() const {
-    return mVal1;
-}
-
-float AttrManipDragAxis::val2() const {
-    return mVal2;
-}
-
-const std::string & AttrManipDragAxis::dataref() const {
-    return mDataref;
-}
-
-void AttrManipDragAxis::setDataref(const std::string & val) {
-    mDataref = val;
-}
+const EManipulator AttrManipDragAxis::mType(EManipulator::drag_axis);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-const AttrAxisDetented & AttrManipDragAxis::axisDetented() const {
-    return mAxisDetented;
-}
-
-void AttrManipDragAxis::setAxisDetented(const AttrAxisDetented & val) {
-    mAxisDetented = val;
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-bool AttrManipDragAxis::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const auto * right = dynamic_cast<const AttrManipDragAxis*>(manip);
-    if (!right)
-        return false;
-
-    return (sts::isEqual(mX, right->mX) &&
-            sts::isEqual(mY, right->mY) &&
-            sts::isEqual(mZ, right->mZ) &&
-            sts::isEqual(mVal1, right->mVal1) &&
-            sts::isEqual(mVal2, right->mVal2) &&
-            sts::isEqual(mAxisDetented, right->mAxisDetented) &&
-            sts::isEqual(mAxisDetentRanges, right->mAxisDetentRanges) &&
-            sts::isEqual(mWheel, right->mWheel) &&
-            sts::isEqual(mDataref, right->mDataref));
-}
-
-AttrManipBase * AttrManipDragAxis::clone() const {
-    return new AttrManipDragAxis(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipDragAxis::printObj(AbstractWriter & writer) const {
-    std::size_t outCounter = 1;
-    StringStream outStr;
-    outStr << ATTR_MANIP_DRAG_AXIS;
-    outStr << " " << cursor().toString();
-    outStr << " " << directionX();
-    outStr << " " << directionY();
-    outStr << " " << directionZ();
-    outStr << " " << val1();
-    outStr << " " << val2();
-    outStr << " " << writer.actualDataref(dataref());
-    outStr << " " << toolTip();
-    writer.writeLine(outStr.str());
-
-    outCounter += wheel().printObj(writer);
-
-    const auto & detented = axisDetented();
-    if (detented.isEnabled()) {
-        outCounter += detented.printObj(writer);
-
-        const auto & detentRangesList = detentRanges();
-        for (const auto & v : detentRangesList) {
-            outCounter += v.printObj(writer);
-        }
-    }
-
-    return outCounter;
+bool AttrManipDragAxis::operator==(const AttrManipDragAxis & other) const {
+    return mCursor == other.mCursor &&
+           mToolType == other.mToolType &&
+           sts::isEqual(mX, other.mX) &&
+           sts::isEqual(mY, other.mY) &&
+           sts::isEqual(mZ, other.mZ) &&
+           sts::isEqual(mVal1, other.mVal1) &&
+           sts::isEqual(mVal2, other.mVal2) &&
+           mDataref == other.mDataref &&
+           mAxisDetentRanges == other.mAxisDetentRanges &&
+           mWheel == other.mWheel &&
+           mAxisDetented == other.mAxisDetented;
 }
 
 /**************************************************************************************************/

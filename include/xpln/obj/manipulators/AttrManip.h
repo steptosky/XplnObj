@@ -30,8 +30,6 @@
 */
 
 #include <variant>
-#include <string>
-#include "xpln/enums/ECursor.h"
 
 #include "AttrManipAxisKnob.h"
 #include "AttrManipAxisSwitchLeftRight.h"
@@ -124,8 +122,6 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    ECursor mCursor;
-    std::string mToolType;
     Type mType;
 
     /// @}

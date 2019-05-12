@@ -276,15 +276,31 @@ void ObjWriteAttr::switchAttrState<AttrCockpit>(const AttrCockpit & attr, const 
             mWriter->writeLine(ATTR_COCKPIT);
         }
         else if (attr.mType == AttrCockpit::region_1) {
+            if (!mState->mGlobal.mCockpitRegion1) {
+                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 0> attribute but <"
+                        << ATTR_GLOBAL_COCKPIT_REGION << "> attribute isn't specified for the obj file.";
+            }
             mWriter->writeLine(ATTR_COCKPIT_REGION, " 0");
         }
         else if (attr.mType == AttrCockpit::region_2) {
+            if (!mState->mGlobal.mCockpitRegion2) {
+                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 1> attribute but <"
+                        << ATTR_GLOBAL_COCKPIT_REGION << "> attribute isn't specified for the obj file.";
+            }
             mWriter->writeLine(ATTR_COCKPIT_REGION, " 1");
         }
         else if (attr.mType == AttrCockpit::region_3) {
+            if (!mState->mGlobal.mCockpitRegion3) {
+                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 2> attribute but <"
+                        << ATTR_GLOBAL_COCKPIT_REGION << "> attribute isn't specified for the obj file.";
+            }
             mWriter->writeLine(ATTR_COCKPIT_REGION, " 2");
         }
         else if (attr.mType == AttrCockpit::region_4) {
+            if (!mState->mGlobal.mCockpitRegion4) {
+                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 3> attribute but <"
+                        << ATTR_GLOBAL_COCKPIT_REGION << "> attribute isn't specified for the obj file.";
+            }
             mWriter->writeLine(ATTR_COCKPIT_REGION, " 3");
         }
         else if (attr.mType == AttrCockpit::cockpit_device) {

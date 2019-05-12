@@ -449,7 +449,7 @@ public:
         else if constexpr (std::is_same_v<T, AttrManipDelta>) { }
         else if constexpr (std::is_same_v<T, AttrManipDragAxis>) {
             if (!manip.mAxisDetented && !manip.mAxisDetentRanges.empty()) {
-                ULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toUiString()
+                ULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toString()
                         << "> manipulator with the " << ATTR_MANIP_AXIS_DETENT_RANGE << " but " << ATTR_MANIP_AXIS_DETENTED << " isn't enabled.";
             }
             // todo this is the code duplication
@@ -500,17 +500,17 @@ public:
         else if constexpr (std::is_same_v<T, AttrManipDragXy>) { }
         else if constexpr (std::is_same_v<T, AttrManipNone>) {
             if (!mAttrWriter->mIsPanelManip) {
-                ULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toUiString()
-                        << "> it does not make a sense because this manipulator is set automatically when it is needed.";
+                ULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toString()
+                        << "> manipulator, it does not make a sense because this manipulator is set automatically when it is needed.";
                 mManipAllowed = false;
             }
         }
         else if constexpr (std::is_same_v<T, AttrManipNoop>) { }
         else if constexpr (std::is_same_v<T, AttrManipPanel>) {
             if (!mAttrWriter->mIsPanelManip) {
-                ULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toUiString()
+                ULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toString()
                         << "> manipulator but the object doesn't have the attributes <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
-                        << "> the <" << manip.mType.toUiString() << "> can be used only for the geometry with one of those attributes.";
+                        << "> the <" << manip.mType.toString() << "> can be used only for the geometry with one of those attributes.";
                 mManipAllowed = false;
             }
             if (mAttrWriter->mObj->mAttr.mCockpit) {
@@ -717,9 +717,9 @@ public:
             std::size_t outCounter = 1;
             w->writeLine(ATTR_MANIP_DRAG_ROTATE,
                          " ", manip.mCursor.toString(),
-                         " ", manip.mDirX,
-                         " ", manip.mDirY,
-                         " ", manip.mDirZ,
+                         " ", manip.mOriginX,
+                         " ", manip.mOriginY,
+                         " ", manip.mOriginZ,
                          " ", manip.mDirX,
                          " ", manip.mDirY,
                          " ", manip.mDirZ,
@@ -766,7 +766,7 @@ public:
             return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipPanel>) {
-#ifndef NDEBUG
+#if 0
             w->printEol();
             w->writeLine("## panel manip");
 #endif

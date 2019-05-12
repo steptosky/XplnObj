@@ -749,7 +749,7 @@ bool ObjReader::readManipulators(ObjReadParser & parser) const {
         parser.skipSpace();
         m.mPosCommand = parser.extractWord();
         parser.skipSpace();
-        m.mPosCommand = parser.extractWord();
+        m.mNegCommand = parser.extractWord();
         parser.skipSpace();
         m.mToolType = parser.extractWord();
         mObjParserListener->gotTrisAttrManip(AttrManip(m));

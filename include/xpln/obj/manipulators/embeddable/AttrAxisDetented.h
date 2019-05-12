@@ -51,6 +51,16 @@ public:
     /// @{
 
     AttrAxisDetented() = default;
+
+    AttrAxisDetented(const float dirX, const float dirY, const float dirZ,
+                     const float min, const float max, std::string dataref)
+        : mDirX(dirX),
+          mDirY(dirY),
+          mDirZ(dirZ),
+          mVMin(min),
+          mVMax(max),
+          mDataref(std::move(dataref)) {}
+
     AttrAxisDetented(const AttrAxisDetented &) = default;
     AttrAxisDetented(AttrAxisDetented &&) = default;
 

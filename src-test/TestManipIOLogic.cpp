@@ -31,11 +31,7 @@
 
 #include "xpln/obj/ObjMesh.h"
 
-#include "xpln/obj/manipulators/AttrManipCmd.h"
-#include "xpln/obj/manipulators/AttrManipCmdAxis.h"
-#include "xpln/obj/manipulators/AttrManipNoop.h"
-#include "xpln/obj/manipulators/AttrManipPush.h"
-#include "xpln/obj/manipulators/ManipContainer.h"
+#include "xpln/obj/manipulators/AttrManip.h"
 
 #include "xpln/obj/IOStatistic.h"
 #include "xpln/obj/ObjMain.h"
@@ -125,7 +121,7 @@ TEST_F(TestManipIOLogic, case_1_no_manips) {
 
     //-----------------------------
 
-    const AttrManipNone* inManip = nullptr;
+    const AttrManipNone * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipNone>(inObj, 0, 0, inManip));
     ASSERT_EQ(nullptr, inManip);
 
@@ -155,7 +151,7 @@ TEST_F(TestManipIOLogic, case_2) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mManipComd.setCmd("test");
+    mManipComd.mCommand = "test";
     // Manip
     outM1->mAttr.mManip = AttrManip(mManipComd);
     // No Manip
@@ -176,10 +172,10 @@ TEST_F(TestManipIOLogic, case_2) {
 
     //-----------------------------
 
-    const AttrManipCmd* inManip = nullptr;
+    const AttrManipCmd * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip));
     ASSERT_NE(nullptr, inManip);
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_TRUE(*inManip == mManipComd);
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 1, inManip));
     ASSERT_EQ(nullptr, inManip);
@@ -205,7 +201,7 @@ TEST_F(TestManipIOLogic, case_3) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mManipComd.setCmd("test");
+    mManipComd.mCommand = "test";
     // Manip
     outM1->mAttr.mManip = AttrManip(mManipComd);
     outM2->mAttr.mManip = AttrManip(mManipComd);
@@ -226,14 +222,14 @@ TEST_F(TestManipIOLogic, case_3) {
 
     //-----------------------------
 
-    const AttrManipCmd* inManip = nullptr;
+    const AttrManipCmd * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip));
     ASSERT_NE(nullptr, inManip);
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_TRUE(*inManip==mManipComd);
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 1, inManip));
     ASSERT_NE(nullptr, inManip);
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_TRUE(*inManip==mManipComd);
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 2, inManip));
     ASSERT_EQ(nullptr, inManip);
@@ -256,7 +252,7 @@ TEST_F(TestManipIOLogic, case_4) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mManipComd.setCmd("test");
+    mManipComd.mCommand = "test";
     // Manip
     outM1->mAttr.mManip = AttrManip(mManipComd);
     outM2->mAttr.mManip = AttrManip(mManipComd);
@@ -277,18 +273,18 @@ TEST_F(TestManipIOLogic, case_4) {
 
     //-----------------------------
 
-    const AttrManipCmd* inManip = nullptr;
+    const AttrManipCmd * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip));
     ASSERT_NE(nullptr, inManip);
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_TRUE(*inManip==mManipComd);
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 1, inManip));
     ASSERT_NE(nullptr, inManip);
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_TRUE(*inManip==mManipComd);
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 2, inManip));
     ASSERT_NE(nullptr, inManip);
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_TRUE(*inManip==mManipComd);
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 3, inManip));
     ASSERT_EQ(nullptr, inManip);
@@ -308,7 +304,7 @@ TEST_F(TestManipIOLogic, case_5) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mManipComd.setCmd("test");
+    mManipComd.mCommand = "test";
     // Manip
     outM1->mAttr.mManip = AttrManip(mManipComd);
     outM2->mAttr.mManip = AttrManip(mManipComd);
@@ -328,22 +324,22 @@ TEST_F(TestManipIOLogic, case_5) {
 
     //-----------------------------
 
-    const AttrManipCmd* inManip = nullptr;
+    const AttrManipCmd * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip));
     ASSERT_NE(nullptr, inManip);
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_TRUE(*inManip==mManipComd);
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 1, inManip));
     ASSERT_NE(nullptr, inManip);
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_TRUE(*inManip==mManipComd);
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 2, inManip));
     ASSERT_NE(nullptr, inManip);
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_TRUE(*inManip==mManipComd);
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 3, inManip));
     ASSERT_NE(nullptr, inManip);
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    ASSERT_TRUE(*inManip==mManipComd);
 }
 
 TEST_F(TestManipIOLogic, case_6) {
@@ -361,16 +357,16 @@ TEST_F(TestManipIOLogic, case_6) {
     outLGroup.transform().addObject(outM4);
 
     // Manip
-    mManipComd.setCmd("test1");
+    mManipComd.mCommand = "test1";
     outM1->mAttr.mManip = AttrManip(mManipComd);
     // Manip
-    mManipComd.setCmd("test2");
+    mManipComd.mCommand = "test2";
     outM2->mAttr.mManip = AttrManip(mManipComd);
     // Manip
-    mManipComd.setCmd("test3");
+    mManipComd.mCommand = "test3";
     outM3->mAttr.mManip = AttrManip(mManipComd);
     // Manip
-    mManipComd.setCmd("test4");
+    mManipComd.mCommand = "test4";
     outM4->mAttr.mManip = AttrManip(mManipComd);
 
     ExportContext expContext(fileName);
@@ -386,26 +382,26 @@ TEST_F(TestManipIOLogic, case_6) {
 
     //-----------------------------
 
-    const AttrManipCmd* inManip = nullptr;
+    const AttrManipCmd * inManip = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip));
     ASSERT_NE(nullptr, inManip);
-    mManipComd.setCmd("test1");
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    mManipComd.mCommand = "test1";
+    ASSERT_TRUE(*inManip==mManipComd);
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 1, inManip));
     ASSERT_NE(nullptr, inManip);
-    mManipComd.setCmd("test2");
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    mManipComd.mCommand = "test2";
+    ASSERT_TRUE(*inManip==mManipComd);
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 2, inManip));
     ASSERT_NE(nullptr, inManip);
-    mManipComd.setCmd("test3");
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    mManipComd.mCommand = "test3";
+    ASSERT_TRUE(*inManip==mManipComd);
 
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 3, inManip));
     ASSERT_NE(nullptr, inManip);
-    mManipComd.setCmd("test4");
-    ASSERT_TRUE(inManip->equals(&mManipComd));
+    mManipComd.mCommand = "test4";
+    ASSERT_TRUE(*inManip==mManipComd);
 }
 
 /**************************************************************************************************/
@@ -448,25 +444,25 @@ TEST_F(TestManipIOLogic, case_7) {
 
     //-----------------------------
 
-    const AttrManipCmd* inManip1 = nullptr;
+    const AttrManipCmd * inManip1 = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip1));
     ASSERT_NE(nullptr, inManip1);
-    ASSERT_TRUE(inManip1->equals(&mManipComd));
+    ASSERT_TRUE(*inManip1==mManipComd);
 
-	const AttrManipCmdAxis* inManip2 = nullptr;
+    const AttrManipCmdAxis * inManip2 = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdAxis>(inObj, 0, 1, inManip2));
     ASSERT_NE(nullptr, inManip2);
-    ASSERT_TRUE(inManip2->equals(&mManipComdAxis));
+    ASSERT_TRUE(*inManip2==mManipComdAxis);
 
-	const AttrManipNoop* inManip3= nullptr;
+    const AttrManipNoop * inManip3 = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipNoop>(inObj, 0, 2, inManip3));
     ASSERT_NE(nullptr, inManip3);
-    ASSERT_TRUE(inManip3->equals(&mManipNoop));
+    ASSERT_TRUE(*inManip3==mManipNoop);
 
-	const AttrManipPush* inManip4 = nullptr;
+    const AttrManipPush * inManip4 = nullptr;
     ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipPush>(inObj, 0, 3, inManip4));
     ASSERT_NE(nullptr, inManip4);
-    ASSERT_TRUE(inManip4->equals(&mManipPush));
+    ASSERT_TRUE(*inManip4==mManipPush);
 }
 
 TEST_F(TestManipIOLogic, case_8) {
@@ -505,24 +501,24 @@ TEST_F(TestManipIOLogic, case_8) {
 
     //-----------------------------
 
-	const AttrManipCmd* inManip1 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip1));
-	ASSERT_NE(nullptr, inManip1);
-	ASSERT_TRUE(inManip1->equals(&mManipComd));
+    const AttrManipCmd * inManip1 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip1));
+    ASSERT_NE(nullptr, inManip1);
+    ASSERT_TRUE(*inManip1==mManipComd);
 
-	const AttrManipCmdAxis* inManip2 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdAxis>(inObj, 0, 1, inManip2));
-	ASSERT_NE(nullptr, inManip2);
-	ASSERT_TRUE(inManip2->equals(&mManipComdAxis));
+    const AttrManipCmdAxis * inManip2 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdAxis>(inObj, 0, 1, inManip2));
+    ASSERT_NE(nullptr, inManip2);
+    ASSERT_TRUE(*inManip2==mManipComdAxis);
 
-	const AttrManipNoop* inManip3 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipNoop>(inObj, 0, 2, inManip3));
-	ASSERT_NE(nullptr, inManip3);
-	ASSERT_TRUE(inManip3->equals(&mManipNoop));
+    const AttrManipNoop * inManip3 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipNoop>(inObj, 0, 2, inManip3));
+    ASSERT_NE(nullptr, inManip3);
+    ASSERT_TRUE(*inManip3==mManipNoop);
 
-	const AttrManipPush* inManip4 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipPush>(inObj, 0, 3, inManip4));
-	ASSERT_EQ(nullptr, inManip4);
+    const AttrManipPush * inManip4 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipPush>(inObj, 0, 3, inManip4));
+    ASSERT_EQ(nullptr, inManip4);
 }
 
 TEST_F(TestManipIOLogic, case_9) {
@@ -560,25 +556,25 @@ TEST_F(TestManipIOLogic, case_9) {
 
     //-----------------------------
 
-	const AttrManipCmd* inManip1 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip1));
-	ASSERT_NE(nullptr, inManip1);
-	ASSERT_TRUE(inManip1->equals(&mManipComd));
+    const AttrManipCmd * inManip1 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip1));
+    ASSERT_NE(nullptr, inManip1);
+    ASSERT_TRUE(*inManip1==mManipComd);
 
-	const AttrManipCmd* inManip2 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 1, inManip2));
-	ASSERT_NE(nullptr, inManip2);
-	ASSERT_TRUE(inManip2->equals(&mManipComd));
+    const AttrManipCmd * inManip2 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 1, inManip2));
+    ASSERT_NE(nullptr, inManip2);
+    ASSERT_TRUE(*inManip2==mManipComd);
 
-	const AttrManipNoop* inManip3 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipNoop>(inObj, 0, 2, inManip3));
-	ASSERT_NE(nullptr, inManip3);
-	ASSERT_TRUE(inManip3->equals(&mManipNoop));
+    const AttrManipNoop * inManip3 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipNoop>(inObj, 0, 2, inManip3));
+    ASSERT_NE(nullptr, inManip3);
+    ASSERT_TRUE(*inManip3==mManipNoop);
 
-	const AttrManipPush* inManip4 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipPush>(inObj, 0, 3, inManip4));
-	ASSERT_NE(nullptr, inManip4);
-	ASSERT_TRUE(inManip4->equals(&mManipPush));
+    const AttrManipPush * inManip4 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipPush>(inObj, 0, 3, inManip4));
+    ASSERT_NE(nullptr, inManip4);
+    ASSERT_TRUE(*inManip4==mManipPush);
 }
 
 TEST_F(TestManipIOLogic, case_10) {
@@ -617,24 +613,24 @@ TEST_F(TestManipIOLogic, case_10) {
 
     //-----------------------------
 
-	const AttrManipCmd* inManip1 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip1));
-	ASSERT_NE(nullptr, inManip1);
-	ASSERT_TRUE(inManip1->equals(&mManipComd));
+    const AttrManipCmd * inManip1 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip1));
+    ASSERT_NE(nullptr, inManip1);
+    ASSERT_TRUE(*inManip1==mManipComd);
 
-	const AttrManipCmdAxis* inManip2 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdAxis>(inObj, 0, 1, inManip2));
-	ASSERT_EQ(nullptr, inManip2);
+    const AttrManipCmdAxis * inManip2 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdAxis>(inObj, 0, 1, inManip2));
+    ASSERT_EQ(nullptr, inManip2);
 
-	const AttrManipNoop* inManip3 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipNoop>(inObj, 0, 2, inManip3));
-	ASSERT_NE(nullptr, inManip3);
-	ASSERT_TRUE(inManip3->equals(&mManipNoop));
+    const AttrManipNoop * inManip3 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipNoop>(inObj, 0, 2, inManip3));
+    ASSERT_NE(nullptr, inManip3);
+    ASSERT_TRUE(*inManip3==mManipNoop);
 
-	const AttrManipPush* inManip4 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipPush>(inObj, 0, 3, inManip4));
-	ASSERT_NE(nullptr, inManip4);
-	ASSERT_TRUE(inManip4->equals(&mManipPush));
+    const AttrManipPush * inManip4 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipPush>(inObj, 0, 3, inManip4));
+    ASSERT_NE(nullptr, inManip4);
+    ASSERT_TRUE(*inManip4==mManipPush);
 }
 
 TEST_F(TestManipIOLogic, case_11) {
@@ -673,23 +669,23 @@ TEST_F(TestManipIOLogic, case_11) {
 
     //-----------------------------
 
-	const AttrManipCmd* inManip1 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip1));
-	ASSERT_NE(nullptr, inManip1);
-	ASSERT_TRUE(inManip1->equals(&mManipComd));
+    const AttrManipCmd * inManip1 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmd>(inObj, 0, 0, inManip1));
+    ASSERT_NE(nullptr, inManip1);
+    ASSERT_TRUE(*inManip1==mManipComd);
 
-	const AttrManipCmdAxis* inManip2 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdAxis>(inObj, 0, 1, inManip2));
-	ASSERT_EQ(nullptr, inManip2);
+    const AttrManipCmdAxis * inManip2 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipCmdAxis>(inObj, 0, 1, inManip2));
+    ASSERT_EQ(nullptr, inManip2);
 
-	const AttrManipNoop* inManip3 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipNoop>(inObj, 0, 2, inManip3));
-	ASSERT_NE(nullptr, inManip3);
-	ASSERT_TRUE(inManip3->equals(&mManipNoop));
+    const AttrManipNoop * inManip3 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipNoop>(inObj, 0, 2, inManip3));
+    ASSERT_NE(nullptr, inManip3);
+    ASSERT_TRUE(*inManip3==mManipNoop);
 
-	const AttrManipPush* inManip4 = nullptr;
-	ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipPush>(inObj, 0, 3, inManip4));
-	ASSERT_EQ(nullptr, inManip4);
+    const AttrManipPush * inManip4 = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipPush>(inObj, 0, 3, inManip4));
+    ASSERT_EQ(nullptr, inManip4);
 }
 
 /**************************************************************************************************/

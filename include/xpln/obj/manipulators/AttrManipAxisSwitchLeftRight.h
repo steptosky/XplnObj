@@ -72,12 +72,12 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    static const EManipulator mType;
+    XpObjLib static const EManipulator mType;
     ECursor mCursor;
     std::string mToolType;
 
-	float mMin = 0.0f;
-	float mMax = 0.0f;
+    float mMin = 0.0f;
+    float mMax = 0.0f;
     float mClickDelta = 0.0f;
     float mHoldDelta = 0.0f;
     std::string mDataref;

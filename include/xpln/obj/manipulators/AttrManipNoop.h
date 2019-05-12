@@ -73,7 +73,7 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    static const EManipulator mType;
+	XpObjLib static const EManipulator mType;
     std::string mToolType;
 
     /// @}

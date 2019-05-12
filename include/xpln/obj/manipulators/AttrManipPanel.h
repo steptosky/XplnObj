@@ -74,7 +74,7 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    static const EManipulator mType;
+	XpObjLib static const EManipulator mType;
 
     /*!
      * \details Panel manipulator can be enabled with the cockpit attribute only.

@@ -56,6 +56,11 @@ void ObjState::finish(const std::string & objName) {
         ULWarning << "The obj <" << objName << "> has the attribute <" << ATTR_GLOBAL_PARTICLE_SYSTEM
                 << "> but it doesn't contain any particle emitters";
     }
+    if (mGlobal.mTextureNormal && !mObjHasAttrShinyRat && !mGlobal.mSpecular) {
+        ULWarning << "The obj <" << objName << "> has the <"
+                << ATTR_GLOBAL_TEXTURE_NORMAL << "> attribute but the following attributes aren't set <"
+                << ATTR_GLOBAL_SPECULAR << " or " << ATTR_SHINY_RAT << ">";
+    }
 }
 
 /**************************************************************************************************/

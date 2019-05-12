@@ -345,6 +345,7 @@ void ObjWriteAttr::switchAttrState<AttrShiny>(const AttrShiny & attr, const bool
                     << ATTR_SHINY_RAT << "> with the out of range ration [0 > ration < 1].";
         }
         mWriter->writeLine(ATTR_SHINY_RAT, " ", std::clamp(attr.mRatio, 0.0f, 1.0f));
+		mState->mObjHasAttrShinyRat = true;
     }
     else {
         mWriter->writeLine(ATTR_SHINY_RAT, " ", 0.0f);

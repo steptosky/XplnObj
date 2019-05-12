@@ -101,7 +101,7 @@ std::string ExternalLog::shortAbout(const bool useWinEol) {
 
     stream << "Project: " << XOBJ_PROJECT_NAME << eol;
     stream << "Version: " XOBJ_VERSION_STRING << "-" << XOBJ_RELEASE_TYPE << "+" << XOBJ_VCS_REVISION << " (" << XOBJ_VCS_BRANCH << ") "
-            << XOBJ_COMPILE_DATE << Debug(" (" << XOBJ_COMPILE_TIME << ") " << "DEBUG" << ) eol;
+            << XOBJ_COMPILE_DATE << Debug(" (" << XOBJ_COMPILE_TIME << ") " << "DEBUG" <<) eol;
     stream << "Compiler: " << XOBJ_COMPILER_NAME << " " << XOBJ_COMPILER_VERSION << eol;
 
     //-------------------------------------------------------------------------

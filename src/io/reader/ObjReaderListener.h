@@ -150,7 +150,7 @@ public:
     virtual void gotTrisAttrManipAxisDetentRange(const AttrAxisDetentRange & manip) = 0;
     virtual void gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & manip) = 0;
     virtual void gotTrisAttrManipWheel(const AttrManipWheel & manip) = 0;
-    virtual void gotTrisAttrManip(const AttrManip& manip) = 0;
+    virtual void gotTrisAttrManip(const AttrManip & manip) = 0;
 
     //-----------------------------------------------------
     // Objects

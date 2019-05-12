@@ -71,7 +71,7 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-	XpObjLib static const EManipulator mType;
+    XpObjLib static const EManipulator mType;
     ECursor mCursor;
     std::string mToolType;
 

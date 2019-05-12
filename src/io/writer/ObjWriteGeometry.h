@@ -61,7 +61,7 @@ class ObjMain;
 class ObjWriteGeometry {
 public:
 
-    ObjWriteGeometry(const ExportOptions * option, IOStatistic * outStat, ObjState::Ptr state );
+    ObjWriteGeometry(const ExportOptions * option, IOStatistic * outStat, ObjState::Ptr state);
 
     ObjWriteGeometry(const ObjWriteGeometry &) = delete;
     ObjWriteGeometry & operator =(const ObjWriteGeometry &) = delete;
@@ -89,7 +89,7 @@ private:
 
     IOStatistic * mStat;
     const ExportOptions * mOptions;
-	ObjState::Ptr mState;
+    ObjState::Ptr mState;
 
     // Mesh
     std::size_t mMeshFaceOffset;

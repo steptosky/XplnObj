@@ -49,9 +49,7 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    AttrManipWheel() = default;
-
-    explicit AttrManipWheel(const float delta)
+    explicit AttrManipWheel(const float delta  = 0.0f)
         : mWheelDelta(delta) {}
 
     AttrManipWheel(const AttrManipWheel &) = default;

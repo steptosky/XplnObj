@@ -30,6 +30,7 @@
 */
 
 #include <string>
+#include <optional>
 #include "xpln/Export.h"
 #include "xpln/enums/ECursor.h"
 #include "xpln/enums/EManipulator.h"

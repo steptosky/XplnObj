@@ -50,9 +50,9 @@ public:
     /// 
     AttrDrapedLayerGroup() = default;
 
-    explicit AttrDrapedLayerGroup(const ELayer layer, const std::int32_t offset = 0)
-        : mOffset(static_cast<uint8_t>(offset)),
-          mLayer(layer) { }
+    explicit AttrDrapedLayerGroup(const ELayer layer, const int offset = 0)
+        : mLayer(layer),
+          mOffset(offset) { }
 
     AttrDrapedLayerGroup(const AttrDrapedLayerGroup &) = default;
     AttrDrapedLayerGroup(AttrDrapedLayerGroup &&) = default;
@@ -73,19 +73,13 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    XpObjLib void setOffset(std::int32_t offset);
-    void setLayer(const ELayer layer) { mLayer = layer; }
+    ELayer mLayer = ELayer(ELayer::objects);
 
-    std::int32_t offset() const { return static_cast<std::int32_t>(mOffset); }
-    ELayer layer() const { return mLayer; }
+    /*! Must be between -5 and 5 */
+    int mOffset = 0;
 
     /// @}
     //-------------------------------------------------------------------------
-
-private:
-
-    std::int8_t mOffset = 0;
-    ELayer mLayer = ELayer(ELayer::objects);
 
 };
 

@@ -29,15 +29,33 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
-#include <cstddef>
-#include "xpln/Export.h"
-#include "xpln/enums/ECursor.h"
-#include "xpln/enums/EManipulator.h"
+#include <variant>
+
+#include "AttrManipAxisKnob.h"
+#include "AttrManipAxisSwitchLeftRight.h"
+#include "AttrManipAxisSwitchUpDown.h"
+#include "AttrManipCmd.h"
+#include "AttrManipCmdAxis.h"
+#include "AttrManipCmdKnob.h"
+#include "AttrManipCmdKnob2.h"
+#include "AttrManipCmdSwitchLeftRight.h"
+#include "AttrManipCmdSwitchLeftRight2.h"
+#include "AttrManipCmdSwitchUpDown.h"
+#include "AttrManipCmdSwitchUpDown2.h"
+#include "AttrManipDelta.h"
+#include "AttrManipDragAxis.h"
+#include "AttrManipDragAxisPix.h"
+#include "AttrManipDragRotate.h"
+#include "AttrManipDragXy.h"
+#include "AttrManipNone.h"
+#include "AttrManipNoop.h"
+#include "AttrManipPanel.h"
+#include "AttrManipPush.h"
+#include "AttrManipRadio.h"
+#include "AttrManipToggle.h"
+#include "AttrManipWrap.h"
 
 namespace xobj {
-
-class AbstractWriter;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,54 +65,67 @@ class AbstractWriter;
  * \details Base class for all manipulators.
  * \ingroup Manipulators
  */
-class AttrManipBase {
-protected:
-
-    XpObjLib explicit AttrManipBase(EManipulator type);
-
+class AttrManip final {
 public:
 
     //-------------------------------------------------------------------------
+    /// @{
 
-    virtual ~AttrManipBase() = default;
+    typedef std::variant<AttrManipAxisKnob,
+                         AttrManipAxisSwitchLeftRight,
+                         AttrManipAxisSwitchUpDown,
+                         AttrManipCmd,
+                         AttrManipCmdAxis,
+                         AttrManipCmdKnob,
+                         AttrManipCmdKnob2,
+                         AttrManipCmdSwitchLeftRight,
+                         AttrManipCmdSwitchLeftRight2,
+                         AttrManipCmdSwitchUpDown,
+                         AttrManipCmdSwitchUpDown2,
+                         AttrManipDelta,
+                         AttrManipDragAxis,
+                         AttrManipDragAxisPix,
+                         AttrManipDragRotate,
+                         AttrManipDragXy,
+                         AttrManipNone,
+                         AttrManipNoop,
+                         AttrManipPanel,
+                         AttrManipPush,
+                         AttrManipRadio,
+                         AttrManipToggle,
+                         AttrManipWrap> Type;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    EManipulator type() const { return mEManipulator; }
+    template<typename T>
+    explicit AttrManip(const T & type)
+        : mType(type) {}
 
+    AttrManip(const AttrManip &) = default;
+    AttrManip(AttrManip &&) = default;
+
+    ~AttrManip() = default;
+
+    AttrManip & operator=(const AttrManip &) = default;
+    AttrManip & operator=(AttrManip &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib virtual void setToolTip(const std::string & toolTip);
-    XpObjLib virtual void setCursor(ECursor cursor);
+    XpObjLib bool operator==(const AttrManip & other) const;
+    bool operator!=(const AttrManip & other) const { return !this->operator==(other); }
 
-    XpObjLib virtual const std::string & toolTip() const;
-    XpObjLib virtual ECursor cursor() const;
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \param [in] manip
-     * \return true if two manipulators are equaled otherwise false.
-     */
-    XpObjLib virtual bool equals(const AttrManipBase * manip) const;
+    Type mType;
 
-    XpObjLib virtual AttrManipBase * clone() const = 0;
-
+    /// @}
     //-------------------------------------------------------------------------
-
-    /*!
-     * \param [in] writer 
-     * \return Number of manipulators attributes that were printed.
-     */
-    XpObjLib virtual std::size_t printObj(AbstractWriter & writer) const =0;
-
-    //-------------------------------------------------------------------------
-
-private:
-
-    ECursor mCursor;
-    EManipulator mEManipulator;
-    std::string mToolType;
 
 };
 

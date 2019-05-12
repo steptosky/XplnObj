@@ -28,16 +28,9 @@
 */
 
 #include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/embeddable/AttrAxisDetented.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
-
-/**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
@@ -49,85 +42,7 @@ bool AttrAxisDetented::operator==(const AttrAxisDetented & other) const {
            sts::isEqual(mDirZ, other.mDirZ) &&
            sts::isEqual(mVMin, other.mVMin) &&
            sts::isEqual(mVMax, other.mVMax) &&
-           sts::isEqual(mDataref, other.mDataref) &&
-           sts::isEqual(mIsEnabled, other.mIsEnabled);
-}
-
-bool AttrAxisDetented::operator!=(const AttrAxisDetented & other) const {
-    return !this->operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrAxisDetented::setDirectionX(const float val) {
-    mDirX = val;
-}
-
-void AttrAxisDetented::setDirectionY(const float val) {
-    mDirY = val;
-}
-
-void AttrAxisDetented::setDirectionZ(const float val) {
-    mDirZ = val;
-}
-
-float AttrAxisDetented::directionX() const {
-    return mDirX;
-}
-
-float AttrAxisDetented::directionY() const {
-    return mDirY;
-}
-
-float AttrAxisDetented::directionZ() const {
-    return mDirZ;
-}
-
-//-------------------------------------------------------------------------
-
-void AttrAxisDetented::setVMin(const float val) {
-    mVMin = val;
-}
-
-void AttrAxisDetented::setVMax(const float val) {
-    mVMax = val;
-}
-
-float AttrAxisDetented::vMin() const {
-    return mVMin;
-}
-
-float AttrAxisDetented::vMax() const {
-    return mVMax;
-}
-
-//-------------------------------------------------------------------------
-
-void AttrAxisDetented::setDataref(const std::string & val) {
-    mDataref = val;
-}
-
-const std::string & AttrAxisDetented::dataref() const {
-    return mDataref;
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrAxisDetented::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_AXIS_DETENTED;
-    outStr << " " << directionX();
-    outStr << " " << directionY();
-    outStr << " " << directionZ();
-    outStr << " " << vMin();
-    outStr << " " << vMax();
-    outStr << " " << writer.actualDataref(dataref());
-    writer.printLine(outStr.str());
-    return 1;
+           mDataref == other.mDataref;
 }
 
 /**************************************************************************************************/

@@ -27,8 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <algorithm>
-
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrSpecular.h"
 
@@ -40,16 +38,6 @@ namespace xobj {
 
 bool AttrSpecular::operator==(const AttrSpecular & other) const {
     return sts::isEqual(mRatio, other.mRatio, 0.01f);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrSpecular::setRatio(float ratio) {
-    ratio = std::min(ratio, 1.0f);
-    ratio = std::max(ratio, 0.0f);
-    mRatio = ratio;
 }
 
 /**************************************************************************************************/

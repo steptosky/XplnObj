@@ -41,11 +41,13 @@ namespace xobj {
  * \details Representation of the animation translate key
  * \ingroup Animation
  */
-class AnimTransKey {
+class AnimTransKey final {
 public:
 
-    AnimTransKey()
-        : mDrfValue(0.0f) {}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    AnimTransKey() = default;
 
     AnimTransKey(const float x, const float y, const float z, const float dataRefValue)
         : AnimTransKey(Point3(x, y, z), dataRefValue) {}
@@ -54,27 +56,30 @@ public:
         : mPosition(pos),
           mDrfValue(dataRefValue) {}
 
-    //-----------------------------------------
+    AnimTransKey(const AnimTransKey &) = default;
+    AnimTransKey(AnimTransKey &&) = default;
+
+    ~AnimTransKey() = default;
+
+    AnimTransKey & operator=(const AnimTransKey &) = default;
+    AnimTransKey & operator=(AnimTransKey &&) = default;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AnimTransKey & other) const;
+    bool operator!=(const AnimTransKey & other) const { return !this->operator==(other); }
 
-    bool operator!=(const AnimTransKey & other) const {
-        return !this->operator==(other);
-    }
-
-    //-----------------------------------------
-
-    void reset() {
-        mPosition.clear();
-        mDrfValue = 0.0f;
-    }
-
-    //-----------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
     Point3 mPosition;
-    float mDrfValue;
+    float mDrfValue = 0.0f;
 
-    //-----------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

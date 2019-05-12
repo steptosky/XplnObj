@@ -29,7 +29,11 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
+#include <string>
+#include <optional>
+#include "xpln/Export.h"
+#include "xpln/enums/ECursor.h"
+#include "xpln/enums/EManipulator.h"
 #include "embeddable/AttrManipWheel.h"
 
 namespace xobj {
@@ -42,86 +46,45 @@ namespace xobj {
  * \details ATTR_manip_axis_knob
  * \ingroup Manipulators
  */
-class AttrManipAxisKnob : public AttrManipBase {
+class AttrManipAxisKnob final {
 public:
 
-    XpObjLib AttrManipAxisKnob();
-    virtual ~AttrManipAxisKnob() = default;
-
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setClickDelta(float val);
-    XpObjLib void setHoldDelta(float val);
-    XpObjLib void setMinimum(float val);
-    XpObjLib void setMaximum(float val);
-    XpObjLib float clickDelta() const;
-    XpObjLib float holdDelta() const;
-    XpObjLib float minimum() const;
-    XpObjLib float maximum() const;
+    AttrManipAxisKnob() = default;
+    AttrManipAxisKnob(const AttrManipAxisKnob &) = default;
+    AttrManipAxisKnob(AttrManipAxisKnob &&) = default;
 
-    XpObjLib const std::string & dataref() const;
-    XpObjLib void setDataref(const std::string & val);
+    ~AttrManipAxisKnob() = default;
 
+    AttrManipAxisKnob & operator=(const AttrManipAxisKnob &) = default;
+    AttrManipAxisKnob & operator=(AttrManipAxisKnob &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \see AttrManipWheel
-     */
-    void setWheel(const AttrManipWheel & ranges) {
-        mWheel = ranges;
-    }
+    XpObjLib bool operator==(const AttrManipAxisKnob & other) const;
+    bool operator!=(const AttrManipAxisKnob & other) const { return !this->operator==(other); }
 
-    /*!
-     * \see AttrManipWheel
-     */
-    AttrManipWheel & wheel() {
-        return mWheel;
-    }
-
-    /*!
-     * \see AttrManipWheel
-     */
-    const AttrManipWheel & wheel() const {
-        return mWheel;
-    }
-
-    //------------------------------------------
-
-    [[deprecated("use wheel().serEnabled()")]]
-    void setWheelEnabled(const bool state) { wheel().setEnabled(state); }
-
-    [[deprecated("use wheel().setDelta()")]]
-    void setWheelDelta(const float delta) { wheel().setDelta(delta); }
-
-    [[deprecated("use wheel().isEnabled()")]]
-    bool isWheelEnabled() const { return wheel().isEnabled(); }
-
-    [[deprecated("use wheel().delta()")]]
-    float wheelDelta() const { return wheel().delta(); }
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
+    XpObjLib static const EManipulator mType;
+    ECursor mCursor;
+    std::string mToolType;
 
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
-
-    //-------------------------------------------------------------------------
-
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
-
-    //-------------------------------------------------------------------------
-
-private:
-
-    float mClickDelta = 0.0f;
-    float mHoldDelta = 0.0f;
     float mMin = 0.0f;
     float mMax = 0.0f;
-    std::string mDataref = "none";
-    AttrManipWheel mWheel;
+    float mClickDelta = 0.0f;
+    float mHoldDelta = 0.0f;
+    std::string mDataref;
+    std::optional<AttrManipWheel> mWheel;
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

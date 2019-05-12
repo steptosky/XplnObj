@@ -66,7 +66,7 @@ public:
     //-------------------------------------------------------------------------
 
     /*! \copydoc AbstractWriter::printEol */
-    void printLine(const char * msg) override;
+    void writeLine(const char * msg) override;
 
     //-------------------------------------------------------------------------
 

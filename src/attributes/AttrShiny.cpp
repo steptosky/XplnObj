@@ -27,13 +27,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <algorithm>
-
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrShiny.h"
-#include "common/AttributeNames.h"
-#include "converters/StringStream.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -43,33 +38,6 @@ namespace xobj {
 
 bool AttrShiny::operator==(const AttrShiny & other) const {
     return sts::isEqual(mRatio, other.mRatio, 0.01f);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrShiny::setRatio(float ratio) {
-    ratio = std::min(ratio, 1.0f);
-    ratio = std::max(ratio, 0.0f);
-    mRatio = ratio;
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::string AttrShiny::objDisableStr() {
-    StringStream outStr;
-    outStr << ATTR_SHINY_RAT << " " << 0.0f;
-    return outStr.str();
-}
-
-std::size_t AttrShiny::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_SHINY_RAT << " " << ratio();
-    writer.printLine(outStr.str());
-    return 1;
 }
 
 /**************************************************************************************************/

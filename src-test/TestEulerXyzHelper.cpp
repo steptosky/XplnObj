@@ -126,13 +126,13 @@ TEST(EulerXyzHelper, XYz_case1) {
     AnimRotateList a = EulerXyzHelper(x, y, z).animation();
     ASSERT_EQ(2, a.size());
 
-    ASSERT_NEAR( 0.0f, a[0].mVector.x, THRESHOLD);
+    ASSERT_NEAR(0.0f, a[0].mVector.x, THRESHOLD);
     ASSERT_NEAR(-1.0f, a[0].mVector.y, THRESHOLD);
-    ASSERT_NEAR( 0.0f, a[0].mVector.z, THRESHOLD);
+    ASSERT_NEAR(0.0f, a[0].mVector.z, THRESHOLD);
 
     ASSERT_NEAR(-1.0f, a[1].mVector.x, THRESHOLD);
-    ASSERT_NEAR( 0.0f, a[1].mVector.y, THRESHOLD);
-    ASSERT_NEAR( 0.0f, a[1].mVector.z, THRESHOLD);
+    ASSERT_NEAR(0.0f, a[1].mVector.y, THRESHOLD);
+    ASSERT_NEAR(0.0f, a[1].mVector.z, THRESHOLD);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,8 +179,8 @@ TEST(EulerXyzHelper, XyZ_case1) {
     ASSERT_NEAR(1.0f, a[0].mVector.z, THRESHOLD);
 
     ASSERT_NEAR(-1.0f, a[1].mVector.x, THRESHOLD);
-    ASSERT_NEAR( 0.0f, a[1].mVector.y, THRESHOLD);
-    ASSERT_NEAR( 0.0f, a[1].mVector.z, THRESHOLD);
+    ASSERT_NEAR(0.0f, a[1].mVector.y, THRESHOLD);
+    ASSERT_NEAR(0.0f, a[1].mVector.z, THRESHOLD);
 }
 
 /**************************************************************************************************/

@@ -97,7 +97,7 @@ TEST_F(TestAttributesIOLogic, case_1) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mAttrPolyOffset.setOffset(1.0f);
+    mAttrPolyOffset.mOffset = 1.0f;
     // Attr
     outM1->mAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
@@ -146,7 +146,7 @@ TEST_F(TestAttributesIOLogic, case_2) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mAttrPolyOffset.setOffset(1.0f);
+    mAttrPolyOffset.mOffset = 1.0f;
     // Attr
     outM1->mAttr.mPolyOffset = mAttrPolyOffset;
     outM2->mAttr.mPolyOffset = mAttrPolyOffset;
@@ -195,7 +195,7 @@ TEST_F(TestAttributesIOLogic, case_3) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mAttrPolyOffset.setOffset(1.0f);
+    mAttrPolyOffset.mOffset = 1.0f;
     // Attr
     outM1->mAttr.mPolyOffset = mAttrPolyOffset;
     outM2->mAttr.mPolyOffset = mAttrPolyOffset;
@@ -244,7 +244,7 @@ TEST_F(TestAttributesIOLogic, case_4) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mAttrPolyOffset.setOffset(1.0f);
+    mAttrPolyOffset.mOffset = 1.0f;
     // Attr
     outM1->mAttr.mPolyOffset = mAttrPolyOffset;
     outM2->mAttr.mPolyOffset = mAttrPolyOffset;
@@ -293,16 +293,16 @@ TEST_F(TestAttributesIOLogic, case_5) {
     outLGroup.transform().addObject(outM4);
 
     // Attr
-    mAttrPolyOffset.setOffset(1.0f);
+    mAttrPolyOffset.mOffset = 1.0f;
     outM1->mAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
-    mAttrPolyOffset.setOffset(2.0f);
+    mAttrPolyOffset.mOffset = 2.0f;
     outM2->mAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
-    mAttrPolyOffset.setOffset(3.0f);
+    mAttrPolyOffset.mOffset = 3.0f;
     outM3->mAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
-    mAttrPolyOffset.setOffset(4.0f);
+    mAttrPolyOffset.mOffset = 4.0f;
     outM4->mAttr.mPolyOffset = mAttrPolyOffset;
 
     ExportContext expContext(fileName);
@@ -346,15 +346,15 @@ TEST_F(TestAttributesIOLogic, case_6) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mAttrPolyOffset.setOffset(1.0f);
+    mAttrPolyOffset.mOffset = 1.0f;
     // Attr
     outM1->mAttr.mPolyOffset = mAttrPolyOffset;
     outM2->mAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
-    mAttrPolyOffset.setOffset(2.0f);
+    mAttrPolyOffset.mOffset = 2.0f;
     outM3->mAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
-    mAttrPolyOffset.setOffset(3.0f);
+    mAttrPolyOffset.mOffset = 3.0f;
     outM4->mAttr.mPolyOffset = mAttrPolyOffset;
 
     ExportContext expContext(fileName);
@@ -398,16 +398,16 @@ TEST_F(TestAttributesIOLogic, case_7) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mAttrPolyOffset.setOffset(1.0f);
+    mAttrPolyOffset.mOffset = 1.0f;
     // Attr
     outM1->mAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh2
     // Attr
-    mAttrPolyOffset.setOffset(2.0f);
+    mAttrPolyOffset.mOffset = 2.0f;
     outM3->mAttr.mPolyOffset = mAttrPolyOffset;
     // Attr
-    mAttrPolyOffset.setOffset(3.0f);
+    mAttrPolyOffset.mOffset = 3.0f;
     outM4->mAttr.mPolyOffset = mAttrPolyOffset;
 
     ExportContext expContext(fileName);
@@ -451,13 +451,13 @@ TEST_F(TestAttributesIOLogic, case_8) {
     outLGroup.transform().addObject(outM3);
     outLGroup.transform().addObject(outM4);
 
-    mAttrPolyOffset.setOffset(1.0f);
+    mAttrPolyOffset.mOffset = 1.0f;
     // Attr
     outM1->mAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh2
     // Attr
-    mAttrPolyOffset.setOffset(2.0f);
+    mAttrPolyOffset.mOffset = 2.0f;
     outM3->mAttr.mPolyOffset = mAttrPolyOffset;
     // No Attr
     // mObjMesh4

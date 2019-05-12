@@ -59,7 +59,7 @@ void printObj(const AnimVisibilityKey & key, AbstractWriter & writer) {
     outStr << " " << key.mValue1
             << " " << key.mValue2
             << " " << writer.actualDataref(key.mDrf);
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 }
 
 bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser) {
@@ -89,7 +89,7 @@ void printObj(const AnimTransKey & key, AbstractWriter & writer) {
     outStr << ATTR_TRANS_KEY
             << " " << key.mDrfValue
             << " " << key.mPosition.toString(PRECISION);
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 }
 
 bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser) {
@@ -114,7 +114,7 @@ void printObj(const AnimRotateKey & key, AbstractWriter & writer) {
     outStr << ATTR_ROTATE_KEY
             << " " << key.mDrfValue
             << " " << key.mAngleDegrees;
-    writer.printLine(outStr.str());
+    writer.writeLine(outStr.str());
 }
 
 bool fromObjString(AnimRotateKey & outVal, ObjReadParser & parser) {

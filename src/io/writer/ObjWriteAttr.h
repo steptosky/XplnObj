@@ -47,13 +47,13 @@ class AbstractWriter;
 class ObjMesh;
 class ObjAbstract;
 
-class ObjWriteManip;
-
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
 class ObjWriteAttr {
+    class ManipChecker;
+    friend ManipChecker;
 public:
 
     explicit ObjWriteAttr(ObjState::Ptr state)
@@ -73,10 +73,20 @@ public:
 
 private:
 
+    template<typename T>
+    void writeGlobAttrState(const T &) {
+        assert(false);
+    }
+
+    template<typename T>
+    void switchAttrState(const T &, bool) {
+        assert(false);
+    }
+
     void writeAttr();
     void writeManip();
-    bool checkManip(AttrManipBase * manip) const;
 
+    const ObjMain * mMainObj = nullptr;
     const ObjMesh * mObj = nullptr;
     AbstractWriter * mWriter = nullptr;
     ObjState::Ptr mState;

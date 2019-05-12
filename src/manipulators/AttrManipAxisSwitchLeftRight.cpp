@@ -28,108 +28,29 @@
 */
 
 #include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipAxisSwitchLeftRight.h"
-#include "xpln/enums/EManipulator.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipAxisSwitchLeftRight::AttrManipAxisSwitchLeftRight()
-    : AttrManipBase(EManipulator(EManipulator::axis_switch_lr)) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipAxisSwitchLeftRight::setClickDelta(const float val) {
-    mClickDelta = val;
-}
-
-void AttrManipAxisSwitchLeftRight::setHoldDelta(const float val) {
-    mHoldDelta = val;
-}
-
-void AttrManipAxisSwitchLeftRight::setMinimum(const float val) {
-    mMin = val;
-}
-
-void AttrManipAxisSwitchLeftRight::setMaximum(const float val) {
-    mMax = val;
-}
-
-float AttrManipAxisSwitchLeftRight::clickDelta() const {
-    return mClickDelta;
-}
-
-float AttrManipAxisSwitchLeftRight::holdDelta() const {
-    return mHoldDelta;
-}
-
-float AttrManipAxisSwitchLeftRight::minimum() const {
-    return mMin;
-}
-
-float AttrManipAxisSwitchLeftRight::maximum() const {
-    return mMax;
-}
-
-void AttrManipAxisSwitchLeftRight::setDataref(const std::string & val) {
-    mDataref = val;
-}
-
-const std::string & AttrManipAxisSwitchLeftRight::dataref() const {
-    return mDataref;
-}
+const EManipulator AttrManipAxisSwitchLeftRight::mType(EManipulator::axis_switch_lr);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipAxisSwitchLeftRight::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const auto * right = dynamic_cast<const AttrManipAxisSwitchLeftRight*>(manip);
-    if (!right)
-        return false;
-
-    return (sts::isEqual(mClickDelta, right->mClickDelta) &&
-            sts::isEqual(mHoldDelta, right->mHoldDelta) &&
-            sts::isEqual(mMin, right->mMin) &&
-            sts::isEqual(mMax, right->mMax) &&
-            sts::isEqual(mWheel, right->mWheel) &&
-            sts::isEqual(mDataref, right->mDataref));
-}
-
-AttrManipBase * AttrManipAxisSwitchLeftRight::clone() const {
-    return new AttrManipAxisSwitchLeftRight(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipAxisSwitchLeftRight::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_AXIS_SWITCH_LEFT_RIGHT;
-    outStr << " " << cursor().toString();
-    outStr << " " << minimum();
-    outStr << " " << maximum();
-    outStr << " " << clickDelta();
-    outStr << " " << holdDelta();
-    outStr << " " << writer.actualDataref(dataref());
-    outStr << " " << toolTip();
-    writer.printLine(outStr.str());
-    return 1 + wheel().printObj(writer);
+bool AttrManipAxisSwitchLeftRight::operator==(const AttrManipAxisSwitchLeftRight & other) const {
+    return mCursor == other.mCursor &&
+           mToolType == other.mToolType &&
+           sts::isEqual(mClickDelta, other.mClickDelta) &&
+           sts::isEqual(mHoldDelta, other.mHoldDelta) &&
+           sts::isEqual(mMin, other.mMin) &&
+           sts::isEqual(mMax, other.mMax) &&
+           mWheel == other.mWheel &&
+           mDataref == other.mDataref;
 }
 
 /**************************************************************************************************/

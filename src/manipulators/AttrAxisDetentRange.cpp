@@ -28,16 +28,9 @@
 */
 
 #include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/embeddable/AttrAxisDetentRange.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
-
-/**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
@@ -47,52 +40,6 @@ bool AttrAxisDetentRange::operator==(const AttrAxisDetentRange & other) const {
     return sts::isEqual(mStart, other.mStart) &&
            sts::isEqual(mEnd, other.mEnd) &&
            sts::isEqual(mHeight, other.mHeight);
-}
-
-bool AttrAxisDetentRange::operator!=(const AttrAxisDetentRange & other) const {
-    return !this->operator==(other);
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrAxisDetentRange::setStart(const float val) {
-    mStart = val;
-}
-
-void AttrAxisDetentRange::setEnd(const float val) {
-    mEnd = val;
-}
-
-void AttrAxisDetentRange::setHeight(const float val) {
-    mHeight = val;
-}
-
-float AttrAxisDetentRange::start() const {
-    return mStart;
-}
-
-float AttrAxisDetentRange::end() const {
-    return mEnd;
-}
-
-float AttrAxisDetentRange::height() const {
-    return mHeight;
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrAxisDetentRange::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_AXIS_DETENT_RANGE;
-    outStr << " " << start();
-    outStr << " " << end();
-    outStr << " " << height();
-    writer.printLine(outStr.str());
-    return 1;
 }
 
 /**************************************************************************************************/

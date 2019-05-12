@@ -28,118 +28,30 @@
 */
 
 #include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipDragAxisPix.h"
-#include "xpln/enums/EManipulator.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipDragAxisPix::AttrManipDragAxisPix()
-    : AttrManipBase(EManipulator(EManipulator::drag_axis_pix)) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipDragAxisPix::setDxPix(const int val) {
-    mDxPix = val;
-}
-
-void AttrManipDragAxisPix::setStep(const int val) {
-    mStep = val;
-}
-
-void AttrManipDragAxisPix::setExp(const float val) {
-    mExp = val;
-}
-
-int AttrManipDragAxisPix::dxPix() const {
-    return mDxPix;
-}
-
-int AttrManipDragAxisPix::step() const {
-    return mStep;
-}
-
-float AttrManipDragAxisPix::exp() const {
-    return mExp;
-}
-
-void AttrManipDragAxisPix::setVal1(const float val) {
-    mVal1 = val;
-}
-
-void AttrManipDragAxisPix::setVal2(const float val) {
-    mVal2 = val;
-}
-
-float AttrManipDragAxisPix::val1() const {
-    return mVal1;
-}
-
-float AttrManipDragAxisPix::val2() const {
-    return mVal2;
-}
-
-const std::string & AttrManipDragAxisPix::dataref() const {
-    return mDataref;
-}
-
-void AttrManipDragAxisPix::setDataref(const std::string & val) {
-    mDataref = val;
-}
+const EManipulator AttrManipDragAxisPix::mType(EManipulator::drag_axis_pix);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipDragAxisPix::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const auto * right = dynamic_cast<const AttrManipDragAxisPix*>(manip);
-    if (!right)
-        return false;
-
-    return (sts::isEqual(mDxPix, right->mDxPix) &&
-            sts::isEqual(mStep, right->mStep) &&
-            sts::isEqual(mExp, right->mExp) &&
-            sts::isEqual(mVal1, right->mVal1) &&
-            sts::isEqual(mVal2, right->mVal2) &&
-            sts::isEqual(mWheel, right->mWheel) &&
-            sts::isEqual(mDataref, right->mDataref));
-}
-
-AttrManipBase * AttrManipDragAxisPix::clone() const {
-    return new AttrManipDragAxisPix(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipDragAxisPix::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_DRAG_AXIS_PIX;
-    outStr << " " << cursor().toString();
-    outStr << " " << dxPix();
-    outStr << " " << step();
-    outStr << " " << exp();
-    outStr << " " << val1();
-    outStr << " " << val2();
-    outStr << " " << writer.actualDataref(dataref());
-    outStr << " " << toolTip();
-    writer.printLine(outStr.str());
-    return 1 + wheel().printObj(writer);
+bool AttrManipDragAxisPix::operator==(const AttrManipDragAxisPix & other) const {
+    return mCursor == other.mCursor &&
+           mToolType == other.mToolType &&
+           sts::isEqual(mDxPix, other.mDxPix) &&
+           sts::isEqual(mStep, other.mStep) &&
+           sts::isEqual(mExp, other.mExp) &&
+           sts::isEqual(mVal1, other.mVal1) &&
+           sts::isEqual(mVal2, other.mVal2) &&
+           mDataref == other.mDataref &&
+           mWheel == other.mWheel;
 }
 
 /**************************************************************************************************/

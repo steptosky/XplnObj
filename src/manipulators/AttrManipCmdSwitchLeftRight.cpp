@@ -27,78 +27,25 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchLeftRight.h"
-#include "xpln/enums/EManipulator.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipCmdSwitchLeftRight::AttrManipCmdSwitchLeftRight()
-    : AttrManipBase(EManipulator(EManipulator::command_switch_lr)) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-const std::string & AttrManipCmdSwitchLeftRight::cmdPositive() const {
-    return mPosCommand;
-}
-
-void AttrManipCmdSwitchLeftRight::setCmdPositive(const std::string & val) {
-    mPosCommand = val;
-}
-
-const std::string & AttrManipCmdSwitchLeftRight::cmdNegative() const {
-    return mNegCommand;
-}
-
-void AttrManipCmdSwitchLeftRight::setCmdNegative(const std::string & val) {
-    mNegCommand = val;
-}
+const EManipulator AttrManipCmdSwitchLeftRight::mType(EManipulator::command_switch_lr);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipCmdSwitchLeftRight::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const auto * right = dynamic_cast<const AttrManipCmdSwitchLeftRight*>(manip);
-    if (!right)
-        return false;
-
-    return (sts::isEqual(mPosCommand, right->mPosCommand) &&
-            sts::isEqual(mNegCommand, right->mNegCommand));
-}
-
-AttrManipBase * AttrManipCmdSwitchLeftRight::clone() const {
-    return new AttrManipCmdSwitchLeftRight(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipCmdSwitchLeftRight::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT;
-    outStr << " " << cursor().toString();
-    outStr << " " << writer.actualCommand(cmdPositive());
-    outStr << " " << writer.actualCommand(cmdNegative());
-    outStr << " " << toolTip();
-    writer.printLine(outStr.str());
-    return 1;
+bool AttrManipCmdSwitchLeftRight::operator==(const AttrManipCmdSwitchLeftRight & other) const {
+    return mCursor == other.mCursor &&
+           mToolType == other.mToolType &&
+           mPosCommand == other.mPosCommand &&
+           mNegCommand == other.mNegCommand;
 }
 
 /**************************************************************************************************/

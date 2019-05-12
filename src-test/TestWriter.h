@@ -44,14 +44,14 @@ public:
 
     virtual ~TestWriter() = default;
 
-    void printLine(const char * msg) override {
+    void writeLine(const char * msg) override {
         mResult.append(msg);
         if (mPrintEol) {
             mResult.append("\n");
         }
     }
 
-    using AbstractWriter::printLine;
+    using AbstractWriter::writeLine;
 
     TestWriter & clear() {
         mResult.clear();

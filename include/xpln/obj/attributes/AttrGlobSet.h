@@ -29,6 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <string>
 #include <optional>
 #include "xpln/obj/attributes/AttrBlend.h"
 #include "xpln/obj/attributes/AttrLayerGroup.h"

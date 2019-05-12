@@ -29,8 +29,12 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <string>
 #include <vector>
-#include "AttrManipBase.h"
+#include <optional>
+#include "xpln/Export.h"
+#include "xpln/enums/ECursor.h"
+#include "xpln/enums/EManipulator.h"
 #include "embeddable/AttrManipWheel.h"
 #include "embeddable/AttrAxisDetented.h"
 #include "embeddable/AttrAxisDetentRange.h"
@@ -45,155 +49,54 @@ namespace xobj {
  * \details ATTR_manip_drag_axis
  * \ingroup Manipulators
  */
-class AttrManipDragAxis : public AttrManipBase {
+class AttrManipDragAxis final {
 public:
+
+    //-------------------------------------------------------------------------
+    /// @{
 
     typedef std::vector<AttrAxisDetentRange> DetentRanges;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib AttrManipDragAxis();
-    virtual ~AttrManipDragAxis() = default;
+    AttrManipDragAxis() = default;
+    AttrManipDragAxis(const AttrManipDragAxis &) = default;
+    AttrManipDragAxis(AttrManipDragAxis &&) = default;
 
+    ~AttrManipDragAxis() = default;
+
+    AttrManipDragAxis & operator=(const AttrManipDragAxis &) = default;
+    AttrManipDragAxis & operator=(AttrManipDragAxis &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    [[deprecated("use setDirectionX")]]
-    void setX(const float val) { setDirectionX(val); }
+    XpObjLib bool operator==(const AttrManipDragAxis & other) const;
+    bool operator!=(const AttrManipDragAxis & other) const { return !this->operator==(other); }
 
-    [[deprecated("use setDirectionY")]]
-    void setY(const float val) { setDirectionY(val); }
-
-    [[deprecated("use setDirectionZ")]]
-    void setZ(const float val) { setDirectionZ(val); }
-
-    [[deprecated("use directionX")]]
-    float x() const { return directionX(); }
-
-    [[deprecated("use directionY")]]
-    float y() const { return directionY(); }
-
-    [[deprecated("use directionZ")]]
-    float z() const { return directionZ(); }
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    void setDirection(const float x, const float y, const float z) {
-        setDirectionX(x);
-        setDirectionY(y);
-        setDirectionZ(z);
-    }
+    XpObjLib static const EManipulator mType;
+    ECursor mCursor;
+    std::string mToolType;
 
-    XpObjLib void setDirectionX(float val);
-    XpObjLib void setDirectionY(float val);
-    XpObjLib void setDirectionZ(float val);
-    XpObjLib float directionX() const;
-    XpObjLib float directionY() const;
-    XpObjLib float directionZ() const;
-
-    void setValues(const float x1, const float x2) {
-        setVal1(x1);
-        setVal2(x2);
-    }
-
-    XpObjLib void setVal1(float val);
-    XpObjLib void setVal2(float val);
-    XpObjLib float val1() const;
-    XpObjLib float val2() const;
-
-    XpObjLib void setDataref(const std::string & val);
-    XpObjLib const std::string & dataref() const;
-
-    //-------------------------------------------------------------------------
-
-    XpObjLib void setAxisDetented(const AttrAxisDetented & val);
-    XpObjLib const AttrAxisDetented & axisDetented() const;
-
-    //-------------------------------------------------------------------------
-
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
-
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
-
-    //-------------------------------------------------------------------------
-
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
-
-    //-------------------------------------------------------------------------
-
-    /*!
-     * \see AttrAxisDetentRange
-     */
-    void setDetentRanges(const DetentRanges & ranges) {
-        mAxisDetentRanges = ranges;
-    }
-
-    /*!
-     * \see AttrAxisDetentRange
-     */
-    DetentRanges & detentRanges() {
-        return mAxisDetentRanges;
-    }
-
-    /*!
-     * \see AttrAxisDetentRange
-     */
-    const DetentRanges & detentRanges() const {
-        return mAxisDetentRanges;
-    }
-
-    //-------------------------------------------------------------------------
-
-    /*!
-     * \see AttrManipWheel
-     */
-    void setWheel(const AttrManipWheel & ranges) {
-        mWheel = ranges;
-    }
-
-    /*!
-     * \see AttrManipWheel
-     */
-    AttrManipWheel & wheel() {
-        return mWheel;
-    }
-
-    /*!
-     * \see AttrManipWheel
-     */
-    const AttrManipWheel & wheel() const {
-        return mWheel;
-    }
-
-    //------------------------------------------
-
-    [[deprecated("use wheel().serEnabled()")]]
-    void setWheelEnabled(const bool state) { wheel().setEnabled(state); }
-
-    [[deprecated("use wheel().setDelta()")]]
-    void setWheelDelta(const float delta) { wheel().setDelta(delta); }
-
-    [[deprecated("use wheel().isEnabled()")]]
-    bool isWheelEnabled() const { return wheel().isEnabled(); }
-
-    [[deprecated("use wheel().delta()")]]
-    float wheelDelta() const { return wheel().delta(); }
-
-    //-------------------------------------------------------------------------
-
-private:
-
-    float mX = 0.0f;
-    float mY = 0.0f;
-    float mZ = 0.0f;
+    float mDirX = 0.0f;
+    float mDirY = 0.0f;
+    float mDirZ = 0.0f;
     float mVal1 = 0.0f;
     float mVal2 = 1.0f;
-    AttrAxisDetented mAxisDetented;
+    std::string mDataref;
     DetentRanges mAxisDetentRanges;
-    std::string mDataref = "none";
-    AttrManipWheel mWheel;
+    std::optional<AttrManipWheel> mWheel;
+    std::optional<AttrAxisDetented> mAxisDetented;
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

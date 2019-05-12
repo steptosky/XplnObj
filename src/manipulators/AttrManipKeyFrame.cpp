@@ -28,62 +28,17 @@
 */
 
 #include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/embeddable/AttrManipKeyFrame.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
-
-/**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrManipKeyFrame::AttrManipKeyFrame(const float value, const float angle)
-    : mValue(value),
-      mAngle(angle) {}
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
 bool AttrManipKeyFrame::operator==(const AttrManipKeyFrame & other) const {
-    return sts::isEqual(mValue, other.mValue) && sts::isEqual(mAngle, other.mAngle);
-}
-
-bool AttrManipKeyFrame::operator!=(const AttrManipKeyFrame & other) const {
-    return !this->operator==(other);
-}
-
-//-------------------------------------------------------------------------
-
-void AttrManipKeyFrame::setValue(const float vales) {
-    mValue = vales;
-}
-
-void AttrManipKeyFrame::setAngle(const float angle) {
-    mAngle = angle;
-}
-
-float AttrManipKeyFrame::value() const {
-    return mValue;
-}
-
-float AttrManipKeyFrame::angle() const {
-    return mAngle;
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipKeyFrame::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_KEYFRAME;
-    outStr << " " << value();
-    outStr << " " << angle();
-    writer.printLine(outStr.str());
-    return 1;
+    return sts::isEqual(mValue, other.mValue) &&
+           sts::isEqual(mAngle, other.mAngle);
 }
 
 /**************************************************************************************************/

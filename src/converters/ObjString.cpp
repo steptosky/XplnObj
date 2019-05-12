@@ -66,7 +66,7 @@ void printObj(const MeshVertex & vertex, AbstractWriter & writer, const bool isT
         out << vertex.mNormal.normalized().toString(PRECISION);
 
     out << "  " << vertex.mTexture.toString(PRECISION);
-    writer.printLine(out.str());
+    writer.writeLine(out.str());
 }
 
 void printObj(const LineVertex & vertex, AbstractWriter & writer) {
@@ -76,7 +76,7 @@ void printObj(const LineVertex & vertex, AbstractWriter & writer) {
             << " " << vertex.mColor.red()
             << " " << vertex.mColor.green()
             << " " << vertex.mColor.blue();
-    writer.printLine(out.str());
+    writer.writeLine(out.str());
 }
 
 /**************************************************************************************************/
@@ -89,7 +89,7 @@ void printObj(const ObjLodGroup & obj, AbstractWriter & writer, const bool print
     if (printName) {
         out << " ## " << obj.objectName();
     }
-    writer.printLine(out.str());
+    writer.writeLine(out.str());
 }
 
 void printObj(const ObjSmoke & obj, AbstractWriter & writer, const bool printName) {
@@ -104,14 +104,14 @@ void printObj(const ObjSmoke & obj, AbstractWriter & writer, const bool printNam
     if (printName) {
         out << " ## " << obj.objectName();
     }
-    writer.printLine(out.str());
+    writer.writeLine(out.str());
 }
 
 void printObj(const ObjDummy & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
         out << "## Dummy: " << obj.objectName();
-        writer.printLine(out.str());
+        writer.writeLine(out.str());
     }
 }
 
@@ -131,7 +131,7 @@ void printObj(const ObjLightCustom & obj, AbstractWriter & writer, const bool pr
             << " " << obj.textureRect().point1().toString(PRECISION)
             << " " << obj.textureRect().point2().toString(PRECISION)
             << " " << (obj.dataRef().empty() ? "none" : writer.actualDataref(obj.dataRef()).c_str());
-    writer.printLine(out.str());
+    writer.writeLine(out.str());
 }
 
 //-------------------------------------------------------------------------
@@ -144,7 +144,7 @@ void printObj(const ObjLightNamed & obj, AbstractWriter & writer, const bool pri
     out << LIGHT_NAMED
             << " " << obj.name()
             << " " << obj.position().toString(PRECISION);
-    writer.printLine(out.str());
+    writer.writeLine(out.str());
 }
 
 //-------------------------------------------------------------------------
@@ -158,7 +158,7 @@ void printObj(const ObjLightParam & obj, AbstractWriter & writer, const bool pri
             << " " << obj.name()
             << " " << obj.position().toString(PRECISION)
             << " " << obj.params();
-    writer.printLine(out.str());
+    writer.writeLine(out.str());
 }
 
 //-------------------------------------------------------------------------
@@ -171,7 +171,7 @@ void printObj(const ObjLightPoint & obj, AbstractWriter & writer, const bool pri
     const Color & c = obj.color();
     out << VLIGHT << " " << obj.position().toString(PRECISION) << " "
             << c.red() << " " << c.green() << " " << c.blue();
-    writer.printLine(out.str());
+    writer.writeLine(out.str());
 }
 
 //-------------------------------------------------------------------------
@@ -194,7 +194,7 @@ void printObj(const ObjEmitter & obj, AbstractWriter & writer, const bool printN
     if (index != 0) {
         out << " " << index;
     }
-    writer.printLine(out.str());
+    writer.writeLine(out.str());
 }
 
 //-------------------------------------------------------------------------
@@ -211,7 +211,7 @@ void printObj(const ObjLightSpillCust & obj, AbstractWriter & writer, const bool
             << " " << obj.direction().toString(PRECISION)
             << " " << obj.semiRaw()
             << " " << (obj.dataRef().empty() ? "none" : writer.actualDataref(obj.dataRef()).c_str());
-    writer.printLine(out.str());
+    writer.writeLine(out.str());
 }
 
 /**************************************************************************************************/

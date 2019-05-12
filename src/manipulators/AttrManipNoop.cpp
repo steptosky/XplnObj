@@ -28,52 +28,21 @@
 */
 
 #include "xpln/obj/manipulators/AttrManipNoop.h"
-#include "converters/StringStream.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipNoop::AttrManipNoop()
-    : AttrManipBase(EManipulator(EManipulator::noop)) {}
+const EManipulator AttrManipNoop::mType(EManipulator::noop);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipNoop::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    return dynamic_cast<const AttrManipNoop*>(manip) != nullptr;
-}
-
-AttrManipBase * AttrManipNoop::clone() const {
-    return new AttrManipNoop(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipNoop::printObj(AbstractWriter & writer) const {
-    const auto & tooltip = this->toolTip();
-    if (!tooltip.empty()) {
-        StringStream outStr;
-        outStr << ATTR_MANIP_NOOP" " << toolTip();
-        writer.printLine(outStr.str());
-    }
-    else {
-        writer.printLine(ATTR_MANIP_NOOP);
-    }
-    return 1;
+bool AttrManipNoop::operator==(const AttrManipNoop & other) const {
+    return mToolType == other.mToolType;
 }
 
 /**************************************************************************************************/

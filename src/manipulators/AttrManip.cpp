@@ -27,46 +27,15 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/obj/manipulators/AttrManipBase.h"
+#include "xpln/obj/manipulators/AttrManip.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
-/**************************************************************************************************/
-
-AttrManipBase::AttrManipBase(EManipulator type)
-    : mEManipulator(type),
-      mToolType("none") { }
-
-/**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
-
-void AttrManipBase::setToolTip(const std::string & toolTip) {
-    mToolType = toolTip;
-}
-
-const std::string & AttrManipBase::toolTip() const {
-    return mToolType;
-}
-
-void AttrManipBase::setCursor(const ECursor cursor) {
-    mCursor = cursor;
-}
-
-bool AttrManipBase::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-    if (mCursor != manip->mCursor)
-        return false;
-    if (mToolType != manip->mToolType)
-        return false;
-    return true;
-}
-
-ECursor AttrManipBase::cursor() const {
-    return mCursor;
+bool AttrManip::operator==(const AttrManip & other) const {
+    return mType == other.mType;
 }
 
 /**************************************************************************************************/

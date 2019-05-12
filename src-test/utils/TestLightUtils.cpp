@@ -66,22 +66,22 @@ TEST(LightUtils, billboard_cone) {
 
 TEST(LightUtils, replaceVariables_normal) {
     ASSERT_STRCASEEQ("word 1 2 word", LightUtils::replaceVariables("word $test1 $test2 word", LightUtils::ParamExpanderMap{
-            LightUtils::ParamExpanderMap::value_type{ "test1", []()->std::string {return "1"; }},
-        LightUtils::ParamExpanderMap::value_type{ "test2", []()->std::string {return "2"; }},
-        }).c_str());
+                             LightUtils::ParamExpanderMap::value_type{ "test1", []()->std::string {return "1"; }},
+                         LightUtils::ParamExpanderMap::value_type{ "test2", []()->std::string {return "2"; }},
+                         }).c_str());
 }
 
 TEST(LightUtils, replaceVariables_incorrect_var) {
     ASSERT_ANY_THROW(LightUtils::replaceVariables("word $test1 $ word", LightUtils::ParamExpanderMap{
-            LightUtils::ParamExpanderMap::value_type{ "test1", []()->std::string {return "1"; }},
-        LightUtils::ParamExpanderMap::value_type{ "test2", []()->std::string {return "2"; }},
-        }));
+                             LightUtils::ParamExpanderMap::value_type{ "test1", []()->std::string {return "1"; }},
+                         LightUtils::ParamExpanderMap::value_type{ "test2", []()->std::string {return "2"; }},
+                         }));
 }
 
 TEST(LightUtils, replaceVariables_no_getter) {
     ASSERT_ANY_THROW(LightUtils::replaceVariables("word $test1 $test2 word", LightUtils::ParamExpanderMap{
-            LightUtils::ParamExpanderMap::value_type{ "test1", []()->std::string {return "1"; }},
-        }));
+                             LightUtils::ParamExpanderMap::value_type{ "test1", []()->std::string {return "1"; }},
+                         }));
 }
 
 /**************************************************************************************************/

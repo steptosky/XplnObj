@@ -42,7 +42,7 @@ public:
     MockWriter(const MockWriter &) = delete;
     MockWriter & operator =(const MockWriter &) = delete;
 
-    MOCK_METHOD1(printLine, void(const char *));
+    MOCK_METHOD1(writeLine, void(const char *));
 
     MockWriter() = default;
     virtual ~MockWriter() = default;

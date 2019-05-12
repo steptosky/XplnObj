@@ -92,7 +92,7 @@ void ObjWriteGeometry::printMeshVerticiesRecursive(AbstractWriter & writer, cons
             const auto * mobj = static_cast<const ObjMesh*>(objBase.get());
 
             if (mOptions->isEnabled(XOBJ_EXP_DEBUG)) {
-                writer.printLine(std::string("# ").append(mobj->objectName()));
+                writer.writeLine(std::string("# ").append(mobj->objectName()));
             }
 
             for (const MeshVertex & v : mobj->mVertices) {
@@ -125,7 +125,7 @@ void ObjWriteGeometry::printMeshFaceRecursive(AbstractWriter & writer, const Obj
         writeMeshFaceRecursive(stream, lod->transform(), idx, offset);
     }
     writeMeshFaceRecursive(stream, main.mDraped.transform(), idx, offset);
-    writer.printLine(stream.str());
+    writer.writeLine(stream.str());
 }
 
 void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Transform & inNode, std::size_t & idx,
@@ -186,7 +186,7 @@ void ObjWriteGeometry::printLineVerticiesRecursive(AbstractWriter & writer, cons
             const auto lobj = static_cast<const ObjLine*>(objBase.get());
 
             if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_DEBUG)) {
-                writer.printLine(std::string("# ").append(lobj->objectName()));
+                writer.writeLine(std::string("# ").append(lobj->objectName()));
             }
 
             for (const LineVertex & v : lobj->verticesList()) {
@@ -242,7 +242,7 @@ bool ObjWriteGeometry::printMeshObject(AbstractWriter & writer, const ObjAbstrac
             stream << MESH_TRIS << " " << (mMeshFaceOffset * 3) << " " << (numface * 3);
         }
 
-        writer.printLine(stream.str());
+        writer.writeLine(stream.str());
         ++mStat->mMeshObjCount;
         mMeshFaceOffset += numface;
         return true;
@@ -264,7 +264,7 @@ bool ObjWriteGeometry::printLightPointObject(AbstractWriter & writer, const ObjA
             stream << " ## " << objBase.objectName().c_str();
         }
 
-        writer.printLine(stream.str());
+        writer.writeLine(stream.str());
         ++mPointLightOffsetByObject;
         ++mStat->mLightObjPointCount;
         return true;
@@ -279,7 +279,7 @@ bool printLight(AbstractWriter & writer, const T & lobj, const ExportOptions & o
     printObj(lobj, writer, options.isEnabled(XOBJ_EXP_MARK_LIGHT));
     // std::string params = toObjString(lobj, options.isEnabled(XOBJ_EXP_MARK_LIGHT));
     // if (!params.empty()) {
-    //     writer.printLine(params.c_str());
+    //     writer.writeLine(params.c_str());
     //     ++counter;
     // }
     ++counter;
@@ -325,7 +325,7 @@ bool ObjWriteGeometry::printLineObject(AbstractWriter & writer, const ObjAbstrac
             stream << LINES << " " << mMeshVertexOffset << " " << numvert << std::endl;
         }
 
-        writer.printLine(stream.str());
+        writer.writeLine(stream.str());
         mMeshVertexOffset += numvert;
         ++mStat->mLineObjCount;
         return true;
@@ -341,7 +341,7 @@ bool ObjWriteGeometry::printSmokeObject(AbstractWriter & writer, const ObjAbstra
         printObj(smoke, writer, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_SMOKE));
         // std::string params = toObjString(smoke, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_SMOKE));
         // if (!params.empty()) {
-        //     writer.printLine(params);
+        //     writer.writeLine(params);
         //     ++mStat->mSmokeObjCount;
         // }
         ++mStat->mSmokeObjCount;
@@ -358,7 +358,7 @@ bool ObjWriteGeometry::printDummyObject(AbstractWriter & writer, const ObjAbstra
         printObj(dummy, writer, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_DUMMY));
         // std::string params = toObjString(dummy, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_DUMMY));
         // if (!params.empty()) {
-        //     writer.printLine(params);
+        //     writer.writeLine(params);
         //     ++mStat->mDummyObjCount;
         // }
         ++mStat->mDummyObjCount;

@@ -288,6 +288,9 @@ void ObjWriteAttr::switchAttrState<AttrCockpit>(const AttrCockpit & attr, const 
             mWriter->writeLine(ATTR_COCKPIT_REGION, " 3");
         }
         else if (attr.mType == AttrCockpit::cockpit_device) {
+            if (attr.mDeviceName.empty()) {
+                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_DEVICE << "> attribute without a device name.";
+            }
             mWriter->writeLine(ATTR_COCKPIT_DEVICE, " ", attr.mDeviceName, " ", attr.mDeviceBus, " ",
                                attr.mDeviceLightingChan, " ", attr.mDeviceAutoAdjust);
         }

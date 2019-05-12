@@ -5,6 +5,7 @@ StepToSky: X-Plane Obj Library
 - **Added** Particle system support.
 - **Added** Constraint for macos deployment target - 10.14, because of [error: call to unavailable function 'visit': introduced in macOS 10.14 std::visit].
 - **Added** Checking if a normal map is specified but the attributes GLOBAL_specular or ATTR_shiny_rat aren't set.
+- **Added** Checking if the ATTR_cockpit_device doesn't have a device name.
 
 ##### Breaking backward compatibility:
 - **Changed** Code style: public variable now have the prefix m instead of p.

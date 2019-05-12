@@ -85,9 +85,9 @@ public:
     ECursor mCursor;
     std::string mToolType;
 
-    float mX = 0.0f;
-    float mY = 0.0f;
-    float mZ = 0.0f;
+    float mDirX = 0.0f;
+    float mDirY = 0.0f;
+    float mDirZ = 0.0f;
     float mVal1 = 0.0f;
     float mVal2 = 1.0f;
     std::string mDataref;

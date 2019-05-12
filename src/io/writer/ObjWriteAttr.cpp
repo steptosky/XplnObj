@@ -448,15 +448,15 @@ public:
         else if constexpr (std::is_same_v<T, AttrManipCmdSwitchUpDown2>) { }
         else if constexpr (std::is_same_v<T, AttrManipDelta>) { }
         else if constexpr (std::is_same_v<T, AttrManipDragAxis>) {
-            if (!manip.axisDetented().isEnabled() && !manip.detentRanges().empty()) {
-                ULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.type().toUiString()
+            if (!manip.mAxisDetented && !manip.mAxisDetentRanges.empty()) {
+                ULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toUiString()
                         << "> manipulator with the " << ATTR_MANIP_AXIS_DETENT_RANGE << " but " << ATTR_MANIP_AXIS_DETENTED << " isn't enabled.";
             }
             // todo this is the code duplication
-            if (!manip.detentRanges().empty()) {
+            if (!manip.mAxisDetentRanges.empty()) {
                 std::size_t counter = 0;
-                for (const auto & dr : manip.detentRanges()) {
-                    if (dr.start() > dr.end()) {
+                for (const auto & dr : manip.mAxisDetentRanges) {
+                    if (dr.mStart > dr.mEnd) {
                         ULError << "The object <" << mAttrWriter->mObj->objectName() << "> has incorrect detent range values at <"
                                 << counter << "> position, start value must be smaller than end value.";
                     }
@@ -471,10 +471,10 @@ public:
         else if constexpr (std::is_same_v<T, AttrManipDragAxisPix>) { }
         else if constexpr (std::is_same_v<T, AttrManipDragRotate>) {
             // todo this is the code duplication
-            if (!manip.detentRanges().empty()) {
+            if (!manip.mAxisDetentRanges.empty()) {
                 std::size_t counter = 0;
-                for (const auto & dr : manip.detentRanges()) {
-                    if (dr.start() > dr.end()) {
+                for (const auto & dr : manip.mAxisDetentRanges) {
+                    if (dr.mStart > dr.mEnd) {
                         ULError << "The object <" << mAttrWriter->mObj->objectName() << "> has incorrect detent range values at <"
                                 << counter << "> position, start value must be smaller than end value.";
                     }
@@ -485,13 +485,13 @@ public:
                     ++counter;
                 }
             }
-            if (!manip.keys().empty()) {
-                const auto & keyList = manip.keys();
-                if (keyList.front() == AttrManipKeyFrame(manip.v1Min(), manip.angle1())) {
+            if (!manip.mKeys.empty()) {
+                const auto & keyList = manip.mKeys;
+                if (keyList.front() == AttrManipKeyFrame(manip.mV1Min, manip.mAngle1)) {
                     ULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> has duplicate value " << ATTR_MANIP_KEYFRAME << " of "
                             << ATTR_MANIP_DRAG_ROTATE << ":<v2min>/<angle1> at position 0.";
                 }
-                if (keyList.back() == AttrManipKeyFrame(manip.v1Max(), manip.angle2())) {
+                if (keyList.back() == AttrManipKeyFrame(manip.mV1Max, manip.mAngle2)) {
                     ULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> has duplicate value " << ATTR_MANIP_KEYFRAME << " of "
                             << ATTR_MANIP_DRAG_ROTATE << ":<v2max>/<angle2> at position " << keyList.size() - 1 << ".";
                 }
@@ -500,7 +500,7 @@ public:
         else if constexpr (std::is_same_v<T, AttrManipDragXy>) { }
         else if constexpr (std::is_same_v<T, AttrManipNone>) {
             if (!mAttrWriter->mIsPanelManip) {
-                ULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.type().toUiString()
+                ULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toUiString()
                         << "> it does not make a sense because this manipulator is set automatically when it is needed.";
                 mManipAllowed = false;
             }
@@ -508,13 +508,13 @@ public:
         else if constexpr (std::is_same_v<T, AttrManipNoop>) { }
         else if constexpr (std::is_same_v<T, AttrManipPanel>) {
             if (!mAttrWriter->mIsPanelManip) {
-                ULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.type().toUiString()
+                ULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toUiString()
                         << "> manipulator but the object doesn't have the attributes <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
-                        << "> the <" << manip.type().toUiString() << "> can be used only for the geometry with one of those attributes.";
+                        << "> the <" << manip.mType.toUiString() << "> can be used only for the geometry with one of those attributes.";
                 mManipAllowed = false;
             }
             if (mAttrWriter->mObj->mAttr.mCockpit) {
-                manip.setCockpit(*mAttrWriter->mObj->mAttr.mCockpit);
+                manip.mAttrCockpit = *mAttrWriter->mObj->mAttr.mCockpit;
             }
         }
         else if constexpr (std::is_same_v<T, AttrManipPush>) { }
@@ -618,9 +618,9 @@ public:
         else if constexpr (std::is_same_v<T, AttrManipCmdAxis>) {
             w->writeLine(ATTR_MANIP_COMMAND_AXIS,
                          " ", manip.mCursor.toString(),
-                         " ", manip.mX,
-                         " ", manip.mY,
-                         " ", manip.mZ,
+                         " ", manip.mDirX,
+                         " ", manip.mDirY,
+                         " ", manip.mDirZ,
                          " ", w->actualCommand(manip.mPosCommand),
                          " ", w->actualCommand(manip.mNegCommand),
                          " ", manip.mToolType);
@@ -686,17 +686,17 @@ public:
             std::size_t outCounter = 1;
             w->writeLine(ATTR_MANIP_DRAG_AXIS,
                          " ", manip.mCursor.toString(),
-                         " ", manip.mX,
-                         " ", manip.mY,
-                         " ", manip.mZ,
+                         " ", manip.mDirX,
+                         " ", manip.mDirY,
+                         " ", manip.mDirZ,
                          " ", manip.mVal1,
                          " ", manip.mVal2,
                          " ", w->actualDataref(manip.mDataref),
                          " ", manip.mToolType);
 
             outCounter += printWheel(manip.mWheel);
-            if (manip.axisDetented) {
-                outCounter += printDetent(manip.axisDetented);
+            if (manip.mAxisDetented) {
+                outCounter += printDetent(manip.mAxisDetented);
                 outCounter += printDetentRanges(manip.mAxisDetentRanges);
             }
             return outCounter;
@@ -717,9 +717,9 @@ public:
             std::size_t outCounter = 1;
             w->writeLine(ATTR_MANIP_DRAG_ROTATE,
                          " ", manip.mCursor.toString(),
-                         " ", manip.mX,
-                         " ", manip.mY,
-                         " ", manip.mZ,
+                         " ", manip.mDirX,
+                         " ", manip.mDirY,
+                         " ", manip.mDirZ,
                          " ", manip.mDirX,
                          " ", manip.mDirY,
                          " ", manip.mDirZ,
@@ -811,6 +811,7 @@ public:
         }
         else {
             static_assert(always_false<T>::value, "non-exhaustive visitor!");
+            return 0;
         }
     }
 
@@ -836,12 +837,12 @@ void ObjWriteAttr::writeManip() {
         if (enable) {
             assert(manipContainer);
             if (const auto panelManip = std::get_if<AttrManipPanel>(&manipContainer->mType)) {
-                switchAttrState<AttrCockpit>(panelManip->cockpit(), true);
+                switchAttrState<AttrCockpit>(panelManip->mAttrCockpit.value_or(AttrCockpit()), true);
             }
             mManipNum += std::visit(ManipPrinter{mWriter}, manipContainer->mType);
         }
         else {
-            mManipNum += AttrManipNone().printObj(*mWriter);
+            mManipNum += std::visit(ManipPrinter{mWriter}, AttrManip::Type(AttrManipNone()));
         }
     };
 

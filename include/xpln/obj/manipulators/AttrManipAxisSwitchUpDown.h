@@ -76,10 +76,10 @@ public:
     ECursor mCursor;
     std::string mToolType;
 
+	float mMin = 0.0f;
+	float mMax = 0.0f;
     float mClickDelta = 0.0f;
     float mHoldDelta = 0.0f;
-    float mMin = 0.0f;
-    float mMax = 0.0f;
     std::string mDataref;
     std::optional<AttrManipWheel> mWheel;
 

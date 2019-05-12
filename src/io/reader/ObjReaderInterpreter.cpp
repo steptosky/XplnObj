@@ -312,13 +312,13 @@ void ObjReaderInterpreter::gotTrisAttrManipAxisDetented(const AttrAxisDetented &
     const auto visitor = [&](auto && currManip) {
         using T = std::decay_t<decltype(currManip)>;
         if constexpr (std::is_same_v<T, AttrManipDragAxis>) {
-            if (currManip.axisDetented().isEnabled()) {
+            if (currManip.mAxisDetented) {
                 LWarning << "Rewriting existing and enabled sub-manipulator";
             }
-            currManip.setAxisDetented(manip);
+            currManip.mAxisDetented = manip;
         }
         else {
-            ULError << "Manipulator <" << currManip.type().toString() << "> doesn't support axis detented";
+            ULError << "Manipulator <" << currManip.mType.toString() << "> doesn't support axis detented";
         }
     };
     //--------------------------
@@ -333,16 +333,16 @@ void ObjReaderInterpreter::gotTrisAttrManipAxisDetentRange(const AttrAxisDetentR
     const auto visitor = [&](auto && currManip) {
         using T = std::decay_t<decltype(currManip)>;
         if constexpr (std::is_same_v<T, AttrManipDragAxis>) {
-            if (!currManip.axisDetented().isEnabled()) {
+            if (!currManip.mAxisDetented) {
                 ULWarning << ATTR_MANIP_AXIS_DETENT_RANGE << " is used when " << ATTR_MANIP_AXIS_DETENTED << " isn't enabled";
             }
-            currManip.detentRanges().emplace_back(manip);
+            currManip.mAxisDetentRanges.emplace_back(manip);
         }
         else if constexpr (std::is_same_v<T, AttrManipDragRotate>) {
-            currManip.detentRanges().emplace_back(manip);
+            currManip.mAxisDetentRanges.emplace_back(manip);
         }
         else {
-            ULError << "Manipulator <" << currManip.type().toString() << "> doesn't support axis detent range";
+            ULError << "Manipulator <" << currManip.mType.toString() << "> doesn't support axis detent range";
         }
     };
     //--------------------------
@@ -357,10 +357,10 @@ void ObjReaderInterpreter::gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & ma
     const auto visitor = [&](auto && currManip) {
         using T = std::decay_t<decltype(currManip)>;
         if constexpr (std::is_same_v<T, AttrManipDragRotate>) {
-            currManip.keys().emplace_back(manip);
+            currManip.mKeys.emplace_back(manip);
         }
         else {
-            ULError << "Manipulator <" << currManip.type().toString() << "> doesn't support key frame";
+            ULError << "Manipulator <" << currManip.mType.toString() << "> doesn't support key frame";
         }
     };
     //--------------------------
@@ -374,17 +374,17 @@ void ObjReaderInterpreter::gotTrisAttrManipWheel(const AttrManipWheel & manip) {
     //--------------------------
     const auto visitor = [&](auto && currManip) {
         using T = std::decay_t<decltype(currManip)>;
-        if constexpr (std::is_same_v<T, AttrManipAxisKnob>) { currManip.setWheel(manip); }
-        else if constexpr (std::is_same_v<T, AttrManipAxisSwitchLeftRight>) { currManip.setWheel(manip); }
-        else if constexpr (std::is_same_v<T, AttrManipAxisSwitchUpDown>) { currManip.setWheel(manip); }
-        else if constexpr (std::is_same_v<T, AttrManipDelta>) { currManip.setWheel(manip); }
-        else if constexpr (std::is_same_v<T, AttrManipDragAxis>) { currManip.setWheel(manip); }
-        else if constexpr (std::is_same_v<T, AttrManipDragAxisPix>) { currManip.setWheel(manip); }
-        else if constexpr (std::is_same_v<T, AttrManipPush>) { currManip.setWheel(manip); }
-        else if constexpr (std::is_same_v<T, AttrManipRadio>) { currManip.setWheel(manip); }
-        else if constexpr (std::is_same_v<T, AttrManipToggle>) { currManip.setWheel(manip); }
-        else if constexpr (std::is_same_v<T, AttrManipWrap>) { currManip.setWheel(manip); }
-        else { ULError << "Manipulator <" << currManip.type().toString() << "> doesn't support mouse wheel"; }
+        if constexpr (std::is_same_v<T, AttrManipAxisKnob>) { currManip.mWheel = manip; }
+        else if constexpr (std::is_same_v<T, AttrManipAxisSwitchLeftRight>) { currManip.mWheel = manip; }
+        else if constexpr (std::is_same_v<T, AttrManipAxisSwitchUpDown>) { currManip.mWheel = manip; }
+        else if constexpr (std::is_same_v<T, AttrManipDelta>) { currManip.mWheel = manip; }
+        else if constexpr (std::is_same_v<T, AttrManipDragAxis>) { currManip.mWheel = manip; }
+        else if constexpr (std::is_same_v<T, AttrManipDragAxisPix>) { currManip.mWheel = manip; }
+        else if constexpr (std::is_same_v<T, AttrManipPush>) { currManip.mWheel = manip; }
+        else if constexpr (std::is_same_v<T, AttrManipRadio>) { currManip.mWheel = manip; }
+        else if constexpr (std::is_same_v<T, AttrManipToggle>) { currManip.mWheel = manip; }
+        else if constexpr (std::is_same_v<T, AttrManipWrap>) { currManip.mWheel = manip; }
+        else { ULError << "Manipulator <" << currManip.mType.toString() << "> doesn't support mouse wheel"; }
     };
     //--------------------------
     std::visit(visitor, mCurrentAttrSet.mManip->mType);

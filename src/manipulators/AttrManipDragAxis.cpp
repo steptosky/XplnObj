@@ -45,9 +45,9 @@ const EManipulator AttrManipDragAxis::mType(EManipulator::drag_axis);
 bool AttrManipDragAxis::operator==(const AttrManipDragAxis & other) const {
     return mCursor == other.mCursor &&
            mToolType == other.mToolType &&
-           sts::isEqual(mX, other.mX) &&
-           sts::isEqual(mY, other.mY) &&
-           sts::isEqual(mZ, other.mZ) &&
+           sts::isEqual(mDirX, other.mDirX) &&
+           sts::isEqual(mDirY, other.mDirY) &&
+           sts::isEqual(mDirZ, other.mDirZ) &&
            sts::isEqual(mVal1, other.mVal1) &&
            sts::isEqual(mVal2, other.mVal2) &&
            mDataref == other.mDataref &&

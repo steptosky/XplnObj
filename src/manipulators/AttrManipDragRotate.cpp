@@ -45,9 +45,9 @@ const EManipulator AttrManipDragRotate::mType(EManipulator::drag_rotate);
 bool AttrManipDragRotate::operator==(const AttrManipDragRotate & other) const {
     return mCursor == other.mCursor &&
            mToolType == other.mToolType &&
-           sts::isEqual(mX, other.mX) &&
-           sts::isEqual(mY, other.mY) &&
-           sts::isEqual(mZ, other.mZ) &&
+           sts::isEqual(mOriginX, other.mOriginX) &&
+           sts::isEqual(mOriginY, other.mOriginY) &&
+           sts::isEqual(mOriginZ, other.mOriginZ) &&
            sts::isEqual(mDirX, other.mDirX) &&
            sts::isEqual(mDirY, other.mDirY) &&
            sts::isEqual(mDirZ, other.mDirZ) &&

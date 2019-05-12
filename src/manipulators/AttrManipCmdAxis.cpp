@@ -45,9 +45,9 @@ const EManipulator AttrManipCmdAxis::mType(EManipulator::command_axis);
 bool AttrManipCmdAxis::operator==(const AttrManipCmdAxis & other) const {
     return mCursor == other.mCursor &&
            mToolType == other.mToolType &&
-           sts::isEqual(mX, other.mX) &&
-           sts::isEqual(mY, other.mY) &&
-           sts::isEqual(mZ, other.mZ) &&
+           sts::isEqual(mDirX, other.mDirX) &&
+           sts::isEqual(mDirY, other.mDirY) &&
+           sts::isEqual(mDirZ, other.mDirZ) &&
            mPosCommand == other.mPosCommand &&
            mNegCommand == other.mNegCommand;
 }

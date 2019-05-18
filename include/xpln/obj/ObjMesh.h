@@ -78,17 +78,6 @@ public:
      */
     FaceList mFaces;
 
-    /*!
-     * \details Tree objects need some changes for its mesh's normals.
-     *          So if your object represent a tree you have to set it to true.
-     */
-    void setIsTree(const bool state) { mIsTree = state; }
-
-    /*!
-     * \returns tree flag.
-     */
-    bool isTree() const { return mIsTree; }
-
     //-------------------------------------------------------------------------
 
     /*!
@@ -122,7 +111,6 @@ public:
 
 private:
 
-    bool mIsTree = false;
     bool mIsTwoSided = false;
 
 };

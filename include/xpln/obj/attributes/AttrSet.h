@@ -102,6 +102,12 @@ public:
     std::optional<AttrCockpit> mCockpit;
     std::optional<ManipContainer> mManipContainer;
 
+    /*!
+     * \details Tree objects need some changes for its mesh's normals.
+     *          So if your object represent a tree you have to set it to true.
+     */
+    bool mIsTree = false;
+
     bool mIsDraw = true;
     bool mIsDraped = false;
     bool mIsTwoSided = false; //!< replacement for ATTR_no_cull

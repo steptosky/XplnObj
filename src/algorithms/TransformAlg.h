@@ -29,6 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <functional>
 #include "xpln/Export.h"
 #include "xpln/obj/Transform.h"
 
@@ -90,7 +91,7 @@ public:
      *          or nullptr if no one is found.
      * \param [in] transform
      */
-    XpObjLib static const Transform * animatedTranslateParent(const Transform * transform);
+    XpObjLib static const Transform * animatedTranslateParent(const Transform & transform);
 
     /*!
      * \details It iterates up by hierarchy starting from the specified transform's parent 
@@ -98,7 +99,16 @@ public:
      *          or nullptr if no one is found.
      * \param [in] transform
      */
-    XpObjLib static const Transform * animatedRotateParent(const Transform * transform);
+    XpObjLib static const Transform * animatedRotateParent(const Transform & transform);
+
+    /*!
+     * \details It iterates up by hierarchy starting from the specified transform's parent
+     *          and return first found transform the predicate returns true for.
+     * \param [in] transform
+     * \param [in] p predicate
+     */
+    XpObjLib static const Transform * findParentIf(const Transform & transform,
+                                                   const std::function<bool(const Transform &)> & p);
 
     /// @}
     //-------------------------------------------------------------------------

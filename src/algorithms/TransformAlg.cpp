@@ -27,7 +27,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <cassert>
 #include "TransformAlg.h"
 
 using namespace std::string_literals;
@@ -87,32 +86,26 @@ void TransformAlg::applyMatrixToAnimRotate(AnimRotateList & inOutAnim, const TMa
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-const Transform * TransformAlg::animatedTranslateParent(const Transform * transform) {
-    assert(transform);
-    auto parent = transform->parent();
-    do {
-        if (parent == nullptr) {
-            return nullptr;
-        }
-        if (parent->hasAnimTrans()) {
-            return parent;
-        }
-        parent = parent->parent();
-    } while (true);
+const Transform * TransformAlg::animatedTranslateParent(const Transform & transform) {
+    return findParentIf(transform, [](const auto & t) { return t.hasAnimTrans(); });
 }
 
-const Transform * TransformAlg::animatedRotateParent(const Transform * transform) {
-    assert(transform);
-    auto parent = transform->parent();
-    do {
+const Transform * TransformAlg::animatedRotateParent(const Transform & transform) {
+    return findParentIf(transform, [](const auto & t) { return t.hasAnimRotate(); });
+}
+
+const Transform * TransformAlg::findParentIf(const Transform & transform,
+                                             const std::function<bool(const Transform &)> & p) {
+    auto parent = transform.parent();
+    while (true) {
         if (parent == nullptr) {
             return nullptr;
         }
-        if (parent->hasAnimRotate()) {
+        if (p(*parent)) {
             return parent;
         }
         parent = parent->parent();
-    } while (true);
+    }
 }
 
 /**************************************************************************************************/

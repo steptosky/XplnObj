@@ -280,7 +280,7 @@ void ObjWriter::printSignature(AbstractWriter & writer, const std::string & sign
 void ObjWriter::calculateVerticiesAndFaces(const Transform & parent) {
     static const ObjMesh * mobj = nullptr;
     static const ObjLine * lobj = nullptr;
-    for (auto & obj : parent.objList()) {
+    for (auto & obj : parent.mObjects) {
         if (obj->objType() == OBJ_MESH) {
             mobj = static_cast<const ObjMesh*>(obj.get());
             mStatistic.mMeshVerticesCount += mobj->mVertices.size();
@@ -295,8 +295,8 @@ void ObjWriter::calculateVerticiesAndFaces(const Transform & parent) {
         }
     }
 
-    for (Transform::TransformIndex i = 0; i < parent.childrenNum(); ++i) {
-        calculateVerticiesAndFaces(*dynamic_cast<const Transform*>(parent.childAt(i)));
+    for (auto & child : parent) {
+        calculateVerticiesAndFaces(*child);
     }
 }
 
@@ -328,7 +328,7 @@ void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) 
 
     //-------------------------------------------------------------------------
 
-    for (auto & objBase : parent.objList()) {
+    for (auto & objBase : parent.mObjects) {
         // order attr and manip is important.
         mWriteAttr.writeObjAttr(&writer, objBase.get());
         //--------------
@@ -374,8 +374,9 @@ void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) 
     //-------------------------------------------------------------------------
 
     // print child
-    for (Transform::TransformIndex i = 0; i < parent.childrenNum(); ++i)
-        printObjects(writer, *dynamic_cast<const Transform*>(parent.childAt(i)));
+    for (auto & child : parent) {
+        printObjects(writer, *child);
+    }
 
     //-------------------------------------------------------------------------
 

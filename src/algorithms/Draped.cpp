@@ -31,6 +31,7 @@
 #include "xpln/obj/ObjDrapedGroup.h"
 #include "xpln/obj/ObjMesh.h"
 #include "common/IInterrupterInternal.h"
+#include "TransformAlg.h"
 
 namespace xobj {
 
@@ -39,7 +40,7 @@ namespace xobj {
 /**************************************************************************************************/
 
 void Draped::ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrupter & interrupt) {
-    inOutDraped.transform().visitAllObjects([&](const Transform &, ObjAbstract & obj) {
+    TransformAlg::visitObjects(inOutDraped.transform(), [&](const Transform &, ObjAbstract & obj) {
         if (obj.objType() == OBJ_MESH) {
             static_cast<ObjMesh*>(&obj)->mAttr.mIsDraped = true;
         }
@@ -52,56 +53,53 @@ void Draped::ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrup
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void Draped::extract(ObjDrapedGroup & inOutDraped,
-                     Transform & inOutTransform,
-                     const IInterrupter & interrupt) {
+void Draped::extractDrapedObjects(ObjDrapedGroup & inOutDraped, Transform & inOutTransform, const IInterrupter & interrupt) {
+    Transform::ObjList drapedObjects;
+    extractDrapedObjects(inOutTransform, drapedObjects, interrupt);
 
-    auto drapedObjects = processObjects(inOutTransform);
-    if (!drapedObjects.empty()) {
-        const Transform * animatedTransform = nullptr;
-        inOutTransform.iterateUp([&](const Transform & tr) {
-            if (tr.hasAnim()) {
-                animatedTransform = &tr;
-                return false;
-            }
-            return true;
-        });
-
-        if (animatedTransform) {
-            ULWarning << " Object <" << inOutDraped.objectName() << "> has animated transform <" << animatedTransform->mName
-                    << "> containing draped geometry in transform <" << inOutTransform.mName << ">."
-                    << " Draped geometry can't be animated.";
-        }
-
-        for (auto & obj : drapedObjects) {
-            obj->applyTransform(inOutDraped.transform().mMatrix.inversed());
-            inOutDraped.transform().addObject(obj.release());
-        }
-    }
-
-    const auto childrenNum = inOutTransform.childrenNum();
-    for (std::size_t i = 0; i < childrenNum; ++ i) {
-        INTERRUPT_CHECK_WITH_RETURN(interrupt);
-        extract(inOutDraped, *inOutTransform.childAt(i), interrupt);
+    for (auto & obj : drapedObjects) {
+        obj->applyTransform(inOutDraped.transform().mMatrix.inversed());
+        inOutDraped.transform().mObjects.emplace_back(std::move(obj));
     }
 }
 
-Transform::ObjList Draped::processObjects(Transform & transform) {
-    Transform::ObjList out;
-    for (auto & obj : transform.objList()) {
-        if (obj->objType() != OBJ_MESH) {
+void Draped::extractDrapedObjects(Transform & transform, Transform::ObjList & outObjects, const IInterrupter & interrupt) {
+    const auto size = outObjects.size();
+    extractDrapedObjects(transform.mObjects, outObjects, interrupt);
+
+    if (size != outObjects.size()) {
+        const auto animatedParent = TransformAlg::animatedParent(transform);
+        for (auto it = outObjects.begin() + size; it != outObjects.end(); ++it) {
+            (*it)->applyTransform(transform.mMatrix);
+            if (animatedParent) {
+                ULWarning << " Animated transform < " << animatedParent->mName
+                        << "> contains draped object <" << (*it)->objectName() << "> in transform <" << transform.mName << ">."
+                        << " Draped geometry must not be animated.";
+            }
+        }
+    }
+
+    for (auto & ch : transform) {
+        INTERRUPT_CHECK_WITH_RETURN(interrupt);
+        extractDrapedObjects(*ch, outObjects, interrupt);
+    }
+}
+
+void Draped::extractDrapedObjects(Transform::ObjList & objects, Transform::ObjList & outObjects, const IInterrupter & interrupt) {
+    for (auto objIt = objects.begin(); objIt != objects.end();) {
+        INTERRUPT_CHECK_WITH_RETURN(interrupt);
+
+        if ((*objIt)->objType() != OBJ_MESH) {
+            ++objIt;
             continue;
         }
-        auto mesh = static_cast<ObjMesh*>(obj.get());
-        if (mesh->mAttr.mIsDraped) {
-            mesh->applyTransform(transform.mMatrix);
-            out.emplace_back(mesh);
+        if (!static_cast<ObjMesh*>((*objIt).get())->mAttr.mIsDraped) {
+            ++objIt;
+            continue;
         }
+        outObjects.emplace_back(std::move(*objIt));
+        objIt = objects.erase(objIt);
     }
-    for (auto & obj : out) {
-        transform.takeObject(obj.get());
-    }
-    return out;
 }
 
 /**************************************************************************************************/

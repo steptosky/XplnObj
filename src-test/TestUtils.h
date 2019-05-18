@@ -60,13 +60,15 @@ public:
     }
 
     static void extractTransform(Transform & transform, const size_t numTransform, Transform *& outTrans) {
-        ASSERT_TRUE(transform.childrenNum() > numTransform) << " value is " << numTransform;
-        outTrans = static_cast<Transform*>(transform.childAt(numTransform));
+        std::size_t childrenNum = 0;
+        std::for_each(transform.begin(), transform.end(), [&childrenNum](auto &) { ++childrenNum; });
+        ASSERT_TRUE(childrenNum > numTransform) << " value is " << numTransform;
+        outTrans = static_cast<Transform*>((transform.begin() + numTransform)->get());
     }
 
     static void extractMesh(Transform & transform, const size_t meshNum, ObjMesh *& outMesh) {
-        ASSERT_TRUE(transform.objList().size() > meshNum) << " value is " << meshNum;
-        auto it = transform.objList().begin();
+        ASSERT_TRUE(transform.mObjects.size() > meshNum) << " value is " << meshNum;
+        auto it = transform.mObjects.begin();
         for (size_t i = 0; i < meshNum; ++i, ++it) {}
         ASSERT_EQ(eObjectType::OBJ_MESH, (*it)->objType());
         outMesh = static_cast<ObjMesh *>(it->get());

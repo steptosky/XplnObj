@@ -62,9 +62,9 @@ bool ObjWriteAnim::printAnimationStart(AbstractWriter & writer, const Transform 
     if (!transform.hasAnim())
         return false;
 
-    if (!transform.hasObjects() && transform.childrenNum() == 0)
+    if (transform.mObjects.empty() && !transform.hasChildren()) {
         return false;
-
+    }
     mWriter = &writer;
 
     //-------------------------------------------------------------------------

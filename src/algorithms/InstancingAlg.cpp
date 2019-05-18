@@ -78,15 +78,14 @@ void InstancingAlg::proccessTransform(Transform & transform, bool & outResult) {
     //-------------------------------------------------------------------------
     // children
 
-    const auto chCount = transform.childrenNum();
-    for (Transform::TransformIndex i = 0; i < chCount; ++i) {
-        proccessTransform(*static_cast<Transform*>(transform.childAt(i)), outResult);
+    for (auto & child : transform) {
+        proccessTransform(*child, outResult);
     }
     //-------------------------------------------------------------------------
 }
 
 void InstancingAlg::proccessObjects(Transform & transform, bool & outResult) {
-    for (auto & curr : transform.objList()) {
+    for (auto & curr : transform.mObjects) {
         if (curr->objType() == OBJ_LINE) {
             printBreakInstancing(curr->objectName().c_str(),
                                  "the object is the line object. Lines are not allowed for instancing.");

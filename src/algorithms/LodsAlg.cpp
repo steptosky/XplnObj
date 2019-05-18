@@ -33,6 +33,7 @@
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/ObjMesh.h"
 #include "common/IInterrupterInternal.h"
+#include "TransformAlg.h"
 
 using namespace std::string_literals;
 
@@ -71,7 +72,7 @@ bool LodsAlg::validate(ObjMain::Lods & inOutLods,
         //---------------------------
         // Checking if the LOD doesn't have objects.
         INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
-        const auto hasObjects = !lod->transform().visitAllObjects([](const auto &, const auto &) { return false; });
+        const auto hasObjects = !TransformAlg::visitObjectsConst(lod->transform(), [](const auto &, const auto &) { return false; });
         if (!hasObjects) {
             ULError << objectName << " - LOD <" << lod->objectName() << "> doesn't contain any objects.";
             return false;
@@ -105,7 +106,7 @@ bool LodsAlg::validate(ObjMain::Lods & inOutLods,
         //---------------------------
         // Checking hard polygons.
         INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
-        const auto hasHardPoly = !lod->transform().visitAllObjects([&](const Transform &, const ObjAbstract & obj) {
+        const auto hasHardPoly = !TransformAlg::visitObjectsConst(lod->transform(), [&](const Transform &, const ObjAbstract & obj) {
             if (obj.objType() != OBJ_MESH) {
                 return true;
             }
@@ -129,7 +130,7 @@ bool LodsAlg::validate(ObjMain::Lods & inOutLods,
 void LodsAlg::removeWithoutObjects(ObjMain::Lods & inOutLods, const IInterrupter & interrupt) {
     for (auto iter = inOutLods.begin(); iter != inOutLods.end();) {
         INTERRUPT_CHECK_WITH_RETURN(interrupt);
-        const auto hasObjects = !(*iter)->transform().visitAllObjects([](const auto &, const auto &) {
+        const auto hasObjects = !TransformAlg::visitObjectsConst((*iter)->transform(), [](const auto &, const auto &) {
             return false;
         });
 

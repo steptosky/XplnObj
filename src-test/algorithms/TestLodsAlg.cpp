@@ -142,7 +142,7 @@ TEST(LodsAlg, removeWithoutObjects) {
     lods.emplace_back(std::make_unique<ObjLodGroup>("1", 0.0f, 100.f));
     lods.emplace_back(std::make_unique<ObjLodGroup>("2", 100.f, 300.0f));
 
-    lods[0]->transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("m1"));
+    lods[0]->transform().mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("m1"));
     LodsAlg::removeWithoutObjects(lods, NoInterrupter());
 
     ASSERT_EQ(1, lods.size());

@@ -27,10 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <cassert>
 #include "TransformAlg.h"
-
-using namespace std::string_literals;
 
 namespace xobj {
 
@@ -87,32 +84,100 @@ void TransformAlg::applyMatrixToAnimRotate(AnimRotateList & inOutAnim, const TMa
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-const Transform * TransformAlg::animatedTranslateParent(const Transform * transform) {
-    assert(transform);
-    auto parent = transform->parent();
-    do {
+const Transform * TransformAlg::findParentIf(const Transform & transform,
+                                             const std::function<bool(const Transform &)> & p) {
+    auto parent = transform.parent();
+    while (true) {
         if (parent == nullptr) {
             return nullptr;
         }
-        if (parent->hasAnimTrans()) {
+        if (p(*parent)) {
             return parent;
         }
         parent = parent->parent();
-    } while (true);
+    }
 }
 
-const Transform * TransformAlg::animatedRotateParent(const Transform * transform) {
-    assert(transform);
-    auto parent = transform->parent();
-    do {
-        if (parent == nullptr) {
-            return nullptr;
+bool TransformAlg::visitObjectsConst(const Transform & transform,
+                                     const std::function<bool(const Transform &, const ObjAbstract &)> & function) {
+
+    for (auto & obj : transform.mObjects) {
+        if (!function(transform, *obj)) {
+            return false;
         }
-        if (parent->hasAnimRotate()) {
-            return parent;
+    }
+
+    for (auto & child : transform) {
+        if (! visitObjectsConst(*child, function)) {
+            return false;
         }
-        parent = parent->parent();
-    } while (true);
+    }
+    return true;
+}
+
+bool TransformAlg::visitObjects(Transform & transform,
+                                const std::function<bool(Transform &, ObjAbstract &)> & function) {
+
+    for (auto & obj : transform.mObjects) {
+        if (!function(transform, *obj)) {
+            return false;
+        }
+    }
+
+    for (auto & child : transform) {
+        if (!visitObjects(*child, function)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+const Transform * TransformAlg::animatedTranslateParent(const Transform & transform) {
+    return findParentIf(transform, [](const auto & t) { return t.hasAnimTrans(); });
+}
+
+const Transform * TransformAlg::animatedRotateParent(const Transform & transform) {
+    return findParentIf(transform, [](const auto & t) { return t.hasAnimRotate(); });
+}
+
+const Transform * TransformAlg::animatedParent(const Transform & transform) {
+    return findParentIf(transform, [](const auto & t) { return t.hasAnim(); });
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+void TransformAlg::applyMatrix(Transform & transform, const TMatrix & matrix) {
+    transform.mMatrix *= matrix;
+    const auto rotation = matrix.toRotation();
+
+    for (auto & a : transform.mAnimTrans) {
+        for (auto & k : a.mKeys) {
+            rotation.transformPoint(k.mPosition);
+        }
+    }
+
+    for (auto & a : transform.mAnimRotate) {
+        rotation.transformPoint(a.mVector);
+    }
+
+    //---------------
+
+    const std::function<void(Transform &, const TMatrix &)> applyToChild = [&applyToChild](Transform & tr, const TMatrix & matrix) {
+        tr.mMatrix *= matrix;
+        for (auto & ch : tr) {
+            applyToChild(*ch, matrix);
+        }
+    };
+
+    for (auto & ch : transform) {
+        applyToChild(*ch, matrix);
+    }
 }
 
 /**************************************************************************************************/

@@ -52,20 +52,20 @@ TEST(DrapedAlg, extract) {
     l1M2->mAttr.mIsDraped = true;
     l2M2->mAttr.mIsDraped = true;
 
-    transformRoot.addObject(l1M1);
-    transformRoot.addObject(l1M2);
+    transformRoot.mObjects.emplace_back(l1M1);
+    transformRoot.mObjects.emplace_back(l1M2);
 
-    transform.addObject(l2M1);
-    transform.addObject(l2M2);
+    transform.mObjects.emplace_back(l2M1);
+    transform.mObjects.emplace_back(l2M2);
 
-    Draped::extract(draped, transformRoot, NoInterrupter());
+    Draped::extractDrapedObjects(draped, transformRoot, NoInterrupter());
 
-    EXPECT_EQ(1, transformRoot.objList().size());
-    EXPECT_EQ(1, transformRoot.childAt(0)->objList().size());
+    EXPECT_EQ(1, transformRoot.mObjects.size());
+    EXPECT_EQ(1, (*transformRoot.begin())->mObjects.size());
 
-    ASSERT_EQ(2, draped.transform().objList().size());
-    EXPECT_STREQ("l1-m1", draped.transform().objList()[0]->objectName().c_str());
-    EXPECT_STREQ("l2-m2", draped.transform().objList()[1]->objectName().c_str());
+    ASSERT_EQ(2, draped.transform().mObjects.size());
+    EXPECT_STREQ("l1-m1", draped.transform().mObjects[0]->objectName().c_str());
+    EXPECT_STREQ("l2-m2", draped.transform().mObjects[1]->objectName().c_str());
 }
 
 /**************************************************************************************************/

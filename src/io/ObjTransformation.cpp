@@ -72,21 +72,21 @@ void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatr
     // objects
 
     if (exp) {
-        if (!transform.hasObjects()) {
+        if (transform.mObjects.empty()) {
             mapsExpCoordinates(nullptr, transform, rootMatrix);
         }
         else {
-            for (auto & curr : transform.objList()) {
+            for (auto & curr : transform.mObjects) {
                 mapsExpCoordinates(curr.get(), transform, rootMatrix);
             }
         }
     }
     else {
-        if (!transform.hasObjects()) {
+        if (transform.mObjects.empty()) {
             mapsImpCoordinates(nullptr, transform, rootMatrix);
         }
         else {
-            for (auto & curr : transform.objList()) {
+            for (auto & curr : transform.mObjects) {
                 mapsImpCoordinates(curr.get(), transform, rootMatrix);
             }
         }
@@ -95,9 +95,8 @@ void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatr
     //-------------------------------------------------------------------------
     // children
 
-    const Transform::TransformIndex chCount = transform.childrenNum();
-    for (Transform::TransformIndex i = 0; i < chCount; ++i) {
-        proccess(*static_cast<Transform*>(transform.childAt(i)), rootMatrix, exp);
+    for (auto & child : transform) {
+        proccess(*child, rootMatrix, exp);
     }
 
     //-------------------------------------------------------------------------
@@ -108,8 +107,8 @@ void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatr
 /**************************************************************************************************/
 
 void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transform, const TMatrix & rootTm) {
-    const Transform * transParent = TransformAlg::animatedTranslateParent(&transform);
-    const Transform * rotateParent = TransformAlg::animatedRotateParent(&transform);
+    const Transform * transParent = TransformAlg::animatedTranslateParent(transform);
+    const Transform * rotateParent = TransformAlg::animatedRotateParent(transform);
     //------------------------------------------------------------------------------------------
     // All animation is relative parent's axis, but transformation matrix of each Transform is in the world space.
     // For example: 
@@ -282,8 +281,8 @@ void ObjTransformation::translationOfTransformToAnimTransKeys(Transform & inOutT
 
 void ObjTransformation::
 mapsImpCoordinates(ObjAbstract * /*obj*/, Transform & objTransform, const TMatrix & /*rootTm*/) {
-    const Transform * transParent = TransformAlg::animatedTranslateParent(&objTransform);
-    const Transform * rotateParent = TransformAlg::animatedRotateParent(&objTransform);
+    const Transform * transParent = TransformAlg::animatedTranslateParent(objTransform);
+    const Transform * rotateParent = TransformAlg::animatedRotateParent(objTransform);
     //------------------------------------------------------------------------------------------
     TransformAlg::applyTranslateKeysToTransform(objTransform, objTransform.mAnimTrans);
     TransformAlg::applyRotateKeysToTransform(objTransform, objTransform.mAnimRotate);

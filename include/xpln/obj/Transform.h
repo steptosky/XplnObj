@@ -30,17 +30,16 @@
 */
 
 #include <functional>
+#include <vector>
 #include <memory>
 #include "xpln/Export.h"
 #include "xpln/common/TMatrix.h"
+#include "xpln/obj/ObjAbstract.h"
 #include "xpln/obj/animation/AnimTrans.h"
 #include "xpln/obj/animation/AnimRotate.h"
 #include "xpln/obj/animation/AnimVisibility.h"
 
 namespace xobj {
-
-class TreeItem;
-class ObjAbstract;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,21 +50,20 @@ class ObjAbstract;
  * \note It takes ownership for all its children and objects.
  */
 class Transform {
-    friend TreeItem;
 public:
 
     //-------------------------------------------------------------------------
     /// @{
 
-    typedef std::size_t TransformIndex;
     typedef std::vector<std::unique_ptr<ObjAbstract>> ObjList;
+    typedef std::vector<std::unique_ptr<Transform>> Children;
 
     /// @}
     //-------------------------------------------------------------------------
     /// \name Construction/Destruction
     /// @{
 
-    XpObjLib Transform();
+    Transform() = default;
 
     Transform(const Transform &) = delete;
     Transform & operator=(const Transform &) = delete;
@@ -90,83 +88,44 @@ public:
      * \details Checks whether the transform is root.
      * \return True if the transform is root otherwise false
      */
-    XpObjLib bool isRoot() const;
-
-    /*!
-     * \details Sets the transform parent
-     * \remark You can set parent as nullptr then the object will be as a root.
-     * \param [in] parent pointer to one new parent
-     */
-    XpObjLib void setParent(Transform * parent);
-
-    /*!
-     * \return root of the transform
-     */
-    XpObjLib Transform * root();
-
-    /*!
-     * \return root of the transform
-     */
-    XpObjLib const Transform * root() const;
+    bool isRoot() const { return !mParent; }
 
     /*!
      * \return If the tree item has the parent then pointer to it, otherwise nullptr.
      */
-    XpObjLib Transform * parent();
+    Transform * parent() { return mParent; }
 
     /*!
      * \return If the tree item has the parent then pointer to it, otherwise nullptr.
      */
-    XpObjLib const Transform * parent() const;
-
-    /*!
-     * \return children number
-     */
-    XpObjLib TransformIndex childrenNum() const;
-
-    /*!
-     * \details Takes children by number
-     * \details Remove specified child pointer from the children container and return its pointer.
-     * \return Pointer to child
-     */
-    XpObjLib Transform * takeChildAt(TransformIndex index);
-
-    /*!
-     * \details Removes child from item's children list by child's pointer.
-     *          The child's destructor will be called while removing.
-     * \param [in, out] child pointer to a children that must be deleted.
-     * \return True if the child by the specified pointer was deleted otherwise false.
-     */
-    XpObjLib bool deleteChild(const Transform * child);
-
-    /*!
-     * \details Gets the child by specified index
-     * \param [in] index
-     * \return Pointer to a child
-     */
-    XpObjLib Transform * childAt(TransformIndex index);
-
-    /*!
-     * \details Gets child at specified index
-     * \param [in] index 
-     * \return child at specified index
-     */
-    XpObjLib const Transform * childAt(TransformIndex index) const;
-
-    /*!
-     * \details Checks whether the transform is 
-     *          a child of specified transform's hierarchy.
-     * \param transform 
-     * \return True or false
-     */
-    XpObjLib bool isChildOf(const Transform * transform) const;
+    const Transform * parent() const { return mParent; }
 
     /*!
      * \details Creates new children with given name.
      * \param [in] name of children
      * \return Reference to new created children.
      */
-    XpObjLib Transform & newChild(const char * name = nullptr);
+    XpObjLib Transform & newChild(std::string_view name = std::string_view());
+
+    /*!
+     * \todo remove when it is not needed anymore
+     */
+    bool hasChildren() const { return !mChildren.empty(); }
+
+    /*!
+     * \todo remove when it is not needed anymore
+     */
+    std::size_t childrenNum() const { return mChildren.size(); }
+
+    Children::iterator begin() { return mChildren.begin(); }
+    Children::iterator end() { return mChildren.end(); }
+    Children::const_iterator begin() const { return mChildren.begin(); }
+    Children::const_iterator end() const { return mChildren.end(); }
+
+    /*!
+     * \return Parent's matrix. If parent isn't set then identity matrix.
+     */
+    XpObjLib TMatrix parentMatrix() const;
 
     /// @}
     //-------------------------------------------------------------------------
@@ -268,11 +227,8 @@ public:
 
     XpObjLib ObjAbstract * takeObject(const ObjAbstract * object);
 
-    XpObjLib const ObjList & objList() const;
-
-    bool hasObjects() const {
-        return !mObjList.empty();
-    }
+    const ObjList & objList() const { return mObjList; }
+    bool hasObjects() const { return !mObjList.empty(); }
 
     /// @}
     //-------------------------------------------------------------------------
@@ -321,21 +277,12 @@ public:
 
     /// @}
     //-------------------------------------------------------------------------
-    /// \name Matrix
-    /// @{
-
-    /*!
-     * \return Parent's matrix. If parent isn't set then identity matrix.
-     */
-    XpObjLib TMatrix parentMatrix() const;
-
-    /// @}
-    //-------------------------------------------------------------------------
 
 private:
 
-    TreeItem * mTreePtr;
+    Transform * mParent = nullptr;
     ObjList mObjList;
+    Children mChildren;
 
 };
 

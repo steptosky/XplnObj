@@ -40,7 +40,6 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-class Transform;
 class TMatrix;
 class AttrSet;
 class AbstractWriter;
@@ -54,9 +53,6 @@ class AbstractWriter;
  * \ingroup Objects
  */
 class ObjAbstract {
-
-    friend Transform;
-
 protected:
 
     //-----------------------------------------------------
@@ -77,25 +73,11 @@ public:
 
     ObjAbstract & operator =(const ObjAbstract &) = delete;
 
-    XpObjLib virtual ~ObjAbstract();
+    virtual ~ObjAbstract() = default;
 
     //--------------------------------------------------------
 
     XpObjLib virtual eObjectType objType() const;
-
-    //--------------------------------------------------------
-
-    /*
-     * \details Access to the object transformation node.
-     * \return Nullptr if the object doesn't have a transformation node, otherwise pointer to the linked transformation node.
-     */
-    XpObjLib Transform * transform();
-
-    /*
-     * \details Access to the object transformation node.
-     * \return Nullptr if the object doesn't have a transformation node, otherwise pointer to the linked transformation node.
-     */
-    XpObjLib const Transform * transform() const;
 
     //--------------------------------------------------------
 
@@ -140,7 +122,6 @@ public:
 
 private:
 
-    Transform * mObjTransform = nullptr;
     std::string mName;
     std::vector<std::string> mDataBefore;
     std::vector<std::string> mDataAfter;

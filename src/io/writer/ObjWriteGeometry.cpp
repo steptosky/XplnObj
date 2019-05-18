@@ -101,12 +101,8 @@ void ObjWriteGeometry::printMeshVerticiesRecursive(AbstractWriter & writer, cons
         }
     }
 
-    for (Transform::TransformIndex i = 0; i < transform.childrenNum(); ++i) {
-        const auto * ch = dynamic_cast<const Transform*>(transform.childAt(i));
-        assert(ch);
-        if (ch) {
-            printMeshVerticiesRecursive(writer, *ch);
-        }
+    for (auto & child : transform) {
+        printMeshVerticiesRecursive(writer, *child);
     }
 }
 
@@ -167,12 +163,8 @@ void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Trans
         offset += mobj->mVertices.size();
     }
 
-    for (Transform::TransformIndex i = 0; i < inNode.childrenNum(); ++i) {
-        const auto * ch = dynamic_cast<const Transform*>(inNode.childAt(i));
-        assert(ch);
-        if (ch) {
-            writeMeshFaceRecursive(writer, *ch, idx, offset);
-        }
+    for (auto & child : inNode) {
+        writeMeshFaceRecursive(writer, *child, idx, offset);
     }
 }
 
@@ -195,12 +187,8 @@ void ObjWriteGeometry::printLineVerticiesRecursive(AbstractWriter & writer, cons
         }
     }
 
-    for (Transform::TransformIndex i = 0; i < transform.childrenNum(); ++i) {
-        const auto * ch = dynamic_cast<const Transform*>(transform.childAt(i));
-        assert(ch);
-        if (ch) {
-            printLineVerticiesRecursive(writer, *dynamic_cast<const Transform*>(transform.childAt(i)));
-        }
+    for (auto & child : transform) {
+        printLineVerticiesRecursive(writer, *child);
     }
 }
 
@@ -214,12 +202,8 @@ void ObjWriteGeometry::printLightPointVerticiesRecursive(AbstractWriter & writer
         }
     }
 
-    for (Transform::TransformIndex i = 0; i < transform.childrenNum(); ++i) {
-        const auto * ch = dynamic_cast<const Transform*>(transform.childAt(i));
-        assert(ch);
-        if (ch) {
-            printLightPointVerticiesRecursive(writer, *dynamic_cast<const Transform*>(transform.childAt(i)));
-        }
+    for (auto & child : transform) {
+        printLightPointVerticiesRecursive(writer, *child);
     }
 }
 

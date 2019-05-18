@@ -53,19 +53,17 @@ bool ObjWritePreparer::prepare(ObjMain & mainObj) {
 }
 
 void ObjWritePreparer::deleteEmptyTransformsRecursively(Transform & transform) {
-    const auto childrenNum = transform.childrenNum();
     std::vector<Transform*> forDelete;
-    for (Transform::TransformIndex i = 0; i < childrenNum; ++i) {
-        const auto currChild = transform.childAt(i);
-        deleteEmptyTransformsRecursively(*currChild);
+    for (auto & child : transform) {
+        deleteEmptyTransformsRecursively(*child);
 
-        if (!currChild->hasObjects() && currChild->childrenNum() == 0) {
-            forDelete.emplace_back(currChild);
+        if (!child->hasObjects() && child->childrenNum() == 0) {
+            forDelete.emplace_back(child.release());
         }
     }
 
-    for (const auto child : forDelete) {
-        transform.deleteChild(child);
+    for (const auto & child : forDelete) {
+        delete child;
     }
 }
 
@@ -84,9 +82,8 @@ bool ObjWritePreparer::proccessTransform(Transform & transform, const size_t lod
     //-------------------------------------------------------------------------
     // children
 
-    const Transform::TransformIndex chCount = transform.childrenNum();
-    for (Transform::TransformIndex i = 0; i < chCount; ++i) {
-        if (!proccessTransform(*static_cast<Transform*>(transform.childAt(i)), lodNumber, lod)) {
+    for (auto & child : transform) {
+        if (!proccessTransform(*child, lodNumber, lod)) {
             return false;
         }
     }

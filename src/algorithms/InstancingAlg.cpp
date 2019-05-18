@@ -78,9 +78,8 @@ void InstancingAlg::proccessTransform(Transform & transform, bool & outResult) {
     //-------------------------------------------------------------------------
     // children
 
-    const auto chCount = transform.childrenNum();
-    for (Transform::TransformIndex i = 0; i < chCount; ++i) {
-        proccessTransform(*static_cast<Transform*>(transform.childAt(i)), outResult);
+    for (auto & child : transform) {
+        proccessTransform(*child, outResult);
     }
     //-------------------------------------------------------------------------
 }

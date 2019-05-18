@@ -79,10 +79,9 @@ void Draped::extract(ObjDrapedGroup & inOutDraped,
         }
     }
 
-    const auto childrenNum = inOutTransform.childrenNum();
-    for (std::size_t i = 0; i < childrenNum; ++ i) {
+    for (auto & child : inOutTransform) {
         INTERRUPT_CHECK_WITH_RETURN(interrupt);
-        extract(inOutDraped, *inOutTransform.childAt(i), interrupt);
+        extract(inOutDraped, *child, interrupt);
     }
 }
 

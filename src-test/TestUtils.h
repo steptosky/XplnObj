@@ -61,7 +61,7 @@ public:
 
     static void extractTransform(Transform & transform, const size_t numTransform, Transform *& outTrans) {
         ASSERT_TRUE(transform.childrenNum() > numTransform) << " value is " << numTransform;
-        outTrans = static_cast<Transform*>(transform.childAt(numTransform));
+        outTrans = static_cast<Transform*>((transform.begin() + numTransform)->get());
     }
 
     static void extractMesh(Transform & transform, const size_t meshNum, ObjMesh *& outMesh) {

@@ -28,8 +28,6 @@
 */
 
 #include "xpln/obj/ObjAbstract.h"
-#include "xpln/obj/Transform.h"
-#include "common/Logger.h"
 
 namespace xobj {
 
@@ -43,30 +41,12 @@ ObjAbstract::ObjAbstract()
 ObjAbstract::ObjAbstract(const ObjAbstract & copy)
     : mName(copy.mName) { }
 
-ObjAbstract::~ObjAbstract() {
-    if (mObjTransform) {
-        if (!mObjTransform->removeObject(this)) {
-            LError << " Internal logic error."
-                    << " type: " << ObjAbstract::objType()
-                    << " objectName: " << objectName();
-        }
-    }
-}
-
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
 eObjectType ObjAbstract::objType() const {
     return OBJ_NO;
-}
-
-const Transform * ObjAbstract::transform() const {
-    return mObjTransform;
-}
-
-Transform * ObjAbstract::transform() {
-    return mObjTransform;
 }
 
 /**************************************************************************************************/

@@ -61,7 +61,7 @@ TEST(DrapedAlg, extract) {
     Draped::extract(draped, transformRoot, NoInterrupter());
 
     EXPECT_EQ(1, transformRoot.objList().size());
-    EXPECT_EQ(1, transformRoot.childAt(0)->objList().size());
+    EXPECT_EQ(1, (*transformRoot.begin())->objList().size());
 
     ASSERT_EQ(2, draped.transform().objList().size());
     EXPECT_STREQ("l1-m1", draped.transform().objList()[0]->objectName().c_str());

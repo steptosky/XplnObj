@@ -66,8 +66,8 @@ public:
     static void extractMesh(const ObjMain & inMain, const size_t inLodNumber, const size_t inMeshNumber, ObjMesh *& outMesh) {
         ASSERT_TRUE(inLodNumber < inMain.lods().size());
         const ObjLodGroup & inLGroup = *inMain.lods().at(inLodNumber);
-        ASSERT_TRUE(inMeshNumber < inLGroup.transform().objects().size());
-        auto iterator = inLGroup.transform().objects().begin();
+        ASSERT_TRUE(inMeshNumber < inLGroup.transform().mObjects.size());
+        auto iterator = inLGroup.transform().mObjects.begin();
         for (size_t i = 0; i < inMeshNumber; ++i) {
             ++iterator;
         }
@@ -103,10 +103,10 @@ TEST_F(TestManipIOLogic, case_1_no_manips) {
     //-----------------------------
     ObjMain outObj;
     ObjLodGroup & outLGroup = outObj.addLod();
-    outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m0", 0.0));
-    outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m1", 1.0));
-    outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m2", 2.0));
-    outLGroup.transform().addObject(TestUtilsObjMesh::createObjMesh("m3", 3.0));
+    outLGroup.transform().mObjects.emplace_back(TestUtilsObjMesh::createObjMesh("m0", 0.0));
+    outLGroup.transform().mObjects.emplace_back(TestUtilsObjMesh::createObjMesh("m1", 1.0));
+    outLGroup.transform().mObjects.emplace_back(TestUtilsObjMesh::createObjMesh("m2", 2.0));
+    outLGroup.transform().mObjects.emplace_back(TestUtilsObjMesh::createObjMesh("m3", 3.0));
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -146,10 +146,10 @@ TEST_F(TestManipIOLogic, case_2) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     mManipComd.mCommand = "test";
     // Manip
@@ -196,10 +196,10 @@ TEST_F(TestManipIOLogic, case_3) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     mManipComd.mCommand = "test";
     // Manip
@@ -247,10 +247,10 @@ TEST_F(TestManipIOLogic, case_4) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     mManipComd.mCommand = "test";
     // Manip
@@ -299,10 +299,10 @@ TEST_F(TestManipIOLogic, case_5) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     mManipComd.mCommand = "test";
     // Manip
@@ -351,10 +351,10 @@ TEST_F(TestManipIOLogic, case_6) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     // Manip
     mManipComd.mCommand = "test1";
@@ -417,10 +417,10 @@ TEST_F(TestManipIOLogic, case_7) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     // Manip
     outM1->mAttr.mManip = AttrManip(mManipComd);
@@ -474,10 +474,10 @@ TEST_F(TestManipIOLogic, case_8) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     // Manip
     outM1->mAttr.mManip = AttrManip(mManipComd);
@@ -530,10 +530,10 @@ TEST_F(TestManipIOLogic, case_9) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     // Manip
     outM1->mAttr.mManip = AttrManip(mManipComd);
@@ -586,10 +586,10 @@ TEST_F(TestManipIOLogic, case_10) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     // Manip
     outM1->mAttr.mManip = AttrManip(mManipComd);
@@ -642,10 +642,10 @@ TEST_F(TestManipIOLogic, case_11) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     // Manip
     outM1->mAttr.mManip = AttrManip(mManipComd);

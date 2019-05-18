@@ -47,14 +47,14 @@ TEST(Draped, DISABLED_io) {
     ObjLodGroup & lod1 = mainOut.addLod(new ObjLodGroup("l1", 0.0f, 100.0f));
     ObjLodGroup & lod2 = mainOut.addLod(new ObjLodGroup("l2", 100.0f, 200.0f));
 
-    lod1.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l1-m1"));
-    lod1.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l1-m2"));
+    lod1.transform().mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("l1-m1"));
+    lod1.transform().mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("l1-m2"));
 
-    lod2.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l2-m1"));
-    lod2.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("l2-m2"));
+    lod2.transform().mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("l2-m1"));
+    lod2.transform().mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("l2-m2"));
 
-    mainOut.mDraped.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("d1"));
-    mainOut.mDraped.transform().addObject(TestUtilsObjMesh::createPyramidTestMesh("d2"));
+    mainOut.mDraped.transform().mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("d1"));
+    mainOut.mDraped.transform().mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("d2"));
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(mainOut.exportObj(expContext));
@@ -75,9 +75,9 @@ TEST(Draped, DISABLED_io) {
     //-------------------
     // check results
 
-    EXPECT_EQ(2, lodIn1->transform().objects().size());
-    EXPECT_EQ(2, lodIn2->transform().objects().size());
-    EXPECT_EQ(2, mainIn.mDraped.transform().objects().size());
+    EXPECT_EQ(2, lodIn1->transform().mObjects.size());
+    EXPECT_EQ(2, lodIn2->transform().mObjects.size());
+    EXPECT_EQ(2, mainIn.mDraped.transform().mObjects.size());
 }
 
 /**************************************************************************************************/

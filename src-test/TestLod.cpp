@@ -95,10 +95,10 @@ TEST_F(TestLod, lods_grouping) {
     lGroup3.setNearVal(0.0);
     lGroup3.setFarVal(500.0);
 
-    lGroup1.transform().addObject(m1);
-    lGroup2.transform().addObject(m2);
-    lGroup3.transform().addObject(m3);
-    lGroup3.transform().addObject(m4);
+    lGroup1.transform().mObjects.emplace_back(m1);
+    lGroup2.transform().mObjects.emplace_back(m2);
+    lGroup3.transform().mObjects.emplace_back(m3);
+    lGroup3.transform().mObjects.emplace_back(m4);
 
     //-------------------------------------------------------------------------
     // LODs are owners for its children, 
@@ -135,7 +135,7 @@ TEST_F(TestLod, lods_grouping) {
     ASSERT_STREQ(lGroup1.objectName().c_str(), lod1.objectName().c_str());
     ASSERT_EQ(1000.0, lod1.nearVal());
     ASSERT_EQ(1500.0, lod1.farVal());
-    const Transform::ObjList & objList1 = lod1.transform().objects();
+    const Transform::ObjList & objList1 = lod1.transform().mObjects;
     ASSERT_EQ(1, objList1.size());
     const auto * obj1 = dynamic_cast<const ObjMesh*>(objList1.begin()->get());
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMesh(mesh1, obj1));
@@ -147,7 +147,7 @@ TEST_F(TestLod, lods_grouping) {
     ASSERT_EQ(1000.0, lod2.farVal());
     ASSERT_STREQ(lGroup2.objectName().c_str(), lod2.objectName().c_str());
 
-    const Transform::ObjList & objList2 = lod2.transform().objects();
+    const Transform::ObjList & objList2 = lod2.transform().mObjects;
     ASSERT_EQ(1, objList2.size());
     const auto * obj2 = dynamic_cast<const ObjMesh*>(objList2.begin()->get());
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMesh(mesh2, obj2));
@@ -159,7 +159,7 @@ TEST_F(TestLod, lods_grouping) {
     ASSERT_EQ(500.0, lod3.farVal());
     ASSERT_STREQ(lGroup3.objectName().c_str(), lod3.objectName().c_str());
 
-    const Transform::ObjList & objList3 = lod3.transform().objects();
+    const Transform::ObjList & objList3 = lod3.transform().mObjects;
     ASSERT_EQ(2, objList3.size());
     const auto * objMesh3 = dynamic_cast<const ObjMesh*>(objList3.begin()->get());
     const auto * objMesh4 = dynamic_cast<const ObjMesh*>((++objList3.begin())->get());
@@ -182,9 +182,9 @@ TEST_F(TestLod, lods_sorting) {
     ObjLodGroup & lGroup2 = main.addLod();
     ObjLodGroup & lGroup3 = main.addLod();
 
-    lGroup1.transform().addObject(new ObjMesh());
-    lGroup2.transform().addObject(new ObjMesh());
-    lGroup3.transform().addObject(new ObjMesh());
+    lGroup1.transform().mObjects.emplace_back(new ObjMesh());
+    lGroup2.transform().mObjects.emplace_back(new ObjMesh());
+    lGroup3.transform().mObjects.emplace_back(new ObjMesh());
 
     lGroup1.setObjectName(TOTEXT(lGroup1));
     lGroup1.setNearVal(1000.0);
@@ -231,8 +231,8 @@ TEST_F(TestLod, validator_near_far_values_case1) {
 
     ObjLodGroup & lGroup1 = main.addLod();
     ObjLodGroup & lGroup2 = main.addLod();
-    lGroup1.transform().addObject(m1);
-    lGroup2.transform().addObject(m2);
+    lGroup1.transform().mObjects.emplace_back(m1);
+    lGroup2.transform().mObjects.emplace_back(m2);
     m1 = nullptr;
     m2 = nullptr;
     lGroup2.setNearVal(0.0f);
@@ -258,7 +258,7 @@ TEST_F(TestLod, validator_near_far_values_case2) {
     ObjMain main;
 
     ObjLodGroup & lGroup1 = main.addLod();
-    lGroup1.transform().addObject(m1);
+    lGroup1.transform().mObjects.emplace_back(m1);
     m1 = nullptr;
 
     // one lod but starts not from 0.0 
@@ -277,7 +277,7 @@ TEST_F(TestLod, validator_no_objects) {
 
     ObjLodGroup & lGroup1 = main.addLod();
     ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
-    lGroup1.transform().addObject(m1);
+    lGroup1.transform().mObjects.emplace_back(m1);
     m1 = nullptr;
 }
 
@@ -285,7 +285,7 @@ TEST_F(TestLod, validator_animation) {
     ObjMain main;
 
     ObjLodGroup & lGroup1 = main.addLod();
-    lGroup1.transform().addObject(m1);
+    lGroup1.transform().mObjects.emplace_back(m1);
     lGroup1.transform().mAnimTrans.emplace_back(AnimTrans());
     lGroup1.transform().mAnimTrans.back().mKeys.emplace_back(AnimTransKey(1.0f, 1.0f, 1.0f, 1.0f));
     lGroup1.transform().mAnimTrans.back().mKeys.emplace_back(AnimTransKey(2.0f, 2.0f, 2.0f, 2.0f));
@@ -301,8 +301,8 @@ TEST_F(TestLod, validator_identical_lods) {
 
     ObjLodGroup & lGroup1 = main.addLod(new ObjLodGroup(TOTEXT(lGroup1), 0.0f, 100.0f));
     ObjLodGroup & lGroup2 = main.addLod(new ObjLodGroup(TOTEXT(lGroup1), 0.0f, 100.0f));
-    lGroup1.transform().addObject(m1);
-    lGroup2.transform().addObject(m2);
+    lGroup1.transform().mObjects.emplace_back(m1);
+    lGroup2.transform().mObjects.emplace_back(m2);
     ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
     m1 = nullptr;
     m2 = nullptr;
@@ -314,8 +314,8 @@ TEST_F(TestLod, validator_attr_hard) {
     // no linked objects
     ObjLodGroup & lGroup1 = main.addLod(new ObjLodGroup(TOTEXT(lGroup1), 0.0f, 100.0f));
     ObjLodGroup & lGroup2 = main.addLod(new ObjLodGroup(TOTEXT(lGroup2), 100.0f, 200.0f));
-    lGroup1.transform().addObject(m1);
-    lGroup2.transform().addObject(m2);
+    lGroup1.transform().mObjects.emplace_back(m1);
+    lGroup2.transform().mObjects.emplace_back(m2);
     m2->mAttr.mHard = AttrHard(ESurface(ESurface::grass), false);
     ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
     m1 = nullptr;

@@ -57,7 +57,7 @@ void ObjWritePreparer::deleteEmptyTransformsRecursively(Transform & transform) {
     for (auto & child : transform) {
         deleteEmptyTransformsRecursively(*child);
 
-        if (!child->hasObjects() && child->childrenNum() == 0) {
+        if (child->mObjects.empty() && child->childrenNum() == 0) {
             forDelete.emplace_back(child.release());
         }
     }
@@ -93,17 +93,13 @@ bool ObjWritePreparer::proccessTransform(Transform & transform, const size_t lod
 }
 
 bool ObjWritePreparer::proccessObjects(Transform & transform, const size_t /*lodNumber*/, const ObjLodGroup & /*lod*/) {
-    std::vector<ObjAbstract*> objToDelete;
-    for (const auto & curr : transform.objects()) {
-        if (!checkParameters(*curr, curr->objectName())) {
-            objToDelete.emplace_back(curr.get());
+    for (auto it = transform.mObjects.begin(); it != transform.mObjects.end();) {
+        if (!checkParameters(*(*it), (*it)->objectName())) {
+            it = transform.mObjects.erase(it);
         }
         else {
-            checkForTwoSided(*curr);
+            ++it;
         }
-    }
-    for (auto & curr : objToDelete) {
-       delete transform.takeObject(curr);
     }
     return true;
 }

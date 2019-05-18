@@ -74,8 +74,8 @@ template<typename MANIP>
 void extractManip(const ObjMain & inMain, const MANIP *& outAttr) {
     ASSERT_EQ(1, inMain.lods().size());
     const ObjLodGroup & inLGroup = *inMain.lods().at(0);
-    ASSERT_EQ(1, inLGroup.transform().objects().size());
-    ObjAbstract * obj = inLGroup.transform().objects().begin()->get();
+    ASSERT_EQ(1, inLGroup.transform().mObjects.size());
+    ObjAbstract * obj = inLGroup.transform().mObjects.begin()->get();
     ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
     auto * inM = static_cast<ObjMesh *>(obj);
     ASSERT_TRUE(inM->mAttr.mManip);
@@ -88,7 +88,7 @@ template<typename MANIP>
 void addManip(ObjMain & inOutMain, const MANIP & inManip) {
     ObjMesh * outM = TestUtilsObjMesh::createObjMesh("m1", 0.0);
     ObjLodGroup & outLGroup = inOutMain.addLod();
-    outLGroup.transform().addObject(outM);
+    outLGroup.transform().mObjects.emplace_back(outM);
     outM->mAttr.mManip = AttrManip(inManip);
 }
 

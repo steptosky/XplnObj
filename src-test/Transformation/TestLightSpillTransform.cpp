@@ -128,7 +128,7 @@ TEST(ObjLightSpillCust, real_usecase_case1) {
     auto * light = new ObjLightSpillCust;
     light->setPosition(Point3(0.0f, -10.0f, 0.0f));
     light->setDirection(Point3(0.0f, -5.0f, 0.0f) - light->position());
-    lightTransform.addObject(light);
+    lightTransform.mObjects.emplace_back(light);
 
     ObjTransformation::correctExportTransform(mainOut, mainOut.mMatrix, true);
 

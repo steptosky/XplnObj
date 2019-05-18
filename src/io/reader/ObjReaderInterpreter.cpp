@@ -478,11 +478,11 @@ void ObjReaderInterpreter::gotTris(const Index offset, const Index count, const 
     //--------------------------
 
     if (!mesh->mAttr.mIsDraped) {
-        mCurrentTransform->addObject(mesh);
+        mCurrentTransform->mObjects.emplace_back(mesh);
     }
     else {
         mesh->applyTransform(mCurrentTransform->mMatrix);
-        mObjMain->mDraped.transform().addObject(mesh);
+        mObjMain->mDraped.transform().mObjects.emplace_back(mesh);
     }
 }
 

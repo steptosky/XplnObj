@@ -62,8 +62,8 @@ TEST(TestTransformationAlgorithm_case5, case1) {
     Transform & trOut1 = trOut0.newChild(TOTEXT(trOut1));
     Transform & trOut2 = trOut1.newChild(TOTEXT(trOut2));
 
-    trOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
-    trOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
+    trOut1.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
+    trOut2.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
     trOut1.mMatrix.rotateDegreesZ(90.0f);
     trOut1.mMatrix.setPosition(Point3(-50.0f, 0.0f, -50.0f));
@@ -141,8 +141,8 @@ TEST(TestTransformationAlgorithm_case5, case2) {
     Transform & trOut1 = trOut0.newChild(TOTEXT(trOut1));
     Transform & trOut2 = trOut1.newChild(TOTEXT(trOut2));
 
-    trOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
-    trOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
+    trOut1.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
+    trOut2.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
     mainOut.mMatrix.rotateDegreesZ(-90.0f);
     trOut1.mMatrix.rotateDegreesZ(90.0f);

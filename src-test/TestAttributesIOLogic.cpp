@@ -65,8 +65,8 @@ public:
     static void extractMesh(const ObjMain & inMain, size_t inLodNumber, size_t inMeshNumber, ObjMesh *& outMesh) {
         ASSERT_TRUE(inLodNumber < inMain.lods().size());
         const ObjLodGroup & inLGroup = *inMain.lods().at(inLodNumber);
-        ASSERT_TRUE(inMeshNumber < inLGroup.transform().objects().size());
-        auto iterator = inLGroup.transform().objects().begin();
+        ASSERT_TRUE(inMeshNumber < inLGroup.transform().mObjects.size());
+        auto iterator = inLGroup.transform().mObjects.begin();
         for (size_t i = 0; i < inMeshNumber; ++i) {
             ++iterator;
         }
@@ -92,10 +92,10 @@ TEST_F(TestAttributesIOLogic, case_1) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     mAttrPolyOffset.mOffset = 1.0f;
     // Attr
@@ -141,10 +141,10 @@ TEST_F(TestAttributesIOLogic, case_2) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     mAttrPolyOffset.mOffset = 1.0f;
     // Attr
@@ -190,10 +190,10 @@ TEST_F(TestAttributesIOLogic, case_3) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     mAttrPolyOffset.mOffset = 1.0f;
     // Attr
@@ -239,10 +239,10 @@ TEST_F(TestAttributesIOLogic, case_4) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     mAttrPolyOffset.mOffset = 1.0f;
     // Attr
@@ -287,10 +287,10 @@ TEST_F(TestAttributesIOLogic, case_5) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     // Attr
     mAttrPolyOffset.mOffset = 1.0f;
@@ -341,10 +341,10 @@ TEST_F(TestAttributesIOLogic, case_6) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     mAttrPolyOffset.mOffset = 1.0f;
     // Attr
@@ -393,10 +393,10 @@ TEST_F(TestAttributesIOLogic, case_7) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     mAttrPolyOffset.mOffset = 1.0f;
     // Attr
@@ -446,10 +446,10 @@ TEST_F(TestAttributesIOLogic, case_8) {
     ObjMesh * outM2 = TestUtilsObjMesh::createObjMesh("m1", 1.0);
     ObjMesh * outM3 = TestUtilsObjMesh::createObjMesh("m2", 2.0);
     ObjMesh * outM4 = TestUtilsObjMesh::createObjMesh("m3", 3.0);
-    outLGroup.transform().addObject(outM1);
-    outLGroup.transform().addObject(outM2);
-    outLGroup.transform().addObject(outM3);
-    outLGroup.transform().addObject(outM4);
+    outLGroup.transform().mObjects.emplace_back(outM1);
+    outLGroup.transform().mObjects.emplace_back(outM2);
+    outLGroup.transform().mObjects.emplace_back(outM3);
+    outLGroup.transform().mObjects.emplace_back(outM4);
 
     mAttrPolyOffset.mOffset = 1.0f;
     // Attr

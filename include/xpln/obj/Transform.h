@@ -77,6 +77,7 @@ public:
     AnimTransList mAnimTrans;
     AnimRotateList mAnimRotate;
     AnimVisibility mAnimVis;
+    ObjList mObjects;
 
     /// @}
     //-------------------------------------------------------------------------
@@ -128,25 +129,6 @@ public:
 
     /// @}
     //-------------------------------------------------------------------------
-    /// \name Objects
-    /// @{
-
-    /*!
-     * \details Adds new object.
-     * \note Takes ownership of the pointer
-     */
-    XpObjLib void addObject(ObjAbstract * object);
-
-    /*!
-     * \details Free ownership and return pointer.
-     */
-    XpObjLib ObjAbstract * takeObject(const ObjAbstract * object);
-
-    const ObjList & objects() const { return mObjects; }
-    bool hasObjects() const { return !mObjects.empty(); }
-
-    /// @}
-    //-------------------------------------------------------------------------
     /// \name Animation
     /// @{
 
@@ -161,7 +143,6 @@ public:
 private:
 
     Transform * mParent = nullptr;
-    ObjList mObjects;
     Children mChildren;
 
 };

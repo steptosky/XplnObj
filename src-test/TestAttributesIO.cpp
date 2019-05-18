@@ -53,8 +53,8 @@ using namespace xobj;
 void extractMesh(ObjMain & inMain, ObjMesh *& outAttr) {
     ASSERT_EQ(1, inMain.lods().size());
     const ObjLodGroup & inLGroup = *inMain.lods().at(0);
-    ASSERT_EQ(1, inLGroup.transform().objects().size());
-    ObjAbstract * obj = inLGroup.transform().objects().begin()->get();
+    ASSERT_EQ(1, inLGroup.transform().mObjects.size());
+    ObjAbstract * obj = inLGroup.transform().mObjects.begin()->get();
     ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
     outAttr = static_cast<ObjMesh *>(obj);
 }
@@ -70,7 +70,7 @@ TEST(TestAttributesIO, default_vals) {
 
     ObjMesh * outM = TestUtilsObjMesh::createObjMesh("m1", 0.0);
     ObjLodGroup & outLGroup = outObj.addLod();
-    outLGroup.transform().addObject(outM);
+    outLGroup.transform().mObjects.emplace_back(outM);
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -98,7 +98,7 @@ TEST(TestAttributesIO, not_default_vals_case_1) {
 
     ObjMesh * outM = TestUtilsObjMesh::createObjMeshNotDefaultAttributes1("m1", 0.0);
     ObjLodGroup & outLGroup = outObj.addLod();
-    outLGroup.transform().addObject(outM);
+    outLGroup.transform().mObjects.emplace_back(outM);
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));
@@ -126,7 +126,7 @@ TEST(TestAttributesIO, not_default_vals_case_2) {
 
     ObjMesh * outM = TestUtilsObjMesh::createObjMeshNotDefaultAttributes2("m1", 0.0);
     ObjLodGroup & outLGroup = outObj.addLod();
-    outLGroup.transform().addObject(outM);
+    outLGroup.transform().mObjects.emplace_back(outM);
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(outObj.exportObj(expContext));

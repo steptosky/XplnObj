@@ -72,21 +72,21 @@ void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatr
     // objects
 
     if (exp) {
-        if (!transform.hasObjects()) {
+        if (transform.mObjects.empty()) {
             mapsExpCoordinates(nullptr, transform, rootMatrix);
         }
         else {
-            for (auto & curr : transform.objects()) {
+            for (auto & curr : transform.mObjects) {
                 mapsExpCoordinates(curr.get(), transform, rootMatrix);
             }
         }
     }
     else {
-        if (!transform.hasObjects()) {
+        if (transform.mObjects.empty()) {
             mapsImpCoordinates(nullptr, transform, rootMatrix);
         }
         else {
-            for (auto & curr : transform.objects()) {
+            for (auto & curr : transform.mObjects) {
                 mapsImpCoordinates(curr.get(), transform, rootMatrix);
             }
         }

@@ -29,7 +29,6 @@
 
 #include "xpln/obj/Transform.h"
 #include "xpln/obj/ObjAbstract.h"
-#include "common/BaseLogger.h"
 
 namespace xobj {
 
@@ -63,36 +62,6 @@ Transform & Transform::newChild(const std::string_view name) {
         t->mName = name;
     }
     return *t;
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void Transform::addObject(ObjAbstract * object) {
-    if (object) {
-        for (const auto & curr : mObjects) {
-            if (curr.get() == object) {
-                LWarning << "You try to add an object which already exists.";
-                return;
-            }
-        }
-        mObjects.emplace_back(object);
-    }
-}
-
-ObjAbstract * Transform::takeObject(const ObjAbstract * object) {
-    ObjAbstract * out = nullptr;
-    if (object) {
-        for (auto it = mObjects.begin(); it != mObjects.end(); ++it) {
-            if (it->get() == object) {
-                out = it->release();
-                mObjects.erase(it);
-                return out;
-            }
-        }
-    }
-    return out;
 }
 
 /**************************************************************************************************/

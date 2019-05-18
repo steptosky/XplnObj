@@ -101,7 +101,7 @@ const Transform * TransformAlg::findParentIf(const Transform & transform,
 bool TransformAlg::visitObjectsConst(const Transform & transform,
                                      const std::function<bool(const Transform &, const ObjAbstract &)> & function) {
 
-    for (auto & obj : transform.objects()) {
+    for (auto & obj : transform.mObjects) {
         if (!function(transform, *obj)) {
             return false;
         }
@@ -118,7 +118,7 @@ bool TransformAlg::visitObjectsConst(const Transform & transform,
 bool TransformAlg::visitObjects(Transform & transform,
                                 const std::function<bool(Transform &, ObjAbstract &)> & function) {
 
-    for (auto & obj : transform.objects()) {
+    for (auto & obj : transform.mObjects) {
         if (!function(transform, *obj)) {
             return false;
         }

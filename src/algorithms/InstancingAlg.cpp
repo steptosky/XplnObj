@@ -85,7 +85,7 @@ void InstancingAlg::proccessTransform(Transform & transform, bool & outResult) {
 }
 
 void InstancingAlg::proccessObjects(Transform & transform, bool & outResult) {
-    for (auto & curr : transform.objects()) {
+    for (auto & curr : transform.mObjects) {
         if (curr->objType() == OBJ_LINE) {
             printBreakInstancing(curr->objectName().c_str(),
                                  "the object is the line object. Lines are not allowed for instancing.");

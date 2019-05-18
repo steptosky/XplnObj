@@ -49,11 +49,10 @@ class Draped {
 public:
 
     XpObjLib static void ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrupter & interrupt);
-    XpObjLib static void extract(ObjDrapedGroup & inOutDraped, Transform & inOutTransform, const IInterrupter & interrupt);
 
-private:
-
-    static Transform::ObjList processObjects(Transform & transform);
+    XpObjLib static void extractDrapedObjects(ObjDrapedGroup & inOutDraped, Transform & inOutTransform, const IInterrupter & interrupt);
+    XpObjLib static void extractDrapedObjects(Transform & transform, Transform::ObjList & outObjects, const IInterrupter & interrupt);
+    XpObjLib static void extractDrapedObjects(Transform::ObjList & objects, Transform::ObjList & outObjects, const IInterrupter & interrupt);
 
 };
 

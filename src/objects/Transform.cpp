@@ -27,6 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <algorithm>
 #include "xpln/obj/Transform.h"
 #include "xpln/obj/ObjAbstract.h"
 

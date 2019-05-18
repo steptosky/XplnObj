@@ -108,14 +108,9 @@ public:
     XpObjLib Transform & newChild(std::string_view name = std::string_view());
 
     /*!
-     * \todo remove when it is not needed anymore
+     * \details Checks whether the transform has children.
      */
     bool hasChildren() const { return !mChildren.empty(); }
-
-    /*!
-     * \todo remove when it is not needed anymore
-     */
-    std::size_t childrenNum() const { return mChildren.size(); }
 
     Children::iterator begin() noexcept { return mChildren.begin(); }
     Children::iterator end() noexcept { return mChildren.end(); }

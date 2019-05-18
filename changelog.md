@@ -1,8 +1,19 @@
 StepToSky: X-Plane Obj Library
 ---------------------------------------------------------------------------
+#### next
+
+- **Added** Particle system support.
+
+##### Breaking backward compatibility:
+- **Changed** Code style: public variable now have the prefix m instead of p.
+- **Changed** Attribute sets use std::optional now.
+- **Changed** Tree attribute location. It is presented as a parameter of the mesh object now.
+- **Removed** `enable/disable` flags from the attributes as the std::option is used.
+
+---------------------------------------------------------------------------
 #### 0.9.0-beta (27.11.2018)
 ##### Breaking backward compatibility:
-- **Changed:** Custom DataRefs and Commands format. The symbol ':' must immediate fallow ID.
+- **Changed** Custom DataRefs and Commands format. The symbol ':' must immediate fallow ID.
 
 ---------------------------------------------------------------------------
 #### 0.8.0-beta (25.10.2018)

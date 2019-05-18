@@ -29,6 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <memory>
 #include <functional>
 #include "xpln/Export.h"
 #include "xpln/obj/attributes/AttrGlobSet.h"
@@ -41,20 +42,22 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**********************************************************************************************************************/
 
-class ObjWriteState final {
+class ObjState final {
 public:
+
+    typedef std::shared_ptr<ObjState> Ptr;
 
     //-------------------------------------------------------------------------
     /// @{
 
-    ObjWriteState() = default;
-    ObjWriteState(const ObjWriteState &) = default;
-    ObjWriteState(ObjWriteState &&) = delete;
+    ObjState() = default;
+    ObjState(const ObjState &) = default;
+    ObjState(ObjState &&) = delete;
 
-    ~ObjWriteState() = default;
+    ~ObjState() = default;
 
-    ObjWriteState & operator=(const ObjWriteState &) = default;
-    ObjWriteState & operator=(ObjWriteState &&) = delete;
+    ObjState & operator=(const ObjState &) = default;
+    ObjState & operator=(ObjState &&) = delete;
 
     /// @}
     //-------------------------------------------------------------------------
@@ -94,7 +97,15 @@ public:
         mGlobal.reset();
         mDraped.reset();
         mObject.reset();
+        mObjHasParticleEmitters = false;
     }
+
+    /*!
+     * \details Will print error and warning in the log
+     *          if something inconsistent in the obj.
+     * \param [in] objName of the object.
+     */
+    XpObjLib void finish(const std::string & objName);
 
     /// @}
     //-------------------------------------------------------------------------
@@ -103,6 +114,12 @@ public:
     AttrGlobSet mGlobal;
     AttrDrapedSet mDraped;
     AttrSet mObject;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    bool mObjHasParticleEmitters = false;
 
     /// @}
     //-------------------------------------------------------------------------

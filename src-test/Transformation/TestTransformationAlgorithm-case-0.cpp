@@ -61,11 +61,11 @@ TEST(TestTransformationAlgorithm_case0, case1) {
     transformOut1.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.addObject(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
 
-    transformOut1.pMatrix.rotateDegreesY(+90.0f);
-    transformOut2.pMatrix.rotateDegreesY(-90.0f);
+    transformOut1.mMatrix.rotateDegreesY(+90.0f);
+    transformOut2.mMatrix.rotateDegreesY(-90.0f);
 
-    transformOut1.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
-    transformOut2.pMatrix.setPosition(Point3(50.0f, 0.0f, 0.0f));
+    transformOut1.mMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    transformOut2.mMatrix.setPosition(Point3(50.0f, 0.0f, 0.0f));
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(mainOut.exportObj(expContext));
@@ -115,8 +115,8 @@ TEST(TestTransformationAlgorithm_case0, case2) {
     mainOut.mMatrix.rotateDegreesY(-90.0f);
     mainOut.mMatrix.setPosition(Point3(50.0f, 0.0f, 0.0f));
 
-    transformOut1.pMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
-    transformOut1.pMatrix.rotateDegreesY(+90.0f);
+    transformOut1.mMatrix.setPosition(Point3(-50.0f, 0.0f, 0.0f));
+    transformOut1.mMatrix.rotateDegreesY(+90.0f);
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(mainOut.exportObj(expContext));

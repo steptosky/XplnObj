@@ -75,10 +75,10 @@ public:
     /// @}
     //-------------------------------------------------------------------------
 
-    TMatrix pMatrix;
-    AnimTransList pAnimTrans;
-    AnimRotateList pAnimRotate;
-    AnimVisibility pAnimVis;
+    TMatrix mMatrix;
+    AnimTransList mAnimTrans;
+    AnimRotateList mAnimRotate;
+    AnimVisibility mAnimVis;
 
     //-------------------------------------------------------------------------
     /// \name Naming

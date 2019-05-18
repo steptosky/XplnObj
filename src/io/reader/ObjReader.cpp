@@ -339,7 +339,11 @@ bool ObjReader::readGlobalAttribute(ObjReadParser & parser) const {
         mObjParserListener->gotGlobAttrTextureNormal(parser.extractWord());
         return true;
     }
-
+    if (parser.isMatch(ATTR_GLOBAL_PARTICLE_SYSTEM)) {
+        parser.skipSpace();
+        mObjParserListener->gotGlobAttrParticleSystemPath(parser.extractWord());
+        return true;
+    }
     if (parser.isMatch(ATTR_GLOBAL_WET)) {
         mObjParserListener->gotGlobAttrWetDry(AttrWetDry(AttrWetDry::wet));
         return true;

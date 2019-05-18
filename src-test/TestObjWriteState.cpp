@@ -28,7 +28,7 @@
 */
 
 #include <gtest/gtest.h>
-#include <io/ObjWriteState.h>
+#include <io/ObjState.h>
 
 using namespace std::string_literals;
 
@@ -43,7 +43,7 @@ TEST(ObjWriteState, processAttr_bool) {
     bool switchEnable = false;
     bool called = false;
 
-    ObjWriteState::processBool(false, state, [&](const bool enable) {
+    ObjState::processBool(false, state, [&](const bool enable) {
         switchEnable = enable;
         called = true;
     });
@@ -53,7 +53,7 @@ TEST(ObjWriteState, processAttr_bool) {
 
     switchEnable = false;
     called = false;
-    ObjWriteState::processBool(true, state, [&](const bool enable) {
+    ObjState::processBool(true, state, [&](const bool enable) {
         switchEnable = enable;
         called = true;
     });
@@ -63,7 +63,7 @@ TEST(ObjWriteState, processAttr_bool) {
 
     switchEnable = false;
     called = false;
-    ObjWriteState::processBool(true, state, [&](const bool enable) {
+    ObjState::processBool(true, state, [&](const bool enable) {
         switchEnable = enable;
         called = true;
     });
@@ -73,7 +73,7 @@ TEST(ObjWriteState, processAttr_bool) {
 
     switchEnable = false;
     called = false;
-    ObjWriteState::processBool(false, state, [&](const bool enable) {
+    ObjState::processBool(false, state, [&](const bool enable) {
         switchEnable = enable;
         called = true;
     });
@@ -88,7 +88,7 @@ TEST(ObjWriteState, processAttr) {
     bool switchEnable = false;
     bool called = false;
     // empty
-    ObjWriteState::processAttr(TestAttr(std::nullopt), state, [&](const bool enable) {
+    ObjState::processAttr(TestAttr(std::nullopt), state, [&](const bool enable) {
         switchEnable = enable;
         called = true;
     });
@@ -98,7 +98,7 @@ TEST(ObjWriteState, processAttr) {
     // new
     switchEnable = false;
     called = false;
-    ObjWriteState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.5f)), state, [&](const bool enable) {
+    ObjState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.5f)), state, [&](const bool enable) {
         switchEnable = enable;
         called = true;
     });
@@ -108,7 +108,7 @@ TEST(ObjWriteState, processAttr) {
     // the same
     switchEnable = false;
     called = false;
-    ObjWriteState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.5f)), state, [&](const bool enable) {
+    ObjState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.5f)), state, [&](const bool enable) {
         switchEnable = enable;
         called = true;
     });
@@ -118,7 +118,7 @@ TEST(ObjWriteState, processAttr) {
     // value changed
     switchEnable = false;
     called = false;
-    ObjWriteState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.75f)), state, [&](const bool enable) {
+    ObjState::processAttr(TestAttr(AttrBlend(AttrBlend::blend, 0.75f)), state, [&](const bool enable) {
         switchEnable = enable;
         called = true;
     });
@@ -128,7 +128,7 @@ TEST(ObjWriteState, processAttr) {
     // disabling
     switchEnable = false;
     called = false;
-    ObjWriteState::processAttr(TestAttr(std::nullopt), state, [&](const bool enable) {
+    ObjState::processAttr(TestAttr(std::nullopt), state, [&](const bool enable) {
         switchEnable = enable;
         called = true;
     });

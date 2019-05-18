@@ -34,6 +34,7 @@
 #include "xpln/obj/ExportOptions.h"
 #include "xpln/obj/IOStatistic.h"
 
+#include "io/ObjState.h"
 #include "ObjWriteAttr.h"
 #include "ObjWritePreparer.h"
 #include "ObjWriteAnim.h"
@@ -67,18 +68,19 @@ private:
 
     ExportOptions mExportOptions;
     IOStatistic mStatistic;
+    ObjState::Ptr mState;
 
     ObjWriteAnim mAnimationWritter;
     ObjWriteGeometry mObjWriteGeometry;
     ObjWriteAttr mWriteAttr;
 
-    ObjMain * mMain;
+    ObjMain * mMain = nullptr;
 
     void calculateVerticiesAndFaces(const Transform & parent);
     void printGlobalInformation(AbstractWriter & writer, const ObjMain & objRoot);
     void printObjects(AbstractWriter & writer, const Transform & parent);
 
-    static void printSignature(AbstractWriter & writer, const std::string & signature);
+    static void printSignature(AbstractWriter & writer, const std::string & signature, bool timeStamp);
     void printLOD(AbstractWriter & writer, const ObjLodGroup & lod, size_t count) const;
 
     static size_t printObjCustomData(AbstractWriter & writer, const std::vector<std::string> & strings);

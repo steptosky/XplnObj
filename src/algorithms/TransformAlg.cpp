@@ -41,9 +41,9 @@ namespace xobj {
 void TransformAlg::applyTranslateKeysToTransform(Transform & inOutTrans, AnimTransList & inOutAnim) {
     for (auto animTr = inOutAnim.begin(); animTr != inOutAnim.end();) {
         if (animTr->mKeys.size() == 1) {
-            const Point3 currPos = inOutTrans.pMatrix.position();
-            inOutTrans.pMatrix.setPosition(currPos + animTr->mKeys[0].mPosition);
-            animTr = inOutTrans.pAnimTrans.erase(animTr);
+            const Point3 currPos = inOutTrans.mMatrix.position();
+            inOutTrans.mMatrix.setPosition(currPos + animTr->mKeys[0].mPosition);
+            animTr = inOutTrans.mAnimTrans.erase(animTr);
         }
         else {
             ++animTr;
@@ -56,8 +56,8 @@ void TransformAlg::applyRotateKeysToTransform(Transform & inOutTrans, AnimRotate
         if (animRot->mKeys.size() == 1) {
             TMatrix mtx;
             mtx.setRotate(animRot->mVector, animRot->mKeys[0].mAngleDegrees);
-            inOutTrans.pMatrix *= mtx;
-            animRot = inOutTrans.pAnimRotate.erase(animRot);
+            inOutTrans.mMatrix *= mtx;
+            animRot = inOutTrans.mAnimRotate.erase(animRot);
         }
         else {
             ++animRot;

@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2019, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,15 +29,10 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <optional>
-#include "xpln/obj/attributes/AttrBlend.h"
-#include "xpln/obj/attributes/AttrLayerGroup.h"
-#include "xpln/obj/attributes/AttrSlungLoadWeight.h"
-#include "xpln/obj/attributes/AttrSpecular.h"
-#include "xpln/obj/attributes/AttrTint.h"
-#include "xpln/obj/attributes/AttrWetDry.h"
-#include "xpln/obj/attributes/AttrSlopeLimit.h"
-#include "xpln/obj/attributes/AttrCockpitRegion.h"
+#include <cstddef>
+#include <tuple>
+#include "ObjAbstract.h"
+#include "xpln/common/Point3.h"
 
 namespace xobj {
 
@@ -46,66 +41,116 @@ namespace xobj {
 /**************************************************************************************************/
 
 /*!
- * \details Representation of the global attributes set
- * \ingroup Attributes
+ * \details Representation of the particle emitter.
+ * \ingroup Objects
  */
-class AttrGlobSet final {
+class ObjEmitter : public ObjAbstract {
+protected:
+
+    ObjEmitter(const ObjEmitter &) = default;
+    ObjEmitter(ObjEmitter &&) = default;
+
 public:
 
     //-------------------------------------------------------------------------
     /// @{
 
-    AttrGlobSet() = default;
-    AttrGlobSet(const AttrGlobSet &) = default;
-    AttrGlobSet(AttrGlobSet &&) = default;
+    ObjEmitter() = default;
 
-    ~AttrGlobSet() = default;
+    virtual ~ObjEmitter() = default;
 
-    AttrGlobSet & operator=(const AttrGlobSet &) = default;
-    AttrGlobSet & operator=(AttrGlobSet &&) = default;
+    ObjEmitter & operator=(const ObjEmitter &) = delete;
+    ObjEmitter & operator=(ObjEmitter &&) = delete;
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
-    void reset() { *this = AttrGlobSet(); }
+    /*!
+     * \details Name of the emitter. Must be one from your .pss file.
+     * \param [in] name from your .pss file.
+     */
+    void setName(const std::string & name) {
+        mName = name;
+    }
+
+    /*!
+     * \returnt emitter name.
+     */
+    const std::string & name() const {
+        return mName;
+    }
+
+    /*!
+     * \details Orientation - degrees roll, pitch, heading in Eulers.
+     * \param [in] psi roll.
+     * \param [in] the pitch.
+     * \param [in] phi heading.
+     */
+    void setOrientation(const float psi, const float the, const float phi) {
+        mPsi = psi;
+        mThe = the;
+        mPhi = phi;
+    }
+
+    /*!
+     * \returnt [psi, the, phi].
+     */
+    std::tuple<float, float, float> orientation() const {
+        return std::make_tuple(mPsi, mThe, mPhi);
+    }
+
+    /*!
+     * \details Orientation - degrees roll, pitch, heading in Eulers.
+     * \param [in] index Optional, if left out it is assumed to be 0.
+     */
+    void setIndex(const std::size_t index) {
+        mIndex = index;
+    }
+
+    /*!
+     * \returnt index.
+     */
+    std::size_t index() const {
+        return mIndex;
+    }
+
+    void setPosition(const Point3 & pos) {
+        mPosition = pos;
+    }
+
+    const Point3 & position() const {
+        return mPosition;
+    }
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
-    std::optional<std::string> mTexture;
-    std::optional<std::string> mTextureLit;
-    std::optional<std::string> mTextureNormal;
-    std::optional<std::string> mParticleSystemPath;
+    /*! \copydoc ObjAbstract::objType */
+    XpObjLib eObjectType objType() const final;
 
-    std::optional<AttrBlend> mBlend;
-    std::optional<AttrLayerGroup> mLayerGroup;
-    std::optional<AttrSlungLoadWeight> mSlungLoadWeight;
-    std::optional<AttrSpecular> mSpecular;
-    std::optional<AttrTint> mTint;
-    std::optional<AttrWetDry> mWetDry;
-    std::optional<AttrSlopeLimit> mSlopeLimit;
-    std::optional<AttrCockpitRegion> mCockpitRegion1;
-    std::optional<AttrCockpitRegion> mCockpitRegion2;
-    std::optional<AttrCockpitRegion> mCockpitRegion3;
-    std::optional<AttrCockpitRegion> mCockpitRegion4;
+    /*! \copydoc ObjAbstract::applyTransform */
+    XpObjLib void applyTransform(const TMatrix & tm, bool useParity = false) override final;
 
-    bool mBlendClass = false;
-    bool mNormalMetalness = false;
-    bool mTilted = false;
-    // todo check for bool inversion as the method was named as "setNoShadow()"
-    bool mDropShadow = false;
-    bool mCockpitLit = false;
-    bool mDebug = false;
+    /*! \copydoc ObjAbstract::clone */
+    XpObjLib ObjAbstract * clone() const override;
 
     /// @}
     //-------------------------------------------------------------------------
+
+private:
+
+    std::string mName;
+    Point3 mPosition;
+    float mPsi = 0.0f;
+    float mThe = 0.0f;
+    float mPhi = 0.0f;
+    std::size_t mIndex = 0;
 
 };
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
-
 }

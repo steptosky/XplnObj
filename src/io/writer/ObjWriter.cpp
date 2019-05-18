@@ -51,8 +51,10 @@ namespace xobj {
 /**************************************************************************************************/
 
 ObjWriter::ObjWriter()
-    : mAnimationWritter(&mExportOptions, &mStatistic),
-      mObjWriteGeometry(&mExportOptions, &mStatistic) {
+    : mState(std::make_shared<ObjState>()),
+      mAnimationWritter(&mExportOptions, &mStatistic),
+      mObjWriteGeometry(&mExportOptions, &mStatistic, mState),
+      mWriteAttr(mState) {
 
     reset();
 }
@@ -68,8 +70,9 @@ ObjWriter::~ObjWriter() {
 /**************************************************************************************************/
 
 void ObjWriter::reset() {
+    mState->reset();
     mStatistic.reset();
-    mWriteAttr.reset();
+    mWriteAttr.reset(mState);
     mObjWriteGeometry.reset();
 }
 
@@ -93,6 +96,8 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
 
         mMain = root;
         mExportOptions = root->mExportOptions;
+        mState->mGlobal = mMain->mAttr;
+        mState->mDraped = mMain->mDraped.mAttr;
 
         Writer writer;
         if (!writer.openFile(context.objFile())) {
@@ -209,13 +214,15 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
         mStatistic.mTrisAttrCount += objAttrNum;
         mStatistic.mTrisManipCount += manipNum;
 
+        mState->finish(root->objectName());
+
         if (mMain->mAttr.mDebug) {
             ++mStatistic.mGlobAttrCount;
             writer.printLine("DEBUG");
             writer.printEol();
         }
 
-        printSignature(writer, context.signature());
+        printSignature(writer, context.signature(), context.isPrintTimeStamp());
         writer.closeFile();
         context.setStatistic(mStatistic);
         return true;
@@ -245,7 +252,7 @@ inline std::string currentDateTime() {
     return buf;
 }
 
-void ObjWriter::printSignature(AbstractWriter & writer, const std::string & signature) {
+void ObjWriter::printSignature(AbstractWriter & writer, const std::string & signature, const bool timeStamp) {
     if (!signature.empty()) {
         writer.printEol();
         std::string s("## ");
@@ -261,7 +268,9 @@ void ObjWriter::printSignature(AbstractWriter & writer, const std::string & sign
     }
     msg.append("+[").append(XOBJ_COMPILE_DATE).append("]");
     writer.printLine(msg);
-    writer.printLine(std::string("## Object created: ").append(currentDateTime()));
+    if (timeStamp) {
+        writer.printLine(std::string("## Object created: ").append(currentDateTime()));
+    }
 }
 
 /********************************************************************************************************/
@@ -351,7 +360,12 @@ void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) 
             continue;
         }
 
-        mObjWriteGeometry.printLightPointObject(writer, *objBase);
+        if (mObjWriteGeometry.printLightPointObject(writer, *objBase)) {
+            mStatistic.mCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
+            continue;
+        }
+
+        mObjWriteGeometry.printEmitterObject(writer, *objBase);
         mStatistic.mCustomLinesCount += printObjCustomData(writer, objBase->dataAfter());
 
         //--------------

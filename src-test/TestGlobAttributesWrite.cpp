@@ -58,29 +58,32 @@ std::string strGlobAttrResult(const T & attr) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-TEST(TestGlobAttributesWrite, textures) {
+TEST(TestGlobAttributesWrite, strings) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
     main.mAttr.mTexture = "test";
     main.mAttr.mTextureLit = "test_lit";
     main.mAttr.mTextureNormal = "test_normal";
+    main.mAttr.mParticleSystemPath = "test_particle_system";
 
     InSequence dummy;
     EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE).append(" ").append(*main.mAttr.mTexture)))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_LIT).append(" ").append(*main.mAttr.mTextureLit)))).Times(1);
     EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_NORMAL).append(" ").append(*main.mAttr.mTextureNormal)))).Times(1);
+    EXPECT_CALL(writer, printLine(StrEq(std::string(ATTR_GLOBAL_PARTICLE_SYSTEM).append(" ").append(*main.mAttr.mParticleSystemPath)))).Times(1);
 
     attrWriter.writeGlobAttr(&writer, &main);
-    ASSERT_EQ(std::make_tuple(3,0,0), attrWriter.count());
+    ASSERT_EQ(std::make_tuple(4, 0, 0), attrWriter.count());
     ASSERT_STREQ("test", main.mAttr.mTexture->c_str());
     ASSERT_STREQ("test_lit", main.mAttr.mTextureLit->c_str());
     ASSERT_STREQ("test_normal", main.mAttr.mTextureNormal->c_str());
+    ASSERT_STREQ("test_particle_system", main.mAttr.mParticleSystemPath->c_str());
 }
 
 TEST(TestGlobAttributesWrite, boolean) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
 
     ASSERT_FALSE(main.mAttr.mBlendClass);
@@ -121,7 +124,7 @@ TEST(TestGlobAttributesWrite, boolean) {
 
 TEST(TestGlobAttributesWrite, AttrWetDry_wet) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
 
     const AttrWetDry attr(AttrWetDry::eState::wet);
@@ -133,7 +136,7 @@ TEST(TestGlobAttributesWrite, AttrWetDry_wet) {
 
 TEST(TestGlobAttributesWrite, AttrWetDry_Dry) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
 
     const AttrWetDry attr(AttrWetDry::eState::dry);
@@ -146,7 +149,7 @@ TEST(TestGlobAttributesWrite, AttrWetDry_Dry) {
 
 TEST(TestGlobAttributesWrite, AttrGlobBlend_no_blend) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
 
     const AttrBlend attr(AttrBlend::eType::no_blend, 0.5);
@@ -159,7 +162,7 @@ TEST(TestGlobAttributesWrite, AttrGlobBlend_no_blend) {
 
 TEST(TestGlobAttributesWrite, AttrGlobBlend_shadow_blend) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
 
     const AttrBlend attr(AttrBlend::eType::shadow_blend, 0.5);
@@ -172,7 +175,7 @@ TEST(TestGlobAttributesWrite, AttrGlobBlend_shadow_blend) {
 
 TEST(TestGlobAttributesWrite, AttrLayerGroup) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
 
     const AttrLayerGroup attr(ELayer(ELayer::eId::cars), 5);
@@ -185,7 +188,7 @@ TEST(TestGlobAttributesWrite, AttrLayerGroup) {
 
 TEST(TestGlobAttributesWrite, AttrDrapedLayerGroup) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
 
     const AttrDrapedLayerGroup attr(ELayer(ELayer::eId::cars), 5);
@@ -198,7 +201,7 @@ TEST(TestGlobAttributesWrite, AttrDrapedLayerGroup) {
 
 TEST(TestGlobAttributesWrite, AttrLodDrap) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
 
     const AttrDrapedLod attr(10.0f);
@@ -211,7 +214,7 @@ TEST(TestGlobAttributesWrite, AttrLodDrap) {
 
 TEST(TestGlobAttributesWrite, AttrSlungLoadWeight) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
 
     const AttrSlungLoadWeight attr(10.0f);
@@ -224,7 +227,7 @@ TEST(TestGlobAttributesWrite, AttrSlungLoadWeight) {
 
 TEST(TestGlobAttributesWrite, AttrSpecular) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
 
     const AttrSpecular attr(0.5f);
@@ -237,7 +240,7 @@ TEST(TestGlobAttributesWrite, AttrSpecular) {
 
 TEST(TestGlobAttributesWrite, AttrTint) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
 
     const AttrTint attr(0.5f, 0.8f);
@@ -250,7 +253,7 @@ TEST(TestGlobAttributesWrite, AttrTint) {
 
 TEST(TestGlobAttributesWrite, AttrSlopeLimit) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
 
     const AttrSlopeLimit attr(0.5f, 0.8f, 5.0f, 10.0f);
@@ -263,7 +266,7 @@ TEST(TestGlobAttributesWrite, AttrSlopeLimit) {
 
 TEST(TestGlobAttributesWrite, AttrCockpitRegion) {
     MockWriter writer;
-    ObjWriteAttr attrWriter;
+	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMain main;
 
     const AttrCockpitRegion attr0(1, 2, 3, 4);

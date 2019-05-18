@@ -63,7 +63,7 @@ public:
     /// @{
 
     ObjMain()
-        : mName("no name Main") {}
+        : mName("unspecified main") {}
 
     ObjMain(const ObjMain &) = delete;
     ObjMain & operator =(const ObjMain &) = delete;

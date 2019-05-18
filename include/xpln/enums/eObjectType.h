@@ -65,6 +65,9 @@ enum eObjectType : std::int32_t {
     //!< Light point custom
     OBJ_LIGHT_POINT,
 
+    //!< Particle emitter
+    OBJ_PARTICLE_EMITTER = 300,
+
 };
 
 /**************************************************************************************************/

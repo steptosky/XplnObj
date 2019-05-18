@@ -39,6 +39,7 @@
 #include "xpln/obj/ObjLightNamed.h"
 #include "xpln/obj/ObjLightParam.h"
 #include "xpln/obj/ObjLightPoint.h"
+#include "xpln/obj/ObjEmitter.h"
 #include "xpln/obj/ObjLightSpillCust.h"
 
 #include "xpln/obj/ObjLodGroup.h"
@@ -170,6 +171,29 @@ void printObj(const ObjLightPoint & obj, AbstractWriter & writer, const bool pri
     const Color & c = obj.color();
     out << VLIGHT << " " << obj.position().toString(PRECISION) << " "
             << c.red() << " " << c.green() << " " << c.blue();
+    writer.printLine(out.str());
+}
+
+//-------------------------------------------------------------------------
+
+void printObj(const ObjEmitter & obj, AbstractWriter & writer, const bool printName) {
+    StringStream out;
+    if (printName) {
+        out << "## " << obj.objectName() << std::endl;
+    }
+    out << ATTR_EMITTER
+            << " " << obj.name()
+            << " " << obj.position().toString(PRECISION);
+
+    auto [psi, the, phi] = obj.orientation();
+    out << " " << psi
+            << " " << the
+            << " " << phi;
+
+    const auto index = obj.index();
+    if (index != 0) {
+        out << " " << index;
+    }
     writer.printLine(out.str());
 }
 

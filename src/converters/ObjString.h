@@ -73,6 +73,7 @@ XpObjLib void printObj(const ObjDummy & obj, AbstractWriter & writer, bool print
 class ObjLightCustom;
 class ObjLightNamed;
 class ObjLightPoint;
+class ObjEmitter;
 class ObjLightParam;
 class ObjLightSpillCust;
 
@@ -80,6 +81,7 @@ XpObjLib void printObj(const ObjLightCustom & obj, AbstractWriter & writer, bool
 XpObjLib void printObj(const ObjLightNamed & obj, AbstractWriter & writer, bool printName);
 XpObjLib void printObj(const ObjLightParam & obj, AbstractWriter & writer, bool printName);
 XpObjLib void printObj(const ObjLightPoint & obj, AbstractWriter & writer, bool printName);
+XpObjLib void printObj(const ObjEmitter & obj, AbstractWriter & writer, bool printName);
 XpObjLib void printObj(const ObjLightSpillCust & obj, AbstractWriter & writer, bool printName);
 
 /**************************************************************************************************/

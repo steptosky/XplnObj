@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2019, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,64 +27,36 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <cstdint>
-#include <cassert>
-#include <tuple>
-#include "xpln/obj/attributes/AttrSet.h"
-#include "xpln/obj/ObjMesh.h"
-#include "io/ObjState.h"
-#include "xpln/obj/ObjMain.h"
+#include "ObjState.h"
+#include "common/Logger.h"
+#include "common/AttributeNames.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-class AbstractWriter;
-class ObjMesh;
-class ObjAbstract;
-
-class ObjWriteManip;
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-class ObjWriteAttr {
-public:
-
-    explicit ObjWriteAttr(ObjState::Ptr state)
-        : mState(std::move(state)) {
-        assert(mState);
+void ObjState::processBool(const bool newValue, bool & inOutStateValue,
+                           const std::function<void(bool enable)> & switchFn) {
+    if (newValue == inOutStateValue) {
+        return;
     }
+    inOutStateValue = newValue;
+    if (inOutStateValue) {
+        switchFn(true);
+    }
+    else {
+        switchFn(false);
+    }
+}
 
-    ObjWriteAttr(const ObjWriteAttr &) = delete;
-    ObjWriteAttr & operator =(const ObjWriteAttr &) = delete;
-
-    ~ObjWriteAttr() = default;
-
-    XpObjLib void writeGlobAttr(AbstractWriter * writer, const ObjMain * obj);
-    XpObjLib void writeObjAttr(AbstractWriter * writer, const ObjAbstract * obj);
-    XpObjLib void reset(ObjState::Ptr state);
-    XpObjLib std::tuple<std::size_t, std::size_t, std::size_t> count() const;
-
-private:
-
-    void writeAttr();
-    void writeManip();
-    bool checkManip(AttrManipBase * manip) const;
-
-    const ObjMesh * mObj = nullptr;
-    AbstractWriter * mWriter = nullptr;
-    ObjState::Ptr mState;
-    bool mIsPanelManip = false;
-
-    std::size_t mGlobNum = 0;
-    std::size_t mAttrNum = 0;
-    std::size_t mManipNum = 0;
-
-};
+void ObjState::finish(const std::string & objName) {
+    if (!mObjHasParticleEmitters && mGlobal.mParticleSystemPath && !mGlobal.mParticleSystemPath->empty()) {
+        ULWarning << "The obj <" << objName << "> has the attribute <" << ATTR_GLOBAL_PARTICLE_SYSTEM
+                << "> but it doesn't contain any particle emitters";
+    }
+}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

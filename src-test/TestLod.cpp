@@ -135,7 +135,7 @@ TEST_F(TestLod, lods_grouping) {
     ASSERT_STREQ(lGroup1.objectName().c_str(), lod1.objectName().c_str());
     ASSERT_EQ(1000.0, lod1.nearVal());
     ASSERT_EQ(1500.0, lod1.farVal());
-    const Transform::ObjList & objList1 = lod1.transform().objList();
+    const Transform::ObjList & objList1 = lod1.transform().objects();
     ASSERT_EQ(1, objList1.size());
     const auto * obj1 = dynamic_cast<const ObjMesh*>(objList1.begin()->get());
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMesh(mesh1, obj1));
@@ -147,7 +147,7 @@ TEST_F(TestLod, lods_grouping) {
     ASSERT_EQ(1000.0, lod2.farVal());
     ASSERT_STREQ(lGroup2.objectName().c_str(), lod2.objectName().c_str());
 
-    const Transform::ObjList & objList2 = lod2.transform().objList();
+    const Transform::ObjList & objList2 = lod2.transform().objects();
     ASSERT_EQ(1, objList2.size());
     const auto * obj2 = dynamic_cast<const ObjMesh*>(objList2.begin()->get());
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMesh(mesh2, obj2));
@@ -159,7 +159,7 @@ TEST_F(TestLod, lods_grouping) {
     ASSERT_EQ(500.0, lod3.farVal());
     ASSERT_STREQ(lGroup3.objectName().c_str(), lod3.objectName().c_str());
 
-    const Transform::ObjList & objList3 = lod3.transform().objList();
+    const Transform::ObjList & objList3 = lod3.transform().objects();
     ASSERT_EQ(2, objList3.size());
     const auto * objMesh3 = dynamic_cast<const ObjMesh*>(objList3.begin()->get());
     const auto * objMesh4 = dynamic_cast<const ObjMesh*>((++objList3.begin())->get());

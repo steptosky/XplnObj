@@ -66,8 +66,8 @@ public:
     static void extractMesh(const ObjMain & inMain, const size_t inLodNumber, const size_t inMeshNumber, ObjMesh *& outMesh) {
         ASSERT_TRUE(inLodNumber < inMain.lods().size());
         const ObjLodGroup & inLGroup = *inMain.lods().at(inLodNumber);
-        ASSERT_TRUE(inMeshNumber < inLGroup.transform().objList().size());
-        auto iterator = inLGroup.transform().objList().begin();
+        ASSERT_TRUE(inMeshNumber < inLGroup.transform().objects().size());
+        auto iterator = inLGroup.transform().objects().begin();
         for (size_t i = 0; i < inMeshNumber; ++i) {
             ++iterator;
         }

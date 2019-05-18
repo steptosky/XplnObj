@@ -71,40 +71,28 @@ Transform & Transform::newChild(const std::string_view name) {
 
 void Transform::addObject(ObjAbstract * object) {
     if (object) {
-        for (const auto & curr : mObjList) {
+        for (const auto & curr : mObjects) {
             if (curr.get() == object) {
                 LWarning << "You try to add an object which already exists.";
                 return;
             }
         }
-        mObjList.emplace_back(object);
+        mObjects.emplace_back(object);
     }
 }
 
 ObjAbstract * Transform::takeObject(const ObjAbstract * object) {
     ObjAbstract * out = nullptr;
     if (object) {
-        for (auto it = mObjList.begin(); it != mObjList.end(); ++it) {
+        for (auto it = mObjects.begin(); it != mObjects.end(); ++it) {
             if (it->get() == object) {
                 out = it->release();
-                mObjList.erase(it);
+                mObjects.erase(it);
                 return out;
             }
         }
     }
     return out;
-}
-
-bool Transform::removeObject(const ObjAbstract * object) {
-    if (object) {
-        for (auto it = mObjList.begin(); it != mObjList.end(); ++it) {
-            if (it->get() == object) {
-                mObjList.erase(it);
-                return true;
-            }
-        }
-    }
-    return false;
 }
 
 /**************************************************************************************************/

@@ -75,9 +75,9 @@ TEST(Draped, DISABLED_io) {
     //-------------------
     // check results
 
-    EXPECT_EQ(2, lodIn1->transform().objList().size());
-    EXPECT_EQ(2, lodIn2->transform().objList().size());
-    EXPECT_EQ(2, mainIn.mDraped.transform().objList().size());
+    EXPECT_EQ(2, lodIn1->transform().objects().size());
+    EXPECT_EQ(2, lodIn2->transform().objects().size());
+    EXPECT_EQ(2, mainIn.mDraped.transform().objects().size());
 }
 
 /**************************************************************************************************/

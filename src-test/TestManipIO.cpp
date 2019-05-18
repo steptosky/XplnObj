@@ -74,8 +74,8 @@ template<typename MANIP>
 void extractManip(const ObjMain & inMain, const MANIP *& outAttr) {
     ASSERT_EQ(1, inMain.lods().size());
     const ObjLodGroup & inLGroup = *inMain.lods().at(0);
-    ASSERT_EQ(1, inLGroup.transform().objList().size());
-    ObjAbstract * obj = inLGroup.transform().objList().begin()->get();
+    ASSERT_EQ(1, inLGroup.transform().objects().size());
+    ObjAbstract * obj = inLGroup.transform().objects().begin()->get();
     ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
     auto * inM = static_cast<ObjMesh *>(obj);
     ASSERT_TRUE(inM->mAttr.mManip);

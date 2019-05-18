@@ -53,8 +53,8 @@ using namespace xobj;
 void extractMesh(ObjMain & inMain, ObjMesh *& outAttr) {
     ASSERT_EQ(1, inMain.lods().size());
     const ObjLodGroup & inLGroup = *inMain.lods().at(0);
-    ASSERT_EQ(1, inLGroup.transform().objList().size());
-    ObjAbstract * obj = inLGroup.transform().objList().begin()->get();
+    ASSERT_EQ(1, inLGroup.transform().objects().size());
+    ObjAbstract * obj = inLGroup.transform().objects().begin()->get();
     ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
     outAttr = static_cast<ObjMesh *>(obj);
 }

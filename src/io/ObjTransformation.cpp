@@ -76,7 +76,7 @@ void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatr
             mapsExpCoordinates(nullptr, transform, rootMatrix);
         }
         else {
-            for (auto & curr : transform.objList()) {
+            for (auto & curr : transform.objects()) {
                 mapsExpCoordinates(curr.get(), transform, rootMatrix);
             }
         }
@@ -86,7 +86,7 @@ void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatr
             mapsImpCoordinates(nullptr, transform, rootMatrix);
         }
         else {
-            for (auto & curr : transform.objList()) {
+            for (auto & curr : transform.objects()) {
                 mapsImpCoordinates(curr.get(), transform, rootMatrix);
             }
         }

@@ -87,7 +87,7 @@ void ObjWriteGeometry::reset() {
 /**************************************************************************************************/
 
 void ObjWriteGeometry::printMeshVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
-    for (auto & objBase : transform.objList()) {
+    for (auto & objBase : transform.objects()) {
         if (objBase->objType() == OBJ_MESH) {
             const auto * mobj = static_cast<const ObjMesh*>(objBase.get());
 
@@ -126,7 +126,7 @@ void ObjWriteGeometry::printMeshFaceRecursive(AbstractWriter & writer, const Obj
 
 void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Transform & inNode, std::size_t & idx,
                                               std::size_t & offset) const {
-    for (const auto & objBase : inNode.objList()) {
+    for (const auto & objBase : inNode.objects()) {
         if (objBase->objType() != OBJ_MESH) {
             continue;
         }
@@ -173,7 +173,7 @@ void ObjWriteGeometry::writeMeshFaceRecursive(std::ostream & writer, const Trans
 /**************************************************************************************************/
 
 void ObjWriteGeometry::printLineVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
-    for (auto & objBase : transform.objList()) {
+    for (auto & objBase : transform.objects()) {
         if (objBase->objType() == OBJ_LINE) {
             const auto lobj = static_cast<const ObjLine*>(objBase.get());
 
@@ -195,7 +195,7 @@ void ObjWriteGeometry::printLineVerticiesRecursive(AbstractWriter & writer, cons
 //-------------------------------------------------------------------------
 
 void ObjWriteGeometry::printLightPointVerticiesRecursive(AbstractWriter & writer, const Transform & transform) const {
-    for (auto & objBase : transform.objList()) {
+    for (auto & objBase : transform.objects()) {
         if (objBase->objType() == OBJ_LIGHT_POINT) {
             const auto lobj = static_cast<const ObjLightPoint*>(objBase.get());
             printObj(*lobj, writer, mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LIGHT));

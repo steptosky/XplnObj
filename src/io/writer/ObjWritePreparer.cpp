@@ -94,7 +94,7 @@ bool ObjWritePreparer::proccessTransform(Transform & transform, const size_t lod
 
 bool ObjWritePreparer::proccessObjects(Transform & transform, const size_t /*lodNumber*/, const ObjLodGroup & /*lod*/) {
     std::vector<ObjAbstract*> objToDelete;
-    for (const auto & curr : transform.objList()) {
+    for (const auto & curr : transform.objects()) {
         if (!checkParameters(*curr, curr->objectName())) {
             objToDelete.emplace_back(curr.get());
         }
@@ -103,7 +103,7 @@ bool ObjWritePreparer::proccessObjects(Transform & transform, const size_t /*lod
         }
     }
     for (auto & curr : objToDelete) {
-        transform.removeObject(curr);
+       delete transform.takeObject(curr);
     }
     return true;
 }

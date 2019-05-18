@@ -60,12 +60,12 @@ TEST(DrapedAlg, extract) {
 
     Draped::extract(draped, transformRoot, NoInterrupter());
 
-    EXPECT_EQ(1, transformRoot.objList().size());
-    EXPECT_EQ(1, (*transformRoot.begin())->objList().size());
+    EXPECT_EQ(1, transformRoot.objects().size());
+    EXPECT_EQ(1, (*transformRoot.begin())->objects().size());
 
-    ASSERT_EQ(2, draped.transform().objList().size());
-    EXPECT_STREQ("l1-m1", draped.transform().objList()[0]->objectName().c_str());
-    EXPECT_STREQ("l2-m2", draped.transform().objList()[1]->objectName().c_str());
+    ASSERT_EQ(2, draped.transform().objects().size());
+    EXPECT_STREQ("l1-m1", draped.transform().objects()[0]->objectName().c_str());
+    EXPECT_STREQ("l2-m2", draped.transform().objects()[1]->objectName().c_str());
 }
 
 /**************************************************************************************************/

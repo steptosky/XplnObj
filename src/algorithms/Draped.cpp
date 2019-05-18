@@ -80,7 +80,7 @@ void Draped::extract(ObjDrapedGroup & inOutDraped,
 
 Transform::ObjList Draped::processObjects(Transform & transform) {
     Transform::ObjList out;
-    for (auto & obj : transform.objList()) {
+    for (auto & obj : transform.objects()) {
         if (obj->objType() != OBJ_MESH) {
             continue;
         }

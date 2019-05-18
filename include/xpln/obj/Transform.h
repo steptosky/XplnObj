@@ -138,16 +138,12 @@ public:
     XpObjLib void addObject(ObjAbstract * object);
 
     /*!
-     * \details Removes and destructs object by its pointer.
-     * \param [in] object 
-     * \return True if object was found and deleted otherwise false.
+     * \details Free ownership and return pointer.
      */
-    XpObjLib bool removeObject(const ObjAbstract * object);
-
     XpObjLib ObjAbstract * takeObject(const ObjAbstract * object);
 
-    const ObjList & objList() const { return mObjList; }
-    bool hasObjects() const { return !mObjList.empty(); }
+    const ObjList & objects() const { return mObjects; }
+    bool hasObjects() const { return !mObjects.empty(); }
 
     /// @}
     //-------------------------------------------------------------------------
@@ -165,7 +161,7 @@ public:
 private:
 
     Transform * mParent = nullptr;
-    ObjList mObjList;
+    ObjList mObjects;
     Children mChildren;
 
 };

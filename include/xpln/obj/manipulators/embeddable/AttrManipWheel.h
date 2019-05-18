@@ -29,7 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <cstddef>
 #include "xpln/Export.h"
 
 namespace xobj {
@@ -50,39 +49,32 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    AttrManipWheel() = default;
+    explicit AttrManipWheel(const float delta = 0.0f)
+        : mWheelDelta(delta) {}
+
+    AttrManipWheel(const AttrManipWheel &) = default;
+    AttrManipWheel(AttrManipWheel &&) = default;
+
     ~AttrManipWheel() = default;
+
+    AttrManipWheel & operator=(const AttrManipWheel &) = default;
+    AttrManipWheel & operator=(AttrManipWheel &&) = default;
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
     XpObjLib bool operator==(const AttrManipWheel & other) const;
-    XpObjLib bool operator!=(const AttrManipWheel & other) const;
+    bool operator!=(const AttrManipWheel & other) const { return !this->operator==(other); }
 
     /// @}
     //-------------------------------------------------------------------------
     /// @{
 
-    XpObjLib void setEnabled(bool state);
-    XpObjLib void setDelta(float delta);
-    XpObjLib bool isEnabled() const;
-    XpObjLib float delta() const;
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
-
-    /// @}
-    //-------------------------------------------------------------------------
-
-private:
-
-    bool mIsEnabled = false;
     float mWheelDelta = 0.0f;
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

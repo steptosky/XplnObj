@@ -29,7 +29,10 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
+#include <string>
+#include "xpln/Export.h"
+#include "xpln/enums/ECursor.h"
+#include "xpln/enums/EManipulator.h"
 
 namespace xobj {
 
@@ -42,35 +45,40 @@ namespace xobj {
  * \details For VR
  * \ingroup Manipulators
  */
-class AttrManipCmdKnob2 : public AttrManipBase {
+class AttrManipCmdKnob2 final {
 public:
 
-    XpObjLib AttrManipCmdKnob2();
-    virtual ~AttrManipCmdKnob2() = default;
-
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setCmd(const std::string & val);
-    XpObjLib const std::string & cmd() const;
+    AttrManipCmdKnob2() = default;
+    AttrManipCmdKnob2(const AttrManipCmdKnob2 &) = default;
+    AttrManipCmdKnob2(AttrManipCmdKnob2 &&) = default;
 
+    ~AttrManipCmdKnob2() = default;
+
+    AttrManipCmdKnob2 & operator=(const AttrManipCmdKnob2 &) = default;
+    AttrManipCmdKnob2 & operator=(AttrManipCmdKnob2 &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
+    XpObjLib bool operator==(const AttrManipCmdKnob2 & other) const;
+    bool operator!=(const AttrManipCmdKnob2 & other) const { return !this->operator==(other); }
 
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
+    XpObjLib static const EManipulator mType;
+    ECursor mCursor;
+    std::string mToolType;
 
+    std::string mCommand;
+
+    /// @}
     //-------------------------------------------------------------------------
-
-private:
-
-    std::string mCommand = "none";
 
 };
 

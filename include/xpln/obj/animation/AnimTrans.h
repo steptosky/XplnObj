@@ -43,40 +43,51 @@ namespace xobj {
  * \details Representation of the Animation translate for the 'obj' objects
  * \ingroup Animation
  */
-class AnimTrans {
+class AnimTrans final {
 public:
 
-    AnimTrans() = default;
-    virtual ~AnimTrans() = default;
+    //-------------------------------------------------------------------------
+    /// @{
 
-    //-----------------------------------------------------
+    AnimTrans() = default;
+    AnimTrans(const AnimTrans &) = default;
+    AnimTrans(AnimTrans &&) = default;
+
+    ~AnimTrans() = default;
+
+    AnimTrans & operator=(const AnimTrans &) = default;
+    AnimTrans & operator=(AnimTrans &&) = default;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
     typedef AnimTransKey Key;
     typedef std::vector<Key> KeyList;
 
-    //-----------------------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AnimTrans & other) const;
+    bool operator!=(const AnimTrans & other) const { return !this->operator==(other); }
 
-    bool operator!=(const AnimTrans & other) const {
-        return !this->operator==(other);
-    }
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
-    //-----------------------------------------------------
+    bool isAnimated() const { return !mKeys.empty(); }
 
-    bool isAnimated() const {
-        return !mKeys.empty();
-    }
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
-    //-----------------------------------------------------
-
-    XpObjLib virtual void reset();
-
-    //-----------------------------------------------------
-
-    std::optional<float> mLoop;
-    std::string mDrf;
     KeyList mKeys;
+    std::string mDrf;
+    std::optional<float> mLoop;
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

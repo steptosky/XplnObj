@@ -36,7 +36,7 @@
 #include "xpln/obj/attributes/AttrPolyOffset.h"
 #include "xpln/obj/attributes/AttrLightLevel.h"
 #include "xpln/obj/attributes/AttrCockpit.h"
-#include "xpln/obj/manipulators/ManipContainer.h"
+#include "xpln/obj/manipulators/AttrManip.h"
 
 namespace xobj {
 
@@ -71,7 +71,7 @@ public:
                mIsDraped == other.mIsDraped &&
                mIsCastShadow == other.mIsCastShadow &&
                mIsSolidForCamera == other.mIsSolidForCamera &&
-               mManipContainer == other.mManipContainer;
+               mManip == other.mManip;
     }
 
     bool operator!=(const AttrSet & other) const { return !this->operator==(other); }
@@ -100,7 +100,7 @@ public:
     std::optional<AttrShiny> mShiny;
     std::optional<AttrHard> mHard;
     std::optional<AttrCockpit> mCockpit;
-    std::optional<ManipContainer> mManipContainer;
+    std::optional<AttrManip> mManip;
 
     /*!
      * \details Tree objects need some changes for its mesh's normals.

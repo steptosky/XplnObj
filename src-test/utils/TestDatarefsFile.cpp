@@ -95,9 +95,9 @@ TEST(DatarefsFile, read_normal_drf) {
     //-----------------------
     Datarefs datarefs;
     ASSERT_NO_THROW(DatarefsFile::loadStream(stream, [&](const Dataref &d) ->bool {
-            datarefs.emplace_back(d);
-            return true;
-        }));
+                            datarefs.emplace_back(d);
+                            return true;
+                        }));
     ASSERT_EQ(10, datarefs.size());
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{ false, Dataref::invalidId(), "x/y/z", "", "", ""}, datarefs[0]));
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{ false, Dataref::invalidId(), "123456", "", "", ""}, datarefs[1]));
@@ -124,10 +124,10 @@ TEST(DatarefsFile, read_normal_drf_custom_case1) {
     //-----------------------
     Datarefs datarefs;
     ASSERT_NO_THROW(DatarefsFile::loadStream(stream, [&](const Dataref &d) ->bool {
-            datarefs.emplace_back(d);
-            return true;
-        }));
-    ASSERT_EQ(4,datarefs.size());
+                            datarefs.emplace_back(d);
+                            return true;
+                        }));
+    ASSERT_EQ(4, datarefs.size());
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{true, 1, "1/a/b/1", "float", "Feet", ":d1.0 11: d1.1: d1.2:1.3" }, datarefs[0]));
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{true, 3, "1/a/b/2", "float", "Feet", ":d2.0 22: d2.1: d2.2:2.3" }, datarefs[1]));
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{true, Dataref::invalidId(), "000005", "float", "Feet", ":d3.0 33: d3.1: d3.2:3.3" }, datarefs[2]));
@@ -146,9 +146,9 @@ TEST(DatarefsFile, read_normal_drf_custom_case2) {
     //-----------------------
     Datarefs datarefs;
     ASSERT_NO_THROW(DatarefsFile::loadStream(stream, [&](const Dataref &d) ->bool {
-        datarefs.emplace_back(d);
-        return true;
-    }));
+                            datarefs.emplace_back(d);
+                            return true;
+                        }));
     ASSERT_EQ(4, datarefs.size());
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{ true, 1, "1/a/b/1", "float", "Feet", ":d1.0 11: d1.1: d1.2:1.3" }, datarefs[0]));
     ASSERT_NO_FATAL_FAILURE(equals(Dataref{ true, 3, "1/a/b/2", "float", "Feet", ":d2.0 22: d2.1: d2.2:2.3" }, datarefs[1]));

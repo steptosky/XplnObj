@@ -45,41 +45,52 @@ namespace xobj {
  * \details Representation of the Animation rotation for the 'obj' objects
  * \ingroup Animation
  */
-class AnimRotate {
+class AnimRotate final {
 public:
 
-    AnimRotate() = default;
-    virtual ~AnimRotate() = default;
-
-    //-----------------------------------------------------
+    //-------------------------------------------------------------------------
+    /// @{
 
     typedef AnimRotateKey Key;
     typedef std::vector<Key> KeyList;
 
-    //-----------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    AnimRotate() = default;
+    AnimRotate(const AnimRotate &) = default;
+    AnimRotate(AnimRotate &&) = default;
+
+    ~AnimRotate() = default;
+
+    AnimRotate & operator=(const AnimRotate &) = default;
+    AnimRotate & operator=(AnimRotate &&) = default;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
     XpObjLib bool operator==(const AnimRotate & other) const;
+    bool operator!=(const AnimRotate & other) const { return !this->operator==(other); }
 
-    bool operator!=(const AnimRotate & other) const {
-        return !this->operator==(other);
-    }
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
-    //----------------------------------------- 
+    bool isAnimated() const { return !mKeys.empty(); }
 
-    bool isAnimated() const {
-        return !mKeys.empty();
-    }
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
-    //-----------------------------------------------
-
-    XpObjLib virtual void reset();
-
-    //-----------------------------------------------
-
-    std::optional<float> mLoop;
     Point3 mVector;
-    KeyList mKeys;
     std::string mDrf;
+    std::optional<float> mLoop;
+    std::vector<AnimRotateKey> mKeys;
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

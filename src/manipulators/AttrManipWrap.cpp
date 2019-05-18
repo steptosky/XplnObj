@@ -28,108 +28,29 @@
 */
 
 #include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipWrap.h"
-#include "xpln/enums/EManipulator.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipWrap::AttrManipWrap()
-    : AttrManipBase(EManipulator(EManipulator::wrap)) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipWrap::setDown(const float val) {
-    mDown = val;
-}
-
-void AttrManipWrap::setHold(const float val) {
-    mHold = val;
-}
-
-void AttrManipWrap::setMinimum(const float val) {
-    mMin = val;
-}
-
-void AttrManipWrap::setMaximum(const float val) {
-    mMax = val;
-}
-
-float AttrManipWrap::down() const {
-    return mDown;
-}
-
-float AttrManipWrap::hold() const {
-    return mHold;
-}
-
-float AttrManipWrap::minimum() const {
-    return mMin;
-}
-
-float AttrManipWrap::maximum() const {
-    return mMax;
-}
-
-void AttrManipWrap::setDataref(const std::string & val) {
-    mDataref = val;
-}
-
-const std::string & AttrManipWrap::dataref() const {
-    return mDataref;
-}
+const EManipulator AttrManipWrap::mType(EManipulator::wrap);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipWrap::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const auto * right = dynamic_cast<const AttrManipWrap*>(manip);
-    if (!right)
-        return false;
-
-    return (sts::isEqual(mDown, right->mDown) &&
-            sts::isEqual(mHold, right->mHold) &&
-            sts::isEqual(mMin, right->mMin) &&
-            sts::isEqual(mMin, right->mMin) &&
-            sts::isEqual(mWheel, right->mWheel) &&
-            sts::isEqual(mDataref, right->mDataref));
-}
-
-AttrManipBase * AttrManipWrap::clone() const {
-    return new AttrManipWrap(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipWrap::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_WRAP;
-    outStr << " " << cursor().toString();
-    outStr << " " << down();
-    outStr << " " << hold();
-    outStr << " " << minimum();
-    outStr << " " << maximum();
-    outStr << " " << writer.actualDataref(dataref());
-    outStr << " " << toolTip();
-    writer.printLine(outStr.str());
-    return 1 + wheel().printObj(writer);
+bool AttrManipWrap::operator==(const AttrManipWrap & other) const {
+    return mCursor == other.mCursor &&
+           mToolType == other.mToolType &&
+           sts::isEqual(mDown, other.mDown) &&
+           sts::isEqual(mHold, other.mHold) &&
+           sts::isEqual(mMin, other.mMin) &&
+           sts::isEqual(mMax, other.mMax) &&
+           mDataref == other.mDataref &&
+           mWheel == other.mWheel;
 }
 
 /**************************************************************************************************/

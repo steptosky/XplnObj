@@ -29,7 +29,10 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
+#include <string>
+#include "xpln/Export.h"
+#include "xpln/enums/ECursor.h"
+#include "xpln/enums/EManipulator.h"
 
 namespace xobj {
 
@@ -41,43 +44,40 @@ namespace xobj {
  * \details ATTR_manip_command
  * \ingroup Manipulators
  */
-class AttrManipCmd : public AttrManipBase {
+class AttrManipCmd final {
 public:
 
-    XpObjLib AttrManipCmd();
-    virtual ~AttrManipCmd() = default;
-
     //-------------------------------------------------------------------------
+    /// @{
 
-    [[deprecated("use setCmd")]]
-    void setCommand(const std::string & cmd) { setCmd(cmd); }
+    AttrManipCmd() = default;
+    AttrManipCmd(const AttrManipCmd &) = default;
+    AttrManipCmd(AttrManipCmd &&) = default;
 
-    [[deprecated("use cmd")]]
-    const std::string & command() const { return cmd(); }
+    ~AttrManipCmd() = default;
 
+    AttrManipCmd & operator=(const AttrManipCmd &) = default;
+    AttrManipCmd & operator=(AttrManipCmd &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setCmd(const std::string & cmd);
-    XpObjLib const std::string & cmd() const;
+    XpObjLib bool operator==(const AttrManipCmd & other) const;
+    bool operator!=(const AttrManipCmd & other) const { return !this->operator==(other); }
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
+    XpObjLib static const EManipulator mType;
+    ECursor mCursor;
+    std::string mToolType;
 
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
+    std::string mCommand;
 
+    /// @}
     //-------------------------------------------------------------------------
-
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
-
-    //-------------------------------------------------------------------------
-
-private:
-
-    std::string mCommand = "none";
 
 };
 

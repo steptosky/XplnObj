@@ -27,68 +27,24 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipCmdSwitchUpDown2.h"
-#include "xpln/enums/EManipulator.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipCmdSwitchUpDown2::AttrManipCmdSwitchUpDown2()
-    : AttrManipBase(EManipulator(EManipulator::command_switch_ud2)) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipCmdSwitchUpDown2::setCmd(const std::string & val) {
-    mCommand = val;
-}
-
-const std::string & AttrManipCmdSwitchUpDown2::cmd() const {
-    return mCommand;
-}
+const EManipulator AttrManipCmdSwitchUpDown2::mType(EManipulator::command_switch_ud2);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipCmdSwitchUpDown2::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const auto * right = dynamic_cast<const AttrManipCmdSwitchUpDown2*>(manip);
-    if (!right)
-        return false;
-
-    return sts::isEqual(mCommand, right->mCommand);
-}
-
-AttrManipBase * AttrManipCmdSwitchUpDown2::clone() const {
-    return new AttrManipCmdSwitchUpDown2(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipCmdSwitchUpDown2::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2;
-    outStr << " " << cursor().toString();
-    outStr << " " << writer.actualCommand(cmd());
-    outStr << " " << toolTip();
-    writer.printLine(outStr.str());
-    return 1;
+bool AttrManipCmdSwitchUpDown2::operator==(const AttrManipCmdSwitchUpDown2 & other) const {
+    return mCursor == other.mCursor &&
+           mToolType == other.mToolType &&
+           mCommand == other.mCommand;
 }
 
 /**************************************************************************************************/

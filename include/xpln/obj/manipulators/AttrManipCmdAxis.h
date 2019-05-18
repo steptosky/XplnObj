@@ -29,7 +29,10 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
+#include <string>
+#include "xpln/Export.h"
+#include "xpln/enums/ECursor.h"
+#include "xpln/enums/EManipulator.h"
 
 namespace xobj {
 
@@ -41,74 +44,44 @@ namespace xobj {
  * \details ATTR_manip_command_axis
  * \ingroup Manipulators
  */
-class AttrManipCmdAxis : public AttrManipBase {
+class AttrManipCmdAxis final {
 public:
 
-    XpObjLib AttrManipCmdAxis();
-    virtual ~AttrManipCmdAxis() = default;
-
     //-------------------------------------------------------------------------
+    /// @{
 
-    [[deprecated("use setDirectionX")]]
-    void setX(const float val) { setDirectionX(val); }
+    AttrManipCmdAxis() = default;
+    AttrManipCmdAxis(const AttrManipCmdAxis &) = default;
+    AttrManipCmdAxis(AttrManipCmdAxis &&) = default;
 
-    [[deprecated("use setDirectionY")]]
-    void setY(const float val) { setDirectionY(val); }
+    ~AttrManipCmdAxis() = default;
 
-    [[deprecated("use setDirectionZ")]]
-    void setZ(const float val) { setDirectionZ(val); }
+    AttrManipCmdAxis & operator=(const AttrManipCmdAxis &) = default;
+    AttrManipCmdAxis & operator=(AttrManipCmdAxis &&) = default;
 
-    [[deprecated("use directionX")]]
-    float x() const { return directionX(); }
-
-    [[deprecated("use directionY")]]
-    float y() const { return directionY(); }
-
-    [[deprecated("use directionZ")]]
-    float z() const { return directionZ(); }
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    void setDirection(const float x, const float y, const float z) {
-        setDirectionX(x);
-        setDirectionY(y);
-        setDirectionZ(z);
-    }
+    XpObjLib bool operator==(const AttrManipCmdAxis & other) const;
+    bool operator!=(const AttrManipCmdAxis & other) const { return !this->operator==(other); }
 
-    XpObjLib void setDirectionX(float val);
-    XpObjLib void setDirectionY(float val);
-    XpObjLib void setDirectionZ(float val);
-    XpObjLib float directionX() const;
-    XpObjLib float directionY() const;
-    XpObjLib float directionZ() const;
-
-    XpObjLib void setCmdNegative(const std::string & val);
-    XpObjLib void setCmdPositive(const std::string & val);
-    XpObjLib const std::string & cmdNegative() const;
-    XpObjLib const std::string & cmdPositive() const;
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
+    XpObjLib static const EManipulator mType;
+    ECursor mCursor;
+    std::string mToolType;
 
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
+    float mDirX = 0.0f;
+    float mDirY = 0.0f;
+    float mDirZ = 0.0f;
+    std::string mPosCommand;
+    std::string mNegCommand;
 
+    /// @}
     //-------------------------------------------------------------------------
-
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
-
-    //-------------------------------------------------------------------------
-
-private:
-
-    float mX = 0.0f;
-    float mY = 0.0f;
-    float mZ = 0.0f;
-    std::string mPosCommand = "none";
-    std::string mNegCommand = "none";
 
 };
 

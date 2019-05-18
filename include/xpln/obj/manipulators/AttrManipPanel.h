@@ -29,7 +29,9 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
+#include <optional>
+#include "xpln/Export.h"
+#include "xpln/enums/EManipulator.h"
 #include "xpln/obj/attributes/AttrCockpit.h"
 
 namespace xobj {
@@ -42,48 +44,47 @@ namespace xobj {
  * \details Panel-Click manipulator
  * \ingroup Manipulators
  */
-class AttrManipPanel : public AttrManipBase {
+class AttrManipPanel final {
 public:
 
-    XpObjLib AttrManipPanel();
-	XpObjLib explicit  AttrManipPanel(const AttrCockpit& cockpit);
-    virtual ~AttrManipPanel() = default;
-
     //-------------------------------------------------------------------------
+    /// @{
+
+    AttrManipPanel() = default;
+
+    explicit AttrManipPanel(AttrCockpit cockpit)
+        : mAttrCockpit(std::move(cockpit)) {}
+
+    AttrManipPanel(const AttrManipPanel &) = default;
+    AttrManipPanel(AttrManipPanel &&) = default;
+
+    ~AttrManipPanel() = default;
+
+    AttrManipPanel & operator=(const AttrManipPanel &) = default;
+    AttrManipPanel & operator=(AttrManipPanel &&) = default;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    XpObjLib bool operator==(const AttrManipPanel & other) const;
+    bool operator!=(const AttrManipPanel & other) const { return !this->operator==(other); }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    XpObjLib static const EManipulator mType;
 
     /*!
      * \details Panel manipulator can be enabled with the cockpit attribute only.
-     *          This method sets the cockpit attribute which will be used for enabling the manipulator.
-     * \note This method is for internal using only! The developer must not use it.
-     * \param cockpit 
+     *        This is the cockpit attribute which will be used for enabling the manipulator.
+     * \note This var is for internal using only! The developer must not use it.
      */
-    XpObjLib void setCockpit(const AttrCockpit & cockpit);
+    std::optional<AttrCockpit> mAttrCockpit;
 
-    /*!
-     * \see \link AttrManipPanel::setCockpit \endlink
-     * \note This method is for internal using only! The developer must not use it.
-     * \return cockpit attribute associated with the manipulator
-     */
-    XpObjLib const AttrCockpit & cockpit() const;
-
+    /// @}
     //-------------------------------------------------------------------------
-
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
-
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
-
-    //-------------------------------------------------------------------------
-
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
-
-    //-------------------------------------------------------------------------
-
-private:
-
-    AttrCockpit mAttrCockpit;
 
 };
 

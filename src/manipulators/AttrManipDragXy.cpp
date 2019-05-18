@@ -28,137 +28,31 @@
 */
 
 #include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipDragXy.h"
-#include "xpln/enums/EManipulator.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipDragXy::AttrManipDragXy()
-    : AttrManipBase(EManipulator(EManipulator::drag_xy)) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipDragXy::setX(const float val) {
-    mX = val;
-}
-
-void AttrManipDragXy::setXMin(const float val) {
-    mXMin = val;
-}
-
-void AttrManipDragXy::setXMax(const float val) {
-    mXMax = val;
-}
-
-float AttrManipDragXy::x() const {
-    return mX;
-}
-
-float AttrManipDragXy::xMin() const {
-    return mXMin;
-}
-
-float AttrManipDragXy::xMax() const {
-    return mXMax;
-}
-
-void AttrManipDragXy::setY(const float val) {
-    mY = val;
-}
-
-void AttrManipDragXy::setYMin(const float val) {
-    mYMin = val;
-}
-
-void AttrManipDragXy::setYMax(const float val) {
-    mYMax = val;
-}
-
-float AttrManipDragXy::y() const {
-    return mY;
-}
-
-float AttrManipDragXy::yMin() const {
-    return mYMin;
-}
-
-float AttrManipDragXy::yMax() const {
-    return mYMax;
-}
-
-const std::string & AttrManipDragXy::yDataref() const {
-    return mYDataref;
-}
-
-void AttrManipDragXy::setYDataref(const std::string & val) {
-    mYDataref = val;
-}
-
-const std::string & AttrManipDragXy::xDataref() const {
-    return mXDataref;
-}
-
-void AttrManipDragXy::setXDataref(const std::string & val) {
-    mXDataref = val;
-}
+const EManipulator AttrManipDragXy::mType(EManipulator::drag_xy);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipDragXy::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const auto * right = dynamic_cast<const AttrManipDragXy*>(manip);
-    if (!right)
-        return false;
-
-    return (sts::isEqual(mX, right->mX) &&
-            sts::isEqual(mY, right->mY) &&
-            sts::isEqual(mXMin, right->mXMin) &&
-            sts::isEqual(mXMax, right->mXMax) &&
-            sts::isEqual(mYMin, right->mYMin) &&
-            sts::isEqual(mYMax, right->mYMax) &&
-            sts::isEqual(mXDataref, right->mXDataref) &&
-            sts::isEqual(mYDataref, right->mYDataref));
-}
-
-AttrManipBase * AttrManipDragXy::clone() const {
-    return new AttrManipDragXy(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipDragXy::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_DRAG_XY;
-    outStr << " " << cursor().toString();
-    outStr << " " << x();
-    outStr << " " << y();
-    outStr << " " << xMin();
-    outStr << " " << xMax();
-    outStr << " " << yMin();
-    outStr << " " << yMax();
-    outStr << " " << writer.actualDataref(xDataref());
-    outStr << " " << writer.actualDataref(yDataref());
-    outStr << " " << toolTip();
-    writer.printLine(outStr.str());
-    return 1;
+bool AttrManipDragXy::operator==(const AttrManipDragXy & other) const {
+    return mCursor == other.mCursor &&
+           mToolType == other.mToolType &&
+           sts::isEqual(mX, other.mX) &&
+           sts::isEqual(mY, other.mY) &&
+           sts::isEqual(mXMin, other.mXMin) &&
+           sts::isEqual(mXMax, other.mXMax) &&
+           sts::isEqual(mYMin, other.mYMin) &&
+           sts::isEqual(mYMax, other.mYMax) &&
+           mXDataref == other.mXDataref &&
+           mYDataref == other.mYDataref;
 }
 
 /**************************************************************************************************/

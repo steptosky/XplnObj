@@ -71,6 +71,23 @@ TEST(Manual, case1) {
 }
 #endif
 
+#if 0
+TEST(Manual, case2) {
+    const auto fileName = XOBJ_PATH("manual-case2.obj");
+    //-----------------------------
+    ObjMain mainOut;
+    mainOut.mAttr.mCockpitRegion1 = AttrCockpitRegion(1, 2, 3, 4);
+    auto & lod = mainOut.addLod();
+    auto * mesh = new ObjMesh;
+    mesh->mVertices = {MeshVertex()};
+    mesh->mFaces = {MeshFace()};
+    mesh->mAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
+    lod.transform().addObject(mesh);
+    ExportContext expContext(fileName);
+    ASSERT_TRUE(mainOut.exportObj(expContext));
+}
+#endif
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/

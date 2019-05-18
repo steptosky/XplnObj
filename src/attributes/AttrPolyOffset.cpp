@@ -29,9 +29,6 @@
 
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrPolyOffset.h"
-#include "common/AttributeNames.h"
-#include "converters/StringStream.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -41,23 +38,6 @@ namespace xobj {
 
 bool AttrPolyOffset::operator==(const AttrPolyOffset & other) const {
     return sts::isEqual(mOffset, other.mOffset, 0.01f);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::string AttrPolyOffset::objDisableStr() {
-    StringStream outStr;
-    outStr << ATTR_POLY_OS << " " << AttrPolyOffset().offset();
-    return outStr.str();
-}
-
-std::size_t AttrPolyOffset::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_POLY_OS << " " << offset();
-    writer.printLine(outStr.str());
-    return 1;
 }
 
 /**************************************************************************************************/

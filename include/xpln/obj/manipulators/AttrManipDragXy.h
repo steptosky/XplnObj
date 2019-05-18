@@ -29,7 +29,10 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
+#include <string>
+#include "xpln/Export.h"
+#include "xpln/enums/ECursor.h"
+#include "xpln/enums/EManipulator.h"
 
 namespace xobj {
 
@@ -41,48 +44,35 @@ namespace xobj {
  * \details ATTR_manip_drag_xy
  * \ingroup Manipulators
  */
-class AttrManipDragXy : public AttrManipBase {
+class AttrManipDragXy final {
 public:
 
-    XpObjLib AttrManipDragXy();
-    virtual ~AttrManipDragXy() = default;
-
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib void setX(float val);
-    XpObjLib void setXMin(float val);
-    XpObjLib void setXMax(float val);
-    XpObjLib float x() const;
-    XpObjLib float xMin() const;
-    XpObjLib float xMax() const;
-    XpObjLib void setXDataref(const std::string & val);
-    XpObjLib const std::string & xDataref() const;
+    AttrManipDragXy() = default;
+    AttrManipDragXy(const AttrManipDragXy &) = default;
+    AttrManipDragXy(AttrManipDragXy &&) = default;
 
-    XpObjLib void setY(float val);
-    XpObjLib void setYMin(float val);
-    XpObjLib void setYMax(float val);
-    XpObjLib float y() const;
-    XpObjLib float yMin() const;
-    XpObjLib float yMax() const;
-    XpObjLib void setYDataref(const std::string & val);
-    XpObjLib const std::string & yDataref() const;
+    ~AttrManipDragXy() = default;
 
+    AttrManipDragXy & operator=(const AttrManipDragXy &) = default;
+    AttrManipDragXy & operator=(AttrManipDragXy &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
+    XpObjLib bool operator==(const AttrManipDragXy & other) const;
+    bool operator!=(const AttrManipDragXy & other) const { return !this->operator==(other); }
 
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
-
-    //-------------------------------------------------------------------------
-
-private:
+    XpObjLib static const EManipulator mType;
+    ECursor mCursor;
+    std::string mToolType;
 
     float mX = 0.0f;
     float mY = 0.0f;
@@ -90,9 +80,11 @@ private:
     float mXMax = 0.0f;
     float mYMin = 0.0f;
     float mYMax = 0.0f;
-    std::string mXDataref = "none";
-    std::string mYDataref = "none";
+    std::string mXDataref;
+    std::string mYDataref;
 
+    /// @}
+    //-------------------------------------------------------------------------
 };
 
 /********************************************************************************************************/

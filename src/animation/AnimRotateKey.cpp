@@ -37,7 +37,8 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool AnimRotateKey::operator==(const AnimRotateKey & other) const {
-    return sts::isEqual(mAngleDegrees, other.mAngleDegrees) && sts::isEqual(mDrfValue, other.mDrfValue);
+    return sts::isEqual(mAngleDegrees, other.mAngleDegrees) &&
+           sts::isEqual(mDrfValue, other.mDrfValue);
 }
 
 /**************************************************************************************************/

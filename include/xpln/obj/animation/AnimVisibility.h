@@ -42,31 +42,49 @@ namespace xobj {
  * \details Representation of the Animation visibility hide/show for the 'obj' objects
  * \ingroup Animation
  */
-class AnimVisibility {
+class AnimVisibility final {
 public:
 
-    //-----------------------------------------
+    //-------------------------------------------------------------------------
+    /// @{
 
     typedef AnimVisibilityKey Key;
     typedef std::vector<Key> KeyList;
 
-    //-----------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
-    bool isAnimated() const {
-        return !mKeys.empty();
-    }
+    AnimVisibility() = default;
+    AnimVisibility(const AnimVisibility &) = default;
+    AnimVisibility(AnimVisibility &&) = default;
 
-    //-----------------------------------------
+    ~AnimVisibility() = default;
 
-    void reset() {
-        mKeys.clear();
-    }
+    AnimVisibility & operator=(const AnimVisibility &) = default;
+    AnimVisibility & operator=(AnimVisibility &&) = default;
 
-    //-----------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    bool operator==(const AnimVisibility & other) const { return mKeys == other.mKeys; }
+    bool operator!=(const AnimVisibility & other) const { return mKeys != other.mKeys; }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    bool isAnimated() const { return !mKeys.empty(); }
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
 
     KeyList mKeys;
 
-    //-----------------------------------------
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

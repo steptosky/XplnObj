@@ -28,10 +28,7 @@
 */
 
 #include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/embeddable/AttrManipWheel.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -40,46 +37,7 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool AttrManipWheel::operator==(const AttrManipWheel & other) const {
-    return mIsEnabled == other.mIsEnabled && sts::isEqual(mWheelDelta, other.mWheelDelta);
-}
-
-bool AttrManipWheel::operator!=(const AttrManipWheel & other) const {
-    return !this->operator==(other);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipWheel::setEnabled(const bool state) {
-    mIsEnabled = state;
-}
-
-void AttrManipWheel::setDelta(const float delta) {
-    mWheelDelta = delta;
-}
-
-bool AttrManipWheel::isEnabled() const {
-    return mIsEnabled;
-}
-
-float AttrManipWheel::delta() const {
-    return mWheelDelta;
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipWheel::printObj(AbstractWriter & writer) const {
-    if (isEnabled()) {
-        StringStream outStr;
-        outStr << ATTR_MANIP_WHEEL;
-        outStr << " " << delta();
-        writer.printLine(outStr.str());
-        return 1;
-    }
-    return 0;
+    return sts::isEqual(mWheelDelta, other.mWheelDelta);
 }
 
 /**************************************************************************************************/

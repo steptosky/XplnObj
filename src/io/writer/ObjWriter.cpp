@@ -218,7 +218,7 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
 
         if (mMain->mAttr.mDebug) {
             ++mStatistic.mGlobAttrCount;
-            writer.printLine("DEBUG");
+            writer.writeLine("DEBUG");
             writer.printEol();
         }
 
@@ -258,7 +258,7 @@ void ObjWriter::printSignature(AbstractWriter & writer, const std::string & sign
         std::string s("## ");
         s.append(signature);
         s = sts::MbStrUtils::replaceCopy(s, "\r\n", "\n## ");
-        writer.printLine(s);
+        writer.writeLine(s);
     }
     std::string msg("## ");
     msg.append(XOBJ_ORGANIZATION_NAME).append(" ").append(XOBJ_PROJECT_NAME);
@@ -267,9 +267,9 @@ void ObjWriter::printSignature(AbstractWriter & writer, const std::string & sign
         msg.append("-").append(XOBJ_RELEASE_TYPE);
     }
     msg.append("+[").append(XOBJ_COMPILE_DATE).append("]");
-    writer.printLine(msg);
+    writer.writeLine(msg);
     if (timeStamp) {
-        writer.printLine(std::string("## Object created: ").append(currentDateTime()));
+        writer.writeLine(std::string("## Object created: ").append(currentDateTime()));
     }
 }
 
@@ -304,7 +304,7 @@ void ObjWriter::calculateVerticiesAndFaces(const Transform & parent) {
 
 void ObjWriter::printGlobalInformation(AbstractWriter & writer, const ObjMain & objRoot) {
     // write header
-    writer.printLine("I\n800\nOBJ\n");
+    writer.writeLine("I\n800\nOBJ\n");
     mWriteAttr.writeGlobAttr(&writer, &objRoot);
 
     writer.printEol();
@@ -313,7 +313,7 @@ void ObjWriter::printGlobalInformation(AbstractWriter & writer, const ObjMain & 
             << mStatistic.mLineVerticesCount << " "
             << mStatistic.mLightObjPointCount << " "
             << (mStatistic.mMeshFacesCount * 3);
-    writer.printLine(stream.str());
+    writer.writeLine(stream.str());
 }
 
 /********************************************************************************************************/
@@ -386,7 +386,7 @@ void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) 
 
 size_t ObjWriter::printObjCustomData(AbstractWriter & writer, const std::vector<std::string> & strings) {
     for (auto & str : strings) {
-        writer.printLine(str);
+        writer.writeLine(str);
     }
     return strings.size();
 }

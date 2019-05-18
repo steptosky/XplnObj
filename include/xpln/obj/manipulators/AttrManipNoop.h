@@ -29,7 +29,9 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
+#include <string>
+#include "xpln/Export.h"
+#include "xpln/enums/EManipulator.h"
 
 namespace xobj {
 
@@ -41,25 +43,40 @@ namespace xobj {
  * \details ATTR_manip_noop
  * \ingroup Manipulators
  */
-class AttrManipNoop : public AttrManipBase {
+class AttrManipNoop final {
 public:
 
-    XpObjLib AttrManipNoop();
-    virtual ~AttrManipNoop() = default;
-
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
+    AttrManipNoop() = default;
 
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
+    explicit AttrManipNoop(std::string toolTip)
+        : mToolType(std::move(toolTip)) {}
 
+    AttrManipNoop(const AttrManipNoop &) = default;
+    AttrManipNoop(AttrManipNoop &&) = default;
+
+    ~AttrManipNoop() = default;
+
+    AttrManipNoop & operator=(const AttrManipNoop &) = default;
+    AttrManipNoop & operator=(AttrManipNoop &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
+    XpObjLib bool operator==(const AttrManipNoop & other) const;
+    bool operator!=(const AttrManipNoop & other) const { return !this->operator==(other); }
 
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    XpObjLib static const EManipulator mType;
+    std::string mToolType;
+
+    /// @}
     //-------------------------------------------------------------------------
 
 };

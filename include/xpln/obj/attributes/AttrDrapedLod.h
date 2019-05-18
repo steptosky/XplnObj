@@ -71,15 +71,10 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    void setDistance(const float distance) { mDistance = distance; }
-    float distance() const { return mDistance; }
+    float mDistance = 1000.0f;
 
     /// @}
     //-------------------------------------------------------------------------
-
-private:
-
-    float mDistance = 1000.0f;
 
 };
 

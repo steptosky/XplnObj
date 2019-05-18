@@ -3,11 +3,16 @@ StepToSky: X-Plane Obj Library
 #### next
 
 - **Added** Particle system support.
+- **Added** Constraint for macos deployment target - 10.14, because of [error: call to unavailable function 'visit': introduced in macOS 10.14 std::visit].
+- **Added** Checking if a normal map is specified but the attributes GLOBAL_specular or ATTR_shiny_rat aren't set.
+- **Added** Checking if the ATTR_cockpit_device doesn't have a device name.
+- **Added** Checking if mesh has the attribute ATTR_cockpit_region but the attribute COCKPIT_REGION isn't set.
 
 ##### Breaking backward compatibility:
 - **Changed** Code style: public variable now have the prefix m instead of p.
 - **Changed** Attribute sets use std::optional now.
 - **Changed** Tree attribute location. It is presented as a parameter of the mesh object now.
+- **Changed** Manipulator use std::variant for its type now.
 - **Removed** `enable/disable` flags from the attributes as the std::option is used.
 
 ---------------------------------------------------------------------------

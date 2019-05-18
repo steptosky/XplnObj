@@ -27,13 +27,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <algorithm>
-
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/attributes/AttrBlend.h"
-#include "common/AttributeNames.h"
-#include "converters/StringStream.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
@@ -43,51 +38,7 @@ namespace xobj {
 
 bool AttrBlend::operator==(const AttrBlend & other) const {
     return sts::isEqual(mRatio, other.mRatio, 0.01f) &&
-           mBlending == other.mBlending;
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-AttrBlend::eType AttrBlend::type() const {
-    return mBlending;
-}
-
-void AttrBlend::setRatio(float ratio) {
-    ratio = std::min(ratio, 1.0f);
-    ratio = std::max(ratio, 0.0f);
-    mRatio = ratio;
-}
-
-float AttrBlend::ratio() const {
-    return mRatio;
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::string AttrBlend::objDisableStr() {
-    StringStream outStr;
-    outStr << ATTR_BLEND << " " << AttrBlend().ratio();
-    return outStr.str();
-}
-
-std::size_t AttrBlend::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    if (type() == no_blend) {
-        outStr << ATTR_NO_BLEND;
-    }
-    else if (type() == shadow_blend) {
-        outStr << ATTR_SHADOW_BLEND;
-    }
-    else {
-        outStr << ATTR_BLEND;
-    }
-    outStr << " " << ratio();
-    writer.printLine(outStr.str());
-    return 1;
+           mType == other.mType;
 }
 
 /**************************************************************************************************/

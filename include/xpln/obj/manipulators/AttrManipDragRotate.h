@@ -29,7 +29,10 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AttrManipBase.h"
+#include <string>
+#include "xpln/Export.h"
+#include "xpln/enums/ECursor.h"
+#include "xpln/enums/EManipulator.h"
 #include "embeddable/AttrManipKeyFrame.h"
 #include "embeddable/AttrAxisDetentRange.h"
 
@@ -43,150 +46,46 @@ namespace xobj {
  * \details ATTR_manip_drag_rotate
  * \ingroup Manipulators
  */
-class AttrManipDragRotate : public AttrManipBase {
+class AttrManipDragRotate final {
 public:
+
+    //-------------------------------------------------------------------------
+    /// @{
 
     typedef std::vector<AttrManipKeyFrame> Keys;
     typedef std::vector<AttrAxisDetentRange> DetentRanges;
 
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    XpObjLib AttrManipDragRotate();
-    virtual ~AttrManipDragRotate() = default;
+    AttrManipDragRotate() = default;
+    AttrManipDragRotate(const AttrManipDragRotate &) = default;
+    AttrManipDragRotate(AttrManipDragRotate &&) = default;
 
+    ~AttrManipDragRotate() = default;
+
+    AttrManipDragRotate & operator=(const AttrManipDragRotate &) = default;
+    AttrManipDragRotate & operator=(AttrManipDragRotate &&) = default;
+
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    void setOrigin(const float x, const float y, const float z) {
-        setOriginX(x);
-        setOriginY(y);
-        setOriginZ(z);
-    }
+    XpObjLib bool operator==(const AttrManipDragRotate & other) const;
+    bool operator!=(const AttrManipDragRotate & other) const { return !this->operator==(other); }
 
-    XpObjLib void setOriginX(float val);
-    XpObjLib void setOriginY(float val);
-    XpObjLib void setOriginZ(float val);
-    XpObjLib float originX() const;
-    XpObjLib float originY() const;
-    XpObjLib float originZ() const;
-
-    void setDirection(const float x, const float y, const float z) {
-        setDirectionX(x);
-        setDirectionY(y);
-        setDirectionZ(z);
-    }
-
-    XpObjLib void setDirectionX(float val);
-    XpObjLib void setDirectionY(float val);
-    XpObjLib void setDirectionZ(float val);
-    XpObjLib float directionX() const;
-    XpObjLib float directionY() const;
-    XpObjLib float directionZ() const;
-
-    void setAngles(const float a1, const float a2) {
-        setAngle1(a1);
-        setAngle2(a2);
-    }
-
-    XpObjLib void setAngle1(float val);
-    XpObjLib void setAngle2(float val);
-    XpObjLib float angle1() const;
-    XpObjLib float angle2() const;
-
-    XpObjLib void setLift(float val);
-    XpObjLib float lift() const;
-
-    // todo min max checking (min <= max)
-
-    void setV1(const float min, const float max) {
-        setV1Min(min);
-        setV1Max(max);
-    }
-
-    XpObjLib void setV1Min(float val);
-    XpObjLib void setV1Max(float val);
-    XpObjLib float v1Min() const;
-    XpObjLib float v1Max() const;
-
-    void setV2(const float min, const float max) {
-        setV2Min(min);
-        setV2Max(max);
-    }
-
-    XpObjLib void setV2Min(float val);
-    XpObjLib void setV2Max(float val);
-    XpObjLib float v2Min() const;
-    XpObjLib float v2Max() const;
-
-    void setDatarefs(const std::string & drf1, const std::string & drf2) {
-        setDataref1(drf1);
-        setDataref2(drf2);
-    }
-
-    XpObjLib void setDataref1(const std::string & val);
-    XpObjLib void setDataref2(const std::string & val);
-    XpObjLib const std::string & dataref1() const;
-    XpObjLib const std::string & dataref2() const;
-
+    /// @}
     //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \see AttrManipKeyFrame
-     */
-    void setKeys(const Keys & keys) { mKeys = keys; }
+    XpObjLib static const EManipulator mType;
+    ECursor mCursor;
+    std::string mToolType;
 
-    /*!
-     * \see AttrManipKeyFrame
-     */
-    Keys & keys() { return mKeys; }
-
-    /*!
-     * \see AttrManipKeyFrame
-     */
-    const Keys & keys() const { return mKeys; }
-
-    //-------------------------------------------------------------------------
-
-    /*!
-     * \see AttrAxisDetentRange
-     */
-    void setDetentRanges(const DetentRanges & ranges) {
-        mAxisDetentRanges = ranges;
-    }
-
-    /*!
-     * \see AttrAxisDetentRange
-     */
-    DetentRanges & detentRanges() {
-        return mAxisDetentRanges;
-    }
-
-    /*!
-     * \see AttrAxisDetentRange
-     */
-    const DetentRanges & detentRanges() const {
-        return mAxisDetentRanges;
-    }
-
-    //-------------------------------------------------------------------------
-
-    /*! \copydoc AttrManipBase::equals */
-    XpObjLib bool equals(const AttrManipBase * manip) const override;
-
-    /*! \copydoc AttrManipBase::clone */
-    XpObjLib AttrManipBase * clone() const override;
-
-    //-------------------------------------------------------------------------
-
-    /*! \copydoc AttrManipBase::printObj */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const override final;
-
-    //-------------------------------------------------------------------------
-
-private:
-
-    float mX = 0.0f;
-    float mY = 0.0f;
-    float mZ = 0.0f;
+    float mOriginX = 0.0f;
+    float mOriginY = 0.0f;
+    float mOriginZ = 0.0f;
 
     float mDirX = 0.0f;
     float mDirY = 0.0f;
@@ -203,11 +102,14 @@ private:
     float mV2Min = 0.0f;
     float mV2Max = 1.0f;
 
-    std::string mDataref1 = "none";
-    std::string mDataref2 = "none";
+    std::string mDataref1;
+    std::string mDataref2;
 
     Keys mKeys;
     DetentRanges mAxisDetentRanges;
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

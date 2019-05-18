@@ -98,6 +98,7 @@ public:
         mDraped.reset();
         mObject.reset();
         mObjHasParticleEmitters = false;
+        mObjHasAttrShinyRat = false;
     }
 
     /*!
@@ -119,7 +120,15 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
+    /*!
+     * \details For warning about emitter and particle system.
+     */
     bool mObjHasParticleEmitters = false;
+
+    /*!
+     * \details For warning about normal map and specular.
+     */
+    bool mObjHasAttrShinyRat = false;
 
     /// @}
     //-------------------------------------------------------------------------

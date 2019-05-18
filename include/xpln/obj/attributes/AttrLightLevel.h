@@ -34,8 +34,6 @@
 
 namespace xobj {
 
-class AbstractWriter;
-
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
@@ -76,40 +74,12 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    void setVal1(const float val1) { mVal1 = val1; }
-    void setVal2(const float val2) { mVal2 = val2; }
-    void setDataref(const std::string & dataRef) { mDataref = dataRef; }
-
-    float val1() const { return mVal1; }
-    float val2() const { return mVal2; }
-    const std::string & dataref() const { return mDataref; }
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    /*!
-     * \note For internal use only.
-     * \return String with default values for simulator.
-     *         It is needed when attribute has been enabled before
-     *         and now should be disabled.
-     */
-    XpObjLib static std::string objDisableStr();
-
-    /*!
-     * \note For internal use only.
-     * \copydoc AttrManipBase::printObj
-     */
-    XpObjLib std::size_t printObj(AbstractWriter & writer) const;
-
-    /// @}
-    //-------------------------------------------------------------------------
-
-private:
-
     float mVal1 = 0.0f;
     float mVal2 = 1.0f;
     std::string mDataref;
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

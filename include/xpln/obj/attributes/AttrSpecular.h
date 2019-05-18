@@ -69,15 +69,10 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    XpObjLib void setRatio(float ratio);
-    float ratio() const { return mRatio; }
+    float mRatio = 0.0f;
 
     /// @}
     //-------------------------------------------------------------------------
-
-private:
-
-    float mRatio = 0.0f;
 
 };
 

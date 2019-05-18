@@ -28,233 +28,40 @@
 */
 
 #include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipDragRotate.h"
-#include "xpln/enums//EManipulator.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipDragRotate::AttrManipDragRotate()
-    : AttrManipBase(EManipulator(EManipulator::drag_rotate)) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipDragRotate::setOriginX(const float val) {
-    mX = val;
-}
-
-void AttrManipDragRotate::setOriginY(const float val) {
-    mY = val;
-}
-
-void AttrManipDragRotate::setOriginZ(const float val) {
-    mZ = val;
-}
-
-float AttrManipDragRotate::originX() const {
-    return mX;
-}
-
-float AttrManipDragRotate::originY() const {
-    return mY;
-}
-
-float AttrManipDragRotate::originZ() const {
-    return mZ;
-}
-
-//-------------------------------------------------------------------------
-
-void AttrManipDragRotate::setDirectionX(const float val) {
-    mDirX = val;
-}
-
-void AttrManipDragRotate::setDirectionY(const float val) {
-    mDirY = val;
-}
-
-void AttrManipDragRotate::setDirectionZ(const float val) {
-    mDirZ = val;
-}
-
-float AttrManipDragRotate::directionX() const {
-    return mDirX;
-}
-
-float AttrManipDragRotate::directionY() const {
-    return mDirY;
-}
-
-float AttrManipDragRotate::directionZ() const {
-    return mDirZ;
-}
-
-//-------------------------------------------------------------------------
-
-void AttrManipDragRotate::setAngle1(const float val) {
-    mAngle1 = val;
-}
-
-void AttrManipDragRotate::setAngle2(const float val) {
-    mAngle2 = val;
-}
-
-float AttrManipDragRotate::angle1() const {
-    return mAngle1;
-}
-
-float AttrManipDragRotate::angle2() const {
-    return mAngle2;
-}
-
-//-------------------------------------------------------------------------
-
-void AttrManipDragRotate::setLift(const float val) {
-    mLift = val;
-}
-
-float AttrManipDragRotate::lift() const {
-    return mLift;
-}
-
-//-------------------------------------------------------------------------
-
-void AttrManipDragRotate::setV1Min(const float val) {
-    mV1Min = val;
-}
-
-void AttrManipDragRotate::setV1Max(const float val) {
-    mV1Max = val;
-}
-
-float AttrManipDragRotate::v1Min() const {
-    return mV1Min;
-}
-
-float AttrManipDragRotate::v1Max() const {
-    return mV1Max;
-}
-
-//-------------------------------------------------------------------------
-
-void AttrManipDragRotate::setV2Min(const float val) {
-    mV2Min = val;
-}
-
-void AttrManipDragRotate::setV2Max(const float val) {
-    mV2Max = val;
-}
-
-float AttrManipDragRotate::v2Min() const {
-    return mV2Min;
-}
-
-float AttrManipDragRotate::v2Max() const {
-    return mV2Max;
-}
-
-//-------------------------------------------------------------------------
-
-void AttrManipDragRotate::setDataref1(const std::string & val) {
-    mDataref1 = val;
-}
-
-void AttrManipDragRotate::setDataref2(const std::string & val) {
-    mDataref2 = val;
-}
-
-const std::string & AttrManipDragRotate::dataref1() const {
-    return mDataref1;
-}
-
-const std::string & AttrManipDragRotate::dataref2() const {
-    return mDataref2;
-}
+const EManipulator AttrManipDragRotate::mType(EManipulator::drag_rotate);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipDragRotate::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const auto * right = dynamic_cast<const AttrManipDragRotate*>(manip);
-    if (!right)
-        return false;
-
-    return (sts::isEqual(mX, right->mX) &&
-            sts::isEqual(mY, right->mY) &&
-            sts::isEqual(mZ, right->mZ) &&
-            sts::isEqual(mDirX, right->mDirX) &&
-            sts::isEqual(mDirY, right->mDirY) &&
-            sts::isEqual(mDirZ, right->mDirZ) &&
-            sts::isEqual(mAngle1, right->mAngle1) &&
-            sts::isEqual(mAngle2, right->mAngle2) &&
-            sts::isEqual(mLift, right->mLift) &&
-            sts::isEqual(mV1Min, right->mV1Min) &&
-            sts::isEqual(mV1Max, right->mV1Max) &&
-            sts::isEqual(mV2Min, right->mV2Min) &&
-            sts::isEqual(mV2Max, right->mV2Max) &&
-            sts::isEqual(mDataref1, right->mDataref1) &&
-            sts::isEqual(mDataref2, right->mDataref2) &&
-            sts::isEqual(mKeys, right->mKeys) &&
-            sts::isEqual(mAxisDetentRanges, right->mAxisDetentRanges));
-}
-
-AttrManipBase * AttrManipDragRotate::clone() const {
-    return new AttrManipDragRotate(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipDragRotate::printObj(AbstractWriter & writer) const {
-    std::size_t outCounter = 1;
-    StringStream outStr;
-    outStr << ATTR_MANIP_DRAG_ROTATE;
-    outStr << " " << cursor().toString();
-    outStr << " " << originX();
-    outStr << " " << originY();
-    outStr << " " << originZ();
-    outStr << " " << directionX();
-    outStr << " " << directionY();
-    outStr << " " << directionZ();
-    outStr << " " << angle1();
-    outStr << " " << angle2();
-    outStr << " " << lift();
-    outStr << " " << v1Min();
-    outStr << " " << v1Max();
-    outStr << " " << v2Min();
-    outStr << " " << v2Max();
-    outStr << " " << writer.actualDataref(dataref1());
-    outStr << " " << writer.actualDataref(dataref2());
-    outStr << " " << toolTip();
-    writer.printLine(outStr.str());
-
-    const auto & keysList = keys();
-    for (const auto & k : keysList) {
-        outCounter += k.printObj(writer);
-    }
-
-    const auto & detentRangeList = detentRanges();
-    for (const auto & v : detentRangeList) {
-        outCounter += v.printObj(writer);
-    }
-
-    return outCounter;
+bool AttrManipDragRotate::operator==(const AttrManipDragRotate & other) const {
+    return mCursor == other.mCursor &&
+           mToolType == other.mToolType &&
+           sts::isEqual(mOriginX, other.mOriginX) &&
+           sts::isEqual(mOriginY, other.mOriginY) &&
+           sts::isEqual(mOriginZ, other.mOriginZ) &&
+           sts::isEqual(mDirX, other.mDirX) &&
+           sts::isEqual(mDirY, other.mDirY) &&
+           sts::isEqual(mDirZ, other.mDirZ) &&
+           sts::isEqual(mAngle1, other.mAngle1) &&
+           sts::isEqual(mAngle2, other.mAngle2) &&
+           sts::isEqual(mLift, other.mLift) &&
+           sts::isEqual(mV1Min, other.mV1Min) &&
+           sts::isEqual(mV1Max, other.mV1Max) &&
+           sts::isEqual(mV2Min, other.mV2Min) &&
+           sts::isEqual(mV2Max, other.mV2Max) &&
+           mDataref1 == other.mDataref1 &&
+           mDataref2 == other.mDataref2 &&
+           mKeys == other.mKeys &&
+           mAxisDetentRanges == other.mAxisDetentRanges;
 }
 
 /**************************************************************************************************/

@@ -28,6 +28,7 @@
 */
 
 #include <cassert>
+#include <algorithm>
 
 #include "ObjWriteAttr.h"
 
@@ -39,7 +40,6 @@
 #include "xpln/obj/manipulators/AttrManipNone.h"
 #include "io/StringValidator.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
-#include "converters/ObjAttrString.h"
 #include "common/Logger.h"
 
 namespace xobj {
@@ -66,22 +66,133 @@ std::tuple<std::size_t, std::size_t, std::size_t> ObjWriteAttr::count() const {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-template<typename T>
-std::size_t writeGlobAttrT(AbstractWriter * writer, const T & attr) {
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrWetDry>>(const std::optional<AttrWetDry> & attr) {
     if (attr) {
-        printObjGlobAttr(*attr, *writer);
+        mWriter->writeLine(attr->mState == AttrWetDry::eState::wet ? ATTR_GLOBAL_WET : ATTR_GLOBAL_DRY);
+        ++mGlobNum;
     }
-    return attr ? 1 : 0;
 }
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrBlend>>(const std::optional<AttrBlend> & attr) {
+    if (attr) {
+        if (attr->mRatio < 0.0f || attr->mRatio > 1.0f) {
+            ULWarning << "The object <" << mMainObj->objectName()
+                    << "> has the blending attribute with the out of range ration [0 > ration < 1].";
+        }
+        const auto ration = std::clamp(attr->mRatio, 0.0f, 1.0f);
+        if (attr->mType == AttrBlend::no_blend) {
+            mWriter->writeLine(ATTR_GLOBAL_NO_BLEND, " ", ration);
+        }
+        else if (attr->mType == AttrBlend::shadow_blend) {
+            mWriter->writeLine(ATTR_GLOBAL_SHADOW_BLEND, " ", ration);
+        }
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrLayerGroup>>(const std::optional<AttrLayerGroup> & attr) {
+    if (attr) {
+        if (attr->mOffset < -5 || attr->mOffset > 5) {
+            ULWarning << "The object <" << mMainObj->objectName() << "> has the attribute <"
+                    << ATTR_GLOBAL_LAYER_GROUP << "> with the out of range offset [-5 > ration < 5].";
+        }
+        mWriter->writeLine(ATTR_GLOBAL_LAYER_GROUP, " ", attr->mLayer.toString(), " ", std::clamp(attr->mOffset, -5, 5));
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrSlungLoadWeight>>(const std::optional<AttrSlungLoadWeight> & attr) {
+    if (attr) {
+        mWriter->writeLine(ATTR_GLOBAL_SLUNG_LOAD_WEIGHT, " ", attr->mWeight);
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrSpecular>>(const std::optional<AttrSpecular> & attr) {
+    if (attr) {
+        if (attr->mRatio < 0.0f || attr->mRatio > 1.0f) {
+            ULWarning << "The object <" << mMainObj->objectName() << "> has the attribute <"
+                    << ATTR_GLOBAL_SPECULAR << "> with the out of range ration [0 > ration < 1].";
+        }
+        mWriter->writeLine(ATTR_GLOBAL_SPECULAR, " ", std::clamp(attr->mRatio, 0.0f, 1.0f));
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrTint>>(const std::optional<AttrTint> & attr) {
+    if (attr) {
+        mWriter->writeLine(ATTR_GLOBAL_TINT, " ", attr->mAlbedo, " ", attr->mEmissive);
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrSlopeLimit>>(const std::optional<AttrSlopeLimit> & attr) {
+    if (attr) {
+        mWriter->writeLine(ATTR_GLOBAL_SLOPE_LIMIT,
+                           " ", attr->mMinPitch,
+                           " ", attr->mMaxPitch,
+                           " ", attr->mMinRoll,
+                           " ", attr->mMaxRoll);
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrCockpitRegion>>(const std::optional<AttrCockpitRegion> & attr) {
+    if (attr) {
+        mWriter->writeLine(ATTR_GLOBAL_COCKPIT_REGION,
+                           " ", attr->mLeft,
+                           " ", attr->mBottom,
+                           " ", attr->mRight,
+                           " ", attr->mTop);
+        ++mGlobNum;
+    }
+}
+
+//-------------------------------------------------------------------------
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrDrapedLayerGroup>>(const std::optional<AttrDrapedLayerGroup> & attr) {
+    if (attr) {
+        if (attr->mOffset < -5 || attr->mOffset > 5) {
+            ULWarning << "The object <" << mMainObj->objectName() << "> has the attribute <"
+                    << ATTR_GLOBAL_LAYER_GROUP_DRAPED << "> with the out of range offset [-5 > ration < 5].";
+        }
+        mWriter->writeLine(ATTR_GLOBAL_LAYER_GROUP_DRAPED,
+                           " ", attr->mLayer.toString(),
+                           " ", std::clamp(attr->mOffset, -5, 5));
+        ++mGlobNum;
+    }
+}
+
+template<>
+void ObjWriteAttr::writeGlobAttrState<std::optional<AttrDrapedLod>>(const std::optional<AttrDrapedLod> & attr) {
+    if (attr) {
+        mWriter->writeLine(ATTR_GLOBAL_LOD_DRAPED, " ", attr->mDistance);
+        ++mGlobNum;
+    }
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
 
 void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
     assert(obj);
     assert(writer);
     mWriter = writer;
+    mMainObj = obj;
 
     const auto writeBool = [&](const char * inAttr, const bool inState) {
         if (inState) {
-            mWriter->printLine(inAttr);
+            mWriter->writeLine(inAttr);
             ++mGlobNum;
         }
     };
@@ -89,7 +200,7 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
     const auto writeString = [&](const char * inAttr, const std::optional<std::string> & string) {
         if (string && !string->empty()) {
             if (!StringValidator::hasIllegalSymbols(*string, "\t\n\r")) {
-                mWriter->printLine(std::string(inAttr).append(" ").append(*string));
+                mWriter->writeLine(std::string(inAttr).append(" ").append(*string));
                 ++mGlobNum;
             }
         }
@@ -110,20 +221,155 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
     // It is printed in another place.
     //writeBool(inWriter, ATTR_GLOBAL_DEBUG, inObj->mAttr.isDebug());
 
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mWetDry);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mBlend);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mLayerGroup);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mSlungLoadWeight);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mSpecular);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mTint);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mSlopeLimit);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mCockpitRegion1);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mCockpitRegion2);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mCockpitRegion3);
-    mGlobNum += writeGlobAttrT(writer, obj->mAttr.mCockpitRegion4);
+    writeGlobAttrState(obj->mAttr.mWetDry);
+    writeGlobAttrState(obj->mAttr.mBlend);
+    writeGlobAttrState(obj->mAttr.mLayerGroup);
+    writeGlobAttrState(obj->mAttr.mSlungLoadWeight);
+    writeGlobAttrState(obj->mAttr.mSpecular);
+    writeGlobAttrState(obj->mAttr.mTint);
+    writeGlobAttrState(obj->mAttr.mSlopeLimit);
+    writeGlobAttrState(obj->mAttr.mCockpitRegion1);
+    writeGlobAttrState(obj->mAttr.mCockpitRegion2);
+    writeGlobAttrState(obj->mAttr.mCockpitRegion3);
+    writeGlobAttrState(obj->mAttr.mCockpitRegion4);
 
-    mGlobNum += writeGlobAttrT(writer, obj->mDraped.mAttr.mLayerGroup);
-    mGlobNum += writeGlobAttrT(writer, obj->mDraped.mAttr.mLod);
+    writeGlobAttrState(obj->mDraped.mAttr.mLayerGroup);
+    writeGlobAttrState(obj->mDraped.mAttr.mLod);
+    mMainObj = nullptr;
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+template<>
+void ObjWriteAttr::switchAttrState<AttrBlend>(const AttrBlend & attr, const bool enable) {
+    if (enable) {
+        if (attr.mRatio < 0.0f || attr.mRatio > 1.0f) {
+            ULWarning << "The object <" << mObj->objectName()
+                    << "> has the blending attribute with the out of range ration [0 > ration < 1].";
+        }
+        const auto ratio = std::clamp(attr.mRatio, 0.0f, 1.0f);
+        if (attr.mType == AttrBlend::no_blend) {
+            mWriter->writeLine(ATTR_NO_BLEND, " ", ratio);
+        }
+        else if (attr.mType == AttrBlend::shadow_blend) {
+            mWriter->writeLine(ATTR_SHADOW_BLEND, " ", ratio);
+        }
+        else {
+            mWriter->writeLine(ATTR_BLEND, " ", ratio);
+        }
+    }
+    else {
+        mWriter->writeLine(ATTR_BLEND, " ", AttrBlend().mRatio);
+    }
+    ++mAttrNum;
+}
+
+template<>
+void ObjWriteAttr::switchAttrState<AttrCockpit>(const AttrCockpit & attr, const bool enable) {
+    if (enable) {
+        mIsPanelManip = true;
+        mState->mObject.mManip = AttrManip(AttrManipPanel(attr));
+
+        if (attr.mType == AttrCockpit::cockpit) {
+            mWriter->writeLine(ATTR_COCKPIT);
+        }
+        else if (attr.mType == AttrCockpit::region_1) {
+            if (!mState->mGlobal.mCockpitRegion1) {
+                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 0> attribute but <"
+                        << ATTR_GLOBAL_COCKPIT_REGION << "> attribute isn't specified for the obj file.";
+            }
+            mWriter->writeLine(ATTR_COCKPIT_REGION, " 0");
+        }
+        else if (attr.mType == AttrCockpit::region_2) {
+            if (!mState->mGlobal.mCockpitRegion2) {
+                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 1> attribute but <"
+                        << ATTR_GLOBAL_COCKPIT_REGION << "> attribute isn't specified for the obj file.";
+            }
+            mWriter->writeLine(ATTR_COCKPIT_REGION, " 1");
+        }
+        else if (attr.mType == AttrCockpit::region_3) {
+            if (!mState->mGlobal.mCockpitRegion3) {
+                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 2> attribute but <"
+                        << ATTR_GLOBAL_COCKPIT_REGION << "> attribute isn't specified for the obj file.";
+            }
+            mWriter->writeLine(ATTR_COCKPIT_REGION, " 2");
+        }
+        else if (attr.mType == AttrCockpit::region_4) {
+            if (!mState->mGlobal.mCockpitRegion4) {
+                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 3> attribute but <"
+                        << ATTR_GLOBAL_COCKPIT_REGION << "> attribute isn't specified for the obj file.";
+            }
+            mWriter->writeLine(ATTR_COCKPIT_REGION, " 3");
+        }
+        else if (attr.mType == AttrCockpit::cockpit_device) {
+            if (attr.mDeviceName.empty()) {
+                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_DEVICE << "> attribute without a device name.";
+            }
+            mWriter->writeLine(ATTR_COCKPIT_DEVICE, " ", attr.mDeviceName, " ", attr.mDeviceBus, " ",
+                               attr.mDeviceLightingChan, " ", attr.mDeviceAutoAdjust);
+        }
+        else {
+            ULError << "unknown cockpit type: " << attr.mType;
+        }
+    }
+    else {
+        mIsPanelManip = false;
+        mState->mObject.mManip = std::nullopt;
+
+        mWriter->writeLine(ATTR_NO_COCKPIT);
+    }
+    ++mAttrNum;
+}
+
+template<>
+void ObjWriteAttr::switchAttrState<AttrHard>(const AttrHard & attr, const bool enable) {
+    if (enable) {
+        mWriter->writeLine(attr.mIsDeck ? ATTR_HARD_DECK : ATTR_HARD, " ", attr.mSurface.toString());
+    }
+    else {
+        mWriter->writeLine(ATTR_NO_HARD);
+    }
+    ++mAttrNum;
+}
+
+template<>
+void ObjWriteAttr::switchAttrState<AttrLightLevel>(const AttrLightLevel & attr, const bool enable) {
+    if (enable) {
+        mWriter->writeLine(ATTR_LIGHT_LEVEL, " ", attr.mVal1, " ", attr.mVal2, " ", attr.mDataref);
+    }
+    else {
+        mWriter->writeLine(ATTR_LIGHT_LEVEL_RESET);
+    }
+    ++mAttrNum;
+}
+
+template<>
+void ObjWriteAttr::switchAttrState<AttrPolyOffset>(const AttrPolyOffset & attr, const bool enable) {
+    if (enable) {
+        mWriter->writeLine(ATTR_POLY_OS, " ", attr.mOffset);
+    }
+    else {
+        mWriter->writeLine(ATTR_POLY_OS, " ", AttrPolyOffset().mOffset);
+    }
+    ++mAttrNum;
+}
+
+template<>
+void ObjWriteAttr::switchAttrState<AttrShiny>(const AttrShiny & attr, const bool enable) {
+    if (enable) {
+        if (attr.mRatio < 0.0f || attr.mRatio > 1.0f) {
+            ULWarning << "The object <" << mObj->objectName() << "> has the attribute <"
+                    << ATTR_SHINY_RAT << "> with the out of range ration [0 > ration < 1].";
+        }
+        mWriter->writeLine(ATTR_SHINY_RAT, " ", std::clamp(attr.mRatio, 0.0f, 1.0f));
+        mState->mObjHasAttrShinyRat = true;
+    }
+    else {
+        mWriter->writeLine(ATTR_SHINY_RAT, " ", 0.0f);
+    }
+    ++mAttrNum;
 }
 
 /**************************************************************************************************/
@@ -140,139 +386,98 @@ void ObjWriteAttr::writeObjAttr(AbstractWriter * writer, const ObjAbstract * obj
     mObj = static_cast<const ObjMesh*>(obj);
     writeAttr();
     writeManip();
+    mObj = nullptr;
 }
 
 void ObjWriteAttr::writeAttr() {
-    const auto writeBool = [&](const char * attr) {
-        ++mAttrNum;
-        mWriter->printLine(attr);
-    };
-
     const auto & attrs = mObj->mAttr;
 
     //-------------------------------------------------------------------------
 
     ObjState::processBool(attrs.mIsDraped, mState->mObject.mIsDraped, [&](const bool enable) {
-        writeBool(enable ? ATTR_DRAPED : ATTR_NO_DRAPED);
+        mWriter->writeLine(enable ? ATTR_DRAPED : ATTR_NO_DRAPED);
+        ++mAttrNum;
     });
 
     ObjState::processBool(attrs.mIsSolidForCamera, mState->mObject.mIsSolidForCamera, [&](const bool enable) {
-        writeBool(enable ? ATTR_SOLID_CAMERA : ATTR_NO_SOLID_CAMERA);
+        mWriter->writeLine(enable ? ATTR_SOLID_CAMERA : ATTR_NO_SOLID_CAMERA);
+        ++mAttrNum;
     });
 
     ObjState::processBool(attrs.mIsDraw, mState->mObject.mIsDraw, [&](const bool enable) {
-        writeBool(enable ? ATTR_DRAW_ENABLE : ATTR_DRAW_DISABLE);
+        mWriter->writeLine(enable ? ATTR_DRAW_ENABLE : ATTR_DRAW_DISABLE);
+        ++mAttrNum;
     });
 
     ObjState::processBool(attrs.mIsCastShadow, mState->mObject.mIsCastShadow, [&](const bool enable) {
-        writeBool(enable ? ATTR_SHADOW : ATTR_NO_SHADOW);
+        mWriter->writeLine(enable ? ATTR_SHADOW : ATTR_NO_SHADOW);
+        ++mAttrNum;
     });
 
     //-------------------------------------------------------------------------
 
     ObjState::processAttr(attrs.mHard, mState->mObject.mHard, [&](const bool enable) {
-        if (enable) {
-            mAttrNum += attrs.mHard->printObj(*mWriter);
-        }
-        else {
-            mWriter->printLine(AttrHard::objDisableStr());
-            ++mAttrNum;
-        }
+        switchAttrState<AttrHard>(*attrs.mHard, enable);
     });
 
     ObjState::processAttr(attrs.mShiny, mState->mObject.mShiny, [&](const bool enable) {
-        if (enable) {
-            mAttrNum += attrs.mShiny->printObj(*mWriter);
-        }
-        else {
-            mWriter->printLine(AttrShiny::objDisableStr());
-            ++mAttrNum;
-        }
+        switchAttrState<AttrShiny>(*attrs.mShiny, enable);
     });
 
     ObjState::processAttr(attrs.mBlend, mState->mObject.mBlend, [&](const bool enable) {
-        if (enable) {
-            mAttrNum += attrs.mBlend->printObj(*mWriter);
-        }
-        else {
-            mWriter->printLine(AttrBlend::objDisableStr());
-            ++mAttrNum;
-        }
+        switchAttrState<AttrBlend>(*attrs.mBlend, enable);
     });
 
     ObjState::processAttr(attrs.mPolyOffset, mState->mObject.mPolyOffset, [&](const bool enable) {
-        if (enable) {
-            mAttrNum += attrs.mPolyOffset->printObj(*mWriter);
-        }
-        else {
-            mWriter->printLine(AttrPolyOffset::objDisableStr());
-            ++mAttrNum;
-        }
+        switchAttrState<AttrPolyOffset>(*attrs.mPolyOffset, enable);
     });
 
     ObjState::processAttr(attrs.mLightLevel, mState->mObject.mLightLevel, [&](const bool enable) {
-        if (enable) {
-            mAttrNum += attrs.mLightLevel->printObj(*mWriter);
-        }
-        else {
-            mWriter->printLine(AttrLightLevel::objDisableStr());
-            ++mAttrNum;
-        }
+        switchAttrState<AttrLightLevel>(*attrs.mLightLevel, enable);
     });
 
     ObjState::processAttr(attrs.mCockpit, mState->mObject.mCockpit, [&](const bool enable) {
-        if (enable) {
-            mIsPanelManip = true;
-            mState->mObject.mManipContainer = ManipContainer(new AttrManipPanel(*attrs.mCockpit));
-            mAttrNum += attrs.mCockpit->printObj(*mWriter);
-        }
-        else {
-            mIsPanelManip = false;
-            mState->mObject.mManipContainer = std::nullopt;
-            mWriter->printLine(AttrCockpit::objDisableStr());
-            ++mAttrNum;
-        }
+        switchAttrState<AttrCockpit>(*attrs.mCockpit, enable);
     });
 
-    //-------------------------------------------------------------------------
 }
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool ObjWriteAttr::checkManip(AttrManipBase * manip) const {
-    if (manip) {
-        if (manip->type() == EManipulator::none) {
-            if (!mIsPanelManip) {
-                ULWarning << "The object <" << mObj->objectName() << "> uses <" << manip->type().toUiString()
-                        << "> it does not make a sense because this manipulator is set automatically when it is needed.";
-                return false;
-            }
-        }
-        else if (manip->type() == EManipulator::panel) {
-            if (!mIsPanelManip) {
-                ULError << "The object <" << mObj->objectName() << "> uses <" << manip->type().toUiString()
-                        << "> manipulator but the object doesn't have the attributes <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
-                        << "> the <" << manip->type().toUiString() << "> can be used only for the geometry with one of those attributes.";
-                return false;
-            }
-            auto * panel = static_cast<AttrManipPanel*>(manip);
-            panel->setCockpit(*mObj->mAttr.mCockpit);
-        }
-        else if (manip->type() == EManipulator::drag_axis) {
-            // todo it seems this place isn't good for such a checking
-            const auto * castManip = static_cast<const AttrManipDragAxis*>(manip);
-            if (!castManip->axisDetented().isEnabled() && !castManip->detentRanges().empty()) {
-                ULError << "The object <" << mObj->objectName() << "> uses <" << manip->type().toUiString()
+class ObjWriteAttr::ManipChecker {
+    template<class V>
+    struct always_false : std::false_type {};
+
+public:
+
+    template<typename MANIP>
+    void operator()(MANIP && manip) {
+        using T = std::decay_t<decltype(manip)>;
+        if constexpr (std::is_same_v<T, AttrManipAxisKnob>) { }
+        else if constexpr (std::is_same_v<T, AttrManipAxisSwitchLeftRight>) { }
+        else if constexpr (std::is_same_v<T, AttrManipAxisSwitchUpDown>) { }
+        else if constexpr (std::is_same_v<T, AttrManipCmd>) { }
+        else if constexpr (std::is_same_v<T, AttrManipCmdAxis>) { }
+        else if constexpr (std::is_same_v<T, AttrManipCmdKnob>) { }
+        else if constexpr (std::is_same_v<T, AttrManipCmdKnob2>) { }
+        else if constexpr (std::is_same_v<T, AttrManipCmdSwitchLeftRight>) { }
+        else if constexpr (std::is_same_v<T, AttrManipCmdSwitchLeftRight2>) { }
+        else if constexpr (std::is_same_v<T, AttrManipCmdSwitchUpDown>) { }
+        else if constexpr (std::is_same_v<T, AttrManipCmdSwitchUpDown2>) { }
+        else if constexpr (std::is_same_v<T, AttrManipDelta>) { }
+        else if constexpr (std::is_same_v<T, AttrManipDragAxis>) {
+            if (!manip.mAxisDetented && !manip.mAxisDetentRanges.empty()) {
+                ULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toString()
                         << "> manipulator with the " << ATTR_MANIP_AXIS_DETENT_RANGE << " but " << ATTR_MANIP_AXIS_DETENTED << " isn't enabled.";
             }
             // todo this is the code duplication
-            if (!castManip->detentRanges().empty()) {
+            if (!manip.mAxisDetentRanges.empty()) {
                 std::size_t counter = 0;
-                for (const auto & dr : castManip->detentRanges()) {
-                    if (dr.start() > dr.end()) {
-                        ULError << "The object <" << mObj->objectName() << "> has incorrect detent range values at <"
+                for (const auto & dr : manip.mAxisDetentRanges) {
+                    if (dr.mStart > dr.mEnd) {
+                        ULError << "The object <" << mAttrWriter->mObj->objectName() << "> has incorrect detent range values at <"
                                 << counter << "> position, start value must be smaller than end value.";
                     }
                     // todo implementation of checking
@@ -283,14 +488,14 @@ bool ObjWriteAttr::checkManip(AttrManipBase * manip) const {
                 }
             }
         }
-        else if (manip->type() == EManipulator::drag_rotate) {
-            // todo it seems this place isn't good for such a checking
-            const auto * castManip = static_cast<const AttrManipDragRotate*>(manip);
-            if (!castManip->detentRanges().empty()) {
+        else if constexpr (std::is_same_v<T, AttrManipDragAxisPix>) { }
+        else if constexpr (std::is_same_v<T, AttrManipDragRotate>) {
+            // todo this is the code duplication
+            if (!manip.mAxisDetentRanges.empty()) {
                 std::size_t counter = 0;
-                for (const auto & dr : castManip->detentRanges()) {
-                    if (dr.start() > dr.end()) {
-                        ULError << "The object <" << mObj->objectName() << "> has incorrect detent range values at <"
+                for (const auto & dr : manip.mAxisDetentRanges) {
+                    if (dr.mStart > dr.mEnd) {
+                        ULError << "The object <" << mAttrWriter->mObj->objectName() << "> has incorrect detent range values at <"
                                 << counter << "> position, start value must be smaller than end value.";
                     }
                     // todo implementation of checking
@@ -300,31 +505,350 @@ bool ObjWriteAttr::checkManip(AttrManipBase * manip) const {
                     ++counter;
                 }
             }
-            if (!castManip->keys().empty()) {
-                const auto & keyList = castManip->keys();
-                if (keyList.front() == AttrManipKeyFrame(castManip->v1Min(), castManip->angle1())) {
-                    ULWarning << "The object <" << mObj->objectName() << "> has duplicate value " << ATTR_MANIP_KEYFRAME << " of "
+            if (!manip.mKeys.empty()) {
+                const auto & keyList = manip.mKeys;
+                if (keyList.front() == AttrManipKeyFrame(manip.mV1Min, manip.mAngle1)) {
+                    ULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> has duplicate value " << ATTR_MANIP_KEYFRAME << " of "
                             << ATTR_MANIP_DRAG_ROTATE << ":<v2min>/<angle1> at position 0.";
                 }
-                if (keyList.back() == AttrManipKeyFrame(castManip->v1Max(), castManip->angle2())) {
-                    ULWarning << "The object <" << mObj->objectName() << "> has duplicate value " << ATTR_MANIP_KEYFRAME << " of "
+                if (keyList.back() == AttrManipKeyFrame(manip.mV1Max, manip.mAngle2)) {
+                    ULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> has duplicate value " << ATTR_MANIP_KEYFRAME << " of "
                             << ATTR_MANIP_DRAG_ROTATE << ":<v2max>/<angle2> at position " << keyList.size() - 1 << ".";
                 }
             }
         }
+        else if constexpr (std::is_same_v<T, AttrManipDragXy>) { }
+        else if constexpr (std::is_same_v<T, AttrManipNone>) {
+            if (!mAttrWriter->mIsPanelManip) {
+                ULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toString()
+                        << "> manipulator, it does not make a sense because this manipulator is set automatically when it is needed.";
+                mManipAllowed = false;
+            }
+        }
+        else if constexpr (std::is_same_v<T, AttrManipNoop>) { }
+        else if constexpr (std::is_same_v<T, AttrManipPanel>) {
+            if (!mAttrWriter->mIsPanelManip) {
+                ULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toString()
+                        << "> manipulator but the object doesn't have the attributes <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
+                        << "> the <" << manip.mType.toString() << "> can be used only for the geometry with one of those attributes.";
+                mManipAllowed = false;
+            }
+            if (mAttrWriter->mObj->mAttr.mCockpit) {
+                manip.mAttrCockpit = *mAttrWriter->mObj->mAttr.mCockpit;
+            }
+        }
+        else if constexpr (std::is_same_v<T, AttrManipPush>) { }
+        else if constexpr (std::is_same_v<T, AttrManipRadio>) { }
+        else if constexpr (std::is_same_v<T, AttrManipToggle>) { }
+        else if constexpr (std::is_same_v<T, AttrManipWrap>) { }
+        else {
+            static_assert(always_false<T>::value, "non-exhaustive visitor!");
+        }
     }
-    return true;
-}
+
+    ObjWriteAttr * mAttrWriter = nullptr;
+    bool mManipAllowed = true;
+};
+
+class ManipPrinter {
+    template<class V>
+    struct always_false : std::false_type {};
+
+public:
+
+    std::size_t printWheel(const std::optional<AttrManipWheel> & wheel) const {
+        if (wheel) {
+            w->writeLine(ATTR_MANIP_WHEEL, " ", wheel->mWheelDelta);
+            return 1;
+        }
+        return 0;
+    }
+
+    std::size_t printDetent(const std::optional<AttrAxisDetented> & detent) const {
+        if (detent) {
+            w->writeLine(ATTR_MANIP_AXIS_DETENTED,
+                         " ", detent->mDirX,
+                         " ", detent->mDirY,
+                         " ", detent->mDirZ,
+                         " ", detent->mVMin,
+                         " ", detent->mVMax,
+                         " ", w->actualDataref(detent->mDataref));
+            return 1;
+        }
+        return 0;
+    }
+
+    std::size_t printDetentRanges(const std::vector<AttrAxisDetentRange> & detentRange) const {
+        for (const auto & dr : detentRange) {
+            w->writeLine(ATTR_MANIP_AXIS_DETENT_RANGE, " ", dr.mStart, " ", dr.mEnd, " ", dr.mHeight);
+        }
+        return detentRange.size();
+    }
+
+    std::size_t printKeyFrame(const std::vector<AttrManipKeyFrame> & keys) const {
+        for (const auto & key : keys) {
+            w->writeLine(ATTR_MANIP_KEYFRAME, " ", key.mValue, " ", key.mAngle);
+        }
+        return keys.size();
+    }
+
+    template<typename MANIP>
+    std::size_t operator()(MANIP && manip) {
+        using T = std::decay_t<decltype(manip)>;
+        if constexpr (std::is_same_v<T, AttrManipAxisKnob>) {
+            w->writeLine(ATTR_MANIP_AXIS_KNOB,
+                         " ", manip.mCursor.toString(),
+                         " ", manip.mMin,
+                         " ", manip.mMax,
+                         " ", manip.mClickDelta,
+                         " ", manip.mHoldDelta,
+                         " ", w->actualDataref(manip.mDataref),
+                         " ", manip.mToolType);
+            return 1 + printWheel(manip.mWheel);
+        }
+        else if constexpr (std::is_same_v<T, AttrManipAxisSwitchLeftRight>) {
+            w->writeLine(ATTR_MANIP_AXIS_SWITCH_LEFT_RIGHT,
+                         " ", manip.mCursor.toString(),
+                         " ", manip.mMin,
+                         " ", manip.mMax,
+                         " ", manip.mClickDelta,
+                         " ", manip.mHoldDelta,
+                         " ", w->actualDataref(manip.mDataref),
+                         " ", manip.mToolType);
+            return 1 + printWheel(manip.mWheel);
+        }
+        else if constexpr (std::is_same_v<T, AttrManipAxisSwitchUpDown>) {
+            w->writeLine(ATTR_MANIP_AXIS_SWITCH_UP_DOWN,
+                         " ", manip.mCursor.toString(),
+                         " ", manip.mMin,
+                         " ", manip.mMax,
+                         " ", manip.mClickDelta,
+                         " ", manip.mHoldDelta,
+                         " ", w->actualDataref(manip.mDataref),
+                         " ", manip.mToolType);
+            return 1 + printWheel(manip.mWheel);
+        }
+        else if constexpr (std::is_same_v<T, AttrManipCmd>) {
+            w->writeLine(ATTR_MANIP_COMMAND,
+                         " ", manip.mCursor.toString(),
+                         " ", w->actualCommand(manip.mCommand),
+                         " ", manip.mToolType);
+            return 1;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipCmdAxis>) {
+            w->writeLine(ATTR_MANIP_COMMAND_AXIS,
+                         " ", manip.mCursor.toString(),
+                         " ", manip.mDirX,
+                         " ", manip.mDirY,
+                         " ", manip.mDirZ,
+                         " ", w->actualCommand(manip.mPosCommand),
+                         " ", w->actualCommand(manip.mNegCommand),
+                         " ", manip.mToolType);
+            return 1;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipCmdKnob>) {
+            w->writeLine(ATTR_MANIP_COMMAND_KNOB,
+                         " ", manip.mCursor.toString(),
+                         " ", w->actualCommand(manip.mPosCommand),
+                         " ", w->actualCommand(manip.mNegCommand),
+                         " ", manip.mToolType);
+            return 1;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipCmdKnob2>) {
+            w->writeLine(ATTR_MANIP_COMMAND_KNOB2,
+                         " ", manip.mCursor.toString(),
+                         " ", w->actualCommand(manip.mCommand),
+                         " ", manip.mToolType);
+            return 1;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipCmdSwitchLeftRight>) {
+            w->writeLine(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT,
+                         " ", manip.mCursor.toString(),
+                         " ", w->actualCommand(manip.mPosCommand),
+                         " ", w->actualCommand(manip.mNegCommand),
+                         " ", manip.mToolType);
+            return 1;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipCmdSwitchLeftRight2>) {
+            w->writeLine(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2,
+                         " ", manip.mCursor.toString(),
+                         " ", w->actualCommand(manip.mCommand),
+                         " ", manip.mToolType);
+            return 1;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipCmdSwitchUpDown>) {
+            w->writeLine(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN,
+                         " ", manip.mCursor.toString(),
+                         " ", w->actualCommand(manip.mPosCommand),
+                         " ", w->actualCommand(manip.mNegCommand),
+                         " ", manip.mToolType);
+            return 1;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipCmdSwitchUpDown2>) {
+            w->writeLine(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2,
+                         " ", manip.mCursor.toString(),
+                         " ", w->actualCommand(manip.mCommand),
+                         " ", manip.mToolType);
+            return 1;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipDelta>) {
+            w->writeLine(ATTR_MANIP_DELTA,
+                         " ", manip.mCursor.toString(),
+                         " ", manip.mDown,
+                         " ", manip.mHold,
+                         " ", manip.mMin,
+                         " ", manip.mMax,
+                         " ", w->actualDataref(manip.mDataref),
+                         " ", manip.mToolType);
+            return 1 + printWheel(manip.mWheel);
+        }
+        else if constexpr (std::is_same_v<T, AttrManipDragAxis>) {
+            std::size_t outCounter = 1;
+            w->writeLine(ATTR_MANIP_DRAG_AXIS,
+                         " ", manip.mCursor.toString(),
+                         " ", manip.mDirX,
+                         " ", manip.mDirY,
+                         " ", manip.mDirZ,
+                         " ", manip.mVal1,
+                         " ", manip.mVal2,
+                         " ", w->actualDataref(manip.mDataref),
+                         " ", manip.mToolType);
+
+            outCounter += printWheel(manip.mWheel);
+            if (manip.mAxisDetented) {
+                outCounter += printDetent(manip.mAxisDetented);
+                outCounter += printDetentRanges(manip.mAxisDetentRanges);
+            }
+            return outCounter;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipDragAxisPix>) {
+            w->writeLine(ATTR_MANIP_DRAG_AXIS_PIX,
+                         " ", manip.mCursor.toString(),
+                         " ", manip.mDxPix,
+                         " ", manip.mStep,
+                         " ", manip.mExp,
+                         " ", manip.mVal1,
+                         " ", manip.mVal2,
+                         " ", w->actualDataref(manip.mDataref),
+                         " ", manip.mToolType);
+            return 1 + printWheel(manip.mWheel);
+        }
+        else if constexpr (std::is_same_v<T, AttrManipDragRotate>) {
+            std::size_t outCounter = 1;
+            w->writeLine(ATTR_MANIP_DRAG_ROTATE,
+                         " ", manip.mCursor.toString(),
+                         " ", manip.mOriginX,
+                         " ", manip.mOriginY,
+                         " ", manip.mOriginZ,
+                         " ", manip.mDirX,
+                         " ", manip.mDirY,
+                         " ", manip.mDirZ,
+                         " ", manip.mAngle1,
+                         " ", manip.mAngle2,
+                         " ", manip.mLift,
+                         " ", manip.mV1Min,
+                         " ", manip.mV1Max,
+                         " ", manip.mV2Min,
+                         " ", manip.mV2Max,
+                         " ", w->actualDataref(manip.mDataref1),
+                         " ", w->actualDataref(manip.mDataref2),
+                         " ", manip.mToolType);
+
+            outCounter += printKeyFrame(manip.mKeys);
+            outCounter += printDetentRanges(manip.mAxisDetentRanges);
+            return outCounter;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipDragXy>) {
+            w->writeLine(ATTR_MANIP_DRAG_XY,
+                         " ", manip.mCursor.toString(),
+                         " ", manip.mX,
+                         " ", manip.mY,
+                         " ", manip.mXMin,
+                         " ", manip.mXMax,
+                         " ", manip.mYMin,
+                         " ", manip.mYMax,
+                         " ", w->actualDataref(manip.mXDataref),
+                         " ", w->actualDataref(manip.mYDataref),
+                         " ", manip.mToolType);
+            return 1;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipNone>) {
+            w->writeLine(ATTR_MANIP_NONE);
+            return 1;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipNoop>) {
+            if (!manip.mToolType.empty()) {
+                w->writeLine(ATTR_MANIP_NOOP, " ", manip.mToolType);
+            }
+            else {
+                w->writeLine(ATTR_MANIP_NOOP);
+            }
+            return 1;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipPanel>) {
+#if 0
+            w->printEol();
+            w->writeLine("## panel manip");
+#endif
+            return 0;
+        }
+        else if constexpr (std::is_same_v<T, AttrManipPush>) {
+            w->writeLine(ATTR_MANIP_PUSH,
+                         " ", manip.mCursor.toString(),
+                         " ", manip.mDown,
+                         " ", manip.mUp,
+                         " ", w->actualDataref(manip.mDataref),
+                         " ", manip.mToolType);
+            return 1 + printWheel(manip.mWheel);
+        }
+        else if constexpr (std::is_same_v<T, AttrManipRadio>) {
+            w->writeLine(ATTR_MANIP_RADIO,
+                         " ", manip.mCursor.toString(),
+                         " ", manip.mDown,
+                         " ", w->actualDataref(manip.mDataref),
+                         " ", manip.mToolType);
+            return 1 + printWheel(manip.mWheel);
+        }
+        else if constexpr (std::is_same_v<T, AttrManipToggle>) {
+            w->writeLine(ATTR_MANIP_TOGGLE,
+                         " ", manip.mCursor.toString(),
+                         " ", manip.mOn,
+                         " ", manip.mOff,
+                         " ", w->actualDataref(manip.mDataref),
+                         " ", manip.mToolType);
+            return 1 + printWheel(manip.mWheel);
+        }
+        else if constexpr (std::is_same_v<T, AttrManipWrap>) {
+            w->writeLine(ATTR_MANIP_WRAP,
+                         " ", manip.mCursor.toString(),
+                         " ", manip.mDown,
+                         " ", manip.mHold,
+                         " ", manip.mMin,
+                         " ", manip.mMax,
+                         " ", w->actualDataref(manip.mDataref),
+                         " ", manip.mToolType);
+            return 1 + printWheel(manip.mWheel);
+        }
+        else {
+            static_assert(always_false<T>::value, "non-exhaustive visitor!");
+            return 0;
+        }
+    }
+
+    AbstractWriter * w = nullptr;
+};
 
 void ObjWriteAttr::writeManip() {
     const auto & attrs = mObj->mAttr;
-    auto manipContainer = attrs.mManipContainer;
+    auto manipContainer = attrs.mManip;
     //------------------------------
     // Checks the order of processing, the attributes must be processed before the manipulators.
     assert(mIsPanelManip == mObj->mAttr.mCockpit.has_value());
     //------------------------------
-    if (manipContainer && manipContainer->hasManip()) {
-        if (!checkManip(manipContainer->mManip.get())) {
+    if (manipContainer) {
+        ManipChecker checker{this};
+        std::visit(checker, manipContainer->mType);
+        if (!checker.mManipAllowed) {
             manipContainer = std::nullopt;
         }
     }
@@ -332,15 +856,17 @@ void ObjWriteAttr::writeManip() {
     const auto switchFn = [&](const bool enable) {
         if (enable) {
             assert(manipContainer);
-            assert(manipContainer->hasManip());
-            mManipNum += manipContainer->mManip->printObj(*mWriter);
+            if (const auto panelManip = std::get_if<AttrManipPanel>(&manipContainer->mType)) {
+                switchAttrState<AttrCockpit>(panelManip->mAttrCockpit.value_or(AttrCockpit()), true);
+            }
+            mManipNum += std::visit(ManipPrinter{mWriter}, manipContainer->mType);
         }
         else {
-            mManipNum += AttrManipNone().printObj(*mWriter);
+            mManipNum += std::visit(ManipPrinter{mWriter}, AttrManip::Type(AttrManipNone()));
         }
     };
 
-    ObjState::processAttr(manipContainer, mState->mObject.mManipContainer, switchFn);
+    ObjState::processAttr(manipContainer, mState->mObject.mManip, switchFn);
 }
 
 /**************************************************************************************************/

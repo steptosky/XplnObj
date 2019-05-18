@@ -43,7 +43,7 @@ typedef std::vector<Command> Commands;
 
 inline void equals(const Command & cmd1, const Command & cmd2) {
     ASSERT_EQ(cmd1.mId, cmd2.mId);
-    ASSERT_STREQ(cmd1.mKey.c_str() ,cmd2.mKey.c_str());
+    ASSERT_STREQ(cmd1.mKey.c_str(), cmd2.mKey.c_str());
     ASSERT_STREQ(cmd1.mDescription.c_str(), cmd2.mDescription.c_str());
 }
 
@@ -87,9 +87,9 @@ TEST(CommandsFile, read_normal_cmd) {
     //-----------------------
     Commands commands;
     ASSERT_NO_THROW(CommandsFile::loadStream(stream, [&](const Command &c) ->bool {
-            commands.emplace_back(c);
-            return true;
-        }));
+                            commands.emplace_back(c);
+                            return true;
+                        }));
     ASSERT_EQ(6, commands.size());
     EXPECT_NO_FATAL_FAILURE(equals(Command{ Command::invalidId(), "x/y/z", "" }, commands[0]));
     EXPECT_NO_FATAL_FAILURE(equals(Command{ Command::invalidId(), "123456", "" }, commands[1]));
@@ -109,9 +109,9 @@ TEST(CommandsFile, read_normal_cmd_custom) {
     //-----------------------
     Commands commands;
     ASSERT_NO_THROW(CommandsFile::loadStream(stream, [&](const Command &c) ->bool {
-            commands.emplace_back(c);
-            return true;
-        }));
+                            commands.emplace_back(c);
+                            return true;
+                        }));
     ASSERT_EQ(5, commands.size());
     ASSERT_NO_FATAL_FAILURE(equals(Command{ 1, "x/y/z", "00: :d0.0 d0.1: d0.2:0.3" }, commands[0]));
     ASSERT_NO_FATAL_FAILURE(equals(Command{ 6, "1/a/b/1", "11: :d1.0 d1.1: d1.2:1.3" }, commands[1]));

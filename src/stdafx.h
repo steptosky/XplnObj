@@ -52,6 +52,7 @@
 #include <cstring>
 #include <atomic>
 #include <optional>
+#include <variant>
 
 #include <iostream>
 #include <sstream>

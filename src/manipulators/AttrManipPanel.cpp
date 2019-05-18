@@ -27,66 +27,22 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipPanel::AttrManipPanel()
-    : AttrManipBase(EManipulator(EManipulator::panel)) {}
-
-AttrManipPanel::AttrManipPanel(const AttrCockpit & cockpit)
-    : AttrManipBase(EManipulator(EManipulator::panel)),
-      mAttrCockpit(cockpit) {}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipPanel::setCockpit(const AttrCockpit & cockpit) {
-    mAttrCockpit = cockpit;
-}
-
-const AttrCockpit & AttrManipPanel::cockpit() const {
-    return mAttrCockpit;
-}
+const EManipulator AttrManipPanel::mType(EManipulator::panel);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipPanel::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    return dynamic_cast<const AttrManipPanel*>(manip) != nullptr;
-}
-
-AttrManipBase * AttrManipPanel::clone() const {
-    return new AttrManipPanel(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipPanel::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    // todo 
-    // #ifndef NDEBUG
-    //     writer.printEol();
-    //     writer.printLine("## panel manip");
-    // #endif
-    cockpit().printObj(writer);
-    return 1;
+bool AttrManipPanel::operator==(const AttrManipPanel & other) const {
+    return mAttrCockpit == other.mAttrCockpit;
 }
 
 /**************************************************************************************************/

@@ -75,25 +75,13 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    void setMinPitch(const float minPitch) { mMinPitch = minPitch; }
-    void setMaxPitch(const float maxPitch) { mMaxPitch = maxPitch; }
-    void setMinRoll(const float minRoll) { mMinRoll = minRoll; }
-    void setMaxRoll(const float maxRoll) { mMaxRoll = maxRoll; }
-
-    float minPitch() const { return mMinPitch; }
-    float maxPitch() const { return mMaxPitch; }
-    float minRoll() const { return mMinRoll; }
-    float maxRoll() const { return mMaxRoll; }
-
-    /// @}
-    //-------------------------------------------------------------------------
-
-private:
-
     float mMinPitch = 0.0f;
     float mMaxPitch = 0.0f;
     float mMinRoll = 0.0f;
     float mMaxRoll = 0.0f;
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

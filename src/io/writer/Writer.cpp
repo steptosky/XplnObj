@@ -41,7 +41,12 @@ namespace xobj {
 /**************************************************************************************************/
 
 Writer::~Writer() {
-    closeFile();
+    try {
+        closeFile();
+    }
+    catch (const std::exception & e) {
+        LError << "Exception while closing the file" << e.what();
+    }
 }
 
 /**************************************************************************************************/
@@ -70,7 +75,7 @@ void Writer::closeFile() {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void Writer::printLine(const char * msg) {
+void Writer::writeLine(const char * msg) {
     if (msg) {
         mStream << space().c_str() << msg << std::endl;
     }
@@ -143,14 +148,14 @@ std::string Writer::actualDataref(const std::string & dataref) {
     }
     if (dataref.empty()) {
         throw std::domain_error(ExcTxt("Dataref <"s.append(dataref)
-                                    .append("> is considered as an id but datarefs file for extracting")
-                                    .append(" the correct values isn't specified or loaded.")));
+                                       .append("> is considered as an id but datarefs file for extracting")
+                                       .append(" the correct values isn't specified or loaded.")));
     }
     const auto iter = mDatarefs.find(Dataref::keyToId(dataref));
     if (iter == mDatarefs.end()) {
         throw std::domain_error(ExcTxt("Dataref <"s.append(dataref)
-                                    .append("> is considered as an id but datarefs file for extracting")
-                                    .append(" the correct values doesn't contain necessary value.")));
+                                       .append("> is considered as an id but datarefs file for extracting")
+                                       .append(" the correct values doesn't contain necessary value.")));
     }
     return iter->second.mKey;
 }
@@ -161,14 +166,14 @@ std::string Writer::actualCommand(const std::string & command) {
     }
     if (command.empty()) {
         throw std::domain_error(ExcTxt("Command <"s.append(command)
-                                    .append("> is considered as an id but commands file for extracting")
-                                    .append(" the correct values isn't specified or loaded.")));
+                                       .append("> is considered as an id but commands file for extracting")
+                                       .append(" the correct values isn't specified or loaded.")));
     }
     const auto iter = mCommands.find(Command::keyToId(command));
     if (iter == mCommands.end()) {
         throw std::domain_error(ExcTxt("Command <"s.append(command)
-                                    .append("> is considered as an id but commands file for extracting")
-                                    .append(" the correct values doesn't contain necessary value.")));
+                                       .append("> is considered as an id but commands file for extracting")
+                                       .append(" the correct values doesn't contain necessary value.")));
     }
     return iter->second.mKey;
 }

@@ -54,15 +54,15 @@ using ::testing::InSequence;
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-template<typename T>
-std::string strAttrResult(const T & attr) {
-    TestWriter w;
-	attr.printObj(w);
-    if (!w.mResult.empty()) {
-        w.mResult.pop_back(); // remove '\n'
-    }
-    return w.mResult;
-}
+// template<typename T>
+// std::string strAttrResult(const T & attr) {
+//     TestWriter w;
+// 	attr.printObj(w);
+//     if (!w.mResult.empty()) {
+//         w.mResult.pop_back(); // remove '\n'
+//     }
+//     return w.mResult;
+// }
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +74,7 @@ TEST(TestAttributesWrite, default) {
     ObjMesh main1;
     ObjMesh main2;
 
-    EXPECT_CALL(writer, printLine(_)).Times(0);
+    EXPECT_CALL(writer, writeLine(_)).Times(0);
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
 }
@@ -85,7 +85,7 @@ TEST(TestAttributesWrite, default) {
 
 TEST(TestAttributesWrite, boolean_case1) {
     MockWriter writer;
-	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
+    ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -108,13 +108,13 @@ TEST(TestAttributesWrite, boolean_case1) {
     main3.mAttr.mIsSolidForCamera = false;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -124,7 +124,7 @@ TEST(TestAttributesWrite, boolean_case1) {
 
 TEST(TestAttributesWrite, boolean_case2) {
     MockWriter writer;
-	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
+    ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -147,13 +147,13 @@ TEST(TestAttributesWrite, boolean_case2) {
     main3.mAttr.mIsSolidForCamera = false;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -163,7 +163,7 @@ TEST(TestAttributesWrite, boolean_case2) {
 
 TEST(TestAttributesWrite, boolean_case3) {
     MockWriter writer;
-	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
+    ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -185,8 +185,8 @@ TEST(TestAttributesWrite, boolean_case3) {
     main3.mAttr.mIsSolidForCamera = true;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -196,7 +196,7 @@ TEST(TestAttributesWrite, boolean_case3) {
 
 TEST(TestAttributesWrite, boolean_case4) {
     MockWriter writer;
-	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
+    ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -218,13 +218,13 @@ TEST(TestAttributesWrite, boolean_case4) {
     main3.mAttr.mIsSolidForCamera = true;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SHADOW))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -234,7 +234,7 @@ TEST(TestAttributesWrite, boolean_case4) {
 
 TEST(TestAttributesWrite, boolean_case5) {
     MockWriter writer;
-	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
+    ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -256,13 +256,13 @@ TEST(TestAttributesWrite, boolean_case5) {
     main3.mAttr.mIsSolidForCamera = true;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SHADOW))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -272,7 +272,7 @@ TEST(TestAttributesWrite, boolean_case5) {
 
 TEST(TestAttributesWrite, boolean_case6) {
     MockWriter writer;
-	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
+    ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -296,18 +296,18 @@ TEST(TestAttributesWrite, boolean_case6) {
     main3.mAttr.mIsSolidForCamera = true;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SHADOW))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -317,7 +317,7 @@ TEST(TestAttributesWrite, boolean_case6) {
 
 TEST(TestAttributesWrite, boolean_case7) {
     MockWriter writer;
-	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
+    ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -340,18 +340,18 @@ TEST(TestAttributesWrite, boolean_case7) {
     main3.mAttr.mIsSolidForCamera = false;
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_ENABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_SHADOW))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_DRAPED))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(ATTR_NO_SHADOW))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_DRAPED))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SOLID_CAMERA))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_DRAW_DISABLE))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(ATTR_NO_SHADOW))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     attrWriter.writeObjAttr(&writer, &main2);
@@ -365,7 +365,7 @@ TEST(TestAttributesWrite, boolean_case7) {
 
 TEST(TestAttributesWrite, parameterized_case1) {
     MockWriter writer;
-	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
+    ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -378,20 +378,21 @@ TEST(TestAttributesWrite, parameterized_case1) {
     main1.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_3);
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(0.1f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::no_blend,0.3f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(5.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(3.0f, 4.0f, "test"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_3))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard dirt"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.10000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_blend 0.30000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 5.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 3.00000 4.00000 test"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 2"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrBlend::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrPolyOffset::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrLightLevel::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
+    // default
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_hard"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_blend 0.50000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level_reset"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_cockpit"))).Times(1);
 
     // enable
     attrWriter.writeObjAttr(&writer, &main1);
@@ -403,7 +404,7 @@ TEST(TestAttributesWrite, parameterized_case1) {
 
 TEST(TestAttributesWrite, parameterized_case2) {
     MockWriter writer;
-	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
+    ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -423,28 +424,29 @@ TEST(TestAttributesWrite, parameterized_case2) {
     main3.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_3);
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(0.8f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::shadow_blend,0.7f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(4.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_2))))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard dirt"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.80000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shadow_blend 0.70000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 4.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 2.00000 6.00000 test"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 1"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrBlend::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrPolyOffset::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrLightLevel::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
+    // default
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_hard"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_blend 0.50000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level_reset"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_cockpit"))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::concrete), true))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(10.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::shadow_blend,0.3f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(5.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(3.0f, 4.0f, "test2"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_3))))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard_deck concrete"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 1.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shadow_blend 0.30000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 5.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 3.00000 4.00000 test2"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 2"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
     // enable
     attrWriter.writeObjAttr(&writer, &main1);
@@ -457,7 +459,7 @@ TEST(TestAttributesWrite, parameterized_case2) {
 
 TEST(TestAttributesWrite, parameterized_case3) {
     MockWriter writer;
-	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
+    ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -477,20 +479,21 @@ TEST(TestAttributesWrite, parameterized_case3) {
     main2.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(0.8f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::no_blend, 0.7f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(4.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_1))))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard dirt"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.80000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_blend 0.70000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 4.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 2.00000 6.00000 test"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrBlend::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrPolyOffset::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrLightLevel::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
+    // default
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_hard"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_blend 0.50000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level_reset"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_cockpit"))).Times(1);
 
     // enable
     attrWriter.writeObjAttr(&writer, &main1);
@@ -503,7 +506,7 @@ TEST(TestAttributesWrite, parameterized_case3) {
 
 TEST(TestAttributesWrite, parameterized_case4) {
     MockWriter writer;
-	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
+    ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -523,28 +526,29 @@ TEST(TestAttributesWrite, parameterized_case4) {
     main2.mAttr.mCockpit = AttrCockpit(AttrCockpit::cockpit);
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(0.8f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::no_blend, 0.7f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(4.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(2.0f, 6.0f, "test"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::region_1))))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard dirt"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.80000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_blend 0.70000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 4.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 2.00000 6.00000 test"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit_region 0"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::concrete), true))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(10.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::no_blend, 0.3f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(5.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(3.0f, 4.0f, "test2"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::cockpit))))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard_deck concrete"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 1.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_blend 0.30000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 5.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 3.00000 4.00000 test2"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrBlend::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrPolyOffset::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrLightLevel::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
+    // default
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_hard"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_blend 0.50000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level_reset"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_cockpit"))).Times(1);
 
     // enable
     attrWriter.writeObjAttr(&writer, &main1);
@@ -557,7 +561,7 @@ TEST(TestAttributesWrite, parameterized_case4) {
 
 TEST(TestAttributesWrite, parameterized_case5) {
     MockWriter writer;
-	ObjWriteAttr attrWriter(std::make_shared<ObjState>());
+    ObjWriteAttr attrWriter(std::make_shared<ObjState>());
     ObjMesh main1;
     ObjMesh main2;
     ObjMesh main3;
@@ -570,20 +574,21 @@ TEST(TestAttributesWrite, parameterized_case5) {
     main2.mAttr.mCockpit = AttrCockpit(AttrCockpit::cockpit);
 
     InSequence dummy;
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrHard(ESurface(ESurface::eId::dirt), false))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrShiny(0.1f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrBlend(AttrBlend::no_blend, 0.3f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrPolyOffset(5.0f))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrLightLevel(3.0f, 4.0f, "test"))))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrCockpit(AttrCockpit::cockpit))))).Times(1);
-	EXPECT_CALL(writer, printLine(StrEq(strAttrResult(AttrManipNone())))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_hard dirt"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.10000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_blend 0.30000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 5.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level 3.00000 4.00000 test"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_cockpit"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_manip_none"))).Times(1);
 
-    EXPECT_CALL(writer, printLine(StrEq(AttrHard::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrShiny::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrBlend::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrPolyOffset::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrLightLevel::objDisableStr()))).Times(1);
-    EXPECT_CALL(writer, printLine(StrEq(AttrCockpit::objDisableStr()))).Times(1);
+    // default
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_hard"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_shiny_rat 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_blend 0.50000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_poly_os 0.00000"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_light_level_reset"))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq("ATTR_no_cockpit"))).Times(1);
 
     attrWriter.writeObjAttr(&writer, &main1);
     // enable

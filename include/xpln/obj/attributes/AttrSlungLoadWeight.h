@@ -69,15 +69,10 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    void setWeight(const float weight) { mWeight = weight; }
-    float weight() const { return mWeight; }
+    float mWeight = 1.0f;
 
     /// @}
     //-------------------------------------------------------------------------
-
-private:
-
-    float mWeight = 1.0f;
 
 };
 

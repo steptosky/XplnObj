@@ -28,78 +28,26 @@
 */
 
 #include "sts/utilities/Compare.h"
-#include "converters/StringStream.h"
 #include "xpln/obj/manipulators/AttrManipRadio.h"
-#include "xpln/enums/EManipulator.h"
-#include "common/AttributeNames.h"
-#include "io/writer/AbstractWriter.h"
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/////////////////////////////////////////* Static area *////////////////////////////////////////////
 /**************************************************************************************************/
 
-AttrManipRadio::AttrManipRadio()
-    : AttrManipBase(EManipulator(EManipulator::radio)) { }
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-void AttrManipRadio::setDown(const float val) {
-    mDown = val;
-}
-
-float AttrManipRadio::down() const {
-    return mDown;
-}
-
-const std::string & AttrManipRadio::dataref() const {
-    return mDataref;
-}
-
-void AttrManipRadio::setDataref(const std::string & val) {
-    mDataref = val;
-}
+const EManipulator AttrManipRadio::mType(EManipulator::radio);
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool AttrManipRadio::equals(const AttrManipBase * manip) const {
-    if (!manip)
-        return false;
-
-    if (!AttrManipBase::equals(manip))
-        return false;
-
-    const auto * right = dynamic_cast<const AttrManipRadio*>(manip);
-    if (!right)
-        return false;
-
-    return (sts::isEqual(mDown, right->mDown) &&
-            sts::isEqual(mWheel, right->mWheel) &&
-            sts::isEqual(mDataref, right->mDataref));
-}
-
-AttrManipBase * AttrManipRadio::clone() const {
-    return new AttrManipRadio(*this);
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-std::size_t AttrManipRadio::printObj(AbstractWriter & writer) const {
-    StringStream outStr;
-    outStr << ATTR_MANIP_RADIO;
-    outStr << " " << cursor().toString();
-    outStr << " " << down();
-    outStr << " " << writer.actualDataref(dataref());
-    outStr << " " << toolTip();
-    writer.printLine(outStr.str());
-    return 1 + wheel().printObj(writer);
+bool AttrManipRadio::operator==(const AttrManipRadio & other) const {
+    return mCursor == other.mCursor &&
+           mToolType == other.mToolType &&
+           sts::isEqual(mDown, other.mDown) &&
+           mDataref == other.mDataref &&
+           mWheel == other.mWheel;
 }
 
 /**************************************************************************************************/

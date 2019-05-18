@@ -87,25 +87,13 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    void setLeft(const std::int32_t left) { mLeft = left; }
-    void setBottom(const std::int32_t bottom) { mBottom = bottom; }
-    void setRight(const std::int32_t right) { mRight = right; }
-    void setTop(const std::int32_t top) { mTop = top; }
-
-    std::int32_t left() const { return mLeft; }
-    std::int32_t bottom() const { return mBottom; }
-    std::int32_t right() const { return mRight; }
-    std::int32_t top() const { return mTop; }
-
-    /// @}
-    //-------------------------------------------------------------------------
-
-private:
-
     std::int32_t mLeft = 0;
     std::int32_t mBottom = 0;
     std::int32_t mRight = 0;
     std::int32_t mTop = 0;
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

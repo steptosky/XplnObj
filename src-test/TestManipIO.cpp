@@ -79,7 +79,7 @@ void extractManip(const ObjMain & inMain, const MANIP *& outAttr) {
     ASSERT_EQ(eObjectType::OBJ_MESH, obj->objType());
     auto * inM = static_cast<ObjMesh *>(obj);
     ASSERT_TRUE(inM->mAttr.mManip);
-    const auto manip = std::get_if<MANIP>(&inM->mAttr.mManip->mType);
+    const auto manip = std::get_if<MANIP>(&(*inM->mAttr.mManip));
     ASSERT_TRUE(manip);
     outAttr = manip;
 }

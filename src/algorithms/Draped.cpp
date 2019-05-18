@@ -68,8 +68,8 @@ void Draped::extract(ObjDrapedGroup & inOutDraped,
         });
 
         if (animatedTransform) {
-            ULWarning << " Object <" << inOutDraped.objectName() << "> has animated transform <" << animatedTransform->name()
-                    << "> containing draped geometry in transform <" << inOutTransform.name() << ">."
+            ULWarning << " Object <" << inOutDraped.objectName() << "> has animated transform <" << animatedTransform->mName
+                    << "> containing draped geometry in transform <" << inOutTransform.mName << ">."
                     << " Draped geometry can't be animated.";
         }
 

@@ -152,7 +152,7 @@ Transform & Transform::newChild(const char * name) {
     auto * tr = new Transform;
     tr->setParent(this);
     if (name) {
-        tr->setName(name);
+        tr->mName = name;
     }
     return *tr;
 }

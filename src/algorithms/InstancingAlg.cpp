@@ -68,7 +68,7 @@ void InstancingAlg::printBreakInstancing(const char * objName, const char * reas
 
 void InstancingAlg::proccessTransform(Transform & transform, bool & outResult) {
     if (transform.hasAnim()) {
-        printBreakInstancing(transform.name().c_str(),
+        printBreakInstancing(transform.mName.c_str(),
                              "node has animation. Animation is not allowed for instancing.");
         outResult = false;
     }

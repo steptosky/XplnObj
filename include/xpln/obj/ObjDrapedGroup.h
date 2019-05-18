@@ -53,7 +53,7 @@ public:
 
     explicit ObjDrapedGroup(const std::string & name)
         : mName(name) {
-        mObjTransform.setName(name);
+        mObjTransform.mName = name;
     }
 
     ObjDrapedGroup(const ObjDrapedGroup &) = delete;
@@ -67,7 +67,7 @@ public:
 
     void setObjectName(const std::string & name) {
         mName = name;
-        mObjTransform.setName(name);
+        mObjTransform.mName = name;
     }
 
     const std::string & objectName() const {

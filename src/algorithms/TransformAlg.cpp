@@ -149,6 +149,38 @@ const Transform * TransformAlg::animatedParent(const Transform & transform) {
 }
 
 /**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+void TransformAlg::applyMatrix(Transform & transform, const TMatrix & matrix) {
+    transform.mMatrix *= matrix;
+    const auto rotation = matrix.toRotation();
+
+    for (auto & a : transform.mAnimTrans) {
+        for (auto & k : a.mKeys) {
+            rotation.transformPoint(k.mPosition);
+        }
+    }
+
+    for (auto & a : transform.mAnimRotate) {
+        rotation.transformPoint(a.mVector);
+    }
+
+    //---------------
+
+    const std::function<void(Transform &, const TMatrix &)> applyToChild = [&applyToChild](Transform & tr, const TMatrix & matrix) {
+        tr.mMatrix *= matrix;
+        for (auto & ch : tr) {
+            applyToChild(*ch, matrix);
+        }
+    };
+
+    for (auto & ch : transform) {
+        applyToChild(*ch, matrix);
+    }
+}
+
+/**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 

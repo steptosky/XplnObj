@@ -144,6 +144,19 @@ public:
 
     /// @}
     //-------------------------------------------------------------------------
+    /// @{
+
+    /*!
+     * \todo tests
+     * \details Applies matrix to transform and it children.
+     * \details it work like: move the transform and all its children are moved too.
+     * \param [in] transform
+     * \param [in] matrix
+     */
+    XpObjLib static void applyMatrix(Transform & transform, const TMatrix & matrix);
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 

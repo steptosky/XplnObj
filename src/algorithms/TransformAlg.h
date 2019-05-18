@@ -86,6 +86,39 @@ public:
     /// @{
 
     /*!
+     * \details It iterates up by hierarchy starting from the specified transform's parent
+     *          and return first found transform the predicate returns true for.
+     * \param [in] transform
+     * \param [in] p predicate
+     */
+    XpObjLib static const Transform * findParentIf(const Transform & transform,
+                                                   const std::function<bool(const Transform &)> & p);
+
+    /*!
+     * \details Calls specified functions for each object in
+     *          the hierarchy including this one.
+     * \param [in] transform
+     * \param [in] function Return false if you want to stop iterating.
+     * \return False if iterating was stopped by function otherwise true.
+     */
+    XpObjLib static bool visitObjectsConst(const Transform & transform,
+                                           const std::function<bool(const Transform &, const ObjAbstract &)> & function);
+
+    /*!
+     * \details Calls specified functions for each object in
+     *          the hierarchy including this one.
+     * \param [in] transform
+     * \param [in] function Return false if you want to stop iterating.
+     * \return False if iterating was stopped by function otherwise true.
+     */
+    XpObjLib static bool visitObjects(Transform & transform,
+                                      const std::function<bool(Transform &, ObjAbstract &)> & function);
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @{
+
+    /*!
      * \details It iterates up by hierarchy starting from the specified transform's parent 
      *          and return first found transform with translate animation 
      *          or nullptr if no one is found.
@@ -103,12 +136,11 @@ public:
 
     /*!
      * \details It iterates up by hierarchy starting from the specified transform's parent
-     *          and return first found transform the predicate returns true for.
+     *          and return first found transform with any animation
+     *          or nullptr if no one is found.
      * \param [in] transform
-     * \param [in] p predicate
      */
-    XpObjLib static const Transform * findParentIf(const Transform & transform,
-                                                   const std::function<bool(const Transform &)> & p);
+    XpObjLib static const Transform * animatedParent(const Transform & transform);
 
     /// @}
     //-------------------------------------------------------------------------

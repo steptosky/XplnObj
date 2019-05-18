@@ -29,7 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <functional>
 #include <vector>
 #include <memory>
 #include "xpln/Export.h"
@@ -49,7 +48,7 @@ namespace xobj {
  * \details A transformation which is tree node. 
  * \note It takes ownership for all its children and objects.
  */
-class Transform {
+class Transform final {
 public:
 
     //-------------------------------------------------------------------------
@@ -68,7 +67,7 @@ public:
     Transform(const Transform &) = delete;
     Transform & operator=(const Transform &) = delete;
 
-    XpObjLib virtual ~Transform();
+    XpObjLib ~Transform();
 
     /// @}
     //-------------------------------------------------------------------------
@@ -117,95 +116,15 @@ public:
      */
     std::size_t childrenNum() const { return mChildren.size(); }
 
-    Children::iterator begin() { return mChildren.begin(); }
-    Children::iterator end() { return mChildren.end(); }
-    Children::const_iterator begin() const { return mChildren.begin(); }
-    Children::const_iterator end() const { return mChildren.end(); }
+    Children::iterator begin() noexcept { return mChildren.begin(); }
+    Children::iterator end() noexcept { return mChildren.end(); }
+    Children::const_iterator begin() const noexcept { return mChildren.begin(); }
+    Children::const_iterator end() const noexcept { return mChildren.end(); }
 
     /*!
      * \return Parent's matrix. If parent isn't set then identity matrix.
      */
     XpObjLib TMatrix parentMatrix() const;
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// \name Children visitors
-    /// @{
-
-    /*!
-     * \details Calls specified function only for children of this transform.
-     * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function otherwise true.
-     */
-    XpObjLib bool visitChildren(const std::function<bool(Transform &)> & function);
-
-    /*!
-     * \details Calls specified function only for children of this transform.
-     * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function otherwise true.
-     */
-    XpObjLib bool visitChildren(const std::function<bool(const Transform &)> & function) const;
-
-    /*!
-     * \details Calls specified function for all children in hierarchy 
-     *          i.e. iterating full tree where this transform is root.
-     * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function otherwise true.
-     */
-    XpObjLib bool visitAllChildren(const std::function<bool(Transform &)> & function);
-
-    /*!
-     * \details Calls specified function for all children in hierarchy
-     *          i.e. iterating full tree where this transform is root.
-     * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function otherwise true.
-     */
-    XpObjLib bool visitAllChildren(const std::function<bool(const Transform &)> & function) const;
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// \name Iteration
-    /// @{
-
-    /*!
-     * \details Calls specified function for this transform and 
-     *          all its children in hierarchy.
-     *          i.e. iterating full tree where this transform is root.
-     * \details Unlike \link Transform::visitAllChildren \endlink
-     *          it also calls function for this transform.
-     * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function otherwise true.
-     */
-    XpObjLib bool iterateDown(const std::function<bool(Transform &)> & function);
-
-    /*!
-     * \details Calls specified function for this transform and
-     *          all its children in hierarchy.
-     *          i.e. iterating full tree where this transform is root.
-     * \details Unlike \link Transform::visitAllChildren \endlink
-     *          it also calls function for this transform.
-     * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function otherwise true.
-     */
-    XpObjLib bool iterateDown(const std::function<bool(const Transform &)> & function) const;
-
-    /*!
-     * \details Calls specified function for
-     *          this transform and all its parents
-     *          according to the hierarchy.
-     * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function otherwise true.
-     */
-    XpObjLib bool iterateUp(const std::function<bool(const Transform &)> & function) const;
-
-    /*!
-     * \details Calls specified function for
-     *          this transform and all its parents
-     *          according to the hierarchy.
-     * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function otherwise true.
-     */
-    XpObjLib bool iterateUp(const std::function<bool(Transform &)> & function);
 
     /// @}
     //-------------------------------------------------------------------------
@@ -229,41 +148,6 @@ public:
 
     const ObjList & objList() const { return mObjList; }
     bool hasObjects() const { return !mObjList.empty(); }
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// \name Object visitors
-    /// @{
-
-    /*!
-     * \details Calls specified function for each object of this transform.
-     * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function otherwise true.
-     */
-    XpObjLib bool visitObjects(const std::function<bool(ObjAbstract &)> & function);
-
-    /*!
-     * \details Calls specified function for each object of this transform.
-     * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function otherwise true.
-     */
-    XpObjLib bool visitObjects(const std::function<bool(const ObjAbstract &)> & function) const;
-
-    /*!
-     * \details Calls specified functions for each object in 
-     *          the hierarchy including this one.
-     * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function otherwise true.
-     */
-    XpObjLib bool visitAllObjects(const std::function<bool(Transform &, ObjAbstract &)> & function);
-
-    /*!
-     * \details Calls specified functions for each object in 
-     *          the hierarchy including this one.
-     * \param function Return false if you want to stop iterating.
-     * \return False if iterating was stopped by function otherwise true.
-     */
-    XpObjLib bool visitAllObjects(const std::function<bool(const Transform &, const ObjAbstract &)> & function) const;
 
     /// @}
     //-------------------------------------------------------------------------

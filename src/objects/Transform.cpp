@@ -28,7 +28,6 @@
 */
 
 #include "xpln/obj/Transform.h"
-#include "sts/utilities/templates/TreeItem.h"
 #include "xpln/obj/ObjAbstract.h"
 #include "common/BaseLogger.h"
 
@@ -64,89 +63,6 @@ Transform & Transform::newChild(const std::string_view name) {
         t->mName = name;
     }
     return *t;
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-template<typename O, typename F>
-bool callForChildren(O & transform, const F & function) {
-    for (auto & child : transform) {
-        if (!function(*child)) {
-            return false;
-        }
-    }
-    return true;
-}
-
-template<typename O, typename F>
-bool callForAllChildren(O & transform, const F & function) {
-    for (auto & child : transform) {
-        if (!function(*child)) {
-            return false;
-        }
-        if (!callForAllChildren(*child, function)) {
-            return false;
-        }
-    }
-    return true;
-}
-
-template<typename O, typename F>
-bool iterateUpByHierarchy(O * transform, const F & function) {
-    assert(transform);
-    if (!function(*transform)) {
-        return false;
-    }
-    if (transform->isRoot()) {
-        return true;
-    }
-    return iterateUpByHierarchy(transform->parent(), function);
-}
-
-//-------------------------------------------------------------------------
-
-bool Transform::visitChildren(const std::function<bool(Transform &)> & function) {
-    return callForChildren(*this, function);
-}
-
-bool Transform::visitChildren(const std::function<bool(const Transform &)> & function) const {
-    return callForChildren(*this, function);
-}
-
-//-------------------------------------------------------------------------
-
-bool Transform::visitAllChildren(const std::function<bool(Transform &)> & function) {
-    return callForAllChildren(*this, function);
-}
-
-bool Transform::visitAllChildren(const std::function<bool(const Transform &)> & function) const {
-    return callForAllChildren(*this, function);
-}
-
-//-------------------------------------------------------------------------
-
-bool Transform::iterateDown(const std::function<bool(Transform &)> & function) {
-    if (!function(*this)) {
-        return false;
-    }
-    return callForAllChildren(*this, function);
-}
-
-bool Transform::iterateDown(const std::function<bool(const Transform &)> & function) const {
-    if (!function(*this)) {
-        return false;
-    }
-    return callForAllChildren(*this, function);
-}
-
-bool Transform::iterateUp(const std::function<bool(const Transform &)> & function) const {
-    return iterateUpByHierarchy(this, function);
-}
-
-bool Transform::iterateUp(const std::function<bool(Transform &)> & function) {
-    return iterateUpByHierarchy(this, function);
 }
 
 /**************************************************************************************************/
@@ -189,49 +105,6 @@ bool Transform::removeObject(const ObjAbstract * object) {
         }
     }
     return false;
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-template<typename O, typename F>
-bool callForObjects(O & objects, const F & function) {
-    for (auto & o : objects) {
-        assert(o);
-        if (!function(*o)) {
-            return false;
-        }
-    }
-    return true;
-}
-
-//-------------------------------------------------------------------------
-
-bool Transform::visitObjects(const std::function<bool(ObjAbstract &)> & function) {
-    return callForObjects(mObjList, function);
-}
-
-bool Transform::visitObjects(const std::function<bool(const ObjAbstract &)> & function) const {
-    return callForObjects(mObjList, function);
-}
-
-//-------------------------------------------------------------------------
-
-bool Transform::visitAllObjects(const std::function<bool(Transform &, ObjAbstract &)> & function) {
-    return iterateDown([&](Transform & tr) {
-        return tr.visitObjects([&](ObjAbstract & obj) {
-            return function(tr, obj);
-        });
-    });
-}
-
-bool Transform::visitAllObjects(const std::function<bool(const Transform &, const ObjAbstract &)> & function) const {
-    return iterateDown([&](const Transform & tr) {
-        return tr.visitObjects([&](const ObjAbstract & obj) {
-            return function(tr, obj);
-        });
-    });
 }
 
 /**************************************************************************************************/

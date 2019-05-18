@@ -31,6 +31,7 @@
 #include "xpln/obj/ObjDrapedGroup.h"
 #include "xpln/obj/ObjMesh.h"
 #include "common/IInterrupterInternal.h"
+#include "TransformAlg.h"
 
 namespace xobj {
 
@@ -39,7 +40,7 @@ namespace xobj {
 /**************************************************************************************************/
 
 void Draped::ensureDrapedAttrIsSet(ObjDrapedGroup & inOutDraped, const IInterrupter & interrupt) {
-    inOutDraped.transform().visitAllObjects([&](const Transform &, ObjAbstract & obj) {
+    TransformAlg::visitObjects(inOutDraped.transform(), [&](Transform &, ObjAbstract & obj) {
         if (obj.objType() == OBJ_MESH) {
             static_cast<ObjMesh*>(&obj)->mAttr.mIsDraped = true;
         }
@@ -58,15 +59,7 @@ void Draped::extract(ObjDrapedGroup & inOutDraped,
 
     auto drapedObjects = processObjects(inOutTransform);
     if (!drapedObjects.empty()) {
-        const Transform * animatedTransform = nullptr;
-        inOutTransform.iterateUp([&](const Transform & tr) {
-            if (tr.hasAnim()) {
-                animatedTransform = &tr;
-                return false;
-            }
-            return true;
-        });
-
+        const Transform * animatedTransform = TransformAlg::animatedParent(inOutTransform);
         if (animatedTransform) {
             ULWarning << " Object <" << inOutDraped.objectName() << "> has animated transform <" << animatedTransform->mName
                     << "> containing draped geometry in transform <" << inOutTransform.mName << ">."

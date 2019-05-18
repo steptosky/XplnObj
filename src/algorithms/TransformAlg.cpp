@@ -29,8 +29,6 @@
 
 #include "TransformAlg.h"
 
-using namespace std::string_literals;
-
 namespace xobj {
 
 /**************************************************************************************************/
@@ -86,14 +84,6 @@ void TransformAlg::applyMatrixToAnimRotate(AnimRotateList & inOutAnim, const TMa
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-const Transform * TransformAlg::animatedTranslateParent(const Transform & transform) {
-    return findParentIf(transform, [](const auto & t) { return t.hasAnimTrans(); });
-}
-
-const Transform * TransformAlg::animatedRotateParent(const Transform & transform) {
-    return findParentIf(transform, [](const auto & t) { return t.hasAnimRotate(); });
-}
-
 const Transform * TransformAlg::findParentIf(const Transform & transform,
                                              const std::function<bool(const Transform &)> & p) {
     auto parent = transform.parent();
@@ -106,6 +96,56 @@ const Transform * TransformAlg::findParentIf(const Transform & transform,
         }
         parent = parent->parent();
     }
+}
+
+bool TransformAlg::visitObjectsConst(const Transform & transform,
+                                     const std::function<bool(const Transform &, const ObjAbstract &)> & function) {
+
+    for (auto & obj : transform.objList()) {
+        if (!function(transform, *obj)) {
+            return false;
+        }
+    }
+
+    for (auto & child : transform) {
+        if (! visitObjectsConst(*child, function)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool TransformAlg::visitObjects(Transform & transform,
+                                const std::function<bool(Transform &, ObjAbstract &)> & function) {
+
+    for (auto & obj : transform.objList()) {
+        if (!function(transform, *obj)) {
+            return false;
+        }
+    }
+
+    for (auto & child : transform) {
+        if (!visitObjects(*child, function)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+const Transform * TransformAlg::animatedTranslateParent(const Transform & transform) {
+    return findParentIf(transform, [](const auto & t) { return t.hasAnimTrans(); });
+}
+
+const Transform * TransformAlg::animatedRotateParent(const Transform & transform) {
+    return findParentIf(transform, [](const auto & t) { return t.hasAnimRotate(); });
+}
+
+const Transform * TransformAlg::animatedParent(const Transform & transform) {
+    return findParentIf(transform, [](const auto & t) { return t.hasAnim(); });
 }
 
 /**************************************************************************************************/

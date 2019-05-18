@@ -62,74 +62,35 @@ namespace xobj {
 /**************************************************************************************************/
 
 /*!
- * \details Base class for all manipulators.
+ * \details Base type for all manipulators.
  * \ingroup Manipulators
  */
-class AttrManip final {
-public:
-
-    //-------------------------------------------------------------------------
-    /// @{
-
-    typedef std::variant<AttrManipAxisKnob,
-                         AttrManipAxisSwitchLeftRight,
-                         AttrManipAxisSwitchUpDown,
-                         AttrManipCmd,
-                         AttrManipCmdAxis,
-                         AttrManipCmdKnob,
-                         AttrManipCmdKnob2,
-                         AttrManipCmdSwitchLeftRight,
-                         AttrManipCmdSwitchLeftRight2,
-                         AttrManipCmdSwitchUpDown,
-                         AttrManipCmdSwitchUpDown2,
-                         AttrManipDelta,
-                         AttrManipDragAxis,
-                         AttrManipDragAxisPix,
-                         AttrManipDragRotate,
-                         AttrManipDragXy,
-                         AttrManipNone,
-                         AttrManipNoop,
-                         AttrManipPanel,
-                         AttrManipPush,
-                         AttrManipRadio,
-                         AttrManipToggle,
-                         AttrManipWrap> Type;
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    template<typename T>
-    explicit AttrManip(const T & type)
-        : mType(type) {}
-
-    AttrManip(const AttrManip &) = default;
-    AttrManip(AttrManip &&) = default;
-
-    ~AttrManip() = default;
-
-    AttrManip & operator=(const AttrManip &) = default;
-    AttrManip & operator=(AttrManip &&) = default;
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    XpObjLib bool operator==(const AttrManip & other) const;
-    bool operator!=(const AttrManip & other) const { return !this->operator==(other); }
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    Type mType;
-
-    /// @}
-    //-------------------------------------------------------------------------
-
-};
+typedef std::variant<AttrManipAxisKnob,
+                     AttrManipAxisSwitchLeftRight,
+                     AttrManipAxisSwitchUpDown,
+                     AttrManipCmd,
+                     AttrManipCmdAxis,
+                     AttrManipCmdKnob,
+                     AttrManipCmdKnob2,
+                     AttrManipCmdSwitchLeftRight,
+                     AttrManipCmdSwitchLeftRight2,
+                     AttrManipCmdSwitchUpDown,
+                     AttrManipCmdSwitchUpDown2,
+                     AttrManipDelta,
+                     AttrManipDragAxis,
+                     AttrManipDragAxisPix,
+                     AttrManipDragRotate,
+                     AttrManipDragXy,
+                     AttrManipNone,
+                     AttrManipNoop,
+                     AttrManipPanel,
+                     AttrManipPush,
+                     AttrManipRadio,
+                     AttrManipToggle,
+                     AttrManipWrap> AttrManip;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
+
 }

@@ -70,7 +70,7 @@ bool ObjWriteAnim::printAnimationStart(AbstractWriter & writer, const Transform 
     //-------------------------------------------------------------------------
 
     if (mOptions->isEnabled(XOBJ_EXP_MARK_TRANSFORM)) {
-        mWriter->writeLine(std::string(ATTR_ANIM_BEGIN).append(" ## ").append(transform.name()));
+        mWriter->writeLine(std::string(ATTR_ANIM_BEGIN).append(" ## ").append(transform.mName));
     }
     else {
         mWriter->writeLine(ATTR_ANIM_BEGIN);
@@ -93,7 +93,7 @@ bool ObjWriteAnim::printAnimationEnd(AbstractWriter & writer, const Transform & 
     mWriter->spaceLess();
 
     if (mOptions->isEnabled(XOBJ_EXP_MARK_TRANSFORM)) {
-        mWriter->writeLine(std::string(ATTR_ANIM_END).append(" ## ").append(transform.name()));
+        mWriter->writeLine(std::string(ATTR_ANIM_END).append(" ## ").append(transform.mName));
     }
     else {
         mWriter->writeLine(ATTR_ANIM_END);
@@ -108,7 +108,7 @@ bool ObjWriteAnim::printAnimationEnd(AbstractWriter & writer, const Transform & 
 void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const Transform & transform) const {
     std::string sep = mOptions->isEnabled(XOBJ_EXP_DEBUG) ? "   " : " ";
     for (auto & a : animTrans) {
-        if (a.isAnimated() && checkParameters(a, std::string("Transform: ").append(transform.name()))) {
+        if (a.isAnimated() && checkParameters(a, std::string("Transform: ").append(transform.mName))) {
             if (a.mKeys.size() == 2) {
                 StringStream stream;
                 stream << ATTR_TRANS
@@ -152,7 +152,7 @@ void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const Transform &
 void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const Transform & transform) const {
     std::string sep = mOptions->isEnabled(XOBJ_EXP_DEBUG) ? "   " : " ";
     for (auto & a : animRot) {
-        if (a.isAnimated() && checkParameters(a, std::string("Transform: ").append(transform.name()))) {
+        if (a.isAnimated() && checkParameters(a, std::string("Transform: ").append(transform.mName))) {
             if (a.mKeys.size() == 2) {
                 StringStream stream;
                 stream << ATTR_ROTATE
@@ -202,7 +202,7 @@ void ObjWriteAnim::printVisible(const AnimVisibility & inAnim, const Transform &
         return;
 
     for (auto & curr : inAnim.mKeys) {
-        if (checkParameters(curr, std::string("Transform: ").append(transform.name()))) {
+        if (checkParameters(curr, std::string("Transform: ").append(transform.mName))) {
             ++mStat->mAnimAttrCount;
             printObj(curr, *mWriter);
             if (curr.mLoopValue) {

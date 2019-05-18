@@ -840,33 +840,33 @@ public:
 
 void ObjWriteAttr::writeManip() {
     const auto & attrs = mObj->mAttr;
-    auto manipContainer = attrs.mManip;
+    auto manipCopy = attrs.mManip;
     //------------------------------
     // Checks the order of processing, the attributes must be processed before the manipulators.
     assert(mIsPanelManip == mObj->mAttr.mCockpit.has_value());
     //------------------------------
-    if (manipContainer) {
+    if (manipCopy) {
         ManipChecker checker{this};
-        std::visit(checker, manipContainer->mType);
+        std::visit(checker, *manipCopy);
         if (!checker.mManipAllowed) {
-            manipContainer = std::nullopt;
+            manipCopy = std::nullopt;
         }
     }
 
     const auto switchFn = [&](const bool enable) {
         if (enable) {
-            assert(manipContainer);
-            if (const auto panelManip = std::get_if<AttrManipPanel>(&manipContainer->mType)) {
+            assert(manipCopy);
+            if (const auto panelManip = std::get_if<AttrManipPanel>(&(*manipCopy))) {
                 switchAttrState<AttrCockpit>(panelManip->mAttrCockpit.value_or(AttrCockpit()), true);
             }
-            mManipNum += std::visit(ManipPrinter{mWriter}, manipContainer->mType);
+            mManipNum += std::visit(ManipPrinter{mWriter}, *manipCopy);
         }
         else {
-            mManipNum += std::visit(ManipPrinter{mWriter}, AttrManip::Type(AttrManipNone()));
+            mManipNum += std::visit(ManipPrinter{mWriter}, AttrManip(AttrManipNone()));
         }
     };
 
-    ObjState::processAttr(manipContainer, mState->mObject.mManip, switchFn);
+    ObjState::processAttr(manipCopy, mState->mObject.mManip, switchFn);
 }
 
 /**************************************************************************************************/

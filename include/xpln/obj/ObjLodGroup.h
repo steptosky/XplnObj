@@ -57,7 +57,7 @@ public:
           mNear(nearVal),
           mFar(farVal) {
 
-        mObjTransform.setName(name);
+        mObjTransform.mName = name;
     }
 
     ObjLodGroup(const ObjLodGroup &) = delete;
@@ -87,7 +87,7 @@ public:
 
     void setObjectName(const std::string & name) {
         mName = name;
-        mObjTransform.setName(name);
+        mObjTransform.mName = name;
     }
 
     const std::string & objectName() const {

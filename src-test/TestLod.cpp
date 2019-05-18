@@ -219,7 +219,7 @@ TEST(TestLodAccess, property_access) {
     ASSERT_EQ(10.0, lGroup1.nearVal());
     ASSERT_EQ(20.0, lGroup1.farVal());
     ASSERT_STREQ("Test", lGroup1.objectName().c_str());
-    ASSERT_STREQ("Test", lGroup1.transform().name().c_str());
+    ASSERT_STREQ("Test", lGroup1.transform().mName.c_str());
 }
 
 /**************************************************************************************************/

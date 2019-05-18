@@ -75,22 +75,11 @@ public:
     /// @}
     //-------------------------------------------------------------------------
 
+    std::string mName = "transform";
     TMatrix mMatrix;
     AnimTransList mAnimTrans;
     AnimRotateList mAnimRotate;
     AnimVisibility mAnimVis;
-
-    //-------------------------------------------------------------------------
-    /// \name Naming
-    /// @{
-
-    void setName(const std::string & val) {
-        mName = val;
-    }
-
-    const std::string & name() const {
-        return mName;
-    }
 
     /// @}
     //-------------------------------------------------------------------------
@@ -346,7 +335,6 @@ public:
 private:
 
     TreeItem * mTreePtr;
-    std::string mName = "Transform";
     ObjList mObjList;
 
 };

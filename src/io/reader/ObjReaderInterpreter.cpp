@@ -322,7 +322,7 @@ void ObjReaderInterpreter::gotTrisAttrManipAxisDetented(const AttrAxisDetented &
         }
     };
     //--------------------------
-    std::visit(visitor, mCurrentAttrSet.mManip->mType);
+    std::visit(visitor, *mCurrentAttrSet.mManip);
 }
 
 void ObjReaderInterpreter::gotTrisAttrManipAxisDetentRange(const AttrAxisDetentRange & manip) {
@@ -346,7 +346,7 @@ void ObjReaderInterpreter::gotTrisAttrManipAxisDetentRange(const AttrAxisDetentR
         }
     };
     //--------------------------
-    std::visit(visitor, mCurrentAttrSet.mManip->mType);
+    std::visit(visitor, *mCurrentAttrSet.mManip);
 }
 
 void ObjReaderInterpreter::gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & manip) {
@@ -364,7 +364,7 @@ void ObjReaderInterpreter::gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & ma
         }
     };
     //--------------------------
-    std::visit(visitor, mCurrentAttrSet.mManip->mType);
+    std::visit(visitor, *mCurrentAttrSet.mManip);
 }
 
 void ObjReaderInterpreter::gotTrisAttrManipWheel(const AttrManipWheel & manip) {
@@ -387,7 +387,7 @@ void ObjReaderInterpreter::gotTrisAttrManipWheel(const AttrManipWheel & manip) {
         else { ULError << "Manipulator <" << currManip.mType.toString() << "> doesn't support mouse wheel"; }
     };
     //--------------------------
-    std::visit(visitor, mCurrentAttrSet.mManip->mType);
+    std::visit(visitor, *mCurrentAttrSet.mManip);
 }
 
 void ObjReaderInterpreter::gotTrisAttrManip(const AttrManip & manip) {

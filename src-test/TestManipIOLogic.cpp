@@ -84,7 +84,7 @@ public:
             outAttr = nullptr;
             return;
         }
-        outAttr = std::get_if<MANIP>(&inM->mAttr.mManip->mType);
+        outAttr = std::get_if<MANIP>(&(*inM->mAttr.mManip));
     }
 
     AttrManipCmd mManipComd;

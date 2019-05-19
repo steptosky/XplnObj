@@ -50,7 +50,10 @@ class LibConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
 
     options = {'shared': [True, False], "fPIC": [True, False]}
-    default_options = 'shared=False', "fPIC=False", 'gtest:shared=False', 'gtest:build_gmock=True'
+    default_options = 'shared=False', "fPIC=False", \
+                      'stsff-logging:shared=False',\
+                      'gtest:shared=False',\
+                      'gtest:build_gmock=True'
 
     exports = 'vcs_data', 'vcs_info.py'
     exports_sources = 'CMakeLists.txt', 'src/*', 'src-test/*', 'include/*', 'cmake/*', 'license*'
@@ -66,6 +69,8 @@ class LibConan(ConanFile):
     def configure(self):
         if self.settings.compiler == "Visual Studio" and float(str(self.settings.compiler.version)) < 15:
             raise Exception("Visual Studio 15 (2017) or higher is required")
+        if self.settings.os != "Windows":
+            self.options["stsff-logging"].fPIC = True
 
     def config_options(self):
         if self.settings.os == "Windows":

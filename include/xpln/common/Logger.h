@@ -29,74 +29,59 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
-#include "xpln/Export.h"
+#include <stsff/logging/BaseLogger.h>
 
-#define LOG_CATEGORY_FOR_USER "Xlb"
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
 
 namespace xobj {
 
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-/*!
- * \details Allows you to receive the messages from the library's log system into your own function.
- * \note The category \link LOG_CATEGORY_FOR_USER \endlink is set when the library wants to show current message to the end-user.
- */
-class ExternalLog {
+class Logger final : public stsff::logging::BaseLogger {
 public:
 
-    enum eType {
-        Fatal = 0,
-        Critical = 1,
-        Error = 2,
-        Warning = 3,
-        Msg = 4,
-        Debug = 5,
-    };
+    //-------------------------------------------------------------------------
+    /// @{
 
-    /*!
-     * \details Log callback.
-     * \param [in] type function message type
-     * \param [in] msg function message
-     * \param [in] file function source file
-     * \param [in] line function line of the source file
-     * \param [in] function objectName
-     * \param [in] category of the message
-     */
-    typedef void (*CallBack)(eType type, const char * msg,
-                             const char * file, int line, const char * function,
-                             const char * category);
+    Logger() = default;
+    Logger(const Logger &) = default;
+    Logger(Logger &&) = default;
 
-    /*!
-     * \details If a callback is registered then all logs from this library will be sent to the callback.
-     * \param [in] callBack function
-     */
-    XpObjLib static void registerCallBack(CallBack callBack);
+    virtual ~Logger() = default;
 
-    /*!
-     * \details Unregisters current callback.
-     */
-    XpObjLib static void unRegisterCallBack();
+    Logger & operator=(const Logger &) = default;
+    Logger & operator=(Logger &&) = default;
 
-    /*!
-     * \details Generates the string that can be used in about window.
-     * \param [in] useWinEol true = "\r\n", false = "\n"
-     * \return ASCII string for about window.
-     */
-    XpObjLib static std::string about(bool useWinEol = false);
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @}
 
-    /*!
-    * \details Generates the short string that can be used in about window.
-    * \param [in] useWinEol true = "\r\n", false = "\n"
-    * \return ASCII string for about window.
-    */
-    XpObjLib static std::string shortAbout(bool useWinEol = false);
+    static Logger mInstance;
+
+    /// @}
+    //-------------------------------------------------------------------------
 
 };
 
+}
+
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
-}
+
+#define LOG_CATEGORY_FOR_USER "Xlb"
+
+// Message with a category for user showing (UL = user log)
+#define ULVar(VAR,L)   LcVar(VAR,L,LOG_CATEGORY_FOR_USER)
+#define ULCritical(L)  LcCritical(L,LOG_CATEGORY_FOR_USER)
+#define ULError(L)     LcError(L,LOG_CATEGORY_FOR_USER)
+#define ULWarning(L)   LcWarning(L,LOG_CATEGORY_FOR_USER)
+#define ULSuccess(L)   LcSuccess(L,LOG_CATEGORY_FOR_USER)
+#define ULInfo(L)      LcInfo(L,LOG_CATEGORY_FOR_USER)
+#define ULMessage(L)   LcMessage(L,LOG_CATEGORY_FOR_USER)
+#define ULDebug(L)     LcDebug(L)
+#define ULLevel(L,LVL) LcLevel(L,LOG_CATEGORY_FOR_USER,LVL)
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/

@@ -91,7 +91,7 @@ void ObjReaderInterpreter::gotGlobAttrTexture(const std::string & val) {
         ++mIOStatistic->mGlobAttrCount;
     }
     else {
-        ULWarning << "Texture is not specified.";
+        XULWarning << "Texture is not specified.";
     }
 }
 
@@ -192,7 +192,7 @@ void ObjReaderInterpreter::gotGlobAttrCockpitRegion(const AttrCockpitRegion & gl
         ++mIOStatistic->mGlobAttrCount;
     }
     else {
-        ULError << "Too many cockpit regions, must be 4 per file.";
+        XULError << "Too many cockpit regions, must be 4 per file.";
     }
 }
 
@@ -306,19 +306,19 @@ void ObjReaderInterpreter::gotTrisAttrManipNo() {
 
 void ObjReaderInterpreter::gotTrisAttrManipAxisDetented(const AttrAxisDetented & manip) {
     if (!mCurrentAttrSet.mManip) {
-        ULError << ATTR_MANIP_AXIS_DETENTED << " is specified without main manipulator";
+        XULError << ATTR_MANIP_AXIS_DETENTED << " is specified without main manipulator";
     }
     //--------------------------
     const auto visitor = [&](auto && currManip) {
         using T = std::decay_t<decltype(currManip)>;
         if constexpr (std::is_same_v<T, AttrManipDragAxis>) {
             if (currManip.mAxisDetented) {
-                LWarning << "Rewriting existing and enabled sub-manipulator";
+                XLWarning << "Rewriting existing and enabled sub-manipulator";
             }
             currManip.mAxisDetented = manip;
         }
         else {
-            ULError << "Manipulator <" << currManip.mType.toString() << "> doesn't support axis detented";
+            XULError << "Manipulator <" << currManip.mType.toString() << "> doesn't support axis detented";
         }
     };
     //--------------------------
@@ -327,14 +327,14 @@ void ObjReaderInterpreter::gotTrisAttrManipAxisDetented(const AttrAxisDetented &
 
 void ObjReaderInterpreter::gotTrisAttrManipAxisDetentRange(const AttrAxisDetentRange & manip) {
     if (!mCurrentAttrSet.mManip) {
-        ULError << ATTR_MANIP_AXIS_DETENT_RANGE << " is specified without main manipulator";
+        XULError << ATTR_MANIP_AXIS_DETENT_RANGE << " is specified without main manipulator";
     }
     //--------------------------
     const auto visitor = [&](auto && currManip) {
         using T = std::decay_t<decltype(currManip)>;
         if constexpr (std::is_same_v<T, AttrManipDragAxis>) {
             if (!currManip.mAxisDetented) {
-                ULWarning << ATTR_MANIP_AXIS_DETENT_RANGE << " is used when " << ATTR_MANIP_AXIS_DETENTED << " isn't enabled";
+                XULWarning << ATTR_MANIP_AXIS_DETENT_RANGE << " is used when " << ATTR_MANIP_AXIS_DETENTED << " isn't enabled";
             }
             currManip.mAxisDetentRanges.emplace_back(manip);
         }
@@ -342,7 +342,7 @@ void ObjReaderInterpreter::gotTrisAttrManipAxisDetentRange(const AttrAxisDetentR
             currManip.mAxisDetentRanges.emplace_back(manip);
         }
         else {
-            ULError << "Manipulator <" << currManip.mType.toString() << "> doesn't support axis detent range";
+            XULError << "Manipulator <" << currManip.mType.toString() << "> doesn't support axis detent range";
         }
     };
     //--------------------------
@@ -351,7 +351,7 @@ void ObjReaderInterpreter::gotTrisAttrManipAxisDetentRange(const AttrAxisDetentR
 
 void ObjReaderInterpreter::gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & manip) {
     if (!mCurrentAttrSet.mManip) {
-        ULError << ATTR_MANIP_AXIS_DETENT_RANGE << " is specified without main manipulator";
+        XULError << ATTR_MANIP_AXIS_DETENT_RANGE << " is specified without main manipulator";
     }
     //--------------------------
     const auto visitor = [&](auto && currManip) {
@@ -360,7 +360,7 @@ void ObjReaderInterpreter::gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & ma
             currManip.mKeys.emplace_back(manip);
         }
         else {
-            ULError << "Manipulator <" << currManip.mType.toString() << "> doesn't support key frame";
+            XULError << "Manipulator <" << currManip.mType.toString() << "> doesn't support key frame";
         }
     };
     //--------------------------
@@ -369,7 +369,7 @@ void ObjReaderInterpreter::gotTrisAttrManipKeyFrame(const AttrManipKeyFrame & ma
 
 void ObjReaderInterpreter::gotTrisAttrManipWheel(const AttrManipWheel & manip) {
     if (!mCurrentAttrSet.mManip) {
-        ULError << ATTR_MANIP_WHEEL << " is specified without main manipulator";
+        XULError << ATTR_MANIP_WHEEL << " is specified without main manipulator";
     }
     //--------------------------
     const auto visitor = [&](auto && currManip) {
@@ -384,7 +384,7 @@ void ObjReaderInterpreter::gotTrisAttrManipWheel(const AttrManipWheel & manip) {
         else if constexpr (std::is_same_v<T, AttrManipRadio>) { currManip.mWheel = manip; }
         else if constexpr (std::is_same_v<T, AttrManipToggle>) { currManip.mWheel = manip; }
         else if constexpr (std::is_same_v<T, AttrManipWrap>) { currManip.mWheel = manip; }
-        else { ULError << "Manipulator <" << currManip.mType.toString() << "> doesn't support mouse wheel"; }
+        else { XULError << "Manipulator <" << currManip.mType.toString() << "> doesn't support mouse wheel"; }
     };
     //--------------------------
     std::visit(visitor, *mCurrentAttrSet.mManip);
@@ -493,7 +493,7 @@ void ObjReaderInterpreter::gotTris(const Index offset, const Index count, const 
 void ObjReaderInterpreter::gotAnimBegin() {
     checkForCreateLod();
     if (!mCurrentTransform) {
-        LError << "Internal error, current transform is nullptr";
+        XLError << "Internal error, current transform is nullptr";
         return;
     }
     mCurrentTransform = &mCurrentTransform->newChild();
@@ -502,11 +502,11 @@ void ObjReaderInterpreter::gotAnimBegin() {
 void ObjReaderInterpreter::gotAnimEnd() {
     checkForCreateLod();
     if (!mCurrentTransform) {
-        LError << "Internal error, current transform is nullptr";
+        XLError << "Internal error, current transform is nullptr";
         return;
     }
     if (mCurrentTransform->isRoot()) {
-        LError << "inconsistent animation begin/end count";
+        XLError << "inconsistent animation begin/end count";
         return;
     }
     mCurrentTransform = static_cast<Transform *>(mCurrentTransform->parent());

@@ -43,7 +43,9 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    Logger() = default;
+    Logger()
+        : BaseLogger("XLIB") { }
+
     Logger(const Logger &) = default;
     Logger(Logger &&) = default;
 
@@ -69,18 +71,32 @@ public:
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-#define LOG_CATEGORY_FOR_USER "Xlb"
+#define LOG_CATEGORY_FOR_USER "user"
 
 // Message with a category for user showing (UL = user log)
-#define ULVar(VAR,L)   LcVar(VAR,L,LOG_CATEGORY_FOR_USER)
-#define ULCritical(L)  LcCritical(L,LOG_CATEGORY_FOR_USER)
-#define ULError(L)     LcError(L,LOG_CATEGORY_FOR_USER)
-#define ULWarning(L)   LcWarning(L,LOG_CATEGORY_FOR_USER)
-#define ULSuccess(L)   LcSuccess(L,LOG_CATEGORY_FOR_USER)
-#define ULInfo(L)      LcInfo(L,LOG_CATEGORY_FOR_USER)
-#define ULMessage(L)   LcMessage(L,LOG_CATEGORY_FOR_USER)
-#define ULDebug(L)     LcDebug(L)
-#define ULLevel(L,LVL) LcLevel(L,LOG_CATEGORY_FOR_USER,LVL)
+#define XULVar(VAR)   LcVar(VAR,xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULCritical   LcCritical(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULError      LcError(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULWarning    LcWarning(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULSuccess    LcSuccess(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULInfo       LcInfo(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULMessage    LcMessage(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULDebug      LcDebug(xobj::Logger::mInstance)
+#define XULLevel(LVL) LcLevel(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER,LVL)
+
+#define XLVar(VAR)    LVar(VAR,xobj::Logger::mInstance)
+#define XLCritical    LCritical(xobj::Logger::mInstance)
+#define XLError       LError(xobj::Logger::mInstance)
+#define XLWarning     LWarning(xobj::Logger::mInstance)
+#define XLSuccess     LSuccess(xobj::Logger::mInstance)
+#define XLInfo        LInfo(xobj::Logger::mInstance)
+#define XLMessage     LMessage(xobj::Logger::mInstance)
+#define XLDebug       LDebug(xobj::Logger::mInstance)
+#define XLLevel(LVL)  LLevel(xobj::Logger::mInstance,LVL)
+
+#ifndef TOTEXT
+#   define TOTEXT(x) #x
+#endif
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

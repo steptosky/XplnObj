@@ -31,7 +31,7 @@
 
 #include "xpln/enums/ECockpitDevice.h"
 #include "common/ArrayLength.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 
 namespace xobj {
 
@@ -110,7 +110,7 @@ ECockpitDevice ECockpitDevice::fromUiString(const char * name) {
                 return ECockpitDevice(ECockpitDeviceData::gList[i].mId);
             }
         }
-        LError << TOTEXT(ECockpitDevice) << " Does not contain ui name: \"" << name << "\"";
+        XLError << TOTEXT(ECockpitDevice) << " Does not contain ui name: \"" << name << "\"";
     }
     return ECockpitDevice();
 }
@@ -122,7 +122,7 @@ ECockpitDevice ECockpitDevice::fromString(const char * attrName) {
                 return ECockpitDevice(ECockpitDeviceData::gList[i].mId);
             }
         }
-        LError << TOTEXT(ECockpitDevice) << " Does not contain attribute name: \"" << attrName << "\"";
+        XLError << TOTEXT(ECockpitDevice) << " Does not contain attribute name: \"" << attrName << "\"";
     }
     return ECockpitDevice();
 }

@@ -31,7 +31,7 @@
 
 #include "xpln/enums/ECursor.h"
 #include "common/ArrayLength.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 
 namespace xobj {
 
@@ -120,7 +120,7 @@ ECursor ECursor::fromUiString(const char * name) {
                 return ECursor(EObjCursorsData::gList[i].mId);
             }
         }
-        LError << TOTEXT(ECursor) << " Does not contain ui name: \"" << name << "\"";
+        XLError << TOTEXT(ECursor) << " Does not contain ui name: \"" << name << "\"";
     }
     return ECursor();
 }
@@ -132,7 +132,7 @@ ECursor ECursor::fromString(const char * attrName) {
                 return ECursor(EObjCursorsData::gList[i].mId);
             }
         }
-        LError << TOTEXT(ECursor) << " Does not contain attribute name: \"" << attrName << "\"";
+        XLError << TOTEXT(ECursor) << " Does not contain attribute name: \"" << attrName << "\"";
     }
     return ECursor();
 }

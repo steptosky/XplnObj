@@ -31,7 +31,7 @@
 
 #include "xpln/enums/ELayer.h"
 #include "common/ArrayLength.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 
 namespace xobj {
 
@@ -112,7 +112,7 @@ ELayer ELayer::fromUiString(const char * name) {
                 return ELayer(ELayersData::gList[i].mId);
             }
         }
-        LError << TOTEXT(ELayer) << " Does not contain ui name: \"" << name << "\"";
+        XLError << TOTEXT(ELayer) << " Does not contain ui name: \"" << name << "\"";
     }
     return ELayer();
 }
@@ -124,7 +124,7 @@ ELayer ELayer::fromString(const char * attrName) {
                 return ELayer(ELayersData::gList[i].mId);
             }
         }
-        LError << TOTEXT(ELayer) << " Does not contain attribute name: \"" << attrName << "\"";
+        XLError << TOTEXT(ELayer) << " Does not contain attribute name: \"" << attrName << "\"";
     }
     return ELayer();
 }

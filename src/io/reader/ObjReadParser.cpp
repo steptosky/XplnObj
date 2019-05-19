@@ -28,7 +28,7 @@
 */
 
 #include "ObjReadParser.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 
 namespace xobj {
 
@@ -58,7 +58,7 @@ bool ObjReadParser::readFile(const std::string & filePath) {
     close();
     FILE * file = fopen(filePath.data(), "rb");
     if (!file) {
-        ULError << "File <" << filePath.data() << "> could not be read!";
+        XULError << "File <" << filePath.data() << "> could not be read!";
         return false;
     }
 
@@ -66,14 +66,14 @@ bool ObjReadParser::readFile(const std::string & filePath) {
 
     mMemStart = static_cast<uint8_t *>(malloc(filesize));
     if (mMemStart == nullptr) {
-        LError << "Memory could not be allocated!";
+        XLError << "Memory could not be allocated!";
         fclose(file);
         return false;
     }
     if (fread(mMemStart, 1, filesize, file) != filesize) {
         close();
         fclose(file);
-        LError << "Size of the allocated memory is incorrect!";
+        XLError << "Size of the allocated memory is incorrect!";
         return false;
     }
     mMemCurr = mMemStart;

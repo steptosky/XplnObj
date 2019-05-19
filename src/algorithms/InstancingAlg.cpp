@@ -34,7 +34,7 @@
 #include "xpln/obj/ObjLodGroup.h"
 #include "xpln/obj/ObjMesh.h"
 #include "common/AttributeNames.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 
 namespace xobj {
 
@@ -43,8 +43,8 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool InstancingAlg::validateAndPrepare(ObjMain & inObjMain, const IInterrupter & /*interrupt*/) {
-    ULWarning << "The instance checking is in the test mode, so it may work incorrectly.";
-    ULInfo << " To check whether your object is instanced, put the word DEBUG in the end of the OBJ file and run X-Plane."
+    XULWarning << "The instance checking is in the test mode, so it may work incorrectly.";
+    XULInfo << " To check whether your object is instanced, put the word DEBUG in the end of the OBJ file and run X-Plane."
             << " The log file will contain a printout about your object."
             << R"( If the word "complex" is not present and the word "additive" is (or your object does not contain multiple LODs) then your object can be instanced.)";
     // TODO checking: LOD must be additive, not selective, or only one LOD 
@@ -59,7 +59,7 @@ bool InstancingAlg::validateAndPrepare(ObjMain & inObjMain, const IInterrupter &
 void InstancingAlg::printBreakInstancing(const char * objName, const char * reason) {
     assert(objName);
     assert(reason);
-    ULError << "Instancing is broken on \"" << objName << "\". The reason: " << reason;
+    XLError << "Instancing is broken on \"" << objName << "\". The reason: " << reason;
 }
 
 /**************************************************************************************************/

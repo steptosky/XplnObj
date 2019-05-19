@@ -41,7 +41,7 @@
 #endif
 
 #ifdef EXC_PRINT_FILE
-#   define ExcTxt(X) std::string(__STS_FUNC_NAME__).append(" : ").append(stsff::logging::internal::fileName(__FILE__)) \
+#   define ExcTxt(X) std::string(__STS_FUNC_NAME__).append(" : ").append(stsff::logging::sourceFileName(__FILE__)) \
     .append(" : ").append(std::to_string(__LINE__)).append(" : ").append(X)
 #else
 #   define ExcTxt(X) std::string(__STS_FUNC_NAME__).append(" ").append(X)

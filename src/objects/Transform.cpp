@@ -27,6 +27,7 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <algorithm>
 #include "xpln/obj/Transform.h"
 #include "xpln/obj/ObjAbstract.h"
 
@@ -41,7 +42,7 @@ Transform::~Transform() {
         auto it = std::find_if(mParent->mChildren.begin(), mParent->mChildren.end(),
                                [this](const auto & t) { return t.get() == this; });
         if (it != mParent->mChildren.end()) {
-            it->release();
+            [[maybe_unused]] const auto ptr = it->release();
             mParent->mChildren.erase(it);
         }
     }

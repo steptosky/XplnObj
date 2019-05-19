@@ -2,7 +2,7 @@
 @echo off
 :: Fix problems with some symbols.
 REM change CHCP to UTF-8
-CHCP 1252
+CHCP 65001
 CLS
 ::==========================================================
 :: Sometimes conan asks you about to login to private repositories

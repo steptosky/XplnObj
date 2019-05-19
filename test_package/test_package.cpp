@@ -32,15 +32,14 @@
 /**************************************************************************************************/
 
 #include <xpln/Info.h>
-#include <xpln/common/ExternalLog.h>
 #include <iostream>
 
 int main (void){
     std::cout << std::endl;
     std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" << std::endl;
     std::cout << "@   " << std::endl;
-    std::cout << "@   " << XOBJ_PROJECT_ID << " : " << XOBJ_VERSION_STRING << std::endl;
-    std::cout << "@   " << xobj::ExternalLog::about() << std::endl;
+    std::cout << "@   " << XOBJ_PROJECT_NAME << " : " << XOBJ_VERSION_STRING << std::endl;
+    std::cout << "@   " << std::endl;
     std::cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" << std::endl;
     std::cout << std::endl;
     return 0;

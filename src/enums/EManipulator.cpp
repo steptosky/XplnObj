@@ -32,7 +32,7 @@
 #include "xpln/enums/EManipulator.h"
 #include "common/ArrayLength.h"
 #include "common/AttributeNames.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 
 namespace xobj {
 
@@ -130,7 +130,7 @@ EManipulator EManipulator::fromUiString(const char * name) {
                 return EManipulator(EManipulatorData::gList[i].mId);
             }
         }
-        LError << TOTEXT(EManipulator) << " Does not contain ui name: \"" << name << "\"";
+        XLError << TOTEXT(EManipulator) << " Does not contain ui name: \"" << name << "\"";
     }
     return EManipulator();
 }
@@ -152,7 +152,7 @@ EManipulator EManipulator::fromString(const char * attrName) {
                 return EManipulator(EManipulatorData::gList[i].mId);
             }
         }
-        LError << TOTEXT(EManipulator) << " Does not contain attribute name: \"" << attrName << "\"";
+        XLError << TOTEXT(EManipulator) << " Does not contain attribute name: \"" << attrName << "\"";
     }
     return EManipulator();
 }

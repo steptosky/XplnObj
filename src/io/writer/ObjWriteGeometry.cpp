@@ -32,7 +32,7 @@
 #include "ObjWriteGeometry.h"
 #include "converters/ObjString.h"
 #include "converters/StringStream.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 #include "common/AttributeNames.h"
 
 #include "xpln/obj/ObjMain.h"
@@ -359,13 +359,13 @@ bool ObjWriteGeometry::printEmitterObject(AbstractWriter & writer, const ObjAbst
 
         mState->mObjHasParticleEmitters = true;
         if (!mState->mGlobal.mParticleSystemPath || mState->mGlobal.mParticleSystemPath->empty()) {
-            ULError << "The object <" << objBase.objectName() << "> is an particle emitter but you "
+            XULError << "The object <" << objBase.objectName() << "> is an particle emitter but you "
                     << "don't have particle system specified for the object."
                     << "You have to put attribute <" << ATTR_GLOBAL_PARTICLE_SYSTEM << ">.";
         }
 
         if (emitter.name().empty()) {
-            ULError << "The object <" << objBase.objectName()
+            XULError << "The object <" << objBase.objectName()
                     << "> doesn't have the emitter name. You have to use a name from your .pss file.";
         }
 

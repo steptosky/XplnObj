@@ -29,40 +29,74 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "sts/utilities/Logger.h"
-#include "xpln/common/ExternalLog.h"
-#include "BaseLogger.h"
+#include "xpln/Export.h"
+#include <stsff/logging/BaseLogger.h>
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
+
+namespace xobj {
+
+class Logger final : public stsff::logging::BaseLogger {
+public:
+
+    //-------------------------------------------------------------------------
+    /// @{
+
+    Logger()
+        : BaseLogger("XLIB") { }
+
+    Logger(const Logger &) = default;
+    Logger(Logger &&) = default;
+
+    virtual ~Logger() = default;
+
+    Logger & operator=(const Logger &) = default;
+    Logger & operator=(Logger &&) = default;
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// @}
+
+    XpObjLib static Logger mInstance;
+
+    /// @}
+    //-------------------------------------------------------------------------
+
+};
+
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+#define LOG_CATEGORY_FOR_USER "user"
 
 // Message with a category for user showing (UL = user log)
-#define ULMessage    CategoryMessage(LOG_CATEGORY_FOR_USER)
-#define ULDebug      CategoryDebug(LOG_CATEGORY_FOR_USER)
-#define ULFatal      CategoryFatal(LOG_CATEGORY_FOR_USER)
-#define ULCritical   CategoryCritical(LOG_CATEGORY_FOR_USER)
-#define ULError      CategoryError(LOG_CATEGORY_FOR_USER)
-#define ULWarning    CategoryWarning(LOG_CATEGORY_FOR_USER)
-#define ULInfo       CategoryInfo(LOG_CATEGORY_FOR_USER)
+#define XULVar(VAR)   LcVar(VAR,xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULCritical   LcCritical(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULError      LcError(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULWarning    LcWarning(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULSuccess    LcSuccess(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULInfo       LcInfo(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULMessage    LcMessage(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER)
+#define XULDebug      LcDebug(xobj::Logger::mInstance)
+#define XULLevel(LVL) LcLevel(xobj::Logger::mInstance,LOG_CATEGORY_FOR_USER,LVL)
 
-// Force push
-#define CLPush LPush
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-#ifndef Debug
-#ifndef NDEBUG
-#define Debug(x) x
-#else
-#define Debug(x)
-#endif // NDEBUG
-#endif // !Debug
+#define XLVar(VAR)    LVar(VAR,xobj::Logger::mInstance)
+#define XLCritical    LCritical(xobj::Logger::mInstance)
+#define XLError       LError(xobj::Logger::mInstance)
+#define XLWarning     LWarning(xobj::Logger::mInstance)
+#define XLSuccess     LSuccess(xobj::Logger::mInstance)
+#define XLInfo        LInfo(xobj::Logger::mInstance)
+#define XLMessage     LMessage(xobj::Logger::mInstance)
+#define XLDebug       LDebug(xobj::Logger::mInstance)
+#define XLLevel(LVL)  LLevel(xobj::Logger::mInstance,LVL)
 
 #ifndef TOTEXT
-#define TOTEXT(x) #x
+#   define TOTEXT(x) #x
 #endif
 
 /**************************************************************************************************/

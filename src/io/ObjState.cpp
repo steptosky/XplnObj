@@ -28,7 +28,7 @@
 */
 
 #include "ObjState.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 #include "common/AttributeNames.h"
 
 namespace xobj {
@@ -53,11 +53,11 @@ void ObjState::processBool(const bool newValue, bool & inOutStateValue,
 
 void ObjState::finish(const std::string & objName) {
     if (!mObjHasParticleEmitters && mGlobal.mParticleSystemPath && !mGlobal.mParticleSystemPath->empty()) {
-        ULWarning << "The obj <" << objName << "> has the attribute <" << ATTR_GLOBAL_PARTICLE_SYSTEM
+        XULWarning << "The obj <" << objName << "> has the attribute <" << ATTR_GLOBAL_PARTICLE_SYSTEM
                 << "> but it doesn't contain any particle emitters";
     }
     if (mGlobal.mTextureNormal && !mObjHasAttrShinyRat && !mGlobal.mSpecular) {
-        ULWarning << "The obj <" << objName << "> has the <"
+        XULWarning << "The obj <" << objName << "> has the <"
                 << ATTR_GLOBAL_TEXTURE_NORMAL << "> attribute but the following attributes aren't set <"
                 << ATTR_GLOBAL_SPECULAR << " or " << ATTR_SHINY_RAT << ">";
     }

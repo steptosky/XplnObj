@@ -27,8 +27,9 @@
 **  Contacts: www.steptosky.com
 */
 
+#include <iostream>
 #include <gmock/gmock.h>
-#include <xpln/common/ExternalLog.h>
+#include <xpln/Info.h>
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,7 +37,7 @@
 
 GTEST_API_ int main(int argc, char ** argv) {
     testing::InitGoogleMock(&argc, argv);
-    std::cout << xobj::ExternalLog::about() << std::endl;
+    std::cout << XOBJ_PROJECT_NAME << " " << XOBJ_VERSION_STRING << std::endl;
     const int res = RUN_ALL_TESTS();
     return res;
 }

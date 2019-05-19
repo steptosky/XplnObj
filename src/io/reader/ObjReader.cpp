@@ -31,7 +31,7 @@
 #include "ObjReader.h"
 #include "ObjReadParser.h"
 #include "common/AttributeNames.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 #include "sts/string/StringUtils.h"
 
 #include "xpln/obj/attributes/AttrBlend.h"
@@ -90,7 +90,7 @@ bool ObjReader::readFile(ImportContext & context, ObjReaderListener & listener) 
         return reader.readFile(sts::toMbString(context.objFile()));
     }
     catch (std::exception & e) {
-        ULFatal << e.what();
+        XULCritical << e.what();
         return false;
     }
 }
@@ -123,7 +123,7 @@ bool ObjReader::readFile(const std::string & filePath) const {
         parser->nextLine();
     }
     if (!gotCount) {
-        ULError << "Could not read vertices and faces counts from file.";
+        XULError << "Could not read vertices and faces counts from file.";
         delete parser;
         return false;
     }
@@ -144,13 +144,13 @@ bool ObjReader::readFile(const std::string & filePath) const {
     }
 
     if (vertices.size() != currVertIndex) {
-        ULError << "The obj file contains incorrect vertex count.";
+        XULError << "The obj file contains incorrect vertex count.";
         delete parser;
         return false;
     }
 
     if (idx.size() != currIndicesIndex) {
-        ULError << "The obj file contains incorrect index count.";
+        XULError << "The obj file contains incorrect index count.";
         delete parser;
         return false;
     }
@@ -158,7 +158,7 @@ bool ObjReader::readFile(const std::string & filePath) const {
     mObjParserListener->gotMeshVertices(vertices);
     if (!idx.empty()) {
         if (idx.size() % 3) {
-            ULError << "The obj file doesn't contain multiple of 3 index count.";
+            XULError << "The obj file doesn't contain multiple of 3 index count.";
             return false;
         }
         mObjParserListener->gotMeshFaces(idx);
@@ -212,7 +212,7 @@ bool ObjReader::readHeader(ObjReadParser & parser) {
     // LINE 1: A/I - who cares?!?
     std::string str = parser.extractWord();
     if (str.empty() || (str[0] != 'A' && str[0] != 'I')) {
-        ULError << "Header LINE 1 (PC type) is incorrect! Must be I or A.";
+        XULError << "Header LINE 1 (PC type) is incorrect! Must be I or A.";
         return false;
     }
     parser.nextLine();
@@ -220,14 +220,14 @@ bool ObjReader::readHeader(ObjReadParser & parser) {
     // LINE 2: version
     const int vers = parser.extractInt();
     if (vers != 800) {
-        ULError << "Header LINE 2 (Version) is incorrect! Must be 800.";
+        XULError << "Header LINE 2 (Version) is incorrect! Must be 800.";
         return false;
     }
     parser.nextLine();
 
     // LINE 3: "OBJ"
     if (!parser.isMatch("OBJ")) {
-        ULError << "Header LINE 3 (Identification) is incorrect! Must be \"OBJ\".";
+        XULError << "Header LINE 3 (Identification) is incorrect! Must be \"OBJ\".";
         return false;
     }
     parser.nextLine();
@@ -515,7 +515,7 @@ bool ObjReader::readAttribute(ObjReadParser & parser) const {
             case 3: mObjParserListener->gotTrisAttrCockpit(AttrCockpit(AttrCockpit::region_4));
                 break;
             default:
-                LError << "Incorrect region number: " << region;
+                XLError << "Incorrect region number: " << region;
                 mObjParserListener->gotTrisAttrCockpit(AttrCockpit());
                 break;
         }
@@ -1185,7 +1185,7 @@ bool ObjReader::readTranslateKeysAnim(ObjReadParser & parser) const {
             mObjParserListener->gotTranslateAnim(keys, dataref, hasLoop ? std::optional<float>(loopVal) : std::nullopt);
         }
         else {
-            ULError << "Incorrect translate key animation.";
+            XULError << "Incorrect translate key animation.";
         }
 
         return true;
@@ -1225,7 +1225,7 @@ bool ObjReader::readRotateKeysAnim(ObjReadParser & parser) const {
             mObjParserListener->gotRotateAnim(keys, vector, dataref, hasLoop ? std::optional<float>(loopVal) : std::nullopt);
         }
         else {
-            ULError << "Incorrect rotate key animation.";
+            XULError << "Incorrect rotate key animation.";
         }
 
         return true;

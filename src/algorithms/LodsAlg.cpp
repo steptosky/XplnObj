@@ -29,7 +29,7 @@
 
 #include <algorithm>
 #include "LodsAlg.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 #include "sts/utilities/Compare.h"
 #include "xpln/obj/ObjMesh.h"
 #include "common/IInterrupterInternal.h"
@@ -53,7 +53,7 @@ bool LodsAlg::validate(ObjMain::Lods & inOutLods,
         //---------------------------
         // Checking if the LOD has incorrect "near" value.
         if (inOutLods[0]->nearVal() != 0.0f) {
-            ULError << objectName << " - LOD <" << inOutLods[0]->objectName()
+            XLError << objectName << " - LOD <" << inOutLods[0]->objectName()
                     << R"(> expected "near" value equals 0.0 but it equals: )" << inOutLods[0]->nearVal();
             return false;
         }
@@ -66,7 +66,7 @@ bool LodsAlg::validate(ObjMain::Lods & inOutLods,
         //---------------------------
         // Checking if the LOD has animation.
         if (lod->transform().hasAnim()) {
-            ULError << objectName << " - LOD <" << lod->objectName() << "> isn't allowed to have animation.";
+            XLError << objectName << " - LOD <" << lod->objectName() << "> isn't allowed to have animation.";
             return false;
         }
         //---------------------------
@@ -74,18 +74,18 @@ bool LodsAlg::validate(ObjMain::Lods & inOutLods,
         INTERRUPT_CHECK_WITH_RETURN_VAL(interrupt, false);
         const auto hasObjects = !TransformAlg::visitObjectsConst(lod->transform(), [](const auto &, const auto &) { return false; });
         if (!hasObjects) {
-            ULError << objectName << " - LOD <" << lod->objectName() << "> doesn't contain any objects.";
+            XLError << objectName << " - LOD <" << lod->objectName() << "> doesn't contain any objects.";
             return false;
         }
         //---------------------------
         // Checking "near" and "far" values.
         if (inOutLods.size() != 1 && sts::isEqual(lod->nearVal(), lod->farVal())) {
-            ULError << objectName << " - LOD <" << lod->objectName()
+            XLError << objectName << " - LOD <" << lod->objectName()
                     << R"(> contains identical "near:)" << lod->nearVal() << R"(" and "far:)" << lod->farVal() << R"(" values.)";
             return false;
         }
         if (lod->farVal() < lod->nearVal()) {
-            ULError << objectName << " - LOD <" << lod->objectName()
+            XLError << objectName << " - LOD <" << lod->objectName()
                     << R"(> contains "far:)" << lod->farVal() << R"(" value that is less then "near:)" << lod->nearVal() << R"(".)";
             return false;
         }
@@ -99,7 +99,7 @@ bool LodsAlg::validate(ObjMain::Lods & inOutLods,
         });
 
         if (iter != inOutLods.end()) {
-            ULError << objectName << " - LOD <" << lod->objectName() << "> and LOD <" << (*iter)->objectName()
+            XLError << objectName << " - LOD <" << lod->objectName() << "> and LOD <" << (*iter)->objectName()
                     << "> have identical distance values. Merge them into one LOD.";
             return false;
         }
@@ -113,7 +113,7 @@ bool LodsAlg::validate(ObjMain::Lods & inOutLods,
             return !bool(static_cast<const ObjMesh*>(&obj)->mAttr.mHard);
         });
         if (hasHardPoly && lod->nearVal() != 0.0f) {
-            ULError << objectName << " - LOD <" << lod->objectName() << "> contains hard polygons on some objects, "
+            XLError << objectName << " - LOD <" << lod->objectName() << "> contains hard polygons on some objects, "
                     << R"(but only the LOD whose "near" value equals "0.0" allowed to contain hard polygons)";
             return false;
         }
@@ -136,7 +136,7 @@ void LodsAlg::removeWithoutObjects(ObjMain::Lods & inOutLods, const IInterrupter
 
         if (!hasObjects) {
 #ifndef NDEBUG
-            LInfo << "LOD <" << (*iter)->objectName() << "> will be removed because it doesn't have any objects.";
+            XLInfo << "LOD <" << (*iter)->objectName() << "> will be removed because it doesn't have any objects.";
 #endif
             iter = inOutLods.erase(iter);
         }
@@ -192,7 +192,7 @@ bool LodsAlg::sort(ObjMain::Lods & inOutLods, const IInterrupter & interrupt) {
     // checking remaining
     for (const auto & lod : inOutLods) {
         if (lod) {
-            LError << "LOD <" << lod->objectName()
+            XLError << "LOD <" << lod->objectName()
                     << R"(> "near" value can't be associated with "far" value of any other LOD.)"
                     << R"( The necessary "far" values don't exist or have already been associated with other LODs)";;
             return false;

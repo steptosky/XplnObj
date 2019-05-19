@@ -40,7 +40,7 @@
 #include "algorithms/Draped.h"
 #include "io/ObjTransformation.h"
 #include "algorithms/InstancingAlg.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 #include "sts/string/StringUtils.h"
 #include "algorithms/LodsAlg.h"
 
@@ -91,7 +91,7 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
 
         if (root->mExportOptions.isEnabled(XOBJ_EXP_DEBUG)) {
             // todo sts::toMbString may work incorrectly.
-            ULMessage << "File: " << sts::toMbString(context.objFile());
+            XULMessage << "File: " << sts::toMbString(context.objFile());
         }
 
         mMain = root;
@@ -198,7 +198,7 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
         // print animation and objects
         for (const auto & currLod : mMain->lods()) {
             if (currLod->transform().hasAnim()) {
-                ULError << currLod->objectName() << " - Lod can't be animated.";
+                XULError << currLod->objectName() << " - Lod can't be animated.";
             }
 
             printLOD(writer, *currLod, mMain->lods().size());
@@ -228,7 +228,7 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
         return true;
     }
     catch (std::exception & e) {
-        ULFatal << e.what();
+        XULCritical << e.what();
         return false;
     }
 }
@@ -243,14 +243,6 @@ void ObjWriter::printLOD(AbstractWriter & writer, const ObjLodGroup & lod, const
 /********************************************************************************************************/
 //////////////////////////////////////////////* Functions *///////////////////////////////////////////////
 /********************************************************************************************************/
-
-inline std::string currentDateTime() {
-    time_t now = time(nullptr);
-    char buf[80];
-    struct tm tstruct = *localtime(&now);
-    strftime(buf, sizeof(buf), "%Y-%m-%d", &tstruct);
-    return buf;
-}
 
 void ObjWriter::printSignature(AbstractWriter & writer, const std::string & signature, const bool timeStamp) {
     if (!signature.empty()) {
@@ -269,7 +261,7 @@ void ObjWriter::printSignature(AbstractWriter & writer, const std::string & sign
     msg.append("+[").append(XOBJ_COMPILE_DATE).append("]");
     writer.writeLine(msg);
     if (timeStamp) {
-        writer.writeLine(std::string("## Object created: ").append(currentDateTime()));
+        writer.writeLine(std::string("## Object created: ").append(Logger::timeStamp("%Y-%m-%d")));
     }
 }
 

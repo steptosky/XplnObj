@@ -9,7 +9,8 @@ environment:
     CONAN_TESTING_REPORT_DIR: "report"
     CONAN_BUILD_POLICY: "outdated"
     CONAN_ARCHS: x86_64
-    
+    CONAN_REMOTES: https://api.bintray.com/conan/steptosky/conan-open-source@True@sts-bintray
+
     matrix:
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
           CONAN_VISUAL_VERSIONS: 15

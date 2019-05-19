@@ -72,7 +72,7 @@ void Draped::extractDrapedObjects(Transform & transform, Transform::ObjList & ou
         for (auto it = outObjects.begin() + size; it != outObjects.end(); ++it) {
             (*it)->applyTransform(transform.mMatrix);
             if (animatedParent) {
-                ULWarning << " Animated transform < " << animatedParent->mName
+                XULWarning << " Animated transform < " << animatedParent->mName
                         << "> contains draped object <" << (*it)->objectName() << "> in transform <" << transform.mName << ">."
                         << " Draped geometry must not be animated.";
             }

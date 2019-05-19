@@ -31,7 +31,7 @@
 
 #include "xpln/enums/ESurface.h"
 #include "common/ArrayLength.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 
 namespace xobj {
 
@@ -111,7 +111,7 @@ ESurface ESurface::fromUiString(const char * name) {
                 return ESurface(ESurfacesData::gList[i].mId);
             }
         }
-        LError << TOTEXT(ESurface) << " Does not contain ui name: \"" << name << "\"";
+        XLError << TOTEXT(ESurface) << " Does not contain ui name: \"" << name << "\"";
     }
     return ESurface();
 }
@@ -123,7 +123,7 @@ ESurface ESurface::fromString(const char * attrName) {
                 return ESurface(ESurfacesData::gList[i].mId);
             }
         }
-        LError << TOTEXT(ESurface) << " Does not contain attribute name: \"" << attrName << "\"";
+        XLError << TOTEXT(ESurface) << " Does not contain attribute name: \"" << attrName << "\"";
     }
     return ESurface();
 }

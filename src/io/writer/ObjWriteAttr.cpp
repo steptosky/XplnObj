@@ -40,7 +40,7 @@
 #include "xpln/obj/manipulators/AttrManipNone.h"
 #include "io/StringValidator.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 
 namespace xobj {
 
@@ -78,7 +78,7 @@ template<>
 void ObjWriteAttr::writeGlobAttrState<std::optional<AttrBlend>>(const std::optional<AttrBlend> & attr) {
     if (attr) {
         if (attr->mRatio < 0.0f || attr->mRatio > 1.0f) {
-            ULWarning << "The object <" << mMainObj->objectName()
+            XULWarning << "The object <" << mMainObj->objectName()
                     << "> has the blending attribute with the out of range ration [0 > ration < 1].";
         }
         const auto ration = std::clamp(attr->mRatio, 0.0f, 1.0f);
@@ -96,7 +96,7 @@ template<>
 void ObjWriteAttr::writeGlobAttrState<std::optional<AttrLayerGroup>>(const std::optional<AttrLayerGroup> & attr) {
     if (attr) {
         if (attr->mOffset < -5 || attr->mOffset > 5) {
-            ULWarning << "The object <" << mMainObj->objectName() << "> has the attribute <"
+            XULWarning << "The object <" << mMainObj->objectName() << "> has the attribute <"
                     << ATTR_GLOBAL_LAYER_GROUP << "> with the out of range offset [-5 > ration < 5].";
         }
         mWriter->writeLine(ATTR_GLOBAL_LAYER_GROUP, " ", attr->mLayer.toString(), " ", std::clamp(attr->mOffset, -5, 5));
@@ -116,7 +116,7 @@ template<>
 void ObjWriteAttr::writeGlobAttrState<std::optional<AttrSpecular>>(const std::optional<AttrSpecular> & attr) {
     if (attr) {
         if (attr->mRatio < 0.0f || attr->mRatio > 1.0f) {
-            ULWarning << "The object <" << mMainObj->objectName() << "> has the attribute <"
+            XULWarning << "The object <" << mMainObj->objectName() << "> has the attribute <"
                     << ATTR_GLOBAL_SPECULAR << "> with the out of range ration [0 > ration < 1].";
         }
         mWriter->writeLine(ATTR_GLOBAL_SPECULAR, " ", std::clamp(attr->mRatio, 0.0f, 1.0f));
@@ -162,7 +162,7 @@ template<>
 void ObjWriteAttr::writeGlobAttrState<std::optional<AttrDrapedLayerGroup>>(const std::optional<AttrDrapedLayerGroup> & attr) {
     if (attr) {
         if (attr->mOffset < -5 || attr->mOffset > 5) {
-            ULWarning << "The object <" << mMainObj->objectName() << "> has the attribute <"
+            XULWarning << "The object <" << mMainObj->objectName() << "> has the attribute <"
                     << ATTR_GLOBAL_LAYER_GROUP_DRAPED << "> with the out of range offset [-5 > ration < 5].";
         }
         mWriter->writeLine(ATTR_GLOBAL_LAYER_GROUP_DRAPED,
@@ -246,7 +246,7 @@ template<>
 void ObjWriteAttr::switchAttrState<AttrBlend>(const AttrBlend & attr, const bool enable) {
     if (enable) {
         if (attr.mRatio < 0.0f || attr.mRatio > 1.0f) {
-            ULWarning << "The object <" << mObj->objectName()
+            XULWarning << "The object <" << mObj->objectName()
                     << "> has the blending attribute with the out of range ration [0 > ration < 1].";
         }
         const auto ratio = std::clamp(attr.mRatio, 0.0f, 1.0f);
@@ -277,41 +277,41 @@ void ObjWriteAttr::switchAttrState<AttrCockpit>(const AttrCockpit & attr, const 
         }
         else if (attr.mType == AttrCockpit::region_1) {
             if (!mState->mGlobal.mCockpitRegion1) {
-                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 0> attribute but <"
+                XULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 0> attribute but <"
                         << ATTR_GLOBAL_COCKPIT_REGION << "> attribute isn't specified for the obj file.";
             }
             mWriter->writeLine(ATTR_COCKPIT_REGION, " 0");
         }
         else if (attr.mType == AttrCockpit::region_2) {
             if (!mState->mGlobal.mCockpitRegion2) {
-                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 1> attribute but <"
+                XULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 1> attribute but <"
                         << ATTR_GLOBAL_COCKPIT_REGION << "> attribute isn't specified for the obj file.";
             }
             mWriter->writeLine(ATTR_COCKPIT_REGION, " 1");
         }
         else if (attr.mType == AttrCockpit::region_3) {
             if (!mState->mGlobal.mCockpitRegion3) {
-                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 2> attribute but <"
+                XULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 2> attribute but <"
                         << ATTR_GLOBAL_COCKPIT_REGION << "> attribute isn't specified for the obj file.";
             }
             mWriter->writeLine(ATTR_COCKPIT_REGION, " 2");
         }
         else if (attr.mType == AttrCockpit::region_4) {
             if (!mState->mGlobal.mCockpitRegion4) {
-                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 3> attribute but <"
+                XULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_REGION << " 3> attribute but <"
                         << ATTR_GLOBAL_COCKPIT_REGION << "> attribute isn't specified for the obj file.";
             }
             mWriter->writeLine(ATTR_COCKPIT_REGION, " 3");
         }
         else if (attr.mType == AttrCockpit::cockpit_device) {
             if (attr.mDeviceName.empty()) {
-                ULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_DEVICE << "> attribute without a device name.";
+                XULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_DEVICE << "> attribute without a device name.";
             }
             mWriter->writeLine(ATTR_COCKPIT_DEVICE, " ", attr.mDeviceName, " ", attr.mDeviceBus, " ",
                                attr.mDeviceLightingChan, " ", attr.mDeviceAutoAdjust);
         }
         else {
-            ULError << "unknown cockpit type: " << attr.mType;
+            XULError << "unknown cockpit type: " << attr.mType;
         }
     }
     else {
@@ -360,7 +360,7 @@ template<>
 void ObjWriteAttr::switchAttrState<AttrShiny>(const AttrShiny & attr, const bool enable) {
     if (enable) {
         if (attr.mRatio < 0.0f || attr.mRatio > 1.0f) {
-            ULWarning << "The object <" << mObj->objectName() << "> has the attribute <"
+            XULWarning << "The object <" << mObj->objectName() << "> has the attribute <"
                     << ATTR_SHINY_RAT << "> with the out of range ration [0 > ration < 1].";
         }
         mWriter->writeLine(ATTR_SHINY_RAT, " ", std::clamp(attr.mRatio, 0.0f, 1.0f));
@@ -469,7 +469,7 @@ public:
         else if constexpr (std::is_same_v<T, AttrManipDelta>) { }
         else if constexpr (std::is_same_v<T, AttrManipDragAxis>) {
             if (!manip.mAxisDetented && !manip.mAxisDetentRanges.empty()) {
-                ULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toString()
+                XULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toString()
                         << "> manipulator with the " << ATTR_MANIP_AXIS_DETENT_RANGE << " but " << ATTR_MANIP_AXIS_DETENTED << " isn't enabled.";
             }
             // todo this is the code duplication
@@ -477,7 +477,7 @@ public:
                 std::size_t counter = 0;
                 for (const auto & dr : manip.mAxisDetentRanges) {
                     if (dr.mStart > dr.mEnd) {
-                        ULError << "The object <" << mAttrWriter->mObj->objectName() << "> has incorrect detent range values at <"
+                        XULError << "The object <" << mAttrWriter->mObj->objectName() << "> has incorrect detent range values at <"
                                 << counter << "> position, start value must be smaller than end value.";
                     }
                     // todo implementation of checking
@@ -495,7 +495,7 @@ public:
                 std::size_t counter = 0;
                 for (const auto & dr : manip.mAxisDetentRanges) {
                     if (dr.mStart > dr.mEnd) {
-                        ULError << "The object <" << mAttrWriter->mObj->objectName() << "> has incorrect detent range values at <"
+                        XULError << "The object <" << mAttrWriter->mObj->objectName() << "> has incorrect detent range values at <"
                                 << counter << "> position, start value must be smaller than end value.";
                     }
                     // todo implementation of checking
@@ -508,11 +508,11 @@ public:
             if (!manip.mKeys.empty()) {
                 const auto & keyList = manip.mKeys;
                 if (keyList.front() == AttrManipKeyFrame(manip.mV1Min, manip.mAngle1)) {
-                    ULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> has duplicate value " << ATTR_MANIP_KEYFRAME << " of "
+                    XULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> has duplicate value " << ATTR_MANIP_KEYFRAME << " of "
                             << ATTR_MANIP_DRAG_ROTATE << ":<v2min>/<angle1> at position 0.";
                 }
                 if (keyList.back() == AttrManipKeyFrame(manip.mV1Max, manip.mAngle2)) {
-                    ULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> has duplicate value " << ATTR_MANIP_KEYFRAME << " of "
+                    XULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> has duplicate value " << ATTR_MANIP_KEYFRAME << " of "
                             << ATTR_MANIP_DRAG_ROTATE << ":<v2max>/<angle2> at position " << keyList.size() - 1 << ".";
                 }
             }
@@ -520,7 +520,7 @@ public:
         else if constexpr (std::is_same_v<T, AttrManipDragXy>) { }
         else if constexpr (std::is_same_v<T, AttrManipNone>) {
             if (!mAttrWriter->mIsPanelManip) {
-                ULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toString()
+                XULWarning << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toString()
                         << "> manipulator, it does not make a sense because this manipulator is set automatically when it is needed.";
                 mManipAllowed = false;
             }
@@ -528,7 +528,7 @@ public:
         else if constexpr (std::is_same_v<T, AttrManipNoop>) { }
         else if constexpr (std::is_same_v<T, AttrManipPanel>) {
             if (!mAttrWriter->mIsPanelManip) {
-                ULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toString()
+                XULError << "The object <" << mAttrWriter->mObj->objectName() << "> uses <" << manip.mType.toString()
                         << "> manipulator but the object doesn't have the attributes <" << ATTR_COCKPIT << " or " ATTR_COCKPIT_REGION
                         << "> the <" << manip.mType.toString() << "> can be used only for the geometry with one of those attributes.";
                 mManipAllowed = false;

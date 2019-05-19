@@ -28,7 +28,7 @@
 */
 
 #include "Writer.h"
-#include "common/Logger.h"
+#include "xpln/common/Logger.h"
 #include "exceptions/defines.h"
 #include "sts/string/StringUtils.h"
 
@@ -45,7 +45,7 @@ Writer::~Writer() {
         closeFile();
     }
     catch (const std::exception & e) {
-        LError << "Exception while closing the file" << e.what();
+        XLError << "Exception while closing the file" << e.what();
     }
 }
 
@@ -57,7 +57,7 @@ bool Writer::openFile(const Path & filePath) {
     mStream.open(filePath, std::ios_base::out);
     if (!mStream) {
         // todo sts::toMbString may work incorrectly with unicode.
-        ULError << " - File <" << sts::toMbString(filePath) << "> couldn't be created or written!";
+        XULError << " - File <" << sts::toMbString(filePath) << "> couldn't be created or written!";
         return false;
     }
     mStream.precision(6);
@@ -92,7 +92,7 @@ bool Writer::loadDatarefs(const Path & filePath) {
     std::ifstream file(filePath, std::ios_base::in);
     if (!file) {
         // todo sts::toMbString may work incorrectly with unicode.
-        ULError << " - File <" << sts::toMbString(filePath) << "> couldn't be read!";
+        XULError << " - File <" << sts::toMbString(filePath) << "> couldn't be read!";
         return false;
     }
 
@@ -101,7 +101,7 @@ bool Writer::loadDatarefs(const Path & filePath) {
             const auto iter = mDatarefs.find(drf.mId);
             if (iter != mDatarefs.end()) {
                 // todo sts::toMbString may work incorrectly with unicode.
-                ULError << "File <" << sts::toMbString(filePath) << "> contains data with duplicated id: " << drf.mId;
+                XULError << "File <" << sts::toMbString(filePath) << "> contains data with duplicated id: " << drf.mId;
             }
             else {
                 mDatarefs.emplace(drf.mId, drf);
@@ -117,7 +117,7 @@ bool Writer::loadCommands(const Path & filePath) {
     std::ifstream file(filePath, std::ios_base::in);
     if (!file) {
         // todo sts::toMbString may work incorrectly with unicode.
-        ULError << " - File <" << sts::toMbString(filePath) << "> couldn't be read!";
+        XULError << " - File <" << sts::toMbString(filePath) << "> couldn't be read!";
         return false;
     }
 
@@ -126,7 +126,7 @@ bool Writer::loadCommands(const Path & filePath) {
             const auto iter = mCommands.find(cmd.mId);
             if (iter != mCommands.end()) {
                 // todo sts::toMbString may work incorrectly with unicode.
-                ULError << "File <" << sts::toMbString(filePath) << "> contains data with duplicated id: " << cmd.mId;
+                XULError << "File <" << sts::toMbString(filePath) << "> contains data with duplicated id: " << cmd.mId;
             }
             else {
                 mCommands.emplace(cmd.mId, cmd);

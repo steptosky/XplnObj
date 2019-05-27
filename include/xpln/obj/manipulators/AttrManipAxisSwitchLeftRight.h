@@ -30,11 +30,9 @@
 */
 
 #include <string>
-#include <optional>
 #include "xpln/Export.h"
 #include "xpln/enums/ECursor.h"
 #include "xpln/enums/EManipulator.h"
-#include "embeddable/AttrManipWheel.h"
 
 namespace xobj {
 
@@ -81,7 +79,6 @@ public:
     float mClickDelta = 0.0f;
     float mHoldDelta = 0.0f;
     std::string mDataref;
-    std::optional<AttrManipWheel> mWheel;
 
     /// @}
     //-------------------------------------------------------------------------

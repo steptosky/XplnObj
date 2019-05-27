@@ -49,7 +49,6 @@ bool AttrManipAxisSwitchLeftRight::operator==(const AttrManipAxisSwitchLeftRight
            sts::isEqual(mHoldDelta, other.mHoldDelta) &&
            sts::isEqual(mMin, other.mMin) &&
            sts::isEqual(mMax, other.mMax) &&
-           mWheel == other.mWheel &&
            mDataref == other.mDataref;
 }
 

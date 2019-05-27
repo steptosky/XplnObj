@@ -604,7 +604,7 @@ public:
                          " ", manip.mHoldDelta,
                          " ", w->actualDataref(manip.mDataref),
                          " ", manip.mToolType);
-            return 1 + printWheel(manip.mWheel);
+            return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipAxisSwitchLeftRight>) {
             w->writeLine(ATTR_MANIP_AXIS_SWITCH_LEFT_RIGHT,
@@ -615,7 +615,7 @@ public:
                          " ", manip.mHoldDelta,
                          " ", w->actualDataref(manip.mDataref),
                          " ", manip.mToolType);
-            return 1 + printWheel(manip.mWheel);
+            return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipAxisSwitchUpDown>) {
             w->writeLine(ATTR_MANIP_AXIS_SWITCH_UP_DOWN,
@@ -626,7 +626,7 @@ public:
                          " ", manip.mHoldDelta,
                          " ", w->actualDataref(manip.mDataref),
                          " ", manip.mToolType);
-            return 1 + printWheel(manip.mWheel);
+            return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipCmd>) {
             w->writeLine(ATTR_MANIP_COMMAND,
@@ -770,7 +770,7 @@ public:
                          " ", w->actualDataref(manip.mXDataref),
                          " ", w->actualDataref(manip.mYDataref),
                          " ", manip.mToolType);
-            return 1;
+            return 1 + printWheel(manip.mWheel);
         }
         else if constexpr (std::is_same_v<T, AttrManipNone>) {
             w->writeLine(ATTR_MANIP_NONE);

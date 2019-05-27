@@ -95,17 +95,6 @@ TEST(TestManip, AttrManipAxisKnob) {
     const auto [printed, number] = print(manip);
     ASSERT_STREQ(result.c_str(), printed.c_str());
     ASSERT_EQ(1, number);
-
-    manip.mWheel = AttrManipWheel(15.0f);
-
-    result.append("ATTR_manip_wheel ")
-          .append(sts::toMbString(15.0f, PRECISION))
-          .append("\n");
-
-    const auto [printed2, number2] = print(manip);
-    ASSERT_STREQ(result.c_str(), printed2.c_str());
-    ASSERT_EQ(2, number2);
-
     ASSERT_EQ(EManipulator(EManipulator::axis_knob), manip.mType);
 }
 
@@ -134,17 +123,6 @@ TEST(TestManip, AttrManipAxisSwitchLeftRight) {
     const auto [printed, number] = print(manip);
     ASSERT_STREQ(result.c_str(), printed.c_str());
     ASSERT_EQ(1, number);
-
-    manip.mWheel = AttrManipWheel(15.0f);
-
-    result.append("ATTR_manip_wheel ")
-          .append(sts::toMbString(15.0f, PRECISION))
-          .append("\n");
-
-    const auto [printed2, number2] = print(manip);
-    ASSERT_STREQ(result.c_str(), printed2.c_str());
-    ASSERT_EQ(2, number2);
-
     ASSERT_EQ(EManipulator(EManipulator::axis_switch_lr), manip.mType);
 }
 
@@ -173,17 +151,6 @@ TEST(TestManip, AttrManipAxisSwitchUpDown) {
     const auto [printed, number] = print(manip);
     ASSERT_STREQ(result.c_str(), printed.c_str());
     ASSERT_EQ(1, number);
-
-    manip.mWheel = AttrManipWheel(15.0f);
-
-    result.append("ATTR_manip_wheel ")
-          .append(sts::toMbString(15.0f, PRECISION))
-          .append("\n");
-
-    const auto [printed2, number2] = print(manip);
-    ASSERT_STREQ(result.c_str(), printed2.c_str());
-    ASSERT_EQ(2, number2);
-
     ASSERT_EQ(EManipulator(EManipulator::axis_switch_ud), manip.mType);
 }
 
@@ -598,20 +565,30 @@ TEST(TestManip, AttrManipDragXy) {
     manip.mYMin = 3.0f;
     manip.mYMax = 4.0f;
 
-    const auto result = std::string("ATTR_manip_drag_xy ")
-                        .append(cursor.toString())
-                        .append(" ")
-                        .append(sts::toMbString(10.0f, PRECISION)).append(" ")
-                        .append(sts::toMbString(20.0f, PRECISION)).append(" ")
-                        .append(sts::toMbString(1.0f, PRECISION)).append(" ")
-                        .append(sts::toMbString(2.0f, PRECISION)).append(" ")
-                        .append(sts::toMbString(3.0f, PRECISION)).append(" ")
-                        .append(sts::toMbString(4.0f, PRECISION)).append(" ")
-                        .append("x-dataref y-dataref ToolTip\n");
+    auto result = std::string("ATTR_manip_drag_xy ")
+                  .append(cursor.toString())
+                  .append(" ")
+                  .append(sts::toMbString(10.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(20.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(1.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(2.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(3.0f, PRECISION)).append(" ")
+                  .append(sts::toMbString(4.0f, PRECISION)).append(" ")
+                  .append("x-dataref y-dataref ToolTip\n");
 
     const auto [printed, number] = print(manip);
     ASSERT_STREQ(result.c_str(), printed.c_str());
     ASSERT_EQ(1, number);
+
+    manip.mWheel = AttrManipWheel(15.0f);
+
+    result.append("ATTR_manip_wheel ")
+          .append(sts::toMbString(15.0f, PRECISION))
+          .append("\n");
+
+    const auto [printed2, number2] = print(manip);
+    ASSERT_STREQ(result.c_str(), printed2.c_str());
+    ASSERT_EQ(2, number2);
 
     ASSERT_EQ(EManipulator(EManipulator::drag_xy), manip.mType);
 }

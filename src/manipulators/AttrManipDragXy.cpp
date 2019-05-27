@@ -51,6 +51,7 @@ bool AttrManipDragXy::operator==(const AttrManipDragXy & other) const {
            sts::isEqual(mXMax, other.mXMax) &&
            sts::isEqual(mYMin, other.mYMin) &&
            sts::isEqual(mYMax, other.mYMax) &&
+           mWheel == other.mWheel &&
            mXDataref == other.mXDataref &&
            mYDataref == other.mYDataref;
 }

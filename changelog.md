@@ -9,7 +9,6 @@ StepToSky: X-Plane Obj Library
 - **Added** Checking if mesh has the attribute ATTR_cockpit_region but the attribute COCKPIT_REGION isn't set.
 
 ##### Breaking backward compatibility:
-- **Removed** Unnecessary wheel manipulators and added it to AttrManipDragXy.
 - **Changed** Code style: public variable now have the prefix m instead of p.
 - **Changed** Attribute sets use std::optional now.
 - **Changed** Tree attribute location. It is presented as a parameter of the mesh object now.

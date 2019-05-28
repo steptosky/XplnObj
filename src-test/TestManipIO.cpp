@@ -132,6 +132,31 @@ TEST(TestManipIO, AttrManipAxisKnob) {
     ASSERT_EQ(outManip.mMax, inManip->mMax);
     ASSERT_EQ(outManip.mClickDelta, inManip->mClickDelta);
     ASSERT_EQ(outManip.mHoldDelta, inManip->mHoldDelta);
+
+    /***************************************************************************************/
+
+    outManip.mWheel = AttrManipWheel(15.0f);
+
+    ObjMain outWheelObj;
+    ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip));
+    ExportContext expWheelContext(fileName);
+    ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
+    ASSERT_EQ(2, expWheelContext.statistic().mTrisManipCount);
+
+    //-----------------------------
+
+    ObjMain inWheelObj;
+    ImportContext impWheelContext(fileName);
+    ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
+    ASSERT_EQ(1, impWheelContext.statistic().mTrisManipCount);
+    inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisKnob>(inWheelObj, inManip));
+
+    //-----------------------------
+
+    ASSERT_TRUE(outManip.mWheel);
+    ASSERT_TRUE(inManip->mWheel);
+    ASSERT_EQ(outManip.mWheel->mWheelDelta, inManip->mWheel->mWheelDelta);
 }
 
 /**************************************************************************************************/
@@ -174,6 +199,31 @@ TEST(TestManipIO, AttrManipAxisSwitchLeftRight) {
     ASSERT_EQ(outManip.mMax, inManip->mMax);
     ASSERT_EQ(outManip.mClickDelta, inManip->mClickDelta);
     ASSERT_EQ(outManip.mHoldDelta, inManip->mHoldDelta);
+
+    /***************************************************************************************/
+
+    outManip.mWheel = AttrManipWheel(15.0f);
+
+    ObjMain outWheelObj;
+    ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip));
+    ExportContext expWheelContext(fileName);
+    ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
+    ASSERT_EQ(2, expWheelContext.statistic().mTrisManipCount);
+
+    //-----------------------------
+
+    ObjMain inWheelObj;
+    ImportContext impWheelContext(fileName);
+    ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
+    ASSERT_EQ(1, impWheelContext.statistic().mTrisManipCount);
+    inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisSwitchLeftRight>(inWheelObj, inManip));
+
+    //-----------------------------
+
+    ASSERT_TRUE(outManip.mWheel);
+    ASSERT_TRUE(inManip->mWheel);
+    ASSERT_EQ(outManip.mWheel->mWheelDelta, inManip->mWheel->mWheelDelta);
 }
 
 /**************************************************************************************************/
@@ -216,6 +266,31 @@ TEST(TestManipIO, AttrManipAxisSwitchUpDown) {
     ASSERT_EQ(outManip.mMax, inManip->mMax);
     ASSERT_EQ(outManip.mClickDelta, inManip->mClickDelta);
     ASSERT_EQ(outManip.mHoldDelta, inManip->mHoldDelta);
+
+    /***************************************************************************************/
+
+    outManip.mWheel = AttrManipWheel(15.0f);
+
+    ObjMain outWheelObj;
+    ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip));
+    ExportContext expWheelContext(fileName);
+    ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
+    ASSERT_EQ(2, expWheelContext.statistic().mTrisManipCount);
+
+    //-----------------------------
+
+    ObjMain inWheelObj;
+    ImportContext impWheelContext(fileName);
+    ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
+    ASSERT_EQ(1, impWheelContext.statistic().mTrisManipCount);
+    inManip = nullptr;
+    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipAxisSwitchUpDown>(inWheelObj, inManip));
+
+    //-----------------------------
+
+    ASSERT_TRUE(outManip.mWheel);
+    ASSERT_TRUE(inManip->mWheel);
+    ASSERT_EQ(outManip.mWheel->mWheelDelta, inManip->mWheel->mWheelDelta);
 }
 
 /**************************************************************************************************/
@@ -819,31 +894,6 @@ TEST(TestManipIO, AttrManipDragXy) {
     ASSERT_EQ(outManip.mYMin, inManip->mYMin);
     ASSERT_EQ(outManip.mXMax, inManip->mXMax);
     ASSERT_EQ(outManip.mYMax, inManip->mYMax);
-
-    /***************************************************************************************/
-
-    outManip.mWheel = AttrManipWheel(15.0f);
-
-    ObjMain outWheelObj;
-    ASSERT_NO_FATAL_FAILURE(addManip(outWheelObj, outManip));
-    ExportContext expWheelContext(fileName);
-    ASSERT_TRUE(outWheelObj.exportObj(expWheelContext));
-    ASSERT_EQ(2, expWheelContext.statistic().mTrisManipCount);
-
-    //-----------------------------
-
-    ObjMain inWheelObj;
-    ImportContext impWheelContext(fileName);
-    ASSERT_TRUE(inWheelObj.importObj(impWheelContext));
-    ASSERT_EQ(1, impWheelContext.statistic().mTrisManipCount);
-    inManip = nullptr;
-    ASSERT_NO_FATAL_FAILURE(extractManip<AttrManipDragXy>(inWheelObj, inManip));
-
-    //-----------------------------
-
-    ASSERT_TRUE(outManip.mWheel);
-    ASSERT_TRUE(inManip->mWheel);
-    ASSERT_EQ(outManip.mWheel->mWheelDelta, inManip->mWheel->mWheelDelta);
 }
 
 /**************************************************************************************************/

@@ -30,11 +30,9 @@
 */
 
 #include <string>
-#include <optional>
 #include "xpln/Export.h"
 #include "xpln/enums/ECursor.h"
 #include "xpln/enums/EManipulator.h"
-#include "embeddable/AttrManipWheel.h"
 
 namespace xobj {
 
@@ -84,7 +82,6 @@ public:
     float mYMax = 0.0f;
     std::string mXDataref;
     std::string mYDataref;
-    std::optional<AttrManipWheel> mWheel;
 
     /// @}
     //-------------------------------------------------------------------------

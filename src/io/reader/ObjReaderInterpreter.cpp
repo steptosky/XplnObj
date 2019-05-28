@@ -36,6 +36,9 @@
 #include "common/AttributeNames.h"
 #include "io/ObjTransformation.h"
 #include "xpln/obj/manipulators/AttrManipDragRotate.h"
+#include "xpln/obj/manipulators/AttrManipAxisKnob.h"
+#include "xpln/obj/manipulators/AttrManipAxisSwitchLeftRight.h"
+#include "xpln/obj/manipulators/AttrManipAxisSwitchUpDown.h"
 #include "xpln/obj/manipulators/AttrManipDelta.h"
 #include "xpln/obj/manipulators/AttrManipDragAxisPix.h"
 #include "xpln/obj/manipulators/AttrManipPush.h"
@@ -371,8 +374,10 @@ void ObjReaderInterpreter::gotTrisAttrManipWheel(const AttrManipWheel & manip) {
     //--------------------------
     const auto visitor = [&](auto && currManip) {
         using T = std::decay_t<decltype(currManip)>;
-        if constexpr (std::is_same_v<T, AttrManipDelta>) { currManip.mWheel = manip; }
-        else if constexpr (std::is_same_v<T, AttrManipDragXy>) { currManip.mWheel = manip; }
+        if constexpr (std::is_same_v<T, AttrManipAxisKnob>) { currManip.mWheel = manip; }
+        else if constexpr (std::is_same_v<T, AttrManipAxisSwitchLeftRight>) { currManip.mWheel = manip; }
+        else if constexpr (std::is_same_v<T, AttrManipAxisSwitchUpDown>) { currManip.mWheel = manip; }
+        else if constexpr (std::is_same_v<T, AttrManipDelta>) { currManip.mWheel = manip; }
         else if constexpr (std::is_same_v<T, AttrManipDragAxis>) { currManip.mWheel = manip; }
         else if constexpr (std::is_same_v<T, AttrManipDragAxisPix>) { currManip.mWheel = manip; }
         else if constexpr (std::is_same_v<T, AttrManipPush>) { currManip.mWheel = manip; }

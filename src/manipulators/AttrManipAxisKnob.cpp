@@ -49,6 +49,7 @@ bool AttrManipAxisKnob::operator==(const AttrManipAxisKnob & other) const {
            sts::isEqual(mHoldDelta, other.mHoldDelta) &&
            sts::isEqual(mMin, other.mMin) &&
            sts::isEqual(mMax, other.mMax) &&
+           mWheel == other.mWheel &&
            mDataref == other.mDataref;
 }
 

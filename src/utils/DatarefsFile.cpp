@@ -102,8 +102,9 @@ bool DatarefsFile::loadStream(std::istream & input, const std::function<bool(con
 
     // remove firs line as the datarefs format
     // uses it for just an information.
-    if (! std::getline(input, line)) {
-        return false;
+    if (!std::getline(input, line)) {
+        // stream empty
+        return true;
     }
 
     while (std::getline(input, line)) {

@@ -3,6 +3,7 @@
 - Check whether the [change log](changelog.md) is correct. Make sure the date and version are correct as well.
 - Check whether the `doxygen` does not have unexpected warnings and errors while generating the documentation.
 - Check whether the dependencies and their version are described correctly in the [readme.md](readme.md) file. 
+- Write the correct version into [win-export-bintray.bat](win-export-bintray.bat)
 
 #### [StsProjectDesc.cmake](cmake/StsProjectDesc.cmake)
 - Set the correct version in the file and check other information there.

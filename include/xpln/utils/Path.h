@@ -56,6 +56,15 @@
 namespace xobj {
 typedef std::wstring Path;
 }
+
+#include <string>
+#include <codecvt>
+
+inline std::string u8string(const xobj::Path& path) {
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
+    return convert.to_bytes(path);
+}
+
 #else
 /*!
  * \pre Windows uses UTF16 and wide string, Unix uses UTF8 and char.
@@ -64,6 +73,10 @@ typedef std::wstring Path;
  */
 namespace xobj {
 typedef std::string Path;
+
+inline std::string u8string(const xobj::Path& path) noexcept {
+    return path;
+}
 }
 #endif
 

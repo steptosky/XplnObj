@@ -28,14 +28,13 @@
 */
 
 #include "xpln/utils/DatarefsFile.h"
-#include "exceptions/defines.h"
-#include "sts/string/StringUtils.h"
 #include <cassert>
 #include <fstream>
 #include <iomanip>
 #include <cctype>
 #include <limits>
 #include <algorithm>
+#include <system_error>
 
 namespace xobj {
 
@@ -72,33 +71,20 @@ bool DatarefsFile::loadFile(const Path & filePath, const std::function<bool(cons
     using namespace std::string_literals;
     std::ifstream file(filePath, std::iostream::in);
     if (!file) {
-        throw std::runtime_error(ExcTxt("can't open file <"s.append(sts::toMbString(filePath)).append(">")));
+        throw std::system_error(errno, std::system_category(),
+                                "Failed to open file: <"s.append(u8string(filePath)).append(">"));
     }
-    try {
-        const auto res = loadStream(file, callback);
-        file.close();
-        return res;
-    }
-    catch (...) {
-        file.close();
-        throw;
-    }
+    return loadStream(file, callback);;
 }
 
 void DatarefsFile::saveFile(const Path & filePath, const std::function<bool(Dataref &)> & callback) {
     using namespace std::string_literals;
     std::ofstream file(filePath, std::iostream::out);
     if (!file) {
-        throw std::runtime_error(ExcTxt("can't open file <"s.append(sts::toMbString(filePath)).append(">")));
+        throw std::system_error(errno, std::system_category(),
+                                "Failed to open file: <"s.append(u8string(filePath)).append(">"));
     }
-    try {
-        saveStream(file, callback);
-        file.close();
-    }
-    catch (...) {
-        file.close();
-        throw;
-    }
+    saveStream(file, callback);
 }
 
 /**************************************************************************************************/

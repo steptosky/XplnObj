@@ -90,6 +90,7 @@ set_source_files_properties(stdafx.cpp
 )
 
 target_compile_options(${TARGET} 
+    PUBLIC  $<$<CXX_COMPILER_ID:MSVC>:-D_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING>
     PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/Yustdafx.h>  # pre-compile headers
     PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/FIstdafx.h>  # pre-compile headers
     PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/MP>          # multi-processor compilation

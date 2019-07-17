@@ -47,12 +47,12 @@ class TMatrix;
  * \note The vector values are ignored and will be auto-calculated
  * \warning It supports only one animated axis now!
  */
-class EulerXyzHelper {
+class EulerXyzRotateHelper {
 public:
 
-    EulerXyzHelper() = default;
+    EulerXyzRotateHelper() = default;
 
-    EulerXyzHelper(const AnimRotate & x, const AnimRotate & y, const AnimRotate & z)
+    EulerXyzRotateHelper(const AnimRotate & x, const AnimRotate & y, const AnimRotate & z)
         : pX(x),
           pY(y),
           pZ(z) {}

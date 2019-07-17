@@ -29,7 +29,7 @@
 
 #include <gtest/gtest.h>
 
-#include "xpln/common/EulerXyzHelper.h"
+#include "xpln/utils/EulerXyzRotateHelper.h"
 
 using namespace xobj;
 
@@ -50,7 +50,7 @@ TEST(EulerXyzHelper, xyz_case1) {
     x.mKeys.push_back(AnimRotate::Key(0.0f, 0.0f));
     y.mKeys.push_back(AnimRotate::Key(0.0f, 0.0f));
     z.mKeys.push_back(AnimRotate::Key(0.0f, 0.0f));
-    ASSERT_TRUE(EulerXyzHelper(x, y, z).animation().empty());
+    ASSERT_TRUE(EulerXyzRotateHelper(x, y, z).animation().empty());
 }
 
 /**************************************************************************************************/
@@ -66,7 +66,7 @@ TEST(EulerXyzHelper, Xyz_case1) {
 
     z.mKeys.push_back(AnimRotate::Key(180.0f, 0.0f));
 
-    AnimRotateList a = EulerXyzHelper(x, y, z).animation();
+    AnimRotateList a = EulerXyzRotateHelper(x, y, z).animation();
     ASSERT_EQ(1, a.size());
     ASSERT_NEAR(1.0f, a[0].mVector.x, THRESHOLD);
     ASSERT_NEAR(0.0f, a[0].mVector.y, THRESHOLD);
@@ -84,7 +84,7 @@ TEST(EulerXyzHelper, xYz_case1) {
 
     z.mKeys.push_back(AnimRotate::Key(90.0f, 0.0f));
 
-    AnimRotateList a = EulerXyzHelper(x, y, z).animation();
+    AnimRotateList a = EulerXyzRotateHelper(x, y, z).animation();
     ASSERT_EQ(1, a.size());
     ASSERT_NEAR(-1.0f, a[0].mVector.x, THRESHOLD);
     ASSERT_NEAR(0.0f, a[0].mVector.y, THRESHOLD);
@@ -102,7 +102,7 @@ TEST(EulerXyzHelper, xyZ_case1) {
     z.mKeys.push_back(AnimRotate::Key(-10.0f, 0.0f));
     z.mKeys.push_back(AnimRotate::Key(10.0f, 0.0f));
 
-    AnimRotateList a = EulerXyzHelper(x, y, z).animation();
+    AnimRotateList a = EulerXyzRotateHelper(x, y, z).animation();
     ASSERT_EQ(1, a.size());
     ASSERT_NEAR(0.0f, a[0].mVector.x, THRESHOLD);
     ASSERT_NEAR(0.0f, a[0].mVector.y, THRESHOLD);
@@ -123,7 +123,7 @@ TEST(EulerXyzHelper, XYz_case1) {
 
     z.mKeys.push_back(AnimRotate::Key(180.0f, 0.0f));
 
-    AnimRotateList a = EulerXyzHelper(x, y, z).animation();
+    AnimRotateList a = EulerXyzRotateHelper(x, y, z).animation();
     ASSERT_EQ(2, a.size());
 
     ASSERT_NEAR(0.0f, a[0].mVector.x, THRESHOLD);
@@ -147,7 +147,7 @@ TEST(EulerXyzHelper, xYZ_case1) {
     z.mKeys.push_back(AnimRotate::Key(-10.0f, 0.0f));
     z.mKeys.push_back(AnimRotate::Key(10.0f, 0.0f));
 
-    AnimRotateList a = EulerXyzHelper(x, y, z).animation();
+    AnimRotateList a = EulerXyzRotateHelper(x, y, z).animation();
     ASSERT_EQ(2, a.size());
 
     ASSERT_NEAR(0.0f, a[0].mVector.x, THRESHOLD);
@@ -171,7 +171,7 @@ TEST(EulerXyzHelper, XyZ_case1) {
     z.mKeys.push_back(AnimRotate::Key(-10.0f, 0.0f));
     z.mKeys.push_back(AnimRotate::Key(10.0f, 0.0f));
 
-    AnimRotateList a = EulerXyzHelper(x, y, z).animation();
+    AnimRotateList a = EulerXyzRotateHelper(x, y, z).animation();
     ASSERT_EQ(2, a.size());
 
     ASSERT_NEAR(0.0f, a[0].mVector.x, THRESHOLD);
@@ -198,7 +198,7 @@ TEST(EulerXyzHelper, XYZ_case1) {
     z.mKeys.push_back(AnimRotate::Key(-10.0f, 0.0f));
     z.mKeys.push_back(AnimRotate::Key(10.0f, 0.0f));
 
-    AnimRotateList a = EulerXyzHelper(x, y, z).animation();
+    AnimRotateList a = EulerXyzRotateHelper(x, y, z).animation();
     ASSERT_EQ(3, a.size());
 
     ASSERT_NEAR(0.0f, a[0].mVector.x, THRESHOLD);

@@ -29,7 +29,7 @@
 
 #include <cassert>
 
-#include "xpln/common/EulerXyzHelper.h"
+#include "xpln/utils/EulerXyzRotateHelper.h"
 #include "xpln/obj/Transform.h"
 
 namespace xobj {
@@ -42,7 +42,7 @@ namespace xobj {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void EulerXyzHelper::addToTransform(Transform & inOutTransform) {
+void EulerXyzRotateHelper::addToTransform(Transform & inOutTransform) {
     AnimRotateList anim = animation();
     for (auto & a : anim) {
         inOutTransform.mAnimRotate.push_back(a);
@@ -53,11 +53,11 @@ void EulerXyzHelper::addToTransform(Transform & inOutTransform) {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool EulerXyzHelper::isAnimated(const AnimRotate & r) {
+bool EulerXyzRotateHelper::isAnimated(const AnimRotate & r) {
     return r.mKeys.size() > 1;
 }
 
-float EulerXyzHelper::value(const AnimRotate & r) {
+float EulerXyzRotateHelper::value(const AnimRotate & r) {
     float v = 0.0f;
     if (!r.mKeys.empty()) {
         assert(r.mKeys.size() == 1);
@@ -70,7 +70,7 @@ float EulerXyzHelper::value(const AnimRotate & r) {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-TMatrix EulerXyzHelper::prepareX() const {
+TMatrix EulerXyzRotateHelper::prepareX() const {
     TMatrix mtx;
     if (!isAnimated(pY)) {
         mtx.rotateDegreesY(value(pY));
@@ -81,7 +81,7 @@ TMatrix EulerXyzHelper::prepareX() const {
     return mtx;
 }
 
-TMatrix EulerXyzHelper::prepareY() const {
+TMatrix EulerXyzRotateHelper::prepareY() const {
     TMatrix mtx;
     if (!isAnimated(pZ)) {
         mtx.rotateDegreesZ(value(pZ));
@@ -91,7 +91,7 @@ TMatrix EulerXyzHelper::prepareY() const {
 
 //-------------------------------------------------------------------------
 
-AnimRotateList EulerXyzHelper::animation() {
+AnimRotateList EulerXyzRotateHelper::animation() {
     pX.mVector.set(1.0f, 0.0f, 0.0f);
     pY.mVector.set(0.0f, 1.0f, 0.0f);
     pZ.mVector.set(0.0f, 0.0f, 1.0f);

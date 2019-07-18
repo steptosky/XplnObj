@@ -37,30 +37,32 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-class XpObjLib Quaternion {
+class XpObjLib Quaternion final {
 public:
 
-    Quaternion();
-    Quaternion(const Quaternion & copy);
-    Quaternion(float x, float y, float z, float w);
-    virtual ~Quaternion();
+    Quaternion() noexcept
+        : Quaternion(0.0f, 0.0f, 0.0f, 0.0f) {}
 
-    Quaternion & operator =(const Quaternion & copy);
+    Quaternion(const Quaternion & copy) noexcept;
+    Quaternion(float x, float y, float z, float w) noexcept;
+    ~Quaternion() = default;
 
-    void setX(float x);
-    void setY(float y);
-    void setZ(float z);
-    void setW(float w);
-    void setValues(float x, float y, float z, float w);
+    Quaternion & operator =(const Quaternion & copy) noexcept;
 
-    float x() const;
-    float y() const;
-    float z() const;
-    float w() const;
+    void setX(float x) noexcept;
+    void setY(float y) noexcept;
+    void setZ(float z) noexcept;
+    void setW(float w) noexcept;
+    void setValues(float x, float y, float z, float w) noexcept;
+
+    float x() const noexcept;
+    float y() const noexcept;
+    float z() const noexcept;
+    float w() const noexcept;
 
 private:
 
-    void * mData;
+    float mData[4] = {0};
 
 };
 

@@ -52,10 +52,10 @@ public:
 
     EulerXyzRotateHelper() = default;
 
-    EulerXyzRotateHelper(const AnimRotate & x, const AnimRotate & y, const AnimRotate & z)
-        : pX(x),
-          pY(y),
-          pZ(z) {}
+    EulerXyzRotateHelper(AnimRotate x, AnimRotate y, AnimRotate z)
+        : pX(std::move(x)),
+          pY(std::move(y)),
+          pZ(std::move(z)) {}
 
     XpObjLib AnimRotateList animation();
     XpObjLib void addToTransform(Transform & inOutTransform);

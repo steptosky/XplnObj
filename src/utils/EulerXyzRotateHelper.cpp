@@ -45,7 +45,7 @@ namespace xobj {
 void EulerXyzRotateHelper::addToTransform(Transform & inOutTransform) {
     AnimRotateList anim = animation();
     for (auto & a : anim) {
-        inOutTransform.mAnimRotate.push_back(a);
+        inOutTransform.mAnimRotate.emplace_back(std::move(a));
     }
 }
 
@@ -96,6 +96,7 @@ AnimRotateList EulerXyzRotateHelper::animation() {
     pY.mVector.set(0.0f, 1.0f, 0.0f);
     pZ.mVector.set(0.0f, 0.0f, 1.0f);
     AnimRotateList outAnim;
+    outAnim.reserve(3);
 
     if (isAnimated(pZ)) {
         outAnim.emplace_back(pZ);
@@ -104,14 +105,14 @@ AnimRotateList EulerXyzRotateHelper::animation() {
     if (isAnimated(pY)) {
         outAnim.emplace_back(pY);
         AnimRotate & a = outAnim.back();
-        TMatrix mtx = prepareY();
+        const TMatrix mtx = prepareY();
         mtx.transformVector(a.mVector);
     }
 
     if (isAnimated(pX)) {
         outAnim.emplace_back(pX);
         AnimRotate & a = outAnim.back();
-        TMatrix mtx = prepareX();
+        const TMatrix mtx = prepareX();
         mtx.transformVector(a.mVector);
     }
 

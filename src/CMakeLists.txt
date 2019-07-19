@@ -74,6 +74,7 @@ target_compile_features(${TARGET} PUBLIC cxx_std_17)
 # linkage 
 
 target_link_libraries(${TARGET} CONAN_PKG::stsff-logging)
+target_link_libraries(${TARGET} CONAN_PKG::glm)
 
 target_include_directories(${TARGET} 
     PRIVATE "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>"

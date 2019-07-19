@@ -77,6 +77,7 @@ class LibConan(ConanFile):
             del self.options.fPIC
 
     def requirements(self):
+        self.requires("glm/0.9.9.4@g-truc/stable")
         self.requires("stsff-logging/1.0.2@steptosky/stable")
         if os.getenv(self.build_test_var, "0") == "1":
             self.requires('gtest/1.8.1@bincrafters/stable', private=True)

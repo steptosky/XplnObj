@@ -29,6 +29,7 @@
 
 #include <gtest/gtest.h>
 #include <xpln/utils/LightUtils.h>
+#include "TestUtils.h"
 
 using namespace xobj;
 
@@ -115,6 +116,17 @@ TEST(LightUtils, billboardCorrectConeAngle_not_normal) {
 
     EXPECT_THROW(LightUtils::billboardCorrectConeAngle("$direction:a+b", 10.0f), std::invalid_argument);
     EXPECT_THROW(LightUtils::billboardCorrectConeAngle("$direction:a-1.c", 10.0f), std::invalid_argument);
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+TEST(LightUtils, parse_lights) {
+    const auto path = TestUtils::resourceDir() + XOBJ_PATH("/") + XOBJ_PATH("lights.txt");
+    const auto names = LightUtils::parseLights(path);
+    ASSERT_EQ(620, names.size());
+    ASSERT_STREQ("headlight", names[10].name().data());
 }
 
 /**************************************************************************************************/

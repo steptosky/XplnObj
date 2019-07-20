@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2019, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -32,6 +32,7 @@
 #include "xpln/obj/ObjMesh.h"
 #include "gtest/gtest.h"
 #include <xpln/obj/ObjMain.h>
+#include <xpln/utils/Path.h>
 
 namespace xobj {
 
@@ -51,6 +52,10 @@ public:
         inOutMain.mExportOptions.enable(XOBJ_EXP_MARK_MESH);
         inOutMain.mExportOptions.enable(XOBJ_EXP_DEBUG);
     }
+
+    //-----------------------------------------------------
+
+    static const Path & resourceDir();
 
     //-----------------------------------------------------
 

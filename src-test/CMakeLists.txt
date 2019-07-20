@@ -79,6 +79,7 @@ set_source_files_properties(ph/stdafx.cpp
 )
 
 target_compile_options(${TARGET}
+    PRIVATE -DTEST_RESOURCES_DIR="${CMAKE_SOURCE_DIR}/src-test-resources"
     PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/Yuph/stdafx.h>   # pre-compile headers
     PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/FIph/stdafx.h>   # pre-compile headers
     PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/MP>              # multi-processor compilation

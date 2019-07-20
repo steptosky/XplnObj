@@ -107,8 +107,8 @@ void TMatrix::setPosition(const Point3 & p) {
     reinterpret_cast<Mtx3*>(this)->translate(p.x, p.y, p.z);
 }
 
-void TMatrix::setRotate(const Quaternion & q) {
-    sts::fromQuat(*reinterpret_cast<Mtx3*>(this), sts::QuaternionF(q.x(), q.y(), q.z(), q.w()));
+void TMatrix::setRotate(const Quat & q) {
+    sts::fromQuat(*reinterpret_cast<Mtx3*>(this), sts::QuaternionF(q.x, q.y, q.z, q.w));
 }
 
 void TMatrix::setRotate(const Point3 & p, float angleDegress) {
@@ -133,9 +133,9 @@ Point3 TMatrix::position() const {
                   (*reinterpret_cast<const Mtx3*>(this))(3, 2));
 }
 
-Quaternion TMatrix::rotation() const {
-    sts_t::Quaternion<float> sq = sts::toQuat<float>(*reinterpret_cast<const Mtx3*>(this));
-    return Quaternion(sq.x(), sq.y(), sq.z(), sq.w());
+Quat TMatrix::rotation() const {
+    const auto q = sts::toQuat<float>(*reinterpret_cast<const Mtx3*>(this));
+    return Quat(q.w(), q.x(), q.y(), q.z());
 }
 
 /**************************************************************************************************/

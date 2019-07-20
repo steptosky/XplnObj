@@ -31,7 +31,7 @@
 
 #include <cstddef>
 #include "Point3.h"
-#include "Quaternion.h"
+#include "Quat.h"
 
 namespace xobj {
 
@@ -70,7 +70,7 @@ public:
     //-------------------------------------------------------------------------
 
     void setPosition(const Point3 & p);
-    void setRotate(const Quaternion & q);
+    void setRotate(const Quat & q);
     void setRotate(const Point3 & p, float angleDegress);
 
     //-------------------------------------------------------------------------
@@ -93,7 +93,7 @@ public:
     //-------------------------------------------------------------------------
 
     Point3 position() const;
-    Quaternion rotation() const;
+    Quat rotation() const;
 
     /*!
      * \details Get the 'parity' of the matrix.

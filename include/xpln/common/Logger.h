@@ -44,8 +44,7 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    Logger()
-        : BaseLogger("XLIB") { }
+    Logger();
 
     Logger(const Logger &) = default;
     Logger(Logger &&) = default;
@@ -59,6 +58,7 @@ public:
     //-------------------------------------------------------------------------
     /// @}
 
+    XpObjLib static void setColorize(bool state);
     XpObjLib static Logger mInstance;
 
     /// @}

@@ -29,13 +29,72 @@
 
 #include "xpln/common/Logger.h"
 
+using namespace stsff::logging;
+
 namespace xobj {
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Static area *///////////////////////////////////////////
 /**************************************************************************************************/
 
+bool gIsColorize = true;
 Logger Logger::mInstance;
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+Logger::Logger()
+    : BaseLogger("lib", {
+            {
+                LvlDebug, [](const BaseLogger & l, const LogMsg & m) {
+                    defaultHandler(l, m, std::clog, "DBG: %LN %MC %MS", gIsColorize ? colorize::magenta : nullptr);
+                }
+            },
+            {
+                LvlMsg, [](const BaseLogger & l, const LogMsg & m) {
+                    defaultHandler(l, m, std::clog, "--  %LN %MC %MS", nullptr);
+                }
+            },
+            {
+                LvlInfo, [](const BaseLogger & l, const LogMsg & m) {
+                    defaultHandler(l, m, std::clog, "INF: %LN %MC %MS", gIsColorize ? colorize::cyan : nullptr);
+                }
+            },
+            {
+                LvlSuccess, [](const BaseLogger & l, const LogMsg & m) {
+                    defaultHandler(l, m, std::clog, "INF: %LN %MC %MS | OK", gIsColorize ? colorize::green : nullptr);
+                }
+            },
+            {
+                LvlWarning, [](const BaseLogger & l, const LogMsg & m) {
+                    defaultHandler(l, m, std::clog, "WRN: %LN %MC %MS", gIsColorize ? colorize::yellow : nullptr);
+                }
+            },
+            {
+                LvlFail, [](const BaseLogger & l, const LogMsg & m) {
+                    defaultHandler(l, m, std::cerr, "ERR: %LN %MC %MS | FAIL\n\t[%TM(%Y-%m-%d] [%T)] [%FN -> %FI(%LI)]", gIsColorize ? colorize::red : nullptr);
+                }
+            },
+            {
+                LvlError, [](const BaseLogger & l, const LogMsg & m) {
+                    defaultHandler(l, m, std::cerr, "ERR: %LN %MC %MS \n\t[%TM(%Y-%m-%d] [%T)] [%FN -> %FI(%LI)]", gIsColorize ? colorize::red : nullptr);
+                }
+            },
+            {
+                LvlCritical, [](const BaseLogger & l, const LogMsg & m) {
+                    defaultHandler(l, m, std::cerr, "ERR: %LN %MC %MS \n\t[%TM(%Y-%m-%d] [%T)] [%FN -> %FI(%LI)]", gIsColorize ? colorize::red : nullptr);
+                }
+            },
+    }) { }
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+void Logger::setColorize(const bool state) {
+    gIsColorize = state;
+}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -30,6 +30,7 @@
 #include <iostream>
 #include <gmock/gmock.h>
 #include <xpln/Info.h>
+#include <xpln/common/Logger.h>
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,6 +39,7 @@
 GTEST_API_ int main(int argc, char ** argv) {
     testing::InitGoogleMock(&argc, argv);
     std::cout << XOBJ_PROJECT_NAME << " " << XOBJ_VERSION_STRING << std::endl;
+    xobj::Logger::setColorize(false);
     const int res = RUN_ALL_TESTS();
     return res;
 }

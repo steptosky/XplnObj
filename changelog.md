@@ -7,6 +7,7 @@ StepToSky: X-Plane Obj Library
 - **Added** Checking if a normal map is specified but the attributes GLOBAL_specular or ATTR_shiny_rat aren't set.
 - **Added** Checking if the ATTR_cockpit_device doesn't have a device name.
 - **Added** Checking if mesh has the attribute ATTR_cockpit_region but the attribute COCKPIT_REGION isn't set.
+- **Added** Helper for converting quaternion sequence to animation rotate.
 
 ##### Breaking backward compatibility:
 - **Changed** Code style: public variable now have the prefix m instead of p.

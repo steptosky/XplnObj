@@ -56,7 +56,7 @@ class LibConan(ConanFile):
                       'gtest:build_gmock=True'
 
     exports = 'vcs_data', 'vcs_info.py'
-    exports_sources = 'CMakeLists.txt', 'src/*', 'src-test/*', 'include/*', 'cmake/*', 'license*'
+    exports_sources = 'CMakeLists.txt', 'src/*', 'src-test/*', 'src-test-resources/*', 'include/*', 'cmake/*', 'license*'
 
     generators = 'cmake'
     build_policy = 'missing'

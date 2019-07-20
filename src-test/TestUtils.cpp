@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2018, StepToSky
+**  Copyright(C) 2019, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,57 +27,23 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
+#include "TestUtils.h"
+
+#define UNWRAP(V) XOBJ_PATH(V)
+
+namespace xobj {
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-#ifndef XOBJ_PATH
-#   ifdef _MSC_VER
-#       define XOBJ_PATH(X) L##X
-#   else
-#       define XOBJ_PATH(X) X
-#   endif
-#endif
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-#ifdef _MSC_VER
-/*!
- * \pre Windows uses UTF16 and wide string, Unix uses UTF8 and char.
- * \note I decided to not use boost file system now
- *       because it will increase build time on CI.
- */
-namespace xobj {
-typedef std::wstring Path;
-}
-
-#include <string>
-#include <codecvt>
-
-inline std::string u8string(const xobj::Path & path) {
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
-    return convert.to_bytes(path);
-}
-
-#else
-/*!
- * \pre Windows uses UTF16 and wide string, Unix uses UTF8 and char.
- * \note I decided to not use boost file system now
- *       because it will increase build time on CI.
- */
-namespace xobj {
-typedef std::string Path;
-
-inline std::string u8string(const xobj::Path& path) noexcept {
+const Path & TestUtils::resourceDir() {
+    static Path path(UNWRAP(TEST_RESOURCES_DIR));
     return path;
 }
-}
-#endif
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
+
+}

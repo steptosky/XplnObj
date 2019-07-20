@@ -31,7 +31,9 @@
 
 #include "xpln/Export.h"
 #include <string>
+#include <string_view>
 #include <map>
+#include <vector>
 #include <functional>
 #include <tuple>
 
@@ -46,9 +48,9 @@ namespace xobj {
  * \ingroup Utils
  */
 class LightUtils {
-    LightUtils() = default;
-    ~LightUtils() = default;
 public:
+
+    LightUtils() = delete;
 
     //-------------------------------------------------------------------------
     /// @{
@@ -180,6 +182,29 @@ public:
      */
     XpObjLib static std::string replaceVariables(const std::string & params,
                                                  const ParamExpanderMap & paramsGetter);
+
+    /// @}
+    //-------------------------------------------------------------------------
+    /// \name Named light list parsing 
+    /// @{
+
+    class LightName {
+        friend LightUtils;
+    public:
+        std::string_view name() const { return std::string_view(mData, mSize); }
+    private:
+        static const std::size_t mDataSize = 64;
+        char mData[mDataSize + 1] = {0};
+        std::size_t mSize = 0;
+    };
+
+    /*!
+     * \details Parse x-plane lights file.
+     * \param [in] filePath path to the x-plane lights file [X-Plane Root/Resources/bitmaps/world/lites/lights.txt].
+     * \return array of light name.
+     * \exception std::system_error if the file could not be opened.
+     */
+    XpObjLib static std::vector<LightName> parseLights(const Path & filePath);
 
     /// @}
     //-------------------------------------------------------------------------

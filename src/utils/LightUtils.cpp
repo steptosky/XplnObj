@@ -29,11 +29,16 @@
 
 #include "xpln/utils/LightUtils.h"
 #include <stdexcept>
+#include <algorithm>
 #include <cmath>
 #include <cctype>
+#include <cstring>
 #include "sts/string/StringUtils.h"
 #include "exceptions/defines.h"
+#include "xpln/common/Logger.h"
 #include <locale>
+
+using namespace std::string_literals;
 
 namespace xobj {
 
@@ -132,6 +137,67 @@ std::string LightUtils::replaceVariables(const std::string & params, const Param
     if (!out.empty()) {
         out.pop_back(); // remove last space
     }
+    return out;
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+std::vector<LightUtils::LightName> LightUtils::parseLights(const Path & filePath) {
+    std::vector<LightName> out;
+    std::ifstream file(filePath);
+    if (!file) {
+        throw std::system_error(errno, std::system_category(),
+                                "Failed to open file: <"s.append(u8string(filePath)).append(">"));
+    }
+    out.reserve(1000);
+    //----------------------------------------------
+    const auto isSpace = [](const char ch) { return std::isspace(static_cast<unsigned char>(ch)); };
+    const auto startWith = [](const std::string_view string, const std::string_view start) ->bool {
+        return string.size() >= start.size() &&
+               std::strncmp(string.data(), start.data(), start.size()) == 0;
+    };
+    //----------------------------------------------
+    std::string line;
+    while (std::getline(file, line)) {
+        if (line.empty() || line == "A" || line == "850" || line == "LIGHT_SPECS" ||
+            startWith(line, "TEXTURE") ||
+            startWith(line, "X_DIVISIONS") ||
+            startWith(line, "Y_DIVISIONS")) {
+            continue;
+        }
+
+        // skip space on line start
+        auto currPos = std::find_if_not(line.begin(), line.end(), isSpace);
+        if (currPos == line.end() || *currPos == '#') {
+            continue;
+        }
+        // skip the first word
+        currPos = std::find_if(currPos, line.end(), isSpace);
+        // skip space up to the second word
+        currPos = std::find_if_not(currPos, line.end(), isSpace);
+        // save start word position
+        auto startName = currPos;
+        // find word end
+
+        currPos = std::find_if(currPos, line.end(), isSpace);
+
+        LightName & name = out.emplace_back();
+        std::size_t counter = 0;
+        while (startName != currPos) {
+            if (counter > LightName::mDataSize) {
+                XULError << "Light name is too big, constraint is: " << LightName::mDataSize;
+                break;
+            }
+            name.mData[counter] = *startName;
+            ++startName;
+            ++counter;
+        }
+        name.mData[counter] = '\0';
+        name.mSize = counter;
+    }
+    //----------------------------------------------
     return out;
 }
 

@@ -8,6 +8,7 @@ StepToSky: X-Plane Obj Library
 - **Added** Checking if the ATTR_cockpit_device doesn't have a device name.
 - **Added** Checking if mesh has the attribute ATTR_cockpit_region but the attribute COCKPIT_REGION isn't set.
 - **Added** Helper for converting quaternion sequence to animation rotate.
+- **Added** Parser for the [X-Plane Root/Resources/bitmaps/world/lites/lights.txt] file.
 
 ##### Breaking backward compatibility:
 - **Changed** Code style: public variable now have the prefix m instead of p.

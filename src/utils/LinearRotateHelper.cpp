@@ -29,7 +29,6 @@
 
 #include <cassert>
 #include <tuple>
-#include <algorithm>
 #include "xpln/utils/LinearRotateHelper.h"
 #include "xpln/common/TMatrix.h"
 
@@ -38,24 +37,6 @@ namespace xobj {
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
-
-inline void correctKeysNumBefore(AnimRotate::KeyList & inOutKeys, const LinearRotateHelper::Input & input,
-                                 const float angle, const std::size_t until) {
-
-    const auto inputCount = std::min(input.size(), until);
-    for (std::size_t i = 0; i < inputCount; ++i) {
-        inOutKeys.emplace_back(AnimRotateKey(angle, input[i].mDrfValue));
-    }
-}
-
-inline void correctKeysNumAfter(AnimRotate::KeyList & inOutKeys, const LinearRotateHelper::Input & input,
-                                const float angle, const std::size_t from) {
-
-    const auto inputCount = input.size();
-    for (std::size_t i = from; i < inputCount; ++i) {
-        inOutKeys.emplace_back(AnimRotateKey(angle, input[i].mDrfValue));
-    }
-}
 
 inline std::tuple<Point3, float> calculateAngleAxis(const Quat & q1, const Quat & q2) {
     const auto animVectorQuat = q1 * glm::inverse(q2);
@@ -67,6 +48,32 @@ inline std::tuple<Point3, float> calculateAngleAxis(const Quat & q1, const Quat 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
+
+std::optional<std::size_t> LinearRotateHelper::checkDatarefValuesOrder(const Input & input) {
+    if (input.size() < 2) {
+        return std::nullopt;
+    }
+    const bool negative = (input[1].mDrfValue - input[0].mDrfValue) < 0.0f;
+    if (!negative) {
+        for (std::size_t it = 1; it < input.size(); ++it) {
+            const auto & curr = input[it - 1];
+            const auto & next = input[it];
+            if (curr.mDrfValue > next.mDrfValue) {
+                return it;
+            }
+        }
+    }
+    else {
+        for (std::size_t it = 1; it < input.size(); ++it) {
+            const auto & curr = input[it - 1];
+            const auto & next = input[it];
+            if (curr.mDrfValue < next.mDrfValue) {
+                return it;
+            }
+        }
+    }
+    return std::nullopt;
+}
 
 AnimRotateList LinearRotateHelper::makeAnimations(const Input & input, const TMatrix & matrix) {
     AnimRotateList out;
@@ -102,14 +109,14 @@ AnimRotateList LinearRotateHelper::makeAnimations(const Input & input, const TMa
         if (auto & back = out.back(); back.mVector != animVector) {
             // correction keys count for current anim before creating a new one.
             assert(!back.mKeys.empty());
-            correctKeysNumAfter(back.mKeys, input, back.mKeys.back().mAngleDegrees, nextI);
+            back.mKeys.emplace_back(AnimRotateKey(back.mKeys.back().mAngleDegrees, input.back().mDrfValue));
 
             // create new
             AnimRotate & anim = out.emplace_back();
             anim.mVector = animVector;
             matrix.transformVector(anim.mVector);
             anim.mKeys.reserve(input.size());
-            correctKeysNumBefore(anim.mKeys, input, 0, currI);
+            anim.mKeys.emplace_back(AnimRotateKey(0, input.front().mDrfValue));
             anim.mKeys.emplace_back(AnimRotateKey(0, currKey.mDrfValue));
             anim.mKeys.emplace_back(AnimRotateKey(animAngle, nextKey.mDrfValue));
         }

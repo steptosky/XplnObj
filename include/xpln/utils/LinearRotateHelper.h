@@ -30,6 +30,7 @@
 */
 
 #include <vector>
+#include <optional>
 #include "xpln/common/Quat.h"
 #include "xpln/obj/animation/AnimRotate.h"
 
@@ -53,7 +54,7 @@ class TMatrix;
  *                  for all the keys, but:
  *              
  *              [vec(1,0,0) angle(0),vec(0,1,0) angle(30),vec(0,0,1) angle(90)]
- *                  Will produce 3 animations with 3 keys for each! 
+ *                  Will produce 3 animations with various keys.
  *                  Sometimes it can be imposable to avoid this situation according to some specific animations,
  *                  and other animation types like Euler will not help much,
  *                  in other cases you should consider to ask user to use other animation types like Euler.
@@ -72,9 +73,21 @@ public:
     typedef std::vector<Key> Input;
 
     /*!
+     * \details Checks whether the dataref values are in correct order.
+     * \details Use it before call \link LinearRotateHelper::makeAnimations \endlink
+     * \param [in] input dataref values.
+     * \return position where value is incorrect or std::nullopt
+     */
+    XpObjLib static std::optional<std::size_t> checkDatarefValuesOrder(const Input & input);
+
+    /*!
      * \pre The algorithm doesn't work if sequence contains less then 2 keys,
-     *      and will return empty animation.
-     * \param [in] input quaternion sequence
+     *      and will return empty animation. 
+     *      
+     *      You also have to check dataref values with the \link LinearRotateHelper::checkDatarefValuesOrder \endlink
+     *      if they are in correct order.
+     *      
+     * \param [in] input quaternion sequence.
      * \param [in] matrix for applying to final vector of \link AnimRotate \endlink.
      */
     XpObjLib static AnimRotateList makeAnimations(const Input & input, const TMatrix & matrix);

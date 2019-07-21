@@ -44,7 +44,7 @@ const float gEpsilon = 0.0002f;
 /**************************************************************************************************/
 
 // double rotation around one axis [Z] [0/45/90] degrees
-TEST(LinearRotateHelper, double_rotate_z) {
+TEST(LinearRotateHelper, makeAnimations_double_rotate_z) {
     LinearRotateHelper::Input input;
 
     input.emplace_back(LinearRotateHelper::Key{Quat(1.000000f, 0.0f, 0.0f, +0.000000f), 00.0f}); //  0
@@ -73,7 +73,7 @@ TEST(LinearRotateHelper, double_rotate_z) {
 
 // it more complex and was taken from 3Ds Max, so this is not human readable.
 // there is a scene where data for this test was created.
-TEST(LinearRotateHelper, comples_3_axis) {
+TEST(LinearRotateHelper, makeAnimations_comples_3_axis) {
     LinearRotateHelper::Input input;
 
     // [WORLD] [0]
@@ -97,20 +97,40 @@ TEST(LinearRotateHelper, comples_3_axis) {
     const auto & anim2 = result.at(1);
     const auto & anim3 = result.at(2);
 
-    ASSERT_EQ(5, anim1.mKeys.size());
+    ASSERT_EQ(3, anim1.mKeys.size());
     ASSERT_EQ(5, anim2.mKeys.size());
-    ASSERT_EQ(5, anim3.mKeys.size());
+    ASSERT_EQ(3, anim3.mKeys.size());
+
+    /*
+        ANIM_begin
+            ANIM_trans 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 none
+            ANIM_rotate_begin 0.00000 1.00000 0.00000 dataref
+                ANIM_rotate_key 0.00000  0.00000
+                ANIM_rotate_key 0.25000 90.00000
+                ANIM_rotate_key 1.00000 90.00000
+            ANIM_rotate_end
+            ANIM_rotate_begin 1.00000 0.00000 0.00000 dataref
+                ANIM_rotate_key 0.00000   0.00000
+                ANIM_rotate_key 0.25000   0.00000
+                ANIM_rotate_key 0.50000  90.00000
+                ANIM_rotate_key 0.75000 180.00000
+                ANIM_rotate_key 1.00000 180.00000
+            ANIM_rotate_end
+            ANIM_rotate_begin 0.00000 0.00000 -1.00000 dataref
+                ANIM_rotate_key 0.00000  0.00000
+                ANIM_rotate_key 0.75000  0.00000
+                ANIM_rotate_key 1.00000 90.00000
+            ANIM_rotate_end
+            TRIS 0 18 ## TestObject
+        ANIM_end
+     */
 
     EXPECT_NEAR(00.0f, anim1.mKeys.at(0).mAngleDegrees, gEpsilon);
     EXPECT_NEAR(90.0f, anim1.mKeys.at(1).mAngleDegrees, gEpsilon);
     EXPECT_NEAR(90.0f, anim1.mKeys.at(2).mAngleDegrees, gEpsilon);
-    EXPECT_NEAR(90.0f, anim1.mKeys.at(3).mAngleDegrees, gEpsilon);
-    EXPECT_NEAR(90.0f, anim1.mKeys.at(4).mAngleDegrees, gEpsilon);
     EXPECT_NEAR(00.0f, anim1.mKeys.at(0).mDrfValue, gEpsilon);
     EXPECT_NEAR(10.0f, anim1.mKeys.at(1).mDrfValue, gEpsilon);
-    EXPECT_NEAR(20.0f, anim1.mKeys.at(2).mDrfValue, gEpsilon);
-    EXPECT_NEAR(30.0f, anim1.mKeys.at(3).mDrfValue, gEpsilon);
-    EXPECT_NEAR(40.0f, anim1.mKeys.at(4).mDrfValue, gEpsilon);
+    EXPECT_NEAR(40.0f, anim1.mKeys.at(2).mDrfValue, gEpsilon);
 
     EXPECT_NEAR(000.0f, anim2.mKeys.at(0).mAngleDegrees, gEpsilon);
     EXPECT_NEAR(000.0f, anim2.mKeys.at(1).mAngleDegrees, gEpsilon);
@@ -125,14 +145,105 @@ TEST(LinearRotateHelper, comples_3_axis) {
 
     EXPECT_NEAR(00.0f, anim3.mKeys.at(0).mAngleDegrees, gEpsilon);
     EXPECT_NEAR(00.0f, anim3.mKeys.at(1).mAngleDegrees, gEpsilon);
-    EXPECT_NEAR(00.0f, anim3.mKeys.at(2).mAngleDegrees, gEpsilon);
-    EXPECT_NEAR(00.0f, anim3.mKeys.at(3).mAngleDegrees, gEpsilon);
-    EXPECT_NEAR(90.0f, anim3.mKeys.at(4).mAngleDegrees, gEpsilon);
+    EXPECT_NEAR(90.0f, anim3.mKeys.at(2).mAngleDegrees, gEpsilon);
     EXPECT_NEAR(00.0f, anim3.mKeys.at(0).mDrfValue, gEpsilon);
-    EXPECT_NEAR(10.0f, anim3.mKeys.at(1).mDrfValue, gEpsilon);
-    EXPECT_NEAR(20.0f, anim3.mKeys.at(2).mDrfValue, gEpsilon);
-    EXPECT_NEAR(30.0f, anim3.mKeys.at(3).mDrfValue, gEpsilon);
-    EXPECT_NEAR(40.0f, anim3.mKeys.at(4).mDrfValue, gEpsilon);
+    EXPECT_NEAR(30.0f, anim3.mKeys.at(1).mDrfValue, gEpsilon);
+    EXPECT_NEAR(40.0f, anim3.mKeys.at(2).mDrfValue, gEpsilon);
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+TEST(LinearRotateHelper, checkDatarefValuesOrder_valid_cases) {
+    auto result = LinearRotateHelper::checkDatarefValuesOrder(LinearRotateHelper::Input{
+            {LinearRotateHelper::Key{Quat(), 1.0f}},
+            {LinearRotateHelper::Key{Quat(), 1.0f}},
+            {LinearRotateHelper::Key{Quat(), 1.0f}},
+    });
+    EXPECT_FALSE(result.has_value());
+
+    result = LinearRotateHelper::checkDatarefValuesOrder(LinearRotateHelper::Input{
+            {LinearRotateHelper::Key{Quat(), 1.0f}},
+            {LinearRotateHelper::Key{Quat(), 2.0f}},
+    });
+    EXPECT_FALSE(result.has_value());
+
+    result = LinearRotateHelper::checkDatarefValuesOrder(LinearRotateHelper::Input{
+            {LinearRotateHelper::Key{Quat(), 1.0f}},
+            {LinearRotateHelper::Key{Quat(), 2.0f}},
+            {LinearRotateHelper::Key{Quat(), 3.0f}},
+    });
+    EXPECT_FALSE(result.has_value());
+
+    result = LinearRotateHelper::checkDatarefValuesOrder(LinearRotateHelper::Input{
+            {LinearRotateHelper::Key{Quat(), 1.0f}},
+            {LinearRotateHelper::Key{Quat(), -1.0f}},
+    });
+    EXPECT_FALSE(result.has_value());
+
+    result = LinearRotateHelper::checkDatarefValuesOrder(LinearRotateHelper::Input{
+            {LinearRotateHelper::Key{Quat(), 1.0f}},
+            {LinearRotateHelper::Key{Quat(), -1.0f}},
+            {LinearRotateHelper::Key{Quat(), -3.0f}},
+    });
+    EXPECT_FALSE(result.has_value());
+
+    result = LinearRotateHelper::checkDatarefValuesOrder(LinearRotateHelper::Input{
+            {LinearRotateHelper::Key{Quat(), -1.0f}},
+            {LinearRotateHelper::Key{Quat(), 2.0f}},
+            {LinearRotateHelper::Key{Quat(), 3.0f}},
+    });
+    EXPECT_FALSE(result.has_value());
+
+    result = LinearRotateHelper::checkDatarefValuesOrder(LinearRotateHelper::Input{
+            {LinearRotateHelper::Key{Quat(), -1.0f}},
+            {LinearRotateHelper::Key{Quat(), -2.0f}},
+            {LinearRotateHelper::Key{Quat(), -3.0f}},
+    });
+    EXPECT_FALSE(result.has_value());
+}
+
+TEST(LinearRotateHelper, checkDatarefValuesOrder_invalid_cases) {
+    auto result = LinearRotateHelper::checkDatarefValuesOrder(LinearRotateHelper::Input{
+            {LinearRotateHelper::Key{Quat(), 1.0f}},
+            {LinearRotateHelper::Key{Quat(), -2.0f}},
+            {LinearRotateHelper::Key{Quat(), 3.0f}},
+    });
+    EXPECT_TRUE(result.has_value());
+    EXPECT_EQ(2, result.value());
+
+    result = LinearRotateHelper::checkDatarefValuesOrder(LinearRotateHelper::Input{
+            {LinearRotateHelper::Key{Quat(), 1.0f}},
+            {LinearRotateHelper::Key{Quat(), 2.0f}},
+            {LinearRotateHelper::Key{Quat(), -1.0f}},
+    });
+    EXPECT_TRUE(result.has_value());
+    EXPECT_EQ(2, result.value());
+
+    result = LinearRotateHelper::checkDatarefValuesOrder(LinearRotateHelper::Input{
+            {LinearRotateHelper::Key{Quat(), 1.0f}},
+            {LinearRotateHelper::Key{Quat(), 3.0f}},
+            {LinearRotateHelper::Key{Quat(), 2.0f}},
+    });
+    EXPECT_TRUE(result.has_value());
+    EXPECT_EQ(2, result.value());
+
+    result = LinearRotateHelper::checkDatarefValuesOrder(LinearRotateHelper::Input{
+            {LinearRotateHelper::Key{Quat(), -1.0f}},
+            {LinearRotateHelper::Key{Quat(), -2.0f}},
+            {LinearRotateHelper::Key{Quat(), 3.0f}},
+    });
+    EXPECT_TRUE(result.has_value());
+    EXPECT_EQ(2, result.value());
+
+    result = LinearRotateHelper::checkDatarefValuesOrder(LinearRotateHelper::Input{
+            {LinearRotateHelper::Key{Quat(), -1.0f}},
+            {LinearRotateHelper::Key{Quat(), 2.0f}},
+            {LinearRotateHelper::Key{Quat(), -1.0f}},
+    });
+    EXPECT_TRUE(result.has_value());
+    EXPECT_EQ(2, result.value());
 }
 
 /**************************************************************************************************/

@@ -49,14 +49,6 @@ class AnimRotateKey;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-XpObjLib void printObj(const AnimVisibilityKey & key, AbstractWriter & writer);
-XpObjLib void printObj(const AnimTransKey & key, AbstractWriter & writer);
-XpObjLib void printObj(const AnimRotateKey & key, AbstractWriter & writer);
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
 XpObjLib bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser);
 XpObjLib bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser);
 XpObjLib bool fromObjString(AnimRotateKey & outVal, ObjReadParser & parser);

@@ -29,23 +29,23 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "AbstractWriter.h"
+#include <string>
 #include "xpln/obj/Transform.h"
-#include "xpln/obj/ExportOptions.h"
-#include "xpln/obj/IOStatistic.h"
 
 namespace xobj {
+
+class AbstractWriter;
+class IOStatistic;
+class ExportOptions;
 
 /**********************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**********************************************************************************************************************/
-/*!
- * details Class helper that write animation for ObjWritter
- */
+
 class ObjWriteAnim {
 public:
 
-    ObjWriteAnim(const ExportOptions * option, IOStatistic * outStat);
+    ObjWriteAnim(const ExportOptions * option, IOStatistic * stat);
 
     ObjWriteAnim(const ObjWriteAnim &) = delete;
     ObjWriteAnim & operator =(const ObjWriteAnim &) = delete;
@@ -61,19 +61,14 @@ public:
 
 private:
 
-    void printTrans(const AnimTransList & animTrans, const Transform & transform) const;
-    void printRotate(const AnimRotateList & animRot, const Transform & transform) const;
-    void printVisible(const AnimVisibility & inAnim, const Transform & transform) const;
-
-    void printLoop(float val) const;
-
-    //-------------------------------------------------------------------------
+    void printTrans(const AnimTransList & animTrans, const std::string & transformName) const;
+    void printRotate(const AnimRotateList & animRot, const std::string & transformName) const;
+    void printVisible(const AnimVisibility & animVis, const std::string & transformName) const;
+    void printLoop(std::optional<float> val) const;
 
     AbstractWriter * mWriter;
     IOStatistic * mStat;
     const ExportOptions * mOptions;
-
-    //-------------------------------------------------------------------------
 
 };
 

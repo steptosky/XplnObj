@@ -68,20 +68,6 @@ XpObjLib bool checkParameters(const Transform & transform, const std::string & p
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-class AnimVisibilityKey;
-class AnimTrans;
-class AnimTransKey;
-class AnimRotate;
-
-XpObjLib bool checkParameters(const AnimVisibilityKey & key, const std::string & prefix);
-XpObjLib bool checkParameters(const AnimTrans & anim, const std::string & prefix);
-XpObjLib bool checkParameters(const AnimTransKey & key, const std::string & prefix);
-XpObjLib bool checkParameters(const AnimRotate & anim, const std::string & prefix);
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
 class ObjLightCustom;
 class ObjLightNamed;
 class ObjLightParam;

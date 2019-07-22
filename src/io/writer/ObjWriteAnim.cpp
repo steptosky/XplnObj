@@ -27,11 +27,12 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "converters/StringStream.h"
 #include "ObjWriteAnim.h"
-#include "io/ObjValidators.h"
+#include "AbstractWriter.h"
+#include "xpln/obj/ExportOptions.h"
+#include "xpln/obj/IOStatistic.h"
 #include "common/AttributeNames.h"
-#include "converters/ObjAnimString.h"
+#include "io/StringValidator.h"
 
 namespace xobj {
 
@@ -39,12 +40,12 @@ namespace xobj {
 ///////////////////////////////////////* Constructors/Destructor *////////////////////////////////////////
 /********************************************************************************************************/
 
-ObjWriteAnim::ObjWriteAnim(const ExportOptions * option, IOStatistic * outStat) {
+ObjWriteAnim::ObjWriteAnim(const ExportOptions * option, IOStatistic * stat) {
     assert(option);
-    assert(outStat);
+    assert(stat);
 
     mWriter = nullptr;
-    mStat = outStat;
+    mStat = stat;
     mOptions = option;
 }
 
@@ -59,9 +60,9 @@ ObjWriteAnim::~ObjWriteAnim() {
 /********************************************************************************************************/
 
 bool ObjWriteAnim::printAnimationStart(AbstractWriter & writer, const Transform & transform) {
-    if (!transform.hasAnim())
+    if (!transform.hasAnim()) {
         return false;
-
+    }
     if (transform.mObjects.empty() && !transform.hasChildren()) {
         return false;
     }
@@ -70,7 +71,7 @@ bool ObjWriteAnim::printAnimationStart(AbstractWriter & writer, const Transform 
     //-------------------------------------------------------------------------
 
     if (mOptions->isEnabled(XOBJ_EXP_MARK_TRANSFORM)) {
-        mWriter->writeLine(std::string(ATTR_ANIM_BEGIN).append(" ## ").append(transform.mName));
+        mWriter->writeLine(ATTR_ANIM_BEGIN, " ## ", transform.mName);
     }
     else {
         mWriter->writeLine(ATTR_ANIM_BEGIN);
@@ -78,22 +79,22 @@ bool ObjWriteAnim::printAnimationStart(AbstractWriter & writer, const Transform 
 
     mWriter->spaceMore();
     //-------------------------------------------------------------------------
-    printVisible(transform.mAnimVis, transform);
-    printTrans(transform.mAnimTrans, transform);
-    printRotate(transform.mAnimRotate, transform);
+    printVisible(transform.mAnimVis, transform.mName);
+    printTrans(transform.mAnimTrans, transform.mName);
+    printRotate(transform.mAnimRotate, transform.mName);
     //-------------------------------------------------------------------------
     return true;
 }
 
 bool ObjWriteAnim::printAnimationEnd(AbstractWriter & writer, const Transform & transform) {
-    if (!transform.hasAnim())
+    if (!transform.hasAnim()) {
         return false;
-
+    }
     mWriter = &writer;
     mWriter->spaceLess();
 
     if (mOptions->isEnabled(XOBJ_EXP_MARK_TRANSFORM)) {
-        mWriter->writeLine(std::string(ATTR_ANIM_END).append(" ## ").append(transform.mName));
+        mWriter->writeLine(ATTR_ANIM_END, " ## ", transform.mName);
     }
     else {
         mWriter->writeLine(ATTR_ANIM_END);
@@ -105,109 +106,60 @@ bool ObjWriteAnim::printAnimationEnd(AbstractWriter & writer, const Transform & 
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const Transform & transform) const {
-    std::string sep = mOptions->isEnabled(XOBJ_EXP_DEBUG) ? "   " : " ";
+void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const std::string & transformName) const {
+    const std::string sep = mOptions->isEnabled(XOBJ_EXP_DEBUG) ? "   " : " ";
     for (auto & a : animTrans) {
-        if (a.isAnimated() && checkParameters(a, std::string("Transform: ").append(transform.mName))) {
-            if (a.mKeys.size() == 2) {
-                StringStream stream;
-                stream << ATTR_TRANS
-                        << sep << a.mKeys[0].mPosition.toString(PRECISION)
-                        << sep << a.mKeys[1].mPosition.toString(PRECISION)
-                        << sep << a.mKeys[0].mDrfValue
-                        << " " << a.mKeys[1].mDrfValue
-                        << sep << (a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf).c_str());
-                mWriter->writeLine(stream.str());
-                if (a.mLoop) {
-                    printLoop(*a.mLoop);
-                }
+        if (!a.isAnimated()) {
+            continue;
+        }
+        //--------------------------------
+        if (a.mKeys.empty()) {
+            XULError << "Transform: " << transformName
+                    << " - doesn't contain any keys in translation";
+            continue;
+        }
 
-                ++mStat->mAnimAttrCount;
-            }
-            else {
-                StringStream stream;
-                stream << ATTR_TRANS_BEGIN << sep << (a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf).c_str());
-                mWriter->writeLine(stream.str());
-                mWriter->spaceMore();
+        if (a.mKeys.size() == 1) {
+            XULError << "Transform: " << transformName
+                    << " - contains only one key in translation";
+            continue;
+        }
 
-                for (auto & key : a.mKeys) {
-                    printObj(key, *mWriter);
-                }
-
-                if (a.mLoop) {
-                    printLoop(*a.mLoop);
-                }
-
-                mWriter->spaceLess();
-                mWriter->writeLine(ATTR_TRANS_END);
-
-                ++mStat->mAnimAttrCount;
+        if (a.mKeys.size() != 2) {
+            if (a.mDrf.empty() || a.mDrf == "none") {
+                XULError << "Transform: " << transformName
+                        << " - doesn't have dataref for translation";
+                continue;
             }
         }
-    }
-}
 
-//-------------------------------------------------------------------------
-
-void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const Transform & transform) const {
-    std::string sep = mOptions->isEnabled(XOBJ_EXP_DEBUG) ? "   " : " ";
-    for (auto & a : animRot) {
-        if (a.isAnimated() && checkParameters(a, std::string("Transform: ").append(transform.mName))) {
-            if (a.mKeys.size() == 2) {
-                StringStream stream;
-                stream << ATTR_ROTATE
-                        << sep << a.mVector.normalized().toString(PRECISION)
-                        << sep << a.mKeys[0].mAngleDegrees
-                        << " " << a.mKeys[1].mAngleDegrees
-                        << sep << a.mKeys[0].mDrfValue
-                        << " " << a.mKeys[1].mDrfValue
-                        << sep << (a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf).c_str());
-                mWriter->writeLine(stream.str());
-                if (a.mLoop) {
-                    printLoop(*a.mLoop);
-                }
-
-                ++mStat->mAnimAttrCount;
-            }
-            else {
-                StringStream stream;
-                stream << ATTR_ROTATE_BEGIN
-                        << sep << a.mVector.normalized().toString(PRECISION)
-                        << sep << (a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf).c_str());
-                mWriter->writeLine(stream.str());
-                mWriter->spaceMore();
-
-                for (auto & key : a.mKeys) {
-                    printObj(key, *mWriter);
-                }
-
-                if (a.mLoop) {
-                    printLoop(*a.mLoop);
-                }
-
-                mWriter->spaceLess();
-                mWriter->writeLine(ATTR_ROTATE_END);
-
-                ++mStat->mAnimAttrCount;
-            }
+        if (StringValidator::hasIllegalSymbols(a.mDrf)) {
+            XULError << "Transform: " << transformName
+                    << " - has illegal symbols in translation dataref: " << a.mDrf;
+            continue;
         }
-    }
-
-}
-
-//-------------------------------------------------------------------------
-
-void ObjWriteAnim::printVisible(const AnimVisibility & inAnim, const Transform & transform) const {
-    if (inAnim.mKeys.empty())
-        return;
-
-    for (auto & curr : inAnim.mKeys) {
-        if (checkParameters(curr, std::string("Transform: ").append(transform.mName))) {
+        //--------------------------------
+        if (a.mKeys.size() == 2) {
+            mWriter->writeLine(ATTR_TRANS,
+                               sep, a.mKeys[0].mPosition.toString(PRECISION),
+                               sep, a.mKeys[1].mPosition.toString(PRECISION),
+                               sep, a.mKeys[0].mDrfValue,
+                               " ", a.mKeys[1].mDrfValue,
+                               sep, a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf));
             ++mStat->mAnimAttrCount;
-            printObj(curr, *mWriter);
-            if (curr.mLoopValue) {
-                printLoop(*curr.mLoopValue);
+            printLoop(a.mLoop);
+        }
+        else {
+            mWriter->writeLine(ATTR_TRANS_BEGIN, sep, a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf));
+            mWriter->spaceMore();
+
+            for (auto & key : a.mKeys) {
+                mWriter->writeLine(ATTR_TRANS_KEY, sep, key.mDrfValue, sep, key.mPosition.toString(PRECISION));
             }
+
+            printLoop(a.mLoop);
+            mWriter->spaceLess();
+            mWriter->writeLine(ATTR_TRANS_END);
             ++mStat->mAnimAttrCount;
         }
     }
@@ -217,11 +169,109 @@ void ObjWriteAnim::printVisible(const AnimVisibility & inAnim, const Transform &
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjWriteAnim::printLoop(const float val) const {
-    StringStream stream;
-    stream << ANIM_KEYFRAME_LOOP << " " << val;
-    mWriter->writeLine(stream.str());
-    ++mStat->mAnimAttrCount;
+void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const std::string & transformName) const {
+    const std::string sep = mOptions->isEnabled(XOBJ_EXP_DEBUG) ? "   " : " ";
+    for (auto & a : animRot) {
+        if (!a.isAnimated()) {
+            continue;
+        }
+        //--------------------------------
+        if (a.mKeys.empty()) {
+            XULError << "Transform: " << transformName
+                    << " - doesn't contain any keys in rotation";
+            continue;
+        }
+        if (a.mKeys.size() == 1) {
+            XULError << "Transform: " << transformName
+                    << " - contains only one key in rotation";
+            continue;
+        }
+        if (a.mKeys.size() != 2) {
+            if (a.mDrf.empty() || a.mDrf == "none") {
+                XULError << "Transform: " << transformName
+                        << " - doesn't have dataref for rotation";
+                continue;
+            }
+        }
+        if (StringValidator::hasIllegalSymbols(a.mDrf)) {
+            XULError << "Transform: " << transformName
+                    << " - has illegal symbols in rotation dataref: " << a.mDrf;
+            continue;
+        }
+        //--------------------------------
+        if (a.mKeys.size() == 2) {
+            mWriter->writeLine(ATTR_ROTATE,
+                               sep, a.mVector.normalized().toString(PRECISION),
+                               sep, a.mKeys[0].mAngleDegrees,
+                               " ", a.mKeys[1].mAngleDegrees,
+                               sep, a.mKeys[0].mDrfValue,
+                               " ", a.mKeys[1].mDrfValue,
+                               sep, a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf));
+
+            ++mStat->mAnimAttrCount;
+            printLoop(a.mLoop);;
+        }
+        else {
+            mWriter->writeLine(ATTR_ROTATE_BEGIN,
+                               sep, a.mVector.normalized().toString(PRECISION),
+                               sep, a.mDrf.empty() ? "none" : mWriter->actualDataref(a.mDrf));
+            mWriter->spaceMore();
+
+            for (auto & key : a.mKeys) {
+                mWriter->writeLine(ATTR_ROTATE_KEY, sep, key.mDrfValue, sep, key.mAngleDegrees);
+            }
+
+            printLoop(a.mLoop);
+            mWriter->spaceLess();
+            mWriter->writeLine(ATTR_ROTATE_END);
+            ++mStat->mAnimAttrCount;
+        }
+    }
+}
+
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
+
+void ObjWriteAnim::printVisible(const AnimVisibility & animVis, const std::string & transformName) const {
+    std::size_t counter = 0;
+    for (auto & key : animVis.mKeys) {
+        ++counter;
+        //-----------------------
+        if (key.mType == AnimVisibilityKey::UNDEFINED) {
+            XULError << "Transform: " << transformName << " - visible key <" << counter
+                    << "> has undefined state";
+            continue;
+        }
+
+        if (key.mDrf.empty() || key.mDrf == "none") {
+            XULError << "Transform: " << transformName << " - visible key <" << counter
+                    << "> has undefined dataref";
+            continue;
+        }
+
+        if (StringValidator::hasIllegalSymbols(key.mDrf)) {
+            XULError << "Transform: " << transformName << " - visible key <" << counter
+                    << "> has illegal symbols in its dataref: " << key.mDrf;
+            continue;
+        }
+        //-----------------------
+        const char * animName = key.mType == AnimVisibilityKey::SHOW ? ATTR_ANIM_SHOW : ATTR_ANIM_HIDE;
+        mWriter->writeLine(animName, " ", key.mValue1, " ", key.mValue2, " ", mWriter->actualDataref(key.mDrf));
+        ++mStat->mAnimAttrCount;
+        printLoop(key.mLoopValue);
+    }
+}
+
+/**************************************************************************************************/
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
+/**************************************************************************************************/
+
+void ObjWriteAnim::printLoop(std::optional<float> val) const {
+    if (val) {
+        mWriter->writeLine(ANIM_KEYFRAME_LOOP, " ", val.value());
+        ++mStat->mAnimAttrCount;
+    }
 }
 
 /**************************************************************************************************/

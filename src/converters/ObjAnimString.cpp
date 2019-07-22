@@ -42,25 +42,6 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-void printObj(const AnimVisibilityKey & key, AbstractWriter & writer) {
-    StringStream outStr;
-    switch (key.mType) {
-        case AnimVisibilityKey::SHOW:
-            outStr << ATTR_ANIM_SHOW;
-            break;
-        case AnimVisibilityKey::HIDE:
-            outStr << ATTR_ANIM_HIDE;
-            break;
-        case AnimVisibilityKey::UNDEFINED:
-        default:
-            XLError << TOTEXT(AnimVisibilityKey) << " has undefined type";
-            return;
-    }
-    outStr << " " << key.mValue1
-            << " " << key.mValue2
-            << " " << writer.actualDataref(key.mDrf);
-    writer.writeLine(outStr.str());
-}
 
 bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser) {
     AnimVisibilityKey::eType type = AnimVisibilityKey::UNDEFINED;
@@ -84,14 +65,6 @@ bool fromObjString(AnimVisibilityKey & outVal, ObjReadParser & parser) {
 
 //-------------------------------------------------------------------------
 
-void printObj(const AnimTransKey & key, AbstractWriter & writer) {
-    StringStream outStr;
-    outStr << ATTR_TRANS_KEY
-            << " " << key.mDrfValue
-            << " " << key.mPosition.toString(PRECISION);
-    writer.writeLine(outStr.str());
-}
-
 bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser) {
     if (!parser.isMatch(ATTR_TRANS_KEY)) {
         return false;
@@ -108,14 +81,6 @@ bool fromObjString(AnimTransKey & outVal, ObjReadParser & parser) {
 }
 
 //-------------------------------------------------------------------------
-
-void printObj(const AnimRotateKey & key, AbstractWriter & writer) {
-    StringStream outStr;
-    outStr << ATTR_ROTATE_KEY
-            << " " << key.mDrfValue
-            << " " << key.mAngleDegrees;
-    writer.writeLine(outStr.str());
-}
 
 bool fromObjString(AnimRotateKey & outVal, ObjReadParser & parser) {
     if (!parser.isMatch(ATTR_ROTATE_KEY)) {

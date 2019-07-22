@@ -39,9 +39,9 @@ namespace xobj {
 /**************************************************************************************************/
 
 inline std::tuple<Point3, float> calculateAngleAxis(const Quat & q1, const Quat & q2) {
-    const auto animVectorQuat = q1 * glm::inverse(q2);
-    const auto animVector = glm::axis(animVectorQuat);
-    const auto animAngle = glm::degrees(glm::angle(animVectorQuat));
+    const Quat animVectorQuat = q1 * q2.inverse();
+    const auto animVector = animVectorQuat.axis();
+    const auto animAngle = animVectorQuat.angleDeg();
     return std::make_tuple(Point3(animVector.x, animVector.y, animVector.z).normalized(), animAngle);
 }
 

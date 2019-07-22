@@ -1,7 +1,5 @@
-#pragma once
-
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2019, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,81 +27,21 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/Export.h"
-#define GLM_FORCE_SILENT_WARNINGS
-#include <glm/gtc/quaternion.hpp>
-#include "xpln/common/Point3.h"
+#include "xpln/common/Quat.h"
+#include <glm/ext/quaternion_geometric.hpp>
 
 namespace xobj {
 
 /**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-class Quat final : public glm::quat {
-public:
-
-    //-------------------------------------------------------------------------
-    ///@{
-
-    Quat()
-        : glm::quat(1.0f, 0.0f, 0.0f, 0.0f) {}
-
-    explicit Quat(const glm::quat & q)
-        : glm::quat(q) {}
-
-    Quat(const Quat &) = default;
-
-    explicit Quat(glm::quat && q)
-        : glm::quat(q) {}
-
-    Quat(Quat &&) = default;
-
-    ~Quat() = default;
-
-    ///@}
-    //-------------------------------------------------------------------------
-    ///@{
-
-    Quat & operator=(const Quat &) = default;
-    Quat & operator=(Quat &&) = default;
-
-    using glm::quat::quat;
-    using glm::quat::operator[];
-    using glm::quat::operator=;
-    using glm::quat::operator+=;
-    using glm::quat::operator-=;
-    using glm::quat::operator*=;
-    using glm::quat::operator/=;
-
-    ///@}
-    //-------------------------------------------------------------------------
-    ///@{
-
-    Quat inverse() const {
-        return glm::inverse(*this);
+void Quat::makeClosest(const Quat & q) {
+    const auto dot = glm::dot(static_cast<const glm::quat&>(*this), static_cast<const glm::quat&>(q));
+    if (dot < 0.0f) {
+        *this = -*this;
     }
-
-    Point3 axis() const {
-        const auto vec = glm::axis(*this);
-        return Point3(vec.x, vec.y, vec.z);
-    }
-
-    float angleDeg() const {
-        return glm::degrees(angleRad());
-    }
-
-    float angleRad() const {
-        return glm::angle(*this);
-    }
-
-    // Modifies this quat so it is on same side of hypersphere as quat arg.
-    XpObjLib void makeClosest(const Quat & q);
-
-    ///@}
-    //-------------------------------------------------------------------------
-
-};
+}
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

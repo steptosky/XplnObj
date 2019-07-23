@@ -64,10 +64,10 @@ public:
     //---------------------------------------------------
     ///@{
 
-    XpObjLib static bool validForDataRef(const std::string & str) noexcept;
-    XpObjLib static bool validForTexture(const std::string & str) noexcept;
-    bool validForDataRef() const noexcept { return validForDataRef(mString); }
-    bool validForTexture() const noexcept { return validForTexture(mString); }
+    XpObjLib static bool isValidForDataRef(const std::string & str) noexcept;
+    XpObjLib static bool isValidForTexture(const std::string & str) noexcept;
+    bool isValidForDataRef() const noexcept { return isValidForDataRef(mString); }
+    bool isValidForTexture() const noexcept { return isValidForTexture(mString); }
 
     ///@}
     //---------------------------------------------------

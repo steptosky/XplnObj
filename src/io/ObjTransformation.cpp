@@ -141,14 +141,14 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         // TestTransformationAlgorithm_case1
     else if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && transParent && !rotateParent) {
         if (obj) {
-            obj->applyTransform((transform.mMatrix * rootTm) * (transParent->mMatrix * rootTm).toTranslation().inversed(), true);
+            obj->applyTransform((transform.mMatrix * rootTm) * (transParent->mMatrix * rootTm).toTranslation().inverse(), true);
         }
     }
         //----------
         // TestTransformationAlgorithm_case2
     else if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && transParent && rotateParent) {
         if (obj) {
-            obj->applyTransform((transform.mMatrix * rootTm) * (transParent->mMatrix * rootTm).toTranslation().inversed(), true);
+            obj->applyTransform((transform.mMatrix * rootTm) * (transParent->mMatrix * rootTm).toTranslation().inverse(), true);
         }
     }
         //------------------------------------------------------------------------------------------
@@ -172,7 +172,7 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         // TODO (needs decompose to method) because has copy
         TMatrix tmTrans = transform.parentMatrix().toRotation();
         tmTrans *= transform.mMatrix.toTranslation();
-        tmTrans *= transParent->mMatrix.toTranslation().inversed();
+        tmTrans *= transParent->mMatrix.toTranslation().inverse();
         tmTrans *= rootTm.toRotation();
         TransformAlg::applyMatrixToAnimTranslate(transform.mAnimTrans, tmTrans);
 
@@ -187,7 +187,7 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         // TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case4
         TMatrix tmTrans = transform.parentMatrix().toRotation();
         tmTrans *= transform.mMatrix.toTranslation();
-        tmTrans *= transParent->mMatrix.toTranslation().inversed();
+        tmTrans *= transParent->mMatrix.toTranslation().inverse();
         tmTrans *= rootTm.toRotation();
         TransformAlg::applyMatrixToAnimTranslate(transform.mAnimTrans, tmTrans);
 
@@ -219,7 +219,7 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         // TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case4
         TMatrix tmTrans = transform.parentMatrix().toRotation();
         tmTrans *= transform.mMatrix.toTranslation();
-        tmTrans *= transParent->mMatrix.toTranslation().inversed();
+        tmTrans *= transParent->mMatrix.toTranslation().inverse();
         tmTrans *= rootTm.toRotation();
         TransformAlg::applyMatrixToAnimTranslate(transform.mAnimTrans, tmTrans);
         // making rotate vector relative parent system coordinates. 
@@ -238,7 +238,7 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         // TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case4
         TMatrix tmTrans = transform.parentMatrix().toRotation();
         tmTrans *= transform.mMatrix.toTranslation();
-        tmTrans *= transParent->mMatrix.toTranslation().inversed();
+        tmTrans *= transParent->mMatrix.toTranslation().inverse();
         tmTrans *= rootTm.toRotation();
         TransformAlg::applyMatrixToAnimTranslate(transform.mAnimTrans, tmTrans);
         // making rotate vector relative parent system coordinates. 

@@ -112,7 +112,7 @@ TEST(TestTransformCommon, apliing_root_transformation) {
     Transform & transformOut1 = lodOut.transform().newChild();
     transformOut1.mObjects.emplace_back(meshOut1);
     transformOut1.mMatrix.setPosition(Point3(10.0f));
-    transformOut1.mMatrix.setRotate(Quat(0.5f, 0.5f, 0.5f, 0.5f));
+    transformOut1.mMatrix.setRotation(Quat(0.5f, 0.5f, 0.5f, 0.5f));
 
     ExportContext expContext(fileName);
     ASSERT_TRUE(mainOut.exportObj(expContext));

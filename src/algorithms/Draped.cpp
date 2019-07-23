@@ -58,7 +58,7 @@ void Draped::extractDrapedObjects(ObjDrapedGroup & inOutDraped, Transform & inOu
     extractDrapedObjects(inOutTransform, drapedObjects, interrupt);
 
     for (auto & obj : drapedObjects) {
-        obj->applyTransform(inOutDraped.transform().mMatrix.inversed());
+        obj->applyTransform(inOutDraped.transform().mMatrix.inverse());
         inOutDraped.transform().mObjects.emplace_back(std::move(obj));
     }
 }

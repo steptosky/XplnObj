@@ -1,5 +1,5 @@
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2019, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -107,12 +107,12 @@ void TMatrix::setPosition(const Point3 & p) {
     reinterpret_cast<Mtx3*>(this)->translate(p.x, p.y, p.z);
 }
 
-void TMatrix::setRotate(const Quat & q) {
+void TMatrix::setRotation(const Quat & q) {
     sts::fromQuat(*reinterpret_cast<Mtx3*>(this), sts::QuaternionF(q.x, q.y, q.z, q.w));
 }
 
-void TMatrix::setRotate(const Point3 & p, float angleDegress) {
-    sts::fromAxisAngle(*reinterpret_cast<Mtx3*>(this), Mtx3::Vec3(p.x, p.y, p.z), sts::toRadians(angleDegress));
+void TMatrix::setRotation(const Point3 & p, float angleDegrees) {
+    sts::fromAxisAngle(*reinterpret_cast<Mtx3*>(this), Mtx3::Vec3(p.x, p.y, p.z), sts::toRadians(angleDegrees));
 }
 
 //-------------------------------------------------------------------------
@@ -181,7 +181,7 @@ TMatrix TMatrix::operator*(const TMatrix & inRight) const {
     return out;
 }
 
-TMatrix TMatrix::inversed() const {
+TMatrix TMatrix::inverse() const {
     const Mtx3 tmInv = reinterpret_cast<const Mtx3*>(this)->inversed();
     return TMatrix(*reinterpret_cast<const TMatrix*>(&tmInv));
 }

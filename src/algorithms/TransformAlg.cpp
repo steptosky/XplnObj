@@ -52,7 +52,7 @@ void TransformAlg::applyRotateKeysToTransform(Transform & inOutTrans, AnimRotate
     for (auto animRot = inOutAnim.begin(); animRot != inOutAnim.end();) {
         if (animRot->mKeys.size() == 1) {
             TMatrix mtx;
-            mtx.setRotate(animRot->mVector, animRot->mKeys[0].mAngleDegrees);
+            mtx.setRotation(animRot->mVector, animRot->mKeys[0].mAngleDegrees);
             inOutTrans.mMatrix *= mtx;
             animRot = inOutTrans.mAnimRotate.erase(animRot);
         }

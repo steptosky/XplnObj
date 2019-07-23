@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2019, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -60,7 +60,7 @@ public:
 
     //-------------------------------------------------------------------------
 
-    TMatrix inversed() const;
+    TMatrix inverse() const;
 
     void transformPoints(Point3 * inArray, unsigned inCount) const;
     void transformVectors(Point3 * inArray, unsigned inCount) const;
@@ -70,8 +70,8 @@ public:
     //-------------------------------------------------------------------------
 
     void setPosition(const Point3 & p);
-    void setRotate(const Quat & q);
-    void setRotate(const Point3 & p, float angleDegress);
+    void setRotation(const Quat & q);
+    void setRotation(const Point3 & p, float angleDegrees);
 
     //-------------------------------------------------------------------------
 

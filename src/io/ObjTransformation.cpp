@@ -42,7 +42,7 @@ namespace xobj {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjTransformation::correctExportTransform(ObjMain & mainObj, const TMatrix & tm, bool useLodTm) {
+void ObjTransformation::correctExportTransform(ObjMain & mainObj, const TMatrix & tm, const bool useLodTm) {
     correctTransform(mainObj, tm, true, useLodTm);
 }
 
@@ -54,7 +54,7 @@ void ObjTransformation::correctImportTransform(ObjMain & mainObj, const TMatrix 
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjTransformation::correctTransform(ObjMain & mainObj, const TMatrix & tm, bool exp, bool useLodTm) {
+void ObjTransformation::correctTransform(ObjMain & mainObj, const TMatrix & tm, const bool exp, const bool useLodTm) {
     for (const auto & lod : mainObj.lods()) {
         Transform & transform = lod->transform();
         TMatrix tmCopy = tm;
@@ -62,51 +62,33 @@ void ObjTransformation::correctTransform(ObjMain & mainObj, const TMatrix & tm, 
             tmCopy = transform.mMatrix * tmCopy;
             transform.mMatrix.setIdentity();
         }
-        proccess(transform, tmCopy, exp);
+        process(transform, tmCopy, exp);
     }
-    proccess(mainObj.mDraped.transform(), tm, exp);
+    process(mainObj.mDraped.transform(), tm, exp);
 }
 
-void ObjTransformation::proccess(Transform & transform, const TMatrix & rootMatrix, bool exp) {
-    //-------------------------------------------------------------------------
-    // objects
-
-    if (exp) {
-        if (transform.mObjects.empty()) {
-            mapsExpCoordinates(nullptr, transform, rootMatrix);
-        }
-        else {
-            for (auto & curr : transform.mObjects) {
-                mapsExpCoordinates(curr.get(), transform, rootMatrix);
-            }
-        }
-    }
-    else {
-        if (transform.mObjects.empty()) {
-            mapsImpCoordinates(nullptr, transform, rootMatrix);
-        }
-        else {
-            for (auto & curr : transform.mObjects) {
-                mapsImpCoordinates(curr.get(), transform, rootMatrix);
-            }
-        }
-    }
-
-    //-------------------------------------------------------------------------
-    // children
-
+void ObjTransformation::process(Transform & transform, const TMatrix & mtx, const bool exp) {
+    exp ? mapsExpCoordinates(transform, mtx) : mapsImpCoordinates(transform, mtx);
     for (auto & child : transform) {
-        proccess(*child, rootMatrix, exp);
+        process(*child, mtx, exp);
     }
+}
 
-    //-------------------------------------------------------------------------
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+void ObjTransformation::applyMatrixToObjects(Transform::ObjList & inOutObjects, const TMatrix & tm) {
+    for (auto & o : inOutObjects) {
+        o->applyTransform(tm, true);
+    }
 }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transform, const TMatrix & rootTm) {
+void ObjTransformation::mapsExpCoordinates(Transform & transform, const TMatrix & rootTm) {
     const Transform * transParent = TransformAlg::animatedTranslateParent(transform);
     const Transform * rotateParent = TransformAlg::animatedRotateParent(transform);
     //------------------------------------------------------------------------------------------
@@ -133,23 +115,17 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
     //------------------------------------------------------------------------------------------
     // TestTransformationAlgorithm_case0
     if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && !transParent && !rotateParent) {
-        if (obj) {
-            obj->applyTransform(transform.mMatrix * rootTm, true);
-        }
+        applyMatrixToObjects(transform.mObjects, transform.mMatrix * rootTm);
     }
         //----------
         // TestTransformationAlgorithm_case1
     else if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && transParent && !rotateParent) {
-        if (obj) {
-            obj->applyTransform((transform.mMatrix * rootTm) * (transParent->mMatrix * rootTm).toTranslation().inverse(), true);
-        }
+        applyMatrixToObjects(transform.mObjects, (transform.mMatrix * rootTm) * (transParent->mMatrix * rootTm).toTranslation().inverse());
     }
         //----------
         // TestTransformationAlgorithm_case2
     else if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && transParent && rotateParent) {
-        if (obj) {
-            obj->applyTransform((transform.mMatrix * rootTm) * (transParent->mMatrix * rootTm).toTranslation().inverse(), true);
-        }
+        applyMatrixToObjects(transform.mObjects, (transform.mMatrix * rootTm) * (transParent->mMatrix * rootTm).toTranslation().inverse());
     }
         //------------------------------------------------------------------------------------------
         // TestTransformationAlgorithm_case3
@@ -160,10 +136,7 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         tmTrans *= transform.mMatrix.toTranslation();
         tmTrans *= rootTm;
         TransformAlg::applyMatrixToAnimTranslate(transform.mAnimTrans, tmTrans);
-
-        if (obj) {
-            obj->applyTransform((transform.mMatrix * rootTm).toRotation(), true);
-        }
+        applyMatrixToObjects(transform.mObjects, (transform.mMatrix * rootTm).toRotation());
     }
         //----------
         // TestTransformationAlgorithm_case4
@@ -175,10 +148,7 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         tmTrans *= transParent->mMatrix.toTranslation().inverse();
         tmTrans *= rootTm.toRotation();
         TransformAlg::applyMatrixToAnimTranslate(transform.mAnimTrans, tmTrans);
-
-        if (obj) {
-            obj->applyTransform((transform.mMatrix * rootTm).toRotation(), true);
-        }
+        applyMatrixToObjects(transform.mObjects, (transform.mMatrix * rootTm).toRotation());
     }
         //----------
         // TestTransformationAlgorithm_case5
@@ -190,10 +160,7 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         tmTrans *= transParent->mMatrix.toTranslation().inverse();
         tmTrans *= rootTm.toRotation();
         TransformAlg::applyMatrixToAnimTranslate(transform.mAnimTrans, tmTrans);
-
-        if (obj) {
-            obj->applyTransform((transform.mMatrix * rootTm).toRotation(), true);
-        }
+        applyMatrixToObjects(transform.mObjects, (transform.mMatrix * rootTm).toRotation());
     }
         //------------------------------------------------------------------------------------------
         // TestTransformationAlgorithm_case6
@@ -207,10 +174,7 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         // making rotate vector relative parent system coordinates. 
         const TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
         TransformAlg::applyMatrixToAnimRotate(transform.mAnimRotate, tmRot);
-
-        if (obj) {
-            obj->applyTransform((transform.mMatrix * rootTm).toRotation(), true);
-        }
+        applyMatrixToObjects(transform.mObjects, (transform.mMatrix * rootTm).toRotation());
     }
         //----------
         // TestTransformationAlgorithm_case7
@@ -226,10 +190,7 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         // TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case6
         const TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
         TransformAlg::applyMatrixToAnimRotate(transform.mAnimRotate, tmRot);
-
-        if (obj) {
-            obj->applyTransform((transform.mMatrix * rootTm).toRotation(), true);
-        }
+        applyMatrixToObjects(transform.mObjects, (transform.mMatrix * rootTm).toRotation());
     }
         //----------
         // TestTransformationAlgorithm_case8
@@ -245,10 +206,7 @@ void ObjTransformation::mapsExpCoordinates(ObjAbstract * obj, Transform & transf
         // TODO (needs decompose to method) copy from the TestTransformationAlgorithm_case6
         const TMatrix tmRot = transform.parentMatrix().toRotation() * rootTm.toRotation();
         TransformAlg::applyMatrixToAnimRotate(transform.mAnimRotate, tmRot);
-
-        if (obj) {
-            obj->applyTransform((transform.mMatrix * rootTm).toRotation(), true);
-        }
+        applyMatrixToObjects(transform.mObjects, (transform.mMatrix * rootTm).toRotation());
     }
         //------------------------------------------------------------------------------------------
     else {
@@ -279,86 +237,85 @@ void ObjTransformation::translationOfTransformToAnimTransKeys(Transform & inOutT
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjTransformation::
-mapsImpCoordinates(ObjAbstract * /*obj*/, Transform & objTransform, const TMatrix & /*rootTm*/) {
-    const Transform * transParent = TransformAlg::animatedTranslateParent(objTransform);
-    const Transform * rotateParent = TransformAlg::animatedRotateParent(objTransform);
+void ObjTransformation::mapsImpCoordinates(Transform & transform, const TMatrix & /*rootTm*/) {
+    const Transform * transParent = TransformAlg::animatedTranslateParent(transform);
+    const Transform * rotateParent = TransformAlg::animatedRotateParent(transform);
     //------------------------------------------------------------------------------------------
-    TransformAlg::applyTranslateKeysToTransform(objTransform, objTransform.mAnimTrans);
-    TransformAlg::applyRotateKeysToTransform(objTransform, objTransform.mAnimRotate);
+    TransformAlg::applyTranslateKeysToTransform(transform, transform.mAnimTrans);
+    TransformAlg::applyRotateKeysToTransform(transform, transform.mAnimRotate);
     //------------------------------------------------------------------------------------------
     // Actually the following code can be optimized but I prefer keep it such a way,
     // it is easier to understanding for me.
     // TODO needs implementation
     //------------------------------------------------------------------------------------------
 
-    if (objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && !transParent && !rotateParent) {
+    if (transform.hasAnimRotate() && transform.hasAnimTrans() && !transParent && !rotateParent) {
         // TODO implementation
         // LInfo << " !!! 1";
     }
-    else if (objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && transParent && !rotateParent) {
+    else if (transform.hasAnimRotate() && transform.hasAnimTrans() && transParent && !rotateParent) {
         // TODO implementation
         // LInfo << " !!! 2";
     }
-    else if (objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && !transParent && rotateParent) {
+    else if (transform.hasAnimRotate() && transform.hasAnimTrans() && !transParent && rotateParent) {
         // TODO implementation
         // LInfo << " !!! 3";
     }
-    else if (objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && transParent && rotateParent) {
+    else if (transform.hasAnimRotate() && transform.hasAnimTrans() && transParent && rotateParent) {
         // TODO implementation
         // LInfo << " !!! 4";
     }
         //------------------------------------------------------------------------------------------
 
-    else if (!objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && !transParent && !rotateParent) {
+    else if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && !transParent && !rotateParent) {
         // TODO implementation
         // LInfo << " !!! 5";
     }
-    else if (!objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && transParent && !rotateParent) {
+    else if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && transParent && !rotateParent) {
         // TODO implementation
         // LInfo << " !!! 6";
     }
-    else if (!objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && !transParent && rotateParent) {
+    else if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && !transParent && rotateParent) {
         // TODO implementation
         // LInfo << " !!! 7";
     }
-    else if (!objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && transParent && rotateParent) {
+    else if (!transform.hasAnimRotate() && !transform.hasAnimTrans() && transParent && rotateParent) {
         // TODO implementation
         // LInfo << " !!! 8";
     }
         //------------------------------------------------------------------------------------------
 
-    else if (!objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && !transParent && !rotateParent) {
+    else if (!transform.hasAnimRotate() && transform.hasAnimTrans() && !transParent && !rotateParent) {
         // TODO implementation
         // LInfo << " !!! 9";
     }
-    else if (!objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && transParent && !rotateParent) {
+    else if (!transform.hasAnimRotate() && transform.hasAnimTrans() && transParent && !rotateParent) {
         // TODO implementation
         // LInfo << " !!! 10";
     }
-    else if (!objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && !transParent && rotateParent) {
+    else if (!transform.hasAnimRotate() && transform.hasAnimTrans() && !transParent && rotateParent) {
         // TODO implementation
         // LInfo << " !!! 11";
     }
-    else if (!objTransform.hasAnimRotate() && objTransform.hasAnimTrans() && transParent && rotateParent) {
+    else if (!transform.hasAnimRotate() && transform.hasAnimTrans() && transParent && rotateParent) {
         // TODO implementation
         // LInfo << " !!! 12";
     }
         //------------------------------------------------------------------------------------------
 
-    else if (objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && !transParent && !rotateParent) {
+    else if (transform.hasAnimRotate() && !transform.hasAnimTrans() && !transParent && !rotateParent) {
         // TODO implementation
         // LInfo << " !!! 13";
     }
-    else if (objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && transParent && !rotateParent) {
+    else if (transform.hasAnimRotate() && !transform.hasAnimTrans() && transParent && !rotateParent) {
         // TODO implementation
         // LInfo << " !!! 14";
     }
-    else if (objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && !transParent && rotateParent) {
+    else if (transform.hasAnimRotate() && !transform.hasAnimTrans() && !transParent && rotateParent) {
         // TODO implementation
         // LInfo << " !!! 15";
     }
-    else if (objTransform.hasAnimRotate() && !objTransform.hasAnimTrans() && transParent && rotateParent) {
+    else if (transform.hasAnimRotate() && !transform.hasAnimTrans() && transParent && rotateParent) {
         // TODO implementation
         // LInfo << " !!! 16";
     }

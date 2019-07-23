@@ -50,16 +50,17 @@ public:
 private:
 
     static void correctTransform(ObjMain & mainObj, const TMatrix & tm, bool exp, bool useLodTm);
-    static void proccess(Transform & transform, const TMatrix & rootTransform, bool exp);
+    static void process(Transform & transform, const TMatrix & mtx, bool exp);
 
     //-------------------------------------------------------------------------
 
-    static void mapsExpCoordinates(ObjAbstract * obj, Transform & inOutTrans, const TMatrix & rootTm);
+    static void mapsExpCoordinates(Transform & transform, const TMatrix & rootTm);
     static void translationOfTransformToAnimTransKeys(Transform & inOutTrans);
 
     //-------------------------------------------------------------------------
 
-    static void mapsImpCoordinates(ObjAbstract * obj, Transform & inOutTrans, const TMatrix & rootTm);
+    static void mapsImpCoordinates(Transform & transform, const TMatrix & rootTm);
+    static void applyMatrixToObjects(Transform::ObjList & inOutObjects, const TMatrix & tm);
 
 };
 

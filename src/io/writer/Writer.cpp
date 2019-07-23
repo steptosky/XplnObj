@@ -56,9 +56,8 @@ Writer::~Writer() {
 bool Writer::openFile(const Path & filePath) {
     mStream.open(filePath, std::ios_base::out);
     if (!mStream) {
-        // todo sts::toMbString may work incorrectly with unicode.
-        XULError << " - File <" << sts::toMbString(filePath) << "> couldn't be created or written!";
-        return false;
+        throw std::system_error(errno, std::system_category(),
+                                "Failed to open file: <"s.append(u8path(filePath)).append(">"));
     }
     mStream.precision(6);
     mStream << std::fixed;
@@ -91,9 +90,8 @@ void Writer::writeLine(const char * msg) {
 bool Writer::loadDatarefs(const Path & filePath) {
     std::ifstream file(filePath, std::ios_base::in);
     if (!file) {
-        // todo sts::toMbString may work incorrectly with unicode.
-        XULError << " - File <" << sts::toMbString(filePath) << "> couldn't be read!";
-        return false;
+        throw std::system_error(errno, std::system_category(),
+                                "Failed to open file: <"s.append(u8path(filePath)).append(">"));
     }
 
     const auto callback = [&](const Dataref & drf) ->bool {
@@ -116,9 +114,8 @@ bool Writer::loadDatarefs(const Path & filePath) {
 bool Writer::loadCommands(const Path & filePath) {
     std::ifstream file(filePath, std::ios_base::in);
     if (!file) {
-        // todo sts::toMbString may work incorrectly with unicode.
-        XULError << " - File <" << sts::toMbString(filePath) << "> couldn't be read!";
-        return false;
+        throw std::system_error(errno, std::system_category(),
+                                "Failed to open file: <"s.append(u8path(filePath)).append(">"));
     }
 
     const auto callback = [&](const Command & cmd) ->bool {

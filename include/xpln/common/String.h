@@ -57,20 +57,27 @@ public:
     //---------------------------------------------------
     ///@{
 
-    XpObjLib static bool validForDataRef(const std::string & str);
-    XpObjLib static bool validForTexture(const std::string & str);
-    bool validForDataRef() const { return validForDataRef(mString); }
-    bool validForTexture() const { return validForTexture(mString); }
+    bool operator==(const String & s) const noexcept { return mString == s.mString; }
+    bool operator!=(const String & s) const noexcept { return mString != s.mString; }
 
     ///@}
     //---------------------------------------------------
     ///@{
 
-    XpObjLib static String from(const std::string & s);
+    XpObjLib static bool validForDataRef(const std::string & str) noexcept;
+    XpObjLib static bool validForTexture(const std::string & str) noexcept;
+    bool validForDataRef() const noexcept { return validForDataRef(mString); }
+    bool validForTexture() const noexcept { return validForTexture(mString); }
+
+    ///@}
+    //---------------------------------------------------
+    ///@{
+
+    XpObjLib static String from(const std::string & s) noexcept;
     XpObjLib static String from(const std::wstring & s);
 
-    operator std::string&() { return mString; }
-    operator const std::string&() const { return mString; }
+    operator std::string&() noexcept { return mString; }
+    operator const std::string&() const noexcept { return mString; }
 
     ///@}
     //---------------------------------------------------

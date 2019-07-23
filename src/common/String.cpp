@@ -36,7 +36,7 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool String::validForDataRef(const std::string & str) {
+bool String::validForDataRef(const std::string & str) noexcept {
     for (auto ch : str) {
         if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch < 32 || ch > 126) {
             return true;
@@ -45,7 +45,7 @@ bool String::validForDataRef(const std::string & str) {
     return false;
 }
 
-bool String::validForTexture(const std::string & str) {
+bool String::validForTexture(const std::string & str) noexcept {
     for (auto ch : str) {
         if (ch == '\t' || ch == '\n' || ch == '\r' || ch < 32 || ch > 126) {
             return true;
@@ -54,7 +54,7 @@ bool String::validForTexture(const std::string & str) {
     return false;
 }
 
-String String::from(const std::string & s) {
+String String::from(const std::string & s) noexcept {
     String out;
     out.mString = s;
     return out;

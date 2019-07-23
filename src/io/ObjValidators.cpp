@@ -28,7 +28,6 @@
 */
 
 #include "ObjValidators.h"
-#include "io/StringValidator.h"
 #include "xpln/common/Logger.h"
 #include "sts/utilities/Compare.h"
 
@@ -50,6 +49,7 @@
 #include "xpln/obj/ObjLightParam.h"
 #include "xpln/obj/ObjLightPoint.h"
 #include "xpln/obj/ObjLightSpillCust.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -62,15 +62,15 @@ bool checkParameters(const AttrGlobSet & attrSet, const std::string & prefix) {
         XULWarning << prefix << " - Texture is not specified";
     }
     bool result = true;
-    if (StringValidator::hasIllegalSymbols(attrSet.mTexture.value_or(std::string()))) {
+    if (String::validForTexture(attrSet.mTexture.value_or(std::string()))) {
         result = false;
         XULError << prefix << " contains illegal symbols in the texture name <" << *attrSet.mTexture << ">";
     }
-    if (StringValidator::hasIllegalSymbols(attrSet.mTextureLit.value_or(std::string()))) {
+    if (String::validForTexture(attrSet.mTextureLit.value_or(std::string()))) {
         result = false;
         XULError << prefix << " contains illegal symbols in the lit texture name <" << *attrSet.mTextureLit << ">";
     }
-    if (StringValidator::hasIllegalSymbols(attrSet.mTextureNormal.value_or(std::string()))) {
+    if (String::validForTexture(attrSet.mTextureNormal.value_or(std::string()))) {
         result = false;
         XULError << prefix << " contains illegal symbols in the normal texture name <" << *attrSet.mTextureNormal << ">";
     }
@@ -193,7 +193,7 @@ bool checkParameters(const ObjLightCustom & inVal, const std::string & inPrefix)
         XULWarning << inPrefix << " - T1 and T2 can't be equaled.";
     }
 
-    if (StringValidator::hasIllegalSymbols(inVal.dataRef())) {
+    if (String::validForDataRef(inVal.dataRef())) {
         result = false;
         XULError << inPrefix << " - Dataref contains illegal symbols.";
     }
@@ -268,7 +268,7 @@ bool checkParameters(const ObjLightSpillCust & inVal, const std::string & inPref
                 " - Hasn't got dataref value, consider to use param light instead spill custom if you don't need dataref.";
     }
 
-    if (StringValidator::hasIllegalSymbols(drf)) {
+    if (String::validForDataRef(drf)) {
         result = false;
         XULError << inPrefix << " - Dataref contains illegal symbols.";
     }

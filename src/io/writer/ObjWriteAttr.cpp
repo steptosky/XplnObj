@@ -38,9 +38,9 @@
 #include "xpln/obj/manipulators/AttrManipDragAxis.h"
 #include "xpln/obj/manipulators/AttrManipDragRotate.h"
 #include "xpln/obj/manipulators/AttrManipNone.h"
-#include "io/StringValidator.h"
 #include "xpln/obj/manipulators/AttrManipPanel.h"
 #include "xpln/common/Logger.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -199,7 +199,7 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
 
     const auto writeString = [&](const char * inAttr, const std::optional<std::string> & string) {
         if (string && !string->empty()) {
-            if (!StringValidator::hasIllegalSymbols(*string, "\t\n\r")) {
+            if (!String::validForTexture(*string)) {
                 mWriter->writeLine(std::string(inAttr).append(" ").append(*string));
                 ++mGlobNum;
             }

@@ -32,7 +32,7 @@
 #include "xpln/obj/ExportOptions.h"
 #include "xpln/obj/IOStatistic.h"
 #include "common/AttributeNames.h"
-#include "io/StringValidator.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -133,7 +133,7 @@ void ObjWriteAnim::printTrans(const AnimTransList & animTrans, const std::string
             }
         }
 
-        if (StringValidator::hasIllegalSymbols(a.mDrf)) {
+        if (String::validForDataRef(a.mDrf)) {
             XULError << "Transform: " << transformName
                     << " - has illegal symbols in translation dataref: " << a.mDrf;
             continue;
@@ -193,7 +193,7 @@ void ObjWriteAnim::printRotate(const AnimRotateList & animRot, const std::string
                 continue;
             }
         }
-        if (StringValidator::hasIllegalSymbols(a.mDrf)) {
+        if (String::validForDataRef(a.mDrf)) {
             XULError << "Transform: " << transformName
                     << " - has illegal symbols in rotation dataref: " << a.mDrf;
             continue;
@@ -250,7 +250,7 @@ void ObjWriteAnim::printVisible(const AnimVisibility & animVis, const std::strin
             continue;
         }
 
-        if (StringValidator::hasIllegalSymbols(key.mDrf)) {
+        if (String::validForDataRef(key.mDrf)) {
             XULError << "Transform: " << transformName << " - visible key <" << counter
                     << "> has illegal symbols in its dataref: " << key.mDrf;
             continue;

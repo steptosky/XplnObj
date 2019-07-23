@@ -1,5 +1,3 @@
-#pragma once
-
 /*
 **  Copyright(C) 2018, StepToSky
 **
@@ -29,55 +27,22 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-#ifndef XOBJ_PATH
-#   ifdef _MSC_VER
-#       define XOBJ_PATH(X) L##X
-#   else
-#       define XOBJ_PATH(X) X
-#   endif
-#endif
+#include "xpln/common/Path.h"
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
 #ifdef _MSC_VER
-/*!
- * \pre Windows uses UTF16 and wide string, Unix uses UTF8 and char.
- * \note I decided to not use boost file system now
- *       because it will increase build time on CI.
- */
-namespace xobj {
-typedef std::wstring Path;
-}
-
-#include <string>
 #include <codecvt>
 
-inline std::string u8string(const xobj::Path & path) {
+namespace xobj {
+std::string u8path(const Path & path) {
     std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
     return convert.to_bytes(path);
 }
-
-#else
-/*!
- * \pre Windows uses UTF16 and wide string, Unix uses UTF8 and char.
- * \note I decided to not use boost file system now
- *       because it will increase build time on CI.
- */
-namespace xobj {
-typedef std::string Path;
-
-inline std::string u8string(const xobj::Path& path) noexcept {
-    return path;
 }
-}
+
 #endif
 
 /**************************************************************************************************/

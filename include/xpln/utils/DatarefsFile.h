@@ -35,7 +35,7 @@
 #include <string>
 #include <iosfwd>
 #include <algorithm>
-#include "xpln/utils/Path.h"
+#include "xpln/common/Path.h"
 
 namespace xobj {
 

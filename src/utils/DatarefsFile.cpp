@@ -72,7 +72,7 @@ bool DatarefsFile::loadFile(const Path & filePath, const std::function<bool(cons
     std::ifstream file(filePath, std::iostream::in);
     if (!file) {
         throw std::system_error(errno, std::system_category(),
-                                "Failed to open file: <"s.append(u8string(filePath)).append(">"));
+                                "Failed to open file: <"s.append(u8path(filePath)).append(">"));
     }
     return loadStream(file, callback);;
 }
@@ -82,7 +82,7 @@ void DatarefsFile::saveFile(const Path & filePath, const std::function<bool(Data
     std::ofstream file(filePath, std::iostream::out);
     if (!file) {
         throw std::system_error(errno, std::system_category(),
-                                "Failed to open file: <"s.append(u8string(filePath)).append(">"));
+                                "Failed to open file: <"s.append(u8path(filePath)).append(">"));
     }
     saveStream(file, callback);
 }

@@ -149,7 +149,7 @@ std::vector<LightUtils::LightName> LightUtils::parseLights(const Path & filePath
     std::ifstream file(filePath);
     if (!file) {
         throw std::system_error(errno, std::system_category(),
-                                "Failed to open file: <"s.append(u8string(filePath)).append(">"));
+                                "Failed to open file: <"s.append(u8path(filePath)).append(">"));
     }
     out.reserve(1000);
     //----------------------------------------------

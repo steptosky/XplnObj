@@ -32,7 +32,7 @@
 #include <memory>
 #include <string>
 #include "xpln/Export.h"
-#include "xpln/utils/Path.h"
+#include "xpln/common/Path.h"
 #include "xpln/common/IInterrupter.h"
 #include "IOStatistic.h"
 

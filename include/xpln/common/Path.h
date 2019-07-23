@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-**  Copyright(C) 2017, StepToSky
+**  Copyright(C) 2018, StepToSky
 **
 **  Redistribution and use in source and binary forms, with or without
 **  modification, are permitted provided that the following conditions are met:
@@ -29,65 +29,53 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <fstream>
-#include <map>
-#include "xpln/common/Path.h"
-#include "AbstractWriter.h"
-#include "xpln/utils/DatarefsFile.h"
-#include "xpln/utils/CommandsFile.h"
-#include "xpln/obj/ExportContext.h"
+#include "xpln/Export.h"
+#include <string>
 
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+#ifndef XOBJ_PATH
+#   ifdef _MSC_VER
+#       define XOBJ_PATH(X) L##X
+#   else
+#       define XOBJ_PATH(X) X
+#   endif
+#endif
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/
+
+#ifdef _MSC_VER
+
+/*!
+ * \pre Windows uses UTF16 and wide string, Unix uses UTF8 and char.
+ * \note I decided to not use boost file system now
+ *       because it will increase build time on CI.
+ */
 namespace xobj {
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-class Writer : public AbstractWriter {
-public:
-
-    //-------------------------------------------------------------------------
-
-    Writer() = default;
-
-    Writer(const Writer &) = delete;
-    Writer & operator =(const Writer &) = delete;
-
-    virtual ~Writer();
-
-    //-------------------------------------------------------------------------
-
-    bool openFile(const Path & filePath);
-    void closeFile();
-
-    bool loadDatarefs(const Path & filePath);
-    bool loadCommands(const Path & filePath);
-
-    //-------------------------------------------------------------------------
-
-    /*! \copydoc AbstractWriter::printEol */
-    void writeLine(const char * msg) override;
-
-    //-------------------------------------------------------------------------
-
-    /*! \copydoc AbstractWriter::actualDataref */
-    std::string actualDataref(const std::string & dataref) override;
-
-    /*! \copydoc AbstractWriter::actualCommand */
-    std::string actualCommand(const std::string & command) override;
-
-    //-------------------------------------------------------------------------
-
-private:
-
-    std::map<std::uint64_t, Dataref> mDatarefs;
-    std::map<std::uint64_t, Command> mCommands;
-    std::ofstream mStream;
-
-};
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
+typedef std::wstring Path;
+XpObjLib std::string u8path(const Path & path);
 }
+
+#else
+
+/*!
+ * \pre Windows uses UTF16 and wide string, Unix uses UTF8 and char.
+ * \note I decided to not use boost file system now
+ *       because it will increase build time on CI.
+ */
+namespace xobj {
+typedef std::string Path;
+inline std::string u8path(const Path& path) noexcept {
+    return path;
+}
+}
+
+#endif
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/

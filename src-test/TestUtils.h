@@ -32,7 +32,7 @@
 #include "xpln/obj/ObjMesh.h"
 #include "gtest/gtest.h"
 #include <xpln/obj/ObjMain.h>
-#include <xpln/utils/Path.h>
+#include <xpln/common/Path.h>
 
 namespace xobj {
 

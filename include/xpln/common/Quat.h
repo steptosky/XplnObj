@@ -40,22 +40,27 @@ namespace xobj {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-class Quat final : public glm::quat {
+class Quat final {
 public:
+
+    typedef glm::quat Type;
 
     //-------------------------------------------------------------------------
     ///@{
 
     Quat()
-        : glm::quat(1.0f, 0.0f, 0.0f, 0.0f) {}
+        : mQuat(1.0f, 0.0f, 0.0f, 0.0f) {}
 
-    explicit Quat(const glm::quat & q)
-        : glm::quat(q) {}
+    Quat(const float w, const float x, const float y, const float z)
+        : mQuat(w, x, y, z) {}
+
+    explicit Quat(const Type & q)
+        : mQuat(q) {}
 
     Quat(const Quat &) = default;
 
-    explicit Quat(glm::quat && q)
-        : glm::quat(q) {}
+    explicit Quat(Type && q) noexcept
+        : mQuat(q) {}
 
     Quat(Quat &&) = default;
 
@@ -68,24 +73,21 @@ public:
     Quat & operator=(const Quat &) = default;
     Quat & operator=(Quat &&) = default;
 
-    using glm::quat::quat;
-    using glm::quat::operator[];
-    using glm::quat::operator=;
-    using glm::quat::operator+=;
-    using glm::quat::operator-=;
-    using glm::quat::operator*=;
-    using glm::quat::operator/=;
+    bool operator==(const Quat & r) const { return mQuat == r.mQuat; }
+    bool operator!=(const Quat & r) const { return mQuat != r.mQuat; }
+
+    Quat operator*(Quat const & p) const { return Quat(mQuat * p.mQuat); }
 
     ///@}
     //-------------------------------------------------------------------------
     ///@{
 
     Quat inverse() const {
-        return glm::inverse(*this);
+        return Quat(glm::inverse(mQuat));
     }
 
     Point3 axis() const {
-        const auto vec = glm::axis(*this);
+        const auto vec = glm::axis(mQuat);
         return Point3(vec.x, vec.y, vec.z);
     }
 
@@ -94,7 +96,7 @@ public:
     }
 
     float angleRad() const {
-        return glm::angle(*this);
+        return glm::angle(mQuat);
     }
 
     // Modifies this quat so it is on same side of hypersphere as quat arg.
@@ -102,6 +104,8 @@ public:
 
     ///@}
     //-------------------------------------------------------------------------
+
+    Type mQuat;
 
 };
 

@@ -108,7 +108,7 @@ void TMatrix::setPosition(const Point3 & p) {
 }
 
 void TMatrix::setRotation(const Quat & q) {
-    sts::fromQuat(*reinterpret_cast<Mtx3*>(this), sts::QuaternionF(q.x, q.y, q.z, q.w));
+    sts::fromQuat(*reinterpret_cast<Mtx3*>(this), sts::QuaternionF(q.mQuat.x, q.mQuat.y, q.mQuat.z, q.mQuat.w));
 }
 
 void TMatrix::setRotation(const Point3 & p, float angleDegrees) {

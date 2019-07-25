@@ -37,9 +37,9 @@ namespace xobj {
 /**************************************************************************************************/
 
 void Quat::makeClosest(const Quat & q) {
-    const auto dot = glm::dot(static_cast<const glm::quat&>(*this), static_cast<const glm::quat&>(q));
+    const auto dot = glm::dot(mQuat, q.mQuat);
     if (dot < 0.0f) {
-        *this = -*this;
+        mQuat = -mQuat;
     }
 }
 

@@ -58,7 +58,7 @@ void ObjWritePreparer::deleteEmptyTransformsRecursively(Transform & transform) {
         deleteEmptyTransformsRecursively(*child);
 
         if (child->mObjects.empty() && !child->hasChildren()) {
-            forDelete.emplace_back(child.release());
+            forDelete.emplace_back(child.get());
         }
     }
 

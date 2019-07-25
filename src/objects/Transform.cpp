@@ -43,6 +43,7 @@ Transform::~Transform() {
                                [this](const auto & t) { return t.get() == this; });
         if (it != mParent->mChildren.end()) {
             [[maybe_unused]] const auto ptr = it->release();
+            assert(this == ptr);
             mParent->mChildren.erase(it);
         }
     }

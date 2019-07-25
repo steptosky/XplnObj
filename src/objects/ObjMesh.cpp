@@ -90,7 +90,11 @@ void ObjMesh::applyTransform(const TMatrix & tm, const bool useParity) {
     }
 
     if (useParity && tm.parity()) {
-        flipNormals();
+        // normals are flipped by tm
+        // so we just reverse tris
+        for (auto & face : mFaces) {
+            std::swap(face.mV0, face.mV2);
+        }
     }
 }
 

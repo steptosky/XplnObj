@@ -66,6 +66,7 @@ public:
     void transformVectors(Point3 * inArray, unsigned inCount) const;
     void transformPoint(Point3 & inPoint) const;
     void transformVector(Point3 & inVec) const;
+    void transformQuat(Quat & quat) const;
 
     //-------------------------------------------------------------------------
 

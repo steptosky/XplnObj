@@ -166,6 +166,11 @@ void TMatrix::transformVector(Point3 & inVec) const {
     *p = reinterpret_cast<const Mtx3*>(this)->mapVector(*p);
 }
 
+void TMatrix::transformQuat(Quat & quat) const {
+    const Quat rot = rotation();
+    quat.mQuat *= rot.mQuat;
+}
+
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/

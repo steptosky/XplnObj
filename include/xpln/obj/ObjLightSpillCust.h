@@ -66,54 +66,23 @@ public:
     /// \name Parameters
     /// @{
 
-    void setColor(const Color & color) {
-        mColor = color;
-    }
-
-    void setSize(const float size) {
-        mSize = size;
-    }
-
-    void setSemiRaw(const float semi) {
-        mSemi = semi;
-    }
-
-    void setSemiAngle(const float radians) {
-        mSemi = LightUtils::spillConeWidthFromAngle(radians);
-    }
+    void setColor(const Color & color) { mColor = color; }
+    void setSize(const float size) { mSize = size; }
+    void setSemiRaw(const float semi) { mSemi = semi; }
+    void setSemiAngle(const float radians) { mSemi = LightUtils::spillConeWidthFromAngle(radians); }
+    void setDataRef(const std::string & dataRef) { mDataRef = dataRef; }
 
     void setDirection(const Point3 & direction) {
         mDirection = direction;
         mDirection.normalize();
     }
 
-    void setDataRef(const std::string & dataRef) {
-        mDataRef = dataRef;
-    }
-
-    Color color() const {
-        return mColor;
-    }
-
-    float size() const {
-        return mSize;
-    }
-
-    float semiRaw() const {
-        return mSemi;
-    }
-
-    float semiAngle() const {
-        return LightUtils::spillConeWidthToAngle(mSemi);
-    }
-
-    Point3 direction() const {
-        return mDirection;
-    }
-
-    const std::string & dataRef() const {
-        return mDataRef;
-    }
+    Color color() const { return mColor; }
+    float size() const { return mSize; }
+    float semiRaw() const { return mSemi; }
+    float semiAngle() const { return LightUtils::spillConeWidthToAngle(mSemi); }
+    const std::string & dataRef() const { return mDataRef; }
+    Point3 direction() const { return mDirection; }
 
     /// @}
     //-------------------------------------------------------------------------

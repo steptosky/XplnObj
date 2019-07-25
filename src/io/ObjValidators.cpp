@@ -40,10 +40,6 @@
 #include "xpln/obj/ObjMesh.h"
 #include "xpln/obj/ObjSmoke.h"
 
-#include "xpln/obj/animation/AnimVisibilityKey.h"
-#include "xpln/obj/animation/AnimTrans.h"
-#include "xpln/obj/animation/AnimRotate.h"
-
 #include "xpln/obj/ObjLightCustom.h"
 #include "xpln/obj/ObjLightNamed.h"
 #include "xpln/obj/ObjLightParam.h"

@@ -28,6 +28,8 @@
 */
 
 #include "TransformAlg.h"
+#include <stdexcept>
+#include "exceptions/defines.h"
 
 namespace xobj {
 
@@ -35,48 +37,35 @@ namespace xobj {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void TransformAlg::applyTranslateKeysToTransform(Transform & inOutTrans, AnimTransList & inOutAnim) {
-    for (auto animTr = inOutAnim.begin(); animTr != inOutAnim.end();) {
-        if (animTr->mKeys.size() == 1) {
+void TransformAlg::applyTranslateKeysToTransform(Transform & inOutTrans, PositionController & inOutAnim) {
+    for (auto tr = inOutAnim.mAnimation.begin(); tr != inOutAnim.mAnimation.end();) {
+        if (tr->mKeys.size() == 1) {
             const Point3 currPos = inOutTrans.mMatrix.position();
-            inOutTrans.mMatrix.setPosition(currPos + animTr->mKeys[0].mPosition);
-            animTr = inOutTrans.mAnimTrans.erase(animTr);
+            inOutTrans.mMatrix.setPosition(currPos + tr->mKeys[0].position);
+            tr = inOutAnim.mAnimation.erase(tr);
         }
         else {
-            ++animTr;
+            ++tr;
         }
     }
 }
 
-void TransformAlg::applyRotateKeysToTransform(Transform & inOutTrans, AnimRotateList & inOutAnim) {
-    for (auto animRot = inOutAnim.begin(); animRot != inOutAnim.end();) {
-        if (animRot->mKeys.size() == 1) {
-            TMatrix mtx;
-            mtx.setRotation(animRot->mVector, animRot->mKeys[0].mAngleDegrees);
-            inOutTrans.mMatrix *= mtx;
-            animRot = inOutTrans.mAnimRotate.erase(animRot);
-        }
-        else {
-            ++animRot;
-        }
-    }
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-void TransformAlg::applyMatrixToAnimTranslate(AnimTransList & inOutAnim, const TMatrix & tm) {
-    for (auto & a : inOutAnim) {
-        for (auto & k : a.mKeys) {
-            tm.transformPoint(k.mPosition);
+void TransformAlg::applyRotateKeysToTransform(Transform & inOutTrans, RotationController & inOutAnim) {
+    if (const auto axes = std::get_if<AxisSetRotation>(&inOutAnim.mAnimation)) {
+        for (auto a = axes->mAxes.begin(); a != axes->mAxes.end();) {
+            if (a->mKeys.size() == 1) {
+                TMatrix mtx;
+                mtx.setRotation(a->mVector, a->mKeys[0].angleDeg.value());
+                inOutTrans.mMatrix *= mtx;
+                a = axes->mAxes.erase(a);
+            }
+            else {
+                ++a;
+            }
         }
     }
-}
-
-void TransformAlg::applyMatrixToAnimRotate(AnimRotateList & inOutAnim, const TMatrix & tm) {
-    for (auto & a : inOutAnim) {
-        tm.transformPoint(a.mVector);
+    else if (!std::get_if<std::monostate>(&inOutAnim.mAnimation)) {
+        throw std::domain_error(ExcTxt("unexpected rotate animation"));
     }
 }
 
@@ -137,46 +126,25 @@ bool TransformAlg::visitObjects(Transform & transform,
 /**************************************************************************************************/
 
 const Transform * TransformAlg::animatedTranslateParent(const Transform & transform) {
-    return findParentIf(transform, [](const auto & t) { return t.hasAnimTrans(); });
+    return findParentIf(transform, [](const Transform & t) { return t.hasAnimTrans(); });
 }
 
 const Transform * TransformAlg::animatedRotateParent(const Transform & transform) {
-    return findParentIf(transform, [](const auto & t) { return t.hasAnimRotate(); });
+    return findParentIf(transform, [](const Transform & t) { return t.hasAnimRotate(); });
 }
 
 const Transform * TransformAlg::animatedParent(const Transform & transform) {
-    return findParentIf(transform, [](const auto & t) { return t.hasAnim(); });
+    return findParentIf(transform, [](const Transform & t) { return t.isAnimated(); });
 }
 
 /**************************************************************************************************/
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void TransformAlg::applyMatrix(Transform & transform, const TMatrix & matrix) {
+void TransformAlg::applyTmRecursively(Transform & transform, const TMatrix & matrix) {
     transform.mMatrix *= matrix;
-    const auto rotation = matrix.toRotation();
-
-    for (auto & a : transform.mAnimTrans) {
-        for (auto & k : a.mKeys) {
-            rotation.transformPoint(k.mPosition);
-        }
-    }
-
-    for (auto & a : transform.mAnimRotate) {
-        rotation.transformPoint(a.mVector);
-    }
-
-    //---------------
-
-    const std::function<void(Transform &, const TMatrix &)> applyToChild = [&applyToChild](Transform & tr, const TMatrix & matrix) {
-        tr.mMatrix *= matrix;
-        for (auto & ch : tr) {
-            applyToChild(*ch, matrix);
-        }
-    };
-
     for (auto & ch : transform) {
-        applyToChild(*ch, matrix);
+        applyTmRecursively(*ch, matrix);
     }
 }
 

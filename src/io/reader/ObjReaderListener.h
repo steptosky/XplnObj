@@ -30,10 +30,11 @@
 */
 
 #include <cstddef>
+#include "xpln/common/String.h"
 #include "xpln/obj/ObjMesh.h"
-#include "xpln/obj/animation/AnimVisibility.h"
-#include "xpln/obj/animation/AnimTrans.h"
-#include "xpln/obj/animation/AnimRotate.h"
+#include "xpln/obj/animation/VisibilityKey.h"
+#include "xpln/obj/animation/PositionController.h"
+#include "xpln/obj/animation/AxisSetRotation.h"
 
 namespace xobj {
 
@@ -163,12 +164,10 @@ public:
     virtual void gotAnimBegin() = 0;
     virtual void gotAnimEnd() = 0;
 
-    virtual void gotAnimHide(const AnimVisibility::Key & key) = 0;
-    virtual void gotAnimShow(const AnimVisibility::Key & key) = 0;
-    virtual void gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
-                                  std::optional<float> loopVal) = 0;
-    virtual void gotRotateAnim(AnimRotate::KeyList & keys, float (&inVector)[3], std::string & dataref,
-                               std::optional<float> loopVal) = 0;
+    virtual void gotAnimHide(VisibilityKey && key) = 0;
+    virtual void gotAnimShow(VisibilityKey && key) = 0;
+    virtual void gotTranslateAnim(Translate::KeyList & key, String && dataref, std::optional<float> loopVal) = 0;
+    virtual void gotRotateAnim(RotationAxis::KeyList & keys, float (&inVector)[3], String && dataref, std::optional<float> loopVal) = 0;
 
     //-----------------------------------------------------
 

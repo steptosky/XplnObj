@@ -34,9 +34,10 @@
 #include "xpln/Export.h"
 #include "xpln/common/TMatrix.h"
 #include "xpln/obj/ObjAbstract.h"
-#include "xpln/obj/animation/AnimTrans.h"
-#include "xpln/obj/animation/AnimRotate.h"
-#include "xpln/obj/animation/AnimVisibility.h"
+
+#include "animation/VisibilityController.h"
+#include "animation/RotationController.h"
+#include "animation/PositionController.h"
 
 namespace xobj {
 
@@ -74,9 +75,11 @@ public:
 
     std::string mName = "transform";
     TMatrix mMatrix;
-    AnimTransList mAnimTrans;
-    AnimRotateList mAnimRotate;
-    AnimVisibility mAnimVis;
+
+    PositionController mPosition;
+    RotationController mRotation;
+    VisibilityController mVisibility;
+
     ObjList mObjects;
 
     /// @}
@@ -120,17 +123,22 @@ public:
     /*!
      * \return Parent's matrix. If parent isn't set then identity matrix.
      */
-    XpObjLib TMatrix parentMatrix() const;
+    XpObjLib TMatrix parentTm() const;
 
     /// @}
     //-------------------------------------------------------------------------
     /// \name Animation
     /// @{
 
-    XpObjLib bool hasAnim() const;
-    XpObjLib bool hasAnimRotate() const;
-    XpObjLib bool hasAnimTrans() const;
-    XpObjLib bool hasAnimVis() const;
+    bool hasAnimRotate() const { return mRotation.isAnimated(); }
+    bool hasAnimTrans() const { return mPosition.isAnimated(); }
+    bool hasAnimVis() const { return mVisibility.isAnimated(); }
+
+    bool isAnimated() const {
+        return hasAnimRotate() ||
+               hasAnimTrans() ||
+               hasAnimVis();;
+    }
 
     /// @}
     //-------------------------------------------------------------------------

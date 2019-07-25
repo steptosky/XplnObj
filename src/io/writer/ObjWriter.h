@@ -39,6 +39,7 @@
 #include "ObjWritePreparer.h"
 #include "ObjWriteAnim.h"
 #include "ObjWriteGeometry.h"
+#include "ObjWriteAnim.h"
 
 namespace xobj {
 

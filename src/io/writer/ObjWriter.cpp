@@ -43,6 +43,7 @@
 #include "xpln/common/Logger.h"
 #include "sts/string/StringUtils.h"
 #include "algorithms/LodsAlg.h"
+#include "io/ObjTransformation.h"
 
 namespace xobj {
 
@@ -197,7 +198,7 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
 
         // print animation and objects
         for (const auto & currLod : mMain->lods()) {
-            if (currLod->transform().hasAnim()) {
+            if (currLod->transform().isAnimated()) {
                 XULError << currLod->objectName() << " - Lod can't be animated.";
             }
 

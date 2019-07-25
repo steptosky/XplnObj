@@ -65,7 +65,7 @@ bool LodsAlg::validate(ObjMain::Lods & inOutLods,
         }
         //---------------------------
         // Checking if the LOD has animation.
-        if (lod->transform().hasAnim()) {
+        if (lod->transform().isAnimated()) {
             XLError << objectName << " - LOD <" << lod->objectName() << "> isn't allowed to have animation.";
             return false;
         }

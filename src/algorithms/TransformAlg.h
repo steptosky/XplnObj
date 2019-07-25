@@ -53,7 +53,7 @@ public:
      * \param [in, out] inOutTrans
      * \param [in, out] inOutAnim
      */
-    XpObjLib static void applyTranslateKeysToTransform(Transform & inOutTrans, AnimTransList & inOutAnim);
+    XpObjLib static void applyTranslateKeysToTransform(Transform & inOutTrans, PositionController & inOutAnim);
 
     /*!
      * \details Applies animation rotation containing only 1 key
@@ -61,25 +61,7 @@ public:
      * \param [in, out] inOutTrans
      * \param [in, out] inOutAnim
      */
-    XpObjLib static void applyRotateKeysToTransform(Transform & inOutTrans, AnimRotateList & inOutAnim);
-
-    /// @}
-    //-------------------------------------------------------------------------
-    /// @{
-
-    /*!
-     * \details Applies specified matrix to each keys of each animation.
-     * \param [in, out] inOutAnim
-     * \param [in] tm
-     */
-    XpObjLib static void applyMatrixToAnimTranslate(AnimTransList & inOutAnim, const TMatrix & tm);
-
-    /*!
-     * \details Applies specified matrix to vector of each animation.
-     * \param [in, out] inOutAnim
-     * \param [in] tm
-     */
-    XpObjLib static void applyMatrixToAnimRotate(AnimRotateList & inOutAnim, const TMatrix & tm);
+    XpObjLib static void applyRotateKeysToTransform(Transform & inOutTrans, RotationController & inOutAnim);
 
     /// @}
     //-------------------------------------------------------------------------
@@ -147,13 +129,12 @@ public:
     /// @{
 
     /*!
-     * \todo tests
      * \details Applies matrix to transform and it children.
-     * \details it work like: move the transform and all its children are moved too.
+     * \post It doesn't touch animation and objects.
      * \param [in] transform
      * \param [in] matrix
      */
-    XpObjLib static void applyMatrix(Transform & transform, const TMatrix & matrix);
+    XpObjLib static void applyTmRecursively(Transform & transform, const TMatrix & matrix);
 
     /// @}
     //-------------------------------------------------------------------------

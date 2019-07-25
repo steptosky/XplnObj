@@ -117,11 +117,11 @@ protected:
 
     void gotAnimBegin() override;
     void gotAnimEnd() override;
-    void gotAnimHide(const AnimVisibility::Key & key) override;
-    void gotAnimShow(const AnimVisibility::Key & key) override;
-    void gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
+    void gotAnimHide(VisibilityKey && key) override;
+    void gotAnimShow(VisibilityKey && key) override;
+    void gotTranslateAnim(Translate::KeyList & key, String && dataref,
                           std::optional<float> loopVal) override;
-    void gotRotateAnim(AnimRotate::KeyList & key, float ( & inVector)[3], std::string & dataref,
+    void gotRotateAnim(RotationAxis::KeyList & key, float ( & inVector)[3], String && dataref,
                        std::optional<float> loopVal) override;
 
     //-----------------------------------------------------

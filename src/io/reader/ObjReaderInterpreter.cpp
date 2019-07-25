@@ -512,44 +512,46 @@ void ObjReaderInterpreter::gotAnimEnd() {
     mCurrentTransform = static_cast<Transform *>(mCurrentTransform->parent());
 }
 
-void ObjReaderInterpreter::gotAnimHide(const AnimVisibility::Key & key) {
+void ObjReaderInterpreter::gotAnimHide(VisibilityKey && key) {
     checkForCreateLod();
-    assert(key.mType == AnimVisibility::Key::HIDE);
+    assert(key.mType == VisibilityKey::HIDE);
     if (mCurrentTransform) {
-        mCurrentTransform->mAnimVis.mKeys.emplace_back(key);
+        mCurrentTransform->mVisibility.mKeys.emplace_back(key);
     }
 }
 
-void ObjReaderInterpreter::gotAnimShow(const AnimVisibility::Key & key) {
+void ObjReaderInterpreter::gotAnimShow(VisibilityKey && key) {
     checkForCreateLod();
-    assert(key.mType == AnimVisibility::Key::SHOW);
+    assert(key.mType == VisibilityKey::SHOW);
     if (mCurrentTransform) {
-        mCurrentTransform->mAnimVis.mKeys.emplace_back(key);
+        mCurrentTransform->mVisibility.mKeys.emplace_back(key);
     }
 }
 
-void ObjReaderInterpreter::gotTranslateAnim(AnimTrans::KeyList & key, std::string & dataref,
+void ObjReaderInterpreter::gotTranslateAnim(Translate::KeyList & key, String && dataref,
                                             const std::optional<float> loopVal) {
     checkForCreateLod();
     if (mCurrentTransform) {
-        mCurrentTransform->mAnimTrans.emplace_back();
-        AnimTrans & anim = mCurrentTransform->mAnimTrans.back();
-        anim.mKeys.swap(key);
-        anim.mDrf = dataref;
-        anim.mLoop = loopVal;
+        auto & tr = mCurrentTransform->mPosition.mAnimation.emplace_back();
+        tr.mKeys.swap(key);
+        tr.mDataRef = dataref;
+        tr.mLoop = loopVal;
     }
 }
 
-void ObjReaderInterpreter::gotRotateAnim(AnimRotate::KeyList & key, float ( & inVector)[3], std::string & dataref,
+void ObjReaderInterpreter::gotRotateAnim(RotationAxis::KeyList & key, float ( & inVector)[3], String && dataref,
                                          const std::optional<float> loopVal) {
     checkForCreateLod();
+    AxisSetRotation * anim = std::get_if<AxisSetRotation>(&mCurrentTransform->mRotation.mAnimation);
+    if (!anim) {
+        anim = &mCurrentTransform->mRotation.mAnimation.emplace<AxisSetRotation>();
+    }
     if (mCurrentTransform) {
-        mCurrentTransform->mAnimRotate.emplace_back();
-        AnimRotate & anim = mCurrentTransform->mAnimRotate.back();
-        anim.mKeys.swap(key);
-        anim.mDrf = dataref;
-        anim.mVector.set(inVector[0], inVector[1], inVector[2]);
-        anim.mLoop = loopVal;
+        auto & axis = anim->mAxes.emplace_back();
+        axis.mKeys.swap(key);
+        axis.mDataRef = dataref;
+        axis.mVector.set(inVector[0], inVector[1], inVector[2]);
+        axis.mLoop = loopVal;
     }
 }
 

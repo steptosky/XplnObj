@@ -61,9 +61,9 @@ public:
 
 private:
 
-    void printTrans(const AnimTransList & animTrans, const std::string & transformName) const;
-    void printRotate(const AnimRotateList & animRot, const std::string & transformName) const;
-    void printVisible(const AnimVisibility & animVis, const std::string & transformName) const;
+    void printTrans(const PositionController & translation, const std::string & transformName) const;
+    void printRotateAxis(const RotationAxis & axis, const std::string & transformName) const;
+    void printVisible(const VisibilityController & visibility, const std::string & transformName) const;
     void printLoop(std::optional<float> val) const;
 
     AbstractWriter * mWriter;

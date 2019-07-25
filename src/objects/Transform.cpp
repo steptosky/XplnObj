@@ -70,37 +70,7 @@ Transform & Transform::newChild(const std::string_view name) {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool Transform::hasAnim() const {
-    return hasAnimRotate() || hasAnimTrans() || hasAnimVis();
-}
-
-bool Transform::hasAnimRotate() const {
-    for (auto & a : mAnimRotate) {
-        if (a.isAnimated()) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool Transform::hasAnimTrans() const {
-    for (auto & a : mAnimTrans) {
-        if (a.isAnimated()) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool Transform::hasAnimVis() const {
-    return mAnimVis.isAnimated();
-}
-
-/**************************************************************************************************/
-///////////////////////////////////////////* Functions *////////////////////////////////////////////
-/**************************************************************************************************/
-
-TMatrix Transform::parentMatrix() const {
+TMatrix Transform::parentTm() const {
     const auto p = parent();
     return p ? p->mMatrix : TMatrix();
 }

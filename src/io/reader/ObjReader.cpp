@@ -1048,15 +1048,15 @@ bool ObjReader::readAnimLoop(ObjReadParser & parser, float & outVal) {
 
 bool ObjReader::readHideAnim(ObjReadParser & parser) const {
     if (parser.isMatch(ATTR_ANIM_HIDE)) {
-        AnimVisibility::Key k;
-        k.mType = AnimVisibility::Key::HIDE;
+        VisibilityKey k;
+        k.mType = VisibilityKey::HIDE;
         parser.skipSpace();
         k.mValue1 = parser.extractFloat();
         parser.skipSpace();
         k.mValue2 = parser.extractFloat();
         parser.skipSpace();
-        k.mDrf = parser.extractWord();
-        mObjParserListener->gotAnimHide(k);
+        k.mDataRef = String::from(parser.extractWord());
+        mObjParserListener->gotAnimHide(std::move(k));
         return true;
     }
     return false;
@@ -1064,15 +1064,15 @@ bool ObjReader::readHideAnim(ObjReadParser & parser) const {
 
 bool ObjReader::readShowAnim(ObjReadParser & parser) const {
     if (parser.isMatch(ATTR_ANIM_SHOW)) {
-        AnimVisibility::Key k;
-        k.mType = AnimVisibility::Key::SHOW;
+        VisibilityKey k;
+        k.mType = VisibilityKey::SHOW;
         parser.skipSpace();
         k.mValue1 = parser.extractFloat();
         parser.skipSpace();
         k.mValue2 = parser.extractFloat();
         parser.skipSpace();
-        k.mDrf = parser.extractWord();
-        mObjParserListener->gotAnimShow(k);
+        k.mDataRef = String::from(parser.extractWord());
+        mObjParserListener->gotAnimShow(std::move(k));
         return true;
     }
     return false;
@@ -1080,39 +1080,39 @@ bool ObjReader::readShowAnim(ObjReadParser & parser) const {
 
 bool ObjReader::readTranslateAnim(ObjReadParser & parser) const {
     if (parser.isMatch(ATTR_TRANS)) {
-        AnimTrans::KeyList keys(2);
+        Translate::KeyList keys(2);
         parser.skipSpace();
-        keys[0].mPosition.x = parser.extractFloat();
+        keys[0].position.x = parser.extractFloat();
         parser.skipSpace();
-        keys[0].mPosition.y = parser.extractFloat();
+        keys[0].position.y = parser.extractFloat();
         parser.skipSpace();
-        keys[0].mPosition.z = parser.extractFloat();
+        keys[0].position.z = parser.extractFloat();
 
         parser.skipSpace();
-        keys[1].mPosition.x = parser.extractFloat();
+        keys[1].position.x = parser.extractFloat();
         parser.skipSpace();
-        keys[1].mPosition.y = parser.extractFloat();
+        keys[1].position.y = parser.extractFloat();
         parser.skipSpace();
-        keys[1].mPosition.z = parser.extractFloat();
+        keys[1].position.z = parser.extractFloat();
 
         parser.skipSpace();
-        keys[0].mDrfValue = parser.extractFloat();
+        keys[0].value = parser.extractFloat();
         parser.skipSpace();
-        keys[1].mDrfValue = parser.extractFloat();
+        keys[1].value = parser.extractFloat();
 
-        if (keys[0].mPosition == keys[1].mPosition) {
+        if (keys[0].position == keys[1].position) {
             keys.pop_back();
         }
 
         parser.skipSpace();
-        std::string dataref = parser.extractWord();
-        if (dataref == DATAREF_DEFAULT_VAL) {
+        String dataref = String::from(parser.extractWord());
+        if (dataref.mString == DATAREF_DEFAULT_VAL) {
             dataref.clear();
         }
 
         float loopVal = 0.0f;
         const bool hasLoop = readAnimLoop(parser, loopVal);
-        mObjParserListener->gotTranslateAnim(keys, dataref, hasLoop ? std::optional<float>(loopVal) : std::nullopt);
+        mObjParserListener->gotTranslateAnim(keys, std::move(dataref), hasLoop ? std::optional<float>(loopVal) : std::nullopt);
         return true;
     }
     return false;
@@ -1128,30 +1128,31 @@ bool ObjReader::readRotateAnim(ObjReadParser & parser) const {
         parser.skipSpace();
         vector[2] = parser.extractFloat();
 
-        AnimRotate::KeyList keys(2);
+        RotationAxis::KeyList keys(2);
         parser.skipSpace();
-        keys[0].mAngleDegrees = parser.extractFloat();
+        keys[0].angleDeg.setDeg(parser.extractFloat());
         parser.skipSpace();
-        keys[1].mAngleDegrees = parser.extractFloat();
+        keys[1].angleDeg.setDeg(parser.extractFloat());
 
         parser.skipSpace();
-        keys[0].mDrfValue = parser.extractFloat();
+        keys[0].value = parser.extractFloat();
         parser.skipSpace();
-        keys[1].mDrfValue = parser.extractFloat();
+        keys[1].value = parser.extractFloat();
 
-        if (sts::isEqual(keys[0].mAngleDegrees, keys[1].mAngleDegrees) ||
-            sts::isEqual(keys[0].mDrfValue, keys[1].mDrfValue)) {
+        if (keys[0].angleDeg.compare(keys[1].angleDeg) ||
+            sts::isEqual(keys[0].value, keys[1].value)) {
             keys.pop_back();
         }
 
         parser.skipSpace();
-        std::string dataref = parser.extractWord();
-        if (dataref == DATAREF_DEFAULT_VAL)
+        String dataref = String::from(parser.extractWord());
+        if (dataref.mString == DATAREF_DEFAULT_VAL) {
             dataref.clear();
+        }
 
         float loopVal = 0.0f;
         const bool hasLoop = readAnimLoop(parser, loopVal);
-        mObjParserListener->gotRotateAnim(keys, vector, dataref, hasLoop ? std::optional<float>(loopVal) : std::nullopt);
+        mObjParserListener->gotRotateAnim(keys, vector, std::move(dataref), hasLoop ? std::optional<float>(loopVal) : std::nullopt);
         return true;
     }
     return false;
@@ -1160,29 +1161,30 @@ bool ObjReader::readRotateAnim(ObjReadParser & parser) const {
 bool ObjReader::readTranslateKeysAnim(ObjReadParser & parser) const {
     if (parser.isMatch(ATTR_TRANS_BEGIN)) {
         parser.skipSpace();
-        std::string dataref = parser.extractWord();
-        if (dataref == DATAREF_DEFAULT_VAL)
+        String dataref = String::from(parser.extractWord());
+        if (dataref.mString == DATAREF_DEFAULT_VAL) {
             dataref.clear();
+        }
         parser.nextLine();
 
-        AnimTrans::KeyList keys;
+        Translate::KeyList keys;
         while (!parser.isEnd() && parser.isMatch(ATTR_TRANS_KEY)) {
             keys.emplace_back();
             parser.skipSpace();
-            keys.back().mDrfValue = parser.extractFloat();
+            keys.back().value = parser.extractFloat();
             parser.skipSpace();
-            keys.back().mPosition.x = parser.extractFloat();
+            keys.back().position.x = parser.extractFloat();
             parser.skipSpace();
-            keys.back().mPosition.y = parser.extractFloat();
+            keys.back().position.y = parser.extractFloat();
             parser.skipSpace();
-            keys.back().mPosition.z = parser.extractFloat();
+            keys.back().position.z = parser.extractFloat();
             parser.nextLine();
         }
 
         if (parser.isMatch(ATTR_TRANS_END)) {
             float loopVal = 0.0f;
             const bool hasLoop = readAnimLoop(parser, loopVal);
-            mObjParserListener->gotTranslateAnim(keys, dataref, hasLoop ? std::optional<float>(loopVal) : std::nullopt);
+            mObjParserListener->gotTranslateAnim(keys, std::move(dataref), hasLoop ? std::optional<float>(loopVal) : std::nullopt);
         }
         else {
             XULError << "Incorrect translate key animation.";
@@ -1204,25 +1206,26 @@ bool ObjReader::readRotateKeysAnim(ObjReadParser & parser) const {
         vector[2] = parser.extractFloat();
 
         parser.skipSpace();
-        std::string dataref = parser.extractWord();
-        if (dataref == DATAREF_DEFAULT_VAL)
+        String dataref = String::from(parser.extractWord());
+        if (dataref.mString == DATAREF_DEFAULT_VAL) {
             dataref.clear();
+        }
         parser.nextLine();
 
-        AnimRotate::KeyList keys;
+        RotationAxis::KeyList keys;
         while (!parser.isEnd() && parser.isMatch(ATTR_ROTATE_KEY)) {
             keys.emplace_back();
             parser.skipSpace();
-            keys.back().mDrfValue = parser.extractFloat();
+            keys.back().value = parser.extractFloat();
             parser.skipSpace();
-            keys.back().mAngleDegrees = parser.extractFloat();
+            keys.back().angleDeg.setDeg(parser.extractFloat());
             parser.nextLine();
         }
 
         if (parser.isMatch(ATTR_ROTATE_END)) {
             float loopVal = 0.0f;
             const bool hasLoop = readAnimLoop(parser, loopVal);
-            mObjParserListener->gotRotateAnim(keys, vector, dataref, hasLoop ? std::optional<float>(loopVal) : std::nullopt);
+            mObjParserListener->gotRotateAnim(keys, vector, std::move(dataref), hasLoop ? std::optional<float>(loopVal) : std::nullopt);
         }
         else {
             XULError << "Incorrect rotate key animation.";

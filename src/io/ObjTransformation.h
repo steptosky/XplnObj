@@ -38,11 +38,9 @@ namespace xobj {
 /**********************************************************************************************************************/
 
 class ObjTransformation {
-
-    ObjTransformation() = default;
-    ~ObjTransformation() = default;
-
 public:
+
+    ObjTransformation() = delete;
 
     XpObjLib static void correctExportTransform(ObjMain & mainObj, const TMatrix & tm, bool useLodTm);
     XpObjLib static void correctImportTransform(ObjMain & mainObj, const TMatrix & tm);
@@ -55,7 +53,6 @@ private:
     //-------------------------------------------------------------------------
 
     static void mapsExpCoordinates(Transform & transform, const TMatrix & rootTm);
-    static void translationOfTransformToAnimTransKeys(Transform & inOutTrans);
 
     //-------------------------------------------------------------------------
 

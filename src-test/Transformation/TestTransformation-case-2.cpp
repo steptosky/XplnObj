@@ -131,9 +131,9 @@ TEST(TestTransform_case2, case1) {
     transformOut2.mMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
     transformOut3.mMatrix.setPosition(Point3(0.0f, 0.0f, 150.0f));
 
-    TestUtils::createTestAnimTranslate(transformOut1.mAnimTrans, Point3(0.0f, 0.0f, 50.0f), TMatrix(), "trans1");
-    TestUtils::createTestAnimRotate(transformOut2.mAnimRotate, Point3(0.0f, 1.0f, 0.0f), "rotate1");
-    TestUtils::createTestAnimTranslate(transformOut2.mAnimTrans, Point3(50.0f, 0.0f, 0.0f), TMatrix(), "trans2");
+    TestUtils::createTestAnimTranslate(transformOut1.mPosition, Point3(0.0f, 0.0f, 50.0f), TMatrix(), "trans1");
+    TestUtils::createTestAnimRotate(transformOut2.mRotation, Point3(0.0f, 1.0f, 0.0f), "rotate1");
+    TestUtils::createTestAnimTranslate(transformOut2.mPosition, Point3(50.0f, 0.0f, 0.0f), TMatrix(), "trans2");
     ExportContext expContext(fileName);
     ASSERT_TRUE(mainOut.exportObj(expContext));
 
@@ -163,20 +163,24 @@ TEST(TestTransform_case2, case1) {
 
     Transform animResult1;
     Transform animResult2;
-    TestUtils::createTestAnimTranslate(animResult1.mAnimTrans,
-                                       AnimTransKey(-50.0f, 0.0f, 0.0f, -10.0f), AnimTransKey(50.0f, 0.0f, -0.0f, 10.0f), "trans1");
-    TestUtils::createTestAnimTranslate(animResult2.mAnimTrans,
-                                       AnimTransKey(0.0f, 0.0f, -0.0f, -10.0f), AnimTransKey(100.0f, 0.0f, -0.0f, 10.0f), "trans2");
-    TestUtils::createTestAnimRotate(animResult2.mAnimRotate, Point3(0.0f, 1.0f, 0.0f), "rotate1");
+    TestUtils::createTestAnimTranslate(animResult1.mPosition,
+                                       Translate::Key{Point3(-50.0f, 0.0f, 0.0f), -10.0f},
+                                       Translate::Key{Point3(50.0f, 0.0f, -0.0f), 10.0f},
+                                       "trans1");
+    TestUtils::createTestAnimTranslate(animResult2.mPosition,
+                                       Translate::Key{Point3(0.0f, 0.0f, -0.0f), -10.0f},
+                                       Translate::Key{Point3(100.0f, 0.0f, -0.0f), 10.0f},
+                                       "trans2");
+    TestUtils::createTestAnimRotate(animResult2.mRotation, Point3(0.0f, 1.0f, 0.0f), "rotate1");
     std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
     std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
     std::unique_ptr<ObjMesh> meshTarget3(TestUtilsObjMesh::createPyramidTestMesh("mesh 3", Point3(50.0f, 0.0f, 0.0f), 0.0f));
 
     ASSERT_TRUE(transformIn1->mMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
     ASSERT_TRUE(transformIn2->mMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
-    ASSERT_TRUE(transformIn1->mAnimTrans == animResult1.mAnimTrans);
-    ASSERT_TRUE(transformIn2->mAnimTrans == animResult2.mAnimTrans);
-    ASSERT_TRUE(transformIn2->mAnimRotate == animResult2.mAnimRotate);
+    ASSERT_TRUE(transformIn1->mPosition == animResult1.mPosition);
+    ASSERT_TRUE(transformIn2->mPosition == animResult2.mPosition);
+    ASSERT_TRUE(transformIn2->mRotation == animResult2.mRotation);
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn3, meshTarget3.get()));
@@ -270,8 +274,8 @@ TEST(TestTransform_case2, case2) {
     transformOut2.mMatrix.setPosition(Point3(0.0f, 0.0f, 100.0f));
     transformOut3.mMatrix.setPosition(Point3(0.0f, 0.0f, 150.0f));
 
-    TestUtils::createTestAnimRotate(transformOut1.mAnimRotate, Point3(0.0f, 1.0f, 0.0f), "rotate1");
-    TestUtils::createTestAnimRotate(transformOut2.mAnimRotate, Point3(0.0f, 1.0f, 0.0f), "rotate2");
+    TestUtils::createTestAnimRotate(transformOut1.mRotation, Point3(0.0f, 1.0f, 0.0f), "rotate1");
+    TestUtils::createTestAnimRotate(transformOut2.mRotation, Point3(0.0f, 1.0f, 0.0f), "rotate2");
     ExportContext expContext(fileName);
     ASSERT_TRUE(mainOut.exportObj(expContext));
 
@@ -301,16 +305,16 @@ TEST(TestTransform_case2, case2) {
 
     Transform animResult1;
     Transform animResult2;
-    TestUtils::createTestAnimRotate(animResult1.mAnimRotate, Point3(0.0f, 1.0f, 0.0f), "rotate1");
-    TestUtils::createTestAnimRotate(animResult2.mAnimRotate, Point3(0.0f, 1.0f, 0.0f), "rotate2");
+    TestUtils::createTestAnimRotate(animResult1.mRotation, Point3(0.0f, 1.0f, 0.0f), "rotate1");
+    TestUtils::createTestAnimRotate(animResult2.mRotation, Point3(0.0f, 1.0f, 0.0f), "rotate2");
     std::unique_ptr<ObjMesh> meshTarget1(TestUtilsObjMesh::createPyramidTestMesh("mesh 1", Point3(0.0f, 0.0f, 0.0f), 0.0f));
     std::unique_ptr<ObjMesh> meshTarget2(TestUtilsObjMesh::createPyramidTestMesh("mesh 2", Point3(0.0f, 0.0f, 0.0f), 0.0f));
     std::unique_ptr<ObjMesh> meshTarget3(TestUtilsObjMesh::createPyramidTestMesh("mesh 3", Point3(50.0f, 0.0f, 0.0f), 0.0f));
 
     ASSERT_TRUE(transformIn1->mMatrix.position() == Point3(0.0f, 0.0f, 0.0f));
     ASSERT_TRUE(transformIn2->mMatrix.position() == Point3(50.0f, 0.0f, 0.0f));
-    ASSERT_TRUE(transformIn1->mAnimRotate == animResult1.mAnimRotate);
-    ASSERT_TRUE(transformIn2->mAnimRotate == animResult2.mAnimRotate);
+    ASSERT_TRUE(transformIn1->mRotation == animResult1.mRotation);
+    ASSERT_TRUE(transformIn2->mRotation == animResult2.mRotation);
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn1, meshTarget1.get()));
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn2, meshTarget2.get()));
     ASSERT_NO_FATAL_FAILURE(TestUtilsObjMesh::compareMeshData(meshIn3, meshTarget3.get()));

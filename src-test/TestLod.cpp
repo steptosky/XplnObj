@@ -286,9 +286,9 @@ TEST_F(TestLod, validator_animation) {
 
     ObjLodGroup & lGroup1 = main.addLod();
     lGroup1.transform().mObjects.emplace_back(m1);
-    lGroup1.transform().mAnimTrans.emplace_back(AnimTrans());
-    lGroup1.transform().mAnimTrans.back().mKeys.emplace_back(AnimTransKey(1.0f, 1.0f, 1.0f, 1.0f));
-    lGroup1.transform().mAnimTrans.back().mKeys.emplace_back(AnimTransKey(2.0f, 2.0f, 2.0f, 2.0f));
+    lGroup1.transform().mPosition.mAnimation.emplace_back();
+    lGroup1.transform().mPosition.mAnimation.back().mKeys.emplace_back(Translate::Key{Point3(1.0f, 1.0f, 1.0f), 1.0f});
+    lGroup1.transform().mPosition.mAnimation.back().mKeys.emplace_back(Translate::Key{Point3(2.0f, 2.0f, 2.0f), 2.0f});
     m1 = nullptr;
 
     lGroup1.setNearVal(0.0);

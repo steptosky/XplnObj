@@ -32,7 +32,6 @@
 #include <xpln/obj/ObjMain.h>
 #include <xpln/obj/ObjMesh.h>
 #include "../TestUtilsObjMesh.h"
-#include "../totext.h"
 #include "../TestUtils.h"
 
 using namespace xobj;
@@ -49,45 +48,44 @@ TEST(TestTransformCommon, anim_enabled) {
     ObjLodGroup & lod = main.addLod();
 
     ASSERT_FALSE(lod.transform().hasAnimTrans());
-    ASSERT_FALSE(lod.transform().hasAnim());
+    ASSERT_FALSE(lod.transform().isAnimated());
     ASSERT_FALSE(lod.transform().hasAnimRotate());
     ASSERT_FALSE(lod.transform().hasAnimVis());
 
     //--------------------
     // translate
 
-    lod.transform().mAnimTrans.emplace_back();
-    AnimTrans & animTrans = lod.transform().mAnimTrans.back();
-    animTrans.mKeys.emplace_back(AnimTrans::Key(Point3(1.0f, 2.0f, 3.0f), 1.0f));
-    animTrans.mKeys.emplace_back(AnimTrans::Key(Point3(10.0f, 20.0f, 30.0f), 5.0f));
+    auto & animTrans = lod.transform().mPosition.mAnimation.emplace_back();
+    animTrans.mKeys.emplace_back(Translate::Key{Point3(1.0f, 2.0f, 3.0f), 1.0f});
+    animTrans.mKeys.emplace_back(Translate::Key{Point3(10.0f, 20.0f, 30.0f), 5.0f});
 
     ASSERT_TRUE(lod.transform().hasAnimTrans());
-    ASSERT_TRUE(lod.transform().hasAnim());
+    ASSERT_TRUE(lod.transform().isAnimated());
     ASSERT_FALSE(lod.transform().hasAnimRotate());
     ASSERT_FALSE(lod.transform().hasAnimVis());
 
     //--------------------
     // rotation
 
-    lod.transform().mAnimRotate.emplace_back();
-    AnimRotate & animRotate = lod.transform().mAnimRotate.back();
-    animRotate.mKeys.emplace_back(AnimRotate::Key(20.0f, 1.0f));
-    animRotate.mKeys.emplace_back(AnimRotate::Key(30.0f, 5.0f));
+    auto & animAxis = lod.transform().mRotation.mAnimation.emplace<AxisSetRotation>();
+    auto & animRotate = animAxis.mAxes.emplace_back();
+    animRotate.mKeys.emplace_back(RotationAxis::Key{Degrees(20.0f), 1.0f});
+    animRotate.mKeys.emplace_back(RotationAxis::Key{Degrees(30.0f), 5.0f});
 
     ASSERT_TRUE(lod.transform().hasAnimTrans());
-    ASSERT_TRUE(lod.transform().hasAnim());
+    ASSERT_TRUE(lod.transform().isAnimated());
     ASSERT_TRUE(lod.transform().hasAnimRotate());
     ASSERT_FALSE(lod.transform().hasAnimVis());
 
     //--------------------
     // visibility
 
-    AnimVisibility & animVis = lod.transform().mAnimVis;
-    animVis.mKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 1.0f, 2.0f, "data-ref"));
-    animVis.mKeys.emplace_back(AnimVisibility::Key(AnimVisibility::Key::HIDE, 3.0f, 4.0f, "data-ref"));
+    auto & animVis = lod.transform().mVisibility;
+    animVis.mKeys.emplace_back(VisibilityKey(VisibilityKey::HIDE, 1.0f, 2.0f, String::from("data-ref")));
+    animVis.mKeys.emplace_back(VisibilityKey(VisibilityKey::HIDE, 3.0f, 4.0f, String::from("data-ref")));
 
     ASSERT_TRUE(lod.transform().hasAnimTrans());
-    ASSERT_TRUE(lod.transform().hasAnim());
+    ASSERT_TRUE(lod.transform().isAnimated());
     ASSERT_TRUE(lod.transform().hasAnimRotate());
     ASSERT_TRUE(lod.transform().hasAnimVis());
 }

@@ -81,62 +81,59 @@ public:
 
     //-----------------------------------------------------
 
-    static void createTestAnimTranslate(AnimTransList & outAnim, const Point3 & inVec, const TMatrix & inMtx, const char * inDrf = nullptr) {
-        AnimTrans anim;
+    static void createTestAnimTranslate(PositionController & outAnim, const Point3 & inVec, const TMatrix & inMtx, const char * inDrf = nullptr) {
+        Translate & anim = outAnim.mAnimation.emplace_back();
         if (!inDrf) {
-            anim.mDrf = "test";
+            anim.mDataRef = String::from("test");
         }
         else {
-            anim.mDrf = inDrf;
+            anim.mDataRef = String::from(inDrf);
         }
-        anim.mKeys.emplace_back(AnimTrans::Key(inVec * -1.0f, -10.0f));
-        inMtx.transformPoint(anim.mKeys.back().mPosition);
+        anim.mKeys.emplace_back(Translate::Key{inVec * -1.0f, -10.0f});
+        inMtx.transformPoint(anim.mKeys.back().position);
         //			anim.mKeys.emplace_back(AnimTrans::Key(Point3(0.0), 0.0f));
         //			inMtx.transformPoint(anim.mKeys.back().mPosition);
-        anim.mKeys.emplace_back(AnimTrans::Key(inVec, 10.0f));
-        inMtx.transformPoint(anim.mKeys.back().mPosition);
-        outAnim.emplace_back(anim);
+        anim.mKeys.emplace_back(Translate::Key{inVec, 10.0f});
+        inMtx.transformPoint(anim.mKeys.back().position);
     }
 
-    static void createTestAnimTranslate(AnimTransList & outAnim, const AnimTransKey & inKey1, const AnimTransKey & inKey2, const char * inDrf = nullptr) {
+    static void createTestAnimTranslate(PositionController & outAnim, const Translate::Key & inKey1, const Translate::Key & inKey2, const char * inDrf = nullptr) {
         createTestAnimTranslate(outAnim, inKey1, inKey2, TMatrix(), inDrf);
     }
 
-    static void createTestAnimTranslate(AnimTransList & outAnim, const AnimTransKey & inKey1, const AnimTransKey & inKey2, const TMatrix & inMtx = TMatrix(), const char * inDrf = nullptr) {
-        AnimTrans anim;
+    static void createTestAnimTranslate(PositionController & outAnim, const Translate::Key & inKey1, const Translate::Key & inKey2, const TMatrix & inMtx = TMatrix(), const char * inDrf = nullptr) {
+        Translate & anim = outAnim.mAnimation.emplace_back();
         if (!inDrf) {
-            anim.mDrf = "test";
+            anim.mDataRef = String::from("test");
         }
         else {
-            anim.mDrf = inDrf;
+            anim.mDataRef = String::from(inDrf);
         }
         anim.mKeys.emplace_back(inKey1);
-        inMtx.transformPoint(anim.mKeys.back().mPosition);
+        inMtx.transformPoint(anim.mKeys.back().position);
         anim.mKeys.emplace_back(inKey2);
-        inMtx.transformPoint(anim.mKeys.back().mPosition);
-        outAnim.emplace_back(anim);
+        inMtx.transformPoint(anim.mKeys.back().position);
     }
 
-    static void createTestAnimTranslate(AnimTransList & outAnim, const AnimTransKey * inKey, size_t inCount, const TMatrix & inMtx, const char * inDrf = nullptr) {
-        AnimTrans anim;
+    static void createTestAnimTranslate(PositionController & outAnim, const Translate::Key * inKey, size_t inCount, const TMatrix & inMtx, const char * inDrf = nullptr) {
+        Translate & anim = outAnim.mAnimation.emplace_back();
         if (!inDrf) {
-            anim.mDrf = "test";
+            anim.mDataRef = String::from("test");
         }
         else {
-            anim.mDrf = inDrf;
+            anim.mDataRef = String::from(inDrf);
         }
         for (size_t i = 0; i < inCount; ++i) {
             anim.mKeys.emplace_back(inKey[i]);
-            inMtx.transformPoint(anim.mKeys.back().mPosition);
+            inMtx.transformPoint(anim.mKeys.back().position);
         }
-        outAnim.emplace_back(anim);
     }
 
-    static void createTestAnimTranslate(AnimTransList & outAnim, const TMatrix & inMtx, const char * inDrf = nullptr) {
+    static void createTestAnimTranslate(PositionController & outAnim, const TMatrix & inMtx, const char * inDrf = nullptr) {
         createTestAnimTranslate(outAnim, Point3(50.0f, 50.0f, 50.0f), inMtx, inDrf);
     }
 
-    static void createTestAnimTranslate(AnimTransList & outAnim, const float inRotate, const char * inDrf = nullptr) {
+    static void createTestAnimTranslate(PositionController & outAnim, const float inRotate, const char * inDrf = nullptr) {
         TMatrix tm;
         if (inRotate != 0.0f) {
             tm.rotateDegreesY(inRotate);
@@ -144,7 +141,7 @@ public:
         createTestAnimTranslate(outAnim, tm, inDrf);
     }
 
-    static void createTestAnimTranslate(AnimTransList & outAnim, const Point3 & shift, const char * inDrf = nullptr) {
+    static void createTestAnimTranslate(PositionController & outAnim, const Point3 & shift, const char * inDrf = nullptr) {
         TMatrix tm;
         tm.setPosition(shift);
         createTestAnimTranslate(outAnim, tm, inDrf);
@@ -152,24 +149,25 @@ public:
 
     //-----------------------------------------------------
 
-    static void createTestAnimRotate(AnimRotateList & outAnim, const Point3 & onVec, const TMatrix & inMtx, const char * inDrf = nullptr) {
-        AnimRotate anim;
+    static void createTestAnimRotate(RotationController & outAnim, const Point3 & onVec, const TMatrix & inMtx, const char * inDrf = nullptr) {
+        AxisSetRotation axes;
+        auto & anim = axes.mAxes.emplace_back();
         if (!inDrf) {
-            anim.mDrf = "test";
+            anim.mDataRef = String::from("test");
         }
         else {
-            anim.mDrf = inDrf;
+            anim.mDataRef = String::from(inDrf);
         }
         anim.mVector = onVec.normalized();
         inMtx.transformVector(anim.mVector);
 
-        anim.mKeys.emplace_back(AnimRotate::Key(-90.0f, -10.0f));
+        anim.mKeys.emplace_back(RotationAxis::Key{Degrees(-90.0f), -10.0f});
         //anim.mKeys.emplace_back(AnimRotate::Key(0.0f, 0.0f));
-        anim.mKeys.emplace_back(AnimRotate::Key(90.0f, 10.0f));
-        outAnim.emplace_back(anim);
+        anim.mKeys.emplace_back(RotationAxis::Key{Degrees(90.0f), 10.0f});
+        outAnim.mAnimation = std::move(axes);
     }
 
-    static void createTestAnimRotate(AnimRotateList & outAnim, const Point3 & onVec, const char * inDrf = nullptr) {
+    static void createTestAnimRotate(RotationController & outAnim, const Point3 & onVec, const char * inDrf = nullptr) {
         createTestAnimRotate(outAnim, onVec, TMatrix(), inDrf);
     }
 

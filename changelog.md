@@ -13,8 +13,9 @@ StepToSky: X-Plane Obj Library
 
 ##### Breaking backward compatibility:
 - **Changed** Code style: public variable now have the prefix m instead of p.
+- **Changed** Reworked animation classes.
 - **Changed** Attribute sets use std::optional now.
-- **Changed** Tree attribute location. It is presented as a parameter of the mesh object now.
+- **Changed** 'Tree' attribute location. It is presented as a parameter of the mesh object now.
 - **Changed** Manipulator use std::variant for its type now.
 - **Removed** `enable/disable` flags from the attributes as the std::option is used.
 

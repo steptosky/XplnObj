@@ -30,6 +30,7 @@
 #include "xpln/utils/LightUtils.h"
 #include <stdexcept>
 #include <algorithm>
+#include <fstream>
 #include <cmath>
 #include <cctype>
 #include <cstring>
@@ -186,8 +187,8 @@ std::vector<LightUtils::LightName> LightUtils::parseLights(const Path & filePath
         LightName & name = out.emplace_back();
         std::size_t counter = 0;
         while (startName != currPos) {
-            if (counter > LightName::mDataSize) {
-                XULError << "Light name is too big, constraint is: " << LightName::mDataSize;
+            if (counter > LightName::DataSize) {
+                XULError << "Light name is too big, constraint is: " << LightName::DataSize;
                 break;
             }
             name.mData[counter] = *startName;

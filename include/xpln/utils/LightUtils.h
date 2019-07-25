@@ -30,6 +30,7 @@
 */
 
 #include "xpln/Export.h"
+#include "xpln/common/Path.h"
 #include <string>
 #include <string_view>
 #include <map>
@@ -193,8 +194,9 @@ public:
     public:
         std::string_view name() const { return std::string_view(mData, mSize); }
     private:
-        static const std::size_t mDataSize = 64;
-        char mData[mDataSize + 1] = {0};
+        enum { DataSize = 64 };
+
+        char mData[DataSize + 1] = {0};
         std::size_t mSize = 0;
     };
 

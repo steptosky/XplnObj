@@ -264,8 +264,7 @@ bool checkParameters(const ObjLightSpillCust & inVal, const std::string & inPref
 
     const std::string & drf = inVal.dataRef();
     if (drf == "none" || drf.empty()) {
-        XULInfo << inPrefix <<
-                " - Hasn't got dataref value, consider to use param light instead spill custom if you don't need dataref.";
+        XULInfo << inPrefix << " - doesn't have dataref, consider to use param light instead of spill custom.";
     }
 
     if (String::isValidForDataRef(drf)) {

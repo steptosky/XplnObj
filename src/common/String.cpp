@@ -60,12 +60,14 @@ String String::from(const std::string & s) noexcept {
     return out;
 }
 
+#ifdef _MSC_VER
 String String::from(const std::wstring & s) {
     static std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
     String out;
     out.mString = convert.to_bytes(s);
     return out;
 }
+#endif
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

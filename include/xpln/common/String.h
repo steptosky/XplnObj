@@ -74,10 +74,20 @@ public:
     ///@{
 
     XpObjLib static String from(const std::string & s) noexcept;
+#ifdef _MSC_VER
     XpObjLib static String from(const std::wstring & s);
+#endif
 
     operator std::string&() noexcept { return mString; }
     operator const std::string&() const noexcept { return mString; }
+
+    ///@}
+    //---------------------------------------------------
+    ///@{
+
+    bool isEmpty() const { return mString.empty(); }
+    bool isNone() const { return mString == "none"; }
+    void clear() { mString.clear(); }
 
     ///@}
     //---------------------------------------------------

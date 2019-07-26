@@ -1051,9 +1051,9 @@ bool ObjReader::readHideAnim(ObjReadParser & parser) const {
         VisibilityKey k;
         k.mType = VisibilityKey::HIDE;
         parser.skipSpace();
-        k.mValue1 = parser.extractFloat();
+        k.mDrfValue1 = parser.extractFloat();
         parser.skipSpace();
-        k.mValue2 = parser.extractFloat();
+        k.mDrfValue2 = parser.extractFloat();
         parser.skipSpace();
         k.mDataRef = String::from(parser.extractWord());
         mObjParserListener->gotAnimHide(std::move(k));
@@ -1067,9 +1067,9 @@ bool ObjReader::readShowAnim(ObjReadParser & parser) const {
         VisibilityKey k;
         k.mType = VisibilityKey::SHOW;
         parser.skipSpace();
-        k.mValue1 = parser.extractFloat();
+        k.mDrfValue1 = parser.extractFloat();
         parser.skipSpace();
-        k.mValue2 = parser.extractFloat();
+        k.mDrfValue2 = parser.extractFloat();
         parser.skipSpace();
         k.mDataRef = String::from(parser.extractWord());
         mObjParserListener->gotAnimShow(std::move(k));
@@ -1082,25 +1082,25 @@ bool ObjReader::readTranslateAnim(ObjReadParser & parser) const {
     if (parser.isMatch(ATTR_TRANS)) {
         Translate::KeyList keys(2);
         parser.skipSpace();
-        keys[0].position.x = parser.extractFloat();
+        keys[0].mPos.x = parser.extractFloat();
         parser.skipSpace();
-        keys[0].position.y = parser.extractFloat();
+        keys[0].mPos.y = parser.extractFloat();
         parser.skipSpace();
-        keys[0].position.z = parser.extractFloat();
+        keys[0].mPos.z = parser.extractFloat();
 
         parser.skipSpace();
-        keys[1].position.x = parser.extractFloat();
+        keys[1].mPos.x = parser.extractFloat();
         parser.skipSpace();
-        keys[1].position.y = parser.extractFloat();
+        keys[1].mPos.y = parser.extractFloat();
         parser.skipSpace();
-        keys[1].position.z = parser.extractFloat();
+        keys[1].mPos.z = parser.extractFloat();
 
         parser.skipSpace();
-        keys[0].value = parser.extractFloat();
+        keys[0].mDrfValue = parser.extractFloat();
         parser.skipSpace();
-        keys[1].value = parser.extractFloat();
+        keys[1].mDrfValue = parser.extractFloat();
 
-        if (keys[0].position == keys[1].position) {
+        if (keys[0].mPos == keys[1].mPos) {
             keys.pop_back();
         }
 
@@ -1130,17 +1130,17 @@ bool ObjReader::readRotateAnim(ObjReadParser & parser) const {
 
         RotationAxis::KeyList keys(2);
         parser.skipSpace();
-        keys[0].angleDeg.setDeg(parser.extractFloat());
+        keys[0].mAngle.setDeg(parser.extractFloat());
         parser.skipSpace();
-        keys[1].angleDeg.setDeg(parser.extractFloat());
+        keys[1].mAngle.setDeg(parser.extractFloat());
 
         parser.skipSpace();
-        keys[0].value = parser.extractFloat();
+        keys[0].mDrfValue = parser.extractFloat();
         parser.skipSpace();
-        keys[1].value = parser.extractFloat();
+        keys[1].mDrfValue = parser.extractFloat();
 
-        if (keys[0].angleDeg.compare(keys[1].angleDeg) ||
-            sts::isEqual(keys[0].value, keys[1].value)) {
+        if (keys[0].mAngle.compare(keys[1].mAngle) ||
+            sts::isEqual(keys[0].mDrfValue, keys[1].mDrfValue)) {
             keys.pop_back();
         }
 
@@ -1171,13 +1171,13 @@ bool ObjReader::readTranslateKeysAnim(ObjReadParser & parser) const {
         while (!parser.isEnd() && parser.isMatch(ATTR_TRANS_KEY)) {
             keys.emplace_back();
             parser.skipSpace();
-            keys.back().value = parser.extractFloat();
+            keys.back().mDrfValue = parser.extractFloat();
             parser.skipSpace();
-            keys.back().position.x = parser.extractFloat();
+            keys.back().mPos.x = parser.extractFloat();
             parser.skipSpace();
-            keys.back().position.y = parser.extractFloat();
+            keys.back().mPos.y = parser.extractFloat();
             parser.skipSpace();
-            keys.back().position.z = parser.extractFloat();
+            keys.back().mPos.z = parser.extractFloat();
             parser.nextLine();
         }
 
@@ -1216,9 +1216,9 @@ bool ObjReader::readRotateKeysAnim(ObjReadParser & parser) const {
         while (!parser.isEnd() && parser.isMatch(ATTR_ROTATE_KEY)) {
             keys.emplace_back();
             parser.skipSpace();
-            keys.back().value = parser.extractFloat();
+            keys.back().mDrfValue = parser.extractFloat();
             parser.skipSpace();
-            keys.back().angleDeg.setDeg(parser.extractFloat());
+            keys.back().mAngle.setDeg(parser.extractFloat());
             parser.nextLine();
         }
 

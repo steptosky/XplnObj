@@ -90,11 +90,11 @@ public:
             anim.mDataRef = String::from(inDrf);
         }
         anim.mKeys.emplace_back(Translate::Key{inVec * -1.0f, -10.0f});
-        inMtx.transformPoint(anim.mKeys.back().position);
+        inMtx.transformPoint(anim.mKeys.back().mPos);
         //			anim.mKeys.emplace_back(AnimTrans::Key(Point3(0.0), 0.0f));
         //			inMtx.transformPoint(anim.mKeys.back().mPosition);
         anim.mKeys.emplace_back(Translate::Key{inVec, 10.0f});
-        inMtx.transformPoint(anim.mKeys.back().position);
+        inMtx.transformPoint(anim.mKeys.back().mPos);
     }
 
     static void createTestAnimTranslate(PositionController & outAnim, const Translate::Key & inKey1, const Translate::Key & inKey2, const char * inDrf = nullptr) {
@@ -110,9 +110,9 @@ public:
             anim.mDataRef = String::from(inDrf);
         }
         anim.mKeys.emplace_back(inKey1);
-        inMtx.transformPoint(anim.mKeys.back().position);
+        inMtx.transformPoint(anim.mKeys.back().mPos);
         anim.mKeys.emplace_back(inKey2);
-        inMtx.transformPoint(anim.mKeys.back().position);
+        inMtx.transformPoint(anim.mKeys.back().mPos);
     }
 
     static void createTestAnimTranslate(PositionController & outAnim, const Translate::Key * inKey, size_t inCount, const TMatrix & inMtx, const char * inDrf = nullptr) {
@@ -125,7 +125,7 @@ public:
         }
         for (size_t i = 0; i < inCount; ++i) {
             anim.mKeys.emplace_back(inKey[i]);
-            inMtx.transformPoint(anim.mKeys.back().position);
+            inMtx.transformPoint(anim.mKeys.back().mPos);
         }
     }
 

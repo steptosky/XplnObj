@@ -144,19 +144,19 @@ void ObjWriteAnim::printTrans(const PositionController & translation, const std:
         //--------------------------------
         if (tr.mKeys.size() == 1) {
             mWriter->writeLine(ATTR_TRANS,
-                               sep, tr.mKeys[0].position.toString(PRECISION),
-                               sep, tr.mKeys[0].position.toString(PRECISION),
-                               sep, tr.mKeys[0].value,
-                               " ", tr.mKeys[0].value,
+                               sep, tr.mKeys[0].mPos.toString(PRECISION),
+                               sep, tr.mKeys[0].mPos.toString(PRECISION),
+                               sep, tr.mKeys[0].mDrfValue,
+                               " ", tr.mKeys[0].mDrfValue,
                                sep, "none");
             ++mStat->mAnimAttrCount;
         }
         else if (tr.mKeys.size() == 2) {
             mWriter->writeLine(ATTR_TRANS,
-                               sep, tr.mKeys[0].position.toString(PRECISION),
-                               sep, tr.mKeys[1].position.toString(PRECISION),
-                               sep, tr.mKeys[0].value,
-                               " ", tr.mKeys[1].value,
+                               sep, tr.mKeys[0].mPos.toString(PRECISION),
+                               sep, tr.mKeys[1].mPos.toString(PRECISION),
+                               sep, tr.mKeys[0].mDrfValue,
+                               " ", tr.mKeys[1].mDrfValue,
                                sep, tr.mDataRef.isEmpty() ? "none" : mWriter->actualDataref(tr.mDataRef));
             ++mStat->mAnimAttrCount;
             printLoop(tr.mLoop);
@@ -166,7 +166,7 @@ void ObjWriteAnim::printTrans(const PositionController & translation, const std:
             mWriter->spaceMore();
 
             for (auto & key : tr.mKeys) {
-                mWriter->writeLine(ATTR_TRANS_KEY, sep, key.value, sep, key.position.toString(PRECISION));
+                mWriter->writeLine(ATTR_TRANS_KEY, sep, key.mDrfValue, sep, key.mPos.toString(PRECISION));
             }
 
             printLoop(tr.mLoop);
@@ -204,20 +204,20 @@ void ObjWriteAnim::printRotateAxis(const RotationAxis & axis, const std::string 
     if (axis.mKeys.size() == 1) {
         mWriter->writeLine(ATTR_ROTATE,
                            sep, axis.mVector.normalized().toString(PRECISION),
-                           sep, axis.mKeys[0].angleDeg.value(),
-                           " ", axis.mKeys[0].angleDeg.value(),
-                           sep, axis.mKeys[0].value,
-                           " ", axis.mKeys[0].value,
+                           sep, axis.mKeys[0].mAngle.value(),
+                           " ", axis.mKeys[0].mAngle.value(),
+                           sep, axis.mKeys[0].mDrfValue,
+                           " ", axis.mKeys[0].mDrfValue,
                            sep, "none");
         ++mStat->mAnimAttrCount;
     }
     else if (axis.mKeys.size() == 2) {
         mWriter->writeLine(ATTR_ROTATE,
                            sep, axis.mVector.normalized().toString(PRECISION),
-                           sep, axis.mKeys[0].angleDeg.value(),
-                           " ", axis.mKeys[1].angleDeg.value(),
-                           sep, axis.mKeys[0].value,
-                           " ", axis.mKeys[1].value,
+                           sep, axis.mKeys[0].mAngle.value(),
+                           " ", axis.mKeys[1].mAngle.value(),
+                           sep, axis.mKeys[0].mDrfValue,
+                           " ", axis.mKeys[1].mDrfValue,
                            sep, axis.mDataRef.isEmpty() ? "none" : mWriter->actualDataref(axis.mDataRef));
 
         ++mStat->mAnimAttrCount;
@@ -230,7 +230,7 @@ void ObjWriteAnim::printRotateAxis(const RotationAxis & axis, const std::string 
         mWriter->spaceMore();
 
         for (auto & key : axis.mKeys) {
-            mWriter->writeLine(ATTR_ROTATE_KEY, sep, key.value, sep, key.angleDeg.value());
+            mWriter->writeLine(ATTR_ROTATE_KEY, sep, key.mDrfValue, sep, key.mAngle.value());
         }
 
         printLoop(axis.mLoop);
@@ -268,7 +268,7 @@ void ObjWriteAnim::printVisible(const VisibilityController & visibility, const s
         }
         //-----------------------
         const char * animName = key.mType == VisibilityKey::SHOW ? ATTR_ANIM_SHOW : ATTR_ANIM_HIDE;
-        mWriter->writeLine(animName, " ", key.mValue1, " ", key.mValue2, " ", mWriter->actualDataref(key.mDataRef));
+        mWriter->writeLine(animName, " ", key.mDrfValue1, " ", key.mDrfValue2, " ", mWriter->actualDataref(key.mDataRef));
         ++mStat->mAnimAttrCount;
         printLoop(key.mLoop);
     }

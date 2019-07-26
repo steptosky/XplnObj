@@ -37,16 +37,16 @@ namespace xobj {
 
 bool VisibilityKey::operator==(const VisibilityKey & other) const {
     return mType == other.mType &&
-           mValue1 == other.mValue1 &&
-           mValue2 == other.mValue2 &&
+           mDrfValue1 == other.mDrfValue1 &&
+           mDrfValue2 == other.mDrfValue2 &&
            mLoop == other.mLoop &&
            mDataRef == other.mDataRef;
 }
 
 bool VisibilityKey::operator!=(const VisibilityKey & other) const {
     return mType != other.mType ||
-           mValue1 != other.mValue1 ||
-           mValue2 != other.mValue2 ||
+           mDrfValue1 != other.mDrfValue1 ||
+           mDrfValue2 != other.mDrfValue2 ||
            mLoop != other.mLoop ||
            mDataRef != other.mDataRef;
 }

@@ -46,10 +46,10 @@ class RotationAxis final {
 public:
 
     struct Key {
-        Degrees angleDeg;
-        float value = 0.0f;
+        Degrees mAngle;
+        float mDrfValue = 0.0f;
 
-        bool operator==(const Key & r) const { return angleDeg == r.angleDeg && value == r.value; }
+        bool operator==(const Key & r) const { return mAngle == r.mAngle && mDrfValue == r.mDrfValue; }
         bool operator!=(const Key & r) const { return !(*this == r); }
     };
 

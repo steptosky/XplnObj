@@ -64,8 +64,8 @@ public:
 
     VisibilityKey(const eType type, const float val1, const float val2, String dataRef)
         : mType(type),
-          mValue1(val1),
-          mValue2(val2),
+          mDrfValue1(val1),
+          mDrfValue2(val2),
           mDataRef(std::move(dataRef)) {}
 
     VisibilityKey(const VisibilityKey &) = default;
@@ -88,8 +88,8 @@ public:
     /// @{
 
     eType mType = UNDEFINED;
-    float mValue1 = 0.0f;
-    float mValue2 = 1.0f;
+    float mDrfValue1 = 0.0f;
+    float mDrfValue2 = 1.0f;
     String mDataRef;
     std::optional<float> mLoop;
 

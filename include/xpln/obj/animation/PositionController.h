@@ -29,7 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/common/String.h"
 #include "xpln/common/TMatrix.h"
 #include "Translate.h"
 

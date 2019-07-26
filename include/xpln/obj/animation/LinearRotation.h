@@ -45,10 +45,10 @@ class LinearRotation final {
 public:
 
     struct Key {
-        Quat quat;
-        float value = 0.0f;
+        Quat mQuat;
+        float mDrfValue = 0.0f;
 
-        bool operator==(const Key & r) const { return quat == r.quat && value == r.value; }
+        bool operator==(const Key & r) const { return mQuat == r.mQuat && mDrfValue == r.mDrfValue; }
         bool operator!=(const Key & r) const { return !(*this == r); }
     };
 

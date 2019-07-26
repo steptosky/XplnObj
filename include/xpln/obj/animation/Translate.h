@@ -45,10 +45,10 @@ class Translate final {
 public:
 
     struct Key {
-        Point3 position;
-        float value = 0.0f;
+        Point3 mPos;
+        float mDrfValue = 0.0f;
 
-        bool operator==(const Key & r) const { return position == r.position && value == r.value; }
+        bool operator==(const Key & r) const { return mPos == r.mPos && mDrfValue == r.mDrfValue; }
         bool operator!=(const Key & r) const { return !(*this == r); }
     };
 

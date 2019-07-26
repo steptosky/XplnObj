@@ -58,12 +58,12 @@ TEST(LinearRotation, makeAnimations_double_rotate_z) {
     EXPECT_NEAR(1.0f, anim1.mVector.z, gEpsilon);
 
     ASSERT_EQ(3, anim1.mKeys.size());
-    EXPECT_NEAR(00.0f, anim1.mKeys.at(0).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(45.0f, anim1.mKeys.at(1).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(90.0f, anim1.mKeys.at(2).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(00.0f, anim1.mKeys.at(0).value, gEpsilon);
-    EXPECT_NEAR(10.0f, anim1.mKeys.at(1).value, gEpsilon);
-    EXPECT_NEAR(20.0f, anim1.mKeys.at(2).value, gEpsilon);
+    EXPECT_NEAR(00.0f, anim1.mKeys.at(0).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(45.0f, anim1.mKeys.at(1).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(90.0f, anim1.mKeys.at(2).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(00.0f, anim1.mKeys.at(0).mDrfValue, gEpsilon);
+    EXPECT_NEAR(10.0f, anim1.mKeys.at(1).mDrfValue, gEpsilon);
+    EXPECT_NEAR(20.0f, anim1.mKeys.at(2).mDrfValue, gEpsilon);
 }
 
 // it more complex and was taken from 3Ds Max, so this is not human readable.
@@ -120,30 +120,30 @@ TEST(LinearRotation, makeAnimations_comples_3_axis) {
         ANIM_end
      */
 
-    EXPECT_NEAR(00.0f, anim1.mKeys.at(0).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(90.0f, anim1.mKeys.at(1).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(90.0f, anim1.mKeys.at(2).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(00.0f, anim1.mKeys.at(0).value, gEpsilon);
-    EXPECT_NEAR(10.0f, anim1.mKeys.at(1).value, gEpsilon);
-    EXPECT_NEAR(40.0f, anim1.mKeys.at(2).value, gEpsilon);
+    EXPECT_NEAR(00.0f, anim1.mKeys.at(0).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(90.0f, anim1.mKeys.at(1).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(90.0f, anim1.mKeys.at(2).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(00.0f, anim1.mKeys.at(0).mDrfValue, gEpsilon);
+    EXPECT_NEAR(10.0f, anim1.mKeys.at(1).mDrfValue, gEpsilon);
+    EXPECT_NEAR(40.0f, anim1.mKeys.at(2).mDrfValue, gEpsilon);
 
-    EXPECT_NEAR(000.0f, anim2.mKeys.at(0).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(000.0f, anim2.mKeys.at(1).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(090.0f, anim2.mKeys.at(2).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(180.0f, anim2.mKeys.at(3).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(180.0f, anim2.mKeys.at(4).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(00.0f, anim2.mKeys.at(0).value, gEpsilon);
-    EXPECT_NEAR(10.0f, anim2.mKeys.at(1).value, gEpsilon);
-    EXPECT_NEAR(20.0f, anim2.mKeys.at(2).value, gEpsilon);
-    EXPECT_NEAR(30.0f, anim2.mKeys.at(3).value, gEpsilon);
-    EXPECT_NEAR(40.0f, anim2.mKeys.at(4).value, gEpsilon);
+    EXPECT_NEAR(000.0f, anim2.mKeys.at(0).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(000.0f, anim2.mKeys.at(1).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(090.0f, anim2.mKeys.at(2).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(180.0f, anim2.mKeys.at(3).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(180.0f, anim2.mKeys.at(4).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(00.0f, anim2.mKeys.at(0).mDrfValue, gEpsilon);
+    EXPECT_NEAR(10.0f, anim2.mKeys.at(1).mDrfValue, gEpsilon);
+    EXPECT_NEAR(20.0f, anim2.mKeys.at(2).mDrfValue, gEpsilon);
+    EXPECT_NEAR(30.0f, anim2.mKeys.at(3).mDrfValue, gEpsilon);
+    EXPECT_NEAR(40.0f, anim2.mKeys.at(4).mDrfValue, gEpsilon);
 
-    EXPECT_NEAR(00.0f, anim3.mKeys.at(0).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(00.0f, anim3.mKeys.at(1).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(90.0f, anim3.mKeys.at(2).angleDeg.value(), gEpsilon);
-    EXPECT_NEAR(00.0f, anim3.mKeys.at(0).value, gEpsilon);
-    EXPECT_NEAR(30.0f, anim3.mKeys.at(1).value, gEpsilon);
-    EXPECT_NEAR(40.0f, anim3.mKeys.at(2).value, gEpsilon);
+    EXPECT_NEAR(00.0f, anim3.mKeys.at(0).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(00.0f, anim3.mKeys.at(1).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(90.0f, anim3.mKeys.at(2).mAngle.value(), gEpsilon);
+    EXPECT_NEAR(00.0f, anim3.mKeys.at(0).mDrfValue, gEpsilon);
+    EXPECT_NEAR(30.0f, anim3.mKeys.at(1).mDrfValue, gEpsilon);
+    EXPECT_NEAR(40.0f, anim3.mKeys.at(2).mDrfValue, gEpsilon);
 }
 
 /**************************************************************************************************/

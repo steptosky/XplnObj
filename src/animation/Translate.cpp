@@ -37,7 +37,7 @@ namespace xobj {
 
 void Translate::applyTransform(const TMatrix & tmx) noexcept {
     for (auto & k : mKeys) {
-        tmx.transformPoint(k.position);
+        tmx.transformPoint(k.mPos);
     }
 }
 

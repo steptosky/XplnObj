@@ -41,7 +41,7 @@ void TransformAlg::applyTranslateKeysToTransform(Transform & inOutTrans, Positio
     for (auto tr = inOutAnim.mAnimation.begin(); tr != inOutAnim.mAnimation.end();) {
         if (tr->mKeys.size() == 1) {
             const Point3 currPos = inOutTrans.mMatrix.position();
-            inOutTrans.mMatrix.setPosition(currPos + tr->mKeys[0].position);
+            inOutTrans.mMatrix.setPosition(currPos + tr->mKeys[0].mPos);
             tr = inOutAnim.mAnimation.erase(tr);
         }
         else {
@@ -55,7 +55,7 @@ void TransformAlg::applyRotateKeysToTransform(Transform & inOutTrans, RotationCo
         for (auto a = axes->mAxes.begin(); a != axes->mAxes.end();) {
             if (a->mKeys.size() == 1) {
                 TMatrix mtx;
-                mtx.setRotation(a->mVector, a->mKeys[0].angleDeg.value());
+                mtx.setRotation(a->mVector, a->mKeys[0].mAngle.value());
                 inOutTrans.mMatrix *= mtx;
                 a = axes->mAxes.erase(a);
             }

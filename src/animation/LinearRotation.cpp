@@ -39,7 +39,8 @@ namespace xobj {
 /**************************************************************************************************/
 
 inline std::tuple<Point3, Degrees> calculateAngleAxis(const Quat & q1, const Quat & q2, const Quat & offset) noexcept {
-    const Quat animVectorQuat = (q1 * q2.inverse()) * offset;
+    Quat animVectorQuat = q1 * q2.inverse();
+    animVectorQuat.rotate(offset);
     const auto animVector = animVectorQuat.axis();
     const auto animAngle = Degrees(animVectorQuat.angleDeg());
     return std::make_tuple(Point3(animVector.x, animVector.y, animVector.z).normalized(), animAngle);
@@ -49,31 +50,24 @@ inline std::tuple<Point3, Degrees> calculateAngleAxis(const Quat & q1, const Qua
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-void LinearRotation::applyTransform(const TMatrix & mtx) noexcept {
-    mtx.transformQuat(mOffset);
-    for (auto & k : mKeys) {
-        mtx.transformQuat(k.mQuat);
-    }
-}
-
-std::optional<std::size_t> LinearRotation::checkDatarefValuesOrder() const noexcept {
-    if (mKeys.size() < 2) {
+std::optional<std::size_t> LinearRotation::checkDatarefValuesOrder(const KeyList & keys) noexcept {
+    if (keys.size() < 2) {
         return std::nullopt;
     }
-    const bool negative = (mKeys[1].mDrfValue - mKeys[0].mDrfValue) < 0.0f;
+    const bool negative = (keys[1].mDrfValue - keys[0].mDrfValue) < 0.0f;
     if (!negative) {
-        for (std::size_t it = 1; it < mKeys.size(); ++it) {
-            const auto & curr = mKeys[it - 1];
-            const auto & next = mKeys[it];
+        for (std::size_t it = 1; it < keys.size(); ++it) {
+            const auto & curr = keys[it - 1];
+            const auto & next = keys[it];
             if (curr.mDrfValue > next.mDrfValue) {
                 return it;
             }
         }
     }
     else {
-        for (std::size_t it = 1; it < mKeys.size(); ++it) {
-            const auto & curr = mKeys[it - 1];
-            const auto & next = mKeys[it];
+        for (std::size_t it = 1; it < keys.size(); ++it) {
+            const auto & curr = keys[it - 1];
+            const auto & next = keys[it];
             if (curr.mDrfValue < next.mDrfValue) {
                 return it;
             }
@@ -82,26 +76,24 @@ std::optional<std::size_t> LinearRotation::checkDatarefValuesOrder() const noexc
     return std::nullopt;
 }
 
-AxisSetRotation LinearRotation::retrieveAxes() const noexcept {
+AxisSetRotation LinearRotation::retrieveAxes(const KeyList & keys, const Quat & offset) noexcept {
     AxisSetRotation out;
 
-    const auto keysNum = mKeys.size();
+    const auto keysNum = keys.size();
     if (keysNum < 2) {
         return out;
     }
-    assert(!checkDatarefValuesOrder());
+    assert(!checkDatarefValuesOrder(keys));
     out.mAxes.reserve(10);
 
     {
         // add the first
         auto & back = out.mAxes.emplace_back();
-        const auto & currKey = mKeys[0];
-        const auto & nextKey = mKeys[1];
-        const auto [animVector, animAngle] = calculateAngleAxis(currKey.mQuat, nextKey.mQuat, mOffset);
+        const auto & currKey = keys[0];
+        const auto & nextKey = keys[1];
+        const auto [animVector, animAngle] = calculateAngleAxis(currKey.mQuat, nextKey.mQuat, offset);
         back.mVector = animVector;
-        back.mDataRef = mDataRef;
-        back.mLoop = mLoop;
-        back.mKeys.reserve(mKeys.size());
+        back.mKeys.reserve(keys.size());
         back.mKeys.emplace_back(RotationAxis::Key{Degrees(0), currKey.mDrfValue});
         back.mKeys.emplace_back(RotationAxis::Key{animAngle, nextKey.mDrfValue});
     }
@@ -110,22 +102,20 @@ AxisSetRotation LinearRotation::retrieveAxes() const noexcept {
     std::size_t currI = 1;
     std::size_t nextI = 2;
     for (; nextI < keysNum; ++currI, ++nextI) {
-        const auto & currKey = mKeys[currI];
-        const auto & nextKey = mKeys[nextI];
-        const auto [animVector, animAngle] = calculateAngleAxis(currKey.mQuat, nextKey.mQuat, mOffset);
+        const auto & currKey = keys[currI];
+        const auto & nextKey = keys[nextI];
+        const auto [animVector, animAngle] = calculateAngleAxis(currKey.mQuat, nextKey.mQuat, offset);
 
         if (auto & back = out.mAxes.back(); back.mVector != animVector) {
             // correction keys count for current anim before creating a new one.
             assert(!back.mKeys.empty());
-            back.mKeys.emplace_back(RotationAxis::Key{back.mKeys.back().mAngle, mKeys.back().mDrfValue});
+            back.mKeys.emplace_back(RotationAxis::Key{back.mKeys.back().mAngle, keys.back().mDrfValue});
 
             // create new
             RotationAxis & anim = out.mAxes.emplace_back();
             anim.mVector = animVector;
-            anim.mDataRef = mDataRef;
-            anim.mLoop = mLoop;
-            anim.mKeys.reserve(mKeys.size());
-            anim.mKeys.emplace_back(RotationAxis::Key{Degrees(), mKeys.front().mDrfValue});
+            anim.mKeys.reserve(keys.size());
+            anim.mKeys.emplace_back(RotationAxis::Key{Degrees(), keys.front().mDrfValue});
             anim.mKeys.emplace_back(RotationAxis::Key{Degrees(), currKey.mDrfValue});
             anim.mKeys.emplace_back(RotationAxis::Key{animAngle, nextKey.mDrfValue});
         }

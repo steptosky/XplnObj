@@ -32,7 +32,6 @@
 #include <optional>
 #include "xpln/Export.h"
 #include "xpln/common/Quat.h"
-#include "xpln/common/TMatrix.h"
 #include "AxisSetRotation.h"
 
 namespace xobj {
@@ -47,9 +46,6 @@ public:
     struct Key {
         Quat mQuat;
         float mDrfValue = 0.0f;
-
-        bool operator==(const Key & r) const { return mQuat == r.mQuat && mDrfValue == r.mDrfValue; }
-        bool operator!=(const Key & r) const { return !(*this == r); }
     };
 
     typedef std::vector<Key> KeyList;
@@ -57,40 +53,14 @@ public:
     //-------------------------------------------------------------------------
     ///@{
 
-    LinearRotation() = default;
-    LinearRotation(const LinearRotation &) = default;
-    LinearRotation(LinearRotation &&) = default;
-
-    ~LinearRotation() = default;
-
-    LinearRotation & operator=(const LinearRotation &) = default;
-    LinearRotation & operator=(LinearRotation &&) = default;
+    LinearRotation() = delete;
 
     ///@}
     //-------------------------------------------------------------------------
     ///@{
 
-    bool operator==(const LinearRotation & r) const { return mOffset == r.mOffset && mKeys == r.mKeys; }
-    bool operator!=(const LinearRotation & r) const { return !(*this == r); }
-
-    ///@}
-    //-------------------------------------------------------------------------
-    ///@{
-
-    bool isAnimated() const noexcept { return !mKeys.empty(); }
-    XpObjLib void applyTransform(const TMatrix & mtx) noexcept;
-
-    XpObjLib std::optional<std::size_t> checkDatarefValuesOrder() const noexcept;
-    XpObjLib AxisSetRotation retrieveAxes() const noexcept;
-
-    ///@}
-    //-------------------------------------------------------------------------
-    ///@{
-
-    String mDataRef;
-    Quat mOffset;
-    KeyList mKeys;
-    std::optional<float> mLoop;
+    XpObjLib static std::optional<std::size_t> checkDatarefValuesOrder(const KeyList & keys) noexcept;
+    XpObjLib static AxisSetRotation retrieveAxes(const KeyList & keys, const Quat & offset) noexcept;
 
     ///@}
     //-------------------------------------------------------------------------

@@ -99,6 +99,10 @@ public:
         return glm::angle(mQuat);
     }
 
+    void rotate(const Quat & q) {
+        mQuat = q.mQuat * mQuat * glm::inverse(q.mQuat);
+    }
+
     // Modifies this quat so it is on same side of hypersphere as quat arg.
     XpObjLib void makeClosest(const Quat & q);
 

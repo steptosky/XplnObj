@@ -54,6 +54,23 @@ bool String::isValidForTexture(const std::string & str) noexcept {
     return false;
 }
 
+/**************************************************************************************************/
+//////////////////////////////////////////* Functions */////////////////////////////////////////////
+/**************************************************************************************************/
+
+#ifdef _MSC_VER
+void String::set(const std::wstring_view s) {
+    static std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
+    mString = convert.to_bytes(s.data(), s.data() + s.size());
+}
+#endif
+
+String String::from(std::string && s) noexcept {
+    String out;
+    out.mString = s;
+    return out;
+}
+
 String String::from(const std::string & s) noexcept {
     String out;
     out.mString = s;
@@ -62,9 +79,14 @@ String String::from(const std::string & s) noexcept {
 
 #ifdef _MSC_VER
 String String::from(const std::wstring & s) {
-    static std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
     String out;
-    out.mString = convert.to_bytes(s);
+    out.set(s);
+    return out;
+}
+
+String String::from(const std::wstring_view s) {
+    String out;
+    out.set(s);
     return out;
 }
 #endif

@@ -288,17 +288,17 @@ TEST(TestTransform_case3, case3) {
     transformOut3.mMatrix.setPosition(Point3(150.0f));
 
     auto & animTr1 = transformOut1.mPosition.mAnimation.emplace_back();
-    animTr1.mDataRef.mString = "test";
+    animTr1.mDataRef.str() = "test";
     animTr1.mKeys.emplace_back();
     animTr1.mKeys.emplace_back();
 
     auto & animTr2 = transformOut2.mPosition.mAnimation.emplace_back();
-    animTr2.mDataRef.mString = "test";
+    animTr2.mDataRef.str() = "test";
     animTr2.mKeys.emplace_back();
     animTr2.mKeys.emplace_back();
 
     auto & animTr3 = transformOut3.mPosition.mAnimation.emplace_back();
-    animTr3.mDataRef.mString = "test";
+    animTr3.mDataRef.str() = "test";
     animTr3.mKeys.emplace_back();
     animTr3.mKeys.emplace_back();
 

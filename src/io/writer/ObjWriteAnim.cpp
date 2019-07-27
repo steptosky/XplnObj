@@ -128,7 +128,7 @@ void ObjWriteAnim::printTrans(const PositionController & translation, const std:
 
         if (tr.mDataRef.isValidForDataRef()) {
             XULError << "Transform: " << transformName
-                    << " - has illegal symbols in translation dataref: " << tr.mDataRef.mString;
+                    << " - has illegal symbols in translation dataref: " << tr.mDataRef.str();
             continue;
         }
         //--------------------------------
@@ -149,12 +149,12 @@ void ObjWriteAnim::printTrans(const PositionController & translation, const std:
                                sep, tr.mKeys[1].mPos.toString(PRECISION),
                                sep, tr.mKeys[0].mDrfValue,
                                " ", tr.mKeys[1].mDrfValue,
-                               sep, tr.mDataRef.isEmpty() ? "none" : mWriter->actualDataref(tr.mDataRef));
+                               sep, tr.mDataRef.isEmpty() ? "none" : mWriter->actualDataref(tr.mDataRef.str()));
             ++mStat->mAnimAttrCount;
             printLoop(tr.mLoop);
         }
         else {
-            mWriter->writeLine(ATTR_TRANS_BEGIN, sep, tr.mDataRef.isEmpty() ? "none" : mWriter->actualDataref(tr.mDataRef));
+            mWriter->writeLine(ATTR_TRANS_BEGIN, sep, tr.mDataRef.isEmpty() ? "none" : mWriter->actualDataref(tr.mDataRef.str()));
             mWriter->spaceMore();
 
             for (auto & key : tr.mKeys) {
@@ -187,7 +187,7 @@ void ObjWriteAnim::printRotateAxis(const RotationAxis & axis, const std::string 
     }
     if (axis.mDataRef.isValidForDataRef()) {
         XULError << "Transform: " << transformName
-                << " - has illegal symbols in rotation dataref: " << axis.mDataRef.mString;
+                << " - has illegal symbols in rotation dataref: " << axis.mDataRef.str();
         return;
     }
     //--------------------------------
@@ -210,7 +210,7 @@ void ObjWriteAnim::printRotateAxis(const RotationAxis & axis, const std::string 
                            " ", axis.mKeys[1].mAngle.value(),
                            sep, axis.mKeys[0].mDrfValue,
                            " ", axis.mKeys[1].mDrfValue,
-                           sep, axis.mDataRef.isEmpty() ? "none" : mWriter->actualDataref(axis.mDataRef));
+                           sep, axis.mDataRef.isEmpty() ? "none" : mWriter->actualDataref(axis.mDataRef.str()));
 
         ++mStat->mAnimAttrCount;
         printLoop(axis.mLoop);;
@@ -218,7 +218,7 @@ void ObjWriteAnim::printRotateAxis(const RotationAxis & axis, const std::string 
     else {
         mWriter->writeLine(ATTR_ROTATE_BEGIN,
                            sep, axis.mVector.normalized().toString(PRECISION),
-                           sep, axis.mDataRef.isEmpty() ? "none" : mWriter->actualDataref(axis.mDataRef));
+                           sep, axis.mDataRef.isEmpty() ? "none" : mWriter->actualDataref(axis.mDataRef.str()));
         mWriter->spaceMore();
 
         for (auto & key : axis.mKeys) {
@@ -255,12 +255,12 @@ void ObjWriteAnim::printVisible(const VisibilityController & visibility, const s
 
         if (key.mDataRef.isValidForDataRef()) {
             XULError << "Transform: " << transformName << " - visible key <" << counter
-                    << "> has illegal symbols in its dataref: " << key.mDataRef.mString;
+                    << "> has illegal symbols in its dataref: " << key.mDataRef.str();
             continue;
         }
         //-----------------------
         const char * animName = key.mType == VisibilityKey::SHOW ? ATTR_ANIM_SHOW : ATTR_ANIM_HIDE;
-        mWriter->writeLine(animName, " ", key.mDrfValue1, " ", key.mDrfValue2, " ", mWriter->actualDataref(key.mDataRef));
+        mWriter->writeLine(animName, " ", key.mDrfValue1, " ", key.mDrfValue2, " ", mWriter->actualDataref(key.mDataRef.str()));
         ++mStat->mAnimAttrCount;
         printLoop(key.mLoop);
     }

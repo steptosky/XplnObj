@@ -31,6 +31,7 @@
 
 #include "xpln/Export.h"
 #include <string>
+#include <string_view>
 
 namespace xobj {
 
@@ -64,6 +65,18 @@ public:
     //---------------------------------------------------
     ///@{
 
+    void set(const std::string & s) noexcept { mString = s; }
+    void set(std::string && s) noexcept { mString = s; }
+    void set(const std::string_view s) noexcept { mString = s; }
+#ifdef _MSC_VER
+    XpObjLib void set(std::wstring_view s);
+    void set(const std::wstring & s) { set(std::wstring_view(s)); }
+#endif
+
+    ///@}
+    //---------------------------------------------------
+    ///@{
+
     XpObjLib static bool isValidForDataRef(const std::string & str) noexcept;
     XpObjLib static bool isValidForTexture(const std::string & str) noexcept;
     bool isValidForDataRef() const noexcept { return isValidForDataRef(mString); }
@@ -74,12 +87,11 @@ public:
     ///@{
 
     XpObjLib static String from(const std::string & s) noexcept;
+    XpObjLib static String from(std::string && s) noexcept;
 #ifdef _MSC_VER
     XpObjLib static String from(const std::wstring & s);
+    XpObjLib static String from(std::wstring_view s);
 #endif
-
-    operator std::string&() noexcept { return mString; }
-    operator const std::string&() const noexcept { return mString; }
 
     ///@}
     //---------------------------------------------------
@@ -93,10 +105,15 @@ public:
     //---------------------------------------------------
     ///@{
 
-    std::string mString;
+    const std::string & str() const noexcept { return mString; }
+    std::string & str() noexcept { return mString; }
 
     ///@}
     //---------------------------------------------------
+
+private:
+
+    std::string mString;
 
 };
 

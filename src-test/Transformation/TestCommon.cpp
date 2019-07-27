@@ -67,7 +67,7 @@ TEST(TestTransformCommon, anim_enabled) {
     //--------------------
     // rotation
 
-    auto & animAxis = lod.transform().mRotation.mAnimation.emplace<AxisSetRotation>();
+    auto & animAxis = lod.transform().mRotation.mAnimation;
     auto & animRotate = animAxis.mAxes.emplace_back();
     animRotate.mKeys.emplace_back(RotationAxis::Key{Degrees(20.0f), 1.0f});
     animRotate.mKeys.emplace_back(RotationAxis::Key{Degrees(30.0f), 5.0f});

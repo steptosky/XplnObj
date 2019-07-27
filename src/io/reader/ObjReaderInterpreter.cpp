@@ -542,12 +542,9 @@ void ObjReaderInterpreter::gotTranslateAnim(Translate::KeyList & key, String && 
 void ObjReaderInterpreter::gotRotateAnim(RotationAxis::KeyList & key, float ( & inVector)[3], String && dataref,
                                          const std::optional<float> loopVal) {
     checkForCreateLod();
-    AxisSetRotation * anim = std::get_if<AxisSetRotation>(&mCurrentTransform->mRotation.mAnimation);
-    if (!anim) {
-        anim = &mCurrentTransform->mRotation.mAnimation.emplace<AxisSetRotation>();
-    }
     if (mCurrentTransform) {
-        auto & axis = anim->mAxes.emplace_back();
+        auto & anim = mCurrentTransform->mRotation.mAnimation;
+        auto & axis = anim.mAxes.emplace_back();
         axis.mKeys.swap(key);
         axis.mDataRef = dataref;
         axis.mVector.set(inVector[0], inVector[1], inVector[2]);

@@ -29,10 +29,7 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <variant>
-#include "xpln/Export.h"
 #include "RotationAxis.h"
-#include "LinearRotation.h"
 #include "xpln/common/TMatrix.h"
 #include "AxisSetRotation.h"
 
@@ -70,10 +67,10 @@ public:
     //-------------------------------------------------------------------------
     ///@{
 
-    XpObjLib bool isAnimated() const noexcept;
-    XpObjLib void applyTransform(const TMatrix & mx) noexcept;
+    bool isAnimated() const noexcept { return mAnimation.isAnimated(); }
+    void applyTransform(const TMatrix & mx) noexcept { return mAnimation.applyTransform(mx); }
 
-    std::variant<std::monostate, AxisSetRotation, LinearRotation> mAnimation;
+    AxisSetRotation mAnimation;
 
     ///@}
     //-------------------------------------------------------------------------

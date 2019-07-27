@@ -82,16 +82,8 @@ bool ObjWriteAnim::printAnimationStart(AbstractWriter & writer, const Transform 
     printVisible(transform.mVisibility, transform.mName);
     printTrans(transform.mPosition, transform.mName);
     if (transform.mRotation.isAnimated()) {
-        if (const auto axisSet = std::get_if<AxisSetRotation>(&transform.mRotation.mAnimation)) {
-            for (const auto & a : axisSet->mAxes) {
-                printRotateAxis(a, transform.mName);
-            }
-        }
-        if (const auto linear = std::get_if<LinearRotation>(&transform.mRotation.mAnimation)) {
-            const auto axes = linear->retrieveAxes();
-            for (const auto & a : axes.mAxes) {
-                printRotateAxis(a, transform.mName);
-            }
+        for (const auto & a : transform.mRotation.mAnimation.mAxes) {
+            printRotateAxis(a, transform.mName);
         }
     }
     //-------------------------------------------------------------------------

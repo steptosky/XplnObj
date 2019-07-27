@@ -35,25 +35,6 @@ namespace xobj {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool RotationController::isAnimated() const noexcept {
-    if (const auto set = std::get_if<AxisSetRotation>(&mAnimation)) {
-        return set->isAnimated();
-    }
-    if (const auto linear = std::get_if<LinearRotation>(&mAnimation)) {
-        return linear->isAnimated();
-    }
-    return false;
-}
-
-void RotationController::applyTransform(const TMatrix & mx) noexcept {
-    if (const auto set = std::get_if<AxisSetRotation>(&mAnimation)) {
-        return set->applyTransform(mx);
-    }
-    if (const auto linear = std::get_if<LinearRotation>(&mAnimation)) {
-        return linear->applyTransform(mx);
-    }
-}
-
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/

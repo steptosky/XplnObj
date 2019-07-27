@@ -51,21 +51,17 @@ void TransformAlg::applyTranslateKeysToTransform(Transform & inOutTrans, Positio
 }
 
 void TransformAlg::applyRotateKeysToTransform(Transform & inOutTrans, RotationController & inOutAnim) {
-    if (const auto axes = std::get_if<AxisSetRotation>(&inOutAnim.mAnimation)) {
-        for (auto a = axes->mAxes.begin(); a != axes->mAxes.end();) {
-            if (a->mKeys.size() == 1) {
-                TMatrix mtx;
-                mtx.setRotation(a->mVector, a->mKeys[0].mAngle.value());
-                inOutTrans.mMatrix *= mtx;
-                a = axes->mAxes.erase(a);
-            }
-            else {
-                ++a;
-            }
+    auto & axes = inOutAnim.mAnimation;
+    for (auto a = axes.mAxes.begin(); a != axes.mAxes.end();) {
+        if (a->mKeys.size() == 1) {
+            TMatrix mtx;
+            mtx.setRotation(a->mVector, a->mKeys[0].mAngle.value());
+            inOutTrans.mMatrix *= mtx;
+            a = axes.mAxes.erase(a);
         }
-    }
-    else if (!std::get_if<std::monostate>(&inOutAnim.mAnimation)) {
-        throw std::domain_error(ExcTxt("unexpected rotate animation"));
+        else {
+            ++a;
+        }
     }
 }
 

@@ -40,13 +40,13 @@ const float gEpsilon = 0.0002f;
 
 // double rotation around one axis [Z] [0/45/90] degrees
 TEST(LinearRotation, makeAnimations_double_rotate_z) {
-    LinearRotation input;
+    LinearRotation::KeyList keys;
 
-    input.mKeys.emplace_back(LinearRotation::Key{Quat(1.000000f, 0.0f, 0.0f, +0.000000f), 00.0f}); //  0
-    input.mKeys.emplace_back(LinearRotation::Key{Quat(0.923880f, 0.0f, 0.0f, -0.382683f), 10.0f}); // 45
-    input.mKeys.emplace_back(LinearRotation::Key{Quat(0.707107f, 0.0f, 0.0f, -0.707107f), 20.0f}); // 90
+    keys.emplace_back(LinearRotation::Key{Quat(1.000000f, 0.0f, 0.0f, +0.000000f), 00.0f}); //  0
+    keys.emplace_back(LinearRotation::Key{Quat(0.923880f, 0.0f, 0.0f, -0.382683f), 10.0f}); // 45
+    keys.emplace_back(LinearRotation::Key{Quat(0.707107f, 0.0f, 0.0f, -0.707107f), 20.0f}); // 90
 
-    const auto result = input.retrieveAxes();
+    const auto result = LinearRotation::retrieveAxes(keys, Quat());
 
     //-----------------------------------------------
 
@@ -69,20 +69,20 @@ TEST(LinearRotation, makeAnimations_double_rotate_z) {
 // it more complex and was taken from 3Ds Max, so this is not human readable.
 // there is a scene where data for this test was created.
 TEST(LinearRotation, makeAnimations_comples_3_axis) {
-    LinearRotation input;
+    LinearRotation::KeyList keys;
 
     // [WORLD] [0]
-    input.mKeys.emplace_back(LinearRotation::Key{Quat(+1.000000f, +0.000000f, +0.000000f, +0.000000f), 00.0f});
+    keys.emplace_back(LinearRotation::Key{Quat(+1.000000f, +0.000000f, +0.000000f, +0.000000f), 00.0f});
     // [WORLD] [Z] [90]                             
-    input.mKeys.emplace_back(LinearRotation::Key{Quat(+0.707107f, +0.000000f, +0.000000f, -0.707107f), 10.0f});
+    keys.emplace_back(LinearRotation::Key{Quat(+0.707107f, +0.000000f, +0.000000f, -0.707107f), 10.0f});
     // [WORLD] [Y] [90]                             
-    input.mKeys.emplace_back(LinearRotation::Key{Quat(+0.500000f, -0.500000f, -0.500000f, -0.500000f), 20.0f});
+    keys.emplace_back(LinearRotation::Key{Quat(+0.500000f, -0.500000f, -0.500000f, -0.500000f), 20.0f});
     // [WORLD] [Y] [180]                            
-    input.mKeys.emplace_back(LinearRotation::Key{Quat(+0.000000f, -0.707107f, -0.707107f, +0.000000f), 30.0f});
+    keys.emplace_back(LinearRotation::Key{Quat(+0.000000f, -0.707107f, -0.707107f, +0.000000f), 30.0f});
     // [WORLD] [X] [90]
-    input.mKeys.emplace_back(LinearRotation::Key{Quat(-0.500000f, -0.500000f, -0.500000f, -0.500000f), 40.0f});
+    keys.emplace_back(LinearRotation::Key{Quat(-0.500000f, -0.500000f, -0.500000f, -0.500000f), 40.0f});
 
-    const auto result = input.retrieveAxes();
+    const auto result = LinearRotation::retrieveAxes(keys, Quat());
 
     //-----------------------------------------------
 
@@ -151,101 +151,97 @@ TEST(LinearRotation, makeAnimations_comples_3_axis) {
 /**************************************************************************************************/
 
 TEST(LinearRotation, checkDatarefValuesOrder_valid_cases) {
-    LinearRotation input;
-
-    input.mKeys = {
+    LinearRotation::KeyList keys = {
             {LinearRotation::Key{Quat(), 1.0f}},
             {LinearRotation::Key{Quat(), 1.0f}},
             {LinearRotation::Key{Quat(), 1.0f}},
     };
-    EXPECT_FALSE(input.checkDatarefValuesOrder().has_value());
+    EXPECT_FALSE(LinearRotation::checkDatarefValuesOrder(keys).has_value());
 
-    input.mKeys = {
+    keys = {
             {LinearRotation::Key{Quat(), 1.0f}},
             {LinearRotation::Key{Quat(), 2.0f}},
     };
-    EXPECT_FALSE(input.checkDatarefValuesOrder().has_value());;
+    EXPECT_FALSE(LinearRotation::checkDatarefValuesOrder(keys).has_value());;
 
-    input.mKeys = {
+    keys = {
             {LinearRotation::Key{Quat(), 1.0f}},
             {LinearRotation::Key{Quat(), 2.0f}},
             {LinearRotation::Key{Quat(), 3.0f}},
     };
-    EXPECT_FALSE(input.checkDatarefValuesOrder().has_value());
+    EXPECT_FALSE(LinearRotation::checkDatarefValuesOrder(keys).has_value());
 
-    input.mKeys = {
+    keys = {
             {LinearRotation::Key{Quat(), 1.0f}},
             {LinearRotation::Key{Quat(), -1.0f}},
     };
-    EXPECT_FALSE(input.checkDatarefValuesOrder().has_value());
+    EXPECT_FALSE(LinearRotation::checkDatarefValuesOrder(keys).has_value());
 
-    input.mKeys = {
+    keys = {
             {LinearRotation::Key{Quat(), 1.0f}},
             {LinearRotation::Key{Quat(), -1.0f}},
             {LinearRotation::Key{Quat(), -3.0f}},
     };
-    EXPECT_FALSE(input.checkDatarefValuesOrder().has_value());
+    EXPECT_FALSE(LinearRotation::checkDatarefValuesOrder(keys).has_value());
 
-    input.mKeys = {
+    keys = {
             {LinearRotation::Key{Quat(), -1.0f}},
             {LinearRotation::Key{Quat(), 2.0f}},
             {LinearRotation::Key{Quat(), 3.0f}},
     };
-    EXPECT_FALSE(input.checkDatarefValuesOrder().has_value());
+    EXPECT_FALSE(LinearRotation::checkDatarefValuesOrder(keys).has_value());
 
-    input.mKeys = {
+    keys = {
             {LinearRotation::Key{Quat(), -1.0f}},
             {LinearRotation::Key{Quat(), -2.0f}},
             {LinearRotation::Key{Quat(), -3.0f}},
     };
-    EXPECT_FALSE(input.checkDatarefValuesOrder().has_value());
+    EXPECT_FALSE(LinearRotation::checkDatarefValuesOrder(keys).has_value());
 }
 
 TEST(LinearRotation, checkDatarefValuesOrder_invalid_cases) {
-    LinearRotation input;
-
-    input.mKeys = {
+    LinearRotation::KeyList keys = {
             {LinearRotation::Key{Quat(), 1.0f}},
             {LinearRotation::Key{Quat(), -2.0f}},
             {LinearRotation::Key{Quat(), 3.0f}},
     };
-    auto result = input.checkDatarefValuesOrder();
+    auto result = LinearRotation::checkDatarefValuesOrder(keys);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(2, result.value());
 
-    input.mKeys = {
+    keys = {
             {LinearRotation::Key{Quat(), 1.0f}},
             {LinearRotation::Key{Quat(), 2.0f}},
             {LinearRotation::Key{Quat(), -1.0f}},
     };
-    result = input.checkDatarefValuesOrder();
+    result = LinearRotation::checkDatarefValuesOrder(keys);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(2, result.value());
 
-    input.mKeys = {
+    keys = {
             {LinearRotation::Key{Quat(), 1.0f}},
             {LinearRotation::Key{Quat(), 3.0f}},
             {LinearRotation::Key{Quat(), 2.0f}},
     };
-    result = input.checkDatarefValuesOrder();
+    result = LinearRotation::checkDatarefValuesOrder(keys);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(2, result.value());
 
-    input.mKeys = {
+    keys = {
             {LinearRotation::Key{Quat(), -1.0f}},
             {LinearRotation::Key{Quat(), -2.0f}},
             {LinearRotation::Key{Quat(), 3.0f}},
     };
-    result = input.checkDatarefValuesOrder();
+    result = LinearRotation::checkDatarefValuesOrder(keys);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(2, result.value());
 
-    input.mKeys = {
+    keys = {
             {LinearRotation::Key{Quat(), -1.0f}},
             {LinearRotation::Key{Quat(), 2.0f}},
             {LinearRotation::Key{Quat(), -1.0f}},
     };
-    result = input.checkDatarefValuesOrder();
+    result = LinearRotation::checkDatarefValuesOrder(keys);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(2, result.value());
 }

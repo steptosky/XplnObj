@@ -71,10 +71,10 @@ public:
     //-------------------------------------------------------------------------
 
     /*! \copydoc AbstractWriter::actualDataref */
-    std::string actualDataref(const std::string & dataref) override;
+    String actualDataref(const String & dataref) override;
 
     /*! \copydoc AbstractWriter::actualCommand */
-    std::string actualCommand(const std::string & command) override;
+    String actualCommand(const String & command) override;
 
     //-------------------------------------------------------------------------
 

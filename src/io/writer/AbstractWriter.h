@@ -32,6 +32,7 @@
 #include <string>
 #include <stdexcept>
 #include "converters/StringStream.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -96,7 +97,7 @@ public:
      * \exception std::domain_error is thrown if dataref must be resolved but there is no data to do it.
      *                              For example file with data for resolving isn't specified or isn't loaded.
      */
-    virtual std::string actualDataref(const std::string & dataref) = 0;
+    virtual String actualDataref(const String & dataref) = 0;
 
     /*!
      * \todo better description - needs link to this functional description 
@@ -107,7 +108,7 @@ public:
      * \exception std::domain_error is thrown if command must be resolved but there is no data to do it.
      *                              For example file with data for resolving isn't specified or isn't loaded.
      */
-    virtual std::string actualCommand(const std::string & command) = 0;
+    virtual String actualCommand(const String & command) = 0;
 
     /// @}
     //-------------------------------------------------------------------------

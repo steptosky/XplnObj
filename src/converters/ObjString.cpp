@@ -130,7 +130,7 @@ void printObj(const ObjLightCustom & obj, AbstractWriter & writer, const bool pr
             << " " << obj.size()
             << " " << obj.textureRect().point1().toString(PRECISION)
             << " " << obj.textureRect().point2().toString(PRECISION)
-            << " " << (obj.dataRef().empty() ? "none" : writer.actualDataref(obj.dataRef()).c_str());
+            << " " << (obj.dataRef().empty() ? String::none() : writer.actualDataref(String(obj.dataRef())).str());
     writer.writeLine(out.str());
 }
 
@@ -210,7 +210,7 @@ void printObj(const ObjLightSpillCust & obj, AbstractWriter & writer, const bool
             << " " << obj.size()
             << " " << obj.direction().toString(PRECISION)
             << " " << obj.semiRaw()
-            << " " << (obj.dataRef().empty() ? "none" : writer.actualDataref(obj.dataRef()).c_str());
+            << " " << (obj.dataRef().empty() ? String::none() : writer.actualDataref(String(obj.dataRef())).str());
     writer.writeLine(out.str());
 }
 

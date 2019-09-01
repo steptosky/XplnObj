@@ -60,8 +60,8 @@ public:
 
     std::string mResult;
 
-    std::string actualDataref(const std::string & dataref) override { return dataref; }
-    std::string actualCommand(const std::string & command) override { return command; }
+    xobj::String actualDataref(const xobj::String & dataref) override { return dataref; }
+    xobj::String actualCommand(const xobj::String & command) override { return command; }
 
     void dropToFile(const std::string & path = "writer-drop.obj") const {
         std::ofstream file(path);

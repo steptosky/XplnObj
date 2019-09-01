@@ -139,40 +139,40 @@ bool Writer::loadCommands(const Path & filePath) {
 //////////////////////////////////////////* Functions */////////////////////////////////////////////
 /**************************************************************************************************/
 
-std::string Writer::actualDataref(const std::string & dataref) {
-    if (!Dataref::isKeyId(dataref)) {
+String Writer::actualDataref(const String & dataref) {
+    if (!Dataref::isKeyId(dataref.str())) {
         return dataref;
     }
-    if (dataref.empty()) {
-        throw std::domain_error(ExcTxt("Dataref <"s.append(dataref)
+    if (dataref.isEmpty()) {
+        throw std::domain_error(ExcTxt("Dataref <"s.append(dataref.str())
                                        .append("> is considered as an id but datarefs file for extracting")
                                        .append(" the correct values isn't specified or loaded.")));
     }
-    const auto iter = mDatarefs.find(Dataref::keyToId(dataref));
+    const auto iter = mDatarefs.find(Dataref::keyToId(dataref.str()));
     if (iter == mDatarefs.end()) {
-        throw std::domain_error(ExcTxt("Dataref <"s.append(dataref)
+        throw std::domain_error(ExcTxt("Dataref <"s.append(dataref.str())
                                        .append("> is considered as an id but datarefs file for extracting")
                                        .append(" the correct values doesn't contain necessary value.")));
     }
-    return iter->second.mKey;
+    return String(iter->second.mKey);
 }
 
-std::string Writer::actualCommand(const std::string & command) {
-    if (!Command::isKeyId(command)) {
+String Writer::actualCommand(const String & command) {
+    if (!Command::isKeyId(command.str())) {
         return command;
     }
-    if (command.empty()) {
-        throw std::domain_error(ExcTxt("Command <"s.append(command)
+    if (command.isEmpty()) {
+        throw std::domain_error(ExcTxt("Command <"s.append(command.str())
                                        .append("> is considered as an id but commands file for extracting")
                                        .append(" the correct values isn't specified or loaded.")));
     }
-    const auto iter = mCommands.find(Command::keyToId(command));
+    const auto iter = mCommands.find(Command::keyToId(command.str()));
     if (iter == mCommands.end()) {
-        throw std::domain_error(ExcTxt("Command <"s.append(command)
+        throw std::domain_error(ExcTxt("Command <"s.append(command.str())
                                        .append("> is considered as an id but commands file for extracting")
                                        .append(" the correct values doesn't contain necessary value.")));
     }
-    return iter->second.mKey;
+    return String(iter->second.mKey);
 }
 
 /**************************************************************************************************/

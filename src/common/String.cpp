@@ -36,6 +36,7 @@ namespace xobj {
 ////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
 /**************************************************************************************************/
 
+#ifdef _MSC_VER
 String::String(const std::wstring_view s) {
     static std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
     mString = convert.to_bytes(s.data(), s.data() + s.size());
@@ -45,6 +46,7 @@ String & String::operator=(const std::wstring_view s) {
     mString = std::move(String(s).mString);
     return *this;
 }
+#endif
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

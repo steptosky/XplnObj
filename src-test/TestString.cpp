@@ -27,72 +27,26 @@
 **  Contacts: www.steptosky.com
 */
 
-#include "xpln/common/String.h"
-#include <codecvt>
+#include <gtest/gtest.h>
 
-namespace xobj {
-
-/**************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/**************************************************************************************************/
-
-bool String::isValidForDataRef(const std::string_view & str) noexcept {
-    for (auto ch : str) {
-        if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch < 32 || ch > 126) {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool String::isValidForTexture(const std::string_view & str) noexcept {
-    for (auto ch : str) {
-        if (ch == '\t' || ch == '\n' || ch == '\r' || ch < 32 || ch > 126) {
-            return false;
-        }
-    }
-    return true;
-}
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-#ifdef _MSC_VER
-void String::set(const std::wstring_view s) {
-    static std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
-    mString = convert.to_bytes(s.data(), s.data() + s.size());
-}
-#endif
-
-String String::from(std::string && s) noexcept {
-    String out;
-    out.mString = s;
-    return out;
-}
-
-String String::from(const std::string & s) noexcept {
-    String out;
-    out.mString = s;
-    return out;
-}
-
-#ifdef _MSC_VER
-String String::from(const std::wstring & s) {
-    String out;
-    out.set(s);
-    return out;
-}
-
-String String::from(const std::wstring_view s) {
-    String out;
-    out.set(s);
-    return out;
-}
-#endif
+using namespace xobj;
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
+TEST(String, isValidForDataRef) {
+    EXPECT_TRUE(String::isValidForDataRef(""));
+    EXPECT_FALSE(String::isValidForDataRef("test\n"));
+    EXPECT_TRUE(String::isValidForDataRef("test"));
 }
+
+TEST(String, isValidForTexture) {
+    EXPECT_TRUE(String::isValidForTexture(""));
+    EXPECT_FALSE(String::isValidForTexture("test\n"));
+    EXPECT_TRUE(String::isValidForTexture("test"));
+}
+
+/**************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**************************************************************************************************/

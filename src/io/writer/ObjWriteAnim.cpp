@@ -126,7 +126,7 @@ void ObjWriteAnim::printTrans(const PositionController & translation, const std:
             }
         }
 
-        if (tr.mDataRef.isValidForDataRef()) {
+        if (!tr.mDataRef.isValidForDataRef()) {
             XULError << "Transform: " << transformName
                     << " - has illegal symbols in translation dataref: " << tr.mDataRef.str();
             continue;
@@ -185,7 +185,7 @@ void ObjWriteAnim::printRotateAxis(const RotationAxis & axis, const std::string 
             return;
         }
     }
-    if (axis.mDataRef.isValidForDataRef()) {
+    if (!axis.mDataRef.isValidForDataRef()) {
         XULError << "Transform: " << transformName
                 << " - has illegal symbols in rotation dataref: " << axis.mDataRef.str();
         return;
@@ -253,7 +253,7 @@ void ObjWriteAnim::printVisible(const VisibilityController & visibility, const s
             continue;
         }
 
-        if (key.mDataRef.isValidForDataRef()) {
+        if (!key.mDataRef.isValidForDataRef()) {
             XULError << "Transform: " << transformName << " - visible key <" << counter
                     << "> has illegal symbols in its dataref: " << key.mDataRef.str();
             continue;

@@ -77,8 +77,8 @@ public:
     //---------------------------------------------------
     ///@{
 
-    XpObjLib static bool isValidForDataRef(const std::string & str) noexcept;
-    XpObjLib static bool isValidForTexture(const std::string & str) noexcept;
+    XpObjLib static bool isValidForDataRef(const std::string_view & str) noexcept;
+    XpObjLib static bool isValidForTexture(const std::string_view & str) noexcept;
     bool isValidForDataRef() const noexcept { return isValidForDataRef(mString); }
     bool isValidForTexture() const noexcept { return isValidForTexture(mString); }
 

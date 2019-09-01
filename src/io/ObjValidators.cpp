@@ -58,15 +58,15 @@ bool checkParameters(const AttrGlobSet & attrSet, const std::string & prefix) {
         XULWarning << prefix << " - Texture is not specified";
     }
     bool result = true;
-    if (String::isValidForTexture(attrSet.mTexture.value_or(std::string()))) {
+    if (!String::isValidForTexture(attrSet.mTexture.value_or(std::string()))) {
         result = false;
         XULError << prefix << " contains illegal symbols in the texture name <" << *attrSet.mTexture << ">";
     }
-    if (String::isValidForTexture(attrSet.mTextureLit.value_or(std::string()))) {
+    if (!String::isValidForTexture(attrSet.mTextureLit.value_or(std::string()))) {
         result = false;
         XULError << prefix << " contains illegal symbols in the lit texture name <" << *attrSet.mTextureLit << ">";
     }
-    if (String::isValidForTexture(attrSet.mTextureNormal.value_or(std::string()))) {
+    if (!String::isValidForTexture(attrSet.mTextureNormal.value_or(std::string()))) {
         result = false;
         XULError << prefix << " contains illegal symbols in the normal texture name <" << *attrSet.mTextureNormal << ">";
     }
@@ -189,7 +189,7 @@ bool checkParameters(const ObjLightCustom & inVal, const std::string & inPrefix)
         XULWarning << inPrefix << " - T1 and T2 can't be equaled.";
     }
 
-    if (String::isValidForDataRef(inVal.dataRef())) {
+    if (!String::isValidForDataRef(inVal.dataRef())) {
         result = false;
         XULError << inPrefix << " - Dataref contains illegal symbols.";
     }
@@ -263,7 +263,7 @@ bool checkParameters(const ObjLightSpillCust & inVal, const std::string & inPref
         XULInfo << inPrefix << " - doesn't have dataref, consider to use param light instead of spill custom.";
     }
 
-    if (String::isValidForDataRef(drf)) {
+    if (!String::isValidForDataRef(drf)) {
         result = false;
         XULError << inPrefix << " - Dataref contains illegal symbols.";
     }

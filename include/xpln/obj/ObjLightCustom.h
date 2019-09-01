@@ -78,7 +78,7 @@ public:
         mTexture = textureRect;
     }
 
-    void setDataRef(const std::string & dataRef) {
+    void setDataRef(const String & dataRef) {
         mDataRef = dataRef;
     }
 
@@ -94,7 +94,7 @@ public:
         return mTexture;
     }
 
-    const std::string & dataRef() const {
+    const String & dataRef() const {
         return mDataRef;
     }
 
@@ -120,7 +120,7 @@ private:
     Color mColor;
     float mSize;
     RectangleI mTexture;
-    std::string mDataRef;
+    String mDataRef;
 
 };
 

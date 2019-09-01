@@ -53,11 +53,11 @@ eObjectType ObjAbstract::objType() const {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjAbstract::setObjectName(const std::string & name) {
+void ObjAbstract::setObjectName(const String & name) {
     mName = name;
 }
 
-const std::string & ObjAbstract::objectName() const {
+const String & ObjAbstract::objectName() const {
     return mName;
 }
 

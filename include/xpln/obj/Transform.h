@@ -63,7 +63,8 @@ public:
     /// \name Construction/Destruction
     /// @{
 
-    Transform() = default;
+    Transform()
+        : mName("transform") {}
 
     Transform(const Transform &) = delete;
     Transform & operator=(const Transform &) = delete;
@@ -73,7 +74,7 @@ public:
     /// @}
     //-------------------------------------------------------------------------
 
-    std::string mName = "transform";
+    String mName;
     TMatrix mMatrix;
 
     PositionController mPosition;
@@ -108,7 +109,7 @@ public:
      * \param [in] name of children
      * \return Reference to new created children.
      */
-    XpObjLib Transform & newChild(std::string_view name = std::string_view());
+    XpObjLib Transform & newChild(const String & name = String());
 
     /*!
      * \details Checks whether the transform has children.

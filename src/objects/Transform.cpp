@@ -57,10 +57,10 @@ Transform::~Transform() {
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-Transform & Transform::newChild(const std::string_view name) {
+Transform & Transform::newChild(const String & name) {
     const auto & t = mChildren.emplace_back(std::make_unique<Transform>());
     t->mParent = this;
-    if (!name.empty()) {
+    if (!name.isEmpty()) {
         t->mName = name;
     }
     return *t;

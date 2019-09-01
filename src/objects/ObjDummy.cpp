@@ -39,7 +39,7 @@ ObjDummy::ObjDummy(const ObjDummy & copy)
     : ObjAbstract(copy) {}
 
 ObjDummy::ObjDummy() {
-    setObjectName("Dummy");
+    setObjectName(String("Dummy"));
 }
 
 ObjDummy::~ObjDummy() { }

@@ -30,11 +30,11 @@
 */
 
 #include <memory>
-#include <string>
 #include "xpln/Export.h"
 #include "xpln/common/Path.h"
 #include "xpln/common/IInterrupter.h"
 #include "IOStatistic.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -79,8 +79,8 @@ public:
     IOStatistic & statistic() { return mStatistic; }
     const IOStatistic & statistic() const { return mStatistic; }
 
-    void setSignature(const std::string & signature) { mSignature = signature; }
-    const std::string & signature() const { return mSignature; }
+    void setSignature(const String & signature) { mSignature = signature; }
+    const String & signature() const { return mSignature; }
 
     /// @}
     //-------------------------------------------------------------------------
@@ -134,7 +134,7 @@ private:
     Path mObjFile;
     Path mDatarefsFile;
     Path mCommandsFile;
-    std::string mSignature;
+    String mSignature;
     IOStatistic mStatistic;
     std::unique_ptr<IInterrupter> mInterruptor;
     bool mIsPrintTimeStamp = true;

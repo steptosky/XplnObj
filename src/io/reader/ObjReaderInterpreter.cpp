@@ -218,7 +218,7 @@ void ObjReaderInterpreter::gotGlobAttrDebug() {
 
 void ObjReaderInterpreter::gotLod(const float near, const float far, const std::string & endLineComment) {
     ObjLodGroup & l = mObjMain->addLod(new ObjLodGroup(near, far));
-    l.setObjectName(extractComment(endLineComment, l.objectName().c_str()));
+    l.setObjectName(String(extractComment(endLineComment, l.objectName().str().c_str())));
     mCurrentLod = &l;
     mCurrentTransform = &l.transform();
     //mCurrentTransform->mMatrix *= mRootMtx;
@@ -472,7 +472,7 @@ void ObjReaderInterpreter::gotTris(const Index offset, const Index count, const 
     auto * mesh = new ObjMesh;
     mesh->mFaces.swap(flist);
     mesh->mVertices.swap(vlist);
-    mesh->setObjectName(extractComment(endLineComment, mesh->objectName().c_str()));
+    mesh->setObjectName(String(extractComment(endLineComment, mesh->objectName().str().c_str())));
     mesh->mAttr = mCurrentAttrSet;
 
     //--------------------------

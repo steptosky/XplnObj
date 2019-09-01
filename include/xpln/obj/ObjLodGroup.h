@@ -50,9 +50,9 @@ public:
         : ObjLodGroup(0.0f, 0.0f) {}
 
     ObjLodGroup(const float nearVal, const float farVal)
-        : ObjLodGroup("LOD", nearVal, farVal) {}
+        : ObjLodGroup(String("LOD"), nearVal, farVal) {}
 
-    ObjLodGroup(const std::string & name, const float nearVal, const float farVal)
+    ObjLodGroup(const String & name, const float nearVal, const float farVal)
         : mName(name),
           mNear(nearVal),
           mFar(farVal) {
@@ -85,12 +85,12 @@ public:
 
     //--------------------------------------------------------
 
-    void setObjectName(const std::string & name) {
+    void setObjectName(const String & name) {
         mName = name;
         mObjTransform.mName = name;
     }
 
-    const std::string & objectName() const {
+    const String & objectName() const {
         return mName;
     }
 
@@ -111,7 +111,7 @@ public:
 private:
 
     Transform mObjTransform;
-    std::string mName;
+    String mName;
     float mNear;
     float mFar;
 

@@ -41,7 +41,7 @@ using namespace xobj;
 
 TEST(DrapedAlg, extract) {
     Transform transformRoot;
-    auto & transform = transformRoot.newChild("l1");
+    auto & transform = transformRoot.newChild(String("l1"));
     ObjDrapedGroup draped;
 
     const auto l1M1 = TestUtilsObjMesh::createPyramidTestMesh("l1-m1");
@@ -64,8 +64,8 @@ TEST(DrapedAlg, extract) {
     EXPECT_EQ(1, (*transformRoot.begin())->mObjects.size());
 
     ASSERT_EQ(2, draped.transform().mObjects.size());
-    EXPECT_STREQ("l1-m1", draped.transform().mObjects[0]->objectName().c_str());
-    EXPECT_STREQ("l2-m2", draped.transform().mObjects[1]->objectName().c_str());
+    EXPECT_STREQ("l1-m1", draped.transform().mObjects[0]->objectName().str().c_str());
+    EXPECT_STREQ("l2-m2", draped.transform().mObjects[1]->objectName().str().c_str());
 }
 
 /**************************************************************************************************/

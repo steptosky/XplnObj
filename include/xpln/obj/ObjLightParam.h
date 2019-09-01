@@ -29,7 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
 #include <map>
 #include "ObjAbstractLight.h"
 #include "xpln/common/Color.h"
@@ -68,19 +67,19 @@ public:
     /// \name Parameters
     /// @{
 
-    void setName(const std::string & name) {
+    void setName(const String & name) {
         mLightName = name;
     }
 
-    const std::string & name() const {
+    const String & name() const {
         return mLightName;
     }
 
-    void setRawParams(const std::string & params) {
+    void setRawParams(const String & params) {
         mParams = params;
     }
 
-    const std::string & rawParams() const {
+    const String & rawParams() const {
         return mParams;
     }
 
@@ -125,13 +124,13 @@ public:
      * \exception std::invalid_argument if some expanded values could not be converted.
      * \exception std::out_of_range if some expanded values could not be converted.
      */
-    XpObjLib void setParams(const std::string & params, const LightUtils::ParamExpanderMap & expander);
+    XpObjLib void setParams(const String & params, const LightUtils::ParamExpanderMap & expander);
 
     /*!
      * \return Params with applied variables like the direction.
-     * \exception the same as \link ObjLightParam::setParams(const std::string &,const LightUtils::ParamExpanderMap &) \endlink
+     * \exception the same as \link ObjLightParam::setParams(const String &,const LightUtils::ParamExpanderMap &) \endlink
      */
-    XpObjLib std::string params() const;
+    XpObjLib String params() const;
 
     /// @}
     //-------------------------------------------------------------------------
@@ -156,8 +155,8 @@ private:
     bool mIsSpill = false;
     bool mIsDirection = false;
     Point3 mDirection;
-    std::string mLightName;
-    std::string mParams;
+    String mLightName;
+    String mParams;
 
 };
 

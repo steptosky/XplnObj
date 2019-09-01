@@ -57,26 +57,26 @@ inline void printLods(const ObjMain::Lods & lods) {
 
 TEST(LodsAlg, sorting_normal_case1) {
     ObjMain::Lods lods;
-    lods.emplace_back(std::make_unique<ObjLodGroup>("0", 0.0f, 50.f));     // additive 1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("1", 0.0f, 100.f));    // selective 1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("2", 0.0f, 25.f));     // additive 2
-    lods.emplace_back(std::make_unique<ObjLodGroup>("3", 200.0f, 300.0f)); // selective 1:1:1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("4", 100.0f, 200.0f)); // selective 1:1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("5", 0.0f, 200.f));    // selective 2
-    lods.emplace_back(std::make_unique<ObjLodGroup>("6", 300.0f, 400.0f)); // selective 2:2:2
-    lods.emplace_back(std::make_unique<ObjLodGroup>("7", 200.0f, 300.0f)); // selective 2:2
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("0"), 0.0f, 50.f));     // additive 1
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("1"), 0.0f, 100.f));    // selective 1
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("2"), 0.0f, 25.f));     // additive 2
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("3"), 200.0f, 300.0f)); // selective 1:1:1
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("4"), 100.0f, 200.0f)); // selective 1:1
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("5"), 0.0f, 200.f));    // selective 2
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("6"), 300.0f, 400.0f)); // selective 2:2:2
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("7"), 200.0f, 300.0f)); // selective 2:2
 
     ASSERT_TRUE(LodsAlg::sort(lods, NoInterrupter()));
     printLods(lods);
 
-    EXPECT_STREQ("0", lods.at(0)->objectName().c_str());
-    EXPECT_STREQ("1", lods.at(1)->objectName().c_str());
-    EXPECT_STREQ("4", lods.at(2)->objectName().c_str());
-    EXPECT_STREQ("3", lods.at(3)->objectName().c_str());
-    EXPECT_STREQ("6", lods.at(4)->objectName().c_str());
-    EXPECT_STREQ("2", lods.at(5)->objectName().c_str());
-    EXPECT_STREQ("5", lods.at(6)->objectName().c_str());
-    EXPECT_STREQ("7", lods.at(7)->objectName().c_str());
+    EXPECT_STREQ("0", lods.at(0)->objectName().str().c_str());
+    EXPECT_STREQ("1", lods.at(1)->objectName().str().c_str());
+    EXPECT_STREQ("4", lods.at(2)->objectName().str().c_str());
+    EXPECT_STREQ("3", lods.at(3)->objectName().str().c_str());
+    EXPECT_STREQ("6", lods.at(4)->objectName().str().c_str());
+    EXPECT_STREQ("2", lods.at(5)->objectName().str().c_str());
+    EXPECT_STREQ("5", lods.at(6)->objectName().str().c_str());
+    EXPECT_STREQ("7", lods.at(7)->objectName().str().c_str());
 }
 
 /**************************************************************************************************/
@@ -86,7 +86,7 @@ TEST(LodsAlg, sorting_normal_case1) {
 TEST(LodsAlg, sorting_incorrect_case1) {
     ObjMain::Lods lods;
     // 1 LOD starts with incorrect value
-    lods.emplace_back(std::make_unique<ObjLodGroup>("0", 10.0f, 50.f)); // [incorrect]
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("0"), 10.0f, 50.f)); // [incorrect]
 
     ASSERT_FALSE(LodsAlg::sort(lods, NoInterrupter()));
 }
@@ -94,8 +94,8 @@ TEST(LodsAlg, sorting_incorrect_case1) {
 TEST(LodsAlg, sorting_incorrect_case2) {
     ObjMain::Lods lods;
     // near and far equal
-    lods.emplace_back(std::make_unique<ObjLodGroup>("0", 0.0f, 25.f));
-    lods.emplace_back(std::make_unique<ObjLodGroup>("1", 100.f, 100.f)); // [incorrect]
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("0"), 0.0f, 25.f));
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("1"), 100.f, 100.f)); // [incorrect]
 
     ASSERT_FALSE(LodsAlg::sort(lods, NoInterrupter()));
 }
@@ -103,8 +103,8 @@ TEST(LodsAlg, sorting_incorrect_case2) {
 TEST(LodsAlg, sorting_incorrect_case3) {
     ObjMain::Lods lods;
     // far less than near
-    lods.emplace_back(std::make_unique<ObjLodGroup>("0", 0.0f, 25.f));
-    lods.emplace_back(std::make_unique<ObjLodGroup>("1", 100.f, 50.f)); // [incorrect]
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("0"), 0.0f, 25.f));
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("1"), 100.f, 50.f)); // [incorrect]
 
     ASSERT_FALSE(LodsAlg::sort(lods, NoInterrupter()));
 }
@@ -112,10 +112,10 @@ TEST(LodsAlg, sorting_incorrect_case3) {
 TEST(LodsAlg, sorting_incorrect_case4) {
     ObjMain::Lods lods;
     // 1 LOD starts with incorrect value
-    lods.emplace_back(std::make_unique<ObjLodGroup>("0", 0.0f, 50.f));     // additive 1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("1", 0.0f, 100.f));    // selective 1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("2", 200.0f, 300.0f)); // selective 1:1:1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("3", 150.0f, 200.0f)); // selective 1:1 [incorrect]
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("0"), 0.0f, 50.f));     // additive 1
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("1"), 0.0f, 100.f));    // selective 1
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("2"), 200.0f, 300.0f)); // selective 1:1:1
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("3"), 150.0f, 200.0f)); // selective 1:1 [incorrect]
 
     ASSERT_FALSE(LodsAlg::sort(lods, NoInterrupter()));
 }
@@ -123,10 +123,10 @@ TEST(LodsAlg, sorting_incorrect_case4) {
 TEST(LodsAlg, sorting_incorrect_case5) {
     ObjMain::Lods lods;
     // 2 LODs start with the same value 
-    lods.emplace_back(std::make_unique<ObjLodGroup>("0", 0.0f, 50.f));    // additive 1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("1", 0.0f, 100.f));   // selective 1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("2", 100.f, 300.0f)); // selective 1:1:1
-    lods.emplace_back(std::make_unique<ObjLodGroup>("3", 100.f, 200.0f)); // selective 1:1 [incorrect]
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("0"), 0.0f, 50.f));    // additive 1
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("1"), 0.0f, 100.f));   // selective 1
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("2"), 100.f, 300.0f)); // selective 1:1:1
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("3"), 100.f, 200.0f)); // selective 1:1 [incorrect]
 
     ASSERT_FALSE(LodsAlg::sort(lods, NoInterrupter()));
 }
@@ -138,15 +138,15 @@ TEST(LodsAlg, sorting_incorrect_case5) {
 TEST(LodsAlg, removeWithoutObjects) {
     ObjMain::Lods lods;
     // 2 LODs start with the same value 
-    lods.emplace_back(std::make_unique<ObjLodGroup>("0", 0.0f, 50.f));
-    lods.emplace_back(std::make_unique<ObjLodGroup>("1", 0.0f, 100.f));
-    lods.emplace_back(std::make_unique<ObjLodGroup>("2", 100.f, 300.0f));
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("0"), 0.0f, 50.f));
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("1"), 0.0f, 100.f));
+    lods.emplace_back(std::make_unique<ObjLodGroup>(String("2"), 100.f, 300.0f));
 
     lods[0]->transform().mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("m1"));
     LodsAlg::removeWithoutObjects(lods, NoInterrupter());
 
     ASSERT_EQ(1, lods.size());
-    ASSERT_STREQ("0", lods[0]->objectName().c_str());
+    ASSERT_STREQ("0", lods[0]->objectName().str().c_str());
 }
 
 /**************************************************************************************************/

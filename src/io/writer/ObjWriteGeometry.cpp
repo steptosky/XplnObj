@@ -92,7 +92,7 @@ void ObjWriteGeometry::printMeshVerticiesRecursive(AbstractWriter & writer, cons
             const auto * mobj = static_cast<const ObjMesh*>(objBase.get());
 
             if (mOptions->isEnabled(XOBJ_EXP_DEBUG)) {
-                writer.writeLine(std::string("# ").append(mobj->objectName()));
+                writer.writeLine(std::string("# ").append(mobj->objectName().str()));
             }
 
             for (const MeshVertex & v : mobj->mVertices) {
@@ -178,7 +178,7 @@ void ObjWriteGeometry::printLineVerticiesRecursive(AbstractWriter & writer, cons
             const auto lobj = static_cast<const ObjLine*>(objBase.get());
 
             if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_DEBUG)) {
-                writer.writeLine(std::string("# ").append(lobj->objectName()));
+                writer.writeLine(std::string("# ").append(lobj->objectName().str()));
             }
 
             for (const LineVertex & v : lobj->verticesList()) {
@@ -220,7 +220,7 @@ bool ObjWriteGeometry::printMeshObject(AbstractWriter & writer, const ObjAbstrac
         stream << std::fixed;
 
         if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_MESH)) {
-            stream << MESH_TRIS << " " << (mMeshFaceOffset * 3) << " " << (numface * 3) << " ## " << mobj->objectName().data();
+            stream << MESH_TRIS << " " << (mMeshFaceOffset * 3) << " " << (numface * 3) << " ## " << mobj->objectName().str().c_str();
         }
         else {
             stream << MESH_TRIS << " " << (mMeshFaceOffset * 3) << " " << (numface * 3);
@@ -245,7 +245,7 @@ bool ObjWriteGeometry::printLightPointObject(AbstractWriter & writer, const ObjA
         stream << LIGHTS << " " << mPointLightOffsetByObject << " " << std::size_t(1);
 
         if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LIGHT)) {
-            stream << " ## " << objBase.objectName().c_str();
+            stream << " ## " << objBase.objectName().str().c_str();
         }
 
         writer.writeLine(stream.str());
@@ -303,7 +303,7 @@ bool ObjWriteGeometry::printLineObject(AbstractWriter & writer, const ObjAbstrac
         stream << std::fixed;
 
         if (mOptions->isEnabled(eExportOptions::XOBJ_EXP_MARK_LINE)) {
-            stream << LINES << " " << mMeshVertexOffset << " " << numvert << " ## " << lobj->objectName() << std::endl;
+            stream << LINES << " " << mMeshVertexOffset << " " << numvert << " ## " << lobj->objectName().str() << std::endl;
         }
         else {
             stream << LINES << " " << mMeshVertexOffset << " " << numvert << std::endl;

@@ -29,8 +29,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
 #include "ObjAbstractLight.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -70,7 +70,7 @@ public:
      *          It can be found:
      *          X-Plane Root/Resources/bitmaps/world/lites/lights.txt
      */
-    void setName(const std::string & id) {
+    void setName(const String & id) {
         mLightName = id;
     }
 
@@ -78,7 +78,7 @@ public:
      * \see ObjLightNamed::setName
      * \return Light named name.
      */
-    std::string name() const {
+    const String & name() const {
         return mLightName;
     }
 
@@ -101,7 +101,7 @@ public:
 
 private:
 
-    std::string mLightName;
+    String mLightName;
 
 };
 

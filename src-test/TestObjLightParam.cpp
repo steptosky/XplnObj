@@ -42,8 +42,8 @@ using namespace std::string_literals;
 
 TEST(ObjLightParam, setParams_no_direction) {
     ObjLightParam l;
-    l.setParams("0 $size", {{"size", []() { return "3.0"; }}});
-    ASSERT_STREQ("0 3.0", l.params().c_str());
+    l.setParams(String("0 $size"), {{"size", []() { return "3.0"; }}});
+    ASSERT_STREQ("0 3.0", l.params().str().c_str());
 }
 
 /**************************************************************************************************/
@@ -53,58 +53,58 @@ TEST(ObjLightParam, setParams_no_direction) {
 TEST(ObjLightParam, setParams_billboards_normal) {
     ObjLightParam l;
     const auto scale = LightUtils::billboardDirectionScaleFromAngle(1.5708f); // 90 deg
-    l.setParams("$direction 0 $size", {
-            {"direction", [&]() { return "0 -1 0 "s.append(sts::toString(scale, PRECISION)); }},
-            {"size", []() { return "3.0"; }},
-    });
-    ASSERT_STREQ("0.00000 -3.41420 0.00000 0 3.0", l.params().c_str());
+    l.setParams(String("$direction 0 $size"), {
+                    {"direction", [&]() { return "0 -1 0 "s.append(sts::toString(scale, PRECISION)); }},
+                    {"size", []() { return "3.0"; }},
+                });
+    ASSERT_STREQ("0.00000 -3.41420 0.00000 0 3.0", l.params().str().c_str());
 }
 
 TEST(ObjLightParam, setParams_billboards_expander_not_presented_case1) {
     ObjLightParam l;
     const LightUtils::ParamExpanderMap expander{
-            {"direction", [&]() { return "0 -1 0"; }},
-    };
-    ASSERT_THROW(l.setParams("$direction 0 $size", expander), std::runtime_error);
+                {"direction", [&]() { return "0 -1 0"; }},
+            };
+    ASSERT_THROW(l.setParams(String("$direction 0 $size"), expander), std::runtime_error);
 }
 
 TEST(ObjLightParam, setParams_billboards_expander_not_presented_case2) {
     ObjLightParam l;
     const LightUtils::ParamExpanderMap expander{
-            {"size", []() { return "3.0"; }},
-    };
-    ASSERT_THROW(l.setParams("$direction 0 $size", expander), std::runtime_error);
+                {"size", []() { return "3.0"; }},
+            };
+    ASSERT_THROW(l.setParams(String("$direction 0 $size"), expander), std::runtime_error);
 }
 
 TEST(ObjLightParam, setParams_billboards_not_enough_value) {
     ObjLightParam l;
     const LightUtils::ParamExpanderMap expander{
-            {"direction", [&]() { return "0 -1 0"; }},
-            {"size", []() { return "3.0"; }},
-    };
-    ASSERT_THROW(l.setParams("$direction 0 $size", expander), std::runtime_error);
+                {"direction", [&]() { return "0 -1 0"; }},
+                {"size", []() { return "3.0"; }},
+            };
+    ASSERT_THROW(l.setParams(String("$direction 0 $size"), expander), std::runtime_error);
 }
 
 TEST(ObjLightParam, setParams_billboards_incorrect_val) {
     ObjLightParam l;
     const LightUtils::ParamExpanderMap expander{
-            {"direction", [&]() { return "0 -1 0 test"; }},
-            {"size", []() { return "3.0"; }},
-    };
-    ASSERT_THROW(l.setParams("$direction 0 $size", expander), std::invalid_argument);
+                {"direction", [&]() { return "0 -1 0 test"; }},
+                {"size", []() { return "3.0"; }},
+            };
+    ASSERT_THROW(l.setParams(String("$direction 0 $size"), expander), std::invalid_argument);
 }
 
 TEST(ObjLightParam, setParams_billboards_transform) {
     ObjLightParam l;
-    l.setParams("$direction 0 $size", {
-            {"direction", [&]() { return "0 -1 0 0.5"; }},
-            {"size", []() { return "3.0"; }},
-    });
+    l.setParams(String("$direction 0 $size"), {
+                    {"direction", [&]() { return "0 -1 0 0.5"; }},
+                    {"size", []() { return "3.0"; }},
+                });
     TMatrix tm;
     tm.setPosition(Point3(1.0f, 1.0f, 1.0f)); // actually shouldn't be applied
     tm.rotateDegreesX(90.0f);
     l.applyTransform(tm);
-    ASSERT_STREQ("0.00000 0.00000 -0.50000 0 3.0", l.params().c_str());
+    ASSERT_STREQ("0.00000 0.00000 -0.50000 0 3.0", l.params().str().c_str());
 }
 
 /**************************************************************************************************/
@@ -113,58 +113,58 @@ TEST(ObjLightParam, setParams_billboards_transform) {
 
 TEST(ObjLightParam, setParams_spill_normal) {
     ObjLightParam l;
-    l.setParams("$direction_sp 0 $size", {
-            {"direction_sp", [&]() { return "0 -1 0 "; }},
-            {"size", []() { return "3.0"; }},
-    });
-    ASSERT_STREQ("0.00000 -1.00000 0.00000 0 3.0", l.params().c_str());
+    l.setParams(String("$direction_sp 0 $size"), {
+                    {"direction_sp", [&]() { return "0 -1 0 "; }},
+                    {"size", []() { return "3.0"; }},
+                });
+    ASSERT_STREQ("0.00000 -1.00000 0.00000 0 3.0", l.params().str().c_str());
 }
 
 TEST(ObjLightParam, setParams_spill_expander_not_presented_case1) {
     ObjLightParam l;
     const LightUtils::ParamExpanderMap expander{
-            {"direction_sp", [&]() { return "0 -1 0"; }},
-    };
-    ASSERT_THROW(l.setParams("$direction_sp 0 $size", expander), std::runtime_error);
+                {"direction_sp", [&]() { return "0 -1 0"; }},
+            };
+    ASSERT_THROW(l.setParams(String("$direction_sp 0 $size"), expander), std::runtime_error);
 }
 
 TEST(ObjLightParam, setParams_spill_expander_not_presented_case2) {
     ObjLightParam l;
     const LightUtils::ParamExpanderMap expander{
-            {"size", []() { return "3.0"; }},
-    };
-    ASSERT_THROW(l.setParams("$direction_sp 0 $size", expander), std::runtime_error);
+                {"size", []() { return "3.0"; }},
+            };
+    ASSERT_THROW(l.setParams(String("$direction_sp 0 $size"), expander), std::runtime_error);
 }
 
 TEST(ObjLightParam, setParams_spill_not_enough_value) {
     ObjLightParam l;
     const LightUtils::ParamExpanderMap expander{
-            {"direction_sp", [&]() { return "0 -1 "; }},
-            {"size", []() { return "3.0"; }},
-    };
-    ASSERT_THROW(l.setParams("$direction_sp 0 $size", expander), std::runtime_error);
+                {"direction_sp", [&]() { return "0 -1 "; }},
+                {"size", []() { return "3.0"; }},
+            };
+    ASSERT_THROW(l.setParams(String("$direction_sp 0 $size"), expander), std::runtime_error);
 }
 
 TEST(ObjLightParam, setParams_spill_incorrect_val) {
     ObjLightParam l;
     const LightUtils::ParamExpanderMap expander{
-            {"direction_sp", [&]() { return "0 -1 test"; }},
-            {"size", []() { return "3.0"; }},
-    };
-    ASSERT_THROW(l.setParams("$direction_sp 0 $size", expander), std::invalid_argument);
+                {"direction_sp", [&]() { return "0 -1 test"; }},
+                {"size", []() { return "3.0"; }},
+            };
+    ASSERT_THROW(l.setParams(String("$direction_sp 0 $size"), expander), std::invalid_argument);
 }
 
 TEST(ObjLightParam, setParams_spill_transform) {
     ObjLightParam l;
-    l.setParams("$direction_sp 0 $size", {
-            {"direction_sp", [&]() { return "0 -1 0"; }},
-            {"size", []() { return "3.0"; }},
-    });
+    l.setParams(String("$direction_sp 0 $size"), {
+                    {"direction_sp", [&]() { return "0 -1 0"; }},
+                    {"size", []() { return "3.0"; }},
+                });
     TMatrix tm;
     tm.setPosition(Point3(1.0f, 1.0f, 1.0f)); // actually shouldn't be applied
     tm.rotateDegreesX(90.0f);
     l.applyTransform(tm);
-    ASSERT_STREQ("0.00000 0.00000 -1.00000 0 3.0", l.params().c_str());
+    ASSERT_STREQ("0.00000 0.00000 -1.00000 0 3.0", l.params().str().c_str());
 }
 
 /**************************************************************************************************/

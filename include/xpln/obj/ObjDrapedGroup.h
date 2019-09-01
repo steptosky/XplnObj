@@ -49,9 +49,9 @@ public:
     /// @{
 
     ObjDrapedGroup()
-        : ObjDrapedGroup("Draped") {}
+        : ObjDrapedGroup(String("Draped")) {}
 
-    explicit ObjDrapedGroup(const std::string & name)
+    explicit ObjDrapedGroup(const String & name)
         : mName(name) {
         mObjTransform.mName = name;
     }
@@ -65,12 +65,12 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    void setObjectName(const std::string & name) {
+    void setObjectName(const String & name) {
         mName = name;
         mObjTransform.mName = name;
     }
 
-    const std::string & objectName() const {
+    const String & objectName() const {
         return mName;
     }
 
@@ -103,7 +103,7 @@ public:
 private:
 
     Transform mObjTransform;
-    std::string mName;
+    String mName;
 
 };
 

@@ -50,7 +50,7 @@ public:
         }
 
         auto * mesh = new ObjMesh();
-        mesh->setObjectName(inName);
+        mesh->setObjectName(String(inName));
 
         mesh->mVertices.emplace_back(ObjMesh::Vertex(Point3(0.0f, 0.0f, -50.0f),
                                                      Point3(0.0f, 0.894427f, -0.447214f),
@@ -110,7 +110,7 @@ public:
     static void compareMesh(const ObjMesh * m1, const ObjMesh * m2) {
         ASSERT_TRUE(m1 != nullptr);
         ASSERT_TRUE(m2 != nullptr);
-        ASSERT_STREQ(m1->objectName().c_str(), m2->objectName().c_str());
+        ASSERT_STREQ(m1->objectName().str().c_str(), m2->objectName().str().c_str());
         ASSERT_TRUE(m1->mVertices == m2->mVertices);
         ASSERT_TRUE(m1->mFaces == m2->mFaces);
     }
@@ -136,7 +136,7 @@ public:
         outMesh->mFaces.push_back(MeshFace(0, 1, 2));
         outMesh->mFaces.push_back(MeshFace(0, 2, 3));
         if (inName) {
-            outMesh->setObjectName(inName);
+            outMesh->setObjectName(String(inName));
         }
         return outMesh;
     }
@@ -178,7 +178,7 @@ private:
 
         outMesh->mAttr.mPolyOffset = AttrPolyOffset(1.0f);
         outMesh->mAttr.mShiny = AttrShiny(0.8f);
-        outMesh->mAttr.mLightLevel = AttrLightLevel(0.3f, 0.8f, "dataref");
+        outMesh->mAttr.mLightLevel = AttrLightLevel(0.3f, 0.8f, String("dataref"));
         outMesh->mAttr.mCockpit = AttrCockpit(AttrCockpit::region_2);
         return outMesh;
     }

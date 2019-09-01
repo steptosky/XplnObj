@@ -41,7 +41,7 @@ ObjLine::ObjLine(const ObjLine & copy)
       mVertices(copy.mVertices) {}
 
 ObjLine::ObjLine() {
-    setObjectName("Obj Line");
+    setObjectName(String("Obj Line"));
 }
 
 ObjLine::~ObjLine() {}

@@ -68,7 +68,7 @@ void InstancingAlg::printBreakInstancing(const char * objName, const char * reas
 
 void InstancingAlg::proccessTransform(Transform & transform, bool & outResult) {
     if (transform.isAnimated()) {
-        printBreakInstancing(transform.mName.c_str(),
+        printBreakInstancing(transform.mName.str().c_str(),
                              "node has animation. Animation is not allowed for instancing.");
         outResult = false;
     }
@@ -87,12 +87,12 @@ void InstancingAlg::proccessTransform(Transform & transform, bool & outResult) {
 void InstancingAlg::proccessObjects(Transform & transform, bool & outResult) {
     for (auto & curr : transform.mObjects) {
         if (curr->objType() == OBJ_LINE) {
-            printBreakInstancing(curr->objectName().c_str(),
+            printBreakInstancing(curr->objectName().str().c_str(),
                                  "the object is the line object. Lines are not allowed for instancing.");
             outResult = false;
         }
         if (curr->objType() == OBJ_SMOKE) {
-            printBreakInstancing(curr->objectName().c_str(),
+            printBreakInstancing(curr->objectName().str().c_str(),
                                  "the object is the smoke object. Smokes are not allowed for instancing.");
             outResult = false;
         }
@@ -106,31 +106,31 @@ void InstancingAlg::proccessObjects(Transform & transform, bool & outResult) {
 
 void InstancingAlg::proccessAttributes(ObjMesh & mesh, bool & outResult) {
     if (mesh.mAttr.mManip) {
-        printBreakInstancing(mesh.objectName().c_str(),
+        printBreakInstancing(mesh.objectName().str().c_str(),
                              std::string("the object has the manipulator attribute which is not allowed for instancing").c_str());
         outResult = false;
     }
     if (mesh.mAttr.mPolyOffset) {
-        printBreakInstancing(mesh.objectName().c_str(),
+        printBreakInstancing(mesh.objectName().str().c_str(),
                              std::string("the object has the \"").append(ATTR_POLY_OS)
                                                                  .append("\" attribute which is not allowed for instancing").c_str());
         outResult = false;
     }
     if (mesh.mAttr.mBlend) {
-        printBreakInstancing(mesh.objectName().c_str(),
+        printBreakInstancing(mesh.objectName().str().c_str(),
                              std::string("the object has on of the \"").append(ATTR_BLEND).append("/")
                                                                        .append(ATTR_NO_BLEND).append("/").append(ATTR_SHADOW_BLEND)
                                                                        .append("\" attribute which is not allowed for instancing").c_str());
         outResult = false;
     }
     if (mesh.mAttr.mShiny) {
-        printBreakInstancing(mesh.objectName().c_str(),
+        printBreakInstancing(mesh.objectName().str().c_str(),
                              std::string("the object has the \"").append(ATTR_SHINY_RAT)
                                                                  .append("\" attribute which is not allowed for instancing").c_str());
         outResult = false;
     }
     if (mesh.mAttr.mCockpit) {
-        printBreakInstancing(mesh.objectName().c_str(),
+        printBreakInstancing(mesh.objectName().str().c_str(),
                              std::string("the object has on of the \"").append(ATTR_COCKPIT).append("/")
                                                                        .append(ATTR_COCKPIT_REGION)
                                                                        .append("\" attribute which is not allowed for instancing").c_str());
@@ -138,19 +138,19 @@ void InstancingAlg::proccessAttributes(ObjMesh & mesh, bool & outResult) {
     }
     //-------------------------------------------------------------------------
     if (!mesh.mAttr.mIsDraw) {
-        printBreakInstancing(mesh.objectName().c_str(),
+        printBreakInstancing(mesh.objectName().str().c_str(),
                              std::string("the object has the \"").append(ATTR_DRAW_DISABLE)
                                                                  .append("\" attribute which is not allowed for instancing").c_str());
         outResult = false;
     }
     if (!mesh.mAttr.mIsCastShadow) {
-        printBreakInstancing(mesh.objectName().c_str(),
+        printBreakInstancing(mesh.objectName().str().c_str(),
                              std::string("the object has the \"").append(ATTR_NO_SHADOW)
                                                                  .append("\" attribute which is not allowed for instancing").c_str());
         outResult = false;
     }
     if (mesh.mAttr.mIsSolidForCamera) {
-        printBreakInstancing(mesh.objectName().c_str(),
+        printBreakInstancing(mesh.objectName().str().c_str(),
                              std::string("the object has the \"").append(ATTR_SOLID_CAMERA)
                                                                  .append("\" attribute which is not allowed for instancing").c_str());
         outResult = false;

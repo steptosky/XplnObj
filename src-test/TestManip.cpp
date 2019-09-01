@@ -438,7 +438,7 @@ TEST(TestManip, AttrManipDragAxis) {
     ASSERT_EQ(1, number);
 
     manip.mWheel = AttrManipWheel(15.0f);
-    manip.mAxisDetented = AttrAxisDetented(1.0f, 2.0f, 3.0f, 4.0, 5.0f, "dataref-2");;
+    manip.mAxisDetented = AttrAxisDetented(1.0f, 2.0f, 3.0f, 4.0, 5.0f, String("dataref-2"));
     manip.mAxisDetentRanges = {AttrAxisDetentRange(1.0f, 2.0f, 3.0f), AttrAxisDetentRange(4.0f, 5.0f, 6.0f)};
 
     result.append("ATTR_manip_wheel ")
@@ -816,7 +816,7 @@ TEST(TestManip, AttrManipWrap) {
 
 TEST(TestManip, AttrAxisDetented) {
     AttrManipDragAxis rootManip;
-    rootManip.mAxisDetented = AttrAxisDetented(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, "dataref");
+    rootManip.mAxisDetented = AttrAxisDetented(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, String("dataref"));
 
     const auto result = std::string("ATTR_manip_drag_axis none 0.00000 0.00000 0.00000 0.00000 1.00000  \n")
                         .append("ATTR_axis_detented ")

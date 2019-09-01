@@ -39,7 +39,7 @@ namespace xobj {
 ObjLightCustom::ObjLightCustom()
     : mSize(10.0f),
       mTexture(Point2(0.0f, 0.0f), Point2(1.0f, 1.0f)) {
-    setObjectName("Custom light");
+    setObjectName(String("Custom light"));
 }
 
 /**************************************************************************************************/

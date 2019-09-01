@@ -29,7 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
 #include <cstdint>
 #include "xpln/Export.h"
 #include "xpln/enums/eExportOptions.h"
@@ -87,7 +86,6 @@ public:
 private:
 
     std::uint64_t mOptionFlags;
-    std::string mSignature;
 
 };
 

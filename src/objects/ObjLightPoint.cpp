@@ -39,7 +39,7 @@ namespace xobj {
 ObjLightPoint::ObjLightPoint()
     : mColor(0.7f, 0.7f, 0.7f, 1.0f) {
 
-    setObjectName("Point light");
+    setObjectName(String("Point light"));
 }
 
 /**************************************************************************************************/

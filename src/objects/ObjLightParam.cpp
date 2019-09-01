@@ -40,14 +40,14 @@ namespace xobj {
 /********************************************************************************************************/
 
 ObjLightParam::ObjLightParam() {
-    setObjectName("Param light");
+    setObjectName(String("Param light"));
 }
 
 /**************************************************************************************************/
 ///////////////////////////////////////////* Functions *////////////////////////////////////////////
 /**************************************************************************************************/
 
-void ObjLightParam::setParams(const std::string & params, const LightUtils::ParamExpanderMap & expander) {
+void ObjLightParam::setParams(const String & params, const LightUtils::ParamExpanderMap & expander) {
     using namespace std::string_literals;
 
     mIsSpill = false;
@@ -57,7 +57,7 @@ void ObjLightParam::setParams(const std::string & params, const LightUtils::Para
 
     auto expanderCopy = expander;
     //------------------------------
-    auto paramsVector = sts::MbStrUtils::splitToVector(params, " ");
+    auto paramsVector = sts::MbStrUtils::splitToVector(params.str(), " ");
 
     const bool hasSpillDirection = std::any_of(paramsVector.begin(), paramsVector.end(), [](const auto & val) {
         return val == "$direction_sp";
@@ -105,16 +105,16 @@ void ObjLightParam::setParams(const std::string & params, const LightUtils::Para
         directionIter->second = []() { return "$direction"; };
     }
     //------------------------------
-    mParams = LightUtils::replaceVariables(params, expanderCopy);
+    mParams = LightUtils::replaceVariables(params.str(), expanderCopy);
 }
 
-std::string ObjLightParam::params() const {
+String ObjLightParam::params() const {
     if (!mIsDirection) {
         return mParams;
     }
-    return LightUtils::replaceVariables(mParams, {
-            {mIsSpill ? "direction_sp" : "direction", [&]() { return (mDirection.normalized() * mBillboardScale).toString(PRECISION); }},
-    });
+    return String(LightUtils::replaceVariables(mParams.str(), {
+                                                   {mIsSpill ? "direction_sp" : "direction", [&]() { return (mDirection.normalized() * mBillboardScale).toString(PRECISION); }},
+                                               }));
 }
 
 /**************************************************************************************************/

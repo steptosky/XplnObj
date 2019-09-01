@@ -42,7 +42,7 @@ ObjMesh::ObjMesh(const ObjMesh & copy)
       mFaces(copy.mFaces) {}
 
 ObjMesh::ObjMesh() {
-    setObjectName("Obj Mesh");
+    setObjectName(String("Obj Mesh"));
 }
 
 ObjMesh::~ObjMesh() { }

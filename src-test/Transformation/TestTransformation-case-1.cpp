@@ -114,9 +114,9 @@ TEST(TestTransform_case1, tr_case1) {
     ObjLodGroup & lodOut = mainOut.addLod();
 
     Transform & transformOut0 = lodOut.transform();
-    Transform & transformOut1 = transformOut0.newChild(TOTEXT(transformOut1));
-    Transform & transformOut2 = transformOut1.newChild(TOTEXT(transformOut2));
-    Transform & transformOut3 = transformOut2.newChild(TOTEXT(transformOut3));
+    Transform & transformOut1 = transformOut0.newChild(String(TOTEXT(transformOut1)));
+    Transform & transformOut2 = transformOut1.newChild(String(TOTEXT(transformOut2)));
+    Transform & transformOut3 = transformOut2.newChild(String(TOTEXT(transformOut3)));
 
     transformOut1.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
@@ -243,9 +243,9 @@ TEST(TestTransform_case1, tr_case2) {
     ObjLodGroup & lodOut = mainOut.addLod();
 
     Transform & transformOut0 = lodOut.transform();
-    Transform & transformOut1 = transformOut0.newChild(TOTEXT(transformOut1));
-    Transform & transformOut2 = transformOut1.newChild(TOTEXT(transformOut2));
-    Transform & transformOut3 = transformOut2.newChild(TOTEXT(transformOut3));
+    Transform & transformOut1 = transformOut0.newChild(String(TOTEXT(transformOut1)));
+    Transform & transformOut2 = transformOut1.newChild(String(TOTEXT(transformOut2)));
+    Transform & transformOut3 = transformOut2.newChild(String(TOTEXT(transformOut3)));
 
     transformOut1.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
@@ -372,9 +372,9 @@ TEST(TestTransform_case1, tr_case3) {
     ObjLodGroup & lodOut = mainOut.addLod();
 
     Transform & transformOut0 = lodOut.transform();
-    Transform & transformOut1 = transformOut0.newChild(TOTEXT(transformOut1));
-    Transform & transformOut2 = transformOut1.newChild(TOTEXT(transformOut2));
-    Transform & transformOut3 = transformOut2.newChild(TOTEXT(transformOut3));
+    Transform & transformOut1 = transformOut0.newChild(String(TOTEXT(transformOut1)));
+    Transform & transformOut2 = transformOut1.newChild(String(TOTEXT(transformOut2)));
+    Transform & transformOut3 = transformOut2.newChild(String(TOTEXT(transformOut3)));
 
     transformOut1.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
@@ -467,9 +467,9 @@ TEST(TestTransform_case1, r_case1) {
     ObjLodGroup & lodOut = mainOut.addLod();
 
     Transform & transformOut0 = lodOut.transform();
-    Transform & transformOut1 = transformOut0.newChild(TOTEXT(transformOut1));
-    Transform & transformOut2 = transformOut1.newChild(TOTEXT(transformOut2));
-    Transform & transformOut3 = transformOut2.newChild(TOTEXT(transformOut3));
+    Transform & transformOut1 = transformOut0.newChild(String(TOTEXT(transformOut1)));
+    Transform & transformOut2 = transformOut1.newChild(String(TOTEXT(transformOut2)));
+    Transform & transformOut3 = transformOut2.newChild(String(TOTEXT(transformOut3)));
 
     transformOut1.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
@@ -564,9 +564,9 @@ TEST(TestTransform_case1, r_case2) {
     ObjLodGroup & lodOut = mainOut.addLod();
 
     Transform & transformOut0 = lodOut.transform();
-    Transform & transformOut1 = transformOut0.newChild(TOTEXT(transformOut1));
-    Transform & transformOut2 = transformOut1.newChild(TOTEXT(transformOut2));
-    Transform & transformOut3 = transformOut2.newChild(TOTEXT(transformOut3));
+    Transform & transformOut1 = transformOut0.newChild(String(TOTEXT(transformOut1)));
+    Transform & transformOut2 = transformOut1.newChild(String(TOTEXT(transformOut2)));
+    Transform & transformOut3 = transformOut2.newChild(String(TOTEXT(transformOut3)));
 
     transformOut1.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
@@ -662,9 +662,9 @@ TEST(TestTransform_case1, t_case1) {
     ObjLodGroup & lodOut = mainOut.addLod();
 
     Transform & transformOut0 = lodOut.transform();
-    Transform & transformOut1 = transformOut0.newChild(TOTEXT(transformOut1));
-    Transform & transformOut2 = transformOut1.newChild(TOTEXT(transformOut2));
-    Transform & transformOut3 = transformOut2.newChild(TOTEXT(transformOut3));
+    Transform & transformOut1 = transformOut0.newChild(String(TOTEXT(transformOut1)));
+    Transform & transformOut2 = transformOut1.newChild(String(TOTEXT(transformOut2)));
+    Transform & transformOut3 = transformOut2.newChild(String(TOTEXT(transformOut3)));
 
     transformOut1.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));

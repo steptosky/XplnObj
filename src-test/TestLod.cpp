@@ -83,15 +83,15 @@ TEST_F(TestLod, lods_grouping) {
     ObjLodGroup & lGroup2 = mainOut.addLod();
     ObjLodGroup & lGroup3 = mainOut.addLod();
 
-    lGroup1.setObjectName(TOTEXT(lGroup1));
+    lGroup1.setObjectName(String(TOTEXT(lGroup1)));
     lGroup1.setNearVal(1000.0);
     lGroup1.setFarVal(1500.0);
 
-    lGroup2.setObjectName(TOTEXT(lGroup2));
+    lGroup2.setObjectName(String(TOTEXT(lGroup2)));
     lGroup2.setNearVal(500.0);
     lGroup2.setFarVal(1000.0);
 
-    lGroup3.setObjectName(TOTEXT(lGroup3));
+    lGroup3.setObjectName(String(TOTEXT(lGroup3)));
     lGroup3.setNearVal(0.0);
     lGroup3.setFarVal(500.0);
 
@@ -132,7 +132,7 @@ TEST_F(TestLod, lods_grouping) {
     //-------------------------
 
     ObjLodGroup & lod1 = *mainIn.lods().at(2);
-    ASSERT_STREQ(lGroup1.objectName().c_str(), lod1.objectName().c_str());
+    ASSERT_STREQ(lGroup1.objectName().str().c_str(), lod1.objectName().str().c_str());
     ASSERT_EQ(1000.0, lod1.nearVal());
     ASSERT_EQ(1500.0, lod1.farVal());
     const Transform::ObjList & objList1 = lod1.transform().mObjects;
@@ -145,7 +145,7 @@ TEST_F(TestLod, lods_grouping) {
     ObjLodGroup & lod2 = *mainIn.lods().at(1);
     ASSERT_EQ(500.0, lod2.nearVal());
     ASSERT_EQ(1000.0, lod2.farVal());
-    ASSERT_STREQ(lGroup2.objectName().c_str(), lod2.objectName().c_str());
+    ASSERT_STREQ(lGroup2.objectName().str().c_str(), lod2.objectName().str().c_str());
 
     const Transform::ObjList & objList2 = lod2.transform().mObjects;
     ASSERT_EQ(1, objList2.size());
@@ -157,7 +157,7 @@ TEST_F(TestLod, lods_grouping) {
     ObjLodGroup & lod3 = *mainIn.lods().at(0);
     ASSERT_EQ(0.0, lod3.nearVal());
     ASSERT_EQ(500.0, lod3.farVal());
-    ASSERT_STREQ(lGroup3.objectName().c_str(), lod3.objectName().c_str());
+    ASSERT_STREQ(lGroup3.objectName().str().c_str(), lod3.objectName().str().c_str());
 
     const Transform::ObjList & objList3 = lod3.transform().mObjects;
     ASSERT_EQ(2, objList3.size());
@@ -186,15 +186,15 @@ TEST_F(TestLod, lods_sorting) {
     lGroup2.transform().mObjects.emplace_back(new ObjMesh());
     lGroup3.transform().mObjects.emplace_back(new ObjMesh());
 
-    lGroup1.setObjectName(TOTEXT(lGroup1));
+    lGroup1.setObjectName(String(TOTEXT(lGroup1)));
     lGroup1.setNearVal(1000.0);
     lGroup1.setFarVal(1500.0);
 
-    lGroup2.setObjectName(TOTEXT(lGroup2));
+    lGroup2.setObjectName(String(TOTEXT(lGroup2)));
     lGroup2.setNearVal(500.0);
     lGroup2.setFarVal(1000.0);
 
-    lGroup3.setObjectName(TOTEXT(lGroup3));
+    lGroup3.setObjectName(String(TOTEXT(lGroup3)));
     lGroup3.setNearVal(0.0);
     lGroup3.setFarVal(500.0);
 
@@ -214,12 +214,12 @@ TEST(TestLodAccess, property_access) {
 
     lGroup1.setNearVal(10.0);
     lGroup1.setFarVal(20.0);
-    lGroup1.setObjectName("Test");
+    lGroup1.setObjectName(String("Test"));
 
     ASSERT_EQ(10.0, lGroup1.nearVal());
     ASSERT_EQ(20.0, lGroup1.farVal());
-    ASSERT_STREQ("Test", lGroup1.objectName().c_str());
-    ASSERT_STREQ("Test", lGroup1.transform().mName.c_str());
+    ASSERT_STREQ("Test", lGroup1.objectName().str().c_str());
+    ASSERT_STREQ("Test", lGroup1.transform().mName.str().c_str());
 }
 
 /**************************************************************************************************/
@@ -241,17 +241,17 @@ TEST_F(TestLod, validator_near_far_values_case1) {
     // far greater than near
     lGroup1.setNearVal(20.0f);
     lGroup1.setFarVal(10.0f);
-    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName().str()));
 
     // far equals near
     lGroup1.setNearVal(20.0f);
     lGroup1.setFarVal(20.0f);
-    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName().str()));
 
     // all okay
     lGroup1.setNearVal(0.0f);
     lGroup1.setFarVal(20.0f);
-    ASSERT_TRUE(LodsAlg::validate(main.lods(), main.objectName()));
+    ASSERT_TRUE(LodsAlg::validate(main.lods(), main.objectName().str()));
 }
 
 TEST_F(TestLod, validator_near_far_values_case2) {
@@ -264,19 +264,19 @@ TEST_F(TestLod, validator_near_far_values_case2) {
     // one lod but starts not from 0.0 
     lGroup1.setNearVal(10.0);
     lGroup1.setFarVal(20.0);
-    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName().str()));
 
     // all okay
     lGroup1.setNearVal(0.0);
     lGroup1.setFarVal(20.0);
-    ASSERT_TRUE(LodsAlg::validate(main.lods(), main.objectName()));
+    ASSERT_TRUE(LodsAlg::validate(main.lods(), main.objectName().str()));
 }
 
 TEST_F(TestLod, validator_no_objects) {
     ObjMain main;
 
     ObjLodGroup & lGroup1 = main.addLod();
-    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName().str()));
     lGroup1.transform().mObjects.emplace_back(m1);
     m1 = nullptr;
 }
@@ -293,17 +293,17 @@ TEST_F(TestLod, validator_animation) {
 
     lGroup1.setNearVal(0.0);
     lGroup1.setFarVal(20.0);
-    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName().str()));
 }
 
 TEST_F(TestLod, validator_identical_lods) {
     ObjMain main;
 
-    ObjLodGroup & lGroup1 = main.addLod(new ObjLodGroup(TOTEXT(lGroup1), 0.0f, 100.0f));
-    ObjLodGroup & lGroup2 = main.addLod(new ObjLodGroup(TOTEXT(lGroup1), 0.0f, 100.0f));
+    ObjLodGroup & lGroup1 = main.addLod(new ObjLodGroup(String(TOTEXT(lGroup1)), 0.0f, 100.0f));
+    ObjLodGroup & lGroup2 = main.addLod(new ObjLodGroup(String(TOTEXT(lGroup1)), 0.0f, 100.0f));
     lGroup1.transform().mObjects.emplace_back(m1);
     lGroup2.transform().mObjects.emplace_back(m2);
-    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName().str()));
     m1 = nullptr;
     m2 = nullptr;
 }
@@ -312,12 +312,12 @@ TEST_F(TestLod, validator_attr_hard) {
     ObjMain main;
 
     // no linked objects
-    ObjLodGroup & lGroup1 = main.addLod(new ObjLodGroup(TOTEXT(lGroup1), 0.0f, 100.0f));
-    ObjLodGroup & lGroup2 = main.addLod(new ObjLodGroup(TOTEXT(lGroup2), 100.0f, 200.0f));
+    ObjLodGroup & lGroup1 = main.addLod(new ObjLodGroup(String(TOTEXT(lGroup1)), 0.0f, 100.0f));
+    ObjLodGroup & lGroup2 = main.addLod(new ObjLodGroup(String(TOTEXT(lGroup2)), 100.0f, 200.0f));
     lGroup1.transform().mObjects.emplace_back(m1);
     lGroup2.transform().mObjects.emplace_back(m2);
     m2->mAttr.mHard = AttrHard(ESurface(ESurface::grass), false);
-    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName()));
+    ASSERT_FALSE(LodsAlg::validate(main.lods(), main.objectName().str()));
     m1 = nullptr;
     m2 = nullptr;
 }

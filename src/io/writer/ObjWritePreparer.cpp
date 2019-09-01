@@ -72,7 +72,7 @@ void ObjWritePreparer::deleteEmptyTransformsRecursively(Transform & transform) {
 /**************************************************************************************************/
 
 bool ObjWritePreparer::proccessTransform(Transform & transform, const size_t lodNumber, const ObjLodGroup & lod) {
-    if (!checkParameters(transform, transform.mName)) {
+    if (!checkParameters(transform, transform.mName.str())) {
         return false;
     }
 
@@ -94,7 +94,7 @@ bool ObjWritePreparer::proccessTransform(Transform & transform, const size_t lod
 
 bool ObjWritePreparer::proccessObjects(Transform & transform, const size_t /*lodNumber*/, const ObjLodGroup & /*lod*/) {
     for (auto it = transform.mObjects.begin(); it != transform.mObjects.end();) {
-        if (!checkParameters(*(*it), (*it)->objectName())) {
+        if (!checkParameters(*(*it), (*it)->objectName().str())) {
             it = transform.mObjects.erase(it);
         }
         else {

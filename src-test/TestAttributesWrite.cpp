@@ -374,7 +374,7 @@ TEST(TestAttributesWrite, parameterized_case1) {
     main1.mAttr.mShiny = AttrShiny(0.1f);
     main1.mAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
     main1.mAttr.mPolyOffset = AttrPolyOffset(5.0f);
-    main1.mAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test");
+    main1.mAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, String("test"));
     main1.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_3);
 
     InSequence dummy;
@@ -413,14 +413,14 @@ TEST(TestAttributesWrite, parameterized_case2) {
     main1.mAttr.mShiny = AttrShiny(0.8f);
     main1.mAttr.mBlend = AttrBlend(AttrBlend::shadow_blend, 0.7f);
     main1.mAttr.mPolyOffset = AttrPolyOffset(4.0f);
-    main1.mAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
+    main1.mAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, String("test"));
     main1.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_2);
 
     main3.mAttr.mHard = AttrHard(ESurface(ESurface::eId::concrete), true);
     main3.mAttr.mShiny = AttrShiny(10.0f);
     main3.mAttr.mBlend = AttrBlend(AttrBlend::shadow_blend, 0.3f);
     main3.mAttr.mPolyOffset = AttrPolyOffset(5.0f);
-    main3.mAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test2");
+    main3.mAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, String("test2"));
     main3.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_3);
 
     InSequence dummy;
@@ -468,14 +468,14 @@ TEST(TestAttributesWrite, parameterized_case3) {
     main1.mAttr.mShiny = AttrShiny(0.8f);
     main1.mAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
     main1.mAttr.mPolyOffset = AttrPolyOffset(4.0f);
-    main1.mAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
+    main1.mAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, String("test"));
     main1.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
 
     main2.mAttr.mHard = AttrHard(ESurface(ESurface::eId::dirt), false);
     main2.mAttr.mShiny = AttrShiny(0.8f);
     main2.mAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
     main2.mAttr.mPolyOffset = AttrPolyOffset(4.0f);
-    main2.mAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
+    main2.mAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, String("test"));
     main2.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
 
     InSequence dummy;
@@ -515,14 +515,14 @@ TEST(TestAttributesWrite, parameterized_case4) {
     main1.mAttr.mShiny = AttrShiny(0.8f);
     main1.mAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.7f);
     main1.mAttr.mPolyOffset = AttrPolyOffset(4.0f);
-    main1.mAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, "test");
+    main1.mAttr.mLightLevel = AttrLightLevel(2.0f, 6.0f, String("test"));
     main1.mAttr.mCockpit = AttrCockpit(AttrCockpit::region_1);
 
     main2.mAttr.mHard = AttrHard(ESurface(ESurface::eId::concrete), true);
     main2.mAttr.mShiny = AttrShiny(10.0f);
     main2.mAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
     main2.mAttr.mPolyOffset = AttrPolyOffset(5.0f);
-    main2.mAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test2");
+    main2.mAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, String("test2"));
     main2.mAttr.mCockpit = AttrCockpit(AttrCockpit::cockpit);
 
     InSequence dummy;
@@ -570,7 +570,7 @@ TEST(TestAttributesWrite, parameterized_case5) {
     main2.mAttr.mShiny = AttrShiny(0.1f);
     main2.mAttr.mBlend = AttrBlend(AttrBlend::no_blend, 0.3f);
     main2.mAttr.mPolyOffset = AttrPolyOffset(5.0f);
-    main2.mAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, "test");
+    main2.mAttr.mLightLevel = AttrLightLevel(3.0f, 4.0f, String("test"));
     main2.mAttr.mCockpit = AttrCockpit(AttrCockpit::cockpit);
 
     InSequence dummy;

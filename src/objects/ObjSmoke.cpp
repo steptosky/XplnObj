@@ -43,7 +43,7 @@ ObjSmoke::ObjSmoke(const ObjSmoke & copy)
       mSmokeType(copy.mSmokeType) { }
 
 ObjSmoke::ObjSmoke() {
-    setObjectName("Smoke");
+    setObjectName(String("Smoke"));
 }
 
 ObjSmoke::~ObjSmoke() { }

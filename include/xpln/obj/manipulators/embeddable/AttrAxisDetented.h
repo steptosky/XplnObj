@@ -53,7 +53,7 @@ public:
     AttrAxisDetented() = default;
 
     AttrAxisDetented(const float dirX, const float dirY, const float dirZ,
-                     const float min, const float max, std::string dataref)
+                     const float min, const float max, String dataref)
         : mDirX(dirX),
           mDirY(dirY),
           mDirZ(dirZ),

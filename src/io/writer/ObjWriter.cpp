@@ -86,7 +86,7 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
         const IInterrupter & interrupt = *context.interrupter();
         reset(); // reset all data that needs to be recalculated
 
-        if (root == nullptr || !checkParameters(*root, root->objectName())) {
+        if (root == nullptr || !checkParameters(*root, root->objectName().str())) {
             return false;
         }
 
@@ -113,11 +113,11 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
         writer.spaceEnable(mExportOptions.isEnabled(XOBJ_EXP_MARK_TREE_HIERARCHY));
         //-------------------------------------------------------------------------
 
-        if (mMain->mDraped.objectName().empty()) {
+        if (mMain->mDraped.objectName().isEmpty()) {
             mMain->mDraped.setObjectName(mMain->objectName());
         }
 
-        if (!LodsAlg::validate(mMain->lods(), mMain->objectName(), interrupt)) {
+        if (!LodsAlg::validate(mMain->lods(), mMain->objectName().str(), interrupt)) {
             return false;
         }
 
@@ -215,7 +215,7 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
         mStatistic.mTrisAttrCount += objAttrNum;
         mStatistic.mTrisManipCount += manipNum;
 
-        mState->finish(root->objectName());
+        mState->finish(root->objectName().str());
 
         if (mMain->mAttr.mDebug) {
             ++mStatistic.mGlobAttrCount;
@@ -223,7 +223,7 @@ bool ObjWriter::writeFile(ObjMain * root, ExportContext & context, const TMatrix
             writer.printEol();
         }
 
-        printSignature(writer, context.signature(), context.isPrintTimeStamp());
+        printSignature(writer, context.signature().str(), context.isPrintTimeStamp());
         writer.closeFile();
         context.setStatistic(mStatistic);
         return true;
@@ -378,9 +378,9 @@ void ObjWriter::printObjects(AbstractWriter & writer, const Transform & parent) 
     //-------------------------------------------------------------------------
 }
 
-size_t ObjWriter::printObjCustomData(AbstractWriter & writer, const std::vector<std::string> & strings) {
+size_t ObjWriter::printObjCustomData(AbstractWriter & writer, const std::vector<String> & strings) {
     for (auto & str : strings) {
-        writer.writeLine(str);
+        writer.writeLine(str.str());
     }
     return strings.size();
 }

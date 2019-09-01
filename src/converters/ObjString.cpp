@@ -87,7 +87,7 @@ void printObj(const ObjLodGroup & obj, AbstractWriter & writer, const bool print
     StringStream out;
     out << ATTR_LOD << " " << obj.nearVal() << " " << obj.farVal();
     if (printName) {
-        out << " ## " << obj.objectName();
+        out << " ## " << obj.objectName().str();
     }
     writer.writeLine(out.str());
 }
@@ -102,7 +102,7 @@ void printObj(const ObjSmoke & obj, AbstractWriter & writer, const bool printNam
             << " " << obj.position().toString(PRECISION)
             << " " << obj.size();
     if (printName) {
-        out << " ## " << obj.objectName();
+        out << " ## " << obj.objectName().str();
     }
     writer.writeLine(out.str());
 }
@@ -110,7 +110,7 @@ void printObj(const ObjSmoke & obj, AbstractWriter & writer, const bool printNam
 void printObj(const ObjDummy & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
-        out << "## Dummy: " << obj.objectName();
+        out << "## Dummy: " << obj.objectName().str();
         writer.writeLine(out.str());
     }
 }
@@ -122,7 +122,7 @@ void printObj(const ObjDummy & obj, AbstractWriter & writer, const bool printNam
 void printObj(const ObjLightCustom & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
-        out << "## " << obj.objectName() << std::endl;
+        out << "## " << obj.objectName().str() << std::endl;
     }
     out << LIGHT_CUSTOM
             << " " << obj.position().toString(PRECISION)
@@ -130,7 +130,7 @@ void printObj(const ObjLightCustom & obj, AbstractWriter & writer, const bool pr
             << " " << obj.size()
             << " " << obj.textureRect().point1().toString(PRECISION)
             << " " << obj.textureRect().point2().toString(PRECISION)
-            << " " << (obj.dataRef().empty() ? String::none() : writer.actualDataref(String(obj.dataRef())).str());
+            << " " << (obj.dataRef().isEmpty() ? String::none() : writer.actualDataref(String(obj.dataRef())).str());
     writer.writeLine(out.str());
 }
 
@@ -139,10 +139,10 @@ void printObj(const ObjLightCustom & obj, AbstractWriter & writer, const bool pr
 void printObj(const ObjLightNamed & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
-        out << "## " << obj.objectName() << std::endl;
+        out << "## " << obj.objectName().str() << std::endl;
     }
     out << LIGHT_NAMED
-            << " " << obj.name()
+            << " " << obj.name().str()
             << " " << obj.position().toString(PRECISION);
     writer.writeLine(out.str());
 }
@@ -152,12 +152,12 @@ void printObj(const ObjLightNamed & obj, AbstractWriter & writer, const bool pri
 void printObj(const ObjLightParam & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
-        out << "## " << obj.objectName() << std::endl;
+        out << "## " << obj.objectName().str() << std::endl;
     }
     out << LIGHT_PARAM
-            << " " << obj.name()
+            << " " << obj.name().str()
             << " " << obj.position().toString(PRECISION)
-            << " " << obj.params();
+            << " " << obj.params().str();
     writer.writeLine(out.str());
 }
 
@@ -166,7 +166,7 @@ void printObj(const ObjLightParam & obj, AbstractWriter & writer, const bool pri
 void printObj(const ObjLightPoint & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
-        out << "## " << obj.objectName() << std::endl;
+        out << "## " << obj.objectName().str() << std::endl;
     }
     const Color & c = obj.color();
     out << VLIGHT << " " << obj.position().toString(PRECISION) << " "
@@ -179,7 +179,7 @@ void printObj(const ObjLightPoint & obj, AbstractWriter & writer, const bool pri
 void printObj(const ObjEmitter & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
-        out << "## " << obj.objectName() << std::endl;
+        out << "## " << obj.objectName().str() << std::endl;
     }
     out << ATTR_EMITTER
             << " " << obj.name().str()
@@ -202,7 +202,7 @@ void printObj(const ObjEmitter & obj, AbstractWriter & writer, const bool printN
 void printObj(const ObjLightSpillCust & obj, AbstractWriter & writer, const bool printName) {
     StringStream out;
     if (printName) {
-        out << "## " << obj.objectName() << std::endl;
+        out << "## " << obj.objectName().str() << std::endl;
     }
     out << LIGHT_SPILL_CUSTOM
             << " " << obj.position().toString(PRECISION)
@@ -210,7 +210,7 @@ void printObj(const ObjLightSpillCust & obj, AbstractWriter & writer, const bool
             << " " << obj.size()
             << " " << obj.direction().toString(PRECISION)
             << " " << obj.semiRaw()
-            << " " << (obj.dataRef().empty() ? String::none() : writer.actualDataref(String(obj.dataRef())).str());
+            << " " << (obj.dataRef().isEmpty() ? String::none() : writer.actualDataref(String(obj.dataRef())).str());
     writer.writeLine(out.str());
 }
 

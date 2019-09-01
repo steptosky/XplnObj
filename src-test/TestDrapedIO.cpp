@@ -44,8 +44,8 @@ TEST(Draped, DISABLED_io) {
     // make out data and save to file
     ObjMain mainOut;
     TestUtils::setTestExportOptions(mainOut);
-    ObjLodGroup & lod1 = mainOut.addLod(new ObjLodGroup("l1", 0.0f, 100.0f));
-    ObjLodGroup & lod2 = mainOut.addLod(new ObjLodGroup("l2", 100.0f, 200.0f));
+    ObjLodGroup & lod1 = mainOut.addLod(new ObjLodGroup(String("l1"), 0.0f, 100.0f));
+    ObjLodGroup & lod2 = mainOut.addLod(new ObjLodGroup(String("l2"), 100.0f, 200.0f));
 
     lod1.transform().mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("l1-m1"));
     lod1.transform().mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("l1-m2"));

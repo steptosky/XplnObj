@@ -84,7 +84,7 @@ private:
     static void printSignature(AbstractWriter & writer, const std::string & signature, bool timeStamp);
     void printLOD(AbstractWriter & writer, const ObjLodGroup & lod, size_t count) const;
 
-    static size_t printObjCustomData(AbstractWriter & writer, const std::vector<std::string> & strings);
+    static size_t printObjCustomData(AbstractWriter & writer, const std::vector<String> & strings);
 
 };
 

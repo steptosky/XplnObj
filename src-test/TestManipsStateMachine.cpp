@@ -71,10 +71,10 @@ public:
 
     ManipsStates()
         : mObjWriteAttr(std::make_shared<ObjState>()) {
-        mObjMesh1.setObjectName(TOTEXT(mObjMesh1));
-        mObjMesh2.setObjectName(TOTEXT(mObjMesh2));
-        mObjMesh3.setObjectName(TOTEXT(mObjMesh3));
-        mObjMesh4.setObjectName(TOTEXT(mObjMesh4));
+        mObjMesh1.setObjectName(String(TOTEXT(mObjMesh1)));
+        mObjMesh2.setObjectName(String(TOTEXT(mObjMesh2)));
+        mObjMesh3.setObjectName(String(TOTEXT(mObjMesh3)));
+        mObjMesh4.setObjectName(String(TOTEXT(mObjMesh4)));
     }
 
     virtual ~ManipsStates() = default;

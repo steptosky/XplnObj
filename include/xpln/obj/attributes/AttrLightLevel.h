@@ -51,7 +51,7 @@ public:
 
     AttrLightLevel() = default;
 
-    AttrLightLevel(const float val1, const float val2, std::string dataRef)
+    AttrLightLevel(const float val1, const float val2, String dataRef)
         : mVal1(val1),
           mVal2(val2),
           mDataref(std::move(dataRef)) { }

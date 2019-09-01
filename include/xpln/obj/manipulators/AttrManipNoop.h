@@ -51,7 +51,7 @@ public:
 
     AttrManipNoop() = default;
 
-    explicit AttrManipNoop(std::string toolTip)
+    explicit AttrManipNoop(String toolTip)
         : mToolType(std::move(toolTip)) {}
 
     AttrManipNoop(const AttrManipNoop &) = default;

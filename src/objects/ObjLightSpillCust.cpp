@@ -40,7 +40,7 @@ ObjLightSpillCust::ObjLightSpillCust()
     : mSize(10.0f),
       mSemi(0.0f) {
 
-    setObjectName("Spill custom light");
+    setObjectName(String("Spill custom light"));
 }
 
 /**************************************************************************************************/

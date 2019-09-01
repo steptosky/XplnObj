@@ -55,8 +55,8 @@ TEST(TestTransformationAlgorithm_case0, case1) {
     ObjLodGroup & lodOut = mainOut.addLod();
 
     Transform & transformOut0 = lodOut.transform();
-    Transform & transformOut1 = transformOut0.newChild(TOTEXT(transformOut1));
-    Transform & transformOut2 = transformOut1.newChild(TOTEXT(transformOut2));
+    Transform & transformOut1 = transformOut0.newChild(String(TOTEXT(transformOut1)));
+    Transform & transformOut2 = transformOut1.newChild(String(TOTEXT(transformOut2)));
 
     transformOut1.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
     transformOut2.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 2"));
@@ -109,7 +109,7 @@ TEST(TestTransformationAlgorithm_case0, case2) {
     ObjLodGroup & lodOut = mainOut.addLod();
 
     Transform & transformOut0 = lodOut.transform();
-    Transform & transformOut1 = transformOut0.newChild(TOTEXT(transformOut1));
+    Transform & transformOut1 = transformOut0.newChild(String(TOTEXT(transformOut1)));
     transformOut1.mObjects.emplace_back(TestUtilsObjMesh::createPyramidTestMesh("mesh 1"));
 
     mainOut.mMatrix.rotateDegreesY(-90.0f);

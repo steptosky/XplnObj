@@ -665,7 +665,7 @@ TEST(TestManipIO, AttrManipDragAxis) {
 
     outManip.mWheel = AttrManipWheel(15.0f);
 
-    outManip.mAxisDetented = AttrAxisDetented(60.0f, 61.0f, 62.0f, 70.0f, 71.0, "I'm/a/dataref-2");
+    outManip.mAxisDetented = AttrAxisDetented(60.0f, 61.0f, 62.0f, 70.0f, 71.0, String("I'm/a/dataref-2"));
     outManip.mAxisDetentRanges = {AttrAxisDetentRange(19.0f, 20.0f, 21.0f), AttrAxisDetentRange(22.0f, 23.0f, 24.0f)};
 
     ObjMain outObj;

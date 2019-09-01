@@ -126,8 +126,8 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    void setObjectName(const std::string & name) { mName = name; }
-    const std::string & objectName() const { return mName; }
+    void setObjectName(const String & name) { mName = name; }
+    const String & objectName() const { return mName; }
 
     /// @}
     //-------------------------------------------------------------------------
@@ -152,7 +152,7 @@ public:
 
 private:
 
-    std::string mName;
+    String mName;
     std::vector<std::unique_ptr<ObjLodGroup>> mLods;
 
 };

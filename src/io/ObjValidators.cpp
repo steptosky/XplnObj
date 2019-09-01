@@ -189,7 +189,7 @@ bool checkParameters(const ObjLightCustom & inVal, const std::string & inPrefix)
         XULWarning << inPrefix << " - T1 and T2 can't be equaled.";
     }
 
-    if (const auto s = String::hasIllegalSymbolsForDataRef(inVal.dataRef()); s) {
+    if (const auto s = inVal.dataRef().hasIllegalSymbolsForDataRef(); s) {
         result = false;
         XULError << inPrefix << " Contains illegal symbol in the dataref <" << inVal.dataRef() << "> at position:" << s.value();
     }
@@ -201,7 +201,7 @@ bool checkParameters(const ObjLightCustom & inVal, const std::string & inPrefix)
 
 bool checkParameters(const ObjLightNamed & inVal, const std::string & inPrefix) {
     bool result = true;
-    if (inVal.name().empty()) {
+    if (inVal.name().isEmpty()) {
         result = false;
         XULError << inPrefix << " - Light name isn't specified.";
     }
@@ -212,11 +212,11 @@ bool checkParameters(const ObjLightNamed & inVal, const std::string & inPrefix) 
 
 bool checkParameters(const ObjLightParam & inVal, const std::string & inPrefix) {
     bool result = true;
-    if (inVal.name().empty()) {
+    if (inVal.name().isEmpty()) {
         result = false;
         XULError << inPrefix << " - Light name isn't specified.";
     }
-    if (inVal.params().empty()) {
+    if (inVal.params().isEmpty()) {
         result = false;
         XULError << inPrefix << " - Parameters aren't specified.";
     }
@@ -258,12 +258,11 @@ bool checkParameters(const ObjLightSpillCust & inVal, const std::string & inPref
         }
     }
 
-    const std::string & drf = inVal.dataRef();
-    if (drf == "none" || drf.empty()) {
+    if (inVal.dataRef().isNone() || inVal.dataRef().isEmpty()) {
         XULInfo << inPrefix << " - doesn't have dataref, consider to use param light instead of spill custom.";
     }
 
-    if (const auto s = String::hasIllegalSymbolsForDataRef(drf); s) {
+    if (const auto s = inVal.dataRef().hasIllegalSymbolsForDataRef(); s) {
         result = false;
         XULError << inPrefix << " Contains illegal symbol in the dataref <" << inVal.dataRef() << "> at position:" << s.value();
     }

@@ -248,18 +248,18 @@ TEST(TestAttributes, AttrLightLevel) {
     ASSERT_STREQ("dataref", attr.mDataref.str().c_str());
 
     ASSERT_TRUE(AttrLightLevel() == AttrLightLevel());
-    ASSERT_TRUE(AttrLightLevel(10.0f, 20.0f, "dataref") == AttrLightLevel(10.0f, 20.0f, "dataref"));
-    ASSERT_TRUE(AttrLightLevel() != AttrLightLevel(10.0f, 20.0f, "dataref"));
-    ASSERT_TRUE(AttrLightLevel(10.0f, 20.0f, "dataref") != AttrLightLevel(20.0f, 20.0f, "dataref"));
-    ASSERT_TRUE(AttrLightLevel(10.0f, 20.0f, "dataref") != AttrLightLevel(10.0f, 30.0f, "dataref"));
-    ASSERT_TRUE(AttrLightLevel(10.0f, 20.0f, "dataref") != AttrLightLevel(10.0f, 20.0f, "dataref2"));
+    ASSERT_TRUE(AttrLightLevel(10.0f, 20.0f, String("dataref")) == AttrLightLevel(10.0f, 20.0f, String("dataref")));
+    ASSERT_TRUE(AttrLightLevel() != AttrLightLevel(10.0f, 20.0f, String("dataref")));
+    ASSERT_TRUE(AttrLightLevel(10.0f, 20.0f, String("dataref")) != AttrLightLevel(20.0f, 20.0f, String("dataref")));
+    ASSERT_TRUE(AttrLightLevel(10.0f, 20.0f, String("dataref")) != AttrLightLevel(10.0f, 30.0f, String("dataref")));
+    ASSERT_TRUE(AttrLightLevel(10.0f, 20.0f, String("dataref")) != AttrLightLevel(10.0f, 20.0f, String("dataref2")));
 
     ASSERT_FALSE(AttrLightLevel() != AttrLightLevel());
-    ASSERT_FALSE(AttrLightLevel(10.0f, 20.0f, "dataref") != AttrLightLevel(10.0f, 20.0f, "dataref"));
-    ASSERT_FALSE(AttrLightLevel() == AttrLightLevel(10.0f, 20.0f, "dataref"));
-    ASSERT_FALSE(AttrLightLevel(10.0f, 20.0f, "dataref") == AttrLightLevel(20.0f, 20.0f, "dataref"));
-    ASSERT_FALSE(AttrLightLevel(10.0f, 20.0f, "dataref") == AttrLightLevel(10.0f, 30.0f, "dataref"));
-    ASSERT_FALSE(AttrLightLevel(10.0f, 20.0f, "dataref") == AttrLightLevel(10.0f, 20.0f, "dataref2"));
+    ASSERT_FALSE(AttrLightLevel(10.0f, 20.0f, String("dataref")) != AttrLightLevel(10.0f, 20.0f, String("dataref")));
+    ASSERT_FALSE(AttrLightLevel() == AttrLightLevel(10.0f, 20.0f, String("dataref")));
+    ASSERT_FALSE(AttrLightLevel(10.0f, 20.0f, String("dataref")) == AttrLightLevel(20.0f, 20.0f, String("dataref")));
+    ASSERT_FALSE(AttrLightLevel(10.0f, 20.0f, String("dataref")) == AttrLightLevel(10.0f, 30.0f, String("dataref")));
+    ASSERT_FALSE(AttrLightLevel(10.0f, 20.0f, String("dataref")) == AttrLightLevel(10.0f, 20.0f, String("dataref2")));
 }
 
 //-------------------------------------------------------------------------

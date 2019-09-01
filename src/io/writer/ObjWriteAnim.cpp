@@ -71,7 +71,7 @@ bool ObjWriteAnim::printAnimationStart(AbstractWriter & writer, const Transform 
     //-------------------------------------------------------------------------
 
     if (mOptions->isEnabled(XOBJ_EXP_MARK_TRANSFORM)) {
-        mWriter->writeLine(ATTR_ANIM_BEGIN, " ## ", transform.mName);
+        mWriter->writeLine(ATTR_ANIM_BEGIN, " ## ", transform.mName.str());
     }
     else {
         mWriter->writeLine(ATTR_ANIM_BEGIN);
@@ -79,11 +79,11 @@ bool ObjWriteAnim::printAnimationStart(AbstractWriter & writer, const Transform 
 
     mWriter->spaceMore();
     //-------------------------------------------------------------------------
-    printVisible(transform.mVisibility, transform.mName);
-    printTrans(transform.mPosition, transform.mName);
+    printVisible(transform.mVisibility, transform.mName.str());
+    printTrans(transform.mPosition, transform.mName.str());
     if (transform.mRotation.isAnimated()) {
         for (const auto & a : transform.mRotation.mAnimation.mAxes) {
-            printRotateAxis(a, transform.mName);
+            printRotateAxis(a, transform.mName.str());
         }
     }
     //-------------------------------------------------------------------------
@@ -98,7 +98,7 @@ bool ObjWriteAnim::printAnimationEnd(AbstractWriter & writer, const Transform & 
     mWriter->spaceLess();
 
     if (mOptions->isEnabled(XOBJ_EXP_MARK_TRANSFORM)) {
-        mWriter->writeLine(ATTR_ANIM_END, " ## ", transform.mName);
+        mWriter->writeLine(ATTR_ANIM_END, " ## ", transform.mName.str());
     }
     else {
         mWriter->writeLine(ATTR_ANIM_END);

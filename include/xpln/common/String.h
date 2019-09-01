@@ -102,6 +102,7 @@ public:
 
     const std::string & str() const noexcept { return mString; }
     std::string & str() noexcept { return mString; }
+    XpObjLib static const std::string & none() noexcept;
 
     ///@}
     //---------------------------------------------------

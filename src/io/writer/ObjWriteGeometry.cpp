@@ -364,7 +364,7 @@ bool ObjWriteGeometry::printEmitterObject(AbstractWriter & writer, const ObjAbst
                     << "You have to put attribute <" << ATTR_GLOBAL_PARTICLE_SYSTEM << ">.";
         }
 
-        if (emitter.name().empty()) {
+        if (emitter.name().isEmpty()) {
             XULError << "The object <" << objBase.objectName()
                     << "> doesn't have the emitter name. You have to use a name from your .pss file.";
         }

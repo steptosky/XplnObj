@@ -33,6 +33,7 @@
 #include <tuple>
 #include "ObjAbstract.h"
 #include "xpln/common/Point3.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -70,14 +71,14 @@ public:
      * \details Name of the emitter. Must be one from your .pss file.
      * \param [in] name from your .pss file.
      */
-    void setName(const std::string & name) {
+    void setName(const String & name) {
         mName = name;
     }
 
     /*!
      * \returnt emitter name.
      */
-    const std::string & name() const {
+    const String & name() const {
         return mName;
     }
 
@@ -141,7 +142,7 @@ public:
 
 private:
 
-    std::string mName;
+    String mName;
     Point3 mPosition;
     float mPsi = 0.0f;
     float mThe = 0.0f;

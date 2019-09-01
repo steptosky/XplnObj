@@ -29,10 +29,10 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
 #include "xpln/Export.h"
 #include "xpln/enums/ECursor.h"
 #include "xpln/enums/EManipulator.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -72,13 +72,13 @@ public:
 
     XpObjLib static const EManipulator mType;
     ECursor mCursor;
-    std::string mToolType;
+    String mToolType;
 
     float mDirX = 0.0f;
     float mDirY = 0.0f;
     float mDirZ = 0.0f;
-    std::string mPosCommand;
-    std::string mNegCommand;
+    String mPosCommand;
+    String mNegCommand;
 
     /// @}
     //-------------------------------------------------------------------------

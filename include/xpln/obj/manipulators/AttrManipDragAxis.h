@@ -29,7 +29,6 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
 #include <vector>
 #include <optional>
 #include "xpln/Export.h"
@@ -83,14 +82,14 @@ public:
 
     XpObjLib static const EManipulator mType;
     ECursor mCursor;
-    std::string mToolType;
+    String mToolType;
 
     float mDirX = 0.0f;
     float mDirY = 0.0f;
     float mDirZ = 0.0f;
     float mVal1 = 0.0f;
     float mVal2 = 1.0f;
-    std::string mDataref;
+    String mDataref;
     DetentRanges mAxisDetentRanges;
     std::optional<AttrManipWheel> mWheel;
     std::optional<AttrAxisDetented> mAxisDetented;

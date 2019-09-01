@@ -29,12 +29,12 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
 #include <optional>
 #include "xpln/Export.h"
 #include "xpln/enums/ECursor.h"
 #include "xpln/enums/EManipulator.h"
 #include "embeddable/AttrManipWheel.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -74,10 +74,10 @@ public:
 
     XpObjLib static const EManipulator mType;
     ECursor mCursor;
-    std::string mToolType;
+    String mToolType;
 
     float mDown = 0.0f;
-    std::string mDataref;
+    String mDataref;
     std::optional<AttrManipWheel> mWheel;
 
     /// @}

@@ -29,8 +29,8 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
 #include "xpln/Export.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -87,7 +87,7 @@ public:
     float mVMin = 0.0f;
     float mVMax = 1.0f;
 
-    std::string mDataref;
+    String mDataref;
 
     /// @}
     //-------------------------------------------------------------------------

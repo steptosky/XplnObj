@@ -603,7 +603,7 @@ public:
                          " ", manip.mClickDelta,
                          " ", manip.mHoldDelta,
                          " ", w->actualDataref(String(manip.mDataref)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1 + printWheel(manip.mWheel);
         }
         else if constexpr (std::is_same_v<T, AttrManipAxisSwitchLeftRight>) {
@@ -614,7 +614,7 @@ public:
                          " ", manip.mClickDelta,
                          " ", manip.mHoldDelta,
                          " ", w->actualDataref(String(manip.mDataref)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1 + printWheel(manip.mWheel);
         }
         else if constexpr (std::is_same_v<T, AttrManipAxisSwitchUpDown>) {
@@ -625,14 +625,14 @@ public:
                          " ", manip.mClickDelta,
                          " ", manip.mHoldDelta,
                          " ", w->actualDataref(String(manip.mDataref)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1 + printWheel(manip.mWheel);
         }
         else if constexpr (std::is_same_v<T, AttrManipCmd>) {
             w->writeLine(ATTR_MANIP_COMMAND,
                          " ", manip.mCursor.toString(),
                          " ", w->actualCommand(String(manip.mCommand)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipCmdAxis>) {
@@ -643,7 +643,7 @@ public:
                          " ", manip.mDirZ,
                          " ", w->actualCommand(String(manip.mPosCommand)).str(),
                          " ", w->actualCommand(String(manip.mNegCommand)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipCmdKnob>) {
@@ -651,14 +651,14 @@ public:
                          " ", manip.mCursor.toString(),
                          " ", w->actualCommand(String(manip.mPosCommand)).str(),
                          " ", w->actualCommand(String(manip.mNegCommand)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipCmdKnob2>) {
             w->writeLine(ATTR_MANIP_COMMAND_KNOB2,
                          " ", manip.mCursor.toString(),
                          " ", w->actualCommand(String(manip.mCommand)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipCmdSwitchLeftRight>) {
@@ -666,14 +666,14 @@ public:
                          " ", manip.mCursor.toString(),
                          " ", w->actualCommand(String(manip.mPosCommand)).str(),
                          " ", w->actualCommand(String(manip.mNegCommand)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipCmdSwitchLeftRight2>) {
             w->writeLine(ATTR_MANIP_COMMAND_SWITCH_LEFT_RIGHT2,
                          " ", manip.mCursor.toString(),
                          " ", w->actualCommand(String(manip.mCommand)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipCmdSwitchUpDown>) {
@@ -681,14 +681,14 @@ public:
                          " ", manip.mCursor.toString(),
                          " ", w->actualCommand(String(manip.mPosCommand)).str(),
                          " ", w->actualCommand(String(manip.mNegCommand)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipCmdSwitchUpDown2>) {
             w->writeLine(ATTR_MANIP_COMMAND_SWITCH_UP_DOWN2,
                          " ", manip.mCursor.toString(),
                          " ", w->actualCommand(String(manip.mCommand)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipDelta>) {
@@ -699,7 +699,7 @@ public:
                          " ", manip.mMin,
                          " ", manip.mMax,
                          " ", w->actualDataref(String(manip.mDataref)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1 + printWheel(manip.mWheel);
         }
         else if constexpr (std::is_same_v<T, AttrManipDragAxis>) {
@@ -712,7 +712,7 @@ public:
                          " ", manip.mVal1,
                          " ", manip.mVal2,
                          " ", w->actualDataref(String(manip.mDataref)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
 
             outCounter += printWheel(manip.mWheel);
             if (manip.mAxisDetented) {
@@ -730,7 +730,7 @@ public:
                          " ", manip.mVal1,
                          " ", manip.mVal2,
                          " ", w->actualDataref(String(manip.mDataref)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1 + printWheel(manip.mWheel);
         }
         else if constexpr (std::is_same_v<T, AttrManipDragRotate>) {
@@ -752,7 +752,7 @@ public:
                          " ", manip.mV2Max,
                          " ", w->actualDataref(String(manip.mDataref1)).str(),
                          " ", w->actualDataref(String(manip.mDataref2)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
 
             outCounter += printKeyFrame(manip.mKeys);
             outCounter += printDetentRanges(manip.mAxisDetentRanges);
@@ -769,7 +769,7 @@ public:
                          " ", manip.mYMax,
                          " ", w->actualDataref(String(manip.mXDataref)).str(),
                          " ", w->actualDataref(String(manip.mYDataref)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipNone>) {
@@ -777,8 +777,8 @@ public:
             return 1;
         }
         else if constexpr (std::is_same_v<T, AttrManipNoop>) {
-            if (!manip.mToolType.empty()) {
-                w->writeLine(ATTR_MANIP_NOOP, " ", manip.mToolType);
+            if (!manip.mToolType.isEmpty()) {
+                w->writeLine(ATTR_MANIP_NOOP, " ", manip.mToolType.str());
             }
             else {
                 w->writeLine(ATTR_MANIP_NOOP);
@@ -798,7 +798,7 @@ public:
                          " ", manip.mDown,
                          " ", manip.mUp,
                          " ", w->actualDataref(String(manip.mDataref)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1 + printWheel(manip.mWheel);
         }
         else if constexpr (std::is_same_v<T, AttrManipRadio>) {
@@ -806,7 +806,7 @@ public:
                          " ", manip.mCursor.toString(),
                          " ", manip.mDown,
                          " ", w->actualDataref(String(manip.mDataref)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1 + printWheel(manip.mWheel);
         }
         else if constexpr (std::is_same_v<T, AttrManipToggle>) {
@@ -815,7 +815,7 @@ public:
                          " ", manip.mOn,
                          " ", manip.mOff,
                          " ", w->actualDataref(String(manip.mDataref)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1 + printWheel(manip.mWheel);
         }
         else if constexpr (std::is_same_v<T, AttrManipWrap>) {
@@ -826,7 +826,7 @@ public:
                          " ", manip.mMin,
                          " ", manip.mMax,
                          " ", w->actualDataref(String(manip.mDataref)).str(),
-                         " ", manip.mToolType);
+                         " ", manip.mToolType.str());
             return 1 + printWheel(manip.mWheel);
         }
         else {

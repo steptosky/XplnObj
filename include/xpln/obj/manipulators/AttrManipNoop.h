@@ -29,9 +29,9 @@
 **  Contacts: www.steptosky.com
 */
 
-#include <string>
 #include "xpln/Export.h"
 #include "xpln/enums/EManipulator.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -74,7 +74,7 @@ public:
     /// @{
 
     XpObjLib static const EManipulator mType;
-    std::string mToolType;
+    String mToolType;
 
     /// @}
     //-------------------------------------------------------------------------

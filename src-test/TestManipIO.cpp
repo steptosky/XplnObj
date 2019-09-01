@@ -126,8 +126,8 @@ TEST(TestManipIO, AttrManipAxisKnob) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mDataref.c_str(), inManip->mDataref.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mDataref.str().c_str(), inManip->mDataref.str().c_str());
     ASSERT_EQ(outManip.mMin, inManip->mMin);
     ASSERT_EQ(outManip.mMax, inManip->mMax);
     ASSERT_EQ(outManip.mClickDelta, inManip->mClickDelta);
@@ -193,8 +193,8 @@ TEST(TestManipIO, AttrManipAxisSwitchLeftRight) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mDataref.c_str(), inManip->mDataref.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mDataref.str().c_str(), inManip->mDataref.str().c_str());
     ASSERT_EQ(outManip.mMin, inManip->mMin);
     ASSERT_EQ(outManip.mMax, inManip->mMax);
     ASSERT_EQ(outManip.mClickDelta, inManip->mClickDelta);
@@ -260,8 +260,8 @@ TEST(TestManipIO, AttrManipAxisSwitchUpDown) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mDataref.c_str(), inManip->mDataref.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mDataref.str().c_str(), inManip->mDataref.str().c_str());
     ASSERT_EQ(outManip.mMin, inManip->mMin);
     ASSERT_EQ(outManip.mMax, inManip->mMax);
     ASSERT_EQ(outManip.mClickDelta, inManip->mClickDelta);
@@ -323,8 +323,8 @@ TEST(TestManipIO, AttrManipCmd) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mCommand.c_str(), inManip->mCommand.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mCommand.str().c_str(), inManip->mCommand.str().c_str());
 }
 
 /**************************************************************************************************/
@@ -361,12 +361,12 @@ TEST(TestManipIO, AttrManipCmdAxis) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
     ASSERT_EQ(outManip.mDirX, inManip->mDirX);
     ASSERT_EQ(outManip.mDirY, inManip->mDirY);
     ASSERT_EQ(outManip.mDirZ, inManip->mDirZ);
-    ASSERT_STREQ(outManip.mPosCommand.c_str(), inManip->mPosCommand.c_str());
-    ASSERT_STREQ(outManip.mNegCommand.c_str(), inManip->mNegCommand.c_str());
+    ASSERT_STREQ(outManip.mPosCommand.str().c_str(), inManip->mPosCommand.str().c_str());
+    ASSERT_STREQ(outManip.mNegCommand.str().c_str(), inManip->mNegCommand.str().c_str());
 }
 
 /**************************************************************************************************/
@@ -400,9 +400,9 @@ TEST(TestManipIO, AttrManipCmdKnob) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mPosCommand.c_str(), inManip->mPosCommand.c_str());
-    ASSERT_STREQ(outManip.mNegCommand.c_str(), inManip->mNegCommand.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mPosCommand.str().c_str(), inManip->mPosCommand.str().c_str());
+    ASSERT_STREQ(outManip.mNegCommand.str().c_str(), inManip->mNegCommand.str().c_str());
 }
 
 /**************************************************************************************************/
@@ -435,8 +435,8 @@ TEST(TestManipIO, AttrManipCmdKnob2) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mCommand.c_str(), inManip->mCommand.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mCommand.str().c_str(), inManip->mCommand.str().c_str());
 }
 
 /**************************************************************************************************/
@@ -470,9 +470,9 @@ TEST(TestManipIO, AttrManipCmdSwitchLeftRight) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mPosCommand.c_str(), inManip->mPosCommand.c_str());
-    ASSERT_STREQ(outManip.mNegCommand.c_str(), inManip->mNegCommand.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mPosCommand.str().c_str(), inManip->mPosCommand.str().c_str());
+    ASSERT_STREQ(outManip.mNegCommand.str().c_str(), inManip->mNegCommand.str().c_str());
 }
 
 /**************************************************************************************************/
@@ -505,8 +505,8 @@ TEST(TestManipIO, AttrManipCmdSwitchLeftRight2) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mCommand.c_str(), inManip->mCommand.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mCommand.str().c_str(), inManip->mCommand.str().c_str());
 }
 
 /**************************************************************************************************/
@@ -540,9 +540,9 @@ TEST(TestManipIO, AttrManipCmdSwitchUpDown) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mPosCommand.c_str(), inManip->mPosCommand.c_str());
-    ASSERT_STREQ(outManip.mNegCommand.c_str(), inManip->mNegCommand.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mPosCommand.str().c_str(), inManip->mPosCommand.str().c_str());
+    ASSERT_STREQ(outManip.mNegCommand.str().c_str(), inManip->mNegCommand.str().c_str());
 }
 
 /**************************************************************************************************/
@@ -575,8 +575,8 @@ TEST(TestManipIO, AttrManipCmdSwitchUpDown2) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mCommand.c_str(), inManip->mCommand.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mCommand.str().c_str(), inManip->mCommand.str().c_str());
 }
 
 /**************************************************************************************************/
@@ -613,8 +613,8 @@ TEST(TestManipIO, AttrManipDelta) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mDataref.c_str(), inManip->mDataref.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mDataref.str().c_str(), inManip->mDataref.str().c_str());
     ASSERT_EQ(outManip.mDown, inManip->mDown);
     ASSERT_EQ(outManip.mHold, inManip->mHold);
     ASSERT_EQ(outManip.mMin, inManip->mMin);
@@ -686,8 +686,8 @@ TEST(TestManipIO, AttrManipDragAxis) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mDataref.c_str(), inManip->mDataref.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mDataref.str().c_str(), inManip->mDataref.str().c_str());
     ASSERT_EQ(outManip.mDirX, inManip->mDirX);
     ASSERT_EQ(outManip.mDirY, inManip->mDirY);
     ASSERT_EQ(outManip.mDirZ, inManip->mDirZ);
@@ -741,8 +741,8 @@ TEST(TestManipIO, AttrManipDragAxisPix) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mDataref.c_str(), inManip->mDataref.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mDataref.str().c_str(), inManip->mDataref.str().c_str());
     ASSERT_EQ(outManip.mDxPix, inManip->mDxPix);
     ASSERT_EQ(outManip.mStep, inManip->mStep);
     ASSERT_EQ(outManip.mExp, inManip->mExp);
@@ -822,9 +822,9 @@ TEST(TestManipIO, AttrManipDragRotate) {
     //-----------------------------
 
     EXPECT_EQ(outManip.mCursor, inManip->mCursor);
-    EXPECT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    EXPECT_STREQ(outManip.mDataref1.c_str(), inManip->mDataref1.c_str());
-    EXPECT_STREQ(outManip.mDataref2.c_str(), inManip->mDataref2.c_str());
+    EXPECT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    EXPECT_STREQ(outManip.mDataref1.str().c_str(), inManip->mDataref1.str().c_str());
+    EXPECT_STREQ(outManip.mDataref2.str().c_str(), inManip->mDataref2.str().c_str());
     EXPECT_EQ(outManip.mOriginX, inManip->mOriginX);
     EXPECT_EQ(outManip.mOriginY, inManip->mOriginY);
     EXPECT_EQ(outManip.mOriginZ, inManip->mOriginZ);
@@ -885,9 +885,9 @@ TEST(TestManipIO, AttrManipDragXy) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mXDataref.c_str(), inManip->mXDataref.c_str());
-    ASSERT_STREQ(outManip.mYDataref.c_str(), inManip->mYDataref.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mXDataref.str().c_str(), inManip->mXDataref.str().c_str());
+    ASSERT_STREQ(outManip.mYDataref.str().c_str(), inManip->mYDataref.str().c_str());
     ASSERT_EQ(outManip.mX, inManip->mX);
     ASSERT_EQ(outManip.mY, inManip->mY);
     ASSERT_EQ(outManip.mXMin, inManip->mXMin);
@@ -955,8 +955,8 @@ TEST(TestManipIO, AttrManipPush) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mDataref.c_str(), inManip->mDataref.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mDataref.str().c_str(), inManip->mDataref.str().c_str());
     ASSERT_EQ(outManip.mDown, inManip->mDown);
     ASSERT_EQ(outManip.mUp, inManip->mUp);
 
@@ -1017,8 +1017,8 @@ TEST(TestManipIO, AttrManipRadio) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mDataref.c_str(), inManip->mDataref.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mDataref.str().c_str(), inManip->mDataref.str().c_str());
     ASSERT_EQ(outManip.mDown, inManip->mDown);
 
     /***************************************************************************************/
@@ -1079,8 +1079,8 @@ TEST(TestManipIO, AttrManipToggle) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mDataref.c_str(), inManip->mDataref.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mDataref.str().c_str(), inManip->mDataref.str().c_str());
     ASSERT_EQ(outManip.mOn, inManip->mOn);
     ASSERT_EQ(outManip.mOff, inManip->mOff);
 
@@ -1144,8 +1144,8 @@ TEST(TestManipIO, AttrManipWrap) {
     //-----------------------------
 
     ASSERT_EQ(outManip.mCursor, inManip->mCursor);
-    ASSERT_STREQ(outManip.mToolType.c_str(), inManip->mToolType.c_str());
-    ASSERT_STREQ(outManip.mDataref.c_str(), inManip->mDataref.c_str());
+    ASSERT_STREQ(outManip.mToolType.str().c_str(), inManip->mToolType.str().c_str());
+    ASSERT_STREQ(outManip.mDataref.str().c_str(), inManip->mDataref.str().c_str());
     ASSERT_EQ(outManip.mDown, inManip->mDown);
     ASSERT_EQ(outManip.mHold, inManip->mHold);
     ASSERT_EQ(outManip.mMin, inManip->mMin);

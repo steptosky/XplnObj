@@ -81,8 +81,8 @@ TEST(TestTransformCommon, anim_enabled) {
     // visibility
 
     auto & animVis = lod.transform().mVisibility;
-    animVis.mKeys.emplace_back(VisibilityKey(VisibilityKey::HIDE, 1.0f, 2.0f, String::from("data-ref")));
-    animVis.mKeys.emplace_back(VisibilityKey(VisibilityKey::HIDE, 3.0f, 4.0f, String::from("data-ref")));
+    animVis.mKeys.emplace_back(VisibilityKey(VisibilityKey::HIDE, 1.0f, 2.0f, String("data-ref")));
+    animVis.mKeys.emplace_back(VisibilityKey(VisibilityKey::HIDE, 3.0f, 4.0f, String("data-ref")));
 
     ASSERT_TRUE(lod.transform().hasAnimTrans());
     ASSERT_TRUE(lod.transform().isAnimated());

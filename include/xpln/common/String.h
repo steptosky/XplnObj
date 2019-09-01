@@ -58,20 +58,25 @@ public:
     //---------------------------------------------------
     ///@{
 
-    bool operator==(const String & s) const noexcept { return mString == s.mString; }
-    bool operator!=(const String & s) const noexcept { return mString != s.mString; }
+    String(const std::string_view s) noexcept
+        : mString(s) {}
+
+    String & operator=(const std::string_view s) {
+        mString = s;
+        return *this;
+    }
+
+#ifdef _MSC_VER
+    XpObjLib String(std::wstring_view s);
+    XpObjLib String & operator=(std::wstring_view s);
+#endif
 
     ///@}
     //---------------------------------------------------
     ///@{
 
-    void set(const std::string & s) noexcept { mString = s; }
-    void set(std::string && s) noexcept { mString = s; }
-    void set(const std::string_view s) noexcept { mString = s; }
-#ifdef _MSC_VER
-    XpObjLib void set(std::wstring_view s);
-    void set(const std::wstring & s) { set(std::wstring_view(s)); }
-#endif
+    bool operator==(const String & s) const noexcept { return mString == s.mString; }
+    bool operator!=(const String & s) const noexcept { return mString != s.mString; }
 
     ///@}
     //---------------------------------------------------
@@ -81,17 +86,6 @@ public:
     XpObjLib static bool isValidForTexture(const std::string_view & str) noexcept;
     bool isValidForDataRef() const noexcept { return isValidForDataRef(mString); }
     bool isValidForTexture() const noexcept { return isValidForTexture(mString); }
-
-    ///@}
-    //---------------------------------------------------
-    ///@{
-
-    XpObjLib static String from(const std::string & s) noexcept;
-    XpObjLib static String from(std::string && s) noexcept;
-#ifdef _MSC_VER
-    XpObjLib static String from(const std::wstring & s);
-    XpObjLib static String from(std::wstring_view s);
-#endif
 
     ///@}
     //---------------------------------------------------

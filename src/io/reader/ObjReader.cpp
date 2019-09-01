@@ -1055,7 +1055,7 @@ bool ObjReader::readHideAnim(ObjReadParser & parser) const {
         parser.skipSpace();
         k.mDrfValue2 = parser.extractFloat();
         parser.skipSpace();
-        k.mDataRef.set(parser.extractWord());
+        k.mDataRef = parser.extractWord();
         mObjParserListener->gotAnimHide(std::move(k));
         return true;
     }
@@ -1071,7 +1071,7 @@ bool ObjReader::readShowAnim(ObjReadParser & parser) const {
         parser.skipSpace();
         k.mDrfValue2 = parser.extractFloat();
         parser.skipSpace();
-        k.mDataRef.set(parser.extractWord());
+        k.mDataRef = parser.extractWord();
         mObjParserListener->gotAnimShow(std::move(k));
         return true;
     }
@@ -1105,7 +1105,7 @@ bool ObjReader::readTranslateAnim(ObjReadParser & parser) const {
         }
 
         parser.skipSpace();
-        String dataref = String::from(parser.extractWord());
+        String dataref(parser.extractWord());
         if (dataref.str() == DATAREF_DEFAULT_VAL) {
             dataref.clear();
         }
@@ -1145,7 +1145,7 @@ bool ObjReader::readRotateAnim(ObjReadParser & parser) const {
         }
 
         parser.skipSpace();
-        String dataref = String::from(parser.extractWord());
+        String dataref(parser.extractWord());
         if (dataref.str() == DATAREF_DEFAULT_VAL) {
             dataref.clear();
         }
@@ -1161,7 +1161,7 @@ bool ObjReader::readRotateAnim(ObjReadParser & parser) const {
 bool ObjReader::readTranslateKeysAnim(ObjReadParser & parser) const {
     if (parser.isMatch(ATTR_TRANS_BEGIN)) {
         parser.skipSpace();
-        String dataref = String::from(parser.extractWord());
+        String dataref(parser.extractWord());
         if (dataref.str() == DATAREF_DEFAULT_VAL) {
             dataref.clear();
         }
@@ -1206,7 +1206,7 @@ bool ObjReader::readRotateKeysAnim(ObjReadParser & parser) const {
         vector[2] = parser.extractFloat();
 
         parser.skipSpace();
-        String dataref = String::from(parser.extractWord());
+        String dataref(parser.extractWord());
         if (dataref.str() == DATAREF_DEFAULT_VAL) {
             dataref.clear();
         }

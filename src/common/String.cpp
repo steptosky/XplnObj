@@ -33,6 +33,20 @@
 namespace xobj {
 
 /**************************************************************************************************/
+////////////////////////////////////* Constructors/Destructor */////////////////////////////////////
+/**************************************************************************************************/
+
+String::String(const std::wstring_view s) {
+    static std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
+    mString = convert.to_bytes(s.data(), s.data() + s.size());
+}
+
+String & String::operator=(const std::wstring_view s) {
+    mString = std::move(String(s).mString);
+    return *this;
+}
+
+/**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
@@ -53,43 +67,6 @@ bool String::isValidForTexture(const std::string_view & str) noexcept {
     }
     return true;
 }
-
-/**************************************************************************************************/
-//////////////////////////////////////////* Functions */////////////////////////////////////////////
-/**************************************************************************************************/
-
-#ifdef _MSC_VER
-void String::set(const std::wstring_view s) {
-    static std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
-    mString = convert.to_bytes(s.data(), s.data() + s.size());
-}
-#endif
-
-String String::from(std::string && s) noexcept {
-    String out;
-    out.mString = s;
-    return out;
-}
-
-String String::from(const std::string & s) noexcept {
-    String out;
-    out.mString = s;
-    return out;
-}
-
-#ifdef _MSC_VER
-String String::from(const std::wstring & s) {
-    String out;
-    out.set(s);
-    return out;
-}
-
-String String::from(const std::wstring_view s) {
-    String out;
-    out.set(s);
-    return out;
-}
-#endif
 
 /**************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -54,21 +54,21 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool checkParameters(const AttrGlobSet & attrSet, const std::string & prefix) {
-    if (!attrSet.mTexture || attrSet.mTexture->empty() || *attrSet.mTexture == "none") {
-        XULWarning << prefix << " - Texture is not specified";
+    if (!attrSet.mTexture || attrSet.mTexture->empty() || *attrSet.mTexture == String::none()) {
+        XULWarning << prefix << " - Texture isn't specified";
     }
     bool result = true;
-    if (!String::isValidForPath(attrSet.mTexture.value_or(std::string()))) {
+    if (const auto s = String::hasIllegalSymbolsForPath(*attrSet.mTexture); s) {
         result = false;
-        XULError << prefix << " contains illegal symbols in the texture name <" << *attrSet.mTexture << ">";
+        XULError << prefix << " Contains illegal symbol in the texture name <" << *attrSet.mTexture << "> at position:" << s.value();
     }
-    if (!String::isValidForPath(attrSet.mTextureLit.value_or(std::string()))) {
+    if (const auto s = String::hasIllegalSymbolsForPath(attrSet.mTextureLit.value_or(std::string())); s) {
         result = false;
-        XULError << prefix << " contains illegal symbols in the lit texture name <" << *attrSet.mTextureLit << ">";
+        XULError << prefix << " Contains illegal symbol in the lit texture name <" << *attrSet.mTextureLit << "> at position:" << s.value();
     }
-    if (!String::isValidForPath(attrSet.mTextureNormal.value_or(std::string()))) {
+    if (const auto s = String::hasIllegalSymbolsForPath(attrSet.mTextureNormal.value_or(std::string())); s) {
         result = false;
-        XULError << prefix << " contains illegal symbols in the normal texture name <" << *attrSet.mTextureNormal << ">";
+        XULError << prefix << " Contains illegal symbol in the normal texture name <" << *attrSet.mTextureNormal << "> at position:" << s.value();
     }
     return result;
 }
@@ -189,9 +189,9 @@ bool checkParameters(const ObjLightCustom & inVal, const std::string & inPrefix)
         XULWarning << inPrefix << " - T1 and T2 can't be equaled.";
     }
 
-    if (!String::isValidForDataRef(inVal.dataRef())) {
+    if (const auto s = String::hasIllegalSymbolsForDataRef(inVal.dataRef()); s) {
         result = false;
-        XULError << inPrefix << " - Dataref contains illegal symbols.";
+        XULError << inPrefix << " Contains illegal symbol in the dataref <" << inVal.dataRef() << "> at position:" << s.value();
     }
 
     return result;
@@ -263,9 +263,9 @@ bool checkParameters(const ObjLightSpillCust & inVal, const std::string & inPref
         XULInfo << inPrefix << " - doesn't have dataref, consider to use param light instead of spill custom.";
     }
 
-    if (!String::isValidForDataRef(drf)) {
+    if (const auto s = String::hasIllegalSymbolsForDataRef(drf); s) {
         result = false;
-        XULError << inPrefix << " - Dataref contains illegal symbols.";
+        XULError << inPrefix << " Contains illegal symbol in the dataref <" << inVal.dataRef() << "> at position:" << s.value();
     }
 
     if (inVal.size() < 0.0f) {

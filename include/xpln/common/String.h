@@ -32,6 +32,7 @@
 #include "xpln/Export.h"
 #include "Logger.h"
 #include <string>
+#include <optional>
 #include <string_view>
 
 /**************************************************************************************************/
@@ -83,17 +84,17 @@ public:
     //---------------------------------------------------
     ///@{
 
-    XpObjLib static bool isValidForDataRef(const std::string_view & str) noexcept;
-    XpObjLib static bool isValidForPath(const std::string_view & str) noexcept;
-    bool isValidForDataRef() const noexcept { return isValidForDataRef(mString); }
-    bool isValidForPath() const noexcept { return isValidForPath(mString); }
+    XpObjLib static std::optional<std::size_t> hasIllegalSymbolsForDataRef(const std::string_view & str) noexcept;
+    XpObjLib static std::optional<std::size_t> hasIllegalSymbolsForPath(const std::string_view & str) noexcept;
+    std::optional<std::size_t> hasIllegalSymbolsForDataRef() const noexcept { return hasIllegalSymbolsForDataRef(mString); }
+    std::optional<std::size_t> hasIllegalSymbolsForPath() const noexcept { return hasIllegalSymbolsForPath(mString); }
 
     ///@}
     //---------------------------------------------------
     ///@{
 
     bool isEmpty() const { return mString.empty(); }
-    bool isNone() const { return mString == "none"; }
+    bool isNone() const { return mString == none(); }
     void clear() { mString.clear(); }
 
     ///@}

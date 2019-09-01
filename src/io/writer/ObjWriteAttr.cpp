@@ -199,7 +199,7 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
 
     const auto writeString = [&](const char * inAttr, const std::optional<std::string> & string) {
         if (string && !string->empty()) {
-            if (String::isValidForPath(*string)) {
+            if (!String::hasIllegalSymbolsForPath(*string)) {
                 mWriter->writeLine(std::string(inAttr).append(" ").append(*string));
                 ++mGlobNum;
             }

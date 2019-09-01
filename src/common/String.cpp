@@ -50,22 +50,24 @@ String & String::operator=(const std::wstring_view s) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************************/
 
-bool String::isValidForDataRef(const std::string_view & str) noexcept {
-    for (auto ch : str) {
+std::optional<std::size_t> String::hasIllegalSymbolsForDataRef(const std::string_view & str) noexcept {
+    for (std::size_t i = 0; i < str.size(); ++i) {
+        const auto ch = str[i];
         if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch < 32 || ch > 126) {
-            return false;
+            return i;
         }
     }
-    return true;
+    return std::nullopt;
 }
 
-bool String::isValidForPath(const std::string_view & str) noexcept {
-    for (auto ch : str) {
+std::optional<std::size_t> String::hasIllegalSymbolsForPath(const std::string_view & str) noexcept {
+    for (std::size_t i = 0; i < str.size(); ++i) {
+        const auto ch = str[i];
         if (ch == '\t' || ch == '\n' || ch == '\r' || ch < 32 || ch > 126) {
-            return false;
+            return i;
         }
     }
-    return true;
+    return std::nullopt;
 }
 
 /**************************************************************************************************/

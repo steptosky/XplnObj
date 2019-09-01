@@ -36,15 +36,15 @@ using namespace xobj;
 /**************************************************************************************************/
 
 TEST(String, isValidForDataRef) {
-    EXPECT_TRUE(String::isValidForDataRef(""));
-    EXPECT_FALSE(String::isValidForDataRef("test\n"));
-    EXPECT_TRUE(String::isValidForDataRef("test"));
+    EXPECT_EQ(std::size_t(-1), String("").hasIllegalSymbolsForDataRef().value_or(std::size_t(-1)));
+    EXPECT_EQ(std::size_t(4), String("test\n").hasIllegalSymbolsForDataRef().value_or(std::size_t(-1)));
+    EXPECT_EQ(std::size_t(-1), String("test").hasIllegalSymbolsForDataRef().value_or(std::size_t(-1)));
 }
 
 TEST(String, isValidForTexture) {
-    EXPECT_TRUE(String::isValidForPath(""));
-    EXPECT_FALSE(String::isValidForPath("test\n"));
-    EXPECT_TRUE(String::isValidForPath("test"));
+    EXPECT_EQ(std::size_t(-1), String("").hasIllegalSymbolsForPath().value_or(std::size_t(-1)));
+    EXPECT_EQ(std::size_t(4), String("test\n").hasIllegalSymbolsForPath().value_or(std::size_t(-1)));
+    EXPECT_EQ(std::size_t(-1), String("test").hasIllegalSymbolsForPath().value_or(std::size_t(-1)));
 }
 
 /**************************************************************************************************/

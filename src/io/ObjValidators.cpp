@@ -58,15 +58,15 @@ bool checkParameters(const AttrGlobSet & attrSet, const std::string & prefix) {
         XULWarning << prefix << " - Texture is not specified";
     }
     bool result = true;
-    if (!String::isValidForTexture(attrSet.mTexture.value_or(std::string()))) {
+    if (!String::isValidForPath(attrSet.mTexture.value_or(std::string()))) {
         result = false;
         XULError << prefix << " contains illegal symbols in the texture name <" << *attrSet.mTexture << ">";
     }
-    if (!String::isValidForTexture(attrSet.mTextureLit.value_or(std::string()))) {
+    if (!String::isValidForPath(attrSet.mTextureLit.value_or(std::string()))) {
         result = false;
         XULError << prefix << " contains illegal symbols in the lit texture name <" << *attrSet.mTextureLit << ">";
     }
-    if (!String::isValidForTexture(attrSet.mTextureNormal.value_or(std::string()))) {
+    if (!String::isValidForPath(attrSet.mTextureNormal.value_or(std::string()))) {
         result = false;
         XULError << prefix << " contains illegal symbols in the normal texture name <" << *attrSet.mTextureNormal << ">";
     }

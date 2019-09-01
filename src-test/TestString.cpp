@@ -42,9 +42,9 @@ TEST(String, isValidForDataRef) {
 }
 
 TEST(String, isValidForTexture) {
-    EXPECT_TRUE(String::isValidForTexture(""));
-    EXPECT_FALSE(String::isValidForTexture("test\n"));
-    EXPECT_TRUE(String::isValidForTexture("test"));
+    EXPECT_TRUE(String::isValidForPath(""));
+    EXPECT_FALSE(String::isValidForPath("test\n"));
+    EXPECT_TRUE(String::isValidForPath("test"));
 }
 
 /**************************************************************************************************/

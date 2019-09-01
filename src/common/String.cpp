@@ -59,7 +59,7 @@ bool String::isValidForDataRef(const std::string_view & str) noexcept {
     return true;
 }
 
-bool String::isValidForTexture(const std::string_view & str) noexcept {
+bool String::isValidForPath(const std::string_view & str) noexcept {
     for (auto ch : str) {
         if (ch == '\t' || ch == '\n' || ch == '\r' || ch < 32 || ch > 126) {
             return false;

@@ -29,6 +29,8 @@
 
 #include <gtest/gtest.h>
 
+#include "xpln/common/String.h"
+
 using namespace xobj;
 
 /**************************************************************************************************/

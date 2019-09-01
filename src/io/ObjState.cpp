@@ -52,7 +52,7 @@ void ObjState::processBool(const bool newValue, bool & inOutStateValue,
 }
 
 void ObjState::finish(const std::string & objName) {
-    if (!mObjHasParticleEmitters && mGlobal.mParticleSystemPath && !mGlobal.mParticleSystemPath->empty()) {
+    if (!mObjHasParticleEmitters && mGlobal.mParticleSystemPath && !mGlobal.mParticleSystemPath->isEmpty()) {
         XULWarning << "The obj <" << objName << "> has the attribute <" << ATTR_GLOBAL_PARTICLE_SYSTEM
                 << "> but it doesn't contain any particle emitters";
     }

@@ -358,7 +358,7 @@ bool ObjWriteGeometry::printEmitterObject(AbstractWriter & writer, const ObjAbst
         const auto & emitter = reinterpret_cast<const ObjEmitter&>(objBase);
 
         mState->mObjHasParticleEmitters = true;
-        if (!mState->mGlobal.mParticleSystemPath || mState->mGlobal.mParticleSystemPath->empty()) {
+        if (!mState->mGlobal.mParticleSystemPath || mState->mGlobal.mParticleSystemPath->isEmpty()) {
             XULError << "The object <" << objBase.objectName() << "> is an particle emitter but you "
                     << "don't have particle system specified for the object."
                     << "You have to put attribute <" << ATTR_GLOBAL_PARTICLE_SYSTEM << ">.";

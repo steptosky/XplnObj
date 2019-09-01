@@ -34,6 +34,7 @@
 #include <cstddef>
 #include "xpln/Export.h"
 #include "xpln/enums/ECockpitDevice.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -96,7 +97,7 @@ public:
     /// @{
 
     /*! \link ECockpitDevice \endlink can be used*/
-    std::string mDeviceName;
+    String mDeviceName;
     std::size_t mDeviceBus = 0;
     std::size_t mDeviceLightingChan = 0;
     bool mDeviceAutoAdjust = false;

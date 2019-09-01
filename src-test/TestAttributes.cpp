@@ -245,7 +245,7 @@ TEST(TestAttributes, AttrLightLevel) {
     // getters
     ASSERT_EQ(10.0f, attr.mVal1);
     ASSERT_EQ(20.0f, attr.mVal2);
-    ASSERT_STREQ("dataref", attr.mDataref.c_str());
+    ASSERT_STREQ("dataref", attr.mDataref.str().c_str());
 
     ASSERT_TRUE(AttrLightLevel() == AttrLightLevel());
     ASSERT_TRUE(AttrLightLevel(10.0f, 20.0f, "dataref") == AttrLightLevel(10.0f, 20.0f, "dataref"));

@@ -39,6 +39,7 @@
 #include "xpln/obj/attributes/AttrWetDry.h"
 #include "xpln/obj/attributes/AttrSlopeLimit.h"
 #include "xpln/obj/attributes/AttrCockpitRegion.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -75,10 +76,10 @@ public:
     //-------------------------------------------------------------------------
     /// @{
 
-    std::optional<std::string> mTexture;
-    std::optional<std::string> mTextureLit;
-    std::optional<std::string> mTextureNormal;
-    std::optional<std::string> mParticleSystemPath;
+    std::optional<String> mTexture;
+    std::optional<String> mTextureLit;
+    std::optional<String> mTextureNormal;
+    std::optional<String> mParticleSystemPath;
 
     std::optional<AttrBlend> mBlend;
     std::optional<AttrLayerGroup> mLayerGroup;

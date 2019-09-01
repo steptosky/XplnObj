@@ -208,10 +208,10 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
 
     //-------------------------------------------------------------------------
 
-    writeString(ATTR_GLOBAL_TEXTURE, obj->mAttr.mTexture);
-    writeString(ATTR_GLOBAL_TEXTURE_LIT, obj->mAttr.mTextureLit);
-    writeString(ATTR_GLOBAL_TEXTURE_NORMAL, obj->mAttr.mTextureNormal);
-    writeString(ATTR_GLOBAL_PARTICLE_SYSTEM, obj->mAttr.mParticleSystemPath);
+    writeString(ATTR_GLOBAL_TEXTURE, obj->mAttr.mTexture->str());
+    writeString(ATTR_GLOBAL_TEXTURE_LIT, obj->mAttr.mTextureLit->str());
+    writeString(ATTR_GLOBAL_TEXTURE_NORMAL, obj->mAttr.mTextureNormal->str());
+    writeString(ATTR_GLOBAL_PARTICLE_SYSTEM, obj->mAttr.mParticleSystemPath->str());
 
     writeBool(ATTR_GLOBAL_BLEND_GLASS, obj->mAttr.mBlendClass);
     writeBool(ATTR_GLOBAL_NORMAL_METALNESS, obj->mAttr.mNormalMetalness);
@@ -304,10 +304,10 @@ void ObjWriteAttr::switchAttrState<AttrCockpit>(const AttrCockpit & attr, const 
             mWriter->writeLine(ATTR_COCKPIT_REGION, " 3");
         }
         else if (attr.mType == AttrCockpit::cockpit_device) {
-            if (attr.mDeviceName.empty()) {
+            if (attr.mDeviceName.isEmpty()) {
                 XULError << "The obj <" << mObj->objectName() << "> has the <" << ATTR_COCKPIT_DEVICE << "> attribute without a device name.";
             }
-            mWriter->writeLine(ATTR_COCKPIT_DEVICE, " ", attr.mDeviceName, " ", attr.mDeviceBus, " ",
+            mWriter->writeLine(ATTR_COCKPIT_DEVICE, " ", attr.mDeviceName.str(), " ", attr.mDeviceBus, " ",
                                attr.mDeviceLightingChan, " ", attr.mDeviceAutoAdjust);
         }
         else {
@@ -337,7 +337,7 @@ void ObjWriteAttr::switchAttrState<AttrHard>(const AttrHard & attr, const bool e
 template<>
 void ObjWriteAttr::switchAttrState<AttrLightLevel>(const AttrLightLevel & attr, const bool enable) {
     if (enable) {
-        mWriter->writeLine(ATTR_LIGHT_LEVEL, " ", attr.mVal1, " ", attr.mVal2, " ", attr.mDataref);
+        mWriter->writeLine(ATTR_LIGHT_LEVEL, " ", attr.mVal1, " ", attr.mVal2, " ", attr.mDataref.str());
     }
     else {
         mWriter->writeLine(ATTR_LIGHT_LEVEL_RESET);

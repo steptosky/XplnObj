@@ -54,19 +54,19 @@ namespace xobj {
 /**************************************************************************************************/
 
 bool checkParameters(const AttrGlobSet & attrSet, const std::string & prefix) {
-    if (!attrSet.mTexture || attrSet.mTexture->empty() || *attrSet.mTexture == String::none()) {
+    if (!attrSet.mTexture || attrSet.mTexture->isEmpty() || attrSet.mTexture->isNone()) {
         XULWarning << prefix << " - Texture isn't specified";
     }
     bool result = true;
-    if (const auto s = String::hasIllegalSymbolsForPath(*attrSet.mTexture); s) {
+    if (const auto s = attrSet.mTexture.value_or(String()).hasIllegalSymbolsForPath(); s) {
         result = false;
         XULError << prefix << " Contains illegal symbol in the texture name <" << *attrSet.mTexture << "> at position:" << s.value();
     }
-    if (const auto s = String::hasIllegalSymbolsForPath(attrSet.mTextureLit.value_or(std::string())); s) {
+    if (const auto s = attrSet.mTextureLit.value_or(String()).hasIllegalSymbolsForPath(); s) {
         result = false;
         XULError << prefix << " Contains illegal symbol in the lit texture name <" << *attrSet.mTextureLit << "> at position:" << s.value();
     }
-    if (const auto s = String::hasIllegalSymbolsForPath(attrSet.mTextureNormal.value_or(std::string())); s) {
+    if (const auto s = attrSet.mTextureNormal.value_or(String()).hasIllegalSymbolsForPath(); s) {
         result = false;
         XULError << prefix << " Contains illegal symbol in the normal texture name <" << *attrSet.mTextureNormal << "> at position:" << s.value();
     }

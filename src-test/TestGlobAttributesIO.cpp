@@ -65,10 +65,10 @@ TEST(TestGlobAttributesIO, strings) {
     ASSERT_TRUE(mainOut.mAttr.mTextureNormal);
     ASSERT_TRUE(mainOut.mAttr.mParticleSystemPath);
 
-    ASSERT_STREQ(mainOut.mAttr.mTexture->c_str(), "test");
-    ASSERT_STREQ(mainOut.mAttr.mTextureLit->c_str(), "test_lit");
-    ASSERT_STREQ(mainOut.mAttr.mTextureNormal->c_str(), "test_normal");
-    ASSERT_STREQ(mainOut.mAttr.mParticleSystemPath->c_str(), "test_particle_system");
+    ASSERT_STREQ(mainOut.mAttr.mTexture->str().c_str(), "test");
+    ASSERT_STREQ(mainOut.mAttr.mTextureLit->str().c_str(), "test_lit");
+    ASSERT_STREQ(mainOut.mAttr.mTextureNormal->str().c_str(), "test_normal");
+    ASSERT_STREQ(mainOut.mAttr.mParticleSystemPath->str().c_str(), "test_particle_system");
 }
 
 TEST(TestGlobAttributesIO, attributes) {

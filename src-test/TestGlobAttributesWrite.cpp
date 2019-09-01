@@ -53,17 +53,17 @@ TEST(TestGlobAttributesWrite, strings) {
     main.mAttr.mParticleSystemPath = "test_particle_system";
 
     InSequence dummy;
-    EXPECT_CALL(writer, writeLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE).append(" ").append(*main.mAttr.mTexture)))).Times(1);
-    EXPECT_CALL(writer, writeLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_LIT).append(" ").append(*main.mAttr.mTextureLit)))).Times(1);
-    EXPECT_CALL(writer, writeLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_NORMAL).append(" ").append(*main.mAttr.mTextureNormal)))).Times(1);
-    EXPECT_CALL(writer, writeLine(StrEq(std::string(ATTR_GLOBAL_PARTICLE_SYSTEM).append(" ").append(*main.mAttr.mParticleSystemPath)))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE).append(" ").append(main.mAttr.mTexture->str())))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_LIT).append(" ").append(main.mAttr.mTextureLit->str())))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(std::string(ATTR_GLOBAL_TEXTURE_NORMAL).append(" ").append(main.mAttr.mTextureNormal->str())))).Times(1);
+    EXPECT_CALL(writer, writeLine(StrEq(std::string(ATTR_GLOBAL_PARTICLE_SYSTEM).append(" ").append(main.mAttr.mParticleSystemPath->str())))).Times(1);
 
     attrWriter.writeGlobAttr(&writer, &main);
     ASSERT_EQ(std::make_tuple(4, 0, 0), attrWriter.count());
-    ASSERT_STREQ("test", main.mAttr.mTexture->c_str());
-    ASSERT_STREQ("test_lit", main.mAttr.mTextureLit->c_str());
-    ASSERT_STREQ("test_normal", main.mAttr.mTextureNormal->c_str());
-    ASSERT_STREQ("test_particle_system", main.mAttr.mParticleSystemPath->c_str());
+    ASSERT_STREQ("test", main.mAttr.mTexture->str().c_str());
+    ASSERT_STREQ("test_lit", main.mAttr.mTextureLit->str().c_str());
+    ASSERT_STREQ("test_normal", main.mAttr.mTextureNormal->str().c_str());
+    ASSERT_STREQ("test_particle_system", main.mAttr.mParticleSystemPath->str().c_str());
 }
 
 TEST(TestGlobAttributesWrite, boolean) {

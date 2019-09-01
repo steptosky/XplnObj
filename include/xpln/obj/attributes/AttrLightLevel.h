@@ -31,6 +31,7 @@
 
 #include <string>
 #include "xpln/Export.h"
+#include "xpln/common/String.h"
 
 namespace xobj {
 
@@ -76,7 +77,7 @@ public:
 
     float mVal1 = 0.0f;
     float mVal2 = 1.0f;
-    std::string mDataref;
+    String mDataref;
 
     /// @}
     //-------------------------------------------------------------------------

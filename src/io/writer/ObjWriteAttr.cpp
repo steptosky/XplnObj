@@ -197,10 +197,10 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
         }
     };
 
-    const auto writeString = [&](const char * inAttr, const std::optional<std::string> & string) {
-        if (string && !string->empty()) {
-            if (!String::hasIllegalSymbolsForPath(*string)) {
-                mWriter->writeLine(std::string(inAttr).append(" ").append(*string));
+    const auto writeString = [&](const char * inAttr, const std::optional<String> & string) {
+        if (string && !string->isEmpty()) {
+            if (!string->hasIllegalSymbolsForPath()) {
+                mWriter->writeLine(std::string(inAttr).append(" ").append(string->str()));
                 ++mGlobNum;
             }
         }
@@ -208,10 +208,10 @@ void ObjWriteAttr::writeGlobAttr(AbstractWriter * writer, const ObjMain * obj) {
 
     //-------------------------------------------------------------------------
 
-    writeString(ATTR_GLOBAL_TEXTURE, obj->mAttr.mTexture->str());
-    writeString(ATTR_GLOBAL_TEXTURE_LIT, obj->mAttr.mTextureLit->str());
-    writeString(ATTR_GLOBAL_TEXTURE_NORMAL, obj->mAttr.mTextureNormal->str());
-    writeString(ATTR_GLOBAL_PARTICLE_SYSTEM, obj->mAttr.mParticleSystemPath->str());
+    writeString(ATTR_GLOBAL_TEXTURE, obj->mAttr.mTexture);
+    writeString(ATTR_GLOBAL_TEXTURE_LIT, obj->mAttr.mTextureLit);
+    writeString(ATTR_GLOBAL_TEXTURE_NORMAL, obj->mAttr.mTextureNormal);
+    writeString(ATTR_GLOBAL_PARTICLE_SYSTEM, obj->mAttr.mParticleSystemPath);
 
     writeBool(ATTR_GLOBAL_BLEND_GLASS, obj->mAttr.mBlendClass);
     writeBool(ATTR_GLOBAL_NORMAL_METALNESS, obj->mAttr.mNormalMetalness);

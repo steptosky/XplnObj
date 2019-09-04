@@ -60,17 +60,27 @@ public:
     //---------------------------------------------------
     ///@{
 
-    String(const std::string_view s) noexcept
+    String(const std::string & s) noexcept
         : mString(s) {}
 
-    String & operator=(const std::string_view s) {
+    String & operator=(const std::string & s) {
         mString = s;
         return *this;
     }
 
+    String(const char * s) noexcept
+        : mString(s ? s : "") {}
+
+    String & operator=(const char * s) {
+        mString = s ? s : "";
+        return *this;
+    }
+
 #ifdef _MSC_VER
-    XpObjLib String(std::wstring_view s);
-    XpObjLib String & operator=(std::wstring_view s);
+    XpObjLib String(const std::wstring & s);
+    XpObjLib String(const wchar_t * s);
+    XpObjLib String & operator=(const std::wstring & s);
+    XpObjLib String & operator=(const wchar_t * s);
 #endif
 
     ///@}

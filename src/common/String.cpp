@@ -37,13 +37,25 @@ namespace xobj {
 /**************************************************************************************************/
 
 #ifdef _MSC_VER
-String::String(const std::wstring_view s) {
+inline std::string toMultiByte(const std::wstring_view s) {
     static std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> convert;
-    mString = convert.to_bytes(s.data(), s.data() + s.size());
+    return convert.to_bytes(s.data(), s.data() + s.size());
 }
 
-String & String::operator=(const std::wstring_view s) {
-    mString = std::move(String(s).mString);
+String::String(const std::wstring & s) {
+    mString = toMultiByte(s);
+}
+
+String & String::operator=(const std::wstring & s) {
+    mString = toMultiByte(s);
+    return *this;
+}
+
+String::String(const wchar_t * s)
+    : mString(s ? toMultiByte(s) : "") {}
+
+String & String::operator=(const wchar_t * s) {
+    mString = s ? toMultiByte(s) : "";
     return *this;
 }
 #endif
